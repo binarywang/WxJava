@@ -38,6 +38,7 @@ public interface WxCpExternalContactService {
    * 用户需要妥善存储返回的config_id，config_id丢失可能导致用户无法编辑或删除「联系我」。
    * 临时会话模式不占用「联系我」数量，但每日最多添加10万个，并且仅支持单人。
    * 临时会话模式的二维码，添加好友完成后该二维码即刻失效。
+   * <a href="https://developer.work.weixin.qq.com/document/path/92228">文档地址</a>
    * </pre>
    *
    * @param info 客户联系「联系我」方式

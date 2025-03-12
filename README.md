@@ -21,24 +21,29 @@
     </td>
   </tr>
   <tr>
-    <td align="center" valign="middle" colspan="3">
+    <td align="center" valign="middle" colspan="2">
       <a href="https://www.jeequan.com/product/jeepay.html" target="_blank">
         <img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统">
       </a>
     </td>
+    <td align="center" valign="middle" colspan="1">
+      <a href="https://www.mall4j.com/cn/?statId=9" target="_blank">
+        <img height="120" src="https://img.mall4j.com/mall.png" alt="Mall4j">
+      </a>
+    </td>
   </tr>
   <tr>
-    <td align="left" valign="middle">
+    <td align="center" valign="middle">
       <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
         <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png" alt="mp qrcode">
       </a>
     </td>
-    <td valign="middle">
+    <td align="center" valign="middle">
       <a href="https://www.diboot.com?from=wxjava" target="_blank">
         <img height="120" src="https://www.diboot.com/img/diboot_ad.png" alt="diboot低代码开发平台"/>
       </a>
     </td>
-    <td align="right" valign="middle">
+    <td align="center" valign="middle">
       <a href="https://www.iyque.cn/" target="_blank">
         <img height="120" src="https://iyque-1251309172.cos.ap-nanjing.myqcloud.com/advert/wxjava.jpg" alt="aliyun ad">
       </a>
