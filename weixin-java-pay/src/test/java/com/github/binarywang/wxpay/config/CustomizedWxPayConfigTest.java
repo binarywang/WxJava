@@ -1,5 +1,9 @@
 package com.github.binarywang.wxpay.config;
 
+import static org.testng.Assert.assertEquals;
+
+import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryV3Result;
+import com.github.binarywang.wxpay.constant.WxPayErrorCode;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.CustomizedApiTestModule;
@@ -30,10 +34,9 @@ public class CustomizedWxPayConfigTest {
 
   public void testCustomizerV3HttpClient() {
     try {
-      wxPayService.queryOrderV3("a", null);
+      WxPayOrderQueryV3Result result = wxPayService.queryOrderV3("a", null);
     } catch (WxPayException e) {
-      // ignore
-      e.printStackTrace();
+      assertEquals(e.getErrCode(), WxPayErrorCode.RefundQuery.PARAM_ERROR);
     }
   }
 }

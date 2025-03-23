@@ -1,7 +1,16 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
@@ -25,16 +34,6 @@ import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleInfo;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleList;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-
-import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 
 /**
  * The type Wx cp external contact service.
@@ -64,6 +63,17 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
 
     final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_WAY);
     return WxCpContactWayInfo.fromJson(this.mainService.post(url, json.toString()));
+  }
+
+  @Override
+  public WxCpContactWayList listContactWay(Long startTime, Long endTime, String cursor, Long limit) throws WxErrorException {
+    JsonObject json = new JsonObject();
+    json.addProperty("start_time", startTime);
+    json.addProperty("end_time", endTime);
+    json.addProperty("cursor", cursor);
+    json.addProperty("limit", limit);
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(LIST_CONTACT_WAY);
+    return WxCpContactWayList.fromJson(this.mainService.post(url, json.toString()));
   }
 
   @Override
@@ -213,6 +223,20 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
     }
     String responseContent = this.mainService.post(url, json.toString());
     return WxCpExternalContactBatchInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpExternalContactListInfo getContactList(String cursor, Integer limit) throws WxErrorException {
+    final String url = this.mainService.getWxCpConfigStorage().getApiUrl(GET_CONTACT_LIST);
+    JsonObject json = new JsonObject();
+    if (StringUtils.isNotBlank(cursor)) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    String responseContent = this.mainService.post(url, json.toString());
+    return WxCpExternalContactListInfo.fromJson(responseContent);
   }
 
   @Override

@@ -550,6 +550,12 @@ public interface WxMaService extends WxService {
    * @return getWxMaOrderShippingService
    */
   WxMaOrderShippingService getWxMaOrderShippingService();
+  /**
+   * 小程序订单管理服务
+   *
+   * @return WxMaOrderManagementService
+   */
+  WxMaOrderManagementService getWxMaOrderManagementService();
 
   /**
    * 小程序openApi管理

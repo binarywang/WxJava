@@ -140,6 +140,11 @@ public class WxOpenXmlMessage implements Serializable {
    */
   @XStreamAlias("result")
   private Integer result;
+  /**
+   * 发起时 along_with_auth 填 true 时有效：9. 认证短信核验通过。
+   */
+  @XStreamAlias("along_with_auth_result")
+  private Integer alongWithAuthResult;
   //endregion
 
   //region 当备案审核被驳回或通过时会推送该事件 推送的消息 infoType=notify_apply_icpfiling_result
@@ -153,6 +158,20 @@ public class WxOpenXmlMessage implements Serializable {
    */
   @XStreamAlias("beian_status")
   private Integer beianStatus;
+  //endregion
+
+  //region 认证及备案流程的主要节点均有事件推送到第三方平台的授权事件接收接口，包括支付完成、派单给审核机构、审核打回、审核通过、审核失败等。消息类型，固定为 notify_3rd_wxa_auth_and_icp
+
+  /**
+   * 小程序认证及备案任务流程 id
+   */
+  @XStreamAlias("procedure_id")
+  private String procedureId;
+  /**
+   * 当前任务流程状态，见“小程序认证及备案进度查询” API 文档中的任务流程状态枚举
+   */
+  @XStreamAlias("procedure_status")
+  private Integer procedureStatus;
   //endregion
 
   /**

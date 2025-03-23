@@ -4,10 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaOrderShippingService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.shop.request.WxMaOrderShippingIsTradeManagedRequest;
 import cn.binarywang.wx.miniapp.bean.shop.request.shipping.*;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoBaseResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoGetListResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoGetResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingIsTradeManagedResponse;
+import cn.binarywang.wx.miniapp.bean.shop.response.*;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
@@ -121,6 +118,34 @@ public class WxMaOrderShippingServiceImpl implements WxMaOrderShippingService {
   public WxMaOrderShippingInfoBaseResponse setMsgJumpPath(String path) throws WxErrorException {
     JsonObject jsonObject = GsonHelper.buildJsonObject("path", path);
     return request(SET_MSG_JUMP_PATH, jsonObject, WxMaOrderShippingInfoBaseResponse.class);
+  }
+
+  /**
+   * 查询小程序是否已完成交易结算管理确认
+   *
+   * @param appId 待查询小程序的 appid，非服务商调用时仅能查询本账号
+   * @return WxMaOrderShippingITMCCompletedResult
+   * @throws WxErrorException e
+   */
+  @Override
+  public WxMaOrderShippingITMCCompletedResult isTradeManagementConfirmationCompleted(String appId) throws WxErrorException {
+    JsonObject jsonObject = GsonHelper.buildJsonObject("appid", appId);
+    return request(IS_TRADE_MANAGEMENT_CONFIRMATION_COMPLETED, jsonObject, WxMaOrderShippingITMCCompletedResult.class);
+  }
+
+  /**
+   * 特殊发货报备
+   *
+   * @param orderId 需要特殊发货报备的订单号，可传入微信支付单号或商户单号
+   * @param type    特殊发货报备类型，1为预售商品订单，2为测试订单
+   * @param delayTo 预计发货时间的unix时间戳，type为1时必填，type为2可省略
+   * @return WxMaOrderShippingInfoBaseResponse
+   * @throws WxErrorException e
+   */
+  @Override
+  public WxMaOrderShippingInfoBaseResponse opSpecialOrder(String orderId, Integer type, Long delayTo) throws WxErrorException {
+    JsonObject jsonObject = GsonHelper.buildJsonObject("order_id", orderId, "type", type, "delay_to", delayTo);
+    return request(OP_SPECIAL_ORDER, jsonObject, WxMaOrderShippingInfoBaseResponse.class);
   }
 
   private <T> T request(String url, Object request, Class<T> resultT) throws WxErrorException {

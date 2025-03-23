@@ -23,7 +23,11 @@ public enum SendTime {
   TWENTYFOUR_HOUR("SendTime_TWENTYFOUR_HOUR", "24小时内发货"),
   /** 48小时内发货 */
   FOUTYEIGHT_HOUR("SendTime_FOUTYEIGHT_HOUR", "48小时内发货"),
-  /** 3天内发货 */
+  /**
+   * 3天内发货
+   * @deprecated 已不支持，微信小店发货管理规则调整
+   */
+  @Deprecated
   THREE_DAY("SendTime_THREE_DAY", "3天内发货"),
 //    /** 5天内发货 */
 //    FIVE_DAY("SendTime_FIVE_DAY", "5天内发货"),

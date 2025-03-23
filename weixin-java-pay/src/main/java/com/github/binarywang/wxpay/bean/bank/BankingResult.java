@@ -43,7 +43,10 @@ public class BankingResult implements Serializable {
 
   @Getter
   @Setter
-  public static class Link {
+  public static class Link implements Serializable {
+
+    private static final long serialVersionUID = -8372812998971715894L;
+
     /**
      * 下一页链接
      */

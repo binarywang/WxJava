@@ -1,4 +1,4 @@
-package me.chanjar.weixin.channel.bean.compass.finder;
+package me.chanjar.weixin.channel.bean.compass;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;

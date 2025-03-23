@@ -37,4 +37,6 @@ public class TemplateConfig implements Serializable {
   @SerializedName("vacation_list")
   private TemplateVacation vacationList;
 
+  private TemplateTips tips;
+
 }

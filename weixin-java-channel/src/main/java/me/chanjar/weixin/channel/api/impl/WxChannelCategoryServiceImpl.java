@@ -67,6 +67,14 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
   }
 
   @Override
+  public ShopCategoryResponse listAvailableCategories(String fCatId) throws WxErrorException {
+    String reqJson = "{\"f_cat_id\": " + fCatId + "}";
+    String resJson = (String) shopService.executeWithoutLog(SimplePostRequestExecutor.create(shopService),
+      AVAILABLE_CATEGORY_URL, reqJson);
+    return ResponseUtils.decode(resJson, ShopCategoryResponse.class);
+  }
+
+  @Override
   public CategoryDetailResult getCategoryDetail(String id) throws WxErrorException {
     Long catId = null;
     try {
@@ -89,11 +97,22 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
       Long l1 = Long.parseLong(level1);
       Long l2 = Long.parseLong(level2);
       Long l3 = Long.parseLong(level3);
-      CategoryAuditInfo categoryInfo = new CategoryAuditInfo(l1, l2, l3, certificate);
+      CategoryAuditInfo categoryInfo = new CategoryAuditInfo();
+      categoryInfo.setLevel1(l1);
+      categoryInfo.setLevel2(l2);
+      categoryInfo.setLevel3(l3);
+      categoryInfo.setCertificates(certificate);
       reqJson = JsonUtils.encode(new CategoryAuditRequest(categoryInfo));
     } catch (Throwable e) {
       log.error("微信请求异常", e);
     }
+    String resJson = shopService.post(ADD_CATEGORY_URL, reqJson);
+    return ResponseUtils.decode(resJson, AuditApplyResponse.class);
+  }
+
+  @Override
+  public AuditApplyResponse addCategory(CategoryAuditInfo info) throws WxErrorException {
+    String reqJson = JsonUtils.encode(new CategoryAuditRequest(info));
     String resJson = shopService.post(ADD_CATEGORY_URL, reqJson);
     return ResponseUtils.decode(resJson, AuditApplyResponse.class);
   }

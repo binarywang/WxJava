@@ -119,8 +119,8 @@ public class ApplySubjectConfirmCreateRequest implements Serializable {
      * IDENTIFICATION_TYPE_TAIWAN_RESIDENT：台湾居民证
      * 示例值：IDENTIFICATION_TYPE_IDCARD
      */
-    @SerializedName("id_doc_type")
-    private IdTypeEnum idDocType;
+    @SerializedName("identification_type")
+    private IdTypeEnum identificationType;
 
     /**
      * 法定代表人说明函
@@ -414,13 +414,13 @@ public class ApplySubjectConfirmCreateRequest implements Serializable {
      * 若未传入将默认填写：false。
      * 示例值：true
      */
-    @SerializedName("finance_institution")
+    @SerializedName("is_finance_institution")
     private Boolean financeInstitution;
 
     /**
      * 营业执照
      */
-    @SerializedName("business_license_info")
+    @SerializedName("business_licence_info")
     private ApplySubConfirmBusinessLicenseInfo businessLicenseInfo;
     /**
      * 登记证书
@@ -736,8 +736,8 @@ public class ApplySubjectConfirmCreateRequest implements Serializable {
        * 参看微信支付提供的特殊行业id对照表
        * 示例值：100
        */
-      @SerializedName("finance_type")
-      private Integer financeType;
+      @SerializedName("category_id")
+      private Integer categoryId;
 
       /**
        * 行业经营许可证资质照片
@@ -791,29 +791,10 @@ public class ApplySubjectConfirmCreateRequest implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
-     * 法人开户承诺函
+     * 待确认商户号列表
      */
-    @SerializedName("legal_person_commitment")
-    private String legalPersonCommitment;
-
-    /**
-     * 法人开户意愿视频
-     */
-    @SerializedName("legal_person_video")
-    private String legalPersonVideo;
-
-    /**
-     * 补充材料
-     */
-    @SerializedName("business_addition_pics")
-    private List<String> businessAdditionPics;
-
-    /**
-     * 补充说明
-     */
-    @SerializedName("business_addition_msg")
-    private String businessAdditionMsg;
-
+    @SerializedName("confirm_mchid_list")
+    private List<String> confirmMchidList;
   }
 
 }

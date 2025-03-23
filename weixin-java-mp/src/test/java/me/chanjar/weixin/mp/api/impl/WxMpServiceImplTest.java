@@ -44,6 +44,15 @@ public class WxMpServiceImplTest {
     System.out.println(qrConnectUrl);
   }
 
+  @Test
+  public void testBuildQrConnectRedirectUrl() {
+    String qrConnectRedirectUrl = this.wxService.getWxMpConfigStorage().getQrConnectRedirectUrl();
+    String qrConnectUrl = this.wxService.buildQrConnectUrl(qrConnectRedirectUrl,
+      WxConsts.QrConnectScope.SNSAPI_LOGIN, null);
+    Assert.assertNotNull(qrConnectUrl);
+    System.out.println(qrConnectUrl);
+  }
+
   public void testGetTicket() throws WxErrorException {
     String ticket = this.wxService.getTicket(TicketType.SDK, false);
     System.out.println(ticket);

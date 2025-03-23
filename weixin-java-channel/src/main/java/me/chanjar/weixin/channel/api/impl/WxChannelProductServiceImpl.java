@@ -6,16 +6,22 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.CA
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.DELETE_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.LIST_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_ADD_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_AUDIT_FREE_UPDATE_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_DELISTING_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_DEL_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_BATCH_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_H5URL_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_LISTING_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_LIST_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_QRCODE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_TAGLINK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.STOP_LIMIT_TASK_URL;
 
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelProductService;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
@@ -23,13 +29,20 @@ import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListParam;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.SkuStockBatchParam;
+import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
+import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
 import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListParam;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
+import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductH5UrlResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductQrCodeResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductTagLinkResponse;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -50,6 +63,20 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
   }
 
   @Override
+  public SpuUpdateResponse addProduct(SpuUpdateInfo info) throws WxErrorException {
+    String reqJson = JsonUtils.encode(info);
+    String resJson = shopService.post(SPU_ADD_URL, reqJson);
+    return ResponseUtils.decode(resJson, SpuUpdateResponse.class);
+  }
+
+  @Override
+  public SpuUpdateResponse updateProduct(SpuUpdateInfo info) throws WxErrorException {
+    String reqJson = JsonUtils.encode(info);
+    String resJson = shopService.post(SPU_UPDATE_URL, reqJson);
+    return ResponseUtils.decode(resJson, SpuUpdateResponse.class);
+  }
+
+  @Override
   public SpuUpdateResponse addProduct(SpuInfo info) throws WxErrorException {
     String reqJson = JsonUtils.encode(info);
     String resJson = shopService.post(SPU_ADD_URL, reqJson);
@@ -60,6 +87,13 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
   public SpuUpdateResponse updateProduct(SpuInfo info) throws WxErrorException {
     String reqJson = JsonUtils.encode(info);
     String resJson = shopService.post(SPU_UPDATE_URL, reqJson);
+    return ResponseUtils.decode(resJson, SpuUpdateResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse updateProductAuditFree(SpuFastInfo info) throws WxErrorException {
+    String reqJson = JsonUtils.encode(info);
+    String resJson = shopService.post(SPU_AUDIT_FREE_UPDATE_URL, reqJson);
     return ResponseUtils.decode(resJson, SpuUpdateResponse.class);
   }
 
@@ -146,6 +180,35 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
     String reqJson = "{\"product_id\":\"" + productId + "\",\"sku_id\":\"" + skuId + "\"}";
     String resJson = shopService.post(SPU_GET_STOCK_URL, reqJson);
     return ResponseUtils.decode(resJson, SkuStockResponse.class);
+  }
+
+  @Override
+  public SkuStockBatchResponse getSkuStockBatch(List<String> productIds) throws WxErrorException {
+    SkuStockBatchParam param = new SkuStockBatchParam(productIds);
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_GET_STOCK_BATCH_URL, reqJson);
+    return ResponseUtils.decode(resJson, SkuStockBatchResponse.class);
+  }
+
+  @Override
+  public ProductH5UrlResponse getProductH5Url(String productId) throws WxErrorException {
+    String reqJson = "{\"product_id\":\"" + productId + "\"}";
+    String resJson = shopService.post(SPU_H5URL_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductH5UrlResponse.class);
+  }
+
+  @Override
+  public ProductQrCodeResponse getProductQrCode(String productId) throws WxErrorException {
+    String reqJson = "{\"product_id\":\"" + productId + "\"}";
+    String resJson = shopService.post(SPU_QRCODE_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductQrCodeResponse.class);
+  }
+
+  @Override
+  public ProductTagLinkResponse getProductTagLink(String productId) throws WxErrorException {
+    String reqJson = "{\"product_id\":\"" + productId + "\"}";
+    String resJson = shopService.post(SPU_TAGLINK_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductTagLinkResponse.class);
   }
 
   @Override

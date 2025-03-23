@@ -113,6 +113,14 @@ public class ComplaintServiceImpl implements ComplaintService {
   }
 
   @Override
+  public void updateRefundProgress(UpdateRefundProgressRequest request) throws WxPayException {
+    String url = String.format("%s/v3/merchant-service/complaints-v2/%s/update-refund-progress", this.payService.getPayBaseUrl(), request.getComplaintId());
+    // 上面url已经含有complaintId，这里设置为空，避免在body中再次传递，否则微信会报错
+    request.setComplaintId(null);
+    this.payService.postV3(url, GSON.toJson(request));
+  }
+
+  @Override
   public ImageUploadResult uploadResponseImage(File imageFile) throws WxPayException, IOException {
     String url = String.format("%s/v3/merchant-service/images/upload", this.payService.getPayBaseUrl());
 

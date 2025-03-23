@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.transfer.QueryTransferBatchesRequest;
 import com.github.binarywang.wxpay.bean.transfer.TransferBatchesRequest;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -72,5 +73,33 @@ public class TransferServiceImplTest {
   @Test
   public void testTransferBatchesOutBatchNoDetail() throws WxPayException {
     log.info("商家明细单号查询明细单:{}", this.payService.getTransferService().transferBatchesOutBatchNoDetail("1655447999520", "1655447989156"));
+  }
+
+  @Test
+  public void testTransferBills() throws WxPayException {
+    TransferBillsRequest transferBillsRequest = TransferBillsRequest.newBuilder()
+      .appid("wxf636efh5xxxxx")
+      .outBillNo("1655447989156")
+      .transferSceneId("1005")
+      .transferAmount(100)
+      .transferRemark("测试转账")
+      .openid("oX_7Jzr9gSZz4X_Xc9-_7HGf8XzI")
+      .userName("测试用户").build();
+    log.info("发起商家转账:{}", this.payService.getTransferService().transferBills(transferBillsRequest));
+  }
+
+  @Test
+  public void testTransformBillsCancel() throws WxPayException {
+    log.info("撤销商家转账:{}", this.payService.getTransferService().transformBillsCancel("123456"));
+  }
+
+  @Test
+  public void testGetBillsByOutBillNo() throws WxPayException {
+    log.info("商户单号查询转账单：{}", this.payService.getTransferService().getBillsByOutBillNo("123456"));
+  }
+
+  @Test
+  public void testGetBillsByTransferBillNo() throws WxPayException {
+    log.info("微信单号查询转账单：{}", this.payService.getTransferService().getBillsByTransferBillNo("123456"));
   }
 }

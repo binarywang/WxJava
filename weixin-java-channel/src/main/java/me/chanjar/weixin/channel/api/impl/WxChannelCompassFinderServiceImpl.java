@@ -2,6 +2,7 @@ package me.chanjar.weixin.channel.api.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelCompassFinderService;
+import me.chanjar.weixin.channel.bean.compass.CompassFinderBaseParam;
 import me.chanjar.weixin.channel.bean.compass.finder.*;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;

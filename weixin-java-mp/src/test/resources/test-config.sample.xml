@@ -10,7 +10,7 @@
   <partnerKey>商户平台设置的API密钥</partnerKey>
   <keyPath>商户平台的证书文件地址</keyPath>
   <templateId>模版消息的模版ID</templateId>
-  <oauth2redirectUri>网页授权获取用户信息回调地址</oauth2redirectUri>
-  <qrconnectRedirectUrl>网页应用授权登陆回调地址</qrconnectRedirectUrl>
+  <oauth2RedirectUrl>网页授权获取用户信息回调地址</oauth2RedirectUrl>
+  <qrConnectRedirectUrl>网页应用授权登陆回调地址</qrConnectRedirectUrl>
   <kfAccount>完整客服账号，格式为：账号前缀@公众号微信号</kfAccount>
 </xml>

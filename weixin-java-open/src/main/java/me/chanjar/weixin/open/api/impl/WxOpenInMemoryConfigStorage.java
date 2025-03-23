@@ -572,8 +572,19 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
       return null;
     }
 
+    @Deprecated
     @Override
     public String getOauth2redirectUri() {
+      return null;
+    }
+
+    @Override
+    public String getOauth2RedirectUrl() {
+      return null;
+    }
+
+    @Override
+    public String getQrConnectRedirectUrl() {
       return null;
     }
 

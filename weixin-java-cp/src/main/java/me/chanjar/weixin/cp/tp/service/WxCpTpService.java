@@ -371,7 +371,9 @@ public interface WxCpTpService {
 
   /**
    * <pre>
-   * 获取访问用户身份
+   * 获取登录/访问用户身份
+   * 1、<a href="https://developer.work.weixin.qq.com/document/path/91121">网页授权登录对应的文档</a>
+   * 2、<a href="https://developer.work.weixin.qq.com/document/path/98179">企业微信web登录对应的文档</a>
    * </pre>
    *
    * @param code the code

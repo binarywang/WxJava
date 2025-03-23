@@ -327,4 +327,141 @@ public class ComplaintDetailResult implements Serializable {
    */
   @SerializedName("user_tag_list")
   private String[] userTagList;
+
+  /**
+   * <pre>
+   * 字段名：补充信息
+   * 是否必填：否
+   * 描述： 用在特定行业或场景下返回的补充信息
+   * </pre>
+   */
+  @SerializedName("additional_info")
+  private AdditionalInfo additionalInfo;
+
+  @Data
+  public static class AdditionalInfo implements Serializable {
+    private static final long serialVersionUID = 7917816070738944147L;
+
+    /**
+     * <pre>
+     * 字段名：补充信息类型
+     * 是否必填：否
+     * 描述： 补充信息类型
+     * 示例值：SHARE_POWER_TYPE: 充电宝投诉相关行业
+     * </pre>
+     */
+    @SerializedName("type")
+    private String type;
+
+    /**
+     * <pre>
+     * 字段名：充电宝投诉相关信息
+     * 是否必填：否
+     * 描述：当type为充电宝投诉相关时有值
+     * </pre>
+     */
+    @SerializedName("share_power_info")
+    private SharePowerInfo sharePowerInfo;
+
+    /**
+     * 充电宝投诉相关信息
+     */
+    @Data
+    public static class SharePowerInfo implements Serializable {
+      private static final long serialVersionUID = -2878382307459369354L;
+
+      /**
+       * <pre>
+       * 字段名：归还时间
+       * 是否必填：否
+       * 描述：遵循rfc3339标准格式，格式为yyyy-MM-DDTHH:mm:ss+TIMEZONE，
+       *      yyyy-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，
+       *      HH:mm:ss表示时分秒，
+       *      TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。
+       * 示例值：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日 13点29分35秒
+       * </pre>
+       */
+      @SerializedName("return_time")
+      private String returnTime;
+
+      /**
+       * <pre>
+       * 字段名：归还地点信息
+       * 是否必填：否
+       * 描述：  归还地点信息
+       * </pre>
+       */
+      @SerializedName("return_address_info")
+      private ReturnAddressInfo returnAddressInfo;
+
+      @Data
+      public static class ReturnAddressInfo implements Serializable {
+        private static final long serialVersionUID = -7649986542568217256L;
+
+        /**
+         * <pre>
+         * 字段名：归还地点
+         * 是否必填：否 string(256)
+         * 描述：归还地点
+         * </pre>
+         */
+        @SerializedName("return_address")
+        private String returnAddress;
+
+        /**
+         * <pre>
+         * 字段名：归还地点经度
+         * 是否必填：否 string(32)
+         * 描述：经度，字符串，范围为-180~180，负数表示西经。使用GCJ-02坐标系
+         * </pre>
+         */
+        @SerializedName("longitude")
+        private String longitude;
+
+        /**
+         * <pre>
+         * 字段名：归还地点纬度
+         * 是否必填：否 string(32)
+         * 描述：纬度，字符串，范围为-90~90，负数表示南纬。使用GCJ-02坐标系
+         * </pre>
+         */
+        @SerializedName("latitude")
+        private String latitude;
+      }
+
+      /**
+       * <pre>
+       * 字段名：是否归还同一柜机
+       * 是否必填：否
+       * 描述：用户声明是否将充电宝归还至与借取时同一柜机
+       * </pre>
+       */
+      @SerializedName("is_returned_to_same_machine")
+      private Boolean isReturnedToSameMachine;
+    }
+  }
+
+  /**
+   * <pre>
+   * 字段名：是否在平台协助中
+   * 是否必填：否
+   * 描述：标识当前投诉单是否正处在平台协助流程中。
+   * 注：在协助期间由微信支付客服为用户服务，期间商户向用户发送的留言用户不可见
+   * </pre>
+   */
+  @SerializedName("in_platform_service")
+  private Boolean inPlatformService;
+
+  /**
+   * <pre>
+   * 字段名：是否需即时服务用户
+   * 是否必填：否
+   * 描述：因用户诉求紧急度、用户界面差异等因素，部分投诉单建议商户更即时地响应用户诉求。
+   *      如此处标识为“是”，建议商户提升服务时效，给用户带来更好的体验
+   * </pre>
+   */
+  @SerializedName("need_immediate_service")
+  private Boolean needImmediateService;
+
+
 }

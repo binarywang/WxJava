@@ -25,9 +25,6 @@ public class WxCpChatModel implements Serializable {
   @SerializedName("action")
   private String action;
 
-  @SerializedName("send")
-  private String send;
-
   @SerializedName("from")
   private String from;
 

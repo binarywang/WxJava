@@ -254,8 +254,8 @@ public class WxMaIntracityServiceImpleTest {
       cargo.setCargoPrice(10000);
       cargo.setCargoWeight(1000);
       request.setCargo(cargo);
-      WxMaAddOrderResponse response = wxService.getIntracityService().preAddOrder(request);
-      logger.debug("查询运费返回 {}， 预估运费{}元", response, response.getFee() / 100.0);
+      WxMaPreAddOrderResponse response = wxService.getIntracityService().preAddOrder(request);
+      logger.debug("查询运费返回 {}， 预估运费{}元", response, response.getEstFee() / 100.0);
     }
     String wxOrderId = null;
     {

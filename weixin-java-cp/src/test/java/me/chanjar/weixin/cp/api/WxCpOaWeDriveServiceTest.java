@@ -56,19 +56,19 @@ public class WxCpOaWeDriveServiceTest {
     String fileId2 = "s.ww45d3e188865aca30.652091685u4h_f.652696024TU4P";
 
 
-    /**
+    /*
      * 获取分享链接
      */
     WxCpFileShare fileShare = cpService.getOaWeDriveService().fileShare(uId, fileId2);
     log.info("获取分享链接返回结果为：{}", fileShare.toJson());
 
-    /**
+    /*
      * 分享设置
      */
     WxCpBaseResp fileSetting = cpService.getOaWeDriveService().fileSetting(uId, fileId2, 2, 1);
     log.info("分享设置返回结果为：{}", fileSetting.toJson());
 
-    /**
+    /*
      * 删除指定人
      */
     WxCpFileAclDelRequest aclDelRequest = new WxCpFileAclDelRequest();
@@ -87,7 +87,7 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp aclDel = cpService.getOaWeDriveService().fileAclDel(aclDelRequest);
     log.info("删除指定人返回结果为：{}", aclDel.toJson());
 
-    /**
+    /*
      * 新增指定人
      */
     WxCpFileAclAddRequest fileAclAdd = new WxCpFileAclAddRequest();
@@ -105,25 +105,24 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp result = cpService.getOaWeDriveService().fileAclAdd(fileAclAdd);
     log.info("返回结果为：{}", result.toJson());
 
-    /**
+    /*
      * 删除文件
      */
     ArrayList<String> fileIds = Lists.newArrayList();
     fileIds.add(fileId);
-    WxCpBaseResp fileDelete = cpService.getOaWeDriveService().fileDelete(uId, fileIds);
+    WxCpBaseResp fileDelete = cpService.getOaWeDriveService().fileDelete(fileIds);
     log.info("删除文件数据为：{}", fileDelete.toJson());
 
-    /**
-     * 文件信息
+    /*
+      文件信息
      */
-    WxCpFileInfo fileInfo = cpService.getOaWeDriveService().fileInfo(uId, fileId);
+    WxCpFileInfo fileInfo = cpService.getOaWeDriveService().fileInfo(fileId);
     log.info("fileInfo数据为：{}", fileInfo.toJson());
 
-    /**
-     * 移动文件
+    /*
+      移动文件
      */
     WxCpFileMoveRequest fileMoveRequest = new WxCpFileMoveRequest();
-    fileMoveRequest.setUserId(uId);
     fileMoveRequest.setFatherId(spId);
     fileMoveRequest.setReplace(true);
     fileMoveRequest.setFileId(new String[]{fileId});
@@ -131,23 +130,22 @@ public class WxCpOaWeDriveServiceTest {
     WxCpFileMove fileMove = cpService.getOaWeDriveService().fileMove(fileMoveRequest);
     log.info("fileMove数据为：{}", fileMove.toJson());
 
-    /**
-     * 新建文件/微文档
+    /*
+      新建文件/微文档
      */
-    WxCpFileCreate fileCreate = cpService.getOaWeDriveService().fileCreate(uId, spId, spId, 3, "新建微文档1");
+    WxCpFileCreate fileCreate = cpService.getOaWeDriveService().fileCreate(spId, spId, 3, "新建微文档1");
     log.info("新建文件/微文档：{}", fileCreate.toJson());
 
-    /**
-     * 下载文件
+    /*
+      下载文件
      */
     WxCpFileDownload fileDownload = cpService.getOaWeDriveService().fileDownload(uId, fileId);
     log.info("下载文件为：{}", fileDownload.toJson());
 
-    /**
-     * 上传文件
+    /*
+      上传文件
      */
     WxCpFileUploadRequest fileUploadRequest = new WxCpFileUploadRequest();
-    fileUploadRequest.setUserId(uId);
     fileUploadRequest.setSpaceId(spId);
     fileUploadRequest.setFatherId(spId);
     fileUploadRequest.setFileName("第一个文件");
@@ -165,17 +163,16 @@ public class WxCpOaWeDriveServiceTest {
     WxCpFileUpload fileUpload = cpService.getOaWeDriveService().fileUpload(fileUploadRequest);
     log.info("上传文件为：{}", fileUpload.toJson());
 
-    /**
-     * 重命名文件
+    /*
+      重命名文件
      */
-    WxCpFileRename fileRename = cpService.getOaWeDriveService().fileRename(uId, fileUpload.getFileId(), "新的名字呢");
+    WxCpFileRename fileRename = cpService.getOaWeDriveService().fileRename(fileUpload.getFileId(), "新的名字呢");
     log.info("重命名文件：{}", fileRename.toJson());
 
-    /**
-     * 获取文件列表
+    /*
+      获取文件列表
      */
     WxCpFileListRequest fileListRequest = new WxCpFileListRequest();
-    fileListRequest.setUserId(uId);
     fileListRequest.setSpaceId(spId);
     fileListRequest.setFatherId(spId);
     fileListRequest.setSortType(1);
@@ -185,7 +182,7 @@ public class WxCpOaWeDriveServiceTest {
     WxCpFileList fileList = cpService.getOaWeDriveService().fileList(fileListRequest);
     log.info("获取文件列表为：{}", fileList.toJson());
 
-    /**
+    /*
      * 权限管理
      */
     WxCpSpaceSettingRequest spaceSettingRequest = new WxCpSpaceSettingRequest();
@@ -200,19 +197,19 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp spaceSetting = cpService.getOaWeDriveService().spaceSetting(spaceSettingRequest);
     log.info("权限管理信息为：{}", spaceSetting.toJson());
 
-    /**
+    /*
      * 获取邀请链接
      */
     WxCpSpaceShare spaceShare = cpService.getOaWeDriveService().spaceShare(uId, spId);
     log.info("获取邀请链接信息为：{}", spaceShare.toJson());
 
-    /**
+    /*
      * 获取空间信息
      */
     WxCpSpaceInfo data = cpService.getOaWeDriveService().spaceInfo(uId, spId);
     log.info("获取空间信息为：{}", data.toJson());
 
-    /**
+    /*
      * 移除成员/部门
      */
     WxCpSpaceAclDelRequest spaceAclDelRequest = new WxCpSpaceAclDelRequest();
@@ -231,7 +228,7 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp spaceAclDel = cpService.getOaWeDriveService().spaceAclDel(spaceAclDelRequest);
     log.info("移除成员/部门，返回数据为：{}", spaceAclDel.toJson());
 
-    /**
+    /*
      * 添加成员/部门
      * https://developer.work.weixin.qq.com/document/path/93656
      */
@@ -252,13 +249,13 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp wxCpBaseResp = cpService.getOaWeDriveService().spaceAclAdd(spaceAclAddRequest);
     log.info("添加成员/部门，返回数据为：{}", wxCpBaseResp.toJson());
 
-    /**
+    /*
      * 获取空间信息
      */
     WxCpSpaceInfo spaceInfo = cpService.getOaWeDriveService().spaceInfo("WangKai", "s.ww45d3e188865aca30.652091685u4h");
     log.info("获取空间信息，spaceInfo信息为：{}", spaceInfo.toJson());
 
-    /**
+    /*
      * 新建空间
      */
     WxCpSpaceCreateRequest request = new WxCpSpaceCreateRequest();
@@ -269,7 +266,7 @@ public class WxCpOaWeDriveServiceTest {
     log.info("空间id为：{}", spaceCreateData.getSpaceId()); //
     log.info(spaceCreateData.toJson());
 
-    /**
+    /*
      * 重命名空间
      */
     WxCpSpaceRenameRequest wxCpSpaceRenameRequest = new WxCpSpaceRenameRequest();
@@ -279,7 +276,7 @@ public class WxCpOaWeDriveServiceTest {
     WxCpBaseResp baseResp = cpService.getOaWeDriveService().spaceRename(wxCpSpaceRenameRequest);
     log.info("重命名成功：{}", baseResp.toJson());
 
-    /**
+    /*
      * 解散空间
      */
     WxCpBaseResp thisResp = cpService.getOaWeDriveService().spaceDismiss("WangKai", spaceCreateData.getSpaceId());

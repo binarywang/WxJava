@@ -173,7 +173,7 @@ public class WxMaMessageRouter {
     return this.route(wxMessage, new HashMap<>(2));
   }
 
-  private boolean isMsgDuplicated(WxMaMessage wxMessage) {
+  protected boolean isMsgDuplicated(WxMaMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
     if (wxMessage.getMsgId() == null) {
       messageId.append(wxMessage.getCreateTime())

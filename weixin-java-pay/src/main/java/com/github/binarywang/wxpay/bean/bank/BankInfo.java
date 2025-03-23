@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * 银行信息
  *
@@ -12,7 +14,10 @@ import lombok.Setter;
  * created on  2022/5/12
  **/
 @Data
-public class BankInfo {
+public class BankInfo implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+
   /**
    * 银行别名
    */

@@ -45,11 +45,11 @@ public interface WxChannelVipService {
    *
    * @param needPhoneNumber the need phone number
    * @param pageNum         the page num
-   * @param PageSize        the page size
+   * @param pageSize        the page size
    * @return the vip list
    * @throws WxErrorException the wx error exception
    */
-  VipListResponse getVipList(Boolean needPhoneNumber, Integer pageNum, Integer PageSize) throws WxErrorException;
+  VipListResponse getVipList(Boolean needPhoneNumber, Integer pageNum, Integer pageSize) throws WxErrorException;
 
   /**
    * 获取用户积分

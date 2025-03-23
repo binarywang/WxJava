@@ -6,14 +6,13 @@ import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import com.google.inject.Binder;
 import com.google.inject.Module;
 import com.thoughtworks.xstream.XStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.xml.XStreamInitializer;
 import org.apache.http.HttpRequestInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * The type Api test module.
@@ -39,7 +38,22 @@ public class CustomizedApiTestModule implements Module {
       config.setHttpClientBuilderCustomizer((builder) -> {
         builder.addInterceptorLast((HttpRequestInterceptor) (r, c) -> System.out.println("--------> HttpRequestInterceptor ..."));
       });
+      try (FileInputStream fis = new FileInputStream(config.getPrivateKeyPath());
+           InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+           BufferedReader reader = new BufferedReader(isr)) {
 
+        StringBuilder stringBuilder = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+          stringBuilder.append(line);
+          stringBuilder.append(System.lineSeparator());
+        }
+
+        String fileContent = stringBuilder.toString();
+        config.setPrivateKeyString(fileContent);
+        System.out.println(fileContent);
+
+      }
       WxPayService wxService = new WxPayServiceImpl();
       wxService.setConfig(config);
 

@@ -54,7 +54,21 @@ public class WxOpenMaIcpServiceImpl implements WxOpenMaIcpService {
    */
   @Override
   public WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask() throws WxErrorException {
-    String response = wxMaService.post(CREATE_ICP_VERIFY_TASK, "");
+    return createIcpVerifyTask(false);
+  }
+
+  /**
+   * 发起小程序管理员人脸核身
+   *
+   * @param alongWithAuth 小程序认证及备案二合一场景，填 true，否则为小程序备案场景。默认值为 false。
+   * @return 人脸核验任务结果
+   * @throws WxErrorException e
+   */
+  @Override
+  public WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask(boolean alongWithAuth) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("along_with_auth", alongWithAuth);
+    String response = wxMaService.post(CREATE_ICP_VERIFY_TASK, params);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenIcpCreateIcpVerifyTaskResult.class);
   }
 
@@ -211,5 +225,33 @@ public class WxOpenMaIcpServiceImpl implements WxOpenMaIcpService {
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
     }
+  }
+
+  /**
+   * 申请小程序认证及备案
+   *
+   * @param param 参数
+   * @return r
+   * @throws WxErrorException e
+   */
+  @Override
+  public WxOpenSubmitAuthAndIcpResult submitAuthAndIcp(WxOpenSubmitAuthAndIcpParam param) throws WxErrorException {
+    String response = wxMaService.post(SUBMIT_AUTH_AND_ICP, param);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenSubmitAuthAndIcpResult.class);
+  }
+
+  /**
+   * 查询小程序认证及备案进度
+   *
+   * @param procedureId 小程序认证及备案任务流程id
+   * @return r
+   * @throws WxErrorException e
+   */
+  @Override
+  public WxOpenQueryAuthAndIcpResult queryAuthAndIcp(String procedureId) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("procedure_id", procedureId);
+    String response = wxMaService.post(QUERY_AUTH_AND_ICP, params);
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenQueryAuthAndIcpResult.class);
   }
 }

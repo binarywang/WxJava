@@ -205,9 +205,10 @@ public class WxMaIntracityServiceImpl implements WxMaIntracityService {
   }
 
   @Override
-  public WxMaAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request) throws WxErrorException {
+  public WxMaPreAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request)
+      throws WxErrorException {
     String response = this.wxMaService.postWithSignature(Intracity.PRE_ADD_ORDER, request);
-    return gson.fromJson(response, WxMaAddOrderResponse.class);
+    return gson.fromJson(response, WxMaPreAddOrderResponse.class);
   }
 
   @Override

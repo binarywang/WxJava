@@ -57,7 +57,7 @@ public interface WxMaIntracityService {
   WxMaGetPayModeResponse getPayMode() throws WxErrorException;
 
   /** 查询运费 */
-  WxMaAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request) throws WxErrorException;
+  WxMaPreAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request) throws WxErrorException;
 
   /** 创建配送单 */
   WxMaAddOrderResponse addOrder(WxMaAddOrderRequest order) throws WxErrorException;

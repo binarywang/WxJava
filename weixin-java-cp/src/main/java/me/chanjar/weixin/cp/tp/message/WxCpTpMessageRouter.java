@@ -278,7 +278,7 @@ public class WxCpTpMessageRouter {
     return this.route(wxMessage, new HashMap<>(2));
   }
 
-  private boolean isMsgDuplicated(final String suiteId, WxCpTpXmlMessage wxMessage) {
+  protected boolean isMsgDuplicated(final String suiteId, WxCpTpXmlMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
     messageId.append(wxMessage.getToUserName());
     if (wxMessage.getInfoType() != null) {
@@ -306,7 +306,8 @@ public class WxCpTpMessageRouter {
           .append("-").append(wxMessage.getCreateTime())
           .append("-").append(wxMessage.getFromUserName())
           .append("-").append(StringUtils.trimToEmpty(wxMessage.getEvent()))
-          .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()));
+          .append("-").append(StringUtils.trimToEmpty(wxMessage.getEventKey()))
+          .append("-").append(StringUtils.trimToEmpty(wxMessage.getExternalUserID()));
       }
     }
 

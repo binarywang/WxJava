@@ -20,7 +20,13 @@ public enum SpuEditStatus {
   /** 4 审核成功 */
   SUCCESS(4, "审核成功"),
   /** 5 商品信息写入中 */
-  WRITING(5, "商品信息写入中");
+  WRITING(5, "商品信息写入中"),
+  /** 7	商品异步提交，上传中（处于该状态的商品调用上架商品接口会返回10020067） */
+  ASYNC_WRITING(7, "商品异步提交，上传中"),
+  /** 8	商品异步提交，上传失败（请重新提交） */
+  ASYNC_FAIL(8, "商品异步提交，上传失败"),
+
+  ;
 
   private final int status;
   private final String desc;

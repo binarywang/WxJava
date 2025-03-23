@@ -93,18 +93,18 @@ public class OrderPriceInfo implements Serializable {
    * merchant_receieve_price=original_order_price-discounted_price-deduction_price-change_down_price
    */
   @JsonProperty("merchant_receieve_price")
-  private Integer merchant_receive_price;
+  private Integer merchantReceivePrice;
 
   /**
    * 商家优惠金额，单位为分，含义同discounted_price，必填
    */
   @JsonProperty("merchant_discounted_price")
-  private Integer merchant_discounted_price;
+  private Integer merchantDiscountedPrice;
 
   /**
    * 达人优惠金额，单位为分
    */
   @JsonProperty("finder_discounted_price")
-  private Integer finder_discounted_price;
+  private Integer finderDiscountedPrice;
 
 }
