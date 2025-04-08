@@ -626,7 +626,7 @@ public class WxMaApiUrlConstants {
     String GET_DELIVERY_LIST_URL =
         "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/get_delivery_list";
 
-    /** 获取运力id列表get_delivery_list 商户使用此接口获取所有运力id的列表 */
+    /** 物流服务-查询组件-更新物品信息接口 update_waybill_goods 更新物品信息 */
     String UPDATE_WAYBILL_GOODS_URL =
         "https://api.weixin.qq.com/cgi-bin/express/delivery/open_msg/update_waybill_goods";
 

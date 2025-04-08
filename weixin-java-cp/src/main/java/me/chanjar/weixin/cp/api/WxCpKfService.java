@@ -77,6 +77,19 @@ public interface WxCpKfService {
 
   /**
    * 接待人员管理
+   * 添加指定客服账号的接待人员，每个客服账号目前最多可添加2000个接待人员，20个部门。
+   * userid_list和department_id_list至少需要填其中一个
+   *
+   * @param openKfid   客服帐号ID
+   * @param userIdList 接待人员userid列表。第三方应用填密文userid，即open_userid 可填充个数：1 ~ 100。超过100个需分批调用。
+   * @param departmentIdList 接待人员部门id列表 可填充个数：0 ~ 20。
+   * @return 添加客服账号结果 wx cp kf servicer op resp
+   * @throws WxErrorException 异常
+   */
+  WxCpKfServicerOpResp addServicer(String openKfid, List<String> userIdList,List<String> departmentIdList) throws WxErrorException;
+
+  /**
+   * 接待人员管理
    * 从客服帐号删除接待人员
    *
    * @param openKfid   客服帐号ID
@@ -85,6 +98,19 @@ public interface WxCpKfService {
    * @throws WxErrorException 异常
    */
   WxCpKfServicerOpResp delServicer(String openKfid, List<String> userIdList) throws WxErrorException;
+
+  /**
+   * 接待人员管理
+   * 从客服帐号删除接待人员
+   * userid_list和department_id_list至少需要填其中一个
+   *
+   * @param openKfid   客服帐号ID
+   * @param userIdList 接待人员userid列表。第三方应用填密文userid，即open_userid 可填充个数：1 ~ 100。超过100个需分批调用。
+   * @param departmentIdList 接待人员部门id列表 可填充个数：0 ~ 100。超过100个需分批调用。
+   * @return 删除客服账号结果 wx cp kf servicer op resp
+   * @throws WxErrorException 异常
+   */
+  WxCpKfServicerOpResp delServicer(String openKfid, List<String> userIdList, List<String> departmentIdList) throws WxErrorException;
 
   /**
    * 接待人员管理

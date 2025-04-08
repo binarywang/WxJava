@@ -59,7 +59,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    * 设置为负数是使用系统默认设置(非3000ms的默认值,而是httpClient的默认设置).
    * </p>
    */
-  private int connectionRequestTimeout = -1;
+  private int connectionRequestTimeout = 3000;
 
   /**
    * 建立链接的超时时间,默认为5000ms.由于是在链接池获取链接,此设置应该并不起什么作用

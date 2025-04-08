@@ -24,7 +24,7 @@ public class PublicCertificateVerifier implements Verifier{
 
     @Override
     public boolean verify(String serialNumber, byte[] message, String signature) {
-        if (!serialNumber.contains("PUB_KEY_ID")) {
+        if (!serialNumber.contains("PUB_KEY_ID") && this.certificateVerifier != null) {
             return this.certificateVerifier.verify(serialNumber, message, signature);
         }
         try {

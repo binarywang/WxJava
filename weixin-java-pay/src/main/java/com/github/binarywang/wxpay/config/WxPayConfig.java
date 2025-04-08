@@ -347,10 +347,14 @@ public class WxPayConfig {
   }
 
   private Verifier getVerifier(PrivateKey merchantPrivateKey, WxPayHttpProxy wxPayHttpProxy, PublicKey publicKey) {
-    Verifier certificatesVerifier = new AutoUpdateCertificatesVerifier(
-      new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-      this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
-      this.getPayBaseUrl(), wxPayHttpProxy);
+    Verifier certificatesVerifier = null;
+    // 如果配置了平台证书，则初始化验证器以备v2版本接口验签（公钥灰度实现）
+    if (this.getPrivateCertPath() != null && this.getPrivateKeyPath() != null) {
+      certificatesVerifier = new AutoUpdateCertificatesVerifier(
+        new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+        this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(),
+        this.getPayBaseUrl(), wxPayHttpProxy);
+    }
     if (publicKey != null) {
       Verifier publicCertificatesVerifier = new PublicCertificateVerifier(publicKey, publicKeyId);
       publicCertificatesVerifier.setOtherVerifier(certificatesVerifier);

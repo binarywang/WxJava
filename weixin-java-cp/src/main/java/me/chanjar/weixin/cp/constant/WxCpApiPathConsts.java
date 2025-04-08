@@ -130,6 +130,10 @@ public interface WxCpApiPathConsts {
      * The constant WORKBENCH_DATA_SET.
      */
     String WORKBENCH_DATA_SET = "/cgi-bin/agent/set_workbench_data";
+    /**
+     * The constant WORKBENCH_BATCH_DATA_SET.
+     */
+    String WORKBENCH_BATCH_DATA_SET = "/cgi-bin/agent/batch_set_workbench_data";
   }
 
   /**

@@ -15,7 +15,7 @@ public class WxMpMapConfigImpl extends WxMpDefaultConfigImpl {
 
   private static final long serialVersionUID = 5311395137835650104L;
 
-  private static final ConcurrentHashMap<String, String> CONCURRENT_HASH_MAP = new ConcurrentHashMap<>(1);
+  private final ConcurrentHashMap<String, String> CONCURRENT_HASH_MAP = new ConcurrentHashMap<>(1);
 
   private static final String MAP_KEY = "access_token";
 
