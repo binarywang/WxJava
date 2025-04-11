@@ -251,7 +251,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public WxPayRefundV3Result refundV3(WxPayRefundV3Request request) throws WxPayException {
     String url = String.format("%s/v3/refund/domestic/refunds", this.getPayBaseUrl());
-    String response = this.postV3(url, GSON.toJson(request));
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayRefundV3Result.class);
   }
 
@@ -294,21 +294,21 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public WxPayRefundQueryV3Result refundQueryV3(String outRefundNo) throws WxPayException {
     String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), outRefundNo);
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }
 
   @Override
   public WxPayRefundQueryV3Result refundQueryV3(WxPayRefundQueryV3Request request) throws WxPayException {
     String url = String.format("%s/v3/refund/domestic/refunds/%s", this.getPayBaseUrl(), request.getOutRefundNo());
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }
 
   @Override
   public WxPayRefundQueryV3Result refundPartnerQueryV3(WxPayRefundQueryV3Request request) throws WxPayException {
     String url = String.format("%s/v3/refund/domestic/refunds/%s?sub_mchid=%s", this.getPayBaseUrl(), request.getOutRefundNo(), request.getSubMchid());
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, WxPayRefundQueryV3Result.class);
   }
 
@@ -523,7 +523,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       url = String.format("%s/v3/pay/transactions/id/%s", this.getPayBaseUrl(), request.getTransactionId());
     }
     String query = String.format("?mchid=%s", request.getMchid());
-    String response = this.getV3(url + query);
+    String response = this.getV3WithWechatPaySerial(url + query);
     return GSON.fromJson(response, WxPayOrderQueryV3Result.class);
   }
 
@@ -548,14 +548,14 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       url = String.format("%s/v3/pay/partner/transactions/id/%s", this.getPayBaseUrl(), request.getTransactionId());
     }
     String query = String.format("?sp_mchid=%s&sub_mchid=%s", request.getSpMchId(), request.getSubMchId());
-    String response = this.getV3(url + query);
+    String response = this.getV3WithWechatPaySerial(url + query);
     return GSON.fromJson(response, WxPayPartnerOrderQueryV3Result.class);
   }
 
   @Override
   public CombineQueryResult queryCombine(String combineOutTradeNo) throws WxPayException {
     String url = String.format("%s/v3/combine-transactions/out-trade-no/%s", this.getPayBaseUrl(), combineOutTradeNo);
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, CombineQueryResult.class);
   }
 
@@ -609,7 +609,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setMchid(this.getConfig().getMchId());
     }
     String url = String.format("%s/v3/pay/transactions/out-trade-no/%s/close", this.getPayBaseUrl(), request.getOutTradeNo());
-    this.postV3(url, GSON.toJson(request));
+    this.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 
   @Override
@@ -621,13 +621,13 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setSubMchId(this.getConfig().getSubMchId());
     }
     String url = String.format("%s/v3/pay/partner/transactions/out-trade-no/%s/close", this.getPayBaseUrl(), request.getOutTradeNo());
-    this.postV3(url, GSON.toJson(request));
+    this.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 
   @Override
   public void closeCombine(CombineCloseRequest request) throws WxPayException {
     String url = String.format("%s/v3/combine-transactions/out-trade-no/%s/close", this.getPayBaseUrl(), request.getCombineOutTradeNo());
-    this.postV3(url, GSON.toJson(request));
+    this.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 
   @Override
@@ -771,7 +771,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String url = this.getPayBaseUrl() + tradeType.getBasePartnerUrl();
-    String response = this.postV3(url, GSON.toJson(request));
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
 
@@ -788,7 +788,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
-    String response = this.postV3(url, GSON.toJson(request));
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
 
@@ -801,7 +801,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setCombineMchid(this.getConfig().getMchId());
     }
     String url = this.getPayBaseUrl() + tradeType.getCombineUrl();
-    String response = this.postV3(url, GSON.toJson(request));
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, CombineTransactionsResult.class);
   }
 
@@ -1114,7 +1114,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     } else {
       url = String.format("%s/v3/bill/tradebill?bill_date=%s&bill_type=%s&tar_type=%s", this.getPayBaseUrl(), request.getBillDate(), request.getBillType(), request.getTarType());
     }
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, WxPayApplyBillV3Result.class);
   }
 
@@ -1126,7 +1126,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     } else {
       url = String.format("%s/v3/bill/fundflowbill?bill_date=%s&account_type=%s&tar_type=%s", this.getPayBaseUrl(), request.getBillDate(), request.getAccountType(), request.getTarType());
     }
-    String response = this.getV3(url);
+    String response = this.getV3WithWechatPaySerial(url);
     return GSON.fromJson(response, WxPayApplyBillV3Result.class);
   }
 
@@ -1155,7 +1155,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setMchid(this.getConfig().getMchId());
     }
     String url = String.format("%s/v3/pay/transactions/codepay", this.getPayBaseUrl());
-    String body = this.postV3(url, GSON.toJson(request));
+    String body = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(body, WxPayCodepayResult.class);
   }
 
@@ -1181,7 +1181,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
     // 拼接参数请求路径并发送
     String url = String.format("%s/v3/pay/transactions/out-trade-no/%s/reverse", this.getPayBaseUrl(), request.getOutTradeNo());
-    String response = this.postV3(url, GSON.toJson(request));
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayOrderReverseV3Result.class);
   }
 
