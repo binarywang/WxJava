@@ -243,6 +243,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String getV3(String url) throws WxPayException {
+    if (this.getConfig().isStrictlyNeedWechatPaySerial()) {
+      return getV3WithWechatPaySerial(url);
+    }
     HttpGet httpGet = new HttpGet(url);
     httpGet.addHeader(ACCEPT, APPLICATION_JSON);
     httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON);
