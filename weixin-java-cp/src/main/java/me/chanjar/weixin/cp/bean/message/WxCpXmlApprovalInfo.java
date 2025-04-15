@@ -190,7 +190,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
     /**
      * 分支审批人userid
      */
-    @XStreamAlias("ItemUserid")
+    @XStreamAlias("ItemUserId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String itemUserId;
 
