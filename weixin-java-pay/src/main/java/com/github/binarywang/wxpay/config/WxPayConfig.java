@@ -300,13 +300,13 @@ public class WxPayConfig {
       this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
     }
     try {
-      if (merchantPrivateKey == null) {
+      if (merchantPrivateKey == null && StringUtils.isNotBlank(this.getPrivateKeyPath())) {
         try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
           this.privateKeyContent, "privateKeyPath")) {
           merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
         }
       }
-      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo())) {
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && StringUtils.isNotBlank(this.getPrivateCertPath())) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath")) {
           certificate = PemUtils.loadCertificate(certInputStream);
