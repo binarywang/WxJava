@@ -403,7 +403,7 @@ public class WxCpTpXmlMessage implements Serializable {
    * The Agent id.
    */
   @XStreamAlias("AgentID")
-  protected String agentID;
+  protected Integer agentID;
 
   /**
    * The Pic url.
