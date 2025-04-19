@@ -14,7 +14,7 @@
   <description>WxJava 各个模块的 Solon Plugin</description>
 
   <properties>
-    <solon.version>3.0.1</solon.version>
+    <solon.version>3.2.0</solon.version>
   </properties>
 
   <modules>
