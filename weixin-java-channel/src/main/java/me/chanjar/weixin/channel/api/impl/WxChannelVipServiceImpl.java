@@ -18,51 +18,51 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Vip.*;
 
 @Slf4j
 public class WxChannelVipServiceImpl implements WxChannelVipService {
-  private BaseWxChannelServiceImpl vipHttpService;
+  private BaseWxChannelServiceImpl shopService;
 
-  public WxChannelVipServiceImpl(BaseWxChannelServiceImpl vipHttpService) {
-    this.vipHttpService = vipHttpService;
+  public WxChannelVipServiceImpl(BaseWxChannelServiceImpl shopService) {
+    this.shopService = shopService;
   }
 
   @Override
   public VipInfoResponse getVipInfo(String openId, Boolean needPhoneNumber) throws WxErrorException {
     VipInfoParam param = new VipInfoParam(openId, needPhoneNumber);
-    String respJson = vipHttpService.post(VIP_USER_INFO_URL, param);
+    String respJson = shopService.post(VIP_USER_INFO_URL, param);
     return ResponseUtils.decode(respJson, VipInfoResponse.class);
   }
 
   @Override
-  public VipListResponse getVipList(Boolean needPhoneNumber, Integer pageNum, Integer PageSize) throws WxErrorException {
-    VipListParam param = new VipListParam(needPhoneNumber, pageNum, PageSize);
-    String respJson = vipHttpService.post(VIP_USER_LIST_URL, param);
+  public VipListResponse getVipList(Boolean needPhoneNumber, Integer pageNum, Integer pageSize) throws WxErrorException {
+    VipListParam param = new VipListParam(needPhoneNumber, pageNum, pageSize);
+    String respJson = shopService.post(VIP_USER_LIST_URL, param);
     return ResponseUtils.decode(respJson, VipListResponse.class);
   }
 
   @Override
   public VipScoreResponse getVipScore(String openId) throws WxErrorException {
-    VipParam param = new VipParam(openId);
-    String respJson = vipHttpService.post(VIP_SCORE_URL, param);
+    VipOpenIdParam param = new VipOpenIdParam(openId);
+    String respJson = shopService.post(VIP_SCORE_URL, param);
     return ResponseUtils.decode(respJson, VipScoreResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse increaseVipScore(String openId, String score, String remark, String requestId) throws WxErrorException {
     VipScoreParam param = new VipScoreParam(openId, score, remark, requestId);
-    String respJson = vipHttpService.post(SCORE_INCREASE_URL, param);
+    String respJson = shopService.post(SCORE_INCREASE_URL, param);
     return ResponseUtils.decode(respJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse decreaseVipScore(String openId, String score, String remark, String requestId) throws WxErrorException {
     VipScoreParam param = new VipScoreParam(openId, score, remark, requestId);
-    String respJson = vipHttpService.post(SCORE_DECREASE_URL, param);
+    String respJson = shopService.post(SCORE_DECREASE_URL, param);
     return ResponseUtils.decode(respJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse updateVipGrade(String openId, Integer score) throws WxErrorException {
     VipGradeParam param = new VipGradeParam(openId, score);
-    String respJson = vipHttpService.post(GRADE_UPDATE_URL, param);
+    String respJson = shopService.post(GRADE_UPDATE_URL, param);
     return ResponseUtils.decode(respJson, WxChannelBaseResponse.class);
   }
 }

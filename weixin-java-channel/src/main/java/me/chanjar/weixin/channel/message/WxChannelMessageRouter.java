@@ -121,6 +121,7 @@ public class WxChannelMessageRouter {
     final Map<String, Object> context, final WxChannelService service, final WxSessionManager sessionManager) {
     // 如果是重复消息，那么就不做处理
     if (isMsgDuplicated(message)) {
+      log.info("收到重复消息，{}", content);
       return null;
     }
 
@@ -178,7 +179,7 @@ public class WxChannelMessageRouter {
    * @param wxMessage 消息
    * @return 是否重复
    */
-  private boolean isMsgDuplicated(WxChannelMessage wxMessage) {
+  protected boolean isMsgDuplicated(WxChannelMessage wxMessage) {
     String messageId = this.generateMessageId(wxMessage);
     return this.messageDuplicateChecker.isDuplicate(messageId);
   }
@@ -188,7 +189,7 @@ public class WxChannelMessageRouter {
    *
    * @return 消息id
    */
-  private String generateMessageId(WxChannelMessage wxMessage) {
+  protected String generateMessageId(WxChannelMessage wxMessage) {
     StringBuilder sb = new StringBuilder();
     if (wxMessage.getMsgId() == null) {
       sb.append(wxMessage.getCreateTime())
@@ -211,10 +212,10 @@ public class WxChannelMessageRouter {
    *
    * @param sessionManager session管理器
    * @param message 消息
-   * @param sync 是否同步 打印log用
+   * @param async 是否异步 打印log用
    */
-  private void sessionEndAccess(WxSessionManager sessionManager, WxChannelMessage message, boolean sync) {
-    log.debug("End session access: async={}, sessionId={}", sync, message.getFromUser());
+  private void sessionEndAccess(WxSessionManager sessionManager, WxChannelMessage message, boolean async) {
+    log.debug("End session access: async={}, sessionId={}", async, message.getFromUser());
     InternalSession session = ((InternalSessionManager) sessionManager).findSession(message.getFromUser());
     if (session != null) {
       session.endAccess();

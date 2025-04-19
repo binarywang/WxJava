@@ -1,9 +1,10 @@
 package me.chanjar.weixin.cp.bean.message;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,152 +15,161 @@ import java.util.List;
 public class TemplateCardMessage implements Serializable {
   private static final long serialVersionUID = 8833792280163704239L;
 
-  @JsonProperty("userids")
+  @SerializedName("userids")
   private List<String> userids;
-  @JsonProperty("partyids")
+  @SerializedName("partyids")
   private List<Integer> partyids;
-  @JsonProperty("tagids")
+  @SerializedName("tagids")
   private List<Integer> tagids;
-  @JsonProperty("atall")
+  @SerializedName("atall")
   private Integer atall;
-  @JsonProperty("agentid")
+  @SerializedName("agentid")
   private Integer agentid;
-  @JsonProperty("response_code")
+  @SerializedName("response_code")
   private String responseCode;
-  @JsonProperty("enable_id_trans")
+  @SerializedName("enable_id_trans")
   private Integer enableIdTrans;
-  @JsonProperty("template_card")
+  @SerializedName("template_card")
   private TemplateCardDTO templateCard;
+
+  /**
+   * To json string.
+   *
+   * @return the string
+   */
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
 
   @NoArgsConstructor
   @Data
   public static class TemplateCardDTO {
-    @JsonProperty("card_type")
+    @SerializedName("card_type")
     private String cardType;
-    @JsonProperty("source")
+    @SerializedName("source")
     private SourceDTO source;
-    @JsonProperty("main_title")
+    @SerializedName("main_title")
     private MainTitleDTO mainTitle;
-    @JsonProperty("select_list")
+    @SerializedName("select_list")
     private List<SelectListDTO> selectList;
-    @JsonProperty("submit_button")
+    @SerializedName("submit_button")
     private SubmitButtonDTO submitButton;
-    @JsonProperty("replace_text")
+    @SerializedName("replace_text")
     private String replaceText;
 
-    @JsonProperty("checkbox")
+    @SerializedName("checkbox")
     private CheckboxDTO checkbox;
 
 
-    @JsonProperty("action_menu")
+    @SerializedName("action_menu")
     private ActionMenuDTO actionMenu;
-    @JsonProperty("quote_area")
+    @SerializedName("quote_area")
     private QuoteAreaDTO quoteArea;
-    @JsonProperty("sub_title_text")
+    @SerializedName("sub_title_text")
     private String subTitleText;
-    @JsonProperty("horizontal_content_list")
+    @SerializedName("horizontal_content_list")
     private List<HorizontalContentListDTO> horizontalContentList;
-    @JsonProperty("card_action")
+    @SerializedName("card_action")
     private CardActionDTO cardAction;
-    @JsonProperty("button_selection")
+    @SerializedName("button_selection")
     private ButtonSelectionDTO buttonSelection;
-    @JsonProperty("button_list")
+    @SerializedName("button_list")
     private List<ButtonListDTO> buttonList;
 
-    @JsonProperty("image_text_area")
+    @SerializedName("image_text_area")
     private ImageTextAreaDTO imageTextArea;
-    @JsonProperty("card_image")
+    @SerializedName("card_image")
     private CardImageDTO cardImage;
-    @JsonProperty("vertical_content_list")
+    @SerializedName("vertical_content_list")
     private List<MainTitleDTO> verticalContentList;
-    @JsonProperty("jump_list")
+    @SerializedName("jump_list")
     private List<JumpListDTO> jumpList;
 
 
     @NoArgsConstructor
     @Data
     public static class SourceDTO {
-      @JsonProperty("icon_url")
+      @SerializedName("icon_url")
       private String iconUrl;
-      @JsonProperty("desc")
+      @SerializedName("desc")
       private String desc;
-      @JsonProperty("desc_color")
+      @SerializedName("desc_color")
       private Integer descColor;
     }
 
     @NoArgsConstructor
     @Data
     public static class ActionMenuDTO {
-      @JsonProperty("desc")
+      @SerializedName("desc")
       private String desc;
-      @JsonProperty("action_list")
+      @SerializedName("action_list")
       private List<SubmitButtonDTO> actionList;
     }
 
     @NoArgsConstructor
     @Data
     public static class QuoteAreaDTO {
-      @JsonProperty("type")
+      @SerializedName("type")
       private Integer type;
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("quote_text")
+      @SerializedName("quote_text")
       private String quoteText;
     }
 
     @NoArgsConstructor
     @Data
     public static class CardActionDTO {
-      @JsonProperty("type")
+      @SerializedName("type")
       private Integer type;
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("appid")
+      @SerializedName("appid")
       private String appid;
-      @JsonProperty("pagepath")
+      @SerializedName("pagepath")
       private String pagepath;
     }
 
     @NoArgsConstructor
     @Data
     public static class ButtonSelectionDTO {
-      @JsonProperty("question_key")
+      @SerializedName("question_key")
       private String questionKey;
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("option_list")
+      @SerializedName("option_list")
       private List<SelectListDTO.OptionListDTO> optionList;
-      @JsonProperty("selected_id")
+      @SerializedName("selected_id")
       private String selectedId;
     }
 
     @NoArgsConstructor
     @Data
     public static class HorizontalContentListDTO {
-      @JsonProperty("keyname")
+      @SerializedName("keyname")
       private String keyname;
-      @JsonProperty("value")
+      @SerializedName("value")
       private String value;
-      @JsonProperty("type")
+      @SerializedName("type")
       private Integer type;
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("media_id")
+      @SerializedName("media_id")
       private String mediaId;
-      @JsonProperty("userid")
+      @SerializedName("userid")
       private String userid;
     }
 
     @NoArgsConstructor
     @Data
     public static class ButtonListDTO {
-      @JsonProperty("text")
+      @SerializedName("text")
       private String text;
-      @JsonProperty("style")
+      @SerializedName("style")
       private Integer style;
-      @JsonProperty("key")
+      @SerializedName("key")
       private String key;
     }
 
@@ -167,23 +177,23 @@ public class TemplateCardMessage implements Serializable {
     @NoArgsConstructor
     @Data
     public static class CheckboxDTO {
-      @JsonProperty("question_key")
+      @SerializedName("question_key")
       private String questionKey;
-      @JsonProperty("option_list")
+      @SerializedName("option_list")
       private List<OptionListDTO> optionList;
-      @JsonProperty("disable")
+      @SerializedName("disable")
       private Boolean disable;
-      @JsonProperty("mode")
+      @SerializedName("mode")
       private Integer mode;
 
       @NoArgsConstructor
       @Data
       public static class OptionListDTO {
-        @JsonProperty("id")
+        @SerializedName("id")
         private String id;
-        @JsonProperty("text")
+        @SerializedName("text")
         private String text;
-        @JsonProperty("is_checked")
+        @SerializedName("is_checked")
         private Boolean isChecked;
       }
 
@@ -192,41 +202,41 @@ public class TemplateCardMessage implements Serializable {
     @NoArgsConstructor
     @Data
     public static class MainTitleDTO {
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("desc")
+      @SerializedName("desc")
       private String desc;
     }
 
     @NoArgsConstructor
     @Data
     public static class SubmitButtonDTO {
-      @JsonProperty("text")
+      @SerializedName("text")
       private String text;
-      @JsonProperty("key")
+      @SerializedName("key")
       private String key;
     }
 
     @NoArgsConstructor
     @Data
     public static class SelectListDTO {
-      @JsonProperty("question_key")
+      @SerializedName("question_key")
       private String questionKey;
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("selected_id")
+      @SerializedName("selected_id")
       private String selectedId;
-      @JsonProperty("disable")
+      @SerializedName("disable")
       private Boolean disable;
-      @JsonProperty("option_list")
+      @SerializedName("option_list")
       private List<OptionListDTO> optionList;
 
       @NoArgsConstructor
       @Data
       public static class OptionListDTO {
-        @JsonProperty("id")
+        @SerializedName("id")
         private String id;
-        @JsonProperty("text")
+        @SerializedName("text")
         private String text;
       }
     }
@@ -234,39 +244,39 @@ public class TemplateCardMessage implements Serializable {
     @NoArgsConstructor
     @Data
     public static class ImageTextAreaDTO {
-      @JsonProperty("type")
+      @SerializedName("type")
       private Integer type;
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("desc")
+      @SerializedName("desc")
       private String desc;
-      @JsonProperty("image_url")
+      @SerializedName("image_url")
       private String imageUrl;
     }
 
     @NoArgsConstructor
     @Data
     public static class CardImageDTO {
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("aspect_ratio")
+      @SerializedName("aspect_ratio")
       private Double aspectRatio;
     }
 
     @NoArgsConstructor
     @Data
     public static class JumpListDTO {
-      @JsonProperty("type")
+      @SerializedName("type")
       private Integer type;
-      @JsonProperty("title")
+      @SerializedName("title")
       private String title;
-      @JsonProperty("url")
+      @SerializedName("url")
       private String url;
-      @JsonProperty("appid")
+      @SerializedName("appid")
       private String appid;
-      @JsonProperty("pagepath")
+      @SerializedName("pagepath")
       private String pagepath;
     }
 

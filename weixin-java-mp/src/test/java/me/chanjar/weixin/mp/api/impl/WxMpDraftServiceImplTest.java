@@ -4,11 +4,7 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
-import me.chanjar.weixin.mp.bean.draft.WxMpAddDraft;
-import me.chanjar.weixin.mp.bean.draft.WxMpDraftArticles;
-import me.chanjar.weixin.mp.bean.draft.WxMpDraftInfo;
-import me.chanjar.weixin.mp.bean.draft.WxMpDraftList;
-import me.chanjar.weixin.mp.bean.draft.WxMpUpdateDraft;
+import me.chanjar.weixin.mp.bean.draft.*;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -59,6 +55,8 @@ public class WxMpDraftServiceImplTest {
       .thumbMediaId(thumbMediaId)
       // 显示封面、打开评论、所有人可评论
       .showCoverPic(1).needOpenComment(1).onlyFansCanComment(0)
+      .picCrop2351("0.1945_0_1_0.5236")
+      .picCrop11("0.1945_0_1_0.5236")
       .build();
     draftArticleList.add(draftArticle);
 
@@ -78,7 +76,10 @@ public class WxMpDraftServiceImplTest {
   @Test
   public void testUpdateDraft() throws WxErrorException {
     WxMpDraftArticles draftArticles = WxMpDraftArticles.builder()
-      .title("新标题").content("新图文消息的具体内容").thumbMediaId(thumbMediaId).build();
+      .title("新标题").content("新图文消息的具体内容").thumbMediaId(thumbMediaId)
+      .picCrop2351("0.1945_0_1_0.5236")
+      .picCrop11("0.1945_0_1_0.5236")
+      .build();
     WxMpUpdateDraft updateDraft = WxMpUpdateDraft.builder()
       .mediaId(mediaId)
       .index(0)

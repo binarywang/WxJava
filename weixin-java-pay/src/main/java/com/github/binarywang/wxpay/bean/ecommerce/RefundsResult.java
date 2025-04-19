@@ -240,4 +240,22 @@ public class RefundsResult implements Serializable {
 
   }
 
+
+  /**
+   * <pre>
+   * 字段名：退款资金来源
+   * 变量名：refund_account
+   * 是否必填：否
+   * 类型：string（32）
+   * 描述：
+   *   枚举值：
+   * REFUND_SOURCE_PARTNER_ADVANCE : 电商平台垫付
+   * REFUND_SOURCE_SUB_MERCHANT : 二级商户，默认值
+   * 示例值：REFUND_SOURCE_SUB_MERCHANT
+   * </pre>
+   */
+  @SerializedName(value = "refund_account")
+  private String refundAccount;
+
+
 }

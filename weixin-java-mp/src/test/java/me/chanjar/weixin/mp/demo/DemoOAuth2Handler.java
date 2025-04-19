@@ -18,7 +18,7 @@ public class DemoOAuth2Handler implements WxMpMessageHandler {
                                   Map<String, Object> context, WxMpService wxMpService,
                                   WxSessionManager sessionManager) {
     String href = "<a href=\"" + wxMpService.getOAuth2Service().buildAuthorizationUrl(
-      wxMpService.getWxMpConfigStorage().getOauth2redirectUri(),
+      wxMpService.getWxMpConfigStorage().getOauth2RedirectUrl(),
       WxConsts.OAuth2Scope.SNSAPI_USERINFO, null) + "\">测试oauth2</a>";
     return WxMpXmlOutMessage.TEXT().content(href)
       .fromUser(wxMessage.getToUser()).toUser(wxMessage.getFromUser())

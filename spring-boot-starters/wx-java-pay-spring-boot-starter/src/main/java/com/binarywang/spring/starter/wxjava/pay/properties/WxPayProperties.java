@@ -73,7 +73,17 @@ public class WxPayProperties {
    * apiv3 商户apiclient_cert.pem
    */
   private String privateCertPath;
-  
+
+  /**
+   * 公钥ID
+   */
+  private String publicKeyId;
+
+  /**
+   * pub_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
+   */
+  private String publicKeyPath;
+
   /**
    * 微信支付是否使用仿真测试环境.
    * 默认不使用

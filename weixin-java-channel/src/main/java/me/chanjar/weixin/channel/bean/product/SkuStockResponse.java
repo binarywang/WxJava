@@ -1,5 +1,6 @@
 package me.chanjar.weixin.channel.bean.product;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -18,5 +19,6 @@ public class SkuStockResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = -2156342792354605826L;
 
   /** 库存信息 */
+  @JsonProperty("data")
   private SkuStockInfo data;
 }

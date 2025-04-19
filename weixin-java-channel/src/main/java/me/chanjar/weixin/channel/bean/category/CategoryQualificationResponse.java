@@ -22,4 +22,7 @@ public class CategoryQualificationResponse extends WxChannelBaseResponse {
   @JsonProperty("cats")
   private List<CategoryAndQualificationList> list;
 
+  @JsonProperty("cats_v2")
+  private List<CategoryAndQualificationList> catsV2;
+
 }

@@ -74,6 +74,38 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
     /** 佣金信息 */
     @JsonProperty("transactionfee_info")
     private FeeInfo feeInfo;
+
+    /** 折扣规则 */
+    @JsonProperty("coupon_rule")
+    private CouponRule couponRule;
+
+    /** 价格下限，单位分，商品售价不可低于此价格 */
+    @JsonProperty("floor_price")
+    private Long floorPrice;
+
+    /** 收货时间选项 */
+    @JsonProperty("confirm_receipt_days")
+    private List<String> confirmReceiptDays;
+
+    /** 是否品牌定向准入，即该类目一定要有品牌 */
+    @JsonProperty("is_limit_brand")
+    private Boolean limitBrand;
+
+    /** 商品编辑要求 */
+    @JsonProperty("product_requirement")
+    private ProductRequirement productRequirement;
+
+    /** 尺码表 */
+    @JsonProperty("size_chart")
+    private SizeChart sizeChart;
+
+    /** 放心买必须打开坏损包赔 */
+    @JsonProperty("is_confidence_require_bad_must_pay")
+    private Boolean confidenceRequireBadMustPay;
+
+    /** 资质信息 */
+    @JsonProperty("product_qua_list")
+    private List<QualificationInfo> productQuaList;
   }
 
   @Data
@@ -93,11 +125,27 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
     @JsonProperty("name")
     private String name;
 
-    /** 类目必填项类型，string为自定义，select_one为多选一 */
+    /** 属性类型，string为自定义，select_one为多选一，该参数短期保留，用于兼容。将来废弃，使用type_v2替代 */
     @JsonProperty("type")
     private String type;
 
-    /** 类目必填项值 */
+    /**
+     * 属性类型v2，共7种类型
+     * string：文本
+     * select_one：单选，选项列表在value中
+     * select_many：多选，选项列表在value中
+     * integer：整数，数字必须为整数
+     * decimal4：小数（4 位精度），小数部分最多 4 位
+     * integer_unit：整数 + 单位，单位的选项列表在value中
+     * decimal4_unit：小数（4 位精度） + 单位，单位的选项列表在value中
+     */
+    @JsonProperty("type_v2")
+    private String typeV2;
+
+    /**
+     * 可选项列表，当type为：select_one/select_many时，为选项列表
+     * 当type为：integer_unit/decimal4_unit时，为单位的列表
+     */
     @JsonProperty("value")
     private String value;
 
@@ -105,7 +153,13 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
     @JsonProperty("is_required")
     private Boolean required;
 
+    /** 输入提示，请填写提示语 */
+    @JsonProperty("hint")
+    private String hint;
 
+    /** 允许添加选项，当type为select_one/select_many时，标识是否允许添加新选项（value中不存在的选项） */
+    @JsonProperty("append_allowed")
+    private Boolean appendAllowed;
   }
 
   @Data
@@ -123,8 +177,78 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
     /** 佣金激励类型，0：无激励措施，1：新店佣金减免 */
     @JsonProperty("incentive_type")
     private Integer incentiveType;
-
   }
+
+  @Data
+  @NoArgsConstructor
+  public static class CouponRule implements Serializable {
+
+    /** 最高的折扣比例，百分比, 0表示无限制 */
+    @JsonProperty("discount_ratio_limit")
+    private Integer supportCoupon;
+
+    /** 最高的折扣金额，单位分，0表示无限制 */
+    @JsonProperty("discount_limit")
+    private Integer couponType;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class ProductRequirement implements Serializable {
+    /** 商品标题的编辑要求 */
+    @JsonProperty("product_title_requirement")
+    private String productTitleRequirement;
+
+    /** 商品主图的编辑要求 */
+    @JsonProperty("product_img_requirement")
+    private String productImgRequirement;
+
+    /** 商品描述的编辑要求 */
+    @JsonProperty("product_desc_requirement")
+    private String productDescRequirement;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class SizeChart implements Serializable {
+
+    /** 是否支持尺码表 */
+    @JsonProperty("is_support")
+    private Boolean support;
+
+    /** 尺码配置要求列表 */
+    @JsonProperty("item_list")
+    private List<SizeChartItem> itemList;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class SizeChartItem implements Serializable {
+    /** 尺码属性名称 */
+    @JsonProperty("name")
+    private String name;
+
+    /** 尺码属性值的单位 */
+    @JsonProperty("unit")
+    private String unit;
+
+    /** 尺码属性值的类型，1：字符型，2：整数型，3：小数型 */
+    @JsonProperty("type")
+    private String type;
+
+    /** 尺码属性值的填写格式，1：单值填写，2：区间值填写，3：支持单值或区间值 */
+    @JsonProperty("format")
+    private String format;
+
+    /** 尺码属性值的限制 */
+    @JsonProperty("limit")
+    private String limit;
+
+    /** 是否必填 */
+    @JsonProperty("is_required")
+    private Boolean required;
+  }
+
 }
 
 

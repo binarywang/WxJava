@@ -142,20 +142,30 @@ public class NegotiationHistoryResult implements Serializable {
      * 是否必填：是
      * 描述：
      * 当前投诉协商记录的操作类型，对应枚举：
-     * USER_CREATE_COMPLAINT：用户提交投诉
-     * USER_CONTINUE_COMPLAINT：用户继续投诉
-     * USER_RESPONSE：用户留言
-     * PLATFORM_RESPONSE：平台留言
-     * MERCHANT_RESPONSE：商户留言
-     * MERCHANT_CONFIRM_COMPLETE：商户申请结单
-     * COMPLAINT_FULL_REFUNDED：投诉单全额退款
-     * USER_CREATE_COMPLAINT_SYSTEM_MESSAGE：用户提交投诉系统通知
-     * COMPLAINT_FULL_REFUNDED_SYSTEM_MESSAGE：投诉单全额退款系统通知
-     * USER_CONTINUE_COMPLAINT_SYSTEM_MESSAGE：用户继续投诉系统通知
-     * MERCHANT_CONFIRM_COMPLETE_SYSTEM_MESSAGE：商户申请结单系统通知
-     * USER_REVOKE_COMPLAINT：用户主动撤诉（只存在于历史投诉单的协商历史中）
-     * PLATFORM_HELP_APPLICATION：平台问询
-     * USER_APPLY_PLATFORM_HELP：申请协助
+     * USER_CREATE_COMPLAINT: 用户提交投诉
+     * USER_CONTINUE_COMPLAINT: 用户继续投诉
+     * USER_RESPONSE: 用户留言
+     * PLATFORM_RESPONSE: 平台留言
+     * MERCHANT_RESPONSE: 商户留言
+     * MERCHANT_CONFIRM_COMPLETE: 商户申请结单
+     * USER_CREATE_COMPLAINT_SYSTEM_MESSAGE: 用户提交投诉系统通知
+     * COMPLAINT_FULL_REFUNDED_SYSTEM_MESSAGE: 投诉单发起全额退款系统通知
+     * USER_CONTINUE_COMPLAINT_SYSTEM_MESSAGE: 用户继续投诉系统通知
+     * USER_REVOKE_COMPLAINT: 用户主动撤诉（只存在于历史投诉单的协商历史中）
+     * USER_COMFIRM_COMPLAINT: 用户确认投诉解决（只存在于历史投诉单的协商历史中）
+     * PLATFORM_HELP_APPLICATION: 平台催办
+     * USER_APPLY_PLATFORM_HELP: 用户申请平台协助
+     * MERCHANT_APPROVE_REFUND: 商户同意退款申请
+     * MERCHANT_REFUSE_RERUND: 商户拒绝退款申请, 此时操作内容里展示拒绝原因
+     * USER_SUBMIT_SATISFACTION: 用户提交满意度调查结果,此时操作内容里会展示满意度分数
+     * SERVICE_ORDER_CANCEL: 服务订单已取消
+     * SERVICE_ORDER_COMPLETE: 服务订单已完成
+     * COMPLAINT_PARTIAL_REFUNDED_SYSTEM_MESSAGE: 投诉单发起部分退款系统通知
+     * COMPLAINT_REFUND_RECEIVED_SYSTEM_MESSAGE: 投诉单退款到账系统通知
+     * COMPLAINT_ENTRUSTED_REFUND_SYSTEM_MESSAGE: 投诉单受托退款系统通知
+     * USER_APPLY_PLATFORM_SERVICE: 用户申请平台协助
+     * USER_CANCEL_PLATFORM_SERVICE: 用户取消平台协助
+     * PLATFORM_SERVICE_FINISHED: 客服结束平台协助
      * </pre>
      */
     @SerializedName("operate_type")
@@ -179,10 +189,31 @@ public class NegotiationHistoryResult implements Serializable {
      * 描述：
      * 当前投诉协商记录提交的图片凭证（url格式），最多返回4张图片，url有效时间为1小时。如未查询到协商历史图片凭证，则返回空数组。
      * 注：本字段包含商户、微信支付客服在协商解决投诉时上传的图片凭证，若希望查看用户图片，请使用complaint_media_list字段并联系微信支付客服
+     * 注：此字段不包含用户提交的图片凭证，建议统一使用complaint_media_list字段接收和请求资料凭证，未来该字段将废弃
      * </pre>
      */
     @SerializedName("image_list")
     private List<String> imageList;
+
+    /**
+     * <pre>
+     * 字段名：用户申请平台协助原因
+     * 是否必填：否
+     * 描述：用户此次申请平台协助时选择的申请协助原因
+     * </pre>
+     */
+    @SerializedName("user_appy_platform_service_reason")
+    private String userApplyPlatformServiceReason;
+
+    /**
+     * <pre>
+     * 字段名：用户申请平台协助原因描述
+     * 是否必填：否
+     * 描述：用户此次申请平台协助时填写的具体申请协助原因描述
+     * </pre>
+     */
+    @SerializedName("user_appy_platform_service_reason_description")
+    private String userApplyPlatformServiceReasonDescription;
 
   }
 

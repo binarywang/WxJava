@@ -7,22 +7,27 @@ import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EcommerceService;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.github.binarywang.wxpay.v3.WechatPayUploadHttpPost;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.common.base.CaseFormat;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
@@ -285,6 +290,25 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, RefundQueryResult.class);
   }
 
+
+  @Override
+  public ReturnAdvanceResult refundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance", this.payService.getPayBaseUrl(), refundId);
+    Map request = new HashMap();
+    request.put("sub_mchid",subMchid);
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
+  @Override
+  public ReturnAdvanceResult queryRefundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance?sub_mchid=%s", this.payService.getPayBaseUrl(), refundId,subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
   @Override
   public RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/refunds/out-refund-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
@@ -395,6 +419,36 @@ public class EcommerceServiceImpl implements EcommerceService {
     String response = this.payService.postV3(url, GSON.toJson(subsidiesCancelRequest));
     return GSON.fromJson(response, SubsidiesCancelResult.class);
   }
+
+  @Override
+  public AccountCancelApplicationsResult createdAccountCancelApplication(AccountCancelApplicationsRequest accountCancelApplicationsRequest) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/account/cancel-applications", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(accountCancelApplicationsRequest));
+    return GSON.fromJson(response, AccountCancelApplicationsResult.class);
+  }
+
+  @Override
+  public AccountCancelApplicationsResult getAccountCancelApplication(String outApplyNo) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/account/cancel-applications/out-apply-no/%s", this.payService.getPayBaseUrl(), outApplyNo);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, AccountCancelApplicationsResult.class);
+  }
+
+  @Override
+  public AccountCancelApplicationsMediaResult uploadMediaAccountCancelApplication(File imageFile) throws WxPayException, IOException {
+    String url = String.format("%s/v3/ecommerce/account/cancel-applications/media", this.payService.getPayBaseUrl());
+    try (FileInputStream s1 = new FileInputStream(imageFile)) {
+      String sha256 = DigestUtils.sha256Hex(s1);
+      try (InputStream s2 = new FileInputStream(imageFile)) {
+        WechatPayUploadHttpPost request = new WechatPayUploadHttpPost.Builder(URI.create(url))
+          .withImage(imageFile.getName(), sha256, s2)
+          .buildEcommerceAccount();
+        String result = this.payService.postV3(url, request);
+        return GSON.fromJson(result, AccountCancelApplicationsMediaResult.class);
+      }
+    }
+  }
+
   /**
    * 校验通知签名
    *

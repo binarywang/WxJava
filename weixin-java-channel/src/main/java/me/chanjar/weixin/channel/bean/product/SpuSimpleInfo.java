@@ -15,7 +15,7 @@ public class SpuSimpleInfo implements Serializable {
 
   private static final long serialVersionUID = 5583726432139404883L;
 
-  /** 交易组件平台内部商品ID */
+  /** 商品ID */
   @JsonProperty("product_id")
   protected String productId;
 

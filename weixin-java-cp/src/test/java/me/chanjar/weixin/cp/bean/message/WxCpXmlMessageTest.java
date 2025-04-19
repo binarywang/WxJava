@@ -301,4 +301,124 @@ public class WxCpXmlMessageTest {
 
     System.out.println(XStreamTransformer.toXml(WxCpXmlMessage.class, wxCpXmlMessage));
   }
+
+  /**
+   * Test template card event.
+   */
+  public void testTemplateCardEvent() {
+    String xml = "<xml>\n" +
+      "<ToUserName><![CDATA[toUser]]></ToUserName>\n" +
+      "<FromUserName><![CDATA[FromUser]]></FromUserName>\n" +
+      "<CreateTime>123456789</CreateTime>\n" +
+      "<MsgType><![CDATA[event]]></MsgType>\n" +
+      "<Event><![CDATA[template_card_event]]></Event>\n" +
+      "<EventKey><![CDATA[key111]]></EventKey>\n" +
+      "<TaskId><![CDATA[taskid111]]></TaskId>\n" +
+      "<CardType><![CDATA[text_notice]]></CardType>\n" +
+      "<ResponseCode><![CDATA[ResponseCode]]></ResponseCode>\n" +
+      "<AgentID>1</AgentID>\n" +
+      "<SelectedItems>\n" +
+      "    <SelectedItem>\n" +
+      "        <QuestionKey><![CDATA[QuestionKey1]]></QuestionKey>\n" +
+      "        <OptionIds>\n" +
+      "            <OptionId><![CDATA[OptionId1]]></OptionId>\n" +
+      "            <OptionId><![CDATA[OptionId2]]></OptionId>\n" +
+      "        </OptionIds>\n" +
+      "    </SelectedItem>\n" +
+      "    <SelectedItem>\n" +
+      "        <QuestionKey><![CDATA[QuestionKey2]]></QuestionKey>\n" +
+      "        <OptionIds>\n" +
+      "            <OptionId><![CDATA[OptionId3]]></OptionId>\n" +
+      "            <OptionId><![CDATA[OptionId4]]></OptionId>\n" +
+      "        </OptionIds>\n" +
+      "    </SelectedItem>\n" +
+      "</SelectedItems>\n" +
+      "</xml>";
+
+    WxCpXmlMessage wxCpXmlMessage = WxCpXmlMessage.fromXml(xml);
+    assertThat(wxCpXmlMessage).isNotNull();
+    assertThat(wxCpXmlMessage.getSelectedItems()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getSelectedItems().get(0).getQuestionKey()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getSelectedItems().get(0).getOptionIds().get(0)).isNotEmpty();
+  }
+
+  /**
+   * Test open approval change.
+   */
+  public void testOpenApprovalChange() {
+    String xml = "<xml>\n" +
+      " <ToUserName><![CDATA[wwddddccc7775555aaa]]></ToUserName>\n" +
+      "  <FromUserName><![CDATA[sys]]></FromUserName>\n" +
+      "  <CreateTime>1527838022</CreateTime>\n" +
+      "  <MsgType><![CDATA[event]]></MsgType>\n" +
+      "  <Event><![CDATA[open_approval_change]]></Event>\n" +
+      "  <AgentID>1</AgentID>\n" +
+      "  <ApprovalInfo>\n" +
+      "    <ThirdNo><![CDATA[201806010001]]></ThirdNo>\n" +
+      "    <OpenSpName><![CDATA[付款]]></OpenSpName>\n" +
+      "    <OpenTemplateId><![CDATA[1234567890]]></OpenTemplateId>\n" +
+      "    <OpenSpStatus>1</OpenSpStatus>\n" +
+      "    <ApplyTime>1527837645</ApplyTime>\n" +
+      "    <ApplyUserName><![CDATA[xiaoming]]></ApplyUserName>\n" +
+      "    <ApplyUserId><![CDATA[1]]></ApplyUserId>\n" +
+      "    <ApplyUserParty><![CDATA[产品部]]></ApplyUserParty>\n" +
+      "    <ApplyUserImage><![CDATA[http://www.qq.com/xxx.png]]></ApplyUserImage>\n" +
+      "    <ApprovalNodes>\n" +
+      "      <ApprovalNode>\n" +
+      "        <NodeStatus>1</NodeStatus>\n" +
+      "        <NodeAttr>1</NodeAttr>\n" +
+      "        <NodeType>1</NodeType>\n" +
+      "        <Items>\n" +
+      "          <Item>\n" +
+      "            <ItemName><![CDATA[xiaohong]]></ItemName>\n" +
+      "            <ItemUserId><![CDATA[2]]></ItemUserId>\n" +
+      "            <ItemImage><![CDATA[http://www.qq.com/xxx.png]]></ItemImage>\n" +
+      "            <ItemStatus>1</ItemStatus>\n" +
+      "            <ItemSpeech><![CDATA[]]></ItemSpeech>\n" +
+      "            <ItemOpTime>0</ItemOpTime>\n" +
+      "          </Item>\n" +
+      "        </Items>\n" +
+      "      </ApprovalNode>\n" +
+      "      <ApprovalNode>\n" +
+      "        <NodeStatus>1</NodeStatus>\n" +
+      "        <NodeAttr>1</NodeAttr>\n" +
+      "        <NodeType>1</NodeType>\n" +
+      "        <Items>\n" +
+      "          <Item>\n" +
+      "            <ItemName><![CDATA[xiaohong]]></ItemName>\n" +
+      "            <ItemUserId><![CDATA[2]]></ItemUserId>\n" +
+      "            <ItemImage><![CDATA[http://www.qq.com/xxx.png]]></ItemImage>\n" +
+      "            <ItemStatus>1</ItemStatus>\n" +
+      "            <ItemSpeech><![CDATA[]]></ItemSpeech>\n" +
+      "            <ItemOpTime>0</ItemOpTime>\n" +
+      "          </Item>\n" +
+      "          <Item>\n" +
+      "            <ItemName><![CDATA[xiaohong]]></ItemName>\n" +
+      "            <ItemUserId><![CDATA[2]]></ItemUserId>\n" +
+      "            <ItemImage><![CDATA[http://www.qq.com/xxx.png]]></ItemImage>\n" +
+      "            <ItemStatus>1</ItemStatus>\n" +
+      "            <ItemSpeech><![CDATA[]]></ItemSpeech>\n" +
+      "            <ItemOpTime>0</ItemOpTime>\n" +
+      "          </Item>\n" +
+      "        </Items>\n" +
+      "      </ApprovalNode>\n" +
+      "    </ApprovalNodes>\n" +
+      "    <NotifyNodes>\n" +
+      "      <NotifyNode>\n" +
+      "        <ItemName><![CDATA[xiaogang]]></ItemName>\n" +
+      "        <ItemUserId><![CDATA[3]]></ItemUserId>\n" +
+      "        <ItemImage><![CDATA[http://www.qq.com/xxx.png]]></ItemImage>\n" +
+      "      </NotifyNode>\n" +
+      "    </NotifyNodes>\n" +
+      "    <approverstep>0</approverstep>\n" +
+      "  </ApprovalInfo>\n" +
+      "</xml>\n";
+
+    WxCpXmlMessage wxCpXmlMessage = WxCpXmlMessage.fromXml(xml);
+    assertThat(wxCpXmlMessage).isNotNull();
+    assertThat(wxCpXmlMessage.getApprovalInfo().getApprovalNodes()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems().get(0).getItemName()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemName()).isNotEmpty();
+  }
 }

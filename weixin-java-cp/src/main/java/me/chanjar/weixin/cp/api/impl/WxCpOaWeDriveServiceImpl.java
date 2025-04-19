@@ -114,10 +114,9 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
   }
 
   @Override
-  public WxCpFileRename fileRename(@NonNull String userId, @NonNull String fileId, @NonNull String newName) throws WxErrorException {
+  public WxCpFileRename fileRename(@NonNull String fileId, @NonNull String newName) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_RENAME);
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("userid", userId);
     jsonObject.addProperty("fileid", fileId);
     jsonObject.addProperty("new_name", newName);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
@@ -125,11 +124,10 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
   }
 
   @Override
-  public WxCpFileCreate fileCreate(@NonNull String userId, @NonNull String spaceId, @NonNull String fatherId,
+  public WxCpFileCreate fileCreate(@NonNull String spaceId, @NonNull String fatherId,
                                    @NonNull Integer fileType, @NonNull String fileName) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_CREATE);
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("userid", userId);
     jsonObject.addProperty("spaceid", spaceId);
     jsonObject.addProperty("fatherid", fatherId);
     jsonObject.addProperty("file_type", fileType);
@@ -146,9 +144,9 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
   }
 
   @Override
-  public WxCpBaseResp fileDelete(@NonNull String userId, @NonNull List<String> fileId) throws WxErrorException {
+  public WxCpBaseResp fileDelete(@NonNull List<String> fileIds) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_DELETE);
-    WxCpFileDeleteRequest request = new WxCpFileDeleteRequest(userId, fileId);
+    WxCpFileDeleteRequest request = new WxCpFileDeleteRequest(fileIds);
     String responseContent = this.cpService.post(apiUrl, request.toJson());
     return WxCpBaseResp.fromJson(responseContent);
   }
@@ -193,10 +191,9 @@ public class WxCpOaWeDriveServiceImpl implements WxCpOaWeDriveService {
   }
 
   @Override
-  public WxCpFileInfo fileInfo(@NonNull String userId, @NonNull String fileId) throws WxErrorException {
+  public WxCpFileInfo fileInfo(@NonNull String fileId) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(FILE_INFO);
     JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("userid", userId);
     jsonObject.addProperty("fileid", fileId);
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpFileInfo.fromJson(responseContent);

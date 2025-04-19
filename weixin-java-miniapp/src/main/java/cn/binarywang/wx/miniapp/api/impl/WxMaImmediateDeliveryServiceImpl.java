@@ -207,7 +207,7 @@ public class WxMaImmediateDeliveryServiceImpl implements WxMaImmediateDeliverySe
 
   @Override
   public WxMaBaseResponse updateWaybillGoods(UpdateWaybillGoodsRequest request) throws WxErrorException {
-    String responseContent = this.wxMaService.post(InstantDelivery.GET_DELIVERY_LIST_URL,request);
+    String responseContent = this.wxMaService.post(InstantDelivery.UPDATE_WAYBILL_GOODS_URL,request);
     WxMaBaseResponse response = WxMaGsonBuilder.create().fromJson(responseContent, WxMaBaseResponse.class);
     if (response.getErrcode() == -1) {
       throw new WxErrorException(WxError.fromJson(responseContent, WxType.MiniApp));

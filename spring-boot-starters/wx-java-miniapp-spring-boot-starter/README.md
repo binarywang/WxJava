@@ -10,12 +10,13 @@
     ```
 2. 添加配置(application.properties)
     ```properties
-    # 公众号配置(必填)
+    # 小程序配置(必填)
     wx.miniapp.appid = appId
     wx.miniapp.secret = @secret
     wx.miniapp.token = @token
     wx.miniapp.aesKey = @aesKey
     wx.miniapp.msgDataFormat = @msgDataFormat                  # 消息格式，XML或者JSON.
+    wx.miniapp.use-stable-access-token=@useStableAccessToken
     # 存储配置redis(可选)
     # 注意: 指定redis.host值后不会使用容器注入的redis连接(JedisPool)
     wx.miniapp.config-storage.type = Jedis                     # 配置类型: Memory(默认), Jedis, RedisTemplate

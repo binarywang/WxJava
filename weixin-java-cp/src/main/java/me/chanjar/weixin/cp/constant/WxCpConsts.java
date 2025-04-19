@@ -49,6 +49,11 @@ public class WxCpConsts {
     public static final String CHANGE_CONTACT = "change_contact";
 
     /**
+     * 企业微信模板卡片事件推送
+     */
+    public static final String TEMPLATE_CARD_EVENT = "template_card_event";
+
+    /**
      * 点击菜单拉取消息的事件推送.
      */
     public static final String CLICK = "click";
@@ -92,6 +97,31 @@ public class WxCpConsts {
      * 任务卡片事件推送.
      */
     public static final String TASKCARD_CLICK = "taskcard_click";
+
+    /**
+     * 企业互联共享应用事件回调.
+     */
+    public static final String SHARE_AGENT_CHANGE = "share_agent_change";
+
+    /**
+     * 上下游共享应用事件回调.
+     */
+    public static final String SHARE_CHAIN_CHANGE = "share_chain_change";
+
+    /**
+     * 通用模板卡片右上角菜单事件推送.
+     */
+    public static final String TEMPLATE_CARD_MENU_EVENT = "template_card_menu_event";
+
+    /**
+     * 长期未使用应用临时停用事件.
+     */
+    public static final String CLOSE_INACTIVE_AGENT = "close_inactive_agent";
+
+    /**
+     * 长期未使用应用重新启用事件.
+     */
+    public static final String REOPEN_INACTIVE_AGENT = "reopen_inactive_agent";
 
     /**
      * 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件
@@ -143,6 +173,21 @@ public class WxCpConsts {
      * 删除日程事件
      */
     public static final String DELETE_SCHEDULE = "delete_schedule";
+
+    /**
+     * 日程回执事件
+     */
+    public static final String RESPOND_SCHEDULE = "respond_schedule";
+
+    /**
+     * 会议室预定事件.
+     */
+    public static final String BOOK_MEETING_ROOM = "book_meeting_room";
+
+    /**
+     * 会议室取消事件.
+     */
+    public static final String CANCEL_MEETING_ROOM = "cancel_meeting_room";
 
     /**
      * 家校通讯录事件

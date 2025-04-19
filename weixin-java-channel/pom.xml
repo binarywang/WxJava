@@ -6,15 +6,15 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.6.5.B</version>
+    <version>4.7.4.B</version>
   </parent>
 
   <artifactId>weixin-java-channel</artifactId>
   <name>WxJava - Channel Java SDK</name>
-  <description>微信视频号 Java SDK</description>
+  <description>微信视频号/微信小店 Java SDK</description>
 
   <properties>
-    <jackson.version>2.15.0</jackson.version>
+    <jackson.version>2.18.1</jackson.version>
   </properties>
 
   <dependencies>

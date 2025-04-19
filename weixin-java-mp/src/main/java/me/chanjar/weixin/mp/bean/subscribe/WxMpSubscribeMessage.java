@@ -17,7 +17,7 @@ import java.util.Map;
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
-public class WxMpSubscribeMessage {
+public class WxMpSubscribeMessage implements Serializable {
 
   /**
    * 接收者openid.

@@ -79,6 +79,18 @@ public class WxMpDraftArticles implements ToJson, Serializable {
   @SerializedName("thumb_url")
   private String thumbUrl;
 
+  /**
+   * 封面裁剪为2.35:1规格的坐标字段。以原始图片（thumb_media_id）左上角（0,0），右下角（1,1）建立平面坐标系，经过裁剪后的图片，其左上角所在的坐标即为（X1,Y1）,右下角所在的坐标则为（X2,Y2），用分隔符_拼接为X1_Y1_X2_Y2，每个坐标值的精度为不超过小数点后6位数字。示例见下图，图中(X1,Y1) 等于（0.1945,0）,(X2,Y2)等于（1,0.5236），所以请求参数值为0.1945_0_1_0.5236。
+   */
+  @SerializedName("pic_crop_235_1")
+  private String picCrop2351;
+
+  /**
+   * 封面裁剪为1:1规格的坐标字段，裁剪原理同pic_crop_235_1，裁剪后的图片必须符合规格要求。
+   */
+  @SerializedName("pic_crop_1_1")
+  private String picCrop11;
+
   public static WxMpDraftArticles fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxMpDraftArticles.class);
   }

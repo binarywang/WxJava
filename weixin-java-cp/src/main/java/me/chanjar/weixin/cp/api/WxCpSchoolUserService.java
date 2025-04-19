@@ -334,7 +334,7 @@ public interface WxCpSchoolUserService {
    * 请求方式：GET（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID
    *
-   * @param id the id
+   * @param id 部门id。获取指定部门及其下的子部门。 如果不填，默认获取全量组织架构
    * @return wx cp department list
    * @throws WxErrorException the wx error exception
    */

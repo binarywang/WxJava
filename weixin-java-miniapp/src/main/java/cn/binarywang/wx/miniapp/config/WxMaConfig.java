@@ -1,11 +1,10 @@
 package cn.binarywang.wx.miniapp.config;
 
+import java.util.concurrent.locks.Lock;
+import java.util.function.Consumer;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
-
-import java.util.concurrent.locks.Lock;
-import java.util.function.Consumer;
 
 /**
  * 小程序配置
@@ -14,9 +13,7 @@ import java.util.function.Consumer;
  */
 public interface WxMaConfig {
 
-  default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {
-
-  }
+  default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {}
 
   /**
    * Gets access token.
@@ -25,12 +22,12 @@ public interface WxMaConfig {
    */
   String getAccessToken();
 
-  //region 稳定版access token
+  // region 稳定版access token
   boolean isStableAccessToken();
 
   void useStableAccessToken(boolean useStableAccessToken);
-  //endregion
 
+  // endregion
 
   /**
    * Gets access token lock.
@@ -46,9 +43,7 @@ public interface WxMaConfig {
    */
   boolean isAccessTokenExpired();
 
-  /**
-   * 强制将access token过期掉
-   */
+  /** 强制将access token过期掉 */
   void expireAccessToken();
 
   /**
@@ -63,7 +58,7 @@ public interface WxMaConfig {
   /**
    * 应该是线程安全的
    *
-   * @param accessToken      新的accessToken值
+   * @param accessToken 新的accessToken值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateAccessToken(String accessToken, int expiresInSeconds);
@@ -77,10 +72,7 @@ public interface WxMaConfig {
     updateAccessToken(accessToken, expiresInSeconds);
   }
 
-  default void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {
-
-  }
-
+  default void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {}
 
   /**
    * Gets jsapi ticket.
@@ -103,15 +95,13 @@ public interface WxMaConfig {
    */
   boolean isJsapiTicketExpired();
 
-  /**
-   * 强制将jsapi ticket过期掉
-   */
+  /** 强制将jsapi ticket过期掉 */
   void expireJsapiTicket();
 
   /**
    * 应该是线程安全的
    *
-   * @param jsapiTicket      新的jsapi ticket值
+   * @param jsapiTicket 新的jsapi ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
@@ -137,15 +127,13 @@ public interface WxMaConfig {
    */
   boolean isCardApiTicketExpired();
 
-  /**
-   * 强制将卡券api ticket过期掉.
-   */
+  /** 强制将卡券api ticket过期掉. */
   void expireCardApiTicket();
 
   /**
    * 应该是线程安全的.
    *
-   * @param apiTicket        新的卡券api ticket值
+   * @param apiTicket 新的卡券api ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateCardApiTicket(String apiTicket, int expiresInSeconds);
@@ -236,6 +224,7 @@ public interface WxMaConfig {
 
   /**
    * http 请求重试间隔
+   *
    * <pre>
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
    * </pre>
@@ -244,6 +233,7 @@ public interface WxMaConfig {
 
   /**
    * http 请求最大重试次数
+   *
    * <pre>
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
    * </pre>
@@ -288,10 +278,35 @@ public interface WxMaConfig {
   String getAccessTokenUrl();
 
   /**
-   * 设置自定义的获取accessToken地址
-   * 可用于设置获取accessToken的自定义服务
+   * 设置自定义的获取accessToken地址 可用于设置获取accessToken的自定义服务
    *
    * @param accessTokenUrl 自定义的获取accessToken地址
    */
   void setAccessTokenUrl(String accessTokenUrl);
+
+  /**
+   * 服务端API签名用到的RSA私钥【pkcs8格式，会以 -----BEGIN PRIVATE KEY-----开头， 'BEGIN RSA PRIVATE
+   * KEY'的是pkcs1格式，需要转换（可用openssl转换）。 设置参考：
+   * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html
+   *
+   * @return rsa private key string
+   */
+  String getApiSignatureRsaPrivateKey();
+
+  /**
+   * 服务端API签名用到的AES密钥
+   * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html
+   *
+   * @return aes key string
+   */
+  String getApiSignatureAesKey();
+
+  /** 密钥对应的序号 */
+  String getApiSignatureAesKeySn();
+
+  /** 密钥对应的序号 */
+  String getApiSignatureRsaPrivateKeySn();
+
+  /** 密钥对应的小程序ID （普通小程序同 appId， 托管第三方平台的是 componentAppId） */
+  String getWechatMpAppid();
 }

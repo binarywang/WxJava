@@ -93,6 +93,11 @@ public class XStreamTransformer {
     xstream.processAnnotations(WxCpXmlMessage.SendPicsInfo.class);
     xstream.processAnnotations(WxCpXmlMessage.SendPicsInfo.Item.class);
     xstream.processAnnotations(WxCpXmlMessage.SendLocationInfo.class);
+    xstream.processAnnotations(WxCpXmlMessage.SelectedItem.class);
+    // 显式允许 String 类
+    xstream.allowTypes(new Class[]{String.class});
+    // 模板卡片事件推送独属
+    xstream.alias("OptionId",String.class);
     return xstream;
   }
 

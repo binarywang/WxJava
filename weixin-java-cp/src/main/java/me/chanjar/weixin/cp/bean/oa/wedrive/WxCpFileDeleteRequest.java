@@ -22,9 +22,6 @@ import java.util.List;
 public class WxCpFileDeleteRequest implements Serializable {
   private static final long serialVersionUID = -4960239393895754138L;
 
-  @SerializedName("userid")
-  private String userId;
-
   @SerializedName("fileid")
   private List<String> fileId;
 

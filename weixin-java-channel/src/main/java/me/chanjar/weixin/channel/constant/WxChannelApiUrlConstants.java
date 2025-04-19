@@ -55,6 +55,48 @@ public class WxChannelApiUrlConstants {
     String LIST_PASS_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/list/get";
   }
 
+  /** 主页管理相关接口 */
+  public interface HomePage {
+
+    /** 添加分类关联的商品 */
+    String ADD_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/add";
+    /** 删除分类关联的商品 */
+    String DEL_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/del";
+    /** 获取分类关联的商品ID列表 */
+    String LIST_TREE_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/product/get";
+    /** 设置展示在店铺主页的商品分类 */
+    String SET_SHOW_TREE_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/set";
+    /** 获取在店铺主页展示的商品分类 */
+    String GET_SHOW_TREE_URL = "https://api.weixin.qq.com/channels/ec/store/classification/tree/get";
+
+    /** 获取主页展示商品列表 */
+    String LIST_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/list/get";
+    /** 重新排序主页展示商品 */
+    String REORDER_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/reorder";
+    /** 隐藏小店主页商品 */
+    String HIDE_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/hide";
+    /** 置顶小店主页商品 */
+    String TOP_WINDOW_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/store/window/product/settop";
+
+    /** 提交主页背景图申请 */
+    String APPLY_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/apply/submit";
+    /** 查询主页背景图 */
+    String GET_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/get";
+    /** 撤销主页背景图申请 */
+    String CANCEL_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/apply/cancel";
+    /** 清空主页背景图并撤销流程中的申请 */
+    String REMOVE_BACKGROUND_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/background/remove";
+
+    /** 提交精选展示位申请 */
+    String APPLY_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/apply/submit";
+    /** 查询精选展示位 */
+    String GET_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/get";
+    /** 撤销精选展示位申请 */
+    String CANCEL_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/apply/cancel";
+    /** 清空精选展示位并撤销流程中的申请 */
+    String REMOVE_BANNER_URL = "https://api.weixin.qq.com/channels/ec/basics/homepage/banner/remove";
+  }
+
   /** 品牌资质相关接口 */
   public interface Brand {
 
@@ -89,14 +131,24 @@ public class WxChannelApiUrlConstants {
     String SPU_LIST_URL = "https://api.weixin.qq.com/channels/ec/product/list/get";
     /** 更新商品 */
     String SPU_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/product/update";
+    /** 更新商品 */
+    String SPU_AUDIT_FREE_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/product/auditfree";
     /** 上架商品 */
     String SPU_LISTING_URL = "https://api.weixin.qq.com/channels/ec/product/listing";
     /** 下架商品 */
     String SPU_DELISTING_URL = "https://api.weixin.qq.com/channels/ec/product/delisting";
     /** 撤回商品审核 */
     String CANCEL_AUDIT_URL = "https://api.weixin.qq.com/channels/ec/product/audit/cancel";
+    /** 获取商品H5短链 */
+    String SPU_H5URL_URL = "https://api.weixin.qq.com/channels/ec/product/h5url/get";
+    /** 获取商品二维码 */
+    String SPU_QRCODE_URL = "https://api.weixin.qq.com/channels/ec/product/qrcode/get";
+    /** 获取商品口令 */
+    String SPU_TAGLINK_URL = "https://api.weixin.qq.com/channels/ec/product/taglink/get";
     /** 获取实时库存 */
     String SPU_GET_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/get";
+    /** 获取实时库存 */
+    String SPU_GET_STOCK_BATCH_URL = "https://api.weixin.qq.com/channels/ec/product/stock/batchget";
     /** 更新商品库存 */
     String SPU_UPDATE_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/update";
     /** 添加限时抢购任务 */
@@ -155,6 +207,12 @@ public class WxChannelApiUrlConstants {
     String REJECT_ADDRESS_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/order/addressmodify/reject";
     /** 订单搜索 */
     String ORDER_SEARCH_URL = "https://api.weixin.qq.com/channels/ec/order/search";
+    /** 上传生鲜质检信息 */
+    String UPLOAD_FRESH_INSPECT_URL = "https://api.weixin.qq.com/channels/ec/order/freshinspect/submit";
+    /** 兑换虚拟号 */
+    String VIRTUAL_TEL_NUMBER_URL = "https://api.weixin.qq.com/channels/ec/order/virtualtelnumber/get";
+    /** 解码订单包含的敏感数据 */
+    String DECODE_SENSITIVE_INFO_URL = "https://api.weixin.qq.com/channels/ec/order/sensitiveinfo/decode";
   }
 
   /** 售后相关接口 */
@@ -258,6 +316,20 @@ public class WxChannelApiUrlConstants {
     String UNBIND_SHARER_URL = "https://api.weixin.qq.com/channels/ec/sharer/unbind";
   }
 
+  /** 合作账号相关接口 */
+  public interface Cooperation {
+    /** 获取合作账号列表 */
+    String LIST_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/list";
+    /** 查看合作账号邀请状态 */
+    String GET_COOPERATION_STATUS_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/get";
+    /** 邀请合作账号 */
+    String GENERATE_QRCODE_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/qrcode/generate";
+    /** 取消合作账号邀请 */
+    String CANCEL_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/invitation/cancel";
+    /** 解绑合作账号 */
+    String UNBIND_COOPERATION_URL = "https://api.weixin.qq.com/channels/ec/cooperation/unbind";
+  }
+
   /** 资金相关接口 */
   public interface Fund {
 
@@ -266,9 +338,9 @@ public class WxChannelApiUrlConstants {
     /** 获取结算账户 */
     String GET_BANK_ACCOUNT_URL = "https://api.weixin.qq.com/channels/ec/funds/getbankacct";
     /** 获取资金流水详情 */
-    String GET_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/league/funds/getfundsflowdetail";
+    String GET_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/funds/getfundsflowdetail";
     /** 获取资金流水列表 */
-    String GET_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/league/funds/getfundsflowlist";
+    String GET_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/funds/getfundsflowlist";
     /** 获取提现记录 */
     String GET_WITHDRAW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/funds/getwithdrawdetail";
     /** 获取提现记录列表 */
@@ -467,5 +539,32 @@ public class WxChannelApiUrlConstants {
      * <a href="https://developers.weixin.qq.com/doc/channels/API/compass/finder/getfindersaleprofiledata.html">获取带货人群数据</a>
      */
     String GET_SALE_PROFILE_DATA_URL = "https://api.weixin.qq.com/channels/ec/compass/finder/sale/profile/data/get";
+  }
+
+  /**
+   * 罗盘商家版API
+   */
+  public interface CompassShop {
+
+    /** 获取电商数据概览 */
+    String GET_SHOP_OVERALL_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/overall/get";
+    /** 获取授权视频号列表 */
+    String FINDER_AUTH_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/finder/authorization/list/get";
+    /** 获取带货达人列表 */
+    String FINDER_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/finder/list/get";
+    /** 获取带货数据概览 */
+    String GET_FINDER_OVERALL_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/finder/overall/get";
+    /** 获取带货达人商品列表 */
+    String GET_FINDER_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/finder/product/list/get";
+    /** 获取带货达人商品数据 */
+    String GET_FINDER_PRODUCT_OVERALL_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/finder/product/overall/get";
+    /** 获取店铺开播列表 */
+    String GET_LIVE_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/live/list/get";
+    /** 获取商品详细信息 */
+    String GET_SHOP_PRODUCT_DATA_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/product/data/get";
+    /** 获取商品列表 */
+    String GET_SHOP_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/product/list/get";
+    /** 获取店铺人群数据 */
+    String GET_SHOP_SALE_PROFILE_DATA_URL = "https://api.weixin.qq.com/channels/ec/compass/shop/sale/profile/data/get";
   }
 }

@@ -315,7 +315,7 @@ public class WxMpMessageRouter {
     return this.route(appid, wxMessage, new HashMap<>(2));
   }
 
-  private boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {
+  protected boolean isMsgDuplicated(WxMpXmlMessage wxMessage) {
     StringBuilder messageId = new StringBuilder();
     if (wxMessage.getMsgId() == null) {
       messageId.append(wxMessage.getCreateTime())

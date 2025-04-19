@@ -72,5 +72,33 @@ public class WechatPayUploadHttpPost extends HttpPost {
 
       return request;
     }
+
+    /**
+     * 平台收付通（注销申请）-图片上传-图片上传
+     * https://pay.weixin.qq.com/docs/partner/apis/ecommerce-cancel/media/upload-media.html
+     * @return WechatPayUploadHttpPost
+     */
+    public WechatPayUploadHttpPost buildEcommerceAccount() {
+      if (fileName == null || fileSha256 == null || fileInputStream == null) {
+        throw new IllegalArgumentException("缺少待上传图片文件信息");
+      }
+
+      if (uri == null) {
+        throw new IllegalArgumentException("缺少上传图片接口URL");
+      }
+
+      String meta = String.format("{\"file_name\":\"%s\",\"file_digest\":\"%s\"}", fileName, fileSha256);
+      WechatPayUploadHttpPost request = new WechatPayUploadHttpPost(uri, meta);
+
+      MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+      entityBuilder.setMode(HttpMultipartMode.RFC6532)
+        .addBinaryBody("file", fileInputStream, fileContentType, fileName)
+        .addTextBody("meta", meta, ContentType.APPLICATION_JSON);
+
+      request.setEntity(entityBuilder.build());
+      request.addHeader("Accept", ContentType.APPLICATION_JSON.toString());
+
+      return request;
+    }
   }
 }

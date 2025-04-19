@@ -13,6 +13,8 @@ import me.chanjar.weixin.cp.bean.WxCpUserDetail;
 import me.chanjar.weixin.cp.bean.workbench.WxCpSecondVerificationInfo;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
+import java.util.Optional;
+
 import static me.chanjar.weixin.common.api.WxConsts.OAuth2Scope.*;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.OAuth2.*;
 
@@ -74,9 +76,9 @@ public class WxCpOAuth2ServiceImpl implements WxCpOAuth2Service {
     JsonObject jo = GsonParser.parse(responseText);
 
     return WxCpOauth2UserInfo.builder()
-      .userId(GsonHelper.getString(jo, "UserId"))
+      .userId(Optional.ofNullable(GsonHelper.getString(jo, "UserId")).orElse(GsonHelper.getString(jo, "userid")))
       .deviceId(GsonHelper.getString(jo, "DeviceId"))
-      .openId(GsonHelper.getString(jo, "OpenId"))
+      .openId(Optional.ofNullable(GsonHelper.getString(jo, "OpenId")).orElse(GsonHelper.getString(jo, "openid")))
       .userTicket(GsonHelper.getString(jo, "user_ticket"))
       .expiresIn(GsonHelper.getString(jo, "expires_in"))
       .externalUserId(GsonHelper.getString(jo, "external_userid"))

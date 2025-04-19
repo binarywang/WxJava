@@ -19,7 +19,18 @@ public enum ShareScene {
   CHANNEL_HOME(4, "视频号主页"),
   /** 5 商品详情页 */
   PRODUCT_DETAIL(5, "商品详情页"),
-
+  /** 6	带商品的公众号文章 */
+  MP_ARTICLE(6, "带商品的公众号文章"),
+  /** 7	商品链接 */
+  PRODUCT_LINK(7, "商品链接"),
+  /** 8	商品二维码 */
+  PRODUCT_QR_CODE(8, "商品二维码"),
+  /** 9	商品口令 */
+  PRODUCT_TAG_LINK(9, "商品口令"),
+  /** 12 视频号橱窗链接 */
+  WINDOW_LINK(12, "视频号橱窗链接"),
+  /** 13 视频号橱窗二维码 */
+  WINDOW_QR_CODE(13, "视频号橱窗二维码"),
   ;
 
 

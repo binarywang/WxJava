@@ -9,8 +9,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /**
  * 资金流水列表 响应
  *
- * @author LiXiZe
- * @since 2023-04-16
+ * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
 @NoArgsConstructor

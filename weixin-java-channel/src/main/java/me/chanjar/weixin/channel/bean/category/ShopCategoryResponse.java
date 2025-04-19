@@ -23,5 +23,7 @@ public class ShopCategoryResponse extends WxChannelBaseResponse {
   @JsonProperty("cat_list")
   private List<ShopCategory> categories;
 
-
+  /** 类目列表 */
+  @JsonProperty("cat_list_v2")
+  private List<ShopCategory> catListV2;
 }

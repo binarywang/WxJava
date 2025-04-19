@@ -8,7 +8,9 @@ import lombok.Getter;
  * 微信视频号全局返回码
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请使用 {@link me.chanjar.weixin.common.error.WxChannelErrorMsgEnum} 替代
  */
+@Deprecated
 @Getter
 public enum WxChannelErrorMsgEnum {
   /**

@@ -337,6 +337,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    * @return the string
    * @throws WxErrorException the wx error exception
    */
+  @Override
   public String post(String url, String postData, boolean withoutSuiteAccessToken) throws WxErrorException {
     return execute(SimplePostRequestExecutor.create(this), url, postData, withoutSuiteAccessToken);
   }
