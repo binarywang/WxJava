@@ -199,6 +199,13 @@ public class WxCpXmlMessage implements Serializable {
   private List<SelectedItem> selectedItems;
 
   /**
+   * <a href="https://developer.work.weixin.qq.com/document/path/96488#%E5%9B%9E%E8%B0%83%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%BB%93%E6%9E%9C">异步任务id</a>
+   */
+  @XStreamAlias("JobId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String jobId;
+
+  /**
    * 微信客服
    * 调用拉取消息接口时，需要传此token，用于校验请求的合法性
    */

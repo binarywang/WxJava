@@ -219,6 +219,11 @@ public class WxCpConsts {
      */
     public static final String CUSTOMER_ACQUISITION = "customer_acquisition";
 
+    /**
+     * <a href="https://developer.work.weixin.qq.com/document/path/96488#%E5%9B%9E%E8%B0%83%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%BB%93%E6%9E%9C">异步上传临时素材结果回调通知</a>
+     */
+    public static final String UPLOAD_MEDIA_JOB_FINISH = "upload_media_job_finish";
+
   }
 
   /**
