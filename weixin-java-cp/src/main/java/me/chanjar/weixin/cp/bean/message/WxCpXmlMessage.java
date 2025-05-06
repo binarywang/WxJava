@@ -155,6 +155,10 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String memChangeCnt;
 
+  @XStreamAlias("MemChangeList")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String MemChangeList;
+
   @XStreamAlias("Source")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String source;
