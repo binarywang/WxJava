@@ -1,0 +1,57 @@
+name: Publish to Maven Central
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 检出代码
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      # 设置所需的Java版本
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          server-id: ossrh
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          cache: maven
+
+      - name: Verify GPG keys
+        run: |
+          echo "Available GPG Keys:"
+          gpg --list-secret-keys --keyid-format LONG
+
+      - name: Generate version && Set version
+        id: set_version
+        run: |
+          git describe --tags 2>/dev/null || echo "no tag"
+          TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+          GIT_DESCRIBE=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.1")
+          VERSION="${GIT_DESCRIBE}-${TIMESTAMP}"
+          echo "Generated version: $VERSION"
+          mvn versions:set -DnewVersion=$VERSION --no-transfer-progress
+        env:
+          TZ: Asia/Shanghai
+
+      - name: Publish to Maven Central
+        run: |
+          mvn clean deploy -P release \
+            -Dmaven.test.skip=true \
+            -Dgpg.args="--batch --yes --pinentry-mode loopback" \
+            --no-transfer-progress
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

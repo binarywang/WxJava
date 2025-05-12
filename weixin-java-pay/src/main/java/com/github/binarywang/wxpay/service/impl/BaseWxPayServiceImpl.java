@@ -30,6 +30,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
@@ -59,12 +60,11 @@ import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Slf4j
 public abstract class BaseWxPayServiceImpl implements WxPayService {
   private static final String TOTAL_FUND_COUNT = "资金流水总笔数";
 
   private static final Gson GSON = new GsonBuilder().create();
-
-  final Logger log = LoggerFactory.getLogger(this.getClass());
 
   static ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
 

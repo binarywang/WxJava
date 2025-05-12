@@ -9,6 +9,7 @@ import jodd.http.ProxyInfo;
 import jodd.http.ProxyInfo.ProxyType;
 import jodd.http.net.SSLSocketHttpConnectionProvider;
 import jodd.http.net.SocketHttpConnectionProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
@@ -24,6 +25,7 @@ import java.util.Base64;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Slf4j
 public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException {
@@ -31,13 +33,13 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
       HttpRequest request = this.buildHttpRequest(url, requestStr, useKey);
       byte[] responseBytes = request.send().bodyBytes();
       final String responseString = Base64.getEncoder().encodeToString(responseBytes);
-      this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据(Base64编码后)】：{}", url, requestStr, responseString);
+      log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据(Base64编码后)】：{}", url, requestStr, responseString);
       if (this.getConfig().isIfSaveApiData()) {
         wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
       }
       return responseBytes;
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
       throw new WxPayException(e.getMessage(), e);
     }
@@ -49,13 +51,13 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
       HttpRequest request = this.buildHttpRequest(url, requestStr, useKey);
       String responseString = this.getResponseString(request.send());
 
-      this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+      log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
       if (this.getConfig().isIfSaveApiData()) {
         wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
       }
       return responseString;
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
       throw new WxPayException(e.getMessage(), e);
     }
@@ -146,9 +148,9 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
 
   private String getResponseString(HttpResponse response) throws WxPayException {
     try {
-      this.log.debug("【微信服务器响应头信息】：\n{}", response.toString(false));
+      log.debug("【微信服务器响应头信息】：\n{}", response.toString(false));
     } catch (NullPointerException e) {
-      this.log.warn("HttpResponse.toString() 居然抛出空指针异常了", e);
+      log.warn("HttpResponse.toString() 居然抛出空指针异常了", e);
     }
 
     String responseString = response.bodyText();
