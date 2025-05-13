@@ -35,6 +35,17 @@ public interface WxChannelOrderService {
   OrderInfoResponse getOrder(String orderId) throws WxErrorException;
 
   /**
+   * 获取订单详情
+   *
+   * @param orderId             订单id
+   * @param encodeSensitiveInfo 是否编码敏感信息
+   * @return 订单详情
+   *
+   * @throws WxErrorException 异常
+   */
+  OrderInfoResponse getOrder(String orderId, Boolean encodeSensitiveInfo) throws WxErrorException;
+
+  /**
    * 获取订单列表
    *
    * @param param 搜索条件
