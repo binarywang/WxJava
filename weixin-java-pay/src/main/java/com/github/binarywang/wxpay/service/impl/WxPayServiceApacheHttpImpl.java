@@ -105,8 +105,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   }
 
   private String requestV3(String url, String requestStr, HttpRequestBase httpRequestBase) throws WxPayException {
-    try (CloseableHttpClient httpClient = this.createApiV3HttpClient();
-         CloseableHttpResponse response = httpClient.execute(httpRequestBase)) {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    try (CloseableHttpResponse response = httpClient.execute(httpRequestBase)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       //post方法有可能会没有返回值的情况
@@ -142,8 +142,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
     HttpPost httpPost = this.createHttpPost(url, requestStr);
     this.configureRequest(httpPost);
-    try (CloseableHttpClient httpClient = this.createApiV3HttpClient();
-         CloseableHttpResponse response = httpClient.execute(httpPost)) {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       String responseString = "{}";
@@ -178,9 +178,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public String requestV3(String url, HttpRequestBase httpRequest) throws WxPayException {
     this.configureRequest(httpRequest);
-
-    try (CloseableHttpClient httpClient = this.createApiV3HttpClient();
-         CloseableHttpResponse response = httpClient.execute(httpRequest)) {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       //post方法有可能会没有返回值的情况
@@ -223,11 +222,9 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public InputStream downloadV3(String url) throws WxPayException {
     HttpGet httpGet = new WxPayV3DownloadHttpGet(url);
-    httpGet.addHeader(ACCEPT, ContentType.WILDCARD.getMimeType());
-    String serialNumber = getWechatPaySerial(getConfig());
-    httpGet.addHeader(WECHAT_PAY_SERIAL, serialNumber);
-    try (CloseableHttpClient httpClient = this.createApiV3HttpClient();
-         CloseableHttpResponse response = httpClient.execute(httpGet)) {
+    this.configureRequest(httpGet);
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       Header contentType = response.getFirstHeader(HttpHeaders.CONTENT_TYPE);
