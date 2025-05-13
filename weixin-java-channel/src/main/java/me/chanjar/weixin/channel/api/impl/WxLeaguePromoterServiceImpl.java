@@ -59,6 +59,34 @@ public class WxLeaguePromoterServiceImpl implements WxLeaguePromoterService {
   }
 
   @Override
+  public WxChannelBaseResponse addPromoterV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
+    String resJson = shopService.post(ADD_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse updatePromoterV2(String promoterId, int type) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\",\"type\":" + type + "}";
+    String resJson = shopService.post(EDIT_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse deletePromoterV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
+    String resJson = shopService.post(DELETE_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public PromoterInfoResponse getPromoterInfoV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
+    String resJson = shopService.post(GET_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, PromoterInfoResponse.class);
+  }
+
+  @Override
   public PromoterListResponse listPromoter(Integer pageIndex, Integer pageSize, Integer status)
     throws WxErrorException {
     PromoterListParam param = new PromoterListParam(pageIndex, pageSize, status);
