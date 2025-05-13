@@ -65,7 +65,7 @@ public class XmlUtils {
     final List<String> names = names(nodes);
 
     // 判断节点下有无非文本节点(非Text和CDATA)，如无，直接取Text文本内容
-    if (names.size() < 1) {
+    if (names.isEmpty()) {
       return element.getText();
     }
 

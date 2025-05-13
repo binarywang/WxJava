@@ -4,7 +4,6 @@ import cn.binarywang.wx.miniapp.api.WxMaDeviceSubscribeService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.device.WxMaDeviceSubscribeMessageRequest;
 import cn.binarywang.wx.miniapp.bean.device.WxMaDeviceTicketRequest;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.api.WxConsts;

@@ -137,7 +137,7 @@ public class WxChannelMessageRouter {
       }
     }
 
-    if (matchRules.size() == 0) {
+    if (matchRules.isEmpty()) {
       return null;
     }
     final List<Future<?>> futures = new ArrayList<>();
@@ -157,7 +157,7 @@ public class WxChannelMessageRouter {
       }
     }
 
-    if (futures.size() > 0) {
+    if (!futures.isEmpty()) {
       this.executorService.submit(() -> {
         for (Future<?> future : futures) {
           try {

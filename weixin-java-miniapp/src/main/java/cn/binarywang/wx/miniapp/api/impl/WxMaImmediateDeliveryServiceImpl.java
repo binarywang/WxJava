@@ -5,7 +5,6 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
 import cn.binarywang.wx.miniapp.bean.delivery.*;
 import cn.binarywang.wx.miniapp.bean.delivery.base.WxMaDeliveryBaseResponse;
-import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants;
 import cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.InstantDelivery;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonElement;

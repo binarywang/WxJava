@@ -51,7 +51,7 @@ public interface WxMaCloudService {
    * @return the list
    * @throws WxErrorException the wx error exception
    */
-  List<String> add(String collection, List list) throws WxErrorException;
+  List<String> add(String collection, List<?> list) throws WxErrorException;
 
   /**
    * Add string.

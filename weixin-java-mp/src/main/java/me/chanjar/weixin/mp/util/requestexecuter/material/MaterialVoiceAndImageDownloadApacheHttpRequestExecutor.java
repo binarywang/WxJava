@@ -26,7 +26,7 @@ import java.util.Map;
  * Created by ecoolper on 2017/5/5.
  */
 public class MaterialVoiceAndImageDownloadApacheHttpRequestExecutor extends MaterialVoiceAndImageDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public MaterialVoiceAndImageDownloadApacheHttpRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
+  public MaterialVoiceAndImageDownloadApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, File tmpDirFile) {
     super(requestHttp, tmpDirFile);
   }
 

@@ -28,7 +28,7 @@ import java.util.UUID;
  * created on  2018-09-13
  */
 public class MaQrCodeApacheHttpRequestExecutor extends MaQrCodeRequestExecutor<CloseableHttpClient, HttpHost> {
-  public MaQrCodeApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public MaQrCodeApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

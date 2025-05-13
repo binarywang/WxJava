@@ -205,12 +205,12 @@ public class WxCpMessageRouter {
       }
     }
 
-    if (matchRules.size() == 0) {
+    if (matchRules.isEmpty()) {
       return null;
     }
 
     WxCpXmlOutMessage res = null;
-    final List<Future> futures = new ArrayList<>();
+    final List<Future<?>> futures = new ArrayList<>();
     for (final WxCpMessageRouterRule rule : matchRules) {
       // 返回最后一个非异步的rule的执行结果
       if (rule.isAsync()) {
@@ -228,9 +228,9 @@ public class WxCpMessageRouter {
       }
     }
 
-    if (futures.size() > 0) {
+    if (!futures.isEmpty()) {
       this.executorService.submit(() -> {
-        for (Future future : futures) {
+        for (Future<?> future : futures) {
           try {
             future.get();
             log.debug("End session access: async=true, sessionId={}", wxMessage.getFromUserName());

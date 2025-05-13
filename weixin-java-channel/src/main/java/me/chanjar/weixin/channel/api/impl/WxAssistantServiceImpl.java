@@ -28,7 +28,7 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Assist
 public class WxAssistantServiceImpl implements WxAssistantService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
   @Override
   public WxChannelBaseResponse addWindowProduct(AddWindowProductRequest req) throws WxErrorException {
     String resJson = shopService.post(ADD_WINDOW_PRODUCT_URL, "{}");

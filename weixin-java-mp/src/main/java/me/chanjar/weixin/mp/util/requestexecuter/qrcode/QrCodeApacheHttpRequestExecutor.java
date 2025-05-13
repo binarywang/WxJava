@@ -26,7 +26,7 @@ import java.util.UUID;
  * Created by ecoolper on 2017/5/5.
  */
 public class QrCodeApacheHttpRequestExecutor extends QrCodeRequestExecutor<CloseableHttpClient, HttpHost> {
-  public QrCodeApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public QrCodeApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

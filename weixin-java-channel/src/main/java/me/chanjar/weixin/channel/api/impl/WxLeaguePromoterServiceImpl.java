@@ -24,9 +24,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxLeaguePromoterServiceImpl implements WxLeaguePromoterService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxLeaguePromoterServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxLeaguePromoterServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

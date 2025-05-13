@@ -66,9 +66,9 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
     List<String> libList = Arrays.asList(libFiles);
     // 判断windows系统会话存档sdk中dll的加载，因为会互相依赖所以是有顺序的，否则会导致无法加载sdk #2598
-    List<String> osLib = new LinkedList();
-    List<String> fileLib = new ArrayList();
-    libList.stream().forEach(s -> {
+    List<String> osLib = new LinkedList<>();
+    List<String> fileLib = new ArrayList<>();
+    libList.forEach(s -> {
       if (s.contains("lib")) {
         osLib.add(s);
       } else {

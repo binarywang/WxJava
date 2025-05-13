@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.http.HttpType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -88,12 +89,7 @@ public class WxMaServiceHttpClientImpl extends BaseWxMaServiceImpl {
       if (httpGet != null) {
         httpGet.releaseConnection();
       }
-      if (response != null) {
-        try {
-          response.close();
-        } catch (IOException e) {
-        }
-      }
+      IOUtils.closeQuietly(response);
     }
   }
 
@@ -124,12 +120,7 @@ public class WxMaServiceHttpClientImpl extends BaseWxMaServiceImpl {
       if (httpPost != null) {
         httpPost.releaseConnection();
       }
-      if (response != null) {
-        try {
-          response.close();
-        } catch (IOException e) {
-        }
-      }
+      IOUtils.closeQuietly(response);
     }
   }
 

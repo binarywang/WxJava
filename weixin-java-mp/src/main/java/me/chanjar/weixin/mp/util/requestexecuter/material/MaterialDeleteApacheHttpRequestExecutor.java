@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by ecoolper on 2017/5/5.
  */
 public class MaterialDeleteApacheHttpRequestExecutor extends MaterialDeleteRequestExecutor<CloseableHttpClient, HttpHost> {
-  public MaterialDeleteApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialDeleteApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

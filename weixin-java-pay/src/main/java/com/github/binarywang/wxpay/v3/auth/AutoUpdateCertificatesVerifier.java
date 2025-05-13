@@ -135,7 +135,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
           //更新时间
           instant = Instant.now();
         } catch (GeneralSecurityException | IOException e) {
-          log.warn("Auto update cert failed, exception = " + e);
+          log.warn("Auto update cert failed, exception = {}", e);
         } finally {
           lock.unlock();
         }
@@ -169,7 +169,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
       }
       this.verifier = new CertificatesVerifier(newCertList);
     } else {
-      log.warn("Auto update cert failed, statusCode = " + statusCode + ",body = " + body);
+      log.warn("Auto update cert failed, statusCode = {},body = {}", statusCode, body);
       throw new WxRuntimeException(this.getErrorMsg(body));
     }
   }

@@ -2,10 +2,7 @@ package me.chanjar.weixin.cp.bean.external.interceptrule;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
-import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.acquisition.WxCpCustomerAcquisitionInfo;
-import me.chanjar.weixin.cp.bean.external.acquisition.WxCpCustomerAcquisitionList;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;

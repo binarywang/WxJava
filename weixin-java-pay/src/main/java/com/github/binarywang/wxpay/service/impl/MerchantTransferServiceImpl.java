@@ -47,7 +47,7 @@ public class MerchantTransferServiceImpl implements MerchantTransferService {
     if (request.getLimit() != null) {
       url = String.format("%s&limit=%d", url, request.getLimit());
     }
-    if (request.getDetailStatus() != null && request.getDetailStatus().length() != 0) {
+    if (request.getDetailStatus() != null && !request.getDetailStatus().isEmpty()) {
       url = String.format("%s&detail_status=%s", url, request.getDetailStatus());
     }
 
@@ -74,7 +74,7 @@ public class MerchantTransferServiceImpl implements MerchantTransferService {
     if (request.getLimit() != null) {
       url = String.format("%s&limit=%d", url, request.getLimit());
     }
-    if (request.getDetailStatus() != null && request.getDetailStatus().length() != 0) {
+    if (request.getDetailStatus() != null && !request.getDetailStatus().isEmpty()) {
       url = String.format("%s&detail_status=%s", url, request.getDetailStatus());
     }
 

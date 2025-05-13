@@ -21,7 +21,7 @@ public class BaseResp extends AbstractDeviceBean {
   private String errMsg;
 
   @Data
-  private class BaseInfo {
+  private static class BaseInfo {
     @SerializedName("device_type")
     private String deviceType;
 

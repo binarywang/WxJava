@@ -2,13 +2,11 @@ package me.chanjar.weixin.open.api.impl;
 
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMinishopService;
-import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.bean.minishop.*;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
@@ -24,7 +22,7 @@ public class WxOpenMinishopServiceImpl extends WxMaServiceImpl implements WxOpen
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
-    log.info("appId: " + appId);
+    log.info("appId: {}", appId);
     if (wxMaConfig == null) {
       log.error("WxMaConfig is null");
     }
@@ -58,7 +56,7 @@ public class WxOpenMinishopServiceImpl extends WxMaServiceImpl implements WxOpen
   @Override
   public String uploadImagePicFile(Integer height, Integer width, File file) throws WxErrorException {
     String url = UPLOAD_IMG_MINISHOP_FILE_URL + "?access_token="+getAccessToken(true)+"&height="+height+"&width="+width;
-    log.info("upload url: " + url);
+    log.info("upload url: {}", url);
     String response = post(url, file);
     return response;
   }

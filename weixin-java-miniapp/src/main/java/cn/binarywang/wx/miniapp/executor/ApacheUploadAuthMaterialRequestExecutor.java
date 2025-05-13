@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 public class ApacheUploadAuthMaterialRequestExecutor extends UploadAuthMaterialRequestExecutor<CloseableHttpClient, HttpHost> {
 
-    public ApacheUploadAuthMaterialRequestExecutor(RequestHttp requestHttp) {
+    public ApacheUploadAuthMaterialRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
         super(requestHttp);
     }
 

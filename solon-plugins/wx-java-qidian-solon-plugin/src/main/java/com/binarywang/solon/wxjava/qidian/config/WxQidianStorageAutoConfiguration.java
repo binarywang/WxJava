@@ -18,11 +18,13 @@ import org.noear.solon.annotation.Condition;
 import org.noear.solon.annotation.Configuration;
 import org.noear.solon.annotation.Inject;
 import org.noear.solon.core.AppContext;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisSentinelPool;
 import redis.clients.jedis.util.Pool;
 
+import java.time.Duration;
 import java.util.Set;
 
 /**
@@ -75,7 +77,7 @@ public class WxQidianStorageAutoConfiguration {
   }
 
   private WxQidianConfigStorage jedisConfigStorage() {
-    Pool jedisPool;
+    Pool<Jedis> jedisPool;
     if (StringUtils.isNotEmpty(redisHost) || StringUtils.isNotEmpty(redisHost2)) {
       jedisPool = getJedisPool();
     } else {
@@ -104,7 +106,7 @@ public class WxQidianStorageAutoConfiguration {
     }
   }
 
-  private Pool getJedisPool() {
+  private Pool<Jedis> getJedisPool() {
     WxQidianProperties.ConfigStorage storage = wxQidianProperties.getConfigStorage();
     RedisProperties redis = storage.getRedis();
 
@@ -116,7 +118,7 @@ public class WxQidianStorageAutoConfiguration {
       config.setMaxIdle(redis.getMaxIdle());
     }
     if (redis.getMaxWaitMillis() != null) {
-      config.setMaxWaitMillis(redis.getMaxWaitMillis());
+      config.setMaxWait(Duration.ofMillis(redis.getMaxWaitMillis()));
     }
     if (redis.getMinIdle() != null) {
       config.setMinIdle(redis.getMinIdle());

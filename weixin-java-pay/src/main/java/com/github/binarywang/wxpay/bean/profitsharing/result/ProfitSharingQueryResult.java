@@ -92,7 +92,7 @@ public class ProfitSharingQueryResult extends BaseWxPayResult implements Seriali
   }
 
   @Data
-  public class Receiver {
+  public static class Receiver {
     /**
      * 分账接收方类型
      */

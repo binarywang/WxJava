@@ -59,7 +59,7 @@ public class MultipleSelect implements Serializable {
     }
 // select_list
     List<CheckboxOption> options = this.getOptions();
-    if (null != options && options.size() > 0) {
+    if (null != options && !options.isEmpty()) {
       JsonArray optionJsonArray = new JsonArray();
       for (CheckboxOption option : this.getOptions()) {
         JsonObject tempObject = option.toJson();

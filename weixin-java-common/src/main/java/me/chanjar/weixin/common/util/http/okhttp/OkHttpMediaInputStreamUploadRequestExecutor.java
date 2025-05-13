@@ -20,7 +20,7 @@ import java.io.InputStream;
  * created on  2022/02/15
  */
 public class OkHttpMediaInputStreamUploadRequestExecutor extends MediaInputStreamUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpMediaInputStreamUploadRequestExecutor(RequestHttp requestHttp) {
+  public OkHttpMediaInputStreamUploadRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

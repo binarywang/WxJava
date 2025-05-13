@@ -25,7 +25,7 @@ import java.nio.charset.StandardCharsets;
  * created on  2022/02/15
  */
 public class JoddHttpMediaInputStreamUploadRequestExecutor extends MediaInputStreamUploadRequestExecutor<HttpConnectionProvider, ProxyInfo> {
-  public JoddHttpMediaInputStreamUploadRequestExecutor(RequestHttp requestHttp) {
+  public JoddHttpMediaInputStreamUploadRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

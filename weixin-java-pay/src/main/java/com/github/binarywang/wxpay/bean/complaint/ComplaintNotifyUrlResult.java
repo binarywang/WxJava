@@ -1,13 +1,10 @@
 package com.github.binarywang.wxpay.bean.complaint;
 
 
-import com.github.binarywang.wxpay.bean.media.MarketingImageUploadResult;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 微信消费者投诉2.0

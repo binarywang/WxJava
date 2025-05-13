@@ -3,6 +3,7 @@ package me.chanjar.weixin.channel.executor;
 
 import java.io.File;
 import java.io.IOException;
+
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -59,8 +60,13 @@ public class ChannelFileUploadRequestExecutor implements RequestExecutor<String,
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<String, File> create(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
-    return new ChannelFileUploadRequestExecutor(requestHttp);
+  public static RequestExecutor<String, File> create(RequestHttp<?, ?> requestHttp) throws WxErrorException {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ChannelFileUploadRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+      default:
+        throw new WxErrorException("不支持的http框架");
+    }
   }
 
 }

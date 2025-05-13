@@ -49,7 +49,7 @@ public class WxMenuGsonAdapter implements JsonSerializer<WxMenu>, JsonDeserializ
     buttonJson.addProperty("article_id", button.getArticleId());
     buttonJson.addProperty("appid", button.getAppId());
     buttonJson.addProperty("pagepath", button.getPagePath());
-    if (button.getSubButtons() != null && button.getSubButtons().size() > 0) {
+    if (button.getSubButtons() != null && !button.getSubButtons().isEmpty()) {
       JsonArray buttonArray = new JsonArray();
       for (WxMenuButton sub_button : button.getSubButtons()) {
         buttonArray.add(convertToJson(sub_button));

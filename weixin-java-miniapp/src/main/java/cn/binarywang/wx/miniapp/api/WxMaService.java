@@ -147,7 +147,7 @@ public interface WxMaService extends WxService {
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
 
   WxMaApiResponse execute(
-      ApiSignaturePostRequestExecutor executor,
+      ApiSignaturePostRequestExecutor<?, ?> executor,
       String uri,
       Map<String, String> headers,
       String data)
@@ -353,7 +353,7 @@ public interface WxMaService extends WxService {
    *
    * @return . request http
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   /**
    * 获取物流助手接口服务对象

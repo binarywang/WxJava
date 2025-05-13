@@ -86,7 +86,7 @@ public class WxMpStoreServiceImpl implements WxMpStoreService {
     if (list.getTotalCount() > limit) {
       int begin = limit;
       WxMpStoreListResult followingList = this.list(begin, limit);
-      while (followingList.getBusinessList().size() > 0) {
+      while (!followingList.getBusinessList().isEmpty()) {
         stores.addAll(followingList.getBusinessList());
         begin += limit;
         if (begin >= list.getTotalCount()) {

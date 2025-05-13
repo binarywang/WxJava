@@ -11,11 +11,9 @@ import java.util.List;
  * 门店管理的相关接口代码.
  * Created by Binary Wang on 2016-09-23.
  *
- * @param <H> the type parameter
- * @param <P> the type parameter
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public interface WxMpStoreService<H, P> {
+public interface WxMpStoreService {
     /**
      * <pre>
      * 创建门店

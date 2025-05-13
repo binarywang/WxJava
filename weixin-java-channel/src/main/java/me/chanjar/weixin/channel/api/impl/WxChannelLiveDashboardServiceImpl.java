@@ -27,10 +27,10 @@ public class WxChannelLiveDashboardServiceImpl implements WxChannelLiveDashboard
   /**
    * 微信商店服务
    */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
   private final ObjectMapper objectMapper = new ObjectMapper();
 
-  public WxChannelLiveDashboardServiceImpl(BaseWxChannelServiceImpl shopService) {this.shopService = shopService;}
+  public WxChannelLiveDashboardServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {this.shopService = shopService;}
 
   @Override
   public LiveListResponse getLiveList(Long ds) throws WxErrorException {

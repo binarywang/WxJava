@@ -26,7 +26,7 @@ import java.io.IOException;
  * created on  2022/02/15
  */
 public class ApacheMediaInputStreamUploadRequestExecutor extends MediaInputStreamUploadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMediaInputStreamUploadRequestExecutor(RequestHttp requestHttp) {
+  public ApacheMediaInputStreamUploadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

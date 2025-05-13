@@ -340,7 +340,7 @@ public interface WxQidianService extends WxService {
    *
    * @return RequestHttp对象 request http
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   WxQidianDialService getDialService();
 

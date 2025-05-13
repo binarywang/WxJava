@@ -44,7 +44,7 @@ public class TemplateCardButtonSelection implements Serializable {
       btnObject.addProperty("selected_id", this.selectedId);
     }
 
-    if (this.optionList != null && this.optionList.size() > 0) {
+    if (this.optionList != null && !this.optionList.isEmpty()) {
       JsonArray optionJsonArray = new JsonArray();
       for (TemplateCardButtonSelectionOption jump : this.getOptionList()) {
         JsonObject tempObject = jump.toJson();

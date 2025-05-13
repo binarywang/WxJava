@@ -14,7 +14,7 @@ public enum WxCardType {
   GIFT("GIFT"),
   GENERAL_COUPON("GENERAL_COUPON");
 
-  private String code;
+  private final String code;
 
   WxCardType(String code) {
     this.code = code;

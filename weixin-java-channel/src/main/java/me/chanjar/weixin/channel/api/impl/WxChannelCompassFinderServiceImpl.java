@@ -20,9 +20,9 @@ public class WxChannelCompassFinderServiceImpl implements WxChannelCompassFinder
   /**
    * 微信商店服务
    */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelCompassFinderServiceImpl(BaseWxChannelServiceImpl shopService) {this.shopService = shopService;}
+  public WxChannelCompassFinderServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {this.shopService = shopService;}
 
   @Override
   public OverallResponse getOverall(String ds) throws WxErrorException {

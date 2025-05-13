@@ -54,9 +54,9 @@ public class WxChannelFundServiceImpl implements WxChannelFundService {
 
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelFundServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelFundServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

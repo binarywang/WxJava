@@ -131,5 +131,5 @@ public interface BaseWxChannelService extends WxService {
    *
    * @return . request http
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 }

@@ -22,7 +22,7 @@ import java.nio.charset.StandardCharsets;
  */
 @Slf4j
 public class JoddHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<HttpConnectionProvider, ProxyInfo> {
-  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+  public JoddHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp, String respType, String imgUrl) {
     super(requestHttp, respType, imgUrl);
   }
 
@@ -51,7 +51,7 @@ public class JoddHttpMinishopMediaUploadRequestCustomizeExecutor extends Minisho
     if (error.getErrorCode() != 0) {
       throw new WxErrorException(error);
     }
-    log.info("responseContent: " + responseContent);
+    log.info("responseContent: {}", responseContent);
 
     return WxMinishopImageUploadCustomizeResult.fromJson(responseContent);
   }

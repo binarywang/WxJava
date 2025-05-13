@@ -105,17 +105,7 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
   @Override
   public Lock getLockByKey(String key) {
-    Lock lock = locks.get(key);
-    if (lock == null) {
-      synchronized (this) {
-        lock = locks.get(key);
-        if (lock == null) {
-          lock = new ReentrantLock();
-          locks.put(key, lock);
-        }
-      }
-    }
-    return lock;
+    return locks.computeIfAbsent(key, e -> new ReentrantLock());
   }
 
   @Override

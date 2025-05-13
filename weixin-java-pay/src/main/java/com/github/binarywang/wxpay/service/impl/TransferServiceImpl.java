@@ -87,7 +87,7 @@ public class TransferServiceImpl implements TransferService {
   @Override
   public TransferBillsResult transferBills(TransferBillsRequest request) throws WxPayException {
     String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills", this.payService.getPayBaseUrl());
-    if (request.getUserName() != null && request.getUserName().length() > 0) {
+    if (request.getUserName() != null && !request.getUserName().isEmpty()) {
       X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
       RsaCryptoUtil.encryptFields(request, validCertificate);
     }

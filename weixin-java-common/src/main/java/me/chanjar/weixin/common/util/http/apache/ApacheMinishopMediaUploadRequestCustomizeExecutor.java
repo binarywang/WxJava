@@ -24,7 +24,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+  public ApacheMinishopMediaUploadRequestCustomizeExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, String respType, String imgUrl) {
     super(requestHttp, respType, imgUrl);
   }
 
@@ -64,7 +64,7 @@ public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopU
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);
       }
-      log.info("responseContent: " + responseContent);
+      log.info("responseContent: {}", responseContent);
       return WxMinishopImageUploadCustomizeResult.fromJson(responseContent);
     } finally {
       httpPost.releaseConnection();

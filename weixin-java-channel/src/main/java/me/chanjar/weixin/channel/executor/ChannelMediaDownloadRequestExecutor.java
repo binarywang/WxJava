@@ -103,8 +103,13 @@ public class ChannelMediaDownloadRequestExecutor implements RequestExecutor<Chan
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<ChannelImageResponse, String> create(RequestHttp requestHttp, File tmpDirFile) {
-    return new ChannelMediaDownloadRequestExecutor(requestHttp, tmpDirFile);
+  public static RequestExecutor<ChannelImageResponse, String> create(RequestHttp<?, ?> requestHttp, File tmpDirFile) throws WxErrorException {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ChannelMediaDownloadRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, tmpDirFile);
+      default:
+        throw new WxErrorException("不支持的http框架");
+    }
   }
 
   /**
@@ -138,7 +143,7 @@ public class ChannelMediaDownloadRequestExecutor implements RequestExecutor<Chan
   }
 
   private String extractFileNameFromContentString(String content) throws WxErrorException {
-    if (content == null || content.length() == 0) {
+    if (content == null || content.isEmpty()) {
       return createDefaultFileName();
     }
     Matcher m = PATTERN.matcher(content);

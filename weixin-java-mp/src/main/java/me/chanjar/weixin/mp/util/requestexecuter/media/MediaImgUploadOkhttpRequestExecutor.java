@@ -21,7 +21,7 @@ import java.io.IOException;
 public class MediaImgUploadOkhttpRequestExecutor extends MediaImgUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public MediaImgUploadOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MediaImgUploadOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

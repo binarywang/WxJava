@@ -16,6 +16,7 @@ import me.chanjar.weixin.cp.api.WxCpMediaService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.media.MediaUploadByUrlReq;
 import me.chanjar.weixin.cp.bean.media.MediaUploadByUrlResult;
+import org.apache.commons.io.IOUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,12 +68,7 @@ public class WxCpMediaServiceImpl implements WxCpMediaService {
         , this.mainService.getWxCpConfigStorage().getApiUrl(MEDIA_UPLOAD + mediaType),
         new InputStreamData(inputStream, filename));
     } finally {
-      if (inputStream != null) {
-        try {
-          inputStream.close();
-        } catch (IOException e) {
-        }
-      }
+      IOUtils.closeQuietly(inputStream);
       if (conn != null) {
         conn.disconnect();
       }

@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class ApacheVodSingleUploadRequestExecutor extends VodSingleUploadRequestExecutor<CloseableHttpClient, HttpHost> {
 
-  public ApacheVodSingleUploadRequestExecutor(RequestHttp requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
+  public ApacheVodSingleUploadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
     super(requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
 
   }

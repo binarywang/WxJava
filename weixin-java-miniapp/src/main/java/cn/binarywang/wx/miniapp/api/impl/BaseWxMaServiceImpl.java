@@ -169,7 +169,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private int maxRetryTimes = 5;
 
   @Override
-  public RequestHttp getRequestHttp() {
+  public RequestHttp<H, P> getRequestHttp() {
     return this;
   }
 
@@ -232,7 +232,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     try {
       return SHA1.gen(this.getWxMaConfig().getToken(), timestamp, nonce).equals(signature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -297,7 +297,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   private boolean isApiSignatureRequired(String url) {
     return this.getWxMaConfig().getApiSignatureAesKey() != null
-        && Arrays.stream(urlPathSupportApiSignature).anyMatch(part -> url.contains(part));
+        && Arrays.stream(urlPathSupportApiSignature).anyMatch(url::contains);
   }
 
   @Override
@@ -361,7 +361,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   @Override
   public WxMaApiResponse execute(
-      ApiSignaturePostRequestExecutor executor,
+      ApiSignaturePostRequestExecutor<?, ?> executor,
       String uri,
       Map<String, String> headers,
       String data)

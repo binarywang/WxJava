@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class OkHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopUploadRequestCustomizeExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+  public OkHttpMinishopMediaUploadRequestCustomizeExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp, String respType, String imgUrl) {
     super(requestHttp, respType, imgUrl);
   }
 
@@ -50,7 +50,7 @@ public class OkHttpMinishopMediaUploadRequestCustomizeExecutor extends MinishopU
     if (error.getErrorCode() != 0) {
       throw new WxErrorException(error);
     }
-    log.info("responseContent: " + responseContent);
+    log.info("responseContent: {}", responseContent);
 
     return WxMinishopImageUploadCustomizeResult.fromJson(responseContent);
   }

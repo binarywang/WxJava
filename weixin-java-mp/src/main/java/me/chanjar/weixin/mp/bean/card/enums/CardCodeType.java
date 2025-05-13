@@ -9,7 +9,7 @@ public enum CardCodeType {
   CODE_TYPE_BARCODE("一维码"),
   CODE_TYPE_QRCODE("二维码");
 
-  private String description;
+  private final String description;
 
   CardCodeType(String description) {
     this.description = description;

@@ -99,7 +99,7 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
     if (StringUtils.isNotEmpty(name)) {
       jsonObject.addProperty("name", name);
     }
-    if (departments != null && departments.size() > 0) {
+    if (departments != null && !departments.isEmpty()) {
       JsonArray jsonArray = new JsonArray();
       for (Integer depart : departments) {
         jsonArray.add(new JsonPrimitive(depart));

@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Date;
 
 
 /**

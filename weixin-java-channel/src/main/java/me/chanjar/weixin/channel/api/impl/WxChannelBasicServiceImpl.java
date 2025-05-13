@@ -31,9 +31,9 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 public class WxChannelBasicServiceImpl implements WxChannelBasicService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelBasicServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelBasicServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

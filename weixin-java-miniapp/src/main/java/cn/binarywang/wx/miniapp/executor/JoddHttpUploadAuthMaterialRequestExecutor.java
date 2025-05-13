@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class JoddHttpUploadAuthMaterialRequestExecutor extends UploadAuthMaterialRequestExecutor<HttpConnectionProvider, ProxyInfo> {
 
-    public JoddHttpUploadAuthMaterialRequestExecutor(RequestHttp requestHttp) {
+    public JoddHttpUploadAuthMaterialRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp) {
         super(requestHttp);
     }
 
