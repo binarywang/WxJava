@@ -93,6 +93,16 @@ class VerifierBuilder {
   }
 
   /**
+   * 针对完全使用公钥的场景
+   * @param publicKeyId 公钥id
+   * @param publicKey 公钥
+   * @return
+   */
+  static Verifier buildPublicCertVerifier(String publicKeyId, PublicKey publicKey) {
+    return getPublicCertVerifier(publicKeyId, publicKey, null);
+  }
+
+  /**
    * 获取证书验证器.
    *
    * @param certSerialNo       certSerialNo
