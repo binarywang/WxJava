@@ -66,7 +66,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private int maxRetryTimes = 5;
 
   @Override
-  public RequestHttp getRequestHttp() {
+  public RequestHttp<H, P> getRequestHttp() {
     return this;
   }
 
@@ -75,7 +75,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
     try {
       return SHA1.gen(this.getConfig().getToken(), timestamp, nonce).equals(signature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -276,7 +276,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
    * @throws WxErrorException 异常
    */
   protected String extractAccessToken(String resultContent) throws WxErrorException {
-    log.debug("access-token response: " + resultContent);
+    log.debug("access-token response: {}", resultContent);
     WxChannelConfig config = this.getConfig();
     WxError error = WxError.fromJson(resultContent, WxType.Channel);
     if (error.getErrorCode() != 0) {

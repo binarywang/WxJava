@@ -37,9 +37,9 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelCategoryServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelCategoryServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
@@ -56,7 +56,7 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
     try {
       pid = Long.parseLong(parentId);
     } catch (Throwable e) {
-      log.error("parentId必须为数字, " + parentId, e);
+      log.error("parentId必须为数字, {}", parentId, e);
       return Collections.emptyList();
     }
     String reqJson = "{\"f_cat_id\": " + pid + "}";
@@ -80,7 +80,7 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
     try {
       catId = Long.parseLong(id);
     } catch (Throwable e) {
-      log.error("id必须为数字, " + id, e);
+      log.error("id必须为数字, {}", id, e);
       return ResponseUtils.internalError(CategoryDetailResult.class);
     }
     String reqJson = "{\"cat_id\": " + catId + "}";

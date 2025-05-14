@@ -1,12 +1,10 @@
 package me.chanjar.weixin.common.util.http.okhttp;
 
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MinishopUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import okhttp3.*;
@@ -22,7 +20,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class OkHttpMinishopMediaUploadRequestExecutor extends MinishopUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpMinishopMediaUploadRequestExecutor(RequestHttp requestHttp) {
+  public OkHttpMinishopMediaUploadRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 
@@ -43,7 +41,7 @@ public class OkHttpMinishopMediaUploadRequestExecutor extends MinishopUploadRequ
     if (error.getErrorCode() != 0) {
       throw new WxErrorException(error);
     }
-    log.info("responseContent: " + responseContent);
+    log.info("responseContent: {}", responseContent);
 
     return WxMinishopImageUploadResult.fromJson(responseContent);
   }

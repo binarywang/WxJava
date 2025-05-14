@@ -17,7 +17,6 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpGetTokenReq;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpMaTransferSession;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
-import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.corpgroup.service.WxCpCgService;
 import me.chanjar.weixin.cp.corpgroup.service.WxCpLinkedCorpService;
 

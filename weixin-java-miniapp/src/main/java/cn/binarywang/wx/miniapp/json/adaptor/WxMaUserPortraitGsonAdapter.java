@@ -50,7 +50,7 @@ public class WxMaUserPortraitGsonAdapter implements JsonDeserializer<WxMaUserPor
 
   private Map<String, Long> getAsMap(JsonObject object, String memberName) {
     JsonArray array = object.getAsJsonArray(memberName);
-    if (array != null && array.size() > 0) {
+    if (array != null && !array.isEmpty()) {
       Map<String, Long> map = new LinkedHashMap<>(array.size());
       for (JsonElement element : array) {
         JsonObject elementObject = element.getAsJsonObject();

@@ -121,7 +121,7 @@ public class WxMpGuideServiceImpl implements WxMpGuideService {
   @Override
   public void setGuideAcctConfig(boolean isDelete, List<String> blackKeyWord, String guideAutoReply) throws WxErrorException {
     JsonObject jsonObject1 = null;
-    if (blackKeyWord != null && blackKeyWord.size() > 0) {
+    if (blackKeyWord != null && !blackKeyWord.isEmpty()) {
       jsonObject1 = new JsonObject();
       JsonArray jsonArray = new JsonArray();
       blackKeyWord.forEach(jsonArray::add);

@@ -2,9 +2,6 @@ package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.bean.card.CardUpdateResult;
-import me.chanjar.weixin.mp.bean.card.membercard.MemberCardActivateUserFormRequest;
-import me.chanjar.weixin.mp.bean.card.membercard.MemberCardActivateUserFormResult;
-import me.chanjar.weixin.mp.bean.card.membercard.MemberCardUpdateRequest;
 import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
 import me.chanjar.weixin.mp.bean.card.membercard.*;
 

@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public class ApacheVodUploadPartRequestExecutor extends VodUploadPartRequestExecutor<CloseableHttpClient, HttpHost> {
 
-  public ApacheVodUploadPartRequestExecutor(RequestHttp requestHttp, String uploadId, Integer partNumber, Integer resourceType) {
+  public ApacheVodUploadPartRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, String uploadId, Integer partNumber, Integer resourceType) {
     super(requestHttp, uploadId, partNumber, resourceType);
 
   }

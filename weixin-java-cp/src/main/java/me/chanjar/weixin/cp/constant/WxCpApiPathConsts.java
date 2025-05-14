@@ -238,6 +238,12 @@ public interface WxCpApiPathConsts {
      * The constant JSSDK_MEDIA_GET.
      */
     String JSSDK_MEDIA_GET = "/cgi-bin/media/get/jssdk";
+
+    /** The constant GET_UPLOAD_BY_URL_RESULT. */
+    String GET_UPLOAD_BY_URL_RESULT = "/cgi-bin/media/get_upload_by_url_result";
+
+    /** The constant UPLOAD_BY_URL. */
+    String UPLOAD_BY_URL = "/cgi-bin/media/upload_by_url";
   }
 
   /**

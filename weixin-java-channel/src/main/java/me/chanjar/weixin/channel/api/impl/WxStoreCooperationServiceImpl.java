@@ -25,9 +25,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxStoreCooperationServiceImpl implements WxStoreCooperationService {
 
   /** 微信小店服务 */
-  private final BaseWxChannelServiceImpl storeService;
+  private final BaseWxChannelServiceImpl<?, ?> storeService;
 
-  public WxStoreCooperationServiceImpl(BaseWxChannelServiceImpl storeService) {
+  public WxStoreCooperationServiceImpl(BaseWxChannelServiceImpl<?, ?> storeService) {
     this.storeService = storeService;
   }
 

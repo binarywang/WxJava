@@ -4,7 +4,6 @@ import cn.binarywang.wx.miniapp.api.WxMaOrderManagementService;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.order.WxMaOrderManagementGetOrderDetailPath;
 import cn.binarywang.wx.miniapp.bean.order.WxMaOrderManagementResult;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoBaseResponse;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;

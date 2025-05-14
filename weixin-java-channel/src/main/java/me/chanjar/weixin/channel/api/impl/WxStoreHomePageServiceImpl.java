@@ -37,9 +37,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxStoreHomePageServiceImpl implements WxStoreHomePageService {
 
   /** 微信小店服务 */
-  private final BaseWxChannelServiceImpl storeService;
+  private final BaseWxChannelServiceImpl<?, ?> storeService;
 
-  public WxStoreHomePageServiceImpl(BaseWxChannelServiceImpl storeService) {
+  public WxStoreHomePageServiceImpl(BaseWxChannelServiceImpl<?, ?> storeService) {
     this.storeService = storeService;
   }
 

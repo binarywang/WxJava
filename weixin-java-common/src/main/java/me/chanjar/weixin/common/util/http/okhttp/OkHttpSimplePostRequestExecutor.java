@@ -18,7 +18,7 @@ import java.util.Objects;
  */
 @Slf4j
 public class OkHttpSimplePostRequestExecutor extends SimplePostRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpSimplePostRequestExecutor(RequestHttp requestHttp) {
+  public OkHttpSimplePostRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

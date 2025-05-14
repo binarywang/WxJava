@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Broadcast.Goods.*;
-import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Code.GET_PAGE_URL;
 
 /**
  * <pre>
@@ -82,7 +81,7 @@ public class WxMaLiveGoodsServiceImpl implements WxMaLiveGoodsService {
     String responseContent = wxMaService.get(GET_APPROVED_GOODS, Joiner.on("&").withKeyValueSeparator("=").join(params));
     JsonObject jsonObject = GsonParser.parse(responseContent);
     JsonArray goodsArr = jsonObject.getAsJsonArray("goods");
-    if (goodsArr.size() > 0) {
+    if (!goodsArr.isEmpty()) {
       for (int i = 0; i < goodsArr.size(); i++) {
         // 接口返回key是驼峰
         JsonObject goods = (JsonObject) goodsArr.get(i);

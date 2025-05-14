@@ -22,7 +22,7 @@ import java.io.IOException;
  * Created by ecoolper on 2017/5/5.
  */
 public class ApacheMediaUploadRequestExecutor extends MediaUploadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMediaUploadRequestExecutor(RequestHttp requestHttp) {
+  public ApacheMediaUploadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

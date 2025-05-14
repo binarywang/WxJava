@@ -46,6 +46,16 @@ public class WxChannelOrderServiceImplTest {
   }
 
   @Test
+  public void testGetOrder2() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    boolean encodeSensitiveInfo = true;
+    OrderInfoResponse response = orderService.getOrder(orderId, encodeSensitiveInfo);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
   public void testGetOrders() throws WxErrorException {
     WxChannelOrderService orderService = channelService.getOrderService();
     OrderListParam param = new OrderListParam();

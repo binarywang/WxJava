@@ -20,7 +20,7 @@ import java.io.IOException;
 public class MaterialVideoInfoOkhttpRequestExecutor extends MaterialVideoInfoRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public MaterialVideoInfoOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialVideoInfoOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

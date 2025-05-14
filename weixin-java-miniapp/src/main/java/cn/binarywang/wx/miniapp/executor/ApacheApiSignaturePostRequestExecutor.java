@@ -24,7 +24,7 @@ public class ApacheApiSignaturePostRequestExecutor
   private static final Logger logger =
       LoggerFactory.getLogger(ApacheApiSignaturePostRequestExecutor.class);
 
-  public ApacheApiSignaturePostRequestExecutor(RequestHttp<?, ?> requestHttp) {
+  public ApacheApiSignaturePostRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

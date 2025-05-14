@@ -2,7 +2,6 @@ package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.order.WxMaOrderManagementGetOrderDetailPath;
 import cn.binarywang.wx.miniapp.bean.order.WxMaOrderManagementResult;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoBaseResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**

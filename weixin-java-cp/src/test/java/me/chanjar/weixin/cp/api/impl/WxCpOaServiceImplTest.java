@@ -162,8 +162,6 @@ public class WxCpOaServiceImplTest {
    */
   @Test
   public void testGetCropCheckinOption() throws WxErrorException {
-
-    Date now = new Date();
     List<WxCpCropCheckinOption> results = wxService.getOaService().getCropCheckinOption();
     assertThat(results).isNotNull();
     System.out.println("results ");

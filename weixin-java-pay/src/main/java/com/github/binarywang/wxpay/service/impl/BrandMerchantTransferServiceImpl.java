@@ -44,7 +44,7 @@ public class BrandMerchantTransferServiceImpl implements BrandMerchantTransferSe
     if (request.getNeedQueryDetail() != null) {
       url = String.format("%s?need_query_detail=%b", url, request.getNeedQueryDetail());
     }
-    if (request.getDetailState() != null && request.getDetailState().length() != 0) {
+    if (request.getDetailState() != null && !request.getDetailState().isEmpty()) {
       url = String.format("%s&detail_state=%s", url, request.getDetailState());
     }
 
@@ -68,7 +68,7 @@ public class BrandMerchantTransferServiceImpl implements BrandMerchantTransferSe
     if (request.getNeedQueryDetail() != null) {
       url = String.format("%s?need_query_detail=%b", url, request.getNeedQueryDetail());
     }
-    if (request.getDetailState() != null && request.getDetailState().length() != 0) {
+    if (request.getDetailState() != null && !request.getDetailState().isEmpty()) {
       url = String.format("%s&detail_state=%s", url, request.getDetailState());
     }
 

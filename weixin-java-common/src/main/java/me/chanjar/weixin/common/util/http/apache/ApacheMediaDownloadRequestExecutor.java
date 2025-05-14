@@ -28,7 +28,7 @@ import java.io.InputStream;
  * created on  2017/5/5
  */
 public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMediaDownloadRequestExecutor(RequestHttp requestHttp, File tmpDirFile) {
+  public ApacheMediaDownloadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, File tmpDirFile) {
     super(requestHttp, tmpDirFile);
   }
 

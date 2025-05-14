@@ -23,7 +23,7 @@ public enum CardWechatFieldType {
   USER_FORM_INFO_FLAG_INCOME("收入"),
   USER_FORM_INFO_FLAG_HABIT("兴趣爱好");
 
-  private String description;
+  private final String description;
 
   CardWechatFieldType(String description) {
     this.description = description;

@@ -9,7 +9,7 @@ public enum BusinessServiceType {
   BIZ_SERVICE_WITH_PET("可带宠物"),
   BIZ_SERVICE_FREE_WIFI("可带宠物");
 
-  private String description;
+  private final String description;
 
   BusinessServiceType(String description) {
     this.description = description;

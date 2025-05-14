@@ -20,7 +20,7 @@ public class JoddApiSignaturePostRequestExecutor
   private static final Logger logger =
       LoggerFactory.getLogger(JoddApiSignaturePostRequestExecutor.class);
 
-  public JoddApiSignaturePostRequestExecutor(RequestHttp<?, ?> requestHttp) {
+  public JoddApiSignaturePostRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

@@ -603,7 +603,7 @@ public class WxCpChatModel implements Serializable {
     private String sdkFileId;
 
     @SerializedName("filesize")
-    private Integer fileSize;
+    private Long fileSize;
 
     /**
      * From json file.

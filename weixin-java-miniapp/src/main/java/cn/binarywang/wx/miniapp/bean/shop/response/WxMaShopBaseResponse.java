@@ -2,7 +2,6 @@ package cn.binarywang.wx.miniapp.bean.shop.response;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 

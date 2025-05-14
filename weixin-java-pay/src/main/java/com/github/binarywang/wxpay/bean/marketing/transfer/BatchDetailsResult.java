@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * <pre>

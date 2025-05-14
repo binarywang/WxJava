@@ -2,8 +2,6 @@ package com.github.binarywang.wxpay.bean.bank;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import java.io.Serializable;
 

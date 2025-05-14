@@ -24,7 +24,7 @@ import java.io.IOException;
  * created on  2019/6/27 14:06
  */
 public class OcrDiscernApacheHttpRequestExecutor extends OcrDiscernRequestExecutor<CloseableHttpClient, HttpHost> {
-  public OcrDiscernApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public OcrDiscernApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

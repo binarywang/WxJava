@@ -91,7 +91,7 @@ public class WxMpGuideTagServiceImpl implements WxMpGuideTagService {
       new TypeToken<List<String>>() {
       }.getType());
     if (isExclude) {
-      if (list.size() > 0) {
+      if (!list.isEmpty()) {
         if (list.get(list.size() - 1).contains("\n")) {
           list.remove(list.size() - 1);
         }

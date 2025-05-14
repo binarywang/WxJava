@@ -23,9 +23,9 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Compla
 public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

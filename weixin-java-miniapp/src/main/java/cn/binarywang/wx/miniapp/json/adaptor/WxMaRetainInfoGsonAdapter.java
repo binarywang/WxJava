@@ -35,7 +35,7 @@ public class WxMaRetainInfoGsonAdapter implements JsonDeserializer<WxMaRetainInf
 
   private Map<Integer, Integer> getAsMap(JsonObject object, String memberName) {
     JsonArray array = object.getAsJsonArray(memberName);
-    if (array != null && array.size() > 0) {
+    if (array != null && !array.isEmpty()) {
       Map<Integer, Integer> map = new LinkedHashMap<>(array.size());
       for (JsonElement element : array) {
         JsonObject elementObject = element.getAsJsonObject();

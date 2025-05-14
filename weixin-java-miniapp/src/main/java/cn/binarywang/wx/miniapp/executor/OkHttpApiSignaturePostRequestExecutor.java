@@ -18,7 +18,7 @@ public class OkHttpApiSignaturePostRequestExecutor
   private static final Logger logger =
       LoggerFactory.getLogger(OkHttpApiSignaturePostRequestExecutor.class);
 
-  public OkHttpApiSignaturePostRequestExecutor(RequestHttp<?, ?> requestHttp) {
+  public OkHttpApiSignaturePostRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

@@ -1,6 +1,5 @@
 package me.chanjar.weixin.common.util.crypto;
 
-import com.google.common.base.CharMatcher;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import me.chanjar.weixin.common.error.WxRuntimeException;

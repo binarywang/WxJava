@@ -14,18 +14,7 @@ import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliverySendParam;
 import me.chanjar.weixin.channel.bean.delivery.FreshInspectParam;
-import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
-import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
-import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
-import me.chanjar.weixin.channel.bean.order.OrderAddressParam;
-import me.chanjar.weixin.channel.bean.order.OrderIdParam;
-import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
-import me.chanjar.weixin.channel.bean.order.OrderListParam;
-import me.chanjar.weixin.channel.bean.order.OrderListResponse;
-import me.chanjar.weixin.channel.bean.order.OrderPriceParam;
-import me.chanjar.weixin.channel.bean.order.OrderRemarkParam;
-import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
-import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
+import me.chanjar.weixin.channel.bean.order.*;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -39,15 +28,22 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxChannelOrderServiceImpl implements WxChannelOrderService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelOrderServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelOrderServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
   @Override
   public OrderInfoResponse getOrder(String orderId) throws WxErrorException {
-    OrderIdParam param = new OrderIdParam(orderId);
+    OrderInfoParam param = new OrderInfoParam(orderId, null);
+    String resJson = shopService.post(ORDER_GET_URL, param);
+    return ResponseUtils.decode(resJson, OrderInfoResponse.class);
+  }
+
+  @Override
+  public OrderInfoResponse getOrder(String orderId, Boolean encodeSensitiveInfo) throws WxErrorException {
+    OrderInfoParam param = new OrderInfoParam(orderId, encodeSensitiveInfo);
     String resJson = shopService.post(ORDER_GET_URL, param);
     return ResponseUtils.decode(resJson, OrderInfoResponse.class);
   }

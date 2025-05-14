@@ -12,7 +12,6 @@ import me.chanjar.weixin.mp.api.WxMpMerchantInvoiceService;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.invoice.merchant.*;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 import java.util.Map;
 

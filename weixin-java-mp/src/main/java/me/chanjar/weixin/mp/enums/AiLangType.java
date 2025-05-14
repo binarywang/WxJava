@@ -21,7 +21,7 @@ public enum AiLangType {
    */
   en_US("en_US");
 
-  private String code;
+  private final String code;
 
   AiLangType(String code) {
     this.code = code;

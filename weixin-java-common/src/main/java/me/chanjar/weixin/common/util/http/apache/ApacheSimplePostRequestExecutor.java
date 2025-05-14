@@ -21,7 +21,7 @@ import java.io.IOException;
  * created on  2017/5/4
  */
 public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheSimplePostRequestExecutor(RequestHttp requestHttp) {
+  public ApacheSimplePostRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

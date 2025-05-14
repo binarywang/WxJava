@@ -14,7 +14,7 @@ public enum CustomFieldNameType {
   FIELD_NAME_TYPE_SET_POINTS("集点"),
   FIELD_NAME_TYPE_TIMS("次数");
 
-  private String description;
+  private final String description;
 
   CustomFieldNameType(String description) {
     this.description = description;

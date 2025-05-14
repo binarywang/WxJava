@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 
 /**
  * 服务端网络相关接口
@@ -25,9 +26,9 @@ public class WxMaInternetServiceImpl implements WxMaInternetService {
 
   private String sha256(String data, String sessionKey) throws Exception {
     Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-    SecretKeySpec secret_key = new SecretKeySpec(sessionKey.getBytes("UTF-8"), "HmacSHA256");
+    SecretKeySpec secret_key = new SecretKeySpec(sessionKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
     sha256_HMAC.init(secret_key);
-    byte[] array = sha256_HMAC.doFinal(data.getBytes("UTF-8"));
+    byte[] array = sha256_HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
     StringBuilder sb = new StringBuilder();
     for (byte item : array) {
       sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));

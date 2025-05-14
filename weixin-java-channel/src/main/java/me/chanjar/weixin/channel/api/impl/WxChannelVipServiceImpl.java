@@ -18,9 +18,9 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Vip.*;
 
 @Slf4j
 public class WxChannelVipServiceImpl implements WxChannelVipService {
-  private BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelVipServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelVipServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

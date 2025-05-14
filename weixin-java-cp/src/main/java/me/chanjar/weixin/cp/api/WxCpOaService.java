@@ -22,7 +22,7 @@ public interface WxCpOaService {
    *
    * 请求方式：POST（HTTPS）
    * 请求地址： https://qyapi.weixin.qq.com/cgi-bin/oa/applyevent?access_token=ACCESS_TOKEN
-   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/91853
+   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/91853">文档地址</a>
    * </pre>
    *
    * @param request 请求
@@ -34,7 +34,7 @@ public interface WxCpOaService {
   /**
    * <pre>
    *  获取打卡数据
-   *  API doc : https://work.weixin.qq.com/api/doc#90000/90135/90262
+   *  <a href="https://work.weixin.qq.com/api/doc#90000/90135/90262">文档地址</a>
    * </pre>
    *
    * @param openCheckinDataType 打卡类型。1：上下班打卡；2：外出打卡；3：全部打卡
@@ -50,7 +50,7 @@ public interface WxCpOaService {
   /**
    * <pre>
    *   获取打卡规则
-   *   API doc : https://work.weixin.qq.com/api/doc#90000/90135/90263
+   *  <a href="https://work.weixin.qq.com/api/doc#90000/90135/90263">文档地址</a>
    * </pre>
    *
    * @param datetime   需要获取规则的当天日期
@@ -64,7 +64,7 @@ public interface WxCpOaService {
   /**
    * <pre>
    *   获取企业所有打卡规则
-   *   API doc : https://work.weixin.qq.com/api/doc/90000/90135/93384
+   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/93384">文档地址</a>
    * </pre>
    *
    * @return 打卡规则列表 crop checkin option
@@ -82,7 +82,7 @@ public interface WxCpOaService {
    *
    * 一次拉取调用最多拉取100个审批记录，可以通过多次拉取的方式来满足需求，但调用频率不可超过600次/分。
    *
-   * API doc : https://work.weixin.qq.com/api/doc/90000/90135/91816
+   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/91816">文档地址</a>
    * </pre>
    *
    * @param startTime 开始时间
@@ -121,7 +121,7 @@ public interface WxCpOaService {
    *
    * 一次拉取调用最多拉取100个审批记录，可以通过多次拉取的方式来满足需求，但调用频率不可超过600次/分。
    *
-   * API doc : https://work.weixin.qq.com/api/doc/90000/90135/91816
+   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/91816">文档地址</a>
    *
    * 1 接口频率限制 600次/分钟
    * 2 请求的参数endtime需要大于startime， 起始时间跨度不能超过31天；
@@ -146,7 +146,7 @@ public interface WxCpOaService {
    *
    *   企业可通过审批应用或自建应用Secret调用本接口，根据审批单号查询企业微信“审批应用”的审批申请详情。
    *
-   *   API Doc : https://work.weixin.qq.com/api/doc/90000/90135/91983
+   *  <a href="https://work.weixin.qq.com/api/doc/90000/90135/91983">文档地址</a>
    * </pre>
    *
    * @param spNo 审批单编号。

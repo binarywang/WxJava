@@ -4,12 +4,19 @@ import cn.binarywang.wx.miniapp.bean.WxMaApiResponse;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.Map;
+
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ApiSignaturePostRequestExecutor<H, P>
@@ -17,7 +24,7 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
 
   protected RequestHttp<H, P> requestHttp;
 
-  public ApiSignaturePostRequestExecutor(RequestHttp requestHttp) {
+  public ApiSignaturePostRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -54,14 +61,15 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
     return response;
   }
 
-  public static ApiSignaturePostRequestExecutor create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static ApiSignaturePostRequestExecutor<?, ?> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheApiSignaturePostRequestExecutor(requestHttp);
+        return new ApacheApiSignaturePostRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new JoddApiSignaturePostRequestExecutor(requestHttp);
+        return new JoddApiSignaturePostRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new OkHttpApiSignaturePostRequestExecutor(requestHttp);
+        return new OkHttpApiSignaturePostRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
       default:
         throw new IllegalArgumentException("非法请求参数");
     }

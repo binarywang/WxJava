@@ -11,7 +11,7 @@ public enum CardFieldType {
   CUSTOM_FIELD("自定义选项"),
   RICH_FIELD("自定义富文本类型");
 
-  private String description;
+  private final String description;
 
   CardFieldType(String description) {
     this.description = description;

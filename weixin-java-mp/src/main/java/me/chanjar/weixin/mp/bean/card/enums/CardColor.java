@@ -22,7 +22,7 @@ public enum CardColor {
   Color101("#cf3e36"),
   Color102("#5E6671");
 
-  private String type;
+  private final String type;
 
   CardColor(String type) {
     this.type = type;

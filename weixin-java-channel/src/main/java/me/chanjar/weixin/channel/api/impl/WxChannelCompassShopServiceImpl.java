@@ -41,9 +41,9 @@ public class WxChannelCompassShopServiceImpl implements WxChannelCompassShopServ
   /**
    * 微信商店服务
    */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelCompassShopServiceImpl(BaseWxChannelServiceImpl shopService) {this.shopService = shopService;}
+  public WxChannelCompassShopServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {this.shopService = shopService;}
 
   @Override
   public ShopOverallResponse getShopOverall(String ds) throws WxErrorException {

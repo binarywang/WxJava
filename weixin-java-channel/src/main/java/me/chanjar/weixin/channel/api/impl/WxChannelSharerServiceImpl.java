@@ -33,9 +33,9 @@ import me.chanjar.weixin.common.util.json.GsonHelper;
 public class WxChannelSharerServiceImpl implements WxChannelSharerService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelSharerServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelSharerServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

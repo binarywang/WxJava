@@ -29,7 +29,7 @@ import java.io.IOException;
 public class MaterialNewsInfoApacheHttpRequestExecutor
   extends MaterialNewsInfoRequestExecutor<CloseableHttpClient, HttpHost> {
 
-  public MaterialNewsInfoApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialNewsInfoApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 

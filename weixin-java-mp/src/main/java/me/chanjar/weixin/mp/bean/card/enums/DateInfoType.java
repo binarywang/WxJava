@@ -5,7 +5,7 @@ public enum DateInfoType {
   DATE_TYPE_FIX_TIME_RANGE("固定日期"),
   DATE_TYPE_FIX_TERM("固定时长");
 
-  private String description;
+  private final String description;
 
   DateInfoType(String description) {
     this.description = description;
