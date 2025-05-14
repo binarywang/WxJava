@@ -316,7 +316,7 @@ public class WxPayConfig {
           publicKey = PemUtils.loadPublicKey(pubInputStream);
         }
       } else {
-        // 使用完全公钥模式时，同时兼容平台证书和公钥
+        // 不使用完全公钥模式时，同时兼容平台证书和公钥
         X509Certificate certificate = null;
         // 尝试从p12证书中加载私钥和证书
         Object[] objects = this.p12ToPem();
