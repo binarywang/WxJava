@@ -65,7 +65,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         httpPost.releaseConnection();
       }
     } catch (Exception e) {
-      this.logError( url, requestStr, e);
+      this.logError(url, requestStr, e);
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
       throw new WxPayException(e.getMessage(), e);
     }
@@ -170,8 +170,6 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String postV3(String url, HttpPost httpPost) throws WxPayException {
-    String serialNumber = getWechatPaySerial(getConfig());
-    httpPost.addHeader(WECHAT_PAY_SERIAL, serialNumber);
     return this.requestV3(url, httpPost);
   }
 
@@ -264,8 +262,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   private void configureRequest(HttpRequestBase request) {
     String serialNumber = getWechatPaySerial(getConfig());
+    String method = request.getMethod();
     request.addHeader(ACCEPT, APPLICATION_JSON);
-    request.addHeader(CONTENT_TYPE, APPLICATION_JSON);
+    if (!method.equals("POST")) {
+      request.addHeader(CONTENT_TYPE, APPLICATION_JSON);
+    }
     request.addHeader(WECHAT_PAY_SERIAL, serialNumber);
 
     request.setConfig(RequestConfig.custom()
