@@ -69,8 +69,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         httpPost.setEntity(entity);
 
         String resultContent;
-        try (CloseableHttpClient httpclient = getRequestHttpClient();
-             CloseableHttpResponse response = httpclient.execute(httpPost)) {
+        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpPost)) {
           resultContent = new BasicResponseHandler().handleResponse(response);
         } finally {
           httpPost.releaseConnection();
@@ -81,7 +80,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         }
         jsonObject = GsonParser.parse(resultContent);
         String suiteAccussToken = jsonObject.get("suite_access_token").getAsString();
-        Integer expiresIn = jsonObject.get("expires_in").getAsInt();
+        int expiresIn = jsonObject.get("expires_in").getAsInt();
         this.configStorage.updateSuiteAccessToken(suiteAccussToken, expiresIn);
       } catch (IOException e) {
         throw new WxRuntimeException(e);

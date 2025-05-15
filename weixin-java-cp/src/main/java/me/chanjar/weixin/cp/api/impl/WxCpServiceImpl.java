@@ -56,8 +56,7 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
           httpGet.setConfig(config);
         }
         String resultContent;
-        try (CloseableHttpClient httpClient = getRequestHttpClient();
-             CloseableHttpResponse response = httpClient.execute(httpGet)) {
+        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
           resultContent = new BasicResponseHandler().handleResponse(response);
         } finally {
           httpGet.releaseConnection();

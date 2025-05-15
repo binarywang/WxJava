@@ -1,33 +1,24 @@
 package me.chanjar.weixin.common.util.http.apache;
 
-import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
+import org.apache.http.impl.client.AbstractResponseHandler;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
- * copy from {@link org.apache.http.impl.client.BasicResponseHandler}
+ * Utf8ResponseHandler
  *
- * @author Daniel Qian
+ * @author altusea
  */
-public class Utf8ResponseHandler implements ResponseHandler<String> {
+public class Utf8ResponseHandler extends AbstractResponseHandler<String> {
 
   public static final ResponseHandler<String> INSTANCE = new Utf8ResponseHandler();
 
   @Override
-  public String handleResponse(final HttpResponse response) throws IOException {
-    final StatusLine statusLine = response.getStatusLine();
-    final HttpEntity entity = response.getEntity();
-    if (statusLine.getStatusCode() >= 300) {
-      EntityUtils.consume(entity);
-      throw new HttpResponseException(statusLine.getStatusCode(), statusLine.toString());
-    }
-    return entity == null ? null : EntityUtils.toString(entity, Consts.UTF_8);
+  public String handleEntity(HttpEntity entity) throws IOException {
+    return EntityUtils.toString(entity, StandardCharsets.UTF_8);
   }
-
 }
