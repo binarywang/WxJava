@@ -59,8 +59,6 @@ public class QrCodeApacheHttpRequestExecutor extends QrCodeRequestExecutor<Close
         }
       }
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
-    } finally {
-      httpGet.releaseConnection();
     }
   }
 }

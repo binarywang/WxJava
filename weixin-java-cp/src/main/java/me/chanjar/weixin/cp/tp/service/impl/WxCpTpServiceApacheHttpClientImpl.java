@@ -1,12 +1,12 @@
 package me.chanjar.weixin.cp.tp.service.impl;
 
-
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.json.GsonParser;
@@ -15,10 +15,8 @@ import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
@@ -68,12 +66,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         StringEntity entity = new StringEntity(jsonObject.toString(), Consts.UTF_8);
         httpPost.setEntity(entity);
 
-        String resultContent;
-        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpPost)) {
-          resultContent = new BasicResponseHandler().handleResponse(response);
-        } finally {
-          httpPost.releaseConnection();
-        }
+        String resultContent = getRequestHttpClient().execute(httpPost, ApacheBasicResponseHandler.INSTANCE);
         WxError error = WxError.fromJson(resultContent, WxType.CP);
         if (error.getErrorCode() != 0) {
           throw new WxErrorException(error);

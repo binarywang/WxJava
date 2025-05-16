@@ -55,8 +55,6 @@ public class MediaImgUploadApacheHttpRequestExecutor extends MediaImgUploadReque
       }
 
       return WxMediaImgUploadResult.fromJson(responseContent);
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }

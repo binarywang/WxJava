@@ -10,7 +10,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -58,16 +57,12 @@ public class ApacheMinishopMediaUploadRequestCustomizeExecutor extends MinishopU
               .build();
       httpPost.setEntity(entity);
     }
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent, wxType);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      }
-      log.info("responseContent: {}", responseContent);
-      return WxMinishopImageUploadCustomizeResult.fromJson(responseContent);
-    } finally {
-      httpPost.releaseConnection();
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    WxError error = WxError.fromJson(responseContent, wxType);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
     }
+    log.info("responseContent: {}", responseContent);
+    return WxMinishopImageUploadCustomizeResult.fromJson(responseContent);
   }
 }

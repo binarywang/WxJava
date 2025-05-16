@@ -1,27 +1,27 @@
 package me.chanjar.weixin.channel.api.impl;
 
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.GET_ACCESS_TOKEN_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.GET_STABLE_ACCESS_TOKEN_URL;
-
-import java.io.IOException;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.bean.token.StableTokenParam;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.io.IOException;
+
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.GET_ACCESS_TOKEN_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.GET_STABLE_ACCESS_TOKEN_URL;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
@@ -76,27 +76,12 @@ public class WxChannelServiceHttpClientImpl extends BaseWxChannelServiceImpl<Htt
 
     url = String.format(url, config.getAppid(), config.getSecret());
 
-    HttpGet httpGet = null;
-    CloseableHttpResponse response = null;
-    try {
-      httpGet = new HttpGet(url);
-      if (this.getRequestHttpProxy() != null) {
-        RequestConfig requestConfig = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
-        httpGet.setConfig(requestConfig);
-      }
-      response = getRequestHttpClient().execute(httpGet);
-      return new BasicResponseHandler().handleResponse(response);
-    } finally {
-      if (httpGet != null) {
-        httpGet.releaseConnection();
-      }
-      if (response != null) {
-        try {
-          response.close();
-        } catch (IOException ignored) {
-        }
-      }
+    HttpGet httpGet = new HttpGet(url);
+    if (this.getRequestHttpProxy() != null) {
+      RequestConfig requestConfig = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
+      httpGet.setConfig(requestConfig);
     }
+    return getRequestHttpClient().execute(httpGet, ApacheBasicResponseHandler.INSTANCE);
   }
 
   /**
@@ -125,10 +110,6 @@ public class WxChannelServiceHttpClientImpl extends BaseWxChannelServiceImpl<Htt
     assert requestJson != null;
 
     httpPost.setEntity(new StringEntity(requestJson, ContentType.APPLICATION_JSON));
-    try (CloseableHttpResponse response = getRequestHttpClient().execute(httpPost)) {
-      return new BasicResponseHandler().handleResponse(response);
-    } finally {
-      httpPost.releaseConnection();
-    }
+    return getRequestHttpClient().execute(httpPost, ApacheBasicResponseHandler.INSTANCE);
   }
 }

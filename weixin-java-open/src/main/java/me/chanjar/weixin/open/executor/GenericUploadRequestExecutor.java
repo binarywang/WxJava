@@ -131,11 +131,7 @@ public class GenericUploadRequestExecutor implements RequestExecutor<String, Inp
       bodyRequest.setEntity(entity);
       bodyRequest.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
 
-      try (CloseableHttpResponse response = getRequestHttp().getRequestHttpClient().execute(bodyRequest)) {
-        return Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      } finally {
-        bodyRequest.releaseConnection();
-      }
+      return getRequestHttp().getRequestHttpClient().execute(bodyRequest, Utf8ResponseHandler.INSTANCE);
     }
   }
 

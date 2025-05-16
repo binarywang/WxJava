@@ -7,7 +7,6 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -39,12 +38,8 @@ public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<C
       httpPost.setEntity(entity);
     }
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      return this.handleResponse(wxType, responseContent);
-    } finally {
-      httpPost.releaseConnection();
-    }
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    return this.handleResponse(wxType, responseContent);
   }
 
 }

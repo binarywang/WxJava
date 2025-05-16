@@ -1,9 +1,5 @@
 package me.chanjar.weixin.channel.executor;
 
-
-import java.io.File;
-import java.io.IOException;
-
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
@@ -13,11 +9,13 @@ import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 视频号小店 图片上传接口 请求的参数是File, 返回的结果是String
@@ -47,11 +45,7 @@ public class ChannelFileUploadRequestExecutor implements RequestExecutor<String,
         .build();
       httpPost.setEntity(entity);
     }
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      return Utf8ResponseHandler.INSTANCE.handleResponse(response);
-    } finally {
-      httpPost.releaseConnection();
-    }
+    return requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
   }
 
   @Override
@@ -60,6 +54,7 @@ public class ChannelFileUploadRequestExecutor implements RequestExecutor<String,
     handler.handle(this.execute(uri, data, wxType));
   }
 
+  @SuppressWarnings("unchecked")
   public static RequestExecutor<String, File> create(RequestHttp<?, ?> requestHttp) throws WxErrorException {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:

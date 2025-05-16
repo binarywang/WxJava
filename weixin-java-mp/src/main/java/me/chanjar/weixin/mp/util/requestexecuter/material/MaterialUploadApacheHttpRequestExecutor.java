@@ -68,8 +68,6 @@ public class MaterialUploadApacheHttpRequestExecutor extends MaterialUploadReque
       } else {
         return WxMpMaterialUploadResult.fromJson(responseContent);
       }
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }

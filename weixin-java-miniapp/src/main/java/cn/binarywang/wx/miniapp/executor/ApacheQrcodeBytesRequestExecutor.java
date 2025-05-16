@@ -63,8 +63,6 @@ public class ApacheQrcodeBytesRequestExecutor extends QrcodeBytesRequestExecutor
       }
 
       return IOUtils.toByteArray(inputStream);
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }
