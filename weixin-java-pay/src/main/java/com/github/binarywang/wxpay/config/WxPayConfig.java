@@ -345,7 +345,7 @@ public class WxPayConfig {
       }
 
       // 加载api私钥
-      if (merchantPrivateKey == null && (StringUtils.isNotBlank(this.getPrivateKeyPath()) || StringUtils.isNotBlank(this.getPrivateKeyString()) || null != this.privateKeyContent)) {
+      if (merchantPrivateKey == null && (StringUtils.isNotBlank(this.getPrivateKeyPath()) || StringUtils.isNotBlank(this.getPrivateKeyString()) || StringUtils.isNotBlank(this.privateKeyContent))) {
         try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
           this.privateKeyContent, "privateKeyPath")) {
           merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
