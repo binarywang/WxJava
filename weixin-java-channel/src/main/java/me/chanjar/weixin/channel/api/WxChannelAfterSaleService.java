@@ -3,6 +3,7 @@ package me.chanjar.weixin.channel.api;
 
 import java.util.List;
 import me.chanjar.weixin.channel.bean.after.AfterSaleInfoResponse;
+import me.chanjar.weixin.channel.bean.after.AfterSaleListParam;
 import me.chanjar.weixin.channel.bean.after.AfterSaleListResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleReasonResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
@@ -26,9 +27,21 @@ public interface WxChannelAfterSaleService {
    * @return 售后单列表
    *
    * @throws WxErrorException 异常
+   * @deprecated 使用 {@link WxChannelAfterSaleService#listIds(AfterSaleListParam)}
    */
+  @Deprecated
   AfterSaleListResponse listIds(Long beginCreateTime, Long endCreateTime, String nextKey)
     throws WxErrorException;
+
+  /**
+   * 获取售后单列表
+   *
+   * @param param 参数
+   * @return 售后单列表
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleListResponse listIds(AfterSaleListParam param) throws WxErrorException;
 
   /**
    * 获取售后单详情

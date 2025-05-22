@@ -139,13 +139,23 @@ public interface WxChannelOrderService {
   WxChannelBaseResponse closeOrder(String orderId);
 
   /**
-   * 获取快递公司列表
+   * 获取快递公司列表-旧
    *
    * @return 快递公司列表
    *
    * @throws WxErrorException 异常
    */
   DeliveryCompanyResponse listDeliveryCompany() throws WxErrorException;
+
+  /**
+   * 获取快递公司列表
+   *
+   * @param ewaybillOnly 是否仅返回支持电子面单功能的快递公司
+   * @return 快递公司列表
+   *
+   * @throws WxErrorException 异常
+   */
+  DeliveryCompanyResponse listDeliveryCompany(Boolean ewaybillOnly) throws WxErrorException;
 
   /**
    * 订单发货
