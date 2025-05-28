@@ -157,6 +157,12 @@
         <version>4.5.0</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents.client5</groupId>
+        <artifactId>httpclient5</artifactId>
+        <version>5.5</version>
+        <scope>provided</scope>
+      </dependency>
 
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>

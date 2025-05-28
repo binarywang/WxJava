@@ -1,4 +1,4 @@
-package me.chanjar.weixin.common.util.http.apache;
+package me.chanjar.weixin.common.util.http.hc5;
 
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -9,25 +9,27 @@ import me.chanjar.weixin.common.util.http.HttpResponseProxy;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpHost;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.entity.ContentType;
-import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.hc.client5.http.ClientProtocolException;
+import org.apache.hc.client5.http.classic.methods.HttpGet;
+import org.apache.hc.client5.http.config.RequestConfig;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
+import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
+import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.Header;
+import org.apache.hc.core5.http.HttpException;
+import org.apache.hc.core5.http.HttpHost;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * .
+ * ApacheMediaDownloadRequestExecutor
  *
- * @author ecoolper
- * created on  2017/5/5
+ * @author altusea
  */
 public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequestExecutor<CloseableHttpClient, HttpHost> {
+
   public ApacheMediaDownloadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp, File tmpDirFile) {
     super(requestHttp, tmpDirFile);
   }
@@ -69,6 +71,8 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
       }
 
       return FileUtils.createTmpFile(inputStream, baseName, FilenameUtils.getExtension(fileName), super.tmpDirFile);
+    } catch (final HttpException httpException) {
+      throw new ClientProtocolException(httpException.getMessage(), httpException);
     }
   }
 

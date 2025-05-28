@@ -1,10 +1,10 @@
 package me.chanjar.weixin.common.util.http;
 
-import jodd.http.HttpResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
-import okhttp3.Response;
-import org.apache.http.Header;
-import org.apache.http.client.methods.CloseableHttpResponse;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpResponseProxy;
+import me.chanjar.weixin.common.util.http.hc5.ApacheHttpClient5ResponseProxy;
+import me.chanjar.weixin.common.util.http.jodd.JoddHttpResponseProxy;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpResponseProxy;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -14,68 +14,33 @@ import java.util.regex.Pattern;
 
 /**
  * <pre>
- * 三种http框架的response代理类，方便提取公共方法
+ * http 框架的 response 代理类，方便提取公共方法
  * Created by Binary Wang on 2017-8-3.
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
-public class HttpResponseProxy {
+public interface HttpResponseProxy {
 
-  private CloseableHttpResponse apacheHttpResponse;
-  private HttpResponse joddHttpResponse;
-  private Response okHttpResponse;
-
-  public HttpResponseProxy(CloseableHttpResponse apacheHttpResponse) {
-    this.apacheHttpResponse = apacheHttpResponse;
+  static ApacheHttpResponseProxy from(org.apache.http.client.methods.CloseableHttpResponse response) {
+    return new ApacheHttpResponseProxy(response);
   }
 
-  public HttpResponseProxy(HttpResponse joddHttpResponse) {
-    this.joddHttpResponse = joddHttpResponse;
+  static ApacheHttpClient5ResponseProxy from(org.apache.hc.client5.http.impl.classic.CloseableHttpResponse response) {
+    return new ApacheHttpClient5ResponseProxy(response);
   }
 
-  public HttpResponseProxy(Response okHttpResponse) {
-    this.okHttpResponse = okHttpResponse;
+  static JoddHttpResponseProxy from(jodd.http.HttpResponse response) {
+    return new JoddHttpResponseProxy(response);
   }
 
-  public String getFileName() throws WxErrorException {
-    //由于对象只能由一个构造方法实现，因此三个response对象必定且只有一个不为空
-    if (this.apacheHttpResponse != null) {
-      return this.getFileName(this.apacheHttpResponse);
-    }
-
-    if (this.joddHttpResponse != null) {
-      return this.getFileName(this.joddHttpResponse);
-    }
-
-    if (this.okHttpResponse != null) {
-      return this.getFileName(this.okHttpResponse);
-    }
-
-    //cannot happen
-    return null;
+  static OkHttpResponseProxy from(okhttp3.Response response) {
+    return new OkHttpResponseProxy(response);
   }
 
-  private String getFileName(CloseableHttpResponse response) throws WxErrorException {
-    Header[] contentDispositionHeader = response.getHeaders("Content-disposition");
-    if (contentDispositionHeader == null || contentDispositionHeader.length == 0) {
-      throw new WxErrorException("无法获取到文件名，Content-disposition为空");
-    }
+  String getFileName() throws WxErrorException;
 
-    return extractFileNameFromContentString(contentDispositionHeader[0].getValue());
-  }
-
-  private String getFileName(HttpResponse response) throws WxErrorException {
-    String content = response.header("Content-disposition");
-    return extractFileNameFromContentString(content);
-  }
-
-  private String getFileName(Response response) throws WxErrorException {
-    String content = response.header("Content-disposition");
-    return extractFileNameFromContentString(content);
-  }
-
-  public static String extractFileNameFromContentString(String content) throws WxErrorException {
+  default String extractFileNameFromContentString(String content) throws WxErrorException {
     if (content == null || content.isEmpty()) {
       throw new WxErrorException("无法获取到文件名，content为空");
     }
