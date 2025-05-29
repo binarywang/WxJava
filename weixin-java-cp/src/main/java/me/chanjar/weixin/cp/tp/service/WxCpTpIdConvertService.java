@@ -6,8 +6,6 @@ import me.chanjar.weixin.cp.bean.WxCpTpOpenKfIdConvertResult;
 import me.chanjar.weixin.cp.bean.WxCpTpTagIdListConvertResult;
 import me.chanjar.weixin.cp.bean.WxCpTpUnionidToExternalUseridResult;
 
-import java.util.List;
-
 /**
  * <pre>
  *  企业微信三方应用ID转换接口

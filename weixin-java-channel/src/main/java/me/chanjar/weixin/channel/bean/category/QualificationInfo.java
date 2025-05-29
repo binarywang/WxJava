@@ -29,4 +29,8 @@ public class QualificationInfo implements Serializable {
   /** 该类目申请的时候是否一定要提交资质 */
   @JsonProperty("mandatory")
   private Boolean mandatory;
+
+  /** 资质名称 */
+  @JsonProperty("name")
+  private String name;
 }

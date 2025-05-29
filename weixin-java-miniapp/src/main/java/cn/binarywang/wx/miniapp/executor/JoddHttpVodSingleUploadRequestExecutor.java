@@ -19,7 +19,7 @@ import java.nio.charset.StandardCharsets;
  */
 public class JoddHttpVodSingleUploadRequestExecutor extends VodSingleUploadRequestExecutor<HttpConnectionProvider, ProxyInfo> {
 
-  public JoddHttpVodSingleUploadRequestExecutor(RequestHttp requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
+  public JoddHttpVodSingleUploadRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
     super(requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
   }
 

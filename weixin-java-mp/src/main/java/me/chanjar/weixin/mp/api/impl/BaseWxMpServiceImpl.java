@@ -188,7 +188,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
       return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -649,7 +649,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   }
 
   @Override
-  public RequestHttp getRequestHttp() {
+  public RequestHttp<H, P> getRequestHttp() {
     return this;
   }
 

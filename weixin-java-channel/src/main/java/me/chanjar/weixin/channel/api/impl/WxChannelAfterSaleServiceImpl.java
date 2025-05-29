@@ -23,16 +23,22 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Compla
 public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
   @Override
   public AfterSaleListResponse listIds(Long beginCreateTime, Long endCreateTime, String nextKey)
     throws WxErrorException {
-    AfterSaleListParam param = new AfterSaleListParam(beginCreateTime, endCreateTime, nextKey);
+    AfterSaleListParam param = new AfterSaleListParam(beginCreateTime, endCreateTime, null, null, nextKey);
+    String resJson = shopService.post(AFTER_SALE_LIST_URL, param);
+    return ResponseUtils.decode(resJson, AfterSaleListResponse.class);
+  }
+
+  @Override
+  public AfterSaleListResponse listIds(AfterSaleListParam param) throws WxErrorException {
     String resJson = shopService.post(AFTER_SALE_LIST_URL, param);
     return ResponseUtils.decode(resJson, AfterSaleListResponse.class);
   }

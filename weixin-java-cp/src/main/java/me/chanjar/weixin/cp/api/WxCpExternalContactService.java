@@ -1,5 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -10,12 +15,6 @@ import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleInfo;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleList;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
 
 /**
  * <pre>
@@ -39,6 +38,7 @@ public interface WxCpExternalContactService {
    * 用户需要妥善存储返回的config_id，config_id丢失可能导致用户无法编辑或删除「联系我」。
    * 临时会话模式不占用「联系我」数量，但每日最多添加10万个，并且仅支持单人。
    * 临时会话模式的二维码，添加好友完成后该二维码即刻失效。
+   * <a href="https://developer.work.weixin.qq.com/document/path/92228">文档地址</a>
    * </pre>
    *
    * @param info 客户联系「联系我」方式
@@ -59,6 +59,25 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpContactWayInfo getContactWay(String configId) throws WxErrorException;
+
+  /**
+   * 获取企业已配置的「联系我」列表
+   *
+   * <pre>
+   * 获取企业配置的「联系我」二维码和「联系我」小程序插件列表。不包含临时会话。
+   * 注意，<b>该接口仅可获取2021年7月10日以后创建的「联系我」</b>
+   * </pre>
+   *
+   * 文档地址: <a href="https://developer.work.weixin.qq.com/document/path/92228#%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9A%E5%B7%B2%E9%85%8D%E7%BD%AE%E7%9A%84%E3%80%8C%E8%81%94%E7%B3%BB%E6%88%91%E3%80%8D%E5%88%97%E8%A1%A8">获取企业已配置的「联系我」列表</a>
+   *
+   * @param startTime 「联系我」创建起始时间戳, 默认为90天前
+   * @param endTime 「联系我」创建结束时间戳, 默认为当前时间
+   * @param cursor 分页查询使用的游标，为上次请求返回的 next_cursor
+   * @param limit 每次查询的分页大小，默认为100条，最多支持1000条
+   * @return contact way configId
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpContactWayList listContactWay(Long startTime, Long endTime, String cursor, Long limit) throws WxErrorException;
 
   /**
    * 更新企业已配置的「联系我」方式
@@ -380,6 +399,24 @@ public interface WxCpExternalContactService {
   WxCpExternalContactBatchInfo getContactDetailBatch(String[] userIdList, String cursor,
                                                      Integer limit)
     throws WxErrorException;
+
+  /**
+   * 获取已服务的外部联系人
+   * <pre>
+   *  企业可通过此接口获取所有已服务的外部联系人，及其添加人和加入的群聊。
+   * 外部联系人分为客户和其他外部联系人，如果是客户，接口将返回外部联系人临时ID和externaluserid；如果是其他外部联系人，接口将只返回外部联系人临时ID。
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/contact_list?access_token=ACCESS_TOKEN
+   * 文档地址: https://developer.work.weixin.qq.com/document/path/99434
+   * </pre>
+   *
+   * @param cursor     the cursor
+   * @param limit      the  limit
+   * @return 已服务的外部联系人列表
+   * @throws WxErrorException .
+   * @apiNote 企业可通过外部联系人临时ID排除重复数据，外部联系人临时ID有效期为4小时。
+   */
+  WxCpExternalContactListInfo getContactList(String cursor, Integer limit) throws WxErrorException;
 
   /**
    * 修改客户备注信息.

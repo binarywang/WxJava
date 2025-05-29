@@ -2,7 +2,6 @@ package me.chanjar.weixin.cp.bean.corpgroup;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
-import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 
 import java.io.Serializable;
 import java.util.List;

@@ -431,7 +431,7 @@ public class WxConsts {
      */
     public static final String WEAPP_AUDIT_FAIL = "weapp_audit_fail";
 
-    
+
     /**
      * 小程序审核事件：审核延后
      */
@@ -621,5 +621,20 @@ public class WxConsts {
      * 小程序appId类型
      */
     public static final String MINI_TYPE = "mini";
+  }
+
+  /**
+   * 新建文章类型
+   */
+  @UtilityClass
+  public static class ArticleType {
+    /**
+     * 图文消息
+     */
+    public static final String NEWS = "news";
+    /**
+     * 图片消息
+     */
+    public static final String NEWS_PIC = "newspic";
   }
 }

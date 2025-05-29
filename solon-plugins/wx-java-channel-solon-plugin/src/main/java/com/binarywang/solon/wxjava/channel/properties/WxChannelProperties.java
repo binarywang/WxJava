@@ -43,6 +43,11 @@ public class WxChannelProperties {
   private String msgDataFormat = "JSON";
 
   /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
+
+  /**
    * 存储策略
    */
   private final ConfigStorage configStorage = new ConfigStorage();

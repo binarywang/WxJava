@@ -1,12 +1,11 @@
 package me.chanjar.weixin.open.api;
 
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import java.util.concurrent.locks.Lock;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.bean.WxOpenAuthorizerAccessToken;
 import me.chanjar.weixin.open.bean.WxOpenComponentAccessToken;
-
-import java.util.concurrent.locks.Lock;
 
 /**
  * The interface Wx open config storage.
@@ -99,9 +98,7 @@ public interface WxOpenConfigStorage {
    */
   boolean isComponentAccessTokenExpired();
 
-  /**
-   * Expire component access token.
-   */
+  /** Expire component access token. */
   void expireComponentAccessToken();
 
   /**
@@ -141,6 +138,7 @@ public interface WxOpenConfigStorage {
 
   /**
    * http 请求重试间隔
+   *
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
@@ -150,6 +148,7 @@ public interface WxOpenConfigStorage {
 
   /**
    * http 请求最大重试次数
+   *
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
@@ -199,7 +198,7 @@ public interface WxOpenConfigStorage {
    * 应该是线程安全的
    *
    * @param componentAccessToken 新的accessToken值
-   * @param expiresInSeconds     过期时间，以秒为单位
+   * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateComponentAccessToken(String componentAccessToken, int expiresInSeconds);
 
@@ -221,7 +220,7 @@ public interface WxOpenConfigStorage {
   /**
    * Sets authorizer refresh token.
    *
-   * @param appId                  the app id
+   * @param appId the app id
    * @param authorizerRefreshToken the authorizer refresh token
    */
   void setAuthorizerRefreshToken(String appId, String authorizerRefreshToken);
@@ -229,7 +228,7 @@ public interface WxOpenConfigStorage {
   /**
    * setAuthorizerRefreshToken(String appId, String authorizerRefreshToken) 方法重载方法
    *
-   * @param appId                  the app id
+   * @param appId the app id
    * @param authorizerRefreshToken the authorizer refresh token
    */
   void updateAuthorizerRefreshToken(String appId, String authorizerRefreshToken);
@@ -260,7 +259,7 @@ public interface WxOpenConfigStorage {
   /**
    * 应该是线程安全的
    *
-   * @param appId                 the app id
+   * @param appId the app id
    * @param authorizerAccessToken 要更新的WxAccessToken对象
    */
   void updateAuthorizerAccessToken(String appId, WxOpenAuthorizerAccessToken authorizerAccessToken);
@@ -268,11 +267,12 @@ public interface WxOpenConfigStorage {
   /**
    * 应该是线程安全的
    *
-   * @param appId                 the app id
+   * @param appId the app id
    * @param authorizerAccessToken 新的accessToken值
-   * @param expiresInSeconds      过期时间，以秒为单位
+   * @param expiresInSeconds 过期时间，以秒为单位
    */
-  void updateAuthorizerAccessToken(String appId, String authorizerAccessToken, int expiresInSeconds);
+  void updateAuthorizerAccessToken(
+      String appId, String authorizerAccessToken, int expiresInSeconds);
 
   /**
    * Gets jsapi ticket.
@@ -300,8 +300,8 @@ public interface WxOpenConfigStorage {
   /**
    * 应该是线程安全的
    *
-   * @param appId            the app id
-   * @param jsapiTicket      新的jsapi ticket值
+   * @param appId the app id
+   * @param jsapiTicket 新的jsapi ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateJsapiTicket(String appId, String jsapiTicket, int expiresInSeconds);
@@ -313,7 +313,6 @@ public interface WxOpenConfigStorage {
    * @return the card api ticket
    */
   String getCardApiTicket(String appId);
-
 
   /**
    * Is card api ticket expired boolean.
@@ -333,8 +332,8 @@ public interface WxOpenConfigStorage {
   /**
    * 应该是线程安全的
    *
-   * @param appId            the app id
-   * @param cardApiTicket    新的cardApi ticket值
+   * @param appId the app id
+   * @param cardApiTicket 新的cardApi ticket值
    * @param expiresInSeconds 过期时间，以秒为单位
    */
   void updateCardApiTicket(String appId, String cardApiTicket, int expiresInSeconds);
@@ -342,10 +341,34 @@ public interface WxOpenConfigStorage {
   /**
    * 设置第三方平台基础信息
    *
-   * @param componentAppId     第三方平台 appid
+   * @param componentAppId 第三方平台 appid
    * @param componentAppSecret 第三方平台 appsecret
-   * @param componentToken     消息校验Token
-   * @param componentAesKey    消息加解密Key
+   * @param componentToken 消息校验Token
+   * @param componentAesKey 消息加解密Key
    */
-  void setWxOpenInfo(String componentAppId, String componentAppSecret, String componentToken, String componentAesKey);
+  void setWxOpenInfo(
+      String componentAppId,
+      String componentAppSecret,
+      String componentToken,
+      String componentAesKey);
+
+  /** 第三方平台设置API签名 RSA 私钥 */
+  String getComponentApiSignatureRsaPrivateKey();
+
+  void setComponentApiSignatureRsaPrivateKey(String apiSignatureRsaPrivateKey);
+
+  /** 第三方平台设置API签名 AES KEY */
+  String getComponentApiSignatureAesKey();
+
+  void setComponentApiSignatureAesKey(String apiSignatureAesKey);
+
+  /** 第三方平台设置API签名 RSA 私钥 序号 */
+  String getComponentApiSignatureRsaPrivateKeySn();
+
+  void setComponentApiSignatureRsaPrivateKeySn(String apiSignatureRsaPrivateKeySn);
+
+  /** 第三方平台设置API签名 AES key 序号 */
+  String getComponentApiSignatureAesKeySn();
+
+  void setComponentApiSignatureAesKeySn(String apiSignatureAesKeySn);
 }

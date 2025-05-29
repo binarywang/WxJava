@@ -38,9 +38,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxLeagueSupplierServiceImpl implements WxLeagueSupplierService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxLeagueSupplierServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxLeagueSupplierServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

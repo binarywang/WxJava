@@ -5,8 +5,6 @@ import me.chanjar.weixin.cp.bean.oa.meeting.WxCpMeeting;
 import me.chanjar.weixin.cp.bean.oa.meeting.WxCpMeetingUpdateResult;
 import me.chanjar.weixin.cp.bean.oa.meeting.WxCpUserMeetingIdResult;
 
-import java.util.List;
-
 /**
  * 企业微信日程接口.
  * 企业和开发者通过会议接口可以便捷地预定及管理会议，用于小组周会、部门例会等场景。

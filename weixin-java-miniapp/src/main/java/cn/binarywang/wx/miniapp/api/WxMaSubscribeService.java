@@ -19,9 +19,9 @@ public interface WxMaSubscribeService {
 
   /**
    * <pre>
-   * 获取帐号所属类目下的公共模板标题
+   * 获取账号所属类目下的公共模板标题
    *
-   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateTitleList.html">获取帐号所属类目下的公共模板标题</a>
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getPubTemplateTitleList.html">获取账号所属类目下的公共模板标题</a>
    * 接口url格式: https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatetitles?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -49,7 +49,7 @@ public interface WxMaSubscribeService {
 
   /**
    * <pre>
-   * 组合模板并添加至帐号下的个人模板库
+   * 组合模板并添加至账号下的个人模板库
    *
    * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.addTemplate.html">获取小程序模板库标题列表</a>
    * 接口url格式: POST https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate?access_token=ACCESS_TOKEN
@@ -58,16 +58,16 @@ public interface WxMaSubscribeService {
    * @param id            模板标题 id，可通过接口获取，也可登录小程序后台查看获取
    * @param keywordIdList 模板关键词列表
    * @param sceneDesc     服务场景描述，15个字以内
-   * @return 添加至帐号下的模板id，发送小程序订阅消息时所需
+   * @return 添加至账号下的模板id，发送小程序订阅消息时所需
    * @throws WxErrorException .
    */
   String addTemplate(String id, List<Integer> keywordIdList, String sceneDesc) throws WxErrorException;
 
   /**
    * <pre>
-   * 获取当前帐号下的个人模板列表
+   * 获取当前账号下的个人模板列表
    *
-   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html">获取当前帐号下的个人模板列表</a>
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.getTemplateList.html">获取当前账号下的个人模板列表</a>
    * 接口url格式: GET https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate?access_token=ACCESS_TOKEN
    * </pre>
    *
@@ -78,9 +78,9 @@ public interface WxMaSubscribeService {
 
   /**
    * <pre>
-   * 删除帐号下的某个模板
+   * 删除账号下的某个模板
    *
-   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html">删除帐号下的个人模板</a>
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/api-backend/open-api/subscribe-message/subscribeMessage.deleteTemplate.html">删除账号下的个人模板</a>
    * 接口url格式: POST https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate?access_token=ACCESS_TOKEN
    * </pre>
    *

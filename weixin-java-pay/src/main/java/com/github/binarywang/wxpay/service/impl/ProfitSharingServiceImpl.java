@@ -146,7 +146,7 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
   @Override
   public ProfitSharingV3Result profitSharingQueryV3(ProfitSharingQueryV3Request request) throws WxPayException {
     String url = String.format("%s/v3/profitsharing/orders/%s?transaction_id=%s", this.payService.getPayBaseUrl(),
-      request.getOutOrderNo(), request.getOutOrderNo());
+      request.getOutOrderNo(), request.getTransactionId());
     if(StringUtils.isNotEmpty(request.getSubMchId())){
       url += "&sub_mchid=" + request.getSubMchId();
     }

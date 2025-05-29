@@ -1,11 +1,17 @@
 package me.chanjar.weixin.common.util.http;
 
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadCustomizeResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheMinishopMediaUploadRequestCustomizeExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMinishopMediaUploadRequestCustomizeExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMinishopMediaUploadRequestCustomizeExecutor;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,7 +22,7 @@ public abstract class MinishopUploadRequestCustomizeExecutor<H, P> implements Re
   protected String uploadType;
   protected String imgUrl;
 
-  public MinishopUploadRequestCustomizeExecutor(RequestHttp requestHttp, String respType, String imgUrl) {
+  public MinishopUploadRequestCustomizeExecutor(RequestHttp<H, P> requestHttp, String respType, String imgUrl) {
     this.requestHttp = requestHttp;
     this.respType = respType;
     if (imgUrl == null || imgUrl.isEmpty()) {
@@ -33,14 +39,15 @@ public abstract class MinishopUploadRequestCustomizeExecutor<H, P> implements Re
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<WxMinishopImageUploadCustomizeResult, File> create(RequestHttp requestHttp, String respType, String imgUrl) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<WxMinishopImageUploadCustomizeResult, File> create(RequestHttp<?, ?> requestHttp, String respType, String imgUrl) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheMinishopMediaUploadRequestCustomizeExecutor(requestHttp, respType, imgUrl);
+        return new ApacheMinishopMediaUploadRequestCustomizeExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, respType, imgUrl);
       case JODD_HTTP:
-        return new JoddHttpMinishopMediaUploadRequestCustomizeExecutor(requestHttp, respType, imgUrl);
+        return new JoddHttpMinishopMediaUploadRequestCustomizeExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, respType, imgUrl);
       case OK_HTTP:
-        return new OkHttpMinishopMediaUploadRequestCustomizeExecutor(requestHttp, respType, imgUrl);
+        return new OkHttpMinishopMediaUploadRequestCustomizeExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, respType, imgUrl);
       default:
         return null;
     }

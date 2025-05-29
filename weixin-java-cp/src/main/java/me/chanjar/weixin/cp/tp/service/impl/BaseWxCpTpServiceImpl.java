@@ -104,7 +104,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
       return SHA1.gen(this.configStorage.getToken(), timestamp, nonce, data)
         .equals(msgSignature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -337,6 +337,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    * @return the string
    * @throws WxErrorException the wx error exception
    */
+  @Override
   public String post(String url, String postData, boolean withoutSuiteAccessToken) throws WxErrorException {
     return execute(SimplePostRequestExecutor.create(this), url, postData, withoutSuiteAccessToken);
   }

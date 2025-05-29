@@ -28,7 +28,7 @@ $ git push
 * 定期使用项目仓库内容更新自己仓库内容。
 
 ```bash
-$ git remote add upstream https://github.com/Wechat-Group/WxJava
+$ git remote add upstream https://github.com/binarywang/WxJava
 $ git fetch upstream
 $ git checkout develop
 $ git rebase upstream/develop

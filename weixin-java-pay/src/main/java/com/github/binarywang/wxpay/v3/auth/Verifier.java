@@ -7,4 +7,6 @@ public interface Verifier {
 
 
   X509Certificate getValidCertificate();
+
+  default void setOtherVerifier(Verifier verifier) {};
 }

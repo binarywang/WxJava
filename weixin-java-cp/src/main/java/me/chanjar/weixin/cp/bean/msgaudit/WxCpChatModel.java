@@ -25,9 +25,6 @@ public class WxCpChatModel implements Serializable {
   @SerializedName("action")
   private String action;
 
-  @SerializedName("send")
-  private String send;
-
   @SerializedName("from")
   private String from;
 
@@ -606,7 +603,7 @@ public class WxCpChatModel implements Serializable {
     private String sdkFileId;
 
     @SerializedName("filesize")
-    private Integer fileSize;
+    private Long fileSize;
 
     /**
      * From json file.

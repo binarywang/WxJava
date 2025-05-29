@@ -38,7 +38,7 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.LeadCo
 public class WxLeadComponentServiceImpl implements WxLeadComponentService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
   private final ObjectMapper objectMapper = new ObjectMapper();
   @Override
   public LeadInfoResponse getLeadsInfoByComponentId(GetLeadInfoByComponentRequest req) throws WxErrorException {

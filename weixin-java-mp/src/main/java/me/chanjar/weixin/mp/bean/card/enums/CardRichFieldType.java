@@ -11,7 +11,7 @@ public enum CardRichFieldType {
   FORM_FIELD_SELECT("自定义选择项"),
   FORM_FIELD_CHECK_BOX("自定义多选");
 
-  private String description;
+  private final String description;
 
   CardRichFieldType(String description) {
     this.description = description;

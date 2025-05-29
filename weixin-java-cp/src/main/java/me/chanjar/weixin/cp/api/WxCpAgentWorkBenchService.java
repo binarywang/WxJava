@@ -36,4 +36,12 @@ public interface WxCpAgentWorkBenchService {
    * @throws WxErrorException the wx error exception
    */
   void setWorkBenchData(WxCpAgentWorkBench wxCpAgentWorkBench) throws WxErrorException;
+
+  /**
+   * Batch sets work bench data.
+   *
+   * @param wxCpAgentWorkBench the wx cp agent work bench
+   * @throws WxErrorException the wx error exception
+   */
+  void batchSetWorkBenchData(WxCpAgentWorkBench wxCpAgentWorkBench) throws WxErrorException;
 }

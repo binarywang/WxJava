@@ -46,11 +46,7 @@ public class WxMpWifiServiceImpl implements WxMpWifiService {
     if (password != null) {
       json.addProperty("password", password);
     }
-    try {
-      this.wxMpService.post(BIZWIFI_SHOP_UPDATE, json.toString());
-      return true;
-    } catch (WxErrorException e) {
-      throw e;
-    }
+    this.wxMpService.post(BIZWIFI_SHOP_UPDATE, json.toString());
+    return true;
   }
 }

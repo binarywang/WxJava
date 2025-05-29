@@ -46,11 +46,11 @@ public class AvailableWeek implements Serializable {
    * </pre>
    */
   @SerializedName(value = "available_day_time")
-  private AvailableDayTime availableDayTime;
+  private AvailableDayTimeItem[] availableDayTime;
 
   @Data
   @NoArgsConstructor
-  public static class AvailableDayTime implements Serializable {
+  public static class AvailableDayTimeItem implements Serializable {
     public static final float serialVersionUID = 1L;
 
     /**

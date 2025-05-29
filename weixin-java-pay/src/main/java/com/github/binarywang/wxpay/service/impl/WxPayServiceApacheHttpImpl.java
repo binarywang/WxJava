@@ -1,10 +1,13 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
+import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.WxPayV3DownloadHttpGet;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.util.http.apache.ByteArrayResponseHandler;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
@@ -38,11 +41,13 @@ import java.util.Optional;
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
+@Slf4j
 public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   private static final String ACCEPT = "Accept";
   private static final String CONTENT_TYPE = "Content-Type";
   private static final String APPLICATION_JSON = "application/json";
+  private static final String WECHAT_PAY_SERIAL = "Wechatpay-Serial";
 
   @Override
   public byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException {
@@ -50,18 +55,14 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       HttpClientBuilder httpClientBuilder = createHttpClientBuilder(useKey);
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-          final byte[] bytes = EntityUtils.toByteArray(response.getEntity());
-          final String responseData = Base64.getEncoder().encodeToString(bytes);
-          this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据(Base64编码后)】：{}", url, requestStr, responseData);
-          wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
-          return bytes;
-        }
-      } finally {
-        httpPost.releaseConnection();
+        final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
+        final String responseData = Base64.getEncoder().encodeToString(bytes);
+        this.logRequestAndResponse(url, requestStr, responseData);
+        wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
+        return bytes;
       }
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      this.logError(url, requestStr, e);
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
       throw new WxPayException(e.getMessage(), e);
     }
@@ -75,7 +76,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
         try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
           String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-          this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+          this.logRequestAndResponse(url, requestStr, responseString);
           if (this.getConfig().isIfSaveApiData()) {
             wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
           }
@@ -85,7 +86,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         httpPost.releaseConnection();
       }
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      this.logError(url, requestStr, e);
       if (this.getConfig().isIfSaveApiData()) {
         wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
       }
@@ -95,11 +96,14 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String postV3(String url, String requestStr) throws WxPayException {
-    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpPost httpPost = this.createHttpPost(url, requestStr);
-    httpPost.addHeader(ACCEPT, APPLICATION_JSON);
-    httpPost.addHeader(CONTENT_TYPE, APPLICATION_JSON);
-    try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+    this.configureRequest(httpPost);
+    return this.requestV3(url, requestStr, httpPost);
+  }
+
+  private String requestV3(String url, String requestStr, HttpRequestBase httpRequestBase) throws WxPayException {
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
+    try (CloseableHttpResponse response = httpClient.execute(httpRequestBase)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
       //post方法有可能会没有返回值的情况
@@ -109,7 +113,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+        this.logRequestAndResponse(url, requestStr, responseString);
         return responseString;
       }
 
@@ -117,62 +121,25 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      this.logError(url, requestStr, e);
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
-      httpPost.releaseConnection();
+      httpRequestBase.releaseConnection();
     }
-
-
   }
 
   @Override
   public String patchV3(String url, String requestStr) throws WxPayException {
-    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpPatch httpPatch = new HttpPatch(url);
-    httpPatch.setEntity(this.createEntry(requestStr));
-
-    httpPatch.setConfig(RequestConfig.custom()
-      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
-      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
-      .setSocketTimeout(this.getConfig().getHttpTimeout())
-      .build());
-
-    httpPatch.addHeader(ACCEPT, APPLICATION_JSON);
-    httpPatch.addHeader(CONTENT_TYPE, APPLICATION_JSON);
-    try (CloseableHttpResponse response = httpClient.execute(httpPatch)) {
-      //v3已经改为通过状态码判断200 204 成功
-      int statusCode = response.getStatusLine().getStatusCode();
-      //post方法有可能会没有返回值的情况
-      String responseString = null;
-      if (response.getEntity() != null) {
-        responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-      }
-
-      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
-        return responseString;
-      }
-
-      //有错误提示信息返回
-      JsonObject jsonObject = GsonParser.parse(responseString);
-      throw convertException(jsonObject);
-    } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
-    } finally {
-      httpPatch.releaseConnection();
-    }
+    httpPatch.setEntity(createEntry(requestStr));
+    return this.requestV3(url, requestStr, httpPatch);
   }
 
   @Override
   public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
-    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpPost httpPost = this.createHttpPost(url, requestStr);
-    httpPost.addHeader(ACCEPT, APPLICATION_JSON);
-    httpPost.addHeader(CONTENT_TYPE, APPLICATION_JSON);
-    String serialNumber = getConfig().getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
-    httpPost.addHeader("Wechatpay-Serial", serialNumber);
+    this.configureRequest(httpPost);
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
@@ -183,7 +150,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+        this.logRequestAndResponse(url, requestStr, responseString);
         return responseString;
       }
 
@@ -191,8 +158,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
-      e.printStackTrace();
+      this.logError(url, requestStr, e);
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
@@ -206,12 +172,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String requestV3(String url, HttpRequestBase httpRequest) throws WxPayException {
-    httpRequest.setConfig(RequestConfig.custom()
-      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
-      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
-      .setSocketTimeout(this.getConfig().getHttpTimeout())
-      .build());
-
+    this.configureRequest(httpRequest);
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
       //v3已经改为通过状态码判断200 204 成功
@@ -223,7 +184,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
+        log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
         return responseString;
       }
 
@@ -231,7 +192,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
+      log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpRequest.releaseConnection();
@@ -240,27 +201,24 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String getV3(String url) throws WxPayException {
+    if (this.getConfig().isStrictlyNeedWechatPaySerial()) {
+      return getV3WithWechatPaySerial(url);
+    }
     HttpGet httpGet = new HttpGet(url);
-    httpGet.addHeader(ACCEPT, APPLICATION_JSON);
-    httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON);
     return this.requestV3(url, httpGet);
   }
 
   @Override
   public String getV3WithWechatPaySerial(String url) throws WxPayException {
     HttpGet httpGet = new HttpGet(url);
-    httpGet.addHeader(ACCEPT, APPLICATION_JSON);
-    httpGet.addHeader(CONTENT_TYPE, APPLICATION_JSON);
-    String serialNumber = getConfig().getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
-    httpGet.addHeader("Wechatpay-Serial", serialNumber);
     return this.requestV3(url, httpGet);
   }
 
   @Override
   public InputStream downloadV3(String url) throws WxPayException {
-    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     HttpGet httpGet = new WxPayV3DownloadHttpGet(url);
-    httpGet.addHeader(ACCEPT, ContentType.WILDCARD.getMimeType());
+    this.configureRequest(httpGet);
+    CloseableHttpClient httpClient = this.createApiV3HttpClient();
     try (CloseableHttpResponse response = httpClient.execute(httpGet)) {
       //v3已经改为通过状态码判断200 204 成功
       int statusCode = response.getStatusLine().getStatusCode();
@@ -268,7 +226,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       boolean isJsonContentType = Objects.nonNull(contentType) && ContentType.APPLICATION_JSON.getMimeType()
         .equals(ContentType.parse(String.valueOf(contentType.getValue())).getMimeType());
       if ((HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) && !isJsonContentType) {
-        this.log.info("\n【请求地址】：{}\n", url);
+        log.info("\n【请求地址】：{}\n", url);
         return response.getEntity().getContent();
       }
 
@@ -278,7 +236,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
+      log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpGet.releaseConnection();
@@ -288,19 +246,31 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public String putV3(String url, String requestStr) throws WxPayException {
     HttpPut httpPut = new HttpPut(url);
-    StringEntity entity = this.createEntry(requestStr);
+    StringEntity entity = createEntry(requestStr);
     httpPut.setEntity(entity);
-    httpPut.addHeader(ACCEPT, APPLICATION_JSON);
-    httpPut.addHeader(CONTENT_TYPE, APPLICATION_JSON);
     return requestV3(url, httpPut);
   }
 
   @Override
   public String deleteV3(String url) throws WxPayException {
     HttpDelete httpDelete = new HttpDelete(url);
-    httpDelete.addHeader(ACCEPT, APPLICATION_JSON);
-    httpDelete.addHeader(CONTENT_TYPE, APPLICATION_JSON);
     return requestV3(url, httpDelete);
+  }
+
+  private void configureRequest(HttpRequestBase request) {
+    String serialNumber = getWechatPaySerial(getConfig());
+    String method = request.getMethod();
+    request.addHeader(ACCEPT, APPLICATION_JSON);
+    if (!method.equals("POST")) {
+      request.addHeader(CONTENT_TYPE, APPLICATION_JSON);
+    }
+    request.addHeader(WECHAT_PAY_SERIAL, serialNumber);
+
+    request.setConfig(RequestConfig.custom()
+      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setSocketTimeout(this.getConfig().getHttpTimeout())
+      .build());
   }
 
   private CloseableHttpClient createApiV3HttpClient() throws WxPayException {
@@ -311,8 +281,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     return apiV3HttpClient;
   }
 
-  private StringEntity createEntry(String requestStr) {
-    return new StringEntity(requestStr, ContentType.create(APPLICATION_JSON, "utf-8"));
+  private static StringEntity createEntry(String requestStr) {
+    return new StringEntity(requestStr, ContentType.create(APPLICATION_JSON, StandardCharsets.UTF_8));
     //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
   }
 
@@ -347,7 +317,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   private HttpPost createHttpPost(String url, String requestStr) {
     HttpPost httpPost = new HttpPost(url);
-    httpPost.setEntity(this.createEntry(requestStr));
+    httpPost.setEntity(createEntry(requestStr));
 
     httpPost.setConfig(RequestConfig.custom()
       .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
@@ -368,9 +338,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       new DefaultHostnameVerifier()));
   }
 
-
   private WxPayException convertException(JsonObject jsonObject) {
-    //todo 这里考虑使用新的适用于V3的异常
+    //TODO 这里考虑使用新的适用于V3的异常
     JsonElement codeElement = jsonObject.get("code");
     String code = codeElement == null ? null : codeElement.getAsString();
     String message = jsonObject.get("message").getAsString();
@@ -380,4 +349,22 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     return wxPayException;
   }
 
+  /**
+   * 兼容微信支付公钥模式
+   */
+  private String getWechatPaySerial(WxPayConfig wxPayConfig) {
+    if (StringUtils.isNotBlank(wxPayConfig.getPublicKeyId())) {
+      return wxPayConfig.getPublicKeyId();
+    }
+
+    return wxPayConfig.getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+  }
+
+  private void logRequestAndResponse(String url, String requestStr, String responseStr) {
+    log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseStr);
+  }
+
+  private void logError(String url, String requestStr, Exception e) {
+    log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+  }
 }

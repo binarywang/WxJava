@@ -9,7 +9,7 @@ public enum CardSceneType {
   SCENE_IVR("自动回复"),
   SCENE_CARD_CUSTOM_CELL("卡券自定义cell");
 
-  private String description;
+  private final String description;
 
   CardSceneType(String description) {
     this.description = description;

@@ -24,10 +24,9 @@ public class WxOpenAuthorizerListResultGsonAdapter implements JsonDeserializer<W
     wxOpenAuthorizerListResult.setTotalCount(GsonHelper.getInteger(jsonObject, "total_count").intValue());
 
     List<Map<String, String>> list = new ArrayList<>();
-    Iterator<JsonElement> jsonElementIterator = jsonObject.getAsJsonArray("list").iterator();
 
-    while (jsonElementIterator.hasNext()) {
-      JsonObject authorizer = jsonElementIterator.next().getAsJsonObject();
+    for (JsonElement element : jsonObject.getAsJsonArray("list")) {
+      JsonObject authorizer = element.getAsJsonObject();
       Map<String, String> authorizerMap = new HashMap<>(10);
 
       authorizerMap.put(AUTHORIZER_APPID, GsonHelper.getString(authorizer, AUTHORIZER_APPID));

@@ -739,6 +739,15 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaPrivacyService getPrivacyService();
 
   /**
+   * 半屏小程序服务
+   *
+   * @return {@link WxOpenMaEmbeddedService }
+   * @author Yuan
+   * @date 2024-12-04 18:42:21
+   */
+  WxOpenMaEmbeddedService getEmbeddedService();
+
+  /**
    * 购物订单
    *
    * @return 购物订单服务

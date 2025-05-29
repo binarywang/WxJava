@@ -92,6 +92,27 @@ public interface WxChannelService extends BaseWxChannelService {
   WxChannelFundService getFundService();
 
   /**
+   * 主页管理服务
+   *
+   * @return 主页管理服务
+   */
+  WxStoreHomePageService getHomePageService();
+
+  /**
+   * 合作账号服务
+   *
+   * @return 团长合作服务
+   */
+  WxStoreCooperationService getCooperationService();
+
+  /**
+   * 视频号/微信小店 罗盘商家版服务
+   *
+   * @return 罗盘商家版服务
+   */
+  WxChannelCompassShopService getCompassShopService();
+
+  /**
    * 优选联盟-团长合作达人管理服务
    *
    * @return 团长合作达人管理服务
@@ -140,11 +161,25 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxAssistantService getAssistantService();
 
-
   /**
    * 会员功能
    *
    * @return 会员服务
    */
   WxChannelVipService getVipService();
+
+  /**
+   * 视频号助手-罗盘达人版服务
+   *
+   * @return 罗盘达人版服务
+   */
+  WxChannelCompassFinderService getCompassFinderService();
+
+  /**
+   * 视频号助手-直播大屏数据服务
+   *
+   * @return 直播大屏数据服务
+   */
+  WxChannelLiveDashboardService getLiveDashboardService();
+
 }

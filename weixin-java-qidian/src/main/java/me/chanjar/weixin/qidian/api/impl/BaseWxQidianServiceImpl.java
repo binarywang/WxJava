@@ -56,7 +56,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
     try {
       return SHA1.gen(this.getWxMpConfigStorage().getToken(), timestamp, nonce).equals(signature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -405,7 +405,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
   }
 
   @Override
-  public RequestHttp getRequestHttp() {
+  public RequestHttp<H, P> getRequestHttp() {
     return this;
   }
 

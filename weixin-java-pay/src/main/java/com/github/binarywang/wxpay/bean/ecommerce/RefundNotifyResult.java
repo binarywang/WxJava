@@ -170,6 +170,25 @@ public class RefundNotifyResult implements Serializable {
   @SerializedName(value = "amount")
   private Amount amount;
 
+  /**
+   * <pre>
+   * 字段名：退款出资商户
+   * 变量名：refund_account
+   * 是否必填：否
+   * 类型：string（32）
+   * 描述：
+   *   电商平台垫资退款专用参数。需先确认已开通此功能后，才能使用。若需要开通，请联系微信支付客服。
+   *   枚举值：
+   *   REFUND_SOURCE_PARTNER_ADVANCE : 电商平台垫付，需要向微信支付申请开通
+   *   REFUND_SOURCE_SUB_MERCHANT : 二级商户，默认值
+   *   注意：
+   *   若传入REFUND_SOURCE_PARTNER_ADVANCE，仅代表可以使用垫付退款，实际出款账户需以退款申请受理结果或查单结果为准。
+   *   示例值：REFUND_SOURCE_SUB_MERCHANT
+   * </pre>
+   */
+  @SerializedName(value = "refund_account")
+  private String refundAccount;
+
   @Data
   @NoArgsConstructor
   public static class Amount implements Serializable {

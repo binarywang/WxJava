@@ -1,11 +1,17 @@
 package me.chanjar.weixin.common.util.http;
 
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimplePostRequestExecutor;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimplePostRequestExecutor;
+import okhttp3.OkHttpClient;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -18,7 +24,7 @@ import java.io.IOException;
 public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor<String, String> {
   protected RequestHttp<H, P> requestHttp;
 
-  public SimplePostRequestExecutor(RequestHttp requestHttp) {
+  public SimplePostRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -28,14 +34,14 @@ public abstract class SimplePostRequestExecutor<H, P> implements RequestExecutor
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<String, String> create(RequestHttp requestHttp) {
+  public static RequestExecutor<String, String> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheSimplePostRequestExecutor(requestHttp);
+        return new ApacheSimplePostRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new JoddHttpSimplePostRequestExecutor(requestHttp);
+        return new JoddHttpSimplePostRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new OkHttpSimplePostRequestExecutor(requestHttp);
+        return new OkHttpSimplePostRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
       default:
         throw new IllegalArgumentException("非法请求参数");
     }

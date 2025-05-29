@@ -3,14 +3,13 @@ package me.chanjar.weixin.qidian.api.impl;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
@@ -86,11 +85,8 @@ public class WxQidianServiceHttpClientImpl extends BaseWxQidianServiceImpl<Close
           RequestConfig requestConfig = RequestConfig.custom().setProxy(this.getRequestHttpProxy()).build();
           httpGet.setConfig(requestConfig);
         }
-        try (CloseableHttpResponse response = getRequestHttpClient().execute(httpGet)) {
-          return this.extractAccessToken(new BasicResponseHandler().handleResponse(response));
-        } finally {
-          httpGet.releaseConnection();
-        }
+        String responseContent = getRequestHttpClient().execute(httpGet, ApacheBasicResponseHandler.INSTANCE);
+        return this.extractAccessToken(responseContent);
       } catch (IOException e) {
         throw new WxRuntimeException(e);
       }

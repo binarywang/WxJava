@@ -1,13 +1,8 @@
 package com.github.binarywang.wxpay.bean.profitsharing.result;
 
-import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import org.w3c.dom.Document;
 
 import java.io.Serializable;
 

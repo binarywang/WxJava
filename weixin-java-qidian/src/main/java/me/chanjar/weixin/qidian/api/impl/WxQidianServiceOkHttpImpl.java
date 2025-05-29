@@ -60,9 +60,7 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
       Request request = new Request.Builder().url(url).get().build();
       Response response = getRequestHttpClient().newCall(request).execute();
       return this.extractAccessToken(Objects.requireNonNull(response.body()).string());
-    } catch (IOException e) {
-      throw new WxRuntimeException(e);
-    } catch (InterruptedException e) {
+    } catch (IOException | InterruptedException e) {
       throw new WxRuntimeException(e);
     } finally {
       if (locked) {

@@ -18,7 +18,7 @@ public interface WxCpAgentService {
   /**
    * <pre>
    * 获取企业号应用信息
-   * 该API用于获取企业号某个应用的基本信息，包括头像、昵称、帐号类型、认证类型、可见范围等信息
+   * 该API用于获取企业号某个应用的基本信息，包括头像、昵称、账号类型、认证类型、可见范围等信息
    * 详情请见: <a href="https://work.weixin.qq.com/api/doc#10087">...</a>
    * </pre>
    *

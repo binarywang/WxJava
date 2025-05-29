@@ -2,7 +2,6 @@ package me.chanjar.weixin.common.util;
 
 import com.google.common.collect.Lists;
 import me.chanjar.weixin.common.annotation.Required;
-import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

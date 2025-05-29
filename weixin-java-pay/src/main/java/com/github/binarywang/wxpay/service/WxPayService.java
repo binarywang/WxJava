@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -38,16 +39,18 @@ public interface WxPayService {
    * Map里 加入新的 {@link WxPayConfig}，适用于动态添加新的微信商户配置.
    *
    * @param mchId       商户id
+   * @param appId       微信应用id
    * @param wxPayConfig 新的微信配置
    */
-  void addConfig(String mchId, WxPayConfig wxPayConfig);
+  void addConfig(String mchId, String appId, WxPayConfig wxPayConfig);
 
   /**
-   * 从 Map中 移除 {@link String mchId} 所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
+   * 从 Map中 移除 {@link String mchId} 和 {@link String appId} 所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
    *
    * @param mchId 对应商户的标识
+   * @param appId 微信应用id
    */
-  void removeConfig(String mchId);
+  void removeConfig(String mchId, String appId);
 
   /**
    * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String mchId} 值
@@ -69,17 +72,19 @@ public interface WxPayService {
    * 进行相应的商户切换.
    *
    * @param mchId 商户标识
+   * @param appId 微信应用id
    * @return 切换是否成功 boolean
    */
-  boolean switchover(String mchId);
+  boolean switchover(String mchId, String appId);
 
   /**
    * 进行相应的商户切换.
    *
    * @param mchId 商户标识
+   * @param appId 微信应用id
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
-  WxPayService switchoverTo(String mchId);
+  WxPayService switchoverTo(String mchId, String appId);
 
   /**
    * 发送post请求，得到响应字节数组.
@@ -616,10 +621,10 @@ public interface WxPayService {
   /**
    * 调用统一下单接口，并组装生成支付所需参数对象.
    *
-   * @param <T>       请使用{@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @param tradeType the trade type
    * @param request   统一下单请求参数
-   * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
   <T> T createOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
@@ -627,10 +632,10 @@ public interface WxPayService {
   /**
    * 服务商模式调用统一下单接口，并组装生成支付所需参数对象.
    *
-   * @param <T>       请使用{@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @param tradeType the trade type
    * @param request   统一下单请求参数
-   * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
   <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
@@ -990,6 +995,17 @@ public interface WxPayService {
    * @throws WxPayException
    */
   WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 解析商家转账批次回调通知
+   * https://pay.weixin.qq.com/doc/v3/merchant/4012712115
+   *
+   * @param notifyData
+   * @param header
+   * @return
+   * @throws WxPayException
+   */
+  TransferBillsNotifyResult parseTransferBillsNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析服务商模式退款结果通知
@@ -1603,7 +1619,8 @@ public interface WxPayService {
 
   /**
    * 获取服务商直股份签约计划服务类
-   * @return  the partner pay score sign plan service
+   *
+   * @return the partner pay score sign plan service
    */
   PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
 }

@@ -6,6 +6,10 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
 
@@ -16,7 +20,7 @@ public abstract class QrcodeBytesRequestExecutor<H, P> implements RequestExecuto
 
   protected RequestHttp<H, P> requestHttp;
 
-  public QrcodeBytesRequestExecutor(RequestHttp requestHttp) {
+  public QrcodeBytesRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -25,14 +29,15 @@ public abstract class QrcodeBytesRequestExecutor<H, P> implements RequestExecuto
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheQrcodeBytesRequestExecutor(requestHttp);
+        return new ApacheQrcodeBytesRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
       case JODD_HTTP:
         return null;
       case OK_HTTP:
-        return new OkHttpQrcodeBytesRequestExecutor(requestHttp);
+        return new OkHttpQrcodeBytesRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
       default:
         return null;
     }

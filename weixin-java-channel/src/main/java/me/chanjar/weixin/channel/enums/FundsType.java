@@ -24,12 +24,23 @@ public enum FundsType {
     /** 8 运费险分账 */
     FREIGHT_SHARE(8, "运费险分账"),
     /** 9 联盟平台抽佣 */
-    LEAGUE_COMMISSION(9, "联盟平台抽佣"),
-    /** 10 小店抽佣 */
-    SHOP_COMMISSION(10, "小店抽佣"),
+    LEAGUE_PLAT_COMMISSION(9, "联盟平台抽佣"),
+    /** 10 联盟抽佣 */
+    LEAGUE_COMMISSION(10, "联盟抽佣"),
+    /** 11台抽佣 */
+    PLATFORM_COMMISSION(11, "平台抽佣"),
+    /** 12 团长抽佣 */
+    LEADER_COMMISSION(12, "团长抽佣"),
+    /** 13 返佣人气卡 */
+    POPULARITY_CARD(13, "返佣人气卡"),
+    /** 14 极速退款垫资金 */
+    FAST_REFUND(14, "极速退款垫资金"),
+    /** 15 极速退款垫资回补 */
+    FAST_REFUND_REPLENISHMENT(15, "极速退款垫资回补"),
+    /** 16 运费险 */
+    FREIGHT_INSURANCE(16, "运费险"),
     /** 99 分账 */
     SHARE(99, "分账"),
-
     ;
 
     private final int key;

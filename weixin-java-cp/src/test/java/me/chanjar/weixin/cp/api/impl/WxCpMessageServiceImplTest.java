@@ -80,6 +80,7 @@ public class WxCpMessageServiceImplTest {
     System.out.println(messageSendResult.getInvalidPartyList());
     System.out.println(messageSendResult.getInvalidUserList());
     System.out.println(messageSendResult.getInvalidTagList());
+    System.out.println(messageSendResult.getUnlicensedUserList());
   }
 
   /**

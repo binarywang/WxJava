@@ -79,13 +79,13 @@ public class DefaultApacheHttpClientBuilderTest {
       HttpUriRequest request = new HttpGet("http://localhost:8080");
       HttpContext context = HttpClientContext.create();
       try (CloseableHttpResponse resp = client.execute(request, context)) {
-        Assert.assertEquals("requestInterceptor1", context.getAttribute("interceptor_called"), "成功调用 requestInterceptor1 并向 content 中写入了数据");
+        Assert.assertEquals(context.getAttribute("interceptor_called"), "requestInterceptor1", "成功调用 requestInterceptor1 并向 content 中写入了数据");
 
         // 测试拦截器执行顺序
-        Assert.assertEquals("requestInterceptor1", interceptorOrder.get(0));
-        Assert.assertEquals("requestInterceptor2", interceptorOrder.get(1));
-        Assert.assertEquals("responseInterceptor1", interceptorOrder.get(2));
-        Assert.assertEquals("responseInterceptor2", interceptorOrder.get(3));
+        Assert.assertEquals(interceptorOrder.get(0), "requestInterceptor1");
+        Assert.assertEquals(interceptorOrder.get(1), "requestInterceptor2");
+        Assert.assertEquals(interceptorOrder.get(2), "responseInterceptor1");
+        Assert.assertEquals(interceptorOrder.get(3), "responseInterceptor2");
       }
     }
   }

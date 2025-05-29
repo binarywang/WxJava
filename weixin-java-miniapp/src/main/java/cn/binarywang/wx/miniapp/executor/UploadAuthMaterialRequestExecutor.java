@@ -1,11 +1,17 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.WxMaUploadAuthMaterialResult;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,7 +27,7 @@ import java.io.IOException;
 public abstract class UploadAuthMaterialRequestExecutor<H, P> implements RequestExecutor<WxMaUploadAuthMaterialResult, File> {
     protected RequestHttp<H, P> requestHttp;
 
-    public UploadAuthMaterialRequestExecutor(RequestHttp requestHttp) {
+    public UploadAuthMaterialRequestExecutor(RequestHttp<H, P> requestHttp) {
         this.requestHttp = requestHttp;
     }
 
@@ -30,14 +36,15 @@ public abstract class UploadAuthMaterialRequestExecutor<H, P> implements Request
         handler.handle(this.execute(uri, data, wxType));
     }
 
-    public static RequestExecutor<WxMaUploadAuthMaterialResult, File> create(RequestHttp requestHttp) {
+    @SuppressWarnings("unchecked")
+    public static RequestExecutor<WxMaUploadAuthMaterialResult, File> create(RequestHttp<?, ?> requestHttp) {
         switch (requestHttp.getRequestType()) {
             case APACHE_HTTP:
-                return new ApacheUploadAuthMaterialRequestExecutor(requestHttp);
+                return new ApacheUploadAuthMaterialRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
             case JODD_HTTP:
-                return new JoddHttpUploadAuthMaterialRequestExecutor(requestHttp);
+                return new JoddHttpUploadAuthMaterialRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
             case OK_HTTP:
-                return new OkHttpUploadAuthMaterialRequestExecutor(requestHttp);
+                return new OkHttpUploadAuthMaterialRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
             default:
                 return null;
         }

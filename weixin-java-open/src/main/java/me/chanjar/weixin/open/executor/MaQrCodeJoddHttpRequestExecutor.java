@@ -5,7 +5,6 @@ import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
 import jodd.net.MimeTypes;
-import jodd.util.StringPool;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -27,7 +26,7 @@ import java.util.UUID;
  * created on  2018-09-13
  */
 public class MaQrCodeJoddHttpRequestExecutor extends MaQrCodeRequestExecutor<HttpConnectionProvider, ProxyInfo> {
-  public MaQrCodeJoddHttpRequestExecutor(RequestHttp requestHttp) {
+  public MaQrCodeJoddHttpRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

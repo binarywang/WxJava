@@ -54,7 +54,7 @@ public class SkuInfo implements Serializable {
 
   /** skuID */
   @JsonProperty("sku_id")
-  private Long skuId;
+  private String skuId;
 
   public SkuInfo() {
   }

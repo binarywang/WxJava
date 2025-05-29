@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class ReceiverList implements Serializable {
   private static final long serialVersionUID = -1316860887694489921L;
-  ArrayList list;
+  ArrayList<Receiver> list;
 
   private ReceiverList() {
   }
@@ -23,7 +23,7 @@ public class ReceiverList implements Serializable {
    */
   public static ReceiverList getInstance() {
     ReceiverList receiverList = new ReceiverList();
-    receiverList.list = new ArrayList();
+    receiverList.list = new ArrayList<>();
     return receiverList;
   }
 

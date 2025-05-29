@@ -47,7 +47,7 @@ public class RsaCryptoUtil {
           Object oldValue = field.get(encryptObject);
           if (oldValue != null) {
             String oldStr = (String) oldValue;
-            if (!"".equals(oldStr.trim())) {
+            if (!oldStr.trim().isEmpty()) {
               field.set(encryptObject, encryptOAEP(oldStr, certificate));
             }
           }
@@ -57,8 +57,8 @@ public class RsaCryptoUtil {
           if (obj == null) {
             continue;
           }
-          if (obj instanceof Collection) {
-            Collection collection = (Collection) obj;
+          if (obj instanceof Collection<?>) {
+            Collection<?> collection = (Collection<?>) obj;
             for (Object o : collection) {
               if (o != null) {
                 encryptField(o, certificate);

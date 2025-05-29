@@ -91,19 +91,19 @@ public class WxCpXmlApprovalInfo implements Serializable {
   /**
    * 审批流程信息
    */
-  @XStreamImplicit(itemFieldName = "ApprovalNodes")
+  @XStreamAlias("ApprovalNodes")
   private List<ApprovalNode> approvalNodes;
 
   /**
    * 抄送信息，可能有多个抄送人
    */
-  @XStreamImplicit(itemFieldName = "NotifyNodes")
+  @XStreamAlias("NotifyNodes")
   private List<NotifyNode> notifyNodes;
 
   /**
    * 抄送人信息
    */
-  @XStreamAlias("NotifyNodes")
+  @XStreamAlias("NotifyNode")
   @Data
   public static class NotifyNode implements Serializable {
     private static final long serialVersionUID = -979255011922209018L;
@@ -118,7 +118,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
     /**
      * 抄送人userid
      */
-    @XStreamAlias("ItemUserid")
+    @XStreamAlias("ItemUserId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String itemUserId;
 
@@ -141,7 +141,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
   /**
    * 审批流程信息，可以有多个审批节点
    */
-  @XStreamAlias("ApprovalNodes")
+  @XStreamAlias("ApprovalNode")
   @Data
   public static class ApprovalNode implements Serializable {
     private static final long serialVersionUID = -979255011922209018L;
@@ -167,7 +167,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
     /**
      * 审批节点信息，当节点为标签或上级时，一个节点可能有多个分支
      */
-    @XStreamImplicit(itemFieldName = "Items")
+    @XStreamAlias("Items")
     private List<Item> items;
 
   }
@@ -175,7 +175,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
   /**
    * 审批节点分支，当节点为标签或上级时，一个节点可能有多个分支
    */
-  @XStreamAlias("Items")
+  @XStreamAlias("Item")
   @Data
   public static class Item implements Serializable {
     private static final long serialVersionUID = -979255011922209018L;
@@ -190,7 +190,7 @@ public class WxCpXmlApprovalInfo implements Serializable {
     /**
      * 分支审批人userid
      */
-    @XStreamAlias("ItemUserid")
+    @XStreamAlias("ItemUserId")
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String itemUserId;
 

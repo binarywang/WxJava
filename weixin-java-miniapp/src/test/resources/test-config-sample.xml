@@ -9,4 +9,9 @@
   <expiresTime>可以不填写</expiresTime>
   <openid>某个用户的openId</openid>
   <templateId>模版消息的模版ID</templateId>
+  <componentApiSignatureAesKey>API签名AES密钥【没有开启API签名不要这条】</componentApiSignatureAesKey>
+  <componentApiSignatureAesKeySn>API签名AES密钥的序号【没有开启API签名不要这条】</componentApiSignatureAesKeySn>
+  <componentApiSignatureRsaPrivateKey>API签名RSA私钥的【没有开启API签名不要这条】</componentApiSignatureRsaPrivateKey>
+  <componentApiSignatureRsaPrivateKeySn>API签名RSA私钥的序【没有开启API签名不要这条】
+  </componentApiSignatureRsaPrivateKeySn>
 </xml>

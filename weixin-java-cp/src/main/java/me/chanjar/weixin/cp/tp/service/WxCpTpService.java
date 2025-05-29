@@ -21,7 +21,7 @@ public interface WxCpTpService {
   /**
    * <pre>
    * 验证推送过来的消息的正确性
-   * 详情请见: https://work.weixin.qq.com/api/doc#90000/90139/90968/消息体签名校验
+   * 详情请见: <a href="https://work.weixin.qq.com/api/doc#90000/90139/90968/">消息体签名校验</a>
    * </pre>
    *
    * @param msgSignature 消息签名
@@ -48,7 +48,7 @@ public interface WxCpTpService {
    * 且在多线程同时刷新时只刷新一次，避免超出2000次/日的调用次数上限
    * 另：本service的所有方法都会在suite_access_token过期是调用此方法
    * 程序员在非必要情况下尽量不要主动调用此方法
-   * 详情请见: https://work.weixin.qq.com/api/doc#90001/90143/90600
+   * 详情请见: <a href="https://work.weixin.qq.com/api/doc#90001/90143/90600">文档</a>
    * </pre>
    *
    * @param forceRefresh 强制刷新
@@ -86,7 +86,7 @@ public interface WxCpTpService {
   /**
    * <pre>
    * 保存企业微信定时推送的suite_ticket,（每10分钟）
-   * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
+   * 详情请见：<a href="https://work.weixin.qq.com/api/doc#90001/90143/90628">文档</a>
    *
    * 注意：微信不是固定10分钟推送suite_ticket的, 且suite_ticket的有效期为30分钟
    * https://work.weixin.qq.com/api/doc/10975#%E8%8E%B7%E5%8F%96%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E5%87%AD%E8%AF%81
@@ -101,7 +101,7 @@ public interface WxCpTpService {
    * 获得suite_ticket
    * 由于suite_ticket是微信服务器定时推送（每10分钟），不能主动获取，如果碰到过期只能抛异常
    *
-   * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
+   * 详情请见：<a href="https://work.weixin.qq.com/api/doc#90001/90143/90628">文档</a>
    * </pre>
    *
    * @param forceRefresh 强制刷新
@@ -116,7 +116,7 @@ public interface WxCpTpService {
   /**
    * <pre>
    * 保存企业微信定时推送的suite_ticket,（每10分钟）
-   * 详情请见：https://work.weixin.qq.com/api/doc#90001/90143/90628
+   * 详情请见：<a href="https://work.weixin.qq.com/api/doc#90001/90143/90628">文档</a>
    *
    * 注意：微信不是固定10分钟推送suite_ticket的, 且suite_ticket的有效期为30分钟
    * https://work.weixin.qq.com/api/doc/10975#%E8%8E%B7%E5%8F%96%E7%AC%AC%E4%B8%89%E6%96%B9%E5%BA%94%E7%94%A8%E5%87%AD%E8%AF%81
@@ -287,6 +287,17 @@ public interface WxCpTpService {
   String post(String url, String postData) throws WxErrorException;
 
   /**
+   * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的POST请求.
+   *
+   * @param url      接口地址
+   * @param postData 请求body字符串
+   * @param withoutSuiteAccessToken 请求是否忽略SuiteAccessToken 默认不忽略-false
+   * @return the string
+   * @throws WxErrorException the wx error exception
+   */
+  String post(String url, String postData, boolean withoutSuiteAccessToken) throws WxErrorException;
+
+  /**
    * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
@@ -360,7 +371,9 @@ public interface WxCpTpService {
 
   /**
    * <pre>
-   * 获取访问用户身份
+   * 获取登录/访问用户身份
+   * 1、<a href="https://developer.work.weixin.qq.com/document/path/91121">网页授权登录对应的文档</a>
+   * 2、<a href="https://developer.work.weixin.qq.com/document/path/98179">企业微信web登录对应的文档</a>
    * </pre>
    *
    * @param code the code
@@ -395,7 +408,7 @@ public interface WxCpTpService {
   /**
    * 获取带参授权链接
    * <p>
-   * 文档地址：https://developer.work.weixin.qq.com/document/path/95436
+   * <a href="https://developer.work.weixin.qq.com/document/path/95436">查看文档</a>
    *
    * @param state state
    * @param templateIdList 代开发自建应用模版ID列表，数量不能超过9个
@@ -548,7 +561,7 @@ public interface WxCpTpService {
 
   /**
    * 创建机构级jsApiTicket签名
-   * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
+   * 详情参见<a href="https://work.weixin.qq.com/api/doc/90001/90144/90539">企业微信第三方应用开发文档</a>
    *
    * @param url        调用JS接口页面的完整URL
    * @param authCorpId the auth corp id
@@ -559,7 +572,7 @@ public interface WxCpTpService {
 
   /**
    * 创建应用级jsapiTicket签名
-   * 详情参见企业微信第三方应用开发文档：https://work.weixin.qq.com/api/doc/90001/90144/90539
+   * 详情参见：<a href="https://work.weixin.qq.com/api/doc/90001/90144/90539">企业微信第三方应用开发文档</a>
    *
    * @param url        调用JS接口页面的完整URL
    * @param authCorpId the auth corp id

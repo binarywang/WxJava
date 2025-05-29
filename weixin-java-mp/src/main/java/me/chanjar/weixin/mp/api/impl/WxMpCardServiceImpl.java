@@ -166,7 +166,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     if (!"0".equals(errcode)) {
       String errmsg = json.get("errmsg").getAsString();
       throw new WxErrorException(WxError.builder()
-        .errorCode(Integer.valueOf(errcode)).errorMsg(errmsg)
+        .errorCode(Integer.parseInt(errcode)).errorMsg(errmsg)
         .build());
     }
 
@@ -257,7 +257,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   @Override
   public WxMpCardCodeDepositResult cardCodeDeposit(String cardId, List<String> codeList) throws WxErrorException {
     checkCardId(cardId);
-    if (codeList.size() == 0 || codeList.size() > 100) {
+    if (codeList.isEmpty() || codeList.size() > 100) {
       throw new WxErrorException(WxError.builder().errorCode(40109).errorMsg("code数量为0或者code数量超过100个").build());
     }
     JsonObject param = new JsonObject();
@@ -283,7 +283,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
   @Override
   public WxMpCardCodeCheckcodeResult cardCodeCheckcode(String cardId, List<String> codeList) throws WxErrorException {
     checkCardId(cardId);
-    if (codeList.size() == 0 || codeList.size() > 100) {
+    if (codeList.isEmpty() || codeList.size() > 100) {
       throw new WxErrorException(WxError.builder().errorCode(40109).errorMsg("code数量为0或者code数量超过100个").build());
     }
     JsonObject param = new JsonObject();

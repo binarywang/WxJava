@@ -20,9 +20,9 @@ import org.dom4j.Element;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static com.github.binarywang.wxpay.constant.WxPayConstants.SignType.ALL_SIGN_TYPES;
 
@@ -147,21 +147,21 @@ public abstract class BaseWxPayRequest implements Serializable {
    * @return the integer
    */
   public static Integer yuanToFen(String yuan) {
-    return new BigDecimal(yuan).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(new BigDecimal(100)).intValue();
+    return new BigDecimal(yuan).setScale(2, RoundingMode.HALF_UP).multiply(new BigDecimal(100)).intValue();
   }
 
   /**
    * 元转分
    */
   public static Integer yuan2Fen(BigDecimal yuan) {
-    return yuan.multiply(BigDecimal.valueOf(100)).setScale(2, BigDecimal.ROUND_HALF_UP).intValue();
+    return yuan.multiply(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP).intValue();
   }
 
   /**
    * 分转元
    */
   public static BigDecimal fen2Yuan(BigDecimal fen) {
-    return fen.divide(BigDecimal.valueOf(100)).setScale(2, BigDecimal.ROUND_HALF_UP);
+    return fen.divide(BigDecimal.valueOf(100)).setScale(2, RoundingMode.HALF_UP);
   }
 
   /**

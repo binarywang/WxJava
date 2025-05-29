@@ -2,17 +2,17 @@ package me.chanjar.weixin.open.executor;
 
 import lombok.Getter;
 import me.chanjar.weixin.common.bean.CommonUploadData;
-import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
+import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -64,19 +64,15 @@ public class CommonUploadMultiRequestExecutorApacheImpl extends CommonUploadMult
 
       httpPost.setEntity(entity.build());
     }
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      if (responseContent == null || responseContent.isEmpty()) {
-        throw new WxErrorException(String.format("上传失败，服务器响应空 url:%s param:%s", uri, param));
-      }
-      WxError error = WxError.fromJson(responseContent, wxType);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      }
-      return responseContent;
-    } finally {
-      httpPost.releaseConnection();
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    if (StringUtils.isEmpty(responseContent)) {
+      throw new WxErrorException(String.format("上传失败，服务器响应空 url:%s param:%s", uri, param));
     }
+    WxError error = WxError.fromJson(responseContent, wxType);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
+    }
+    return responseContent;
   }
 
   /**

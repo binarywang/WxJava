@@ -8,6 +8,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import org.apache.http.HttpHost;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * <pre>
@@ -19,7 +21,7 @@ import me.chanjar.weixin.common.util.http.ResponseHandler;
 public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecutor<Boolean, File> {
   protected RequestHttp<H, P> requestHttp;
 
-  public VoiceUploadRequestExecutor(RequestHttp requestHttp) {
+  public VoiceUploadRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -28,10 +30,11 @@ public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecuto
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<Boolean, File> create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<Boolean, File> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new VoiceUploadApacheHttpRequestExecutor(requestHttp);
+        return new VoiceUploadApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
       case JODD_HTTP:
       case OK_HTTP:
       default:

@@ -30,4 +30,10 @@ public class WxOpenIcpVerifyTaskResult extends WxOpenResult {
    */
   @SerializedName("face_status")
   private Integer faceStatus;
+
+  /**
+   * 发起时 along_with_auth 填 true 时有效：9. 认证短信核验通过。
+   */
+  @SerializedName("along_with_auth_result")
+  private Integer alongWithAuthResult;
 }

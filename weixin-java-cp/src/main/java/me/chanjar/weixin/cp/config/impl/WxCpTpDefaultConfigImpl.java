@@ -270,6 +270,11 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   }
 
   @Override
+  public void setProviderSecret(String providerSecret) {
+    this.providerSecret = providerSecret;
+  }
+
+  @Override
   public String getProviderSecret() {
     return providerSecret;
   }

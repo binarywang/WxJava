@@ -24,9 +24,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 @Slf4j
 public class WxChannelFreightTemplateServiceImpl implements WxChannelFreightTemplateService {
     /** 微信商店服务 */
-    private final BaseWxChannelServiceImpl shopService;
+    private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-    public WxChannelFreightTemplateServiceImpl(BaseWxChannelServiceImpl shopService) {
+    public WxChannelFreightTemplateServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
         this.shopService = shopService;
     }
 

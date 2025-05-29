@@ -123,6 +123,10 @@ public class ContentValue implements Serializable {
 
     @SerializedName("file_id")
     private String fileId;
+    @SerializedName("file_name")
+    private String fileName;
+    @SerializedName("file_url")
+    private String fileUrl;
   }
 
   /**

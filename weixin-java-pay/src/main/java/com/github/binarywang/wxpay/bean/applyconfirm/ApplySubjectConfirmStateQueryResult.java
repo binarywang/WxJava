@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.bean.applyconfirm;
 
-import com.github.binarywang.wxpay.bean.applyment.enums.ApplymentStateEnum;
+import com.github.binarywang.wxpay.bean.applyconfirm.enums.ApplySubjectStateEnum;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * 查询申请单状态返回对象信息
@@ -26,7 +25,7 @@ public class ApplySubjectConfirmStateQueryResult implements Serializable {
    * 申请单状态
    */
   @SerializedName("applyment_state")
-  private ApplymentStateEnum applymentState;
+  private ApplySubjectStateEnum applymentState;
   /**
    * 二维码图片
    */

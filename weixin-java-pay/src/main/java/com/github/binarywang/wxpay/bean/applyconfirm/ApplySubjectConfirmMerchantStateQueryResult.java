@@ -1,7 +1,6 @@
 package com.github.binarywang.wxpay.bean.applyconfirm;
 
 import com.github.binarywang.wxpay.bean.applyconfirm.enums.AuthorizeStateEnum;
-import com.github.binarywang.wxpay.bean.applyment.enums.ApplymentStateEnum;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

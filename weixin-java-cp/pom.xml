@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.6.4.B</version>
+    <version>4.7.5.B</version>
   </parent>
 
   <artifactId>weixin-java-cp</artifactId>
@@ -101,7 +101,6 @@
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
       <artifactId>jackson-core</artifactId>
-      <version>2.13.4</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

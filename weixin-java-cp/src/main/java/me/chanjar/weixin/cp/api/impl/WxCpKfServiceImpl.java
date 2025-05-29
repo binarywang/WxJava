@@ -70,23 +70,62 @@ public class WxCpKfServiceImpl implements WxCpKfService {
 
   @Override
   public WxCpKfServicerOpResp addServicer(String openKfid, List<String> userIdList) throws WxErrorException {
-    return servicerOp(openKfid, userIdList, SERVICER_ADD);
+    return servicerOp(openKfid, userIdList, null, SERVICER_ADD);
+  }
+
+  @Override
+  public WxCpKfServicerOpResp addServicer(String openKfId, List<String> userIdList, List<String> departmentIdList) throws WxErrorException {
+    validateParameters(SERVICER_ADD, userIdList, departmentIdList);
+    return servicerOp(openKfId, userIdList, departmentIdList, SERVICER_ADD);
   }
 
   @Override
   public WxCpKfServicerOpResp delServicer(String openKfid, List<String> userIdList) throws WxErrorException {
-    return servicerOp(openKfid, userIdList, SERVICER_DEL);
+    return servicerOp(openKfid, userIdList, null, SERVICER_DEL);
   }
 
-  private WxCpKfServicerOpResp servicerOp(String openKfid, List<String> userIdList, String uri) throws WxErrorException {
+  @Override
+  public WxCpKfServicerOpResp delServicer(String openKfid, List<String> userIdList, List<String> departmentIdList) throws WxErrorException {
+    validateParameters(SERVICER_DEL, userIdList, departmentIdList);
+    return servicerOp(openKfid, userIdList, departmentIdList, SERVICER_DEL);
+  }
+
+  private void validateParameters(String uri, List<String> userIdList, List<String> departmentIdList) {
+    if ((userIdList == null || userIdList.isEmpty()) && (departmentIdList == null || departmentIdList.isEmpty())) {
+      throw new IllegalArgumentException("userid_list和department_id_list至少需要填其中一个");
+    }
+    if (SERVICER_DEL.equals(uri)) {
+      if (userIdList != null && userIdList.size() > 100) {
+        throw new IllegalArgumentException("可填充个数：0 ~ 100。超过100个需分批调用。");
+      }
+      if (departmentIdList != null && departmentIdList.size() > 100) {
+        throw new IllegalArgumentException("可填充个数：0 ~ 100。超过100个需分批调用。");
+      }
+    } else {
+      if (userIdList != null && userIdList.size() > 100) {
+        throw new IllegalArgumentException("可填充个数：0 ~ 100。超过100个需分批调用。");
+      }
+      if (departmentIdList != null && departmentIdList.size() > 20) {
+        throw new IllegalArgumentException("可填充个数：0 ~ 20。");
+      }
+    }
+  }
+
+  private WxCpKfServicerOpResp servicerOp(String openKfid, List<String> userIdList, List<String> departmentIdList, String uri) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(uri);
 
     JsonObject json = new JsonObject();
     json.addProperty("open_kfid", openKfid);
-    JsonArray userIdArray = new JsonArray();
-    userIdList.forEach(userIdArray::add);
-    json.add("userid_list", userIdArray);
-
+    if (userIdList != null && !userIdList.isEmpty()) {
+      JsonArray userIdArray = new JsonArray();
+      userIdList.forEach(userIdArray::add);
+      json.add("userid_list", userIdArray);
+    }
+    if (departmentIdList != null && !departmentIdList.isEmpty()) {
+      JsonArray departmentIdArray = new JsonArray();
+      departmentIdList.forEach(departmentIdArray::add);
+      json.add("department_id_list", departmentIdArray);
+    }
     String responseContent = cpService.post(url, json.toString());
     return WxCpKfServicerOpResp.fromJson(responseContent);
   }

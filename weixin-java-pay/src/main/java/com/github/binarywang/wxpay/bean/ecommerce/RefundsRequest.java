@@ -147,6 +147,41 @@ public class RefundsRequest implements Serializable {
   @SerializedName(value = "notify_url")
   private String notifyUrl;
 
+  /**
+   * <pre>
+   * 字段名：退款出资商户
+   * 变量名：refund_account
+   * 是否必填：否
+   * 类型：string（32）
+   * 描述：
+   *   电商平台垫资退款专用参数。需先确认已开通此功能后，才能使用。若需要开通，请联系微信支付客服。
+   *   枚举值：
+   *   REFUND_SOURCE_PARTNER_ADVANCE : 电商平台垫付，需要向微信支付申请开通
+   *   REFUND_SOURCE_SUB_MERCHANT : 二级商户，默认值
+   *   注意：
+   *   若传入REFUND_SOURCE_PARTNER_ADVANCE，仅代表可以使用垫付退款，实际出款账户需以退款申请受理结果或查单结果为准。
+   *   示例值：REFUND_SOURCE_SUB_MERCHANT
+   * </pre>
+   */
+  @SerializedName(value = "refund_account")
+  private String refundAccount;
+
+  /**
+   * <pre>
+   * 字段名：资金账户
+   * 变量名：funds_account
+   * 是否必填：否
+   * 类型：string（32）
+   * 描述：
+   *   若订单处于待分账状态，且未指定垫资退款（即refund_account未指定为REFUND_SOURCE_PARTNER_ADVANCE），
+   *   可以传入此参数，指定退款资金来源账户。当该字段不存在时，默认使用订单交易资金所在账户出款，
+   *   即待分账时使用不可用余额的资金进行退款，已分账或无分账时使用可用余额的资金进行退款。 AVAILABLE：可用余额
+   * 示例值：AVAILABLE
+   * </pre>
+   */
+  @SerializedName(value = "funds_account")
+  private String fundsAccount;
+
   @Data
   @Builder
   @NoArgsConstructor(access = AccessLevel.PRIVATE)

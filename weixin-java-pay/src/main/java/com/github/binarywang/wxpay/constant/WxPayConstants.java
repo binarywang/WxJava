@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.result.WxPayMicropayResult;
 import com.google.common.collect.Lists;
+import lombok.experimental.UtilityClass;
 import org.apache.commons.lang3.time.FastDateFormat;
 
 import java.text.Format;
@@ -353,4 +354,86 @@ public class WxPayConstants {
     public static final String PERSONAL_SUB_OPENID = "PERSONAL_SUB_OPENID";
   }
 
+  /**
+   * 微信商户转账订单状态
+   */
+  @UtilityClass
+  public static class TransformBillState {
+    /**
+     * 转账已受理
+     */
+    public static final String ACCEPTED = "ACCEPTED";
+
+    /**
+     * 转账处理中，转账结果尚未明确，如一直处于此状态，建议检查账户余额是否足够
+     */
+    public static final String PROCESSING = "PROCESSING";
+
+    /**
+     * 待收款用户确认，可拉起微信收款确认页面进行收款确认
+     */
+    public static final String WAIT_USER_CONFIRM = "WAIT_USER_CONFIRM";
+
+    /**
+     * 转账结果尚未明确，可拉起微信收款确认页面再次重试确认收款
+     */
+    public static final String TRANSFERING = "TRANSFERING";
+
+    /**
+     * 转账成功
+     */
+    public static final String SUCCESS = "SUCCESS";
+
+    /**
+     * 转账失败
+     */
+    public static final String FAIL = "FAIL";
+
+    /**
+     * 商户撤销请求受理成功，该笔转账正在撤销中
+     */
+    public static final String CANCELING = "CANCELING";
+
+    /**
+     * 转账撤销完成
+     */
+    public static final String CANCELLED = "CANCELLED";
+
+  }
+
+  /**
+   * 【转账场景ID】 该笔转账使用的转账场景，可前往“商户平台-产品中心-商家转账”中申请。
+   */
+  @UtilityClass
+  public static class TransformSceneId {
+    /**
+     * 现金营销
+     */
+    public static final String CASH_MARKETING = "1001";
+  }
+
+  /**
+   * 用户收款感知
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988#3.3-%E5%8F%91%E8%B5%B7%E8%BD%AC%E8%B4%A6">官方文档</a>
+   */
+  @UtilityClass
+  public static class UserRecvPerception {
+    /**
+     * 转账场景 现金营销
+     * 场景介绍 向参与营销活动的用户发放现金奖励
+     */
+    public static class CASH_MARKETING {
+      /**
+       * 默认展示
+       */
+      public static final String ACTIVITY = "活动奖励";
+
+      /**
+       * 需在发起转账时，“用户收款感知”字段主动传入“现金奖励”才可展示
+       */
+      public static final String CASH = "现金奖励";
+    }
+
+  }
 }

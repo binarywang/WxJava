@@ -250,6 +250,12 @@ public class WxPayUnifiedOrderV3Request implements Serializable {
      */
     @SerializedName(value = "openid")
     private String openid;
+
+    /**
+     * 实名支付用户身份标识
+     */
+    @SerializedName(value = "identity")
+    private Identity identity;
   }
 
   @Data
@@ -571,5 +577,37 @@ public class WxPayUnifiedOrderV3Request implements Serializable {
      */
     @SerializedName(value = "profit_sharing")
     private Boolean profitSharing;
+  }
+
+
+  @Data
+  @NoArgsConstructor
+  public static class Identity implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 证件类型
+     * IDCARD:身份证
+     * HONGKONG_MACAO:港澳回乡证
+     * HONGKONG_MACAO_RESIDENT:港澳居住证
+     * TAIWAN_RESIDENT:台湾居住证
+     * FOREIGN_RESIDENT:外国人永居证
+     * OVERSEA_PASSPORT:护照
+     */
+    @SerializedName(value = "type")
+    private String type;
+    /**
+     * 证件号
+     * 证件号，如身份证号。
+     * 示例值：43102119910910512X
+     */
+    @SerializedName(value = "number")
+    private String number;
+    /**
+     * 证件姓名。
+     * 示例值：周星星
+     */
+    @SerializedName(value = "name")
+    private String name;
   }
 }

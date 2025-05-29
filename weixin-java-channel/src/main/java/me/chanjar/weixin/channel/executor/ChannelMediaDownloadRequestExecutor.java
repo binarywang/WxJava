@@ -1,14 +1,5 @@
 package me.chanjar.weixin.channel.executor;
 
-import static org.apache.commons.io.FileUtils.openOutputStream;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.bean.image.ChannelImageResponse;
 import me.chanjar.weixin.channel.util.JsonUtils;
@@ -29,6 +20,16 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.entity.ContentType;
 import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static org.apache.commons.io.FileUtils.openOutputStream;
 
 /**
  * 下载媒体文件请求执行器
@@ -90,10 +91,7 @@ public class ChannelMediaDownloadRequestExecutor implements RequestExecutor<Chan
         extension = "unknown";
       }
       File file = createTmpFile(inputStream, baseName, extension, tmpDirFile);
-      ChannelImageResponse result = new ChannelImageResponse(file, contentType);
-      return result;
-    } finally {
-      httpGet.releaseConnection();
+      return new ChannelImageResponse(file, contentType);
     }
   }
 
@@ -103,8 +101,13 @@ public class ChannelMediaDownloadRequestExecutor implements RequestExecutor<Chan
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<ChannelImageResponse, String> create(RequestHttp requestHttp, File tmpDirFile) {
-    return new ChannelMediaDownloadRequestExecutor(requestHttp, tmpDirFile);
+  public static RequestExecutor<ChannelImageResponse, String> create(RequestHttp<?, ?> requestHttp, File tmpDirFile) throws WxErrorException {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ChannelMediaDownloadRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, tmpDirFile);
+      default:
+        throw new WxErrorException("不支持的http框架");
+    }
   }
 
   /**
@@ -138,7 +141,7 @@ public class ChannelMediaDownloadRequestExecutor implements RequestExecutor<Chan
   }
 
   private String extractFileNameFromContentString(String content) throws WxErrorException {
-    if (content == null || content.length() == 0) {
+    if (content == null || content.isEmpty()) {
       return createDefaultFileName();
     }
     Matcher m = PATTERN.matcher(content);

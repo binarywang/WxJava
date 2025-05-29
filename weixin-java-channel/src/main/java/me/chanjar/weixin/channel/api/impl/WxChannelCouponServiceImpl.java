@@ -35,9 +35,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxChannelCouponServiceImpl implements WxChannelCouponService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelCouponServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelCouponServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

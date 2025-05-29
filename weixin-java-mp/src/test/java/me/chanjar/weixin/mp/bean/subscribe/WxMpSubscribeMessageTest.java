@@ -2,6 +2,9 @@ package me.chanjar.weixin.mp.bean.subscribe;
 
 import org.testng.annotations.*;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 import static org.testng.AssertJUnit.*;
 
 /**
@@ -42,5 +45,10 @@ public class WxMpSubscribeMessageTest {
 
     assertEquals(message.toJson(), actual);
 
+  }
+
+  @Test
+  void testWxMpSubscribeMessageIsSerializable() {
+    assertTrue(Arrays.stream(WxMpSubscribeMessage.class.getInterfaces()).anyMatch(anInterface -> anInterface.isInstance(Serializable.class)));
   }
 }

@@ -213,6 +213,11 @@ public class WxCpTpRedissonConfigImpl implements WxCpTpConfigStorage, Serializab
   }
 
   @Override
+  public void setProviderSecret(String providerSecret) {
+    this.providerSecret = providerSecret;
+  }
+
+  @Override
   public String getProviderSecret() {
     return providerSecret;
   }

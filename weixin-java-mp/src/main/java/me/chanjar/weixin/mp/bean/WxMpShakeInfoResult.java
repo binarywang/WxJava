@@ -26,7 +26,7 @@ public class WxMpShakeInfoResult implements Serializable {
   }
 
   @Data
-  public class ShakeInfoData implements Serializable {
+  public static class ShakeInfoData implements Serializable {
     private static final long serialVersionUID = -4828142206067489488L;
 
     private String page_id;

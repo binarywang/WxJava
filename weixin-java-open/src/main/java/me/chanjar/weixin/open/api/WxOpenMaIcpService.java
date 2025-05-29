@@ -98,6 +98,19 @@ public interface WxOpenMaIcpService {
   String GET_ICP_MEDIA = "https://api.weixin.qq.com/wxa/icp/get_icp_media";
 
   /**
+   * 申请小程序认证及备案
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/wxverifyicp/submitAuthAndIcp.html
+   */
+  String SUBMIT_AUTH_AND_ICP = "https://api.weixin.qq.com/wxa/sec/submit_auth_and_icp";
+
+  /**
+   * 查询小程序认证及备案进度
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/OpenApiDoc/miniprogram-management/wxverifyicp/queryAuthAndIcp.html
+   */
+  String QUERY_AUTH_AND_ICP = "https://api.weixin.qq.com/wxa/sec/query_auth_and_icp";
+
+
+  /**
    * 查询人脸核身任务状态
    *
    * @param taskId 任务id
@@ -113,6 +126,15 @@ public interface WxOpenMaIcpService {
    * @throws WxErrorException e
    */
   WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask() throws WxErrorException;
+
+  /**
+   * 发起小程序管理员人脸核身
+   *
+   * @param alongWithAuth 小程序认证及备案二合一场景，填 true，否则为小程序备案场景。默认值为 false。
+   * @return 人脸核验任务结果
+   * @throws WxErrorException e
+   */
+  WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask(boolean alongWithAuth) throws WxErrorException;
 
   /**
    * 上传小程序备案媒体材料
@@ -204,4 +226,22 @@ public interface WxOpenMaIcpService {
    * @throws WxErrorException e
    */
   File getIcpMedia(String mediaId) throws WxErrorException;
+
+  /**
+   * 申请小程序认证及备案
+   *
+   * @param param 参数
+   * @return r
+   * @throws WxErrorException e
+   */
+  WxOpenSubmitAuthAndIcpResult submitAuthAndIcp(WxOpenSubmitAuthAndIcpParam param) throws WxErrorException;
+
+  /**
+   * 查询小程序认证及备案进度
+   * @param procedureId 小程序认证及备案任务流程id
+   * @return r
+   * @throws WxErrorException e
+   */
+  WxOpenQueryAuthAndIcpResult queryAuthAndIcp(String procedureId) throws WxErrorException;
+
 }

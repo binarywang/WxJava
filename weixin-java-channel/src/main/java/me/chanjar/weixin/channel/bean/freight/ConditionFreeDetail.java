@@ -20,11 +20,11 @@ public class ConditionFreeDetail extends AddressInfoList {
   @JsonProperty("min_piece")
   private Integer minPiece;
 
-  /** 最低重量 */
+  /** 最低重量，单位千克，订单商品总质量小于一千克，算作一千克 */
   @JsonProperty("min_weight")
   private Double minWeight;
 
-  /** 最低金额 */
+  /** 最低金额，单位（分） */
   @JsonProperty("min_amount")
   private Integer minAmount;
 
