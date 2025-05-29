@@ -26,6 +26,6 @@ public interface RequestHttp<H, P> {
    *
    * @return HttpType
    */
-  HttpType getRequestType();
+  HttpClientType getRequestType();
 
 }

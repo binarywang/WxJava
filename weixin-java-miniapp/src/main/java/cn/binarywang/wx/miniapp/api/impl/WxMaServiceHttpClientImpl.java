@@ -4,7 +4,7 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaStableAccessTokenRequest;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
@@ -58,8 +58,8 @@ public class WxMaServiceHttpClientImpl extends BaseWxMaServiceImpl {
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.APACHE_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.APACHE_HTTP;
   }
 
   @Override

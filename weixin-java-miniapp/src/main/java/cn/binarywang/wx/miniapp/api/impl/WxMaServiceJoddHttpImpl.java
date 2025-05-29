@@ -8,7 +8,7 @@ import jodd.http.HttpRequest;
 import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import jodd.net.MimeTypes;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -43,8 +43,8 @@ public class WxMaServiceJoddHttpImpl extends BaseWxMaServiceImpl<HttpConnectionP
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.JODD_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.JODD_HTTP;
   }
 
   @Override

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.bean.token.StableTokenParam;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
 import me.chanjar.weixin.channel.util.JsonUtils;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
@@ -63,8 +63,8 @@ public class WxChannelServiceHttpClientImpl extends BaseWxChannelServiceImpl<Htt
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.APACHE_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.APACHE_HTTP;
   }
 
   @Override

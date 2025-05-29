@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
@@ -237,7 +237,7 @@ public class BaseWxMpServiceImplTest {
       }
 
       @Override
-      public HttpType getRequestType() {
+      public HttpClientType getRequestType() {
         return null;
       }
     };

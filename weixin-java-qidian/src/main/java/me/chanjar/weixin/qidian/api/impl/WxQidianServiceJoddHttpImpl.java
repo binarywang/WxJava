@@ -6,7 +6,7 @@ import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 
 import java.util.concurrent.TimeUnit;
@@ -34,8 +34,8 @@ public class WxQidianServiceJoddHttpImpl extends BaseWxQidianServiceImpl<HttpCon
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.JODD_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.JODD_HTTP;
   }
 
   @Override
