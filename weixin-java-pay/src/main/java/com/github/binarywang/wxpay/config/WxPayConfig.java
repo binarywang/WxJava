@@ -298,49 +298,31 @@ public class WxPayConfig {
       PrivateKey merchantPrivateKey = null;
       PublicKey publicKey = null;
 
-      // 使用完全公钥模式时，只加载公钥相关配置，避免下载平台证书使灰度切换无法达到100%覆盖
-      if (this.fullPublicKeyModel) {
-        if (StringUtils.isBlank(this.getCertSerialNo())) {
-          throw new WxPayException("使用公钥模式时，请确保certSerialNo(apiV3证书序列号)值已设置");
+      // 不使用完全公钥模式时，同时兼容平台证书和公钥
+      X509Certificate certificate = null;
+      // 尝试从p12证书中加载私钥和证书
+      Object[] objects = this.p12ToPem();
+      if (objects != null) {
+        merchantPrivateKey = (PrivateKey) objects[0];
+        certificate = (X509Certificate) objects[1];
+        this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+      }
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && StringUtils.isNotBlank(this.getPrivateCertPath())) {
+        try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
+          this.privateCertContent, "privateCertPath")) {
+          certificate = PemUtils.loadCertificate(certInputStream);
         }
-        if (StringUtils.isBlank(this.getPublicKeyId())) {
-          throw new WxPayException("使用公钥模式时，请确保publicKeyId值已设置");
-        }
-        if (StringUtils.isBlank(this.getPublicKeyString()) && StringUtils.isBlank(this.getPublicKeyPath()) && this.getPublicKeyContent() == null) {
-          throw new WxPayException("使用公钥模式时，请确保publicKeyString/publicKeyPath/publicKeyContent其中一项值已设置");
-        }
+        this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
+      }
 
+      if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
+        if (StringUtils.isBlank(this.getPublicKeyId())) {
+          throw new WxPayException("请确保和publicKeyId配套使用");
+        }
         try (InputStream pubInputStream =
                this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
-                 this.getPublicKeyContent(), "publicKeyPath")) {
+                 this.publicKeyContent, "publicKeyPath")) {
           publicKey = PemUtils.loadPublicKey(pubInputStream);
-        }
-      } else {
-        // 不使用完全公钥模式时，同时兼容平台证书和公钥
-        X509Certificate certificate = null;
-        // 尝试从p12证书中加载私钥和证书
-        Object[] objects = this.p12ToPem();
-        if (objects != null) {
-          merchantPrivateKey = (PrivateKey) objects[0];
-          certificate = (X509Certificate) objects[1];
-          this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
-        }
-        if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && StringUtils.isNotBlank(this.getPrivateCertPath())) {
-          try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
-            this.privateCertContent, "privateCertPath")) {
-            certificate = PemUtils.loadCertificate(certInputStream);
-          }
-          this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
-        }
-        if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
-          if (StringUtils.isBlank(this.getPublicKeyId())) {
-            throw new WxPayException("请确保和publicKeyId配套使用");
-          }
-          try (InputStream pubInputStream =
-                 this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
-                   this.publicKeyContent, "publicKeyPath")) {
-            publicKey = PemUtils.loadPublicKey(pubInputStream);
-          }
         }
       }
 
@@ -358,6 +340,7 @@ public class WxPayConfig {
       // 构造证书验签器
       Verifier certificatesVerifier;
       if (this.fullPublicKeyModel) {
+        // 使用完全公钥模式时，只加载公钥相关配置，避免下载平台证书使灰度切换无法达到100%覆盖
         certificatesVerifier = VerifierBuilder.buildPublicCertVerifier(this.publicKeyId, publicKey);
       } else {
         certificatesVerifier = VerifierBuilder.build(
