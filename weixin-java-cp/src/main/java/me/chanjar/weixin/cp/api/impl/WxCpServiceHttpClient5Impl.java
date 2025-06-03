@@ -23,7 +23,7 @@ import java.io.IOException;
  *
  * @author altusea
  */
-public class WxCpServiceApacheHttpClient5Impl extends BaseWxCpServiceImpl<CloseableHttpClient, HttpHost> {
+public class WxCpServiceHttpClient5Impl extends BaseWxCpServiceImpl<CloseableHttpClient, HttpHost> {
 
   private CloseableHttpClient httpClient;
   private HttpHost httpProxy;
@@ -40,7 +40,7 @@ public class WxCpServiceApacheHttpClient5Impl extends BaseWxCpServiceImpl<Closea
 
   @Override
   public HttpClientType getRequestType() {
-    return HttpClientType.APACHE_HTTP;
+    return HttpClientType.HTTP_CLIENT_5;
   }
 
   @Override

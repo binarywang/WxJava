@@ -19,5 +19,5 @@ public enum HttpClientType {
   /**
    * apache httpclient5.
    */
-  APACHE_HTTP_5
+  HTTP_CLIENT_5
 }
