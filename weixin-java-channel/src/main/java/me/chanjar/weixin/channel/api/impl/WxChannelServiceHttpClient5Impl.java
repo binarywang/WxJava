@@ -61,7 +61,7 @@ public class WxChannelServiceHttpClient5Impl extends BaseWxChannelServiceImpl<Ht
 
   @Override
   public HttpClientType getRequestType() {
-    return HttpClientType.APACHE_HTTP;
+    return HttpClientType.HTTP_CLIENT_5;
   }
 
   @Override
