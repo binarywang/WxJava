@@ -42,6 +42,8 @@ public abstract class CommonUploadMultiRequestExecutor<H, P> implements RequestE
         return new CommonUploadMultiRequestExecutorJoddHttpImpl(requestHttp);
       case OK_HTTP:
         return new CommonUploadMultiRequestExecutorOkHttpImpl(requestHttp);
+      case HTTP_CLIENT_5:
+        return new CommonUploadMultiRequestExecutorHttpClient5Impl(requestHttp);
       default:
         throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
