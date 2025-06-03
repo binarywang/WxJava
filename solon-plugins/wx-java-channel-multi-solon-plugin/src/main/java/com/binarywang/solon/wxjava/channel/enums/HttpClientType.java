@@ -11,6 +11,10 @@ public enum HttpClientType {
    * HttpClient
    */
   HTTP_CLIENT,
+  /**
+   * HttpClient5
+   */
+  HTTP_CLIENT_5
   // WxChannelServiceOkHttpImpl 实现经测试无法正常完成业务固暂不支持OK_HTTP方式
 //  /**
 //   * OkHttp.
