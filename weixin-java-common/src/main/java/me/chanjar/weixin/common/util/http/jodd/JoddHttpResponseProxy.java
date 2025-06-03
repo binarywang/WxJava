@@ -15,6 +15,6 @@ public class JoddHttpResponseProxy implements HttpResponseProxy {
   @Override
   public String getFileName() throws WxErrorException {
     String content = response.header("Content-disposition");
-    return extractFileNameFromContentString(content);
+    return HttpResponseProxy.extractFileNameFromContentString(content);
   }
 }

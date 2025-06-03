@@ -40,7 +40,7 @@ public interface HttpResponseProxy {
 
   String getFileName() throws WxErrorException;
 
-  default String extractFileNameFromContentString(String content) throws WxErrorException {
+  static String extractFileNameFromContentString(String content) throws WxErrorException {
     if (content == null || content.isEmpty()) {
       throw new WxErrorException("无法获取到文件名，content为空");
     }

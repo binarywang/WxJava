@@ -15,6 +15,6 @@ public class OkHttpResponseProxy implements HttpResponseProxy {
   @Override
   public String getFileName() throws WxErrorException {
     String content = this.response.header("Content-disposition");
-    return extractFileNameFromContentString(content);
+    return HttpResponseProxy.extractFileNameFromContentString(content);
   }
 }

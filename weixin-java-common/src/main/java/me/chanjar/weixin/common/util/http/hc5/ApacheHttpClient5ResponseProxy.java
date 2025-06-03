@@ -20,6 +20,6 @@ public class ApacheHttpClient5ResponseProxy implements HttpResponseProxy {
       throw new WxErrorException("无法获取到文件名，Content-disposition为空");
     }
 
-    return extractFileNameFromContentString(contentDispositionHeader[0].getValue());
+    return HttpResponseProxy.extractFileNameFromContentString(contentDispositionHeader[0].getValue());
   }
 }
