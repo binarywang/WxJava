@@ -20,7 +20,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class BusiFavorQueryOneUserCouponsResult implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>* 字段名：批次归属商户号

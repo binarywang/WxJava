@@ -24,7 +24,7 @@ public class ZipUtils {
     resultFile.createNewFile();
 
     try (FileOutputStream fos = new FileOutputStream(resultFile);
-         GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(file));) {
+         GZIPInputStream gzis = new GZIPInputStream(new FileInputStream(file))) {
       IOUtils.copy(gzis, fos);
     }
 

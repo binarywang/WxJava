@@ -64,7 +64,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   private static final Gson GSON = new GsonBuilder().create();
 
-  static ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
+  static final ThreadLocal<WxPayApiData> wxApiData = new ThreadLocal<>();
 
 
   @Setter

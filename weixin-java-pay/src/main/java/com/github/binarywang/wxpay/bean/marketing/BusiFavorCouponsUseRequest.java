@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * 核销用户券请求对象
  * <pre>
@@ -14,8 +16,8 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
-public class BusiFavorCouponsUseRequest {
-  public static final float serialVersionUID = 1L;
+public class BusiFavorCouponsUseRequest implements Serializable {
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>

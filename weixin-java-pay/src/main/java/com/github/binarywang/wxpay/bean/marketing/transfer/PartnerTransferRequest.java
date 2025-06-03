@@ -19,7 +19,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class PartnerTransferRequest implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>

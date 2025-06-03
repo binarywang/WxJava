@@ -92,8 +92,7 @@ public class SignUtils {
     for (String key : new TreeMap<>(params).keySet()) {
       String value = params.get(key);
       boolean shouldSign = false;
-      if (StringUtils.isNotEmpty(value) && !ArrayUtils.contains(ignoredParams, key)
-        && !NO_SIGN_PARAMS.contains(key)) {
+      if (StringUtils.isNotEmpty(value) && !ArrayUtils.contains(ignoredParams, key) && !NO_SIGN_PARAMS.contains(key)) {
         shouldSign = true;
       }
 
