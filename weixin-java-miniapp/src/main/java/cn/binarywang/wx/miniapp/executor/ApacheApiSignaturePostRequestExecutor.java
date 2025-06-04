@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ApacheApiSignaturePostRequestExecutor
-    extends ApiSignaturePostRequestExecutor<CloseableHttpClient, HttpHost> {
-  private static final Logger logger =
-      LoggerFactory.getLogger(ApacheApiSignaturePostRequestExecutor.class);
+public class ApacheApiSignaturePostRequestExecutor extends ApiSignaturePostRequestExecutor<CloseableHttpClient, HttpHost> {
 
   public ApacheApiSignaturePostRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
