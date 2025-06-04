@@ -71,7 +71,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
       }
 
       return FileUtils.createTmpFile(inputStream, baseName, FilenameUtils.getExtension(fileName), super.tmpDirFile);
-    } catch (final HttpException httpException) {
+    } catch (HttpException httpException) {
       throw new ClientProtocolException(httpException.getMessage(), httpException);
     }
   }

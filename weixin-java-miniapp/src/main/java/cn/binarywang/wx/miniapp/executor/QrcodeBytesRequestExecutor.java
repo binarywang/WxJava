@@ -8,8 +8,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
 
@@ -33,11 +31,13 @@ public abstract class QrcodeBytesRequestExecutor<H, P> implements RequestExecuto
   public static RequestExecutor<byte[], AbstractWxMaQrcodeWrapper> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheQrcodeBytesRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
-      case JODD_HTTP:
-        return null;
+        return new ApacheQrcodeBytesRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case OK_HTTP:
         return new OkHttpQrcodeBytesRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_CLIENT_5:
+        return new HttpClient5QrcodeBytesRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;
     }

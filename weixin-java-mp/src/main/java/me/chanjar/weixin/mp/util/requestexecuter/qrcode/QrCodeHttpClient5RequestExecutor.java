@@ -60,7 +60,7 @@ public class QrCodeHttpClient5RequestExecutor extends QrCodeRequestExecutor<Clos
         }
       }
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
-    } catch (final HttpException httpException) {
+    } catch (HttpException httpException) {
       throw new ClientProtocolException(httpException.getMessage(), httpException);
     }
   }
