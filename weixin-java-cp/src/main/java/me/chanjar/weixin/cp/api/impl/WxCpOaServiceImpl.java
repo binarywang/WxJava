@@ -140,7 +140,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     if (filters != null && !filters.isEmpty()) {
       JsonArray filterJsonArray = new JsonArray();
       for (WxCpApprovalInfoQueryFilter filter : filters) {
-        filterJsonArray.add(new JsonParser().parse(filter.toJson()));
+        filterJsonArray.add(JsonParser.parseString(filter.toJson()));
       }
       jsonObject.add("filters", filterJsonArray);
     }
@@ -181,7 +181,7 @@ public class WxCpOaServiceImpl implements WxCpOaService {
     if (filters != null && !filters.isEmpty()) {
       JsonArray filterJsonArray = new JsonArray();
       for (WxCpApprovalInfoQueryFilter filter : filters) {
-        filterJsonArray.add(new JsonParser().parse(filter.toJson()));
+        filterJsonArray.add(JsonParser.parseString(filter.toJson()));
       }
       jsonObject.add("filters", filterJsonArray);
     }

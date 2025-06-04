@@ -114,7 +114,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     param.addProperty("code", code);
     param.addProperty("check_consume", checkConsume);
     String responseContent = this.wxMpService.post(WxMpApiUrl.Card.CARD_CODE_GET, param.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonElement tmpJsonElement = JsonParser.parseString(responseContent);
     return WxMpGsonBuilder.create().fromJson(tmpJsonElement,
       new TypeToken<WxMpCardResult>() {
       }.getType());
@@ -145,7 +145,7 @@ public class WxMpCardServiceImpl implements WxMpCardService {
     param.addProperty("openid", openId);
     param.addProperty("is_mark", isMark);
     String responseContent = this.getWxMpService().post(WxMpApiUrl.Card.CARD_CODE_MARK, param.toString());
-    JsonElement tmpJsonElement = new JsonParser().parse(responseContent);
+    JsonElement tmpJsonElement = JsonParser.parseString(responseContent);
     WxMpCardResult cardResult = WxMpGsonBuilder.create().fromJson(tmpJsonElement,
       new TypeToken<WxMpCardResult>() {
       }.getType());

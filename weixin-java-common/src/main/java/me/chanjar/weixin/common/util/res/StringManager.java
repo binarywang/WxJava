@@ -102,7 +102,7 @@ public class StringManager {
    *
    * @param packageName The package name
    */
-  public static final synchronized StringManager getManager(
+  public static synchronized StringManager getManager(
     String packageName) {
     return getManager(packageName, Locale.getDefault());
   }
@@ -115,7 +115,7 @@ public class StringManager {
    * @param packageName The package name
    * @param locale      The Locale
    */
-  public static final synchronized StringManager getManager(
+  public static synchronized StringManager getManager(
     String packageName, Locale locale) {
 
     Map<Locale, StringManager> map = MANAGERS.get(packageName);
