@@ -34,11 +34,15 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
   public static RequestExecutor<InputStream, String> create(RequestHttp<?, ?> requestHttp, File tmpDirFile) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new MaterialVoiceAndImageDownloadApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, tmpDirFile);
+        return new MaterialVoiceAndImageDownloadApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp, tmpDirFile);
       case JODD_HTTP:
         return new MaterialVoiceAndImageDownloadJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, tmpDirFile);
       case OK_HTTP:
         return new MaterialVoiceAndImageDownloadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, tmpDirFile);
+      case HTTP_CLIENT_5:
+        return new MaterialVoiceAndImageDownloadHttpClient5RequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
       default:
         return null;
     }
