@@ -31,11 +31,15 @@ public abstract class MaterialNewsInfoRequestExecutor<H, P> implements RequestEx
   public static RequestExecutor<WxMpMaterialNews, String> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new MaterialNewsInfoApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new MaterialNewsInfoApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new MaterialNewsInfoJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaterialNewsInfoOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+        case HTTP_CLIENT_5:
+          return new MaterialNewsInfoHttpClient5RequestExecutor(
+            (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         //TODO 需要优化抛出异常
         return null;
