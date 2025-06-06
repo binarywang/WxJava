@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.5.B</version>
+    <version>4.7.6.B</version>
   </parent>
 
   <artifactId>weixin-java-common</artifactId>

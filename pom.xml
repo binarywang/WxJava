@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.7.5.B</version>
+  <version>4.7.6.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>

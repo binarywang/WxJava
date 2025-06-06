@@ -4,6 +4,9 @@ on:
     branches:
       - develop
 
+permissions:
+  contents: write
+
 concurrency:
   group: maven-publish-${{ github.ref }}
   cancel-in-progress: true
@@ -13,13 +16,38 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 检出代码
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 设置所需的Java版本
+      - name: Detect and tag release version from commit message
+        id: version_detect
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          VERSION=""
+          TAG=""
+          IS_RELEASE="false"
+          if [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\.B\ 测试版本 ]]; then
+            BASE_VER="${BASH_REMATCH[1]}"
+            VERSION="${BASE_VER}.B"
+            TAG="v${BASE_VER}"
+            IS_RELEASE="true"
+            echo "Matched release commit: VERSION=$VERSION, TAG=$TAG"
+            # 检查并打tag
+            if git tag | grep -q "^$TAG$"; then
+              echo "Tag $TAG already exists."
+            else
+              git config user.name "Binary Wang"
+              git config user.email "a@binarywang.com"
+              git tag -a "$TAG" -m "Release $TAG"
+              git push origin "$TAG"
+              echo "Tag $TAG created and pushed."
+            fi
+          fi
+          echo "is_release=$IS_RELEASE" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
@@ -37,14 +65,19 @@ jobs:
           echo "Available GPG Keys:"
           gpg --list-secret-keys --keyid-format LONG
 
-      - name: Generate version && Set version
+      - name: Generate and set version
         id: set_version
         run: |
-          git describe --tags 2>/dev/null || echo "no tag"
-          TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
-          GIT_DESCRIBE=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.1")
-          VERSION="${GIT_DESCRIBE}-${TIMESTAMP}"
-          echo "Generated version: $VERSION"
+          if [[ "${{ steps.version_detect.outputs.is_release }}" == "true" ]]; then
+            VERSION="${{ steps.version_detect.outputs.version }}"
+          else
+            git describe --tags 2>/dev/null || echo "no tag"
+            TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+            GIT_DESCRIBE=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.1")
+            VERSION="${GIT_DESCRIBE}-${TIMESTAMP}"
+          fi
+          echo "Final version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
           mvn versions:set -DnewVersion=$VERSION --no-transfer-progress
         env:
           TZ: Asia/Shanghai
