@@ -34,8 +34,11 @@ public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecuto
   public static RequestExecutor<Boolean, File> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new VoiceUploadApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
-      case JODD_HTTP:
+        return new VoiceUploadApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
+      case HTTP_CLIENT_5:
+        return new VoiceUploadHttpClient5RequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       case OK_HTTP:
       default:
         return null;
