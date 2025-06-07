@@ -8,8 +8,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * <pre>
@@ -36,8 +34,8 @@ public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecuto
       case APACHE_HTTP:
         return new VoiceUploadApacheHttpRequestExecutor(
           (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new VoiceUploadHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new VoiceUploadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       case OK_HTTP:
       default:

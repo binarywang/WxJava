@@ -13,8 +13,6 @@ import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.mp.bean.material.WxMediaImgUploadResult;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * @author miller
@@ -41,8 +39,8 @@ public abstract class MediaImgUploadRequestExecutor<H, P> implements RequestExec
         return new MediaImgUploadHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MediaImgUploadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new MediaImgUploadHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new MediaImgUploadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;

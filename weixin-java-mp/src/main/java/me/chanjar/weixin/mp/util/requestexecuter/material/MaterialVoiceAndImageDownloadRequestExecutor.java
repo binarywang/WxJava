@@ -13,8 +13,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> implements RequestExecutor<InputStream, String> {
   protected RequestHttp<H, P> requestHttp;
@@ -40,8 +38,8 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
         return new MaterialVoiceAndImageDownloadJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, tmpDirFile);
       case OK_HTTP:
         return new MaterialVoiceAndImageDownloadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, tmpDirFile);
-      case HTTP_CLIENT_5:
-        return new MaterialVoiceAndImageDownloadHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new MaterialVoiceAndImageDownloadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
       default:
         return null;

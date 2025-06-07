@@ -2,7 +2,7 @@ package me.chanjar.weixin.common.util.http;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpResponseProxy;
-import me.chanjar.weixin.common.util.http.hc5.ApacheHttpClient5ResponseProxy;
+import me.chanjar.weixin.common.util.http.hc.HttpComponentsResponseProxy;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpResponseProxy;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpResponseProxy;
 
@@ -26,8 +26,8 @@ public interface HttpResponseProxy {
     return new ApacheHttpResponseProxy(response);
   }
 
-  static ApacheHttpClient5ResponseProxy from(org.apache.hc.client5.http.impl.classic.CloseableHttpResponse response) {
-    return new ApacheHttpClient5ResponseProxy(response);
+  static HttpComponentsResponseProxy from(org.apache.hc.client5.http.impl.classic.CloseableHttpResponse response) {
+    return new HttpComponentsResponseProxy(response);
   }
 
   static JoddHttpResponseProxy from(jodd.http.HttpResponse response) {

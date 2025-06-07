@@ -35,8 +35,8 @@ public abstract class MaterialVideoInfoRequestExecutor<H, P> implements RequestE
         return new MaterialVideoInfoJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaterialVideoInfoOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new MaterialVideoInfoHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new MaterialVideoInfoHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;

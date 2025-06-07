@@ -8,7 +8,7 @@ import com.binarywang.solon.wxjava.channel.service.WxChannelMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelService;
-import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpClient5Impl;
+import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpComponentsImpl;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpClientImpl;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceImpl;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
@@ -85,8 +85,8 @@ public abstract class AbstractWxChannelConfiguration {
       case HTTP_CLIENT:
         wxChannelService = new WxChannelServiceHttpClientImpl();
         break;
-      case HTTP_CLIENT_5:
-        wxChannelService = new WxChannelServiceHttpClient5Impl();
+      case HTTP_COMPONENTS:
+        wxChannelService = new WxChannelServiceHttpComponentsImpl();
         break;
       default:
         wxChannelService = new WxChannelServiceImpl();

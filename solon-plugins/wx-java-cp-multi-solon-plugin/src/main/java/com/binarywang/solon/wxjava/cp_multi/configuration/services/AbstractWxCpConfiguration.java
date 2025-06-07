@@ -93,8 +93,8 @@ public abstract class AbstractWxCpConfiguration {
       case HTTP_CLIENT:
         wxCpService = new WxCpServiceApacheHttpClientImpl();
         break;
-      case HTTP_CLIENT_5:
-        wxCpService = new WxCpServiceHttpClient5Impl();
+      case HTTP_COMPONENTS:
+        wxCpService = new WxCpServiceHttpComponentsImpl();
         break;
       default:
         wxCpService = new WxCpServiceImpl();

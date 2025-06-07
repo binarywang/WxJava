@@ -28,8 +28,7 @@ import java.io.InputStream;
  * @author <a href="https://www.sacoc.cn">广州跨界</a>
  * created on  2024/01/11
  */
-public class CommonUploadRequestExecutorApacheImpl
-  extends CommonUploadRequestExecutor<CloseableHttpClient, HttpHost> {
+public class CommonUploadRequestExecutorApacheImpl extends CommonUploadRequestExecutor<CloseableHttpClient, HttpHost> {
 
   public CommonUploadRequestExecutorApacheImpl(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);

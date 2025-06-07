@@ -88,8 +88,8 @@ public abstract class AbstractWxMpConfiguration {
       case HTTP_CLIENT:
         wxMpService = new WxMpServiceHttpClientImpl();
         break;
-      case HTTP_CLIENT_5:
-        wxMpService = new WxMpServiceHttpClient5Impl();
+      case HTTP_COMPONENTS:
+        wxMpService = new WxMpServiceHttpComponentsImpl();
         break;
       default:
         wxMpService = new WxMpServiceImpl();

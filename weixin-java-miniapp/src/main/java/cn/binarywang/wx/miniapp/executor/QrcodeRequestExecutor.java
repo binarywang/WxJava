@@ -37,8 +37,8 @@ public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<Fil
           (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp, path);
       case OK_HTTP:
         return new OkHttpQrcodeFileRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, path);
-      case HTTP_CLIENT_5:
-        return new HttpClient5QrcodeFileRequestExecutor(
+      case HTTP_COMPONENTS:
+        return new HttpComponentsQrcodeFileRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, path);
       default:
         return null;
@@ -52,8 +52,8 @@ public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<Fil
         return new ApacheQrcodeFileRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, null);
       case OK_HTTP:
         return new OkHttpQrcodeFileRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, null);
-      case HTTP_CLIENT_5:
-        return new HttpClient5QrcodeFileRequestExecutor(
+      case HTTP_COMPONENTS:
+        return new HttpComponentsQrcodeFileRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, null);
       default:
         return null;

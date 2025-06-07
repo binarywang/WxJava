@@ -15,8 +15,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class ApiSignaturePostRequestExecutor<H, P>
@@ -71,8 +69,8 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
         return new JoddApiSignaturePostRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new OkHttpApiSignaturePostRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new HttpClient5ApiSignaturePostRequestExecutor(
+      case HTTP_COMPONENTS:
+        return new HttpComponentsApiSignaturePostRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         throw new IllegalArgumentException("非法请求参数");

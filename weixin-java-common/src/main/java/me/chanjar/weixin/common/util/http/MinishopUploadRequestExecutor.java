@@ -6,12 +6,11 @@ import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheMinishopMediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.hc.HttpComponentsMinishopMediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMinishopMediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMinishopMediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -32,13 +31,17 @@ public abstract class MinishopUploadRequestExecutor<H, P> implements RequestExec
   public static RequestExecutor<WxMinishopImageUploadResult, File> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheMinishopMediaUploadRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new ApacheMinishopMediaUploadRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new JoddHttpMinishopMediaUploadRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new OkHttpMinishopMediaUploadRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsMinishopMediaUploadRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

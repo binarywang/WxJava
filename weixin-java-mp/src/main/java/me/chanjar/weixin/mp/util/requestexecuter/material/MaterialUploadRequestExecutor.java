@@ -39,8 +39,8 @@ public abstract class MaterialUploadRequestExecutor<H, P> implements RequestExec
         return new MaterialUploadJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaterialUploadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new MaterialUploadHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new MaterialUploadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;

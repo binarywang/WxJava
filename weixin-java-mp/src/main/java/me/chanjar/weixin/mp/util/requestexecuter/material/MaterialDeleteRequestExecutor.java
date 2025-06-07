@@ -34,8 +34,8 @@ public abstract class MaterialDeleteRequestExecutor<H, P> implements RequestExec
         return new MaterialDeleteJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaterialDeleteOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new MaterialDeleteHttpClient5RequestExecutor(
+      case HTTP_COMPONENTS:
+        return new MaterialDeleteHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;

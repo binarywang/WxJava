@@ -44,8 +44,8 @@ public abstract class UploadAuthMaterialRequestExecutor<H, P> implements Request
         return new JoddHttpUploadAuthMaterialRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new OkHttpUploadAuthMaterialRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
-      case HTTP_CLIENT_5:
-        return new HttpClient5UploadAuthMaterialRequestExecutor(
+      case HTTP_COMPONENTS:
+        return new HttpComponentsUploadAuthMaterialRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         return null;

@@ -143,9 +143,9 @@ public class WxMpMultiProperties implements Serializable {
      */
     HTTP_CLIENT,
     /**
-     * HttpClient5
+     * HttpComponents
      */
-    HTTP_CLIENT_5,
+    HTTP_COMPONENTS,
     /**
      * OkHttp
      */
