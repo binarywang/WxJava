@@ -10,7 +10,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
 import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -24,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -50,7 +50,7 @@ public class CommonUploadMultiRequestExecutorApacheImpl extends CommonUploadMult
       List<CommonUploadMultiParam.NormalParam> normalParams = param.getNormalParams();
       if (!CollectionUtils.isEmpty(normalParams)) {
         for (CommonUploadMultiParam.NormalParam normalParam : normalParams) {
-          entity.addPart(normalParam.getName(), new StringBody(normalParam.getValue(), ContentType.create("multipart/form-data", Consts.UTF_8)));
+          entity.addPart(normalParam.getName(), new StringBody(normalParam.getValue(), ContentType.MULTIPART_FORM_DATA.withCharset(StandardCharsets.UTF_8)));
         }
       }
 

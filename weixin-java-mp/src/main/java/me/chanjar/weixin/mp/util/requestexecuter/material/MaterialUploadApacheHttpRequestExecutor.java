@@ -8,7 +8,6 @@ import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
-import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,6 +21,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 /**
@@ -56,7 +56,7 @@ public class MaterialUploadApacheHttpRequestExecutor extends MaterialUploadReque
     Map<String, String> form = material.getForm();
     if (material.getForm() != null) {
       multipartEntityBuilder.addPart("description",
-        new StringBody(WxGsonBuilder.create().toJson(form), ContentType.create("text/plain", Consts.UTF_8)));
+        new StringBody(WxGsonBuilder.create().toJson(form), ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8)));
     }
     httpPost.setEntity(multipartEntityBuilder.build());
 

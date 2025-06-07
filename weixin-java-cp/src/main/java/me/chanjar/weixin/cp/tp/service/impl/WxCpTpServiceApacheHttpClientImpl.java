@@ -12,7 +12,6 @@ import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
-import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpPost;
@@ -20,6 +19,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * The type Wx cp tp service apache http client.
@@ -63,7 +63,7 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
         jsonObject.addProperty("suite_id", this.configStorage.getSuiteId());
         jsonObject.addProperty("suite_secret", this.configStorage.getSuiteSecret());
         jsonObject.addProperty("suite_ticket", this.getSuiteTicket());
-        StringEntity entity = new StringEntity(jsonObject.toString(), Consts.UTF_8);
+        StringEntity entity = new StringEntity(jsonObject.toString(), StandardCharsets.UTF_8);
         httpPost.setEntity(entity);
 
         String resultContent = getRequestHttpClient().execute(httpPost, ApacheBasicResponseHandler.INSTANCE);
