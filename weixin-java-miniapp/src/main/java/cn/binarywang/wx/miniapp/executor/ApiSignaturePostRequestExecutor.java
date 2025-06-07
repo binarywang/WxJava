@@ -1,10 +1,6 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.WxMaApiResponse;
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Map;
-
 import jodd.http.HttpConnectionProvider;
 import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
@@ -16,6 +12,10 @@ import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.Map;
 
 public abstract class ApiSignaturePostRequestExecutor<H, P>
     implements RequestExecutor<WxMaApiResponse, WxMaApiResponse> {
@@ -73,7 +73,7 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
         return new HttpComponentsApiSignaturePostRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new IllegalArgumentException("非法请求参数");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

@@ -9,7 +9,7 @@ public enum HttpClientType {
    */
   JODD_HTTP,
   /**
-   * apache httpclient.
+   * apache httpclient 4.x.
    */
   APACHE_HTTP,
   /**

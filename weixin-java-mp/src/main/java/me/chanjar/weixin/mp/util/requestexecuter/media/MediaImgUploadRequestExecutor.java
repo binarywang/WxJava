@@ -43,7 +43,7 @@ public abstract class MediaImgUploadRequestExecutor<H, P> implements RequestExec
         return new MediaImgUploadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

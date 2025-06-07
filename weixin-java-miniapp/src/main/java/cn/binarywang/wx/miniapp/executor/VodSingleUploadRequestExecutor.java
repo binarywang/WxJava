@@ -10,8 +10,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,16 +41,24 @@ public abstract class VodSingleUploadRequestExecutor<H, P> implements RequestExe
 
   }
 
+  @SuppressWarnings("unchecked")
   public static RequestExecutor<WxMaVodSingleFileUploadResult, File> create(RequestHttp<?, ?> requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheVodSingleUploadRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
+        return new ApacheVodSingleUploadRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp,
+          mediaName, mediaType, coverType, coverData, sourceContext);
       case JODD_HTTP:
         return new JoddHttpVodSingleUploadRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
       case OK_HTTP:
-        return new OkHttpVodSingleUploadRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
+        return new OkHttpVodSingleUploadRequestExecutor(
+          (RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
+        case HTTP_COMPONENTS:
+          return new HttpComponentsVodSingleUploadRequestExecutor(
+            (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp,
+            mediaName, mediaType, coverType, coverData, sourceContext);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 
@@ -60,6 +66,5 @@ public abstract class VodSingleUploadRequestExecutor<H, P> implements RequestExe
   public void execute(String uri, File data, ResponseHandler<WxMaVodSingleFileUploadResult> handler, WxType wxType) throws WxErrorException, IOException {
     handler.handle(this.execute(uri, data, wxType));
   }
-
 
 }

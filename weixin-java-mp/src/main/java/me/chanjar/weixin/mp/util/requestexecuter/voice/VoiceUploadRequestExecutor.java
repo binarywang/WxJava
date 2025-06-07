@@ -1,13 +1,13 @@
 package me.chanjar.weixin.mp.util.requestexecuter.voice;
 
-import java.io.File;
-import java.io.IOException;
-
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * <pre>
@@ -37,9 +37,8 @@ public abstract class VoiceUploadRequestExecutor<H, P> implements RequestExecuto
       case HTTP_COMPONENTS:
         return new VoiceUploadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
-      case OK_HTTP:
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

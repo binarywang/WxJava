@@ -42,7 +42,7 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
         return new MaterialVoiceAndImageDownloadHttpComponentsRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

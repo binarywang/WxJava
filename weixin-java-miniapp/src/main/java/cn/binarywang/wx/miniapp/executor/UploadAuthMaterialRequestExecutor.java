@@ -48,7 +48,7 @@ public abstract class UploadAuthMaterialRequestExecutor<H, P> implements Request
         return new HttpComponentsUploadAuthMaterialRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }
