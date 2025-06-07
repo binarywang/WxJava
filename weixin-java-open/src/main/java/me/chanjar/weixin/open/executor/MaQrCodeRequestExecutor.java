@@ -43,6 +43,9 @@ public abstract class MaQrCodeRequestExecutor<H, P> implements RequestExecutor<F
         return new MaQrCodeJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaQrCodeOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_CLIENT_5:
+        return new MaQrCodeHttpClient5RequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         throw new WxErrorException("不支持的http框架");
     }
