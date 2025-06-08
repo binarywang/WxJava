@@ -38,6 +38,7 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxMaErrorMsgEnum;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.service.WxImgProcService;
@@ -458,7 +459,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        if (error.getErrorCode() != WxMaErrorMsgEnum.CODE_43101.getCode()) {
+          // 43101 日志太多, 不打印
+          log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        }
         throw new WxErrorException(error, e);
       }
       return null;
