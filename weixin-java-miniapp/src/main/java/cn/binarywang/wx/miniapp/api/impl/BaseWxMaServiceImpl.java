@@ -459,8 +459,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       }
 
       if (error.getErrorCode() != 0) {
-        if (error.getErrorCode() != WxMaErrorMsgEnum.CODE_43101.getCode()) {
-          // 43101 日志太多, 不打印
+        if (error.getErrorCode() == WxMaErrorMsgEnum.CODE_43101.getCode()) {
+          // 43101 日志太多, 打印为debug, 其他情况打印为warn
+          log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        } else {
           log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         }
         throw new WxErrorException(error, e);
