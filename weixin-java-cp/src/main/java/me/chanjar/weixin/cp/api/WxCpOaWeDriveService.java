@@ -48,12 +48,11 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_dismiss?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param userId  the user id
    * @param spaceId the space id
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp spaceDismiss(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
+  WxCpBaseResp spaceDismiss(@NonNull String spaceId) throws WxErrorException;
 
   /**
    * 获取空间信息
@@ -62,12 +61,11 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_info?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param userId  the user id
    * @param spaceId the space id
    * @return wx cp space info
    * @throws WxErrorException the wx error exception
    */
-  WxCpSpaceInfo spaceInfo(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
+  WxCpSpaceInfo spaceInfo(@NonNull String spaceId) throws WxErrorException;
 
   /**
    * 添加成员/部门
@@ -115,12 +113,11 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/space_share?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param userId  the user id
    * @param spaceId the space id
    * @return wx cp space share
    * @throws WxErrorException the wx error exception
    */
-  WxCpSpaceShare spaceShare(@NonNull String userId, @NonNull String spaceId) throws WxErrorException;
+  WxCpSpaceShare spaceShare(@NonNull String spaceId) throws WxErrorException;
 
   /**
    * 获取文件列表
@@ -155,18 +152,18 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_download?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param fileId 文件fileid（只支持下载普通文件，不支持下载文件夹或微文档）
+   * @param fileId         文件fileid（只支持下载普通文件，不支持下载文件夹或微文档）
    * @param selectedTicket 微盘和文件选择器jsapi返回的selectedTicket。若填此参数，则不需要填fileid。
    * @return {
-   *     "errcode": 0,
-   *     "errmsg": "ok",
-   *     "download_url": "DOWNLOAD_URL",
-   *     "cookie_name": "COOKIE_NAME",
-   *     "cookie_value": "COOKIE_VALUE"
+   * "errcode": 0,
+   * "errmsg": "ok",
+   * "download_url": "DOWNLOAD_URL",
+   * "cookie_name": "COOKIE_NAME",
+   * "cookie_value": "COOKIE_VALUE"
    * }
    * @throws WxErrorException the wx error exception
    */
-  WxCpFileDownload fileDownload( String fileId, String selectedTicket) throws WxErrorException;
+  WxCpFileDownload fileDownload(String fileId, String selectedTicket) throws WxErrorException;
 
   /**
    * 重命名文件
@@ -271,14 +268,13 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_setting?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param userId    the user id
    * @param fileId    the file id
    * @param authScope the auth scope
    * @param auth      the auth
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp fileSetting(@NonNull String userId, @NonNull String fileId, @NonNull Integer authScope, Integer auth) throws WxErrorException;
+  WxCpBaseResp fileSetting(@NonNull String fileId, @NonNull Integer authScope, Integer auth) throws WxErrorException;
 
   /**
    * 获取分享链接
@@ -287,11 +283,10 @@ public interface WxCpOaWeDriveService {
    * 请求方式：POST（HTTPS）
    * 请求地址: <a href="https://qyapi.weixin.qq.com/cgi-bin/wedrive/file_share?access_token=ACCESS_TOKEN">...</a>
    *
-   * @param userId the user id
    * @param fileId the file id
    * @return wx cp file share
    * @throws WxErrorException the wx error exception
    */
-  WxCpFileShare fileShare(@NonNull String userId, @NonNull String fileId) throws WxErrorException;
+  WxCpFileShare fileShare(@NonNull String fileId) throws WxErrorException;
 
 }
