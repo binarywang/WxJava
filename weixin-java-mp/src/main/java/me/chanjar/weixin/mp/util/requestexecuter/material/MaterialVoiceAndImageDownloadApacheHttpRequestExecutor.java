@@ -57,8 +57,6 @@ public class MaterialVoiceAndImageDownloadApacheHttpRequestExecutor extends Mate
         }
       }
       return new ByteArrayInputStream(responseContent);
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }

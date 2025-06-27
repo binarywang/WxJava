@@ -6,7 +6,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 
@@ -37,12 +36,8 @@ public class ApacheSimpleGetRequestExecutor extends SimpleGetRequestExecutor<Clo
       httpGet.setConfig(config);
     }
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpGet)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      return handleResponse(wxType, responseContent);
-    } finally {
-      httpGet.releaseConnection();
-    }
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpGet, Utf8ResponseHandler.INSTANCE);
+    return handleResponse(wxType, responseContent);
   }
 
 }

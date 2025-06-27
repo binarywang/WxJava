@@ -118,6 +118,10 @@ public class WxCpMultiProperties implements Serializable {
      */
     HTTP_CLIENT,
     /**
+     * HttpComponents
+     */
+    HTTP_COMPONENTS,
+    /**
      * OkHttp
      */
     OK_HTTP,

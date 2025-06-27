@@ -56,7 +56,7 @@ public class WxChannelBasicServiceImpl implements WxChannelBasicService {
   public ChannelImageInfo uploadImg(int respType, File file, int height, int width) throws WxErrorException {
     String url = IMG_UPLOAD_URL + "?upload_type=0&resp_type=" + respType + "&height=" + height + "&width=" + width;
     RequestExecutor<String, File> executor = ChannelFileUploadRequestExecutor.create(shopService);
-    String resJson = (String) shopService.execute(executor, url, file);
+    String resJson = shopService.execute(executor, url, file);
     UploadImageResponse response = ResponseUtils.decode(resJson, UploadImageResponse.class);
     return response.getImgInfo();
   }
@@ -64,19 +64,19 @@ public class WxChannelBasicServiceImpl implements WxChannelBasicService {
   @Override
   public QualificationFileResponse uploadQualificationFile(File file) throws WxErrorException {
     RequestExecutor<String, File> executor = ChannelFileUploadRequestExecutor.create(shopService);
-    String resJson = (String) shopService.execute(executor, UPLOAD_QUALIFICATION_FILE, file);
+    String resJson = shopService.execute(executor, UPLOAD_QUALIFICATION_FILE, file);
     return ResponseUtils.decode(resJson, QualificationFileResponse.class);
   }
 
   @Override
   public ChannelImageResponse getImg(String mediaId) throws WxErrorException {
     String appId = shopService.getConfig().getAppid();
-    ChannelImageResponse rs = null;
+    ChannelImageResponse rs;
     try {
       String url = GET_IMG_URL + "?media_id=" + mediaId;
       RequestExecutor<ChannelImageResponse, String> executor = ChannelMediaDownloadRequestExecutor.create(shopService,
         Files.createTempDirectory("wxjava-channel-" + appId).toFile());
-      rs = (ChannelImageResponse) shopService.execute(executor, url, null);
+      rs = shopService.execute(executor, url, null);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
     }

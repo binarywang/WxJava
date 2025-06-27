@@ -71,8 +71,6 @@ public class ApacheQrcodeFileRequestExecutor extends QrcodeRequestExecutor<Close
         return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
       }
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg", Paths.get(filePath).toFile());
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }

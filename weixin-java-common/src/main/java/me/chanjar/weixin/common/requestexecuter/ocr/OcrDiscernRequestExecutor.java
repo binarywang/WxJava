@@ -33,9 +33,13 @@ public abstract class OcrDiscernRequestExecutor<H, P> implements RequestExecutor
   public static RequestExecutor<String, File> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new OcrDiscernApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new OcrDiscernApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new OcrDiscernHttpComponentsRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

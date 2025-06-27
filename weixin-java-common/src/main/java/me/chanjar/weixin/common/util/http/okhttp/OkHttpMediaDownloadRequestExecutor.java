@@ -51,7 +51,7 @@ public class OkHttpMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
       throw new WxErrorException(WxError.fromJson(response.body().string(), wxType));
     }
 
-    String fileName = new HttpResponseProxy(response).getFileName();
+    String fileName = HttpResponseProxy.from(response).getFileName();
     if (StringUtils.isBlank(fileName)) {
       return null;
     }

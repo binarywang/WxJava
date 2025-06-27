@@ -39,7 +39,6 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
   }
 
   @Override
-  @SuppressWarnings("rawtypes")
   public boolean canConvert(Class type) {
     return type.equals(WxPayOrderNotifyResult.class);
   }

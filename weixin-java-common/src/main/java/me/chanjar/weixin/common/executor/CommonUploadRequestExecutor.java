@@ -1,11 +1,15 @@
 package me.chanjar.weixin.common.executor;
 
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 
@@ -34,15 +38,19 @@ public abstract class CommonUploadRequestExecutor<H, P> implements RequestExecut
    * @param requestHttp 请求信息
    * @return 执行器
    */
-  @SuppressWarnings({"rawtypes", "unchecked"})
-  public static RequestExecutor<String, CommonUploadParam> create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<String, CommonUploadParam> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new CommonUploadRequestExecutorApacheImpl(requestHttp);
+        return new CommonUploadRequestExecutorApacheImpl(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new CommonUploadRequestExecutorJoddHttpImpl(requestHttp);
+        return new CommonUploadRequestExecutorJoddHttpImpl((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new CommonUploadRequestExecutorOkHttpImpl(requestHttp);
+        return new CommonUploadRequestExecutorOkHttpImpl((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new CommonUploadRequestExecutorHttpComponentsImpl(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
         throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }

@@ -20,7 +20,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BatchNumberResult implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   @Override
   public String toString() {

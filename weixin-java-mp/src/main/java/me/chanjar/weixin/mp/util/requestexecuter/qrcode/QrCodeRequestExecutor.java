@@ -13,8 +13,6 @@ import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.mp.bean.result.WxMpQrCodeTicket;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * 获得QrCode图片 请求执行器.
@@ -34,16 +32,20 @@ public abstract class QrCodeRequestExecutor<H, P> implements RequestExecutor<Fil
   }
 
   @SuppressWarnings("unchecked")
-  public static RequestExecutor<File, WxMpQrCodeTicket> create(RequestHttp<?, ?> requestHttp) throws WxErrorException {
+  public static RequestExecutor<File, WxMpQrCodeTicket> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new QrCodeApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new QrCodeApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new QrCodeJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new QrCodeOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new QrCodeHttpComponentsRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new WxErrorException("不支持的http框架");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

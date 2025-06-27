@@ -4,7 +4,7 @@ import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
@@ -92,7 +92,7 @@ public class BaseWxCpServiceImplTest {
       }
 
       @Override
-      public HttpType getRequestType() {
+      public HttpClientType getRequestType() {
         return null;
       }
 

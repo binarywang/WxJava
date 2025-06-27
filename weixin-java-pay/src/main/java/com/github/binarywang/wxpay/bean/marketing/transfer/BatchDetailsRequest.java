@@ -23,7 +23,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class BatchDetailsRequest implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
   /**
    * <pre>
    * 字段名：微信支付批次单号

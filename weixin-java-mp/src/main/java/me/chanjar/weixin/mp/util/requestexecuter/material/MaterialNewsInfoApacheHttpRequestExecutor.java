@@ -51,8 +51,6 @@ public class MaterialNewsInfoApacheHttpRequestExecutor
       } else {
         return WxMpGsonBuilder.create().fromJson(responseContent, WxMpMaterialNews.class);
       }
-    } finally {
-      httpPost.releaseConnection();
     }
   }
 }

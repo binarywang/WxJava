@@ -13,8 +13,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> implements RequestExecutor<InputStream, String> {
   protected RequestHttp<H, P> requestHttp;
@@ -34,13 +32,17 @@ public abstract class MaterialVoiceAndImageDownloadRequestExecutor<H, P> impleme
   public static RequestExecutor<InputStream, String> create(RequestHttp<?, ?> requestHttp, File tmpDirFile) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new MaterialVoiceAndImageDownloadApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, tmpDirFile);
+        return new MaterialVoiceAndImageDownloadApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp, tmpDirFile);
       case JODD_HTTP:
         return new MaterialVoiceAndImageDownloadJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, tmpDirFile);
       case OK_HTTP:
         return new MaterialVoiceAndImageDownloadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, tmpDirFile);
+      case HTTP_COMPONENTS:
+        return new MaterialVoiceAndImageDownloadHttpComponentsRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

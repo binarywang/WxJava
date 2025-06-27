@@ -1,10 +1,6 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.WxMaApiResponse;
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Map;
-
 import jodd.http.HttpConnectionProvider;
 import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
@@ -15,9 +11,11 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.Map;
 
 public abstract class ApiSignaturePostRequestExecutor<H, P>
     implements RequestExecutor<WxMaApiResponse, WxMaApiResponse> {
@@ -65,13 +63,17 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
   public static ApiSignaturePostRequestExecutor<?, ?> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheApiSignaturePostRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new ApacheApiSignaturePostRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new JoddApiSignaturePostRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new OkHttpApiSignaturePostRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsApiSignaturePostRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new IllegalArgumentException("非法请求参数");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

@@ -13,8 +13,6 @@ import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.open.bean.ma.WxMaQrcodeParam;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 /**
  * 获得小程序体验QrCode图片 请求执行器.
@@ -35,16 +33,20 @@ public abstract class MaQrCodeRequestExecutor<H, P> implements RequestExecutor<F
   }
 
   @SuppressWarnings("unchecked")
-  public static RequestExecutor<File, WxMaQrcodeParam> create(RequestHttp<?, ?> requestHttp) throws WxErrorException {
+  public static RequestExecutor<File, WxMaQrcodeParam> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new MaQrCodeApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new MaQrCodeApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new MaQrCodeJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaQrCodeOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new MaQrCodeHttpComponentsRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new WxErrorException("不支持的http框架");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

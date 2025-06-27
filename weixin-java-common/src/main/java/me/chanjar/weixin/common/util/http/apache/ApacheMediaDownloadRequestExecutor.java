@@ -58,7 +58,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
         }
       }
 
-      String fileName = new HttpResponseProxy(response).getFileName();
+      String fileName = HttpResponseProxy.from(response).getFileName();
       if (StringUtils.isBlank(fileName)) {
         fileName = String.valueOf(System.currentTimeMillis());
       }
@@ -68,11 +68,7 @@ public class ApacheMediaDownloadRequestExecutor extends BaseMediaDownloadRequest
         baseName = String.valueOf(System.currentTimeMillis());
       }
 
-      return FileUtils.createTmpFile(inputStream, baseName, FilenameUtils.getExtension(fileName),
-        super.tmpDirFile);
-
-    } finally {
-      httpGet.releaseConnection();
+      return FileUtils.createTmpFile(inputStream, baseName, FilenameUtils.getExtension(fileName), super.tmpDirFile);
     }
   }
 

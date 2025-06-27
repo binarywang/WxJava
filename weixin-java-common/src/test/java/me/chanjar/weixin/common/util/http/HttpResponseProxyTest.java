@@ -1,6 +1,7 @@
 package me.chanjar.weixin.common.util.http;
 
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpResponseProxy;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;

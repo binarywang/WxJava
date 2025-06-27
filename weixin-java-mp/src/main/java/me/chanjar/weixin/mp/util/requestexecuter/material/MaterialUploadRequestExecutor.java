@@ -1,7 +1,5 @@
 package me.chanjar.weixin.mp.util.requestexecuter.material;
 
-import java.io.IOException;
-
 import jodd.http.HttpConnectionProvider;
 import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
@@ -13,8 +11,8 @@ import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterial;
 import me.chanjar.weixin.mp.bean.material.WxMpMaterialUploadResult;
 import okhttp3.OkHttpClient;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.client.CloseableHttpClient;
+
+import java.io.IOException;
 
 /**
  * @author codepiano
@@ -35,13 +33,17 @@ public abstract class MaterialUploadRequestExecutor<H, P> implements RequestExec
   public static RequestExecutor<WxMpMaterialUploadResult, WxMpMaterial> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new MaterialUploadApacheHttpRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp);
+        return new MaterialUploadApacheHttpRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
         return new MaterialUploadJoddHttpRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
         return new MaterialUploadOkhttpRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new MaterialUploadHttpComponentsRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

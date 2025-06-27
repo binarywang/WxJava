@@ -20,6 +20,7 @@ import me.chanjar.weixin.channel.bean.order.OrderAddressInfo;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
+import me.chanjar.weixin.channel.bean.order.OrderSearchCondition;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
 import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
@@ -68,6 +69,10 @@ public class WxChannelOrderServiceImplTest {
   public void testSearchOrder() throws WxErrorException {
     WxChannelOrderService orderService = channelService.getOrderService();
     OrderSearchParam param = new OrderSearchParam();
+    param.setPageSize(100);
+    OrderSearchCondition searchCondition = new OrderSearchCondition();
+    searchCondition.setTitle("");
+    param.setSearchCondition(searchCondition);
     OrderListResponse response = orderService.searchOrder(param);
     assertNotNull(response);
     assertTrue(response.isSuccess());
@@ -145,7 +150,7 @@ public class WxChannelOrderServiceImplTest {
   @Test
   public void testListDeliveryCompany() throws WxErrorException {
     WxChannelOrderService orderService = channelService.getOrderService();
-    DeliveryCompanyResponse response = orderService.listDeliveryCompany();
+    DeliveryCompanyResponse response = orderService.listDeliveryCompany(false);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }

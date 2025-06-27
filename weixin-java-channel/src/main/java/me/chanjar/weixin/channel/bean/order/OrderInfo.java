@@ -39,6 +39,26 @@ public class OrderInfo implements Serializable {
   @JsonProperty("aftersale_detail")
   protected AfterSaleDetail afterSaleDetail;
 
+  /** 是否为礼物订单 */
+  @JsonProperty("is_present")
+  private Boolean present;
+
+  /** 礼物订单ID */
+  @JsonProperty("present_order_id_str")
+  private String presentOrderId;
+
+  /** 礼物订单留言 */
+  @JsonProperty("present_note")
+  private String presentNote;
+
+  /** 礼物订单赠送者openid */
+  @JsonProperty("present_giver_openid")
+  private String presentGiverOpenid;
+
+  /** 礼物订单赠送者unionid */
+  @JsonProperty("present_giver_unionid")
+  private String presentGiverUnionid;
+
   /** 创建时间 秒级时间戳 */
   @JsonProperty("create_time")
   protected Integer createTime;
@@ -46,5 +66,4 @@ public class OrderInfo implements Serializable {
   /** 更新时间 秒级时间戳 */
   @JsonProperty("update_time")
   protected Integer updateTime;
-
 }

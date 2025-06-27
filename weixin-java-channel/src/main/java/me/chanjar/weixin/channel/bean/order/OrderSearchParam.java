@@ -25,6 +25,6 @@ public class OrderSearchParam extends StreamPageParam {
   private Integer onAfterSaleOrderExist;
 
   /** 订单状态 {@link me.chanjar.weixin.channel.enums.WxOrderStatus} */
-  @JsonProperty("on_aftersale_order_exist")
+  @JsonProperty("status")
   private Integer status;
 }

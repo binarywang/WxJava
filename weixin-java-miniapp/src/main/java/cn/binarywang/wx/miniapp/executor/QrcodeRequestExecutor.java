@@ -33,12 +33,15 @@ public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<Fil
   public static RequestExecutor<File, AbstractWxMaQrcodeWrapper> create(RequestHttp<?, ?> requestHttp, String path) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheQrcodeFileRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, path);
+        return new ApacheQrcodeFileRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp, path);
       case OK_HTTP:
         return new OkHttpQrcodeFileRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, path);
-      case JODD_HTTP:
+      case HTTP_COMPONENTS:
+        return new HttpComponentsQrcodeFileRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, path);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 
@@ -47,12 +50,13 @@ public abstract class QrcodeRequestExecutor<H, P> implements RequestExecutor<Fil
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
         return new ApacheQrcodeFileRequestExecutor((RequestHttp<CloseableHttpClient, HttpHost>) requestHttp, null);
-      case JODD_HTTP:
-        return null;
       case OK_HTTP:
         return new OkHttpQrcodeFileRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, null);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsQrcodeFileRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, null);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

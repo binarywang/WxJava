@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.5.B</version>
+    <version>4.7.6.B</version>
   </parent>
 
   <artifactId>weixin-java-channel</artifactId>
@@ -14,7 +14,7 @@
   <description>微信视频号/微信小店 Java SDK</description>
 
   <properties>
-    <jackson.version>2.18.1</jackson.version>
+    <jackson.version>2.18.4</jackson.version>
   </properties>
 
   <dependencies>
@@ -27,6 +27,11 @@
     <dependency>
       <groupId>org.jodd</groupId>
       <artifactId>jodd-http</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
       <scope>provided</scope>
     </dependency>
 

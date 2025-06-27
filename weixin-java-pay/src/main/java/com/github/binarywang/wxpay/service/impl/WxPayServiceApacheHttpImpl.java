@@ -7,6 +7,7 @@ import com.github.binarywang.wxpay.v3.WxPayV3DownloadHttpGet;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.util.http.apache.ByteArrayResponseHandler;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.*;
@@ -54,15 +55,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       HttpClientBuilder httpClientBuilder = createHttpClientBuilder(useKey);
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-          final byte[] bytes = EntityUtils.toByteArray(response.getEntity());
-          final String responseData = Base64.getEncoder().encodeToString(bytes);
-          this.logRequestAndResponse(url, requestStr, responseData);
-          wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
-          return bytes;
-        }
-      } finally {
-        httpPost.releaseConnection();
+        final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
+        final String responseData = Base64.getEncoder().encodeToString(bytes);
+        this.logRequestAndResponse(url, requestStr, responseData);
+        wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
+        return bytes;
       }
     } catch (Exception e) {
       this.logError(url, requestStr, e);
@@ -134,7 +131,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public String patchV3(String url, String requestStr) throws WxPayException {
     HttpPatch httpPatch = new HttpPatch(url);
-    httpPatch.setEntity(this.createEntry(requestStr));
+    httpPatch.setEntity(createEntry(requestStr));
     return this.requestV3(url, requestStr, httpPatch);
   }
 
@@ -187,7 +184,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
-        this.log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
+        log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
         return responseString;
       }
 
@@ -249,7 +246,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public String putV3(String url, String requestStr) throws WxPayException {
     HttpPut httpPut = new HttpPut(url);
-    StringEntity entity = this.createEntry(requestStr);
+    StringEntity entity = createEntry(requestStr);
     httpPut.setEntity(entity);
     return requestV3(url, httpPut);
   }
@@ -284,8 +281,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     return apiV3HttpClient;
   }
 
-  private StringEntity createEntry(String requestStr) {
-    return new StringEntity(requestStr, ContentType.create(APPLICATION_JSON, "utf-8"));
+  private static StringEntity createEntry(String requestStr) {
+    return new StringEntity(requestStr, ContentType.create(APPLICATION_JSON, StandardCharsets.UTF_8));
     //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
   }
 
@@ -320,7 +317,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   private HttpPost createHttpPost(String url, String requestStr) {
     HttpPost httpPost = new HttpPost(url);
-    httpPost.setEntity(this.createEntry(requestStr));
+    httpPost.setEntity(createEntry(requestStr));
 
     httpPost.setConfig(RequestConfig.custom()
       .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())

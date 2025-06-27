@@ -55,7 +55,7 @@ public class JoddHttpMediaDownloadRequestExecutor extends BaseMediaDownloadReque
       throw new WxErrorException(WxError.fromJson(response.bodyText(), wxType));
     }
 
-    String fileName = new HttpResponseProxy(response).getFileName();
+    String fileName = HttpResponseProxy.from(response).getFileName();
     if (StringUtils.isBlank(fileName)) {
       return null;
     }

@@ -34,6 +34,9 @@ public class ContentValue implements Serializable {
 
   private List<ContentValue.Department> departments;
 
+  @SerializedName("new_tips")
+  private NewTips newTips;
+
   private List<ContentValue.File> files;
 
   private List<ContentValue.Child> children;
@@ -112,6 +115,68 @@ public class ContentValue implements Serializable {
     @SerializedName("openapi_id")
     private String openApiId;
     private String name;
+  }
+
+  /**
+   * The type Tips.
+   */
+  @Data
+  public static class NewTips implements Serializable {
+    private static final long serialVersionUID = 1094978100200056100L;
+    @SerializedName("tips_content")
+    private List<TipsContent> tipsContent;
+
+    /**
+     * The type tips_content.
+     */
+    @Data
+    public static class TipsContent implements Serializable {
+      private static final long serialVersionUID = 559432801311084797L;
+      @SerializedName("text")
+      private Text text;
+      private String lang;
+
+      /**
+       * The type sub_text.
+       */
+      @Data
+      public static class Text implements Serializable {
+        private static final long serialVersionUID = -70174360931158924L;
+        @SerializedName("sub_text")
+        private List<SubText> subText;
+      }
+
+      /**
+       * The type sub_text.
+       */
+      @Data
+      public static class SubText implements Serializable {
+        private static final long serialVersionUID = -8226911175438019317L;
+        private Integer type;
+        private Content content;
+
+        @Data
+        public static class Content implements Serializable {
+          private static final long serialVersionUID = -6813250009451940525L;
+          @SerializedName("plain_text")
+          private PlainText plainText;
+          private Link link;
+
+          @Data
+          public static class PlainText implements Serializable {
+            private static final long serialVersionUID = -599377674188314118L;
+            private String content;
+          }
+
+          @Data
+          public static class Link implements Serializable {
+            private static final long serialVersionUID = 2784173996170990308L;
+            private String title;
+            private String url;
+          }
+        }
+      }
+    }
   }
 
   /**

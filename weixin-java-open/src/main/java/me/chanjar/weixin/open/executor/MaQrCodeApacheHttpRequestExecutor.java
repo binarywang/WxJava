@@ -61,8 +61,6 @@ public class MaQrCodeApacheHttpRequestExecutor extends MaQrCodeRequestExecutor<C
         }
       }
       return FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), "jpg");
-    } finally {
-      httpGet.releaseConnection();
     }
   }
 }

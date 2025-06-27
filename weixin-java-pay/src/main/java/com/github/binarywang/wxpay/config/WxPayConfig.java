@@ -233,6 +233,11 @@ public class WxPayConfig {
   private boolean strictlyNeedWechatPaySerial = false;
 
   /**
+   * 是否完全使用公钥模式(用以微信从平台证书到公钥的灰度切换)，默认不使用
+   */
+  private boolean fullPublicKeyModel = false;
+
+  /**
    * 返回所设置的微信支付接口请求地址域名.
    *
    * @return 微信支付接口请求地址域名
@@ -289,22 +294,18 @@ public class WxPayConfig {
     if (StringUtils.isBlank(this.getApiV3Key())) {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
-
-    // 尝试从p12证书中加载私钥和证书
-    PrivateKey merchantPrivateKey = null;
-    X509Certificate certificate = null;
-    Object[] objects = this.p12ToPem();
-    if (objects != null) {
-      merchantPrivateKey = (PrivateKey) objects[0];
-      certificate = (X509Certificate) objects[1];
-      this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
-    }
     try {
-      if (merchantPrivateKey == null && StringUtils.isNotBlank(this.getPrivateKeyPath())) {
-        try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
-          this.privateKeyContent, "privateKeyPath")) {
-          merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
-        }
+      PrivateKey merchantPrivateKey = null;
+      PublicKey publicKey = null;
+
+      // 不使用完全公钥模式时，同时兼容平台证书和公钥
+      X509Certificate certificate = null;
+      // 尝试从p12证书中加载私钥和证书
+      Object[] objects = this.p12ToPem();
+      if (objects != null) {
+        merchantPrivateKey = (PrivateKey) objects[0];
+        certificate = (X509Certificate) objects[1];
+        this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
       if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && StringUtils.isNotBlank(this.getPrivateCertPath())) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
@@ -313,8 +314,11 @@ public class WxPayConfig {
         }
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
-      PublicKey publicKey = null;
+
       if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
+        if (StringUtils.isBlank(this.getPublicKeyId())) {
+          throw new WxPayException("请确保和publicKeyId配套使用");
+        }
         try (InputStream pubInputStream =
                this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
                  this.publicKeyContent, "publicKeyPath")) {
@@ -322,15 +326,27 @@ public class WxPayConfig {
         }
       }
 
+      // 加载api私钥
+      if (merchantPrivateKey == null && (StringUtils.isNotBlank(this.getPrivateKeyPath()) || StringUtils.isNotBlank(this.getPrivateKeyString()) || null != this.privateKeyContent)) {
+        try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
+          this.privateKeyContent, "privateKeyPath")) {
+          merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+        }
+      }
+
       //构造Http Proxy正向代理
       WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
       // 构造证书验签器
-      Verifier certificatesVerifier = VerifierBuilder.build(
-        this.getCertSerialNo(), this.getMchId(), this.getApiV3Key(), merchantPrivateKey, wxPayHttpProxy,
-        this.getCertAutoUpdateTime(), this.getPayBaseUrl(),
-        this.getPublicKeyId(), publicKey
-      );
+      Verifier certificatesVerifier;
+      if (this.fullPublicKeyModel) {
+        // 使用完全公钥模式时，只加载公钥相关配置，避免下载平台证书使灰度切换无法达到100%覆盖
+        certificatesVerifier = VerifierBuilder.buildPublicCertVerifier(this.publicKeyId, publicKey);
+      } else {
+        certificatesVerifier = VerifierBuilder.build(
+          this.getCertSerialNo(), this.getMchId(), this.getApiV3Key(), merchantPrivateKey, wxPayHttpProxy,
+          this.getCertAutoUpdateTime(), this.getPayBaseUrl(), this.getPublicKeyId(), publicKey);
+      }
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)

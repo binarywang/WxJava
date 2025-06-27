@@ -247,8 +247,9 @@ public class WxChannelApiUrlConstants {
 
   /** 物流相关接口 */
   public interface Delivery {
-
     /** 获取快递公司列表 */
+    String GET_DELIVERY_COMPANY_NEW_URL = "https://api.weixin.qq.com/channels/ec/order/deliverycompanylist/new/get";
+    /** 获取快递公司列表（旧） */
     String GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/channels/ec/order/deliverycompanylist/get";
     /** 订单发货 */
     String DELIVERY_SEND_URL = "https://api.weixin.qq.com/channels/ec/order/delivery/send";
