@@ -127,8 +127,10 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
 
       switch (type) {
         case 0: {
-          attr.setTextValue(GsonHelper.getString(attrJsonElement.getAsJsonObject().get("text").getAsJsonObject(),
-            "value"));
+          JsonElement textJsonElement = attrJsonElement.getAsJsonObject().get("text");
+          if (textJsonElement != null) {
+            attr.setTextValue(GsonHelper.getString(textJsonElement.getAsJsonObject(), "value"));
+          }
           break;
         }
         case 1: {
