@@ -42,6 +42,7 @@ public class WxPayScoreRequest implements Serializable {
    * openid : oUpF8uMuAJO_M2pxb1Q9zNjWeS6o
    * need_user_confirm : true
    * profitSharing : false：不分账，默认：false,true：分账
+   * device: 设备信息
    */
   @SerializedName("out_order_no")
   private String outOrderNo;
@@ -95,4 +96,6 @@ public class WxPayScoreRequest implements Serializable {
    */
   @SerializedName("complete_time")
   private String completeTime;
+  @SerializedName("device")
+  private Device device;
 }
