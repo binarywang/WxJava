@@ -6,10 +6,11 @@ import org.testng.annotations.Test;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * created on  2020-07-11
  */
-public class WxPayScoreRequestTest {
+public class WxPartnerPayScoreRequestTest {
+
   @Test
   public void testToJson() {
-    WxPayScoreRequest request = WxPayScoreRequest.builder()
+    WxPartnerPayScoreRequest request = WxPartnerPayScoreRequest.builder()
       .outOrderNo("QLS202005201058000201")
       .appid("123")
       .serviceId("345")

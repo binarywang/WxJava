@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.payscore;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
  **/
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class Device  implements Serializable {
 
   private static final long serialVersionUID = -4510224826631515321L;
