@@ -10,6 +10,7 @@ import com.github.binarywang.wxpay.util.SignUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.URLEncoder;
 
@@ -65,8 +66,13 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
     strBuilder.append("&contract_code=").append(wxH5EntrustRequest.getContractCode());
     strBuilder.append("&contract_display_account=").append(URLEncoder.encode(wxH5EntrustRequest.getContractDisplayAccount()));
     strBuilder.append("&mch_id=").append(wxH5EntrustRequest.getMchId()).append("&notify_url=").append(URLEncoder.encode(wxH5EntrustRequest.getNotifyUrl()));
-    strBuilder.append("&plan_id=").append(wxH5EntrustRequest.getPlanId()).append("&outerid=").append(URLEncoder.encode(wxH5EntrustRequest.getOuterId()));
-    strBuilder.append("&return_appid=").append(wxH5EntrustRequest.getReturnAppid());
+    strBuilder.append("&plan_id=").append(wxH5EntrustRequest.getPlanId());
+    if (StringUtils.isNotEmpty(wxH5EntrustRequest.getOuterId())) {
+      strBuilder.append("&outerid=").append(URLEncoder.encode(wxH5EntrustRequest.getOuterId()));
+    }
+    if (StringUtils.isNotEmpty(wxH5EntrustRequest.getReturnAppid())) {
+      strBuilder.append("&return_appid=").append(wxH5EntrustRequest.getReturnAppid());
+    }
     strBuilder.append("&clientip=").append(wxH5EntrustRequest.getClientIp());
     strBuilder.append("&request_serial=").append(wxH5EntrustRequest.getRequestSerial()).append("&timestamp=").append(wxH5EntrustRequest.getTimestamp());
     strBuilder.append("&version=").append(wxH5EntrustRequest.getVersion()).append("&sign=").append(sign);

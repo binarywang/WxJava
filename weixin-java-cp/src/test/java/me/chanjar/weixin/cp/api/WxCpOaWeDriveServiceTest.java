@@ -59,13 +59,13 @@ public class WxCpOaWeDriveServiceTest {
     /*
      * 获取分享链接
      */
-    WxCpFileShare fileShare = cpService.getOaWeDriveService().fileShare(uId, fileId2);
+    WxCpFileShare fileShare = cpService.getOaWeDriveService().fileShare(fileId2);
     log.info("获取分享链接返回结果为：{}", fileShare.toJson());
 
     /*
      * 分享设置
      */
-    WxCpBaseResp fileSetting = cpService.getOaWeDriveService().fileSetting(uId, fileId2, 2, 1);
+    WxCpBaseResp fileSetting = cpService.getOaWeDriveService().fileSetting(fileId2, 2, 1);
     log.info("分享设置返回结果为：{}", fileSetting.toJson());
 
     /*
@@ -200,13 +200,13 @@ public class WxCpOaWeDriveServiceTest {
     /*
      * 获取邀请链接
      */
-    WxCpSpaceShare spaceShare = cpService.getOaWeDriveService().spaceShare(uId, spId);
+    WxCpSpaceShare spaceShare = cpService.getOaWeDriveService().spaceShare(spId);
     log.info("获取邀请链接信息为：{}", spaceShare.toJson());
 
     /*
      * 获取空间信息
      */
-    WxCpSpaceInfo data = cpService.getOaWeDriveService().spaceInfo(uId, spId);
+    WxCpSpaceInfo data = cpService.getOaWeDriveService().spaceInfo(spId);
     log.info("获取空间信息为：{}", data.toJson());
 
     /*
@@ -252,7 +252,7 @@ public class WxCpOaWeDriveServiceTest {
     /*
      * 获取空间信息
      */
-    WxCpSpaceInfo spaceInfo = cpService.getOaWeDriveService().spaceInfo("WangKai", "s.ww45d3e188865aca30.652091685u4h");
+    WxCpSpaceInfo spaceInfo = cpService.getOaWeDriveService().spaceInfo("s.ww45d3e188865aca30.652091685u4h");
     log.info("获取空间信息，spaceInfo信息为：{}", spaceInfo.toJson());
 
     /*
@@ -279,7 +279,7 @@ public class WxCpOaWeDriveServiceTest {
     /*
      * 解散空间
      */
-    WxCpBaseResp thisResp = cpService.getOaWeDriveService().spaceDismiss("WangKai", spaceCreateData.getSpaceId());
+    WxCpBaseResp thisResp = cpService.getOaWeDriveService().spaceDismiss(spaceCreateData.getSpaceId());
     log.info("解散成功：{}", thisResp.toJson());
 
   }

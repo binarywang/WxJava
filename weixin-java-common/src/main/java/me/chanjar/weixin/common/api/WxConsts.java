@@ -302,6 +302,7 @@ public class WxConsts {
     public static final String VIEW = "VIEW";
     public static final String MASS_SEND_JOB_FINISH = "MASSSENDJOBFINISH";
 
+    public static final String SYS_APPROVAL_CHANGE = "sys_approval_change";
     /**
      * 扫码推事件的事件推送
      */

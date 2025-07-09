@@ -207,7 +207,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     throw new WxRuntimeException(String.format("无法找到对应mchId=【%s】,appId=【%s】的商户号配置信息，请核实！", mchId, appId));
   }
 
-  private String getConfigKey(String mchId, String appId) {
+  public String getConfigKey(String mchId, String appId) {
     return mchId + "_" + appId;
   }
 
