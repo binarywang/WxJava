@@ -89,7 +89,7 @@ public interface WxMpQrcodeService {
      * @throws WxErrorException the wx error exception
      */
     @Deprecated
-  String qrCodePictureUrl(String ticket, boolean needShortUrl) throws WxErrorException;
+    String qrCodePictureUrl(String ticket, boolean needShortUrl) throws WxErrorException;
 
     /**
      * <pre>
