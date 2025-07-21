@@ -1,29 +1,23 @@
-<?xml version="1.0"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-         xmlns="http://maven.apache.org/POM/4.0.0">
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.7.B</version>
+    <version>4.7.0</version>
   </parent>
-
   <artifactId>weixin-graal</artifactId>
   <name>WxJava - Graal</name>
   <description>微信开发Java内部配合graal以产生native-image配置的辅助工具, 可以通过项目的 native-image Profile 来启用: mvn -P native-image ...
   </description>
-
   <dependencies>
-
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <scope>compile</scope>
+      <version>${org.projectlombok_lombok_version}</version>
     </dependency>
-
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -36,5 +30,7 @@
       </plugin>
     </plugins>
   </build>
-
+  <properties>
+    <org.projectlombok_lombok_version>1.18.34</org.projectlombok_lombok_version>
+  </properties>
 </project>
