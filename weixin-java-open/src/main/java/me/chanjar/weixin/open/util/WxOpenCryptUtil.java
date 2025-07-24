@@ -1,7 +1,5 @@
 package me.chanjar.weixin.open.util;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 

@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class OkHttpVodUploadPartRequestExecutor extends VodUploadPartRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
 
-  public OkHttpVodUploadPartRequestExecutor(RequestHttp requestHttp, String uploadId, Integer partNumber, Integer resourceType) {
+  public OkHttpVodUploadPartRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp, String uploadId, Integer partNumber, Integer resourceType) {
     super(requestHttp, uploadId, partNumber, resourceType);
 
   }

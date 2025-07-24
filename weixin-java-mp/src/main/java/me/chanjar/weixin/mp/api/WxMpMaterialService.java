@@ -148,30 +148,6 @@ public interface WxMpMaterialService {
 
     /**
      * <pre>
-     * 新增永久图文素材
-     *
-     * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN">新增永久素材</a>
-     * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/add_news?access_token=ACCESS_TOKEN
-     *
-     * 除了3天就会失效的临时素材外，开发者有时需要永久保存一些素材，届时就可以通过本接口新增永久素材。
-     * 永久图片素材新增后，将带有URL返回给开发者，开发者可以在腾讯系域名内使用（腾讯系域名外使用，图片将被屏蔽）。
-     * 请注意：
-     * 1、新增的永久素材也可以在公众平台官网素材管理模块中看到
-     * 2、永久素材的数量是有上限的，请谨慎新增。图文消息素材和图片素材的上限为5000，其他类型为1000
-     * 3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持bmp/png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/wma/wav/amr格式
-     * 4、调用该接口需https协议
-     * </pre>
-     *
-     * @param news 上传的图文消息, 请看{@link WxMpMaterialNews}
-     * @return the wx mp material upload result
-     * @throws WxErrorException the wx error exception
-     * @deprecated 关于永久图文素材相关接口下线的公告 : https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11644831863qFQSh&version=&token=2085564289&lang=zh_CN
-     */
-    @Deprecated
-  WxMpMaterialUploadResult materialNewsUpload(WxMpMaterialNews news) throws WxErrorException;
-
-    /**
-     * <pre>
      * 获取声音或者图片永久素材
      *
      * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738729&token=&lang=zh_CN">获取永久素材</a>
@@ -211,22 +187,6 @@ public interface WxMpMaterialService {
      * @throws WxErrorException the wx error exception
      */
     WxMpMaterialNews materialNewsInfo(String mediaId) throws WxErrorException;
-
-    /**
-     * <pre>
-     * 修改永久图文素材
-     *
-     * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738732&token=&lang=zh_CN">修改永久图文素材</a>
-     * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/update_news?access_token=ACCESS_TOKEN
-     * </pre>
-     *
-     * @param wxMpMaterialArticleUpdate 用来更新图文素材的bean, 请看{@link WxMpMaterialArticleUpdate}
-     * @return the boolean
-     * @throws WxErrorException the wx error exception
-     * @deprecated 关于永久图文素材相关接口下线的公告 : https://mp.weixin.qq.com/cgi-bin/announce?action=getannouncement&announce_id=11644831863qFQSh&version=&token=2085564289&lang=zh_CN
-     */
-    @Deprecated
-  boolean materialNewsUpdate(WxMpMaterialArticleUpdate wxMpMaterialArticleUpdate) throws WxErrorException;
 
     /**
      * <pre>

@@ -7,7 +7,7 @@ public enum CardStatusType {
   CARD_STATUS_DELETE("卡券被商户删除"),
   CARD_STATUS_DISPATCH("在公众平台投放过的卡券");
 
-  private String description;
+  private final String description;
 
   CardStatusType(String description) {
     this.description = description;

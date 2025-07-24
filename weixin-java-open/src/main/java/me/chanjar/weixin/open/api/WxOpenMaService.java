@@ -732,11 +732,27 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaIcpService getIcpService();
 
   /**
+   * 小程序认证及备案服务
+   *
+   * @return 小程序认证及备案服务
+   */
+  WxOpenMaAuthAndIcpService getAuthAndIcpService();
+
+  /**
    * 小程序用户隐私保护指引服务
    *
    * @return 小程序用户隐私保护指引服务
    */
   WxOpenMaPrivacyService getPrivacyService();
+
+  /**
+   * 半屏小程序服务
+   *
+   * @return {@link WxOpenMaEmbeddedService }
+   * @author Yuan
+   * @date 2024-12-04 18:42:21
+   */
+  WxOpenMaEmbeddedService getEmbeddedService();
 
   /**
    * 购物订单

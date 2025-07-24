@@ -42,4 +42,8 @@ public class OrderCommissionInfo implements Serializable {
   /** 达人openfinderid */
   @JsonProperty("openfinderid")
   private String openFinderId;
+
+  /** 新带货平台 id */
+  @JsonProperty("talent_id")
+  private String talentId;
 }

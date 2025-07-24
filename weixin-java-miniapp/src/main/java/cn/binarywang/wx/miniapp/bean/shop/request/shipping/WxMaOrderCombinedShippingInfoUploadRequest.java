@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.shop.request.shipping;
 
-import cn.binarywang.wx.miniapp.bean.shop.request.shipping.ContactBean;
 import cn.binarywang.wx.miniapp.bean.shop.request.shipping.OrderKeyBean;
 import cn.binarywang.wx.miniapp.bean.shop.request.shipping.PayerBean;
 import com.google.gson.annotations.SerializedName;

@@ -47,7 +47,9 @@ public class ProvincesResult implements Serializable {
 
   @Getter
   @Setter
-  public static class ProvinceInfo {
+  public static class ProvinceInfo implements Serializable {
+
+    private static final long serialVersionUID = -4118613374545722650L;
 
     /**
      * <pre>

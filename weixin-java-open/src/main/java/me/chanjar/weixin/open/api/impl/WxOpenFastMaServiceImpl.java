@@ -8,7 +8,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenFastMaService;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
@@ -111,6 +110,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   @Override
   public String getAllCategories() throws WxErrorException {
     return get(OPEN_GET_ALL_CATEGORIES, "");
+  }
+
+  @Override
+  public WxOpenGetAllCategoriesByTypeResult getAllCategoriesByType(String verifyType)  {
+    return null;
   }
 
   @Override

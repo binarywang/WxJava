@@ -1,0 +1,23 @@
+package com.binarywang.solon.wxjava.channel.enums;
+
+/**
+ * httpclient类型
+ *
+ * @author <a href="https://github.com/Winnie-by996">Winnie</a>
+ * @date 2024/9/13
+ */
+public enum HttpClientType {
+  /**
+   * HttpClient
+   */
+  HTTP_CLIENT,
+  /**
+   * HttpComponents
+   */
+  HTTP_COMPONENTS
+  // WxChannelServiceOkHttpImpl 实现经测试无法正常完成业务固暂不支持OK_HTTP方式
+//  /**
+//   * OkHttp.
+//   */
+//  OK_HTTP,
+}

@@ -23,7 +23,7 @@ import java.util.UUID;
  * created on  2018-09-13
  */
 public class MaQrCodeOkhttpRequestExecutor extends MaQrCodeRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public MaQrCodeOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MaQrCodeOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

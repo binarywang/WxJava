@@ -20,7 +20,7 @@ public class WxNetCheckResultGsonAdapter implements JsonDeserializer<WxNetCheckR
 
     JsonArray dnssJson = json.getAsJsonObject().get("dns").getAsJsonArray();
     List<WxNetCheckResult.WxNetCheckDnsInfo> dnsInfoList = new ArrayList<>();
-    if (dnssJson != null && dnssJson.size() > 0) {
+    if (dnssJson != null && !dnssJson.isEmpty()) {
       for (int i = 0; i < dnssJson.size(); i++) {
         JsonObject buttonJson = dnssJson.get(i).getAsJsonObject();
         WxNetCheckResult.WxNetCheckDnsInfo dnsInfo = new WxNetCheckResult.WxNetCheckDnsInfo();
@@ -32,7 +32,7 @@ public class WxNetCheckResultGsonAdapter implements JsonDeserializer<WxNetCheckR
 
     JsonArray pingsJson = json.getAsJsonObject().get("ping").getAsJsonArray();
     List<WxNetCheckResult.WxNetCheckPingInfo> pingInfoList = new ArrayList<>();
-    if (pingsJson != null && pingsJson.size() > 0) {
+    if (pingsJson != null && !pingsJson.isEmpty()) {
       for (int i = 0; i < pingsJson.size(); i++) {
         JsonObject pingJson = pingsJson.get(i).getAsJsonObject();
         WxNetCheckResult.WxNetCheckPingInfo pingInfo = new WxNetCheckResult.WxNetCheckPingInfo();

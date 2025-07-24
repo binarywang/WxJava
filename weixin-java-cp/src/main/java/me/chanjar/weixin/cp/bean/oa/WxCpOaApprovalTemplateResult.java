@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTips;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTitle;
 import me.chanjar.weixin.cp.bean.oa.templatedata.control.*;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -93,6 +94,9 @@ public class WxCpOaApprovalTemplateResult implements Serializable {
 
     @SerializedName("vacation_list")
     private TemplateVacation vacationList;
+
+    @SerializedName("tips")
+    private TemplateTips tips;
 
   }
 

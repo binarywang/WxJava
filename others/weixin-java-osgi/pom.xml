@@ -28,7 +28,7 @@
     <dependency>
       <groupId>com.thoughtworks.xstream</groupId>
       <artifactId>xstream</artifactId>
-      <version>1.4.19</version>
+      <version>1.4.21</version>
       <scope>provided</scope>
       <exclusions>
         <exclusion>

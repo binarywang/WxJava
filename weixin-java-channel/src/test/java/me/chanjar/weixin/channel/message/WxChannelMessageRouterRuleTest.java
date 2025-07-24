@@ -6,8 +6,7 @@ import me.chanjar.weixin.channel.bean.message.order.OrderPayMessage;
 import org.testng.annotations.Test;
 
 /**
- * @author LiXiZe
- * @since 2023-04-20
+ * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 public class WxChannelMessageRouterRuleTest {
 

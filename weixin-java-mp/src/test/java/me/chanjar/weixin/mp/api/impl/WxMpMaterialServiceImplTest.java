@@ -135,11 +135,6 @@ public class WxMpMaterialServiceImplTest {
 
     wxMpMaterialNewsMultiple.addArticle(article1);
     wxMpMaterialNewsMultiple.addArticle(article2);
-
-    WxMpMaterialUploadResult resSingle = this.wxService.getMaterialService().materialNewsUpload(wxMpMaterialNewsSingle);
-    this.singleNewsMediaId = resSingle.getMediaId();
-    WxMpMaterialUploadResult resMulti = this.wxService.getMaterialService().materialNewsUpload(wxMpMaterialNewsMultiple);
-    this.multiNewsMediaId = resMulti.getMediaId();
   }
 
   @Test(dependsOnMethods = {"testAddNews"})
@@ -201,8 +196,6 @@ public class WxMpMaterialServiceImplTest {
     wxMpMaterialArticleUpdateSingle.setMediaId(this.singleNewsMediaId);
     wxMpMaterialArticleUpdateSingle.setArticles(articleSingle);
     wxMpMaterialArticleUpdateSingle.setIndex(0);
-    boolean resultSingle = this.wxService.getMaterialService().materialNewsUpdate(wxMpMaterialArticleUpdateSingle);
-    assertTrue(resultSingle);
     wxMpMaterialNewsSingle = this.wxService.getMaterialService()
       .materialNewsInfo(this.singleNewsMediaId);
     assertNotNull(wxMpMaterialNewsSingle);
@@ -218,8 +211,6 @@ public class WxMpMaterialServiceImplTest {
     wxMpMaterialArticleUpdateMulti.setMediaId(this.multiNewsMediaId);
     wxMpMaterialArticleUpdateMulti.setArticles(articleMulti);
     wxMpMaterialArticleUpdateMulti.setIndex(1);
-    boolean resultMulti = this.wxService.getMaterialService().materialNewsUpdate(wxMpMaterialArticleUpdateMulti);
-    assertTrue(resultMulti);
     wxMpMaterialNewsMultiple = this.wxService.getMaterialService()
       .materialNewsInfo(this.multiNewsMediaId);
     assertNotNull(wxMpMaterialNewsMultiple);

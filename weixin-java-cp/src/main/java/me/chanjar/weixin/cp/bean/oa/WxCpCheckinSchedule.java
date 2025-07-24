@@ -49,7 +49,7 @@ public class WxCpCheckinSchedule implements Serializable {
    * The type User schedule.
    */
   @Data
-  public class UserSchedule implements Serializable {
+  public static class UserSchedule implements Serializable {
     private static final long serialVersionUID = 9138985222324576857L;
     /**
      * scheduleList 个人排班表信息

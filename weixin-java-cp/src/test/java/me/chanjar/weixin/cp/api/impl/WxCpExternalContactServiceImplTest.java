@@ -1,7 +1,16 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import static org.testng.Assert.assertNotNull;
+
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
+
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.cp.api.ApiTestModule;
@@ -10,6 +19,7 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.external.*;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactBatchInfo;
 import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactInfo;
+import me.chanjar.weixin.cp.bean.external.contact.WxCpExternalContactListInfo;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
 import me.chanjar.weixin.cp.bean.external.msg.AttachmentBuilder;
 import me.chanjar.weixin.cp.bean.external.msg.Image;
@@ -21,13 +31,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
-import static org.testng.Assert.assertNotNull;
 
 /**
  * The type Wx cp external contact service impl test.
@@ -88,6 +91,20 @@ public class WxCpExternalContactServiceImplTest {
     WxCpContactWayInfo contactWayInfo = this.wxCpService.getExternalContactService().getContactWay(configId);
     System.out.println(contactWayInfo.toJson());
     assertNotNull(contactWayInfo);
+  }
+
+  /**
+   * Test list contact way.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testListContactWay() throws WxErrorException {
+    long startTime = LocalDateTime.now().minusDays(1).toEpochSecond(ZoneOffset.of("+8"));
+    long endTime = LocalDateTime.now().toEpochSecond(ZoneOffset.of("+8"));
+    WxCpContactWayList wxCpContactWayList = this.wxCpService.getExternalContactService().listContactWay(startTime, endTime, null, 100L);
+    System.out.println(wxCpContactWayList.toJson());
+    assertNotNull(wxCpContactWayList);
   }
 
   /**
@@ -184,6 +201,19 @@ public class WxCpExternalContactServiceImplTest {
     String userId = this.configStorage.getUserId();
     WxCpExternalContactBatchInfo result =
       this.wxCpService.getExternalContactService().getContactDetailBatch(new String[]{userId}, "", 100);
+    System.out.println(result);
+    assertNotNull(result);
+  }
+
+  /**
+   * Test get contact list.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testGetContactList() throws WxErrorException {
+    WxCpExternalContactListInfo result =
+      this.wxCpService.getExternalContactService().getContactList("", 100);
     System.out.println(result);
     assertNotNull(result);
   }

@@ -4,17 +4,23 @@ import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import com.google.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 import me.chanjar.weixin.channel.api.WxChannelProductService;
 import me.chanjar.weixin.channel.api.WxChannelService;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
-import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
+import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductH5UrlResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductQrCodeResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductTagLinkResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.testng.annotations.Guice;
@@ -32,7 +38,7 @@ public class WxChannelProductServiceImplTest {
   @Test
   public void testAddProduct() throws WxErrorException {
     WxChannelProductService productService = channelService.getProductService();
-    SpuInfo spuInfo = new SpuInfo();
+    SpuUpdateInfo spuInfo = new SpuUpdateInfo();
     // ...
     SpuUpdateResponse response = productService.addProduct(spuInfo);
     assertNotNull(response);
@@ -42,7 +48,7 @@ public class WxChannelProductServiceImplTest {
   @Test
   public void testUpdateProduct() throws WxErrorException {
     WxChannelProductService productService = channelService.getProductService();
-    SpuInfo spuInfo = new SpuInfo();
+    SpuUpdateInfo spuInfo = new SpuUpdateInfo();
     // ...
     SpuUpdateResponse response = productService.updateProduct(spuInfo);
     assertNotNull(response);
@@ -121,11 +127,51 @@ public class WxChannelProductServiceImplTest {
   @Test
   public void testGetSkuStock() throws WxErrorException {
     WxChannelProductService productService = channelService.getProductService();
-    String productId = "";
-    String skuId = "";
+    String productId = "10000076089602";
+    String skuId = "1918289111";
     SkuStockResponse response = productService.getSkuStock(productId, skuId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetSkuStockBatch() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    List<String> productIds = new ArrayList<>();
+    productIds.add("123");
+    SkuStockBatchResponse response = productService.getSkuStockBatch(productIds);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetProductH5Url() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    String productId = "";
+    ProductH5UrlResponse response = productService.getProductH5Url(productId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+    System.out.println(response.getProductH5url());
+  }
+
+  @Test
+  public void testGetProductQrCode() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    String productId = "";
+    ProductQrCodeResponse response = productService.getProductQrCode(productId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+    System.out.println(response.getProductQrcode());
+  }
+
+  @Test
+  public void testGetProductTagLink() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    String productId = "";
+    ProductTagLinkResponse response = productService.getProductTagLink(productId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+    System.out.println(response.getProductTaglink());
   }
 
   @Test

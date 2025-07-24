@@ -25,7 +25,7 @@ public class IntegerArrayConverter extends StringConverter {
   @Override
   public Object fromString(String str) {
 
-    if (str == null || str.length() == 0) {
+    if (str == null || str.isEmpty()) {
       return null;
     }
 

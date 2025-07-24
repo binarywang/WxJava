@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.bean.icp;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
  * @createTime 2024/08/14 15:09
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class WxOpenApplyIcpFilingParam implements Serializable {

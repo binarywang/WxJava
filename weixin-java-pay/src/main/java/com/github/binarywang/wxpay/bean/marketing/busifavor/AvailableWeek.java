@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class AvailableWeek implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>
@@ -46,12 +46,12 @@ public class AvailableWeek implements Serializable {
    * </pre>
    */
   @SerializedName(value = "available_day_time")
-  private AvailableDayTime availableDayTime;
+  private AvailableDayTimeItem[] availableDayTime;
 
   @Data
   @NoArgsConstructor
-  public static class AvailableDayTime implements Serializable {
-    public static final float serialVersionUID = 1L;
+  public static class AvailableDayTimeItem implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * <pre>

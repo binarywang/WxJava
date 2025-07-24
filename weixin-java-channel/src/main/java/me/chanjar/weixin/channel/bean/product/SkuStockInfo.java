@@ -29,7 +29,14 @@ public class SkuStockInfo implements Serializable {
   @JsonProperty("warehouse_stocks")
   private List<WarehouseStockInfo> warehouseStocks;
 
-  /** 库存总量：通用库存数量 + 限时抢购库存数量 + 区域库存总量 */
+  /**
+   * 普通查询：库存总量：通用库存数量 + 限时抢购库存数量 + 区域库存总量
+   * 批量查询：库存总量：通用库存数量 + 限时抢购库存数量 + 区域库存数量 + 达人专属计划营销库存数量
+   */
   @JsonProperty("total_stock_num")
   private Integer totalStockNum;
+
+  /** 达人专属计划营销库存数量 */
+  @JsonProperty("finder_stock_num")
+  private Integer finderTotalNum;
 }

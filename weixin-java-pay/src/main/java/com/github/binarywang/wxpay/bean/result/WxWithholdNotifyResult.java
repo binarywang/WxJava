@@ -224,7 +224,7 @@ public class WxWithholdNotifyResult extends BaseWxPayResult {
     if (this.couponCount == null || this.couponCount == 0) {
       return;
     }
-    this.couponList = new ArrayList(couponCount);
+    this.couponList = new ArrayList<>(couponCount);
     for (int i = 0; i < this.couponCount; i++) {
       WxPayOrderNotifyCoupon coupon = new WxPayOrderNotifyCoupon();
       coupon.setCouponId(this.getXmlValue("xml/coupon_id_" + i));

@@ -1,6 +1,6 @@
 package me.chanjar.weixin.cp.corpgroup.service.impl;
 
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import org.apache.http.HttpHost;
@@ -25,8 +25,8 @@ public class WxCpCgServiceApacheHttpClientImpl extends BaseWxCpCgServiceImpl<Clo
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.APACHE_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.APACHE_HTTP;
   }
 
   @Override

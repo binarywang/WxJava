@@ -34,6 +34,11 @@ public class WxCpOaSchedule implements Serializable, ToJson {
   @SerializedName("organizer")
   private String organizer;
   /**
+   * 管理员userid列表
+   */
+  @SerializedName("admins")
+  private List<String> admins;
+  /**
    * 日程参与者列表。最多支持2000人
    */
   @SerializedName("attendees")
@@ -70,7 +75,7 @@ public class WxCpOaSchedule implements Serializable, ToJson {
   @SerializedName("end_time")
   private Long endTime;
   /**
-   *
+   * 日程状态。0-正常；1-已取消
    */
   @SerializedName("status")
   private Integer status;
@@ -83,6 +88,11 @@ public class WxCpOaSchedule implements Serializable, ToJson {
    */
   @SerializedName("cal_id")
   private String calId;
+  /**
+   * 是否全天日程，0-否；1-是
+   */
+  @SerializedName("is_whole_day")
+  private Integer isWholeDay;
 
   @Override
   public String toJson() {
@@ -140,9 +150,18 @@ public class WxCpOaSchedule implements Serializable, ToJson {
      * 900 - 事件开始前15分钟
      * 3600 - 事件开始前1小时
      * 86400 - 事件开始前1天
+     * 注意：建议使用 remind_time_diffs 字段，该字段后续将会废弃。
      */
     @SerializedName("remind_before_event_secs")
     private Integer remindBeforeEventSecs;
+    /**
+     * 提醒时间与日程开始时间（start_time）的差值，当is_remind为1时有效。例如：-300表示日程开始前5分钟提醒。
+     * 特殊情况：企业微信终端设置的“全天”类型的日程，由于start_time是0点时间戳，提醒如果设置了当天9点，则会出现正数32400。
+     * <br/>
+     * 取值范围：-604800 ~ 86399
+     */
+    @SerializedName("remind_time_diffs")
+    private List<Integer> remindTimeDiffs;
     /**
      * 重复类型，当is_repeat为1时有效。目前支持如下类型：
      * 0 - 每日
@@ -195,5 +214,21 @@ public class WxCpOaSchedule implements Serializable, ToJson {
      */
     @SerializedName("timezone")
     private Integer timezone;
+    /**
+     * 重复日程不包含的日期列表。对重复日程修改/删除特定一天或多天，则原来的日程将会排除对应的日期。
+     */
+    @SerializedName("exclude_time_list")
+    private List<ExcludeTime> excludeTimeList;
+
+    @Data
+    @Accessors(chain = true)
+    public static class ExcludeTime implements Serializable {
+      private static final long serialVersionUID = 5030527150838243359L;
+      /**
+       * 不包含的日期时间戳。
+       */
+      @SerializedName("start_time")
+      private Long startTime;
+    }
   }
 }

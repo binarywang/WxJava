@@ -528,7 +528,7 @@ public interface WxMpService extends WxService {
    *
    * @return RequestHttp对象 request http
    */
-  RequestHttp getRequestHttp();
+  RequestHttp<?, ?> getRequestHttp();
 
   /**
    * 返回群发消息相关接口方法的实现类对象，以方便调用其各个接口.

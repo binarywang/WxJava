@@ -1,10 +1,7 @@
 package cn.binarywang.wx.miniapp.api;
 
 import cn.binarywang.wx.miniapp.bean.shop.request.shipping.*;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoBaseResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoGetListResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingInfoGetResponse;
-import cn.binarywang.wx.miniapp.bean.shop.response.WxMaOrderShippingIsTradeManagedResponse;
+import cn.binarywang.wx.miniapp.bean.shop.response.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -85,5 +82,26 @@ public interface WxMaOrderShippingService {
    * @throws WxErrorException e
    */
   WxMaOrderShippingInfoBaseResponse setMsgJumpPath(String path)
+    throws WxErrorException;
+
+  /**
+   * 查询小程序是否已完成交易结算管理确认
+   *
+   * @param appId 待查询小程序的 appid，非服务商调用时仅能查询本账号
+   * @return WxMaOrderShippingITMCCompletedResult
+   * @throws WxErrorException e
+   */
+  WxMaOrderShippingITMCCompletedResult isTradeManagementConfirmationCompleted(String appId)
+    throws WxErrorException;
+
+  /**
+   * 特殊发货报备
+   * @param orderId  需要特殊发货报备的订单号，可传入微信支付单号或商户单号
+   * @param type 特殊发货报备类型，1为预售商品订单，2为测试订单
+   * @param delayTo 预计发货时间的unix时间戳，type为1时必填，type为2可省略
+   * @return WxMaOrderShippingInfoBaseResponse
+   * @throws WxErrorException e
+   */
+  WxMaOrderShippingInfoBaseResponse opSpecialOrder(String orderId, Integer type, Long delayTo)
     throws WxErrorException;
 }

@@ -16,6 +16,7 @@ import me.chanjar.weixin.cp.bean.school.user.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
+import java.util.Objects;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.ExternalContact.*;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.School.*;
@@ -98,7 +99,7 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
     if (StringUtils.isNotEmpty(name)) {
       jsonObject.addProperty("name", name);
     }
-    if (departments != null && departments.size() > 0) {
+    if (departments != null && !departments.isEmpty()) {
       JsonArray jsonArray = new JsonArray();
       for (Integer depart : departments) {
         jsonArray.add(new JsonPrimitive(depart));
@@ -246,7 +247,7 @@ public class WxCpSchoolUserServiceImpl implements WxCpSchoolUserService {
 
   @Override
   public WxCpDepartmentList listDepartment(Integer id) throws WxErrorException {
-    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) + id;
+    String apiUrl = Objects.isNull(id) ? this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST) : String.format("%s?id=%s", this.cpService.getWxCpConfigStorage().getApiUrl(DEPARTMENT_LIST), id);
     String responseContent = this.cpService.get(apiUrl, null);
     return WxCpDepartmentList.fromJson(responseContent);
   }

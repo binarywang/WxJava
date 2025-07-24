@@ -65,6 +65,6 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
   @Override
   public void updateTemplateCardButton(TemplateCardMessage templateCardMessage) throws WxErrorException {
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(UPDATE_TEMPLATE_CARD);
-    this.mainService.post(url, WxGsonBuilder.create().toJson(templateCardMessage));
+    this.mainService.post(url, templateCardMessage.toJson());
   }
 }

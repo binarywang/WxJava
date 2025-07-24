@@ -5,9 +5,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.gson.JsonObject;
 import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMpService;
@@ -16,9 +14,7 @@ import me.chanjar.weixin.open.bean.result.WxAmpLinkResult;
 import me.chanjar.weixin.open.bean.result.WxOpenResult;
 
 import java.net.URLEncoder;
-import java.util.Map;
 import java.util.Objects;
-import java.util.function.Function;
 
 /**
  * @author <a href="https://github.com/007gzs">007</a>

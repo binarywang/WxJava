@@ -1,21 +1,29 @@
 package me.chanjar.weixin.channel.api;
 
 
+import java.util.List;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
+import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
 import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
+import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductH5UrlResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductQrCodeResponse;
+import me.chanjar.weixin.channel.bean.product.link.ProductTagLinkResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * 视频号小店 商品服务接口
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @see <a href="https://developers.weixin.qq.com/doc/store/API/product/product_status.html">商品状态流转图</a>
  */
 public interface WxChannelProductService {
 
@@ -27,7 +35,7 @@ public interface WxChannelProductService {
    *
    * @throws WxErrorException 异常
    */
-  SpuUpdateResponse addProduct(SpuInfo info) throws WxErrorException;
+  SpuUpdateResponse addProduct(SpuUpdateInfo info) throws WxErrorException;
 
   /**
    * 更新商品
@@ -37,7 +45,41 @@ public interface WxChannelProductService {
    *
    * @throws WxErrorException 异常
    */
+  SpuUpdateResponse updateProduct(SpuUpdateInfo info) throws WxErrorException;
+
+  /**
+   * 添加商品
+   *
+   * @param info 商品信息
+   * @return 返回商品的状态和id
+   *
+   * @throws WxErrorException 异常
+   * @deprecated 请使用 {@link #addProduct(SpuUpdateInfo)}
+   */
+  @Deprecated
+  SpuUpdateResponse addProduct(SpuInfo info) throws WxErrorException;
+
+  /**
+   * 更新商品
+   *
+   * @param info 商品信息
+   * @return 返回商品的状态和id
+   *
+   * @throws WxErrorException 异常
+   * @deprecated 请使用 {@link #updateProduct(SpuUpdateInfo)}
+   */
+  @Deprecated
   SpuUpdateResponse updateProduct(SpuInfo info) throws WxErrorException;
+
+  /**
+   * 免审更新商品
+   *
+   * @param info 商品信息
+   * @return 返回商品的状态和id
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse updateProductAuditFree(SpuFastInfo info) throws WxErrorException;
 
   /**
    * 更新商品库存 （仅对edit_status != 2 的商品适用，其他状态的商品无法通过该接口修改库存）
@@ -45,6 +87,7 @@ public interface WxChannelProductService {
    * @param productId 内部商品ID
    * @param skuId     内部sku_id
    * @param diffType  修改类型 1增加 2减少 3设置
+   *                  建议使用1或2，不建议使用3，因为使用3在高并发场景可能会出现预期外表现
    * @param num       增加、减少或者设置的库存值
    * @return WxChannelBaseResponse
    *
@@ -126,6 +169,42 @@ public interface WxChannelProductService {
    * @throws WxErrorException 异常
    */
   SkuStockResponse getSkuStock(String productId, String skuId) throws WxErrorException;
+
+  /**
+   * 批量获取库存信息 （单次请求不能超过50个商品ID）
+   *
+   * @param productIds 商品ID列表
+   * @return 库存信息
+   * @throws WxErrorException 异常
+   */
+  SkuStockBatchResponse getSkuStockBatch(List<String> productIds) throws WxErrorException;
+
+  /**
+   * 获取商品H5链接
+   *
+   * @param productId 商品ID
+   * @return 商品H5链接
+   * @throws WxErrorException 异常
+   */
+  ProductH5UrlResponse getProductH5Url(String productId) throws WxErrorException;
+
+  /**
+   * 获取商品二维码
+   *
+   * @param productId 商品ID
+   * @return 商品二维码
+   * @throws WxErrorException 异常
+   */
+  ProductQrCodeResponse getProductQrCode(String productId) throws WxErrorException;
+
+  /**
+   * 获取商品口令
+   *
+   * @param productId 商品ID
+   * @return 商品口令
+   * @throws WxErrorException 异常
+   */
+  ProductTagLinkResponse getProductTagLink(String productId) throws WxErrorException;
 
   /**
    * 添加限时抢购任务

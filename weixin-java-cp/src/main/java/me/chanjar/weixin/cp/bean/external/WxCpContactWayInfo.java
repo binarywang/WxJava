@@ -152,6 +152,13 @@ public class WxCpContactWayInfo implements Serializable {
     @SerializedName("unionid")
     private String unionId;
 
+
+    /**
+     *非必填,是否开启同一外部企业客户只能添加同一个员工，默认为否，开启后，同一个企业的客户会优先添加到同一个跟进人
+     */
+    @SerializedName("is_exclusive")
+    private boolean isExclusive;
+
     /**
      * <pre>
      * 非必填

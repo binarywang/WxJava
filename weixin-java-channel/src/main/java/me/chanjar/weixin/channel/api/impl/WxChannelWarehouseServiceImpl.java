@@ -40,9 +40,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxChannelWarehouseServiceImpl implements WxChannelWarehouseService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelWarehouseServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelWarehouseServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 

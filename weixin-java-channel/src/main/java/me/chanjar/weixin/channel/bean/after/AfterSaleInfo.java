@@ -86,4 +86,16 @@ public class AfterSaleInfo implements Serializable {
   /** 仅在待商家审核退款退货申请或收货期间返回，表示操作剩余时间（秒数）*/
   @JsonProperty("deadline")
   private Long deadline;
+
+  /** 售后换货商品信息 */
+  @JsonProperty("exchange_product_info")
+  private AfterSaleExchangeProductInfo exchangeProductInfo;
+
+  /** 售后换货物流信息 */
+  @JsonProperty("exchange_delivery_info")
+  private AfterSaleExchangeDeliveryInfo exchangeDeliveryInfo;
+
+  /** 售后换货虚拟号码信息 */
+  @JsonProperty("virtual_tel_num_info")
+  private AfterSaleVirtualNumberInfo virtualTelNumInfo;
 }

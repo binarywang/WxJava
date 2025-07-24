@@ -61,6 +61,8 @@
 import com.binarywang.solon.wxjava.cp_multi.service.WxCpMultiServices;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
+import org.noear.solon.annotation.Component;
+import org.noear.solon.annotation.Inject;
 
 @Component
 public class DemoService {

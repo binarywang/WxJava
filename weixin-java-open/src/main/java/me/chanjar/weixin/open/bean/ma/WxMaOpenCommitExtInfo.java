@@ -95,16 +95,38 @@ public class WxMaOpenCommitExtInfo implements Serializable {
   private WxMaOpenTabBar tabBar;
 
   /**
+   * 关于新增 requiredPrivateInfos 说明
+   * 关于地理位置接口新增与相关流程调整可以查看社区公告：
+   * <a href="https://developers.weixin.qq.com/community/develop/doc/000a02f2c5026891650e7f40351c01">点击查看</a>
+   * 7.14后，在代码中使用的地理位置相关接口（共计 8 个，见表1），第三方开发者均需要在 ext_json 参数中 requiredPrivateInfos 配置项中声明
+   * 在ext_json参数中配置requiredPrivateInfos，其规则为「整体替换」。即如果在 app.json 里也配置了，那么最终会是ext_json的配置会覆盖 app.json
+   * 配置的requiredPrivateInfos。其余规则可查看下方的「ext_json补充说明」
+   * 在ext_json参数中配置 requiredPrivateInfos 示例如下
+   * {
+   * "template_id": "95",
+   * "ext_json": "{\"requiredPrivateInfos\":[\"onLocationChange\",\"startLocationUpdate\"]}",
+   * "user_version": "V1.0",
+   * "user_desc": "test"
+   * }
+   * requiredPrivateInfos主要会检查格式是否正确，填入的 api 名称是否正确，填入的 api 名称是否有权限，填入的 api 名称是否互斥。对应的错误码可查看文档末尾的错误码文档。
+   * requiredPrivateInfos在2022.7.14后才会生效，文档提前更新是为了方便开发者可以提前了解接口的参数变更规则，提前进行调整。
+   */
+  @SerializedName("requiredPrivateInfos")
+  private String[] requiredPrivateInfos;
+
+  /**
    * 添加扩展项
    *
    * @param key
    * @param value
    */
   public void addExt(String key, String value) {
-    if (extMap == null)
+    if (extMap == null) {
       extMap = new HashMap<>();
-    if (StringUtils.isNoneBlank(key, value))
+    }
+    if (StringUtils.isNoneBlank(key, value)) {
       extMap.put(key, value);
+    }
   }
 
   /**
@@ -114,10 +136,12 @@ public class WxMaOpenCommitExtInfo implements Serializable {
    * @param page
    */
   public void addExtPage(String pagePath, WxMaOpenPage page) {
-    if (extPages == null)
+    if (extPages == null) {
       extPages = new HashMap<>();
-    if (StringUtils.isNotBlank(pagePath) && page != null)
+    }
+    if (StringUtils.isNotBlank(pagePath) && page != null) {
       extPages.put(pagePath, page);
+    }
   }
 
   /**
@@ -126,10 +150,12 @@ public class WxMaOpenCommitExtInfo implements Serializable {
    * @param pagePath
    */
   public void addPage(String pagePath) {
-    if (pageList == null)
+    if (pageList == null) {
       pageList = new ArrayList<>();
-    if (StringUtils.isNotBlank(pagePath))
+    }
+    if (StringUtils.isNotBlank(pagePath)) {
       pageList.add(pagePath);
+    }
   }
 
   public static WxMaOpenCommitExtInfo INSTANCE() {

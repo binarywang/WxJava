@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class OkHttpVodSingleUploadRequestExecutor extends VodSingleUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
 
-  public OkHttpVodSingleUploadRequestExecutor(RequestHttp requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
+  public OkHttpVodSingleUploadRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp, String mediaName, String mediaType, String coverType, File coverData, String sourceContext) {
     super(requestHttp, mediaName, mediaType, coverType, coverData, sourceContext);
   }
 

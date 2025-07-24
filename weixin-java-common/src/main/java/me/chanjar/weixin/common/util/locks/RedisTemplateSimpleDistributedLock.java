@@ -9,7 +9,7 @@ import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.Expiration;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -66,7 +66,7 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
   @Override
   public boolean tryLock() {
     String value = valueThreadLocal.get();
-    if (value == null || value.length() == 0) {
+    if (value == null || value.isEmpty()) {
       value = UUID.randomUUID().toString();
       valueThreadLocal.set(value);
     }
@@ -98,8 +98,8 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
   public void unlock() {
     if (valueThreadLocal.get() != null) {
       // 提示: 必须指定returnType, 类型: 此处必须为Long, 不能是Integer
-      RedisScript<Long> script = new DefaultRedisScript("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end", Long.class);
-      redisTemplate.execute(script, Arrays.asList(key), valueThreadLocal.get());
+      RedisScript<Long> script = new DefaultRedisScript<>("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end", Long.class);
+      redisTemplate.execute(script, Collections.singletonList(key), valueThreadLocal.get());
       valueThreadLocal.remove();
     }
   }

@@ -46,6 +46,11 @@ public class WxMaProperties {
   private String msgDataFormat;
 
   /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
+
+  /**
    * 存储策略
    */
   private final ConfigStorage configStorage = new ConfigStorage();

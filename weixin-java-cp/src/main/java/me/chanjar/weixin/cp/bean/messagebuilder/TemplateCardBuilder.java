@@ -428,6 +428,17 @@ public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   }
 
   /**
+   * Button selection template card builder.
+   *
+   * @param buttonSelection the button selection
+   * @return the template card builder
+   */
+  public TemplateCardBuilder buttonSelection(TemplateCardButtonSelection buttonSelection) {
+    this.buttonSelection = buttonSelection;
+    return this;
+  }
+
+  /**
    * Buttons template card builder.
    *
    * @param buttons the buttons

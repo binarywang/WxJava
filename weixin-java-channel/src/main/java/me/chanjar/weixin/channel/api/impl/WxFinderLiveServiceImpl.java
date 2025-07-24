@@ -26,7 +26,7 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Finder
 public class WxFinderLiveServiceImpl implements WxFinderLiveService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
   @Override
   public FinderAttrResponse getFinderAttrByAppid() throws WxErrorException {
     String resJson = shopService.post(GET_FINDER_ATTR_BY_APPID, "{}");

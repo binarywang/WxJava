@@ -1,6 +1,5 @@
 package me.chanjar.weixin.open.executor;
 
-import com.google.common.io.Files;
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -24,7 +23,6 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -133,11 +131,7 @@ public class GenericUploadRequestExecutor implements RequestExecutor<String, Inp
       bodyRequest.setEntity(entity);
       bodyRequest.setHeader("Content-Type", ContentType.MULTIPART_FORM_DATA.toString());
 
-      try (CloseableHttpResponse response = getRequestHttp().getRequestHttpClient().execute(bodyRequest)) {
-        return Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      } finally {
-        bodyRequest.releaseConnection();
-      }
+      return getRequestHttp().getRequestHttpClient().execute(bodyRequest, Utf8ResponseHandler.INSTANCE);
     }
   }
 

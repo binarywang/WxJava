@@ -18,6 +18,7 @@
   <certSerialNo>apiV3 证书序列号值</certSerialNo>
   <privateKeyPath>apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateKeyPath>
   <privateCertPath>apiclient_cert.pem证书文件的绝对路径或者以classpath:开头的类路径.</privateCertPath>
+  <publicKeyPath>pub_key.pem证书文件的绝对路径或者以classpath:开头的类路径.</publicKeyPath>
 
   <!-- other配置 -->
   <openid>某个openId</openid>

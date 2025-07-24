@@ -168,4 +168,22 @@ public class OrderProductInfo implements Serializable {
    */
   @JsonProperty("delivery_deadline")
   private Long deliveryDeadline;
+
+  /**
+   * 商家优惠金额，单位为分
+   */
+  @JsonProperty("merchant_discounted_price")
+  private Integer merchantDiscountedPrice;
+
+  /**
+   * 商家优惠金额，单位为分
+   */
+  @JsonProperty("finder_discounted_price")
+  private Integer finderDiscountedPrice;
+
+  /**
+   * 是否赠品，非必填，赠品商品返回，1:是赠品
+   */
+  @JsonProperty("is_free_gift")
+  private Boolean freeGift;
 }

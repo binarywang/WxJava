@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
@@ -93,6 +92,14 @@ public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
   @Override
   public String getAllCategories() throws WxErrorException {
     return wxMaService.get(OPEN_GET_ALL_CATEGORIES, "");
+  }
+
+  @Override
+  public WxOpenGetAllCategoriesByTypeResult getAllCategoriesByType(String verifyType) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("verify_type", verifyType);
+    String response = wxMaService.post(OPEN_GET_ALL_CATEGORIES_BY_TYPE, params);
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenGetAllCategoriesByTypeResult.class);
   }
 
   @Override

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class IrregularyAvaliableTime implements Serializable {
 
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>

@@ -20,6 +20,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 import redis.clients.jedis.JedisSentinelPool;
@@ -80,7 +81,7 @@ public class WxQidianStorageAutoConfiguration {
   }
 
   private WxQidianConfigStorage jedisConfigStorage() {
-    Pool jedisPool;
+    Pool<Jedis> jedisPool;
     if (StringUtils.isNotEmpty(redisHost) || StringUtils.isNotEmpty(redisHost2)) {
       jedisPool = getJedisPool();
     } else {
@@ -136,7 +137,7 @@ public class WxQidianStorageAutoConfiguration {
     }
   }
 
-  private Pool getJedisPool() {
+  private Pool<Jedis> getJedisPool() {
     WxQidianProperties.ConfigStorage storage = wxQidianProperties.getConfigStorage();
     RedisProperties redis = storage.getRedis();
 

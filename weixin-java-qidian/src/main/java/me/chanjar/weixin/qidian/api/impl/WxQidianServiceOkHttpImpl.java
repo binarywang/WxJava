@@ -2,7 +2,7 @@ package me.chanjar.weixin.qidian.api.impl;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.okhttp.DefaultOkHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
@@ -35,8 +35,8 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.OK_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.OK_HTTP;
   }
 
   @Override
@@ -60,9 +60,7 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
       Request request = new Request.Builder().url(url).get().build();
       Response response = getRequestHttpClient().newCall(request).execute();
       return this.extractAccessToken(Objects.requireNonNull(response.body()).string());
-    } catch (IOException e) {
-      throw new WxRuntimeException(e);
-    } catch (InterruptedException e) {
+    } catch (IOException | InterruptedException e) {
       throw new WxRuntimeException(e);
     } finally {
       if (locked) {

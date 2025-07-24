@@ -1,13 +1,18 @@
 package me.chanjar.weixin.common.util.http;
 
-import java.io.File;
-import java.io.IOException;
-
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.hc.HttpComponentsMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMediaDownloadRequestExecutor;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * 下载媒体文件请求执行器.
@@ -30,16 +35,21 @@ public abstract class BaseMediaDownloadRequestExecutor<H, P> implements RequestE
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<File, String> create(RequestHttp requestHttp, File tmpDirFile) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<File, String> create(RequestHttp<?, ?> requestHttp, File tmpDirFile) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheMediaDownloadRequestExecutor(requestHttp, tmpDirFile);
+        return new ApacheMediaDownloadRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp, tmpDirFile);
       case JODD_HTTP:
-        return new JoddHttpMediaDownloadRequestExecutor(requestHttp, tmpDirFile);
+        return new JoddHttpMediaDownloadRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp, tmpDirFile);
       case OK_HTTP:
-        return new OkHttpMediaDownloadRequestExecutor(requestHttp, tmpDirFile);
+        return new OkHttpMediaDownloadRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp, tmpDirFile);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsMediaDownloadRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

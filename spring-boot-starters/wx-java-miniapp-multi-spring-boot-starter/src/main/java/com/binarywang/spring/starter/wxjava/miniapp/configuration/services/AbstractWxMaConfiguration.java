@@ -108,12 +108,12 @@ public abstract class AbstractWxMaConfiguration {
     return wxMaService;
   }
 
-  private void configApp(WxMaDefaultConfigImpl config, WxMaSingleProperties corpProperties) {
-    String appId = corpProperties.getAppId();
-    String appSecret = corpProperties.getAppSecret();
-    String token = corpProperties.getToken();
-    String aesKey = corpProperties.getAesKey();
-    boolean useStableAccessToken = corpProperties.isUseStableAccessToken();
+  private void configApp(WxMaDefaultConfigImpl config, WxMaSingleProperties properties) {
+    String appId = properties.getAppId();
+    String appSecret = properties.getAppSecret();
+    String token = properties.getToken();
+    String aesKey = properties.getAesKey();
+    boolean useStableAccessToken = properties.isUseStableAccessToken();
 
     config.setAppid(appId);
     config.setSecret(appSecret);
@@ -123,6 +123,7 @@ public abstract class AbstractWxMaConfiguration {
     if (StringUtils.isNotBlank(aesKey)) {
       config.setAesKey(aesKey);
     }
+    config.setMsgDataFormat(properties.getMsgDataFormat());
     config.useStableAccessToken(useStableAccessToken);
   }
 

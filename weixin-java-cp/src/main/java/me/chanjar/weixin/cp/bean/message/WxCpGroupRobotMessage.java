@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
-import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.TEMPLATE_CARD;
 
 /**
  * 微信群机器人消息

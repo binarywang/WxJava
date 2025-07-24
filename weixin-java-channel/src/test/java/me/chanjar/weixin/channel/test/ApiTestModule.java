@@ -29,6 +29,7 @@ public class ApiTestModule implements Module {
           "测试配置文件【" + TEST_CONFIG_XML + "】未找到，请参照test-config-sample.xml文件生成");
       }
 
+      // 提示xml相关依赖不存在时，引入一下就好
       TestConfig config = this.fromXml(TestConfig.class, inputStream);
       WxChannelService service = new WxChannelServiceImpl();
 

@@ -94,4 +94,57 @@ public class ResponseRequest implements Serializable {
   @SerializedName("jump_url_text")
   private String jumpUrlText;
 
+  /**
+   * <pre>
+   * 字段名：跳转小程序信息
+   * 是否必填：否
+   * 描述：商户可在回复中附加小程序信息，引导用户跳转至商户客诉处理小程序。
+   * 注：配置小程序属于灰度功能，若有需要请联系对接的行业运营进行咨询。
+   * </pre>
+   */
+  @SerializedName("mini_program_jump_info")
+  private MiniProgramJumpInfo miniProgramJumpInfo;
+
+
+  /**
+   * 跳转小程序信息
+   */
+  @Data
+  public static class MiniProgramJumpInfo implements Serializable {
+    private static final long serialVersionUID = 1169503275787468380L;
+
+    /**
+     * <pre>
+     * 字段名：跳转小程序APPID
+     * 是否必填：是
+     * 描述：商户可在回复中附加小程序页面路径，引导用户跳转至商户服务工具页面。
+     *      该字段为小程序APPID。
+     * </pre>
+     */
+    @SerializedName("appid")
+    private String appId;
+
+    /**
+     * <pre>
+     * 字段名：跳转小程序页面PATH
+     * 是否必填：是
+     * 描述：商户可在回复中附加小程序页面路径，引导用户跳转至商户服务工具页面。
+     *      该字段为小程序路径。
+     * </pre>
+     */
+    @SerializedName("path")
+    private String path;
+
+    /**
+     * <pre>
+     * 字段名：跳转小程序页面名称
+     * 是否必填：是
+     * 描述：商户可在回复中附加小程序页面路径，引导用户跳转至商户服务工具页面。
+     *      该字段为商户可自定义的页面名称。
+     * </pre>
+     */
+    @SerializedName("text")
+    private String text;
+  }
+
 }

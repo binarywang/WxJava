@@ -35,8 +35,4 @@ public class WxCpFileDownload extends WxCpBaseResp implements Serializable {
     return WxCpGsonBuilder.create().fromJson(json, WxCpFileDownload.class);
   }
 
-  public String toJson() {
-    return WxCpGsonBuilder.create().toJson(this);
-  }
-
 }

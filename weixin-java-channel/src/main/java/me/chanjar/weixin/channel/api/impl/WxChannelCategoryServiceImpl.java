@@ -37,9 +37,9 @@ import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelCategoryServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelCategoryServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
@@ -56,7 +56,7 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
     try {
       pid = Long.parseLong(parentId);
     } catch (Throwable e) {
-      log.error("parentId必须为数字, " + parentId, e);
+      log.error("parentId必须为数字, {}", parentId, e);
       return Collections.emptyList();
     }
     String reqJson = "{\"f_cat_id\": " + pid + "}";
@@ -67,12 +67,20 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
   }
 
   @Override
+  public ShopCategoryResponse listAvailableCategories(String fCatId) throws WxErrorException {
+    String reqJson = "{\"f_cat_id\": " + fCatId + "}";
+    String resJson = (String) shopService.executeWithoutLog(SimplePostRequestExecutor.create(shopService),
+      AVAILABLE_CATEGORY_URL, reqJson);
+    return ResponseUtils.decode(resJson, ShopCategoryResponse.class);
+  }
+
+  @Override
   public CategoryDetailResult getCategoryDetail(String id) throws WxErrorException {
     Long catId = null;
     try {
       catId = Long.parseLong(id);
     } catch (Throwable e) {
-      log.error("id必须为数字, " + id, e);
+      log.error("id必须为数字, {}", id, e);
       return ResponseUtils.internalError(CategoryDetailResult.class);
     }
     String reqJson = "{\"cat_id\": " + catId + "}";
@@ -89,11 +97,22 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
       Long l1 = Long.parseLong(level1);
       Long l2 = Long.parseLong(level2);
       Long l3 = Long.parseLong(level3);
-      CategoryAuditInfo categoryInfo = new CategoryAuditInfo(l1, l2, l3, certificate);
+      CategoryAuditInfo categoryInfo = new CategoryAuditInfo();
+      categoryInfo.setLevel1(l1);
+      categoryInfo.setLevel2(l2);
+      categoryInfo.setLevel3(l3);
+      categoryInfo.setCertificates(certificate);
       reqJson = JsonUtils.encode(new CategoryAuditRequest(categoryInfo));
     } catch (Throwable e) {
       log.error("微信请求异常", e);
     }
+    String resJson = shopService.post(ADD_CATEGORY_URL, reqJson);
+    return ResponseUtils.decode(resJson, AuditApplyResponse.class);
+  }
+
+  @Override
+  public AuditApplyResponse addCategory(CategoryAuditInfo info) throws WxErrorException {
+    String reqJson = JsonUtils.encode(new CategoryAuditRequest(info));
     String resJson = shopService.post(ADD_CATEGORY_URL, reqJson);
     return ResponseUtils.decode(resJson, AuditApplyResponse.class);
   }

@@ -1,13 +1,18 @@
 package me.chanjar.weixin.common.util.http;
 
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.apache.ApacheMediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.hc.HttpComponentsMediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpMediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpMediaUploadRequestExecutor;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,7 +30,7 @@ import java.io.IOException;
 public abstract class MediaUploadRequestExecutor<H, P> implements RequestExecutor<WxMediaUploadResult, File> {
   protected RequestHttp<H, P> requestHttp;
 
-  public MediaUploadRequestExecutor(RequestHttp requestHttp) {
+  public MediaUploadRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -34,16 +39,21 @@ public abstract class MediaUploadRequestExecutor<H, P> implements RequestExecuto
     handler.handle(this.execute(uri, data, wxType));
   }
 
-  public static RequestExecutor<WxMediaUploadResult, File> create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<WxMediaUploadResult, File> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheMediaUploadRequestExecutor(requestHttp);
+        return new ApacheMediaUploadRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new JoddHttpMediaUploadRequestExecutor(requestHttp);
+        return new JoddHttpMediaUploadRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new OkHttpMediaUploadRequestExecutor(requestHttp);
+        return new OkHttpMediaUploadRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsMediaUploadRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        return null;
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

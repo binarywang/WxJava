@@ -155,6 +155,10 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String memChangeCnt;
 
+  @XStreamAlias("MemChangeList")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String MemChangeList;
+
   @XStreamAlias("Source")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String source;
@@ -186,6 +190,24 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("TaskId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String taskId;
+
+  @XStreamAlias("CardType")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String cardType;
+
+  @XStreamAlias("ResponseCode")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String responseCode;
+
+  @XStreamAlias("SelectedItems")
+  private List<SelectedItem> selectedItems;
+
+  /**
+   * <a href="https://developer.work.weixin.qq.com/document/path/96488#%E5%9B%9E%E8%B0%83%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%BB%93%E6%9E%9C">异步任务id</a>
+   */
+  @XStreamAlias("JobId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String jobId;
 
   /**
    * 微信客服
@@ -385,6 +407,19 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("CalId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String calId;
+
+  /**
+   * 会议室ID.
+   */
+  @XStreamAlias("MeetingRoomId")
+  private String meetingRoomId;
+
+  /**
+   * 会议室预定id，可根据该ID查询具体的会议预定情况
+   */
+  @XStreamAlias("BookingId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String bookingId;
 
   /**
    * 扩展属性.
@@ -735,6 +770,23 @@ public class WxCpXmlMessage implements Serializable {
     @XStreamConverter(value = XStreamCDataConverter.class)
     private String poiName;
 
+  }
+
+
+  /**
+   * The type selected Items.
+   */
+  @Data
+  @XStreamAlias("SelectedItem")
+  public static class SelectedItem implements Serializable {
+    private static final long serialVersionUID = 6319921121637597406L;
+
+    @XStreamAlias("QuestionKey")
+    @XStreamConverter(value = XStreamCDataConverter.class)
+    private String questionKey;
+
+    @XStreamAlias(value = "OptionIds")
+    private List<String> optionIds;
   }
 
 }

@@ -144,7 +144,7 @@ public class WxMpKefuServiceImpl implements WxMpKefuService {
     if (result != null && result.getNumber() == number) {
       Long msgId = result.getMsgId();
       WxMpKfMsgList followingResult = this.kfMsgList(startTime, endTime, msgId, number);
-      while (followingResult != null && followingResult.getRecords().size() > 0) {
+      while (followingResult != null && !followingResult.getRecords().isEmpty()) {
         result.getRecords().addAll(followingResult.getRecords());
         result.setNumber(result.getNumber() + followingResult.getNumber());
         result.setMsgId(followingResult.getMsgId());

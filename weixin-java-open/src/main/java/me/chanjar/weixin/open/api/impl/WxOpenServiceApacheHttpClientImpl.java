@@ -1,6 +1,5 @@
 package me.chanjar.weixin.open.api.impl;
 
-import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.*;
@@ -53,8 +52,8 @@ public class WxOpenServiceApacheHttpClientImpl extends WxOpenServiceAbstractImpl
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.APACHE_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.APACHE_HTTP;
   }
 
   @Override

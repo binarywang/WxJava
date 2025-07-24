@@ -5,7 +5,7 @@ import jodd.http.HttpRequest;
 import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import jodd.net.MimeTypes;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.mp.bean.WxMpStableAccessTokenRequest;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 
@@ -35,8 +35,8 @@ public class WxMpServiceJoddHttpImpl extends BaseWxMpServiceImpl<HttpConnectionP
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.JODD_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.JODD_HTTP;
   }
 
   @Override

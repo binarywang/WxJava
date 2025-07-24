@@ -31,7 +31,7 @@ public class WxMaMessage implements Serializable {
   private static final long serialVersionUID = -3586245291677274914L;
 
   /**
-   * 使用dom4j解析的存放所有xml属性和值的map.
+   * 使用dom4j解析的存放所有xml或json属性和值的map.
    */
   private Map<String, Object> allFieldsMap;
 
@@ -212,6 +212,51 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("SubscribeMsgSentEvent")
   private WxMaSubscribeMsgEvent.SubscribeMsgSentEvent subscribeMsgSentEvent;
 
+  // 小程序基本信息
+
+  //region 小程序基本信息 infoType=notify_3rd_wxa_auth_and_icp
+
+  /**
+   * 返回值
+   */
+  @XStreamAlias("ret")
+  private String ret;
+
+  /**
+   * 一级类目id
+   */
+  @XStreamAlias("first")
+  private String first;
+
+  /**
+   * 二级类目id
+   */
+  @XStreamAlias("second")
+  private String second;
+
+  /**
+   * 驳回原因
+   */
+  @XStreamAlias("reason")
+  private String reason;
+
+  /**
+   * 小程序代码审核驳回原因
+   */
+  @XStreamAlias("Reason")
+  private String weAppReason;
+
+  /**
+   * 昵称
+   */
+  @XStreamAlias("nickname")
+  private String nickname;
+
+  /**
+   * 原始通知内容
+   */
+  private String context;
+
   /**
    * 不要直接使用这个字段，
    * 这个字段只是为了适配 SubscribeMsgPopupEvent SubscribeMsgChangeEvent SubscribeMsgSentEvent
@@ -261,7 +306,9 @@ public class WxMaMessage implements Serializable {
                                              WxMaConfig wxMaConfig, String timestamp, String nonce,
                                              String msgSignature) {
     String plainText = new WxMaCryptUtils(wxMaConfig).decryptXml(msgSignature, timestamp, nonce, encryptedXml);
-    return fromXml(plainText);
+    WxMaMessage wxMaMessage = fromXml(plainText);
+    wxMaMessage.setContext(plainText);
+    return wxMaMessage;
   }
 
   public static WxMaMessage fromEncryptedXml(InputStream is, WxMaConfig wxMaConfig, String timestamp,
@@ -287,6 +334,7 @@ public class WxMaMessage implements Serializable {
       }
       message.setUselessMsg(null);
     }
+    message.setAllFieldsMap(WxMaGsonBuilder.create().fromJson(json, Map.class));
     return message;
   }
 

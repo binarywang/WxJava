@@ -20,6 +20,14 @@ public interface WxChannelConfig {
   String getAccessToken();
 
   /**
+   * Is use stable access token api
+   *
+   * @link <a href="https://developers.weixin.qq.com/doc/store/API/basics/getStableAccessToken.html">获取稳定版AccessToken</a>
+   * @return the boolean
+   */
+  boolean isStableAccessToken();
+
+  /**
    * Gets access token lock.
    *
    * @return the access token lock

@@ -50,6 +50,9 @@ public class WxCpMessageSendResult implements Serializable {
   @SerializedName("invalidtag")
   private String invalidTag;
 
+  @SerializedName("unlicenseduser")
+  private String unlicensedUser;
+
   @SerializedName("msgid")
   private String msgId;
 
@@ -92,5 +95,14 @@ public class WxCpMessageSendResult implements Serializable {
    */
   public List<String> getInvalidTagList() {
     return this.content2List(this.invalidTag);
+  }
+
+  /**
+   * Gets unlicensed user list.
+   *
+   * @return the unlicensed user list
+   */
+  public List<String> getUnlicensedUserList() {
+    return this.content2List(this.unlicensedUser);
   }
 }

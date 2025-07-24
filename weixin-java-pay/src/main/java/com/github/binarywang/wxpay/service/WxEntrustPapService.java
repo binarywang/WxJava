@@ -166,4 +166,22 @@ public interface WxEntrustPapService {
    * @throws WxPayException the wx pay exception
    */
   WxWithholdOrderQueryResult papOrderQuery(WxWithholdOrderQueryRequest wxWithholdOrderQueryRequest) throws WxPayException;
+
+  /**
+   * <pre>
+   *   签约、解约结果通知解析
+   *   详见：<a href="https://pay.weixin.qq.com/doc/v2/merchant/4011987586">签约、解约结果通知</a>
+   *   注意：
+   *    1、同样的通知可能会多次发送给商户系统。商户系统必须能够正确处理重复的通知。 推荐的做法是：当商户系统收到通知进行处理时，先检查对应业务数据的状态，并判断该通知是否已经处理。如果未处理，则再进行处理；如果已处理，则直接返回结果成功。在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
+   *    2、如果在所有通知频率(0/10/10/10/30/30/30/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300/300（单位：秒）)后没有收到微信侧回调,商户应调用查询订单接口确认订单状态。
+   *   特别提醒：
+   *    1、商户系统对于签约、解约结果通知的内容一定要做签名验证,并校验返回的商户协议号和用户openid信息是否一致，防止数据泄露导致出现“假通知”，造成损失。
+   *    2、当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，如果没有处理过再进行处理，如果处理过直接返回结果成功。在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
+   * </pre>
+   *
+   * @param xmlData the wx withhold order query request
+   * @return wx sign result
+   * @throws WxPayException the wx pay exception
+   */
+  WxSignQueryResult parseSignNotifyResult(String xmlData) throws WxPayException;
 }

@@ -1,16 +1,10 @@
 package com.github.binarywang.wxpay.bean.profitsharing.request;
 
-import com.github.binarywang.wxpay.bean.request.BaseWxPayRequest;
-import com.github.binarywang.wxpay.constant.WxPayConstants;
-import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
-import com.thoughtworks.xstream.annotations.XStreamAlias;
 import lombok.*;
-import me.chanjar.weixin.common.annotation.Required;
 
 import java.io.Serializable;
-import java.util.Map;
 
 /**
  * 添加/删除分账接受方请求对象

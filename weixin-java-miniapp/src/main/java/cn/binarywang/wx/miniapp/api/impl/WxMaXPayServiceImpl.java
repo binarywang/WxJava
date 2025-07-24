@@ -1,10 +1,10 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
-import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import cn.binarywang.wx.miniapp.api.WxMaXPayService;
+import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
 import cn.binarywang.wx.miniapp.bean.xpay.*;
+import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.enums.WxType;
@@ -233,6 +233,219 @@ public class WxMaXPayServiceImpl implements WxMaXPayService {
         new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
     }
 
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayQueryBizBalanceResponse queryBizBalance(WxMaXPayQueryBizBalanceRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(QUERY_BIZ_BALANCE_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayQueryBizBalanceResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayQueryBizBalanceResponse.class);
+
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayQueryTransferAccountResponse queryTransferAccount(WxMaXPayQueryTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(QUERY_TRANSFER_ACCOUNT_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayQueryTransferAccountResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayQueryTransferAccountResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayQueryAdverFundsResponse queryAdverFunds(WxMaXPayQueryAdverFundsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(QUERY_ADVER_FUNDS_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayQueryAdverFundsResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayQueryAdverFundsResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayCreateFundsBillResponse createFundsBill(WxMaXPayCreateFundsBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(CREATE_FUNDS_BILL_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayCreateFundsBillResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayCreateFundsBillResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaBaseResponse bindTransferAccount(WxMaXPayBindTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(BIND_TRANSFER_ACCOUNT_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaBaseResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaBaseResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayQueryFundsBillResponse queryFundsBill(WxMaXPayQueryFundsBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(QUERY_FUNDS_BILL_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayQueryFundsBillResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayQueryFundsBillResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayQueryRecoverBillResponse queryRecoverBill(WxMaXPayQueryRecoverBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(QUERY_RECOVER_BILL_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayQueryRecoverBillResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayQueryRecoverBillResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+
+  @Override
+  public WxMaXPayGetComplaintListResponse getComplaintList(WxMaXPayGetComplaintListRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(GET_COMPLAINT_LIST_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayGetComplaintListResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayGetComplaintListResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayGetComplaintDetailResponse getComplaintDetail(WxMaXPayGetComplaintDetailRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(GET_COMPLAINT_DETAIL_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayGetComplaintDetailResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayGetComplaintDetailResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayGetNegotiationHistoryResponse getNegotiationHistory(WxMaXPayGetNegotiationHistoryRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(GET_NEGOTIATION_HISTORY_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayGetNegotiationHistoryResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayGetNegotiationHistoryResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaBaseResponse responseComplaint(WxMaXPayResponseComplaintRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(RESPONSE_COMPLAINT_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaBaseResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaBaseResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaBaseResponse completeComplaint(WxMaXPayCompleteComplaintRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(COMPLETE_COMPLAINT_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaBaseResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaBaseResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayUploadVpFileResponse uploadVpFile(WxMaXPayUploadVpFileRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(UPLOAD_VP_FILE_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayUploadVpFileResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayUploadVpFileResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayGetUploadFileSignResponse getUploadFileSign(WxMaXPayGetUploadFileSignRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(GET_UPLOAD_FILE_SIGN_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayGetUploadFileSignResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayGetUploadFileSignResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+    return getDetailResponse;
+  }
+
+  @Override
+  public WxMaXPayDownloadAdverfundsOrderResponse downloadAdverfundsOrder(WxMaXPayDownloadAdverfundsOrderRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(DOWNLOAD_ADVERFUNDS_ORDER_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayDownloadAdverfundsOrderResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayDownloadAdverfundsOrderResponse.class);
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
     return getDetailResponse;
   }
 }

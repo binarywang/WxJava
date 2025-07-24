@@ -20,6 +20,8 @@ import me.chanjar.weixin.channel.test.ApiTestModule;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.io.FileUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -29,8 +31,18 @@ import org.testng.annotations.Test;
 @Guice(modules = ApiTestModule.class)
 public class WxChannelBasicServiceImplTest {
 
+  private static final Logger log = LoggerFactory.getLogger(WxChannelBasicServiceImplTest.class);
+
   @Inject
   private WxChannelService channelService;
+
+  @Test
+  public void testGetAccessToken() throws WxErrorException {
+    String accessToken = channelService.getAccessToken();
+    assertNotNull(accessToken);
+    log.info("accessToken: \n{}\n\n", accessToken);
+    System.out.println(accessToken);
+  }
 
   @Test
   public void testGetShopInfo() throws WxErrorException {

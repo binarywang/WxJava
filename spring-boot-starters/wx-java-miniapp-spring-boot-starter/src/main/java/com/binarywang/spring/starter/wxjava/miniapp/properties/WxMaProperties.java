@@ -45,6 +45,11 @@ public class WxMaProperties {
   private String msgDataFormat;
 
   /**
+   * 是否使用稳定版 Access Token
+   */
+  private boolean useStableAccessToken = false;
+
+  /**
    * 存储策略
    */
   private final ConfigStorage configStorage = new ConfigStorage();
@@ -107,6 +112,21 @@ public class WxMaProperties {
      * </pre>
      */
     private int maxRetryTimes = 5;
+
+    /**
+     * 连接超时时间，单位毫秒
+     */
+    private int connectionTimeout = 5000;
+
+    /**
+     * 读数据超时时间，即socketTimeout，单位毫秒
+     */
+    private int soTimeout = 5000;
+
+    /**
+     * 从连接池获取链接的超时时间，单位毫秒
+     */
+    private int connectionRequestTimeout = 5000;
   }
 
 }

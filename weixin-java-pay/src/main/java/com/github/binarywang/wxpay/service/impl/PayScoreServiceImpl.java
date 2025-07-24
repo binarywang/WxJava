@@ -7,6 +7,7 @@ import com.github.binarywang.wxpay.bean.payscore.WxPayScoreRequest;
 import com.github.binarywang.wxpay.bean.payscore.WxPayScoreResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.exception.WxSignTestException;
 import com.github.binarywang.wxpay.service.PayScoreService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.util.AesUtils;
@@ -327,7 +328,11 @@ public class PayScoreServiceImpl implements PayScoreService {
    * @param data   通知数据
    * @return true:校验通过 false:校验不通过
    */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
+  private boolean verifyNotifySign(SignatureHeader header, String data) throws WxSignTestException {
+    String wxPaySign = header.getSigned();
+    if(wxPaySign.startsWith("WECHATPAY/SIGNTEST/")){
+      throw new WxSignTestException("微信支付签名探测流量");
+    }
     String beforeSign = String.format("%s\n%s\n%s\n", header.getTimeStamp(), header.getNonce(), data);
     return payService.getConfig().getVerifier().verify(header.getSerialNo(),
       beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());

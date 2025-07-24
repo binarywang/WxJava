@@ -7,10 +7,7 @@ import com.binarywang.spring.starter.wxjava.mp.service.WxMpMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceJoddHttpImpl;
-import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
+import me.chanjar.weixin.mp.api.impl.*;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
@@ -90,6 +87,9 @@ public abstract class AbstractWxMpConfiguration {
         break;
       case HTTP_CLIENT:
         wxMpService = new WxMpServiceHttpClientImpl();
+        break;
+      case HTTP_COMPONENTS:
+        wxMpService = new WxMpServiceHttpComponentsImpl();
         break;
       default:
         wxMpService = new WxMpServiceImpl();

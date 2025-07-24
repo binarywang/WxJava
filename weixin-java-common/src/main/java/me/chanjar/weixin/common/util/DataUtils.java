@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.util;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -17,7 +18,7 @@ public class DataUtils {
   public static <E> E handleDataWithSecret(E data) {
     E dataForLog = data;
     if(data instanceof String && StringUtils.contains((String)data, "&secret=")){
-      dataForLog = (E) StringUtils.replaceAll((String)data,"&secret=\\w+&","&secret=******&");
+      dataForLog = (E) RegExUtils.replaceAll((String)data,"&secret=\\w+&","&secret=******&");
     }
     return dataForLog;
   }

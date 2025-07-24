@@ -55,7 +55,7 @@ public class WxMaCloudServiceImpl implements WxMaCloudService {
   }
 
   @Override
-  public List<String> add(String collection, List list) throws WxErrorException {
+  public List<String> add(String collection, List<?> list) throws WxErrorException {
     String jsonData = WxMaGsonBuilder.create().toJson(list);
     String query = blankJoiner.join(
       "db.collection('", collection, "')",

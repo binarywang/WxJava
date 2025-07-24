@@ -15,6 +15,7 @@ public abstract class AbstractWxChannelConfigStorageConfiguration {
     config.setToken(StringUtils.trimToNull(properties.getToken()));
     config.setAesKey(StringUtils.trimToNull(properties.getAesKey()));
     config.setMsgDataFormat(StringUtils.trimToNull(properties.getMsgDataFormat()));
+    config.setStableAccessToken(properties.isUseStableAccessToken());
 
     WxChannelProperties.ConfigStorage configStorageProperties = properties.getConfigStorage();
     config.setHttpProxyHost(configStorageProperties.getHttpProxyHost());

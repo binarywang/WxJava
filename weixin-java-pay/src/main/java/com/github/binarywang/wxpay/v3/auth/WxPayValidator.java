@@ -10,6 +10,7 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author spvycf & F00lish
@@ -39,7 +40,7 @@ public class WxPayValidator implements Validator {
     }
 
     String message = buildMessage(response);
-    return verifier.verify(serialNo.getValue(), message.getBytes("utf-8"), sign.getValue());
+    return verifier.verify(serialNo.getValue(), message.getBytes(StandardCharsets.UTF_8), sign.getValue());
   }
 
   protected final String buildMessage(CloseableHttpResponse response) throws IOException {

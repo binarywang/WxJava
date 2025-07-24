@@ -51,6 +51,11 @@ public class WxMaExpressOrderInfoResult extends WxMaExpressInfoResult implements
   @SerializedName("waybill_data")
   private List<Map<String,String>> waybillData;
 
+  /**
+   * 运单状态, 0正常，1取消
+   */
+  @SerializedName("order_status")
+  private Integer orderStatus;
 
   public static WxMaExpressOrderInfoResult fromJson(String json) {
     return WxMaGsonBuilder.create().fromJson(json, WxMaExpressOrderInfoResult.class);
