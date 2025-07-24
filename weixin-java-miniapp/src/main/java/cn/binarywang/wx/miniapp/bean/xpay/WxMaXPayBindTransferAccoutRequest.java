@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class WxMaXPayBindTransferAccoutRequest implements Serializable {
+public class WxMaXPayBindTransferAccountRequest implements Serializable {
   private static final long serialVersionUID = 7495157056049312108L;
   @SerializedName("transfer_account_uid")
   private Long transferAccountUid;
