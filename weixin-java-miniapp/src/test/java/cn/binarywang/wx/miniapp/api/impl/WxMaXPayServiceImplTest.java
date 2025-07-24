@@ -277,14 +277,14 @@ public class WxMaXPayServiceImplTest {
 
   @Test
   public void testBindTransferAccount() throws Exception {
-    WxMaXPayBindTransferAccoutRequest request = WxMaXPayBindTransferAccoutRequest.builder()
+    WxMaXPayBindTransferAccountRequest request = WxMaXPayBindTransferAccountRequest.builder()
       .env(WxMaConstants.XPayEnv.PRODUCT)
       .transferAccountOrgName("")
       .transferAccountUid(0L)
       .build();
     WxMaXPaySigParams sigParams = new WxMaXPaySigParams();
     sigParams.setAppKey("");
-    WxMaBaseResponse response = this.wxService.getWxMaXPayService().bindTransferAccout(request, sigParams);
+    WxMaBaseResponse response = this.wxService.getWxMaXPayService().bindTransferAccount(request, sigParams);
     assertNotNull(response);
   }
 
