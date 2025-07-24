@@ -53,4 +53,10 @@ public interface ApacheHttpClientBuilder {
    * ssl连接socket工厂.
    */
   ApacheHttpClientBuilder sslConnectionSocketFactory(SSLConnectionSocketFactory sslConnectionSocketFactory);
+
+  /**
+   * 支持的TLS协议版本.
+   * Supported TLS protocol versions.
+   */
+  ApacheHttpClientBuilder supportedProtocols(String[] supportedProtocols);
 }
