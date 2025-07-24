@@ -886,7 +886,7 @@ public class WxMaApiUrlConstants {
     String QUERY_PUBLISH_GOODS_URL =
         "https://api.weixin.qq.com/xpay/query_publish_goods?pay_sig=%s";
     String QUERY_BIZ_BALANCE_URL =
-      "https://api.weixin.qq.com/xpay/query_biz_balance?&pay_sig=%s";
+      "https://api.weixin.qq.com/xpay/query_biz_balance?pay_sig=%s";
     String QUERY_TRANSFER_ACCOUNT_URL = "https://api.weixin.qq.com/xpay/query_transfer_account?pay_sig=%s";
     String QUERY_ADVER_FUNDS_URL = "https://api.weixin.qq.com/xpay/query_adver_funds?pay_sig=%s";
     String CREATE_FUNDS_BILL_URL = "https://api.weixin.qq.com/xpay/create_funds_bill?pay_sig=%s";
