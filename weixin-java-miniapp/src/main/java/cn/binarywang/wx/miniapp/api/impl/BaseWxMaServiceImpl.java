@@ -426,6 +426,9 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
     if (StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl())) {
       uri = uri.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl());
+    } else if (this.getWxMaConfig().isUseHttpOnly()) {
+      // 微信云托管环境下，将HTTPS替换为HTTP
+      uri = uri.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com");
     }
 
     String uriWithAccessToken =

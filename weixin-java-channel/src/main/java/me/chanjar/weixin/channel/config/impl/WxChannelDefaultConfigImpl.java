@@ -41,6 +41,7 @@ public class WxChannelDefaultConfigImpl implements WxChannelConfig {
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
   private String apiHostUrl;
   private String accessTokenUrl;
+  private boolean useHttpOnly = false;
 
   /**
    * 会过期的数据提前过期时间，默认预留200秒的时间
@@ -231,6 +232,16 @@ public class WxChannelDefaultConfigImpl implements WxChannelConfig {
   @Override
   public void setAccessTokenUrl(String accessTokenUrl) {
     this.accessTokenUrl = accessTokenUrl;
+  }
+
+  @Override
+  public boolean isUseHttpOnly() {
+    return this.useHttpOnly;
+  }
+
+  @Override
+  public void setUseHttpOnly(boolean useHttpOnly) {
+    this.useHttpOnly = useHttpOnly;
   }
 
   @Override

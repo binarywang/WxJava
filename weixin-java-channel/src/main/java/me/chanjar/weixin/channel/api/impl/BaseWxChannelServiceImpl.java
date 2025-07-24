@@ -225,6 +225,9 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
     WxChannelConfig config = this.getConfig();
     if (StringUtils.isNotEmpty(config.getApiHostUrl())) {
       uri = uri.replace("https://api.weixin.qq.com", config.getApiHostUrl());
+    } else if (config.isUseHttpOnly()) {
+      // 微信云托管环境下，将HTTPS替换为HTTP
+      uri = uri.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com");
     }
 
     String uriWithAccessToken = uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;

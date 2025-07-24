@@ -74,7 +74,9 @@ public class WxChannelServiceOkHttpImpl extends BaseWxChannelServiceImpl<OkHttpC
     WxChannelConfig config = this.getConfig();
     String url = StringUtils.isNotEmpty(config.getAccessTokenUrl()) ? config.getAccessTokenUrl() :
       StringUtils.isNotEmpty(config.getApiHostUrl()) ?
-        GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", config.getApiHostUrl()) : GET_ACCESS_TOKEN_URL;
+        GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", config.getApiHostUrl()) : 
+        config.isUseHttpOnly() ? 
+          GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com") : GET_ACCESS_TOKEN_URL;
 
     url = String.format(url, config.getAppid(), config.getSecret());
 
@@ -90,7 +92,9 @@ public class WxChannelServiceOkHttpImpl extends BaseWxChannelServiceImpl<OkHttpC
     String url = StringUtils.isNotEmpty(config.getAccessTokenUrl()) ?
       config.getAccessTokenUrl() : StringUtils.isNotEmpty(config.getApiHostUrl()) ?
       GET_STABLE_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", config.getApiHostUrl()) :
-      GET_STABLE_ACCESS_TOKEN_URL;
+      config.isUseHttpOnly() ? 
+        GET_STABLE_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com") :
+        GET_STABLE_ACCESS_TOKEN_URL;
 
     StableTokenParam requestParam = new StableTokenParam();
     requestParam.setAppId(config.getAppid());
