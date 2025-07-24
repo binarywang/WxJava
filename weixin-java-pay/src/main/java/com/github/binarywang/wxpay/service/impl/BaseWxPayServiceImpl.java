@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
@@ -747,6 +748,14 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public <T> T createOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException {
+    WxPayUnifiedOrderV3Result result = this.unifiedOrderV3Global(tradeType, request);
+    // Convert GlobalTradeTypeEnum to TradeTypeEnum for getPayInfo method
+    TradeTypeEnum domesticTradeType = TradeTypeEnum.valueOf(tradeType.name());
+    return result.getPayInfo(domesticTradeType, request.getAppid(), request.getMchid(), this.getConfig().getPrivateKey());
+  }
+
+  @Override
   public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     if (StringUtils.isBlank(request.getSpAppid())) {
       request.setSpAppid(this.getConfig().getAppId());
@@ -786,6 +795,28 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
+  }
+
+  @Override
+  public WxPayUnifiedOrderV3Result unifiedOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    if (StringUtils.isBlank(request.getNotifyUrl())) {
+      request.setNotifyUrl(this.getConfig().getNotifyUrl());
+    }
+    if (StringUtils.isBlank(request.getTradeType())) {
+      request.setTradeType(tradeType.name());
+    }
+
+    // Use global WeChat Pay base URL for overseas payments
+    String globalBaseUrl = "https://apihk.mch.weixin.qq.com";
+    String url = globalBaseUrl + tradeType.getUrl();
     String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
