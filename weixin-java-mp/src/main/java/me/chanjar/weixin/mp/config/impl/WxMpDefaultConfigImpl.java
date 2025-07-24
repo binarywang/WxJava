@@ -213,4 +213,17 @@ public class WxMpDefaultConfigImpl implements WxMpConfigStorage, Serializable {
     this.hostConfig = hostConfig;
   }
 
+  @Override
+  public boolean isUseHttpOnly() {
+    return this.hostConfig != null && this.hostConfig.isUseHttpOnly();
+  }
+
+  @Override
+  public void setUseHttpOnly(boolean useHttpOnly) {
+    if (this.hostConfig == null) {
+      this.hostConfig = new WxMpHostConfig();
+    }
+    this.hostConfig.setUseHttpOnly(useHttpOnly);
+  }
+
 }

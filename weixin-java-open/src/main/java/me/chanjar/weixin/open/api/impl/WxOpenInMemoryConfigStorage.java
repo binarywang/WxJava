@@ -67,6 +67,8 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
 
   private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
+  private boolean useHttpOnly = false;
+
   private Map<String, Token> authorizerRefreshTokens = new ConcurrentHashMap<>();
   private Map<String, Token> authorizerAccessTokens = new ConcurrentHashMap<>();
   private Map<String, Token> jsapiTickets = new ConcurrentHashMap<>();
@@ -637,5 +639,25 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     public void setHostConfig(WxMpHostConfig hostConfig) {
       this.hostConfig = hostConfig;
     }
+
+    @Override
+    public boolean isUseHttpOnly() {
+      return WxOpenInMemoryConfigStorage.this.useHttpOnly;
+    }
+
+    @Override
+    public void setUseHttpOnly(boolean useHttpOnly) {
+      WxOpenInMemoryConfigStorage.this.useHttpOnly = useHttpOnly;
+    }
+  }
+
+  @Override
+  public boolean isUseHttpOnly() {
+    return this.useHttpOnly;
+  }
+
+  @Override
+  public void setUseHttpOnly(boolean useHttpOnly) {
+    this.useHttpOnly = useHttpOnly;
   }
 }

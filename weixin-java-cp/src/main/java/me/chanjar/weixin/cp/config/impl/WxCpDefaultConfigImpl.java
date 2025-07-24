@@ -67,6 +67,8 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   private volatile String webhookKey;
 
+  private volatile boolean useHttpOnly = false;
+
   @Override
   public void setBaseApiUrl(String baseUrl) {
     this.baseApiUrl = baseUrl;
@@ -76,6 +78,10 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public String getApiUrl(String path) {
     if (baseApiUrl == null) {
       baseApiUrl = WxCpApiPathConsts.DEFAULT_CP_BASE_URL;
+      // 如果启用HTTP模式，替换为HTTP
+      if (useHttpOnly) {
+        baseApiUrl = baseApiUrl.replace("https://", "http://");
+      }
     }
     return baseApiUrl + path;
   }
@@ -449,5 +455,23 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public WxCpDefaultConfigImpl setMsgAuditSecret(String msgAuditSecret) {
     this.msgAuditSecret = msgAuditSecret;
     return this;
+  }
+
+  @Override
+  public boolean isUseHttpOnly() {
+    return this.useHttpOnly;
+  }
+
+  @Override
+  public void setUseHttpOnly(boolean useHttpOnly) {
+    this.useHttpOnly = useHttpOnly;
+    // 如果已经初始化了baseApiUrl，需要重新设置
+    if (this.baseApiUrl != null) {
+      if (useHttpOnly && this.baseApiUrl.startsWith("https://")) {
+        this.baseApiUrl = this.baseApiUrl.replace("https://", "http://");
+      } else if (!useHttpOnly && this.baseApiUrl.startsWith("http://")) {
+        this.baseApiUrl = this.baseApiUrl.replace("http://", "https://");
+      }
+    }
   }
 }

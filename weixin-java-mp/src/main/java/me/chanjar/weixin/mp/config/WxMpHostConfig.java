@@ -39,21 +39,32 @@ public class WxMpHostConfig implements Serializable {
    */
   private String mpHost;
 
+  /**
+   * 是否使用HTTP协议而不是HTTPS，主要用于微信云托管等内网环境
+   */
+  private boolean useHttpOnly;
+
   public static String buildUrl(WxMpHostConfig hostConfig, String prefix, String path) {
     if (hostConfig == null) {
       return prefix + path;
     }
 
+    String targetHost = null;
     if (hostConfig.getApiHost() != null && prefix.equals(API_DEFAULT_HOST_URL)) {
-      return hostConfig.getApiHost() + path;
+      targetHost = hostConfig.getApiHost();
+    } else if (hostConfig.getMpHost() != null && prefix.equals(MP_DEFAULT_HOST_URL)) {
+      targetHost = hostConfig.getMpHost();
+    } else if (hostConfig.getOpenHost() != null && prefix.equals(OPEN_DEFAULT_HOST_URL)) {
+      targetHost = hostConfig.getOpenHost();
     }
 
-    if (hostConfig.getMpHost() != null && prefix.equals(MP_DEFAULT_HOST_URL)) {
-      return hostConfig.getMpHost() + path;
+    if (targetHost != null) {
+      return targetHost + path;
     }
 
-    if (hostConfig.getOpenHost() != null && prefix.equals(OPEN_DEFAULT_HOST_URL)) {
-      return hostConfig.getOpenHost() + path;
+    // 如果启用HTTP模式且没有自定义主机，则将默认的HTTPS替换为HTTP
+    if (hostConfig.isUseHttpOnly()) {
+      prefix = prefix.replace("https://", "http://");
     }
 
     return prefix + path;

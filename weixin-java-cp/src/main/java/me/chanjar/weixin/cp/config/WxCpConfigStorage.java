@@ -263,4 +263,24 @@ public interface WxCpConfigStorage {
    * @return msg audit secret
    */
   String getMsgAuditSecret();
+
+  /**
+   * 是否使用HTTP协议而不是HTTPS，主要用于微信云托管等内网环境
+   * 当微信云托管将qyapi.weixin.qq.com解析为内网地址时，可能不支持HTTPS，需要使用HTTP
+   *
+   * @return true表示使用HTTP，false表示使用HTTPS（默认）
+   */
+  default boolean isUseHttpOnly() {
+    return false;
+  }
+
+  /**
+   * 设置是否使用HTTP协议而不是HTTPS
+   * 主要用于微信云托管等内网环境，当qyapi.weixin.qq.com被解析为不支持HTTPS的内网地址时使用
+   *
+   * @param useHttpOnly true表示使用HTTP，false表示使用HTTPS（默认）
+   */
+  default void setUseHttpOnly(boolean useHttpOnly) {
+    // 默认实现为空，由具体实现类根据需要重写
+  }
 }

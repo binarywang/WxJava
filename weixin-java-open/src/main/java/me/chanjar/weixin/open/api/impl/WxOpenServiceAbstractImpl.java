@@ -43,6 +43,11 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   public abstract void initHttp();
 
   protected <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+    // 支持微信云托管环境，将HTTPS替换为HTTP
+    if (wxOpenConfigStorage != null && wxOpenConfigStorage.isUseHttpOnly() && uri.startsWith("https://api.weixin.qq.com")) {
+      uri = uri.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com");
+    }
+    
     try {
       T result = executor.execute(uri, data, WxType.Open);
       log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
