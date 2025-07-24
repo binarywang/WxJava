@@ -199,7 +199,7 @@ public interface WxMaXPayService {
    * @return 绑定广告金充值账户结果
    * @throws WxErrorException 查询失败时抛出
    */
-  WxMaBaseResponse bindTransferAccout(WxMaXPayBindTransferAccoutRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+  WxMaBaseResponse bindTransferAccount(WxMaXPayBindTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
 
   /**
    * 查询广告金充值记录。
