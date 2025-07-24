@@ -295,9 +295,9 @@ public class WxMaXPayServiceImpl implements WxMaXPayService {
   }
 
   @Override
-  public WxMaBaseResponse bindTransferAccout(WxMaXPayBindTransferAccoutRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+  public WxMaBaseResponse bindTransferAccount(WxMaXPayBindTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
     final String postBody = request.toJson();
-    final String uri = sigParams.signUriWithPay(BIND_TRANSFER_ACCOUT_URL, postBody);
+    final String uri = sigParams.signUriWithPay(BIND_TRANSFER_ACCOUNT_URL, postBody);
     String responseContent = this.service.post(uri, postBody);
     WxMaBaseResponse getDetailResponse = WxMaGsonBuilder.create()
       .fromJson(responseContent, WxMaBaseResponse.class);
