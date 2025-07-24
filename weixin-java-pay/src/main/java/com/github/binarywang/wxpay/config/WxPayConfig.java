@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
@@ -185,11 +187,27 @@ public class WxPayConfig {
 
 
   private CloseableHttpClient apiV3HttpClient;
+  
+  /**
+   * 用于普通支付接口的可复用HttpClient，使用连接池
+   */
+  private CloseableHttpClient httpClient;
+  
   /**
    * 支持扩展httpClientBuilder
    */
   private HttpClientBuilderCustomizer httpClientBuilderCustomizer;
   private HttpClientBuilderCustomizer apiV3HttpClientBuilderCustomizer;
+  
+  /**
+   * HTTP连接池最大连接数，默认20
+   */
+  private int maxConnTotal = 20;
+  
+  /**
+   * HTTP连接池每个路由的最大连接数，默认10
+   */
+  private int maxConnPerRoute = 10;
   /**
    * 私钥信息
    */
@@ -497,5 +515,43 @@ public class WxPayConfig {
 
     return null;
 
+  }
+
+  /**
+   * 初始化使用连接池的HttpClient
+   * 
+   * @return CloseableHttpClient
+   * @throws WxPayException 初始化异常
+   */
+  public CloseableHttpClient initHttpClient() throws WxPayException {
+    if (this.httpClient != null) {
+      return this.httpClient;
+    }
+    
+    // 创建连接池管理器
+    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(this.maxConnTotal);
+    connectionManager.setDefaultMaxPerRoute(this.maxConnPerRoute);
+    
+    // 创建HttpClient构建器
+    org.apache.http.impl.client.HttpClientBuilder httpClientBuilder = HttpClients.custom()
+        .setConnectionManager(connectionManager);
+    
+    // 提供自定义httpClientBuilder的能力
+    Optional.ofNullable(httpClientBuilderCustomizer).ifPresent(e -> {
+      e.customize(httpClientBuilder);
+    });
+    
+    this.httpClient = httpClientBuilder.build();
+    return this.httpClient;
+  }
+
+  /**
+   * 获取用于普通支付接口的HttpClient
+   * 
+   * @return CloseableHttpClient
+   */
+  public CloseableHttpClient getHttpClient() {
+    return httpClient;
   }
 }
