@@ -14,9 +14,16 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
@@ -192,6 +199,11 @@ public class WxPayConfig {
    * 用于普通支付接口的可复用HttpClient，使用连接池
    */
   private CloseableHttpClient httpClient;
+  
+  /**
+   * 用于需要SSL证书的支付接口的可复用HttpClient，使用连接池
+   */
+  private CloseableHttpClient sslHttpClient;
   
   /**
    * 支持扩展httpClientBuilder
@@ -536,6 +548,9 @@ public class WxPayConfig {
     // 创建HttpClient构建器
     org.apache.http.impl.client.HttpClientBuilder httpClientBuilder = HttpClients.custom()
         .setConnectionManager(connectionManager);
+        
+    // 配置代理
+    configureProxy(httpClientBuilder);
     
     // 提供自定义httpClientBuilder的能力
     Optional.ofNullable(httpClientBuilderCustomizer).ifPresent(e -> {
@@ -547,11 +562,77 @@ public class WxPayConfig {
   }
 
   /**
+   * 初始化使用连接池且支持SSL的HttpClient
+   * 
+   * @return CloseableHttpClient
+   * @throws WxPayException 初始化异常
+   */
+  public CloseableHttpClient initSslHttpClient() throws WxPayException {
+    if (this.sslHttpClient != null) {
+      return this.sslHttpClient;
+    }
+    
+    // 初始化SSL上下文
+    SSLContext sslContext = this.getSslContext();
+    if (null == sslContext) {
+      sslContext = this.initSSLContext();
+    }
+    
+    // 创建支持SSL的连接池管理器
+    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(this.maxConnTotal);
+    connectionManager.setDefaultMaxPerRoute(this.maxConnPerRoute);
+    
+    // 创建HttpClient构建器，配置SSL
+    org.apache.http.impl.client.HttpClientBuilder httpClientBuilder = HttpClients.custom()
+        .setConnectionManager(connectionManager)
+        .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext, new DefaultHostnameVerifier()));
+        
+    // 配置代理
+    configureProxy(httpClientBuilder);
+    
+    // 提供自定义httpClientBuilder的能力
+    Optional.ofNullable(httpClientBuilderCustomizer).ifPresent(e -> {
+      e.customize(httpClientBuilder);
+    });
+    
+    this.sslHttpClient = httpClientBuilder.build();
+    return this.sslHttpClient;
+  }
+
+  /**
+   * 配置HTTP代理
+   */
+  private void configureProxy(org.apache.http.impl.client.HttpClientBuilder httpClientBuilder) {
+    if (StringUtils.isNotBlank(this.getHttpProxyHost()) && this.getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getHttpProxyUsername())) {
+        this.setHttpProxyUsername("whatever");
+      }
+
+      // 使用代理服务器 需要用户认证的代理服务器
+      CredentialsProvider provider = new BasicCredentialsProvider();
+      provider.setCredentials(new AuthScope(this.getHttpProxyHost(), this.getHttpProxyPort()),
+        new UsernamePasswordCredentials(this.getHttpProxyUsername(), this.getHttpProxyPassword()));
+      httpClientBuilder.setDefaultCredentialsProvider(provider)
+        .setProxy(new HttpHost(this.getHttpProxyHost(), this.getHttpProxyPort()));
+    }
+  }
+
+  /**
    * 获取用于普通支付接口的HttpClient
    * 
    * @return CloseableHttpClient
    */
   public CloseableHttpClient getHttpClient() {
     return httpClient;
+  }
+
+  /**
+   * 获取用于SSL支付接口的HttpClient
+   * 
+   * @return CloseableHttpClient
+   */
+  public CloseableHttpClient getSslHttpClient() {
+    return sslHttpClient;
   }
 }

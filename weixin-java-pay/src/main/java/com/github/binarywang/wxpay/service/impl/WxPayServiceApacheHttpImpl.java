@@ -55,22 +55,12 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       CloseableHttpClient httpClient = this.createHttpClient(useKey);
       
-      // 对于使用连接池的客户端，不需要关闭，对于新创建的SSL客户端，需要关闭
-      if (useKey) {
-        try (CloseableHttpClient clientToClose = httpClient) {
-          final byte[] bytes = clientToClose.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
-          final String responseData = Base64.getEncoder().encodeToString(bytes);
-          this.logRequestAndResponse(url, requestStr, responseData);
-          wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
-          return bytes;
-        }
-      } else {
-        final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
-        final String responseData = Base64.getEncoder().encodeToString(bytes);
-        this.logRequestAndResponse(url, requestStr, responseData);
-        wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
-        return bytes;
-      }
+      // 使用连接池的客户端，不需要手动关闭
+      final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
+      final String responseData = Base64.getEncoder().encodeToString(bytes);
+      this.logRequestAndResponse(url, requestStr, responseData);
+      wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
+      return bytes;
     } catch (Exception e) {
       this.logError(url, requestStr, e);
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
@@ -84,31 +74,16 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       CloseableHttpClient httpClient = this.createHttpClient(useKey);
       
-      // 对于使用连接池的客户端，不需要关闭，对于新创建的SSL客户端，需要关闭
-      if (useKey) {
-        try (CloseableHttpClient clientToClose = httpClient) {
-          try (CloseableHttpResponse response = clientToClose.execute(httpPost)) {
-            String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-            this.logRequestAndResponse(url, requestStr, responseString);
-            if (this.getConfig().isIfSaveApiData()) {
-              wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
-            }
-            return responseString;
-          } finally {
-            httpPost.releaseConnection();
-          }
+      // 使用连接池的客户端，不需要手动关闭
+      try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        this.logRequestAndResponse(url, requestStr, responseString);
+        if (this.getConfig().isIfSaveApiData()) {
+          wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
         }
-      } else {
-        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-          String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-          this.logRequestAndResponse(url, requestStr, responseString);
-          if (this.getConfig().isIfSaveApiData()) {
-            wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
-          }
-          return responseString;
-        } finally {
-          httpPost.releaseConnection();
-        }
+        return responseString;
+      } finally {
+        httpPost.releaseConnection();
       }
     } catch (Exception e) {
       this.logError(url, requestStr, e);
@@ -307,21 +282,23 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   }
 
   CloseableHttpClient createHttpClient(boolean useKey) throws WxPayException {
-    CloseableHttpClient httpClient = this.getConfig().getHttpClient();
-    if (null == httpClient) {
-      // 初始化带连接池的HttpClient
-      this.getConfig().initHttpClient();
-      httpClient = this.getConfig().getHttpClient();
-    }
-    
-    // 对于需要SSL的情况，当前连接池客户端还不支持动态SSL配置
-    // 暂时保持原有行为，为SSL请求创建新客户端
     if (useKey) {
-      HttpClientBuilder httpClientBuilder = this.createHttpClientBuilder(useKey);
-      return httpClientBuilder.build();
+      // 使用SSL连接池客户端
+      CloseableHttpClient sslHttpClient = this.getConfig().getSslHttpClient();
+      if (null == sslHttpClient) {
+        this.getConfig().initSslHttpClient();
+        sslHttpClient = this.getConfig().getSslHttpClient();
+      }
+      return sslHttpClient;
+    } else {
+      // 使用普通连接池客户端
+      CloseableHttpClient httpClient = this.getConfig().getHttpClient();
+      if (null == httpClient) {
+        this.getConfig().initHttpClient();
+        httpClient = this.getConfig().getHttpClient();
+      }
+      return httpClient;
     }
-    
-    return httpClient;
   }
 
   private static StringEntity createEntry(String requestStr) {
