@@ -372,11 +372,11 @@ public class WxChannelApiUrlConstants {
     /** 添加团长商品到橱窗 */
     String ADD_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/add";
     /** 查询橱窗上团长商品列表 */
-    String LIST_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/getall";
+    String LIST_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/list/get";
     /** 从橱窗移除团长商品 */
     String REMOVE_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/remove";
     /** 查询橱窗上团长商品详情 */
-    String GET_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/getdetail";
+    String GET_SUPPLIER_GOODS_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/window/get";
     /** 获取达人橱窗授权链接 */
     String GET_SUPPLIER_AUTH_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/windowauth/get";
     /** 获取达人橱窗授权状态 */
@@ -384,9 +384,9 @@ public class WxChannelApiUrlConstants {
     /** 获取团长账户余额 */
     String GET_SUPPLIER_BALANCE_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/funds/balance/get";
     /** 获取资金流水详情 */
-    String GET_SUPPLIER_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/funds/flowdetail/get";
+    String GET_SUPPLIER_BALANCE_FLOW_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/funds/flow/detail/get";
     /** 获取资金流水列表 */
-    String GET_SUPPLIER_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/funds/flowlist/get";
+    String GET_SUPPLIER_BALANCE_FLOW_LIST_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/funds/flow/list/get";
     /** 获取合作商品详情 */
     String GET_SUPPLIER_ITEM_URL = "https://api.weixin.qq.com/channels/ec/league/headsupplier/item/get";
     /** 获取合作商品列表 */
