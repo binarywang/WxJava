@@ -8,6 +8,7 @@ import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.*;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -166,6 +167,46 @@ public class WxCpOaServiceImplTest {
     assertThat(results).isNotNull();
     System.out.println("results ");
     System.out.println(gson.toJson(results));
+  }
+
+  /**
+   * Test new ot_info_v2 structure deserialization.
+   */
+  @Test
+  public void testOtInfoV2Deserialization() {
+    // Test JSON with ot_info_v2 structure based on the new API response format
+    String jsonWithOtInfoV2 = "{\n" +
+      "  \"groupid\": 1,\n" +
+      "  \"groupname\": \"test group\",\n" +
+      "  \"grouptype\": 0,\n" +
+      "  \"ot_info_v2\": {\n" +
+      "    \"workdayconf\": {\n" +
+      "      \"allow_ot\": true,\n" +
+      "      \"type\": 1\n" +
+      "    },\n" +
+      "    \"restdayconf\": {\n" +
+      "      \"allow_ot\": false,\n" +
+      "      \"type\": 0\n" +
+      "    },\n" +
+      "    \"holidayconf\": {\n" +
+      "      \"allow_ot\": true,\n" +
+      "      \"type\": 2\n" +
+      "    }\n" +
+      "  }\n" +
+      "}";
+
+    WxCpCropCheckinOption option = WxCpGsonBuilder.create().fromJson(jsonWithOtInfoV2, WxCpCropCheckinOption.class);
+    assertThat(option).isNotNull();
+    assertThat(option.getOtInfoV2()).isNotNull();
+    assertThat(option.getOtInfoV2().getWorkdayConf()).isNotNull();
+    assertThat(option.getOtInfoV2().getWorkdayConf().getAllowOt()).isTrue();
+    assertThat(option.getOtInfoV2().getWorkdayConf().getType()).isEqualTo(1);
+    assertThat(option.getOtInfoV2().getRestdayConf()).isNotNull();
+    assertThat(option.getOtInfoV2().getRestdayConf().getAllowOt()).isFalse();
+    assertThat(option.getOtInfoV2().getHolidayConf().getAllowOt()).isTrue();
+    
+    System.out.println("Parsed ot_info_v2 structure:");
+    System.out.println(gson.toJson(option.getOtInfoV2()));
   }
 
   /**
