@@ -87,7 +87,9 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
     String url = String.format("%s/v3/marketing/favor/users/%s/coupons/%s", this.payService.getPayBaseUrl(), openid, couponId);
     String query = String.format("?appid=%s", appid);
     String result = this.payService.getV3(url + query);
-    return GSON.fromJson(result, FavorCouponsGetResult.class);
+    FavorCouponsGetResult favorCouponsGetResult = GSON.fromJson(result, FavorCouponsGetResult.class);
+    favorCouponsGetResult.setRawJsonString(result);
+    return favorCouponsGetResult;
   }
 
   @Override
