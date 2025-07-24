@@ -65,6 +65,35 @@ public class WxCpMeeting implements Serializable, ToJson {
   @SerializedName("agentid")
   private Integer agentId;
 
+  /**
+   * 发起人所在部门
+   */
+  @SerializedName("main_department")
+  private Integer mainDepartment;
+
+  /**
+   * 会议的状态。
+   * 1：待开始
+   * 2：会议中
+   * 3：已结束
+   * 4：已取消
+   * 5：已过期
+   */
+  @SerializedName("status")
+  public Integer status;
+
+  /**
+   * 会议类型。
+   * 0：一次性会议
+   * 1：周期性会议
+   * 2：微信专属会议
+   * 3：Rooms 投屏会议
+   * 5：个人会议号会议
+   * 6：网络研讨会
+   */
+  @SerializedName("meeting_type")
+  private Integer meetingType;
+
 
   /**
    * 参与会议的成员。会议人数上限，以指定的「管理员」可预约的人数上限来校验，普通企业与会人员最多100；
