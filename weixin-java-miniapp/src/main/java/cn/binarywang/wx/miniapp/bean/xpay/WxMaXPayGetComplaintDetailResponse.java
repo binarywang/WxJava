@@ -55,7 +55,7 @@ public class WxMaXPayGetComplaintDetailResponse extends WxMaBaseResponse impleme
     private Integer applyRefundAmount;
     @SerializedName("user_tag_list")
     private List<String> userTagList;
-    @SerializedName("service_order_info>")
+    @SerializedName("service_order_info")
     private List<ServiceOrderInfo> serviceOrderInfo;
 
 
