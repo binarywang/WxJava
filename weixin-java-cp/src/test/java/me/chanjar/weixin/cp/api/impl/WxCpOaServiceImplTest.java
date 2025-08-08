@@ -210,6 +210,206 @@ public class WxCpOaServiceImplTest {
   }
 
   /**
+   * Test late_rule field deserialization in getCropCheckinOption response.
+   */
+  @Test
+  public void testLateRuleDeserialization() {
+    // Test JSON with late_rule structure based on the issue #3323
+    String jsonWithLateRule = "{\n" +
+      "  \"grouptype\": 1,\n" +
+      "  \"groupid\": 1,\n" +
+      "  \"checkindate\": [\n" +
+      "    {\n" +
+      "      \"workdays\": [1, 2, 3, 4, 5],\n" +
+      "      \"checkintime\": [\n" +
+      "        {\n" +
+      "          \"time_id\": 1,\n" +
+      "          \"work_sec\": 32400,\n" +
+      "          \"off_work_sec\": 64800,\n" +
+      "          \"remind_work_sec\": 31800,\n" +
+      "          \"remind_off_work_sec\": 64800,\n" +
+      "          \"rest_begin_time\": 43200,\n" +
+      "          \"rest_end_time\": 48600,\n" +
+      "          \"allow_rest\": true,\n" +
+      "          \"earliest_work_sec\": 21600,\n" +
+      "          \"latest_work_sec\": 64740,\n" +
+      "          \"earliest_off_work_sec\": 32460,\n" +
+      "          \"latest_off_work_sec\": 107940,\n" +
+      "          \"no_need_checkon\": false,\n" +
+      "          \"no_need_checkoff\": false\n" +
+      "        }\n" +
+      "      ],\n" +
+      "      \"noneed_offwork\": false,\n" +
+      "      \"limit_aheadtime\": 0,\n" +
+      "      \"flex_on_duty_time\": 0,\n" +
+      "      \"flex_off_duty_time\": 0,\n" +
+      "      \"allow_flex\": false,\n" +
+      "      \"late_rule\": {\n" +
+      "        \"offwork_after_time\": 3600,\n" +
+      "        \"onwork_flex_time\": 3600,\n" +
+      "        \"allow_offwork_after_time\": true,\n" +
+      "        \"timerules\": [\n" +
+      "          {\n" +
+      "            \"offwork_after_time\": 18000,\n" +
+      "            \"onwork_flex_time\": 3600\n" +
+      "          },\n" +
+      "          {\n" +
+      "            \"offwork_after_time\": 21600,\n" +
+      "            \"onwork_flex_time\": 7200\n" +
+      "          }\n" +
+      "        ]\n" +
+      "      },\n" +
+      "      \"max_allow_arrive_early\": 0,\n" +
+      "      \"max_allow_arrive_late\": 0\n" +
+      "    }\n" +
+      "  ],\n" +
+      "  \"groupname\": \"打卡\",\n" +
+      "  \"need_photo\": false\n" +
+      "}";
+
+    WxCpCropCheckinOption option = WxCpGsonBuilder.create().fromJson(jsonWithLateRule, WxCpCropCheckinOption.class);
+    assertThat(option).isNotNull();
+    assertThat(option.getCheckinDate()).isNotNull();
+    assertThat(option.getCheckinDate().size()).isEqualTo(1);
+    
+    WxCpCheckinGroupBase.CheckinDate checkinDate = option.getCheckinDate().get(0);
+    assertThat(checkinDate).isNotNull();
+    assertThat(checkinDate.getAllowFlex()).isFalse();
+    assertThat(checkinDate.getMaxAllowArriveEarly()).isEqualTo(0);
+    assertThat(checkinDate.getMaxAllowArriveLate()).isEqualTo(0);
+    
+    // Test late_rule field
+    assertThat(checkinDate.getLateRule()).isNotNull();
+    assertThat(checkinDate.getLateRule().getOffWorkAfterTime()).isEqualTo(3600);
+    assertThat(checkinDate.getLateRule().getOnWorkFlexTime()).isEqualTo(3600);
+    assertThat(checkinDate.getLateRule().getAllowOffWorkAfterTime()).isTrue();
+    assertThat(checkinDate.getLateRule().getTimerules()).isNotNull();
+    assertThat(checkinDate.getLateRule().getTimerules().size()).isEqualTo(2);
+    
+    // Test timerules
+    WxCpCheckinGroupBase.TimeRule firstRule = checkinDate.getLateRule().getTimerules().get(0);
+    assertThat(firstRule.getOffWorkAfterTime()).isEqualTo(18000);
+    assertThat(firstRule.getOnWorkFlexTime()).isEqualTo(3600);
+    
+    // Test CheckinTime fields
+    assertThat(checkinDate.getCheckinTime()).isNotNull();
+    assertThat(checkinDate.getCheckinTime().size()).isEqualTo(1);
+    
+    WxCpCheckinGroupBase.CheckinTime checkinTime = checkinDate.getCheckinTime().get(0);
+    assertThat(checkinTime.getTimeId()).isEqualTo(1);
+    assertThat(checkinTime.getRestBeginTime()).isEqualTo(43200);
+    assertThat(checkinTime.getRestEndTime()).isEqualTo(48600);
+    assertThat(checkinTime.getAllowRest()).isTrue();
+    assertThat(checkinTime.getEarliestWorkSec()).isEqualTo(21600);
+    assertThat(checkinTime.getLatestWorkSec()).isEqualTo(64740);
+    assertThat(checkinTime.getEarliestOffWorkSec()).isEqualTo(32460);
+    assertThat(checkinTime.getLatestOffWorkSec()).isEqualTo(107940);
+    assertThat(checkinTime.getNoNeedCheckon()).isFalse();
+    assertThat(checkinTime.getNoNeedCheckoff()).isFalse();
+    
+    System.out.println("Successfully parsed late_rule and new checkintime fields:");
+    System.out.println(gson.toJson(option));
+  }
+
+  /**
+   * Test issue #3323 - full JSON from the issue report.
+   */
+  @Test
+  public void testIssue3323FullJson() {
+    // Full JSON from issue #3323
+    String issueJson = "{\n" +
+      "      \"grouptype\": 1,\n" +
+      "      \"groupid\": 1,\n" +
+      "      \"checkindate\": [\n" +
+      "        {\n" +
+      "          \"workdays\": [\n" +
+      "            1,\n" +
+      "            2,\n" +
+      "            3,\n" +
+      "            4,\n" +
+      "            5\n" +
+      "          ],\n" +
+      "          \"checkintime\": [\n" +
+      "            {\n" +
+      "              \"time_id\": 1,\n" +
+      "              \"work_sec\": 32400,\n" +
+      "              \"off_work_sec\": 64800,\n" +
+      "              \"remind_work_sec\": 31800,\n" +
+      "              \"remind_off_work_sec\": 64800,\n" +
+      "              \"rest_begin_time\": 43200,\n" +
+      "              \"rest_end_time\": 48600,\n" +
+      "              \"allow_rest\": true,\n" +
+      "              \"earliest_work_sec\": 21600,\n" +
+      "              \"latest_work_sec\": 64740,\n" +
+      "              \"earliest_off_work_sec\": 32460,\n" +
+      "              \"latest_off_work_sec\": 107940,\n" +
+      "              \"no_need_checkon\": false,\n" +
+      "              \"no_need_checkoff\": false\n" +
+      "            }\n" +
+      "          ],\n" +
+      "          \"noneed_offwork\": false,\n" +
+      "          \"limit_aheadtime\": 0,\n" +
+      "          \"flex_on_duty_time\": 0,\n" +
+      "          \"flex_off_duty_time\": 0,\n" +
+      "          \"allow_flex\": false,\n" +
+      "          \"late_rule\": {\n" +
+      "            \"offwork_after_time\": 3600,\n" +
+      "            \"onwork_flex_time\": 3600,\n" +
+      "            \"allow_offwork_after_time\": true,\n" +
+      "            \"timerules\": [\n" +
+      "              {\n" +
+      "                \"offwork_after_time\": 18000,\n" +
+      "                \"onwork_flex_time\": 3600\n" +
+      "              },\n" +
+      "              {\n" +
+      "                \"offwork_after_time\": 21600,\n" +
+      "                \"onwork_flex_time\": 7200\n" +
+      "              },\n" +
+      "              {\n" +
+      "                \"offwork_after_time\": 28800,\n" +
+      "                \"onwork_flex_time\": 10800\n" +
+      "              }\n" +
+      "            ]\n" +
+      "          },\n" +
+      "          \"max_allow_arrive_early\": 0,\n" +
+      "          \"max_allow_arrive_late\": 0\n" +
+      "        }\n" +
+      "      ],\n" +
+      "      \"spe_workdays\": [],\n" +
+      "      \"spe_offdays\": [],\n" +
+      "      \"sync_holidays\": true,\n" +
+      "      \"groupname\": \"打卡\",\n" +
+      "      \"need_photo\": false,\n" +
+      "      \"wifimac_infos\": [],\n" +
+      "      \"note_can_use_local_pic\": true,\n" +
+      "      \"allow_checkin_offworkday\": false,\n" +
+      "      \"allow_apply_offworkday\": false,\n" +
+      "      \"loc_infos\": []\n" +
+      "    }";
+
+    WxCpCropCheckinOption option = WxCpGsonBuilder.create().fromJson(issueJson, WxCpCropCheckinOption.class);
+    assertThat(option).isNotNull();
+    assertThat(option.getGroupId()).isEqualTo(1);
+    assertThat(option.getGroupName()).isEqualTo("打卡");
+    assertThat(option.getCheckinDate()).isNotNull();
+    assertThat(option.getCheckinDate().size()).isEqualTo(1);
+    
+    WxCpCheckinGroupBase.CheckinDate checkinDate = option.getCheckinDate().get(0);
+    assertThat(checkinDate.getLateRule()).isNotNull();
+    assertThat(checkinDate.getLateRule().getOffWorkAfterTime()).isEqualTo(3600);
+    assertThat(checkinDate.getLateRule().getOnWorkFlexTime()).isEqualTo(3600);
+    assertThat(checkinDate.getLateRule().getAllowOffWorkAfterTime()).isTrue();
+    assertThat(checkinDate.getLateRule().getTimerules()).isNotNull();
+    assertThat(checkinDate.getLateRule().getTimerules().size()).isEqualTo(3);
+    
+    System.out.println("✓ Successfully parsed full JSON from issue #3323");
+    System.out.println("✓ Late Rule offwork_after_time: " + checkinDate.getLateRule().getOffWorkAfterTime());
+    System.out.println("✓ Late Rule onwork_flex_time: " + checkinDate.getLateRule().getOnWorkFlexTime());
+    System.out.println("✓ Late Rule allow_offwork_after_time: " + checkinDate.getLateRule().getAllowOffWorkAfterTime());
+    System.out.println("✓ Late Rule timerules count: " + checkinDate.getLateRule().getTimerules().size());
+  }
+
+  /**
    * Test get approval info.
    *
    * @throws WxErrorException the wx error exception
