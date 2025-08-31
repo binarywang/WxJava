@@ -1146,15 +1146,40 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayCodepayResult codepay(WxPayCodepayRequest request) throws WxPayException {
-    if (StringUtils.isBlank(request.getAppid())) {
-      request.setAppid(this.getConfig().getAppId());
+    // 判断是否为服务商模式：如果设置了sp_appid或sp_mchid或sub_mchid中的任何一个，则认为是服务商模式
+    boolean isPartnerMode = StringUtils.isNotBlank(request.getSpAppid()) 
+        || StringUtils.isNotBlank(request.getSpMchid()) 
+        || StringUtils.isNotBlank(request.getSubMchid());
+
+    if (isPartnerMode) {
+      // 服务商模式
+      if (StringUtils.isBlank(request.getSpAppid())) {
+        request.setSpAppid(this.getConfig().getAppId());
+      }
+      if (StringUtils.isBlank(request.getSpMchid())) {
+        request.setSpMchid(this.getConfig().getMchId());
+      }
+      if (StringUtils.isBlank(request.getSubAppid())) {
+        request.setSubAppid(this.getConfig().getSubAppId());
+      }
+      if (StringUtils.isBlank(request.getSubMchid())) {
+        request.setSubMchid(this.getConfig().getSubMchId());
+      }
+      String url = String.format("%s/v3/pay/partner/transactions/codepay", this.getPayBaseUrl());
+      String body = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+      return GSON.fromJson(body, WxPayCodepayResult.class);
+    } else {
+      // 直连商户模式
+      if (StringUtils.isBlank(request.getAppid())) {
+        request.setAppid(this.getConfig().getAppId());
+      }
+      if (StringUtils.isBlank(request.getMchid())) {
+        request.setMchid(this.getConfig().getMchId());
+      }
+      String url = String.format("%s/v3/pay/transactions/codepay", this.getPayBaseUrl());
+      String body = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+      return GSON.fromJson(body, WxPayCodepayResult.class);
     }
-    if (StringUtils.isBlank(request.getMchid())) {
-      request.setMchid(this.getConfig().getMchId());
-    }
-    String url = String.format("%s/v3/pay/transactions/codepay", this.getPayBaseUrl());
-    String body = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
-    return GSON.fromJson(body, WxPayCodepayResult.class);
   }
 
   @Override
