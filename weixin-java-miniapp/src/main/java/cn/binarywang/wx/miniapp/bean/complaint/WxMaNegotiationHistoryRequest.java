@@ -40,6 +40,7 @@ public class WxMaNegotiationHistoryRequest implements Serializable {
    * </pre>
    */
   @SerializedName("limit")
+  @Builder.Default
   private Integer limit = 10;
 
   /**
@@ -50,6 +51,7 @@ public class WxMaNegotiationHistoryRequest implements Serializable {
    * </pre>
    */
   @SerializedName("offset")
+  @Builder.Default
   private Integer offset = 0;
 
   public String toJson() {
