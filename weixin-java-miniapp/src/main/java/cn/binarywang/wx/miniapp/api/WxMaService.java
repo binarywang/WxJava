@@ -605,4 +605,13 @@ public interface WxMaService extends WxService {
    * @return                 同城配送服务对象WxMaIntracityService
    */
   WxMaIntracityService getIntracityService();
+
+  /**
+   * 获取交易投诉服务对象。
+   * <br>
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/guarantee/complaint.html
+   *
+   * @return                 交易投诉服务对象WxMaComplaintService
+   */
+  WxMaComplaintService getComplaintService();
 }
