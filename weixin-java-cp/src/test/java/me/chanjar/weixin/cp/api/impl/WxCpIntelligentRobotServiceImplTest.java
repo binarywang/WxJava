@@ -1,7 +1,7 @@
 package me.chanjar.weixin.cp.api.impl;
 
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.api.test.ApiTestModule;
+import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.bean.intelligentrobot.*;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
