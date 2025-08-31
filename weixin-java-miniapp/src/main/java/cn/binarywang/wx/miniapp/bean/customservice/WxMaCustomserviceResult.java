@@ -35,7 +35,7 @@ public class WxMaCustomserviceResult  implements Serializable {
   private String entityName;
 
   /**
-   * 企业ID，未绑定时不返回，未绑定时不返回
+   * 企业ID，未绑定时不返回
    */
   @SerializedName("corpid")
   private String corpid;
