@@ -12,8 +12,15 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 小程序帐号的可选类目，其中 address / tag / title 是提交审核会用到的
- *
+ * 客服绑定结果信息，包括错误码、主体名称、企业ID和绑定时间戳。
+ * <p>
+ * 字段说明：
+ * <ul>
+ *   <li>errCode: 错误码</li>
+ *   <li>entityName: 小程序主体名称，未绑定时不返回</li>
+ *   <li>corpid: 企业ID，未绑定时不返回</li>
+ *   <li>bindTime: 接受绑定时间戳（毫秒）</li>
+ * </ul>
  * @author <a href="https://github.com/tryking123">tryking123</a>
  * @since 2025/8/18 17:40
  */
