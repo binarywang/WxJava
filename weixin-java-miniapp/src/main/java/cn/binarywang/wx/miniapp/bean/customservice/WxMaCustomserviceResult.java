@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.customservice;
 
-import cn.binarywang.wx.miniapp.bean.express.WxMaExpressAccount;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
