@@ -286,6 +286,13 @@ public interface WxMaService extends WxService {
   WxMaCustomserviceWorkService getCustomserviceWorkService();
 
   /**
+   * 获取小程序客服管理服务。
+   *
+   * @return                 客服管理服务对象WxMaKefuService
+   */
+  WxMaKefuService getKefuService();
+
+  /**
    * 获取jsapi操作相关服务对象。
    *
    * @return                 jsapi服务对象WxMaJsapiService
