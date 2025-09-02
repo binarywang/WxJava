@@ -273,7 +273,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
      * </pre>
      */
     @XStreamAlias("refund_recv_accout")
-    private String refundRecvAccout;
+    private String refundRecvAccount;
 
     /**
      * <pre>
@@ -324,7 +324,7 @@ public class WxPayRefundNotifyResult extends BaseWxPayResult implements Serializ
       settlementRefundFee = readXmlInteger(d, "settlement_refund_fee");
       refundStatus = readXmlString(d, "refund_status");
       successTime = readXmlString(d, "success_time");
-      refundRecvAccout = readXmlString(d, "refund_recv_accout");
+      refundRecvAccount = readXmlString(d, "refund_recv_accout");
       refundAccount = readXmlString(d, "refund_account");
       refundRequestSource = readXmlString(d, "refund_request_source");
     }

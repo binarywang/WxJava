@@ -87,5 +87,33 @@ public class CombineCloseRequest implements Serializable {
      */
     @SerializedName(value = "out_trade_no")
     private String outTradeNo;
+    /**
+     * <pre>
+     * 字段名：二级商户号
+     * 变量名：sub_mchid
+     * 是否必填：是
+     * 类型：string[1,32]
+     * 描述：
+     *  二级商户商户号，由微信支付生成并下发。服务商子商户的商户号，被合单方。直连商户不用传二级商户号。
+     *  示例值：1900000109
+     * </pre>
+     */
+    @SerializedName(value = "sub_mchid")
+    private String subMchid;
+    /**
+     * <pre>
+     * 字段名：子商户应用ID
+     * 变量名：sub_appid
+     * 是否必填：是
+     * 类型：string[1,32]
+     * 描述：
+     *  子商户申请的应用ID，全局唯一。请求基础下单接口时请注意APPID的应用属性，例如公众号场景下，
+     *  需使用应用属性为公众号的APPID 若sub_openid有传的情况下，
+     *  sub_appid必填，且sub_appid需与sub_openid对应
+     *  示例值：wxd678efh567hg6999
+     * </pre>
+     */
+    @SerializedName(value = "sub_appid")
+    private String subAppid;
   }
 }

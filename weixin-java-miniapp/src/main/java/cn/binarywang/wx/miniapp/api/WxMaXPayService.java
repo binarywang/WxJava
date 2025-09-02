@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.WxMaBaseResponse;
 import cn.binarywang.wx.miniapp.bean.xpay.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -149,4 +150,156 @@ public interface WxMaXPayService {
    * @throws WxErrorException 查询失败时抛出
    */
   WxMaXPayQueryPublishGoodsResponse queryPublishGoods(WxMaXPayQueryPublishGoodsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 查询商家账户里的可提现余额。
+   *
+   * @param request   查询商家账户里的可提现余额请求对象
+   * @param sigParams 签名参数对象
+   * @return 商家账户里的可提现余额查询结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayQueryBizBalanceResponse queryBizBalance(WxMaXPayQueryBizBalanceRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 查询广告金充值账户。
+   *
+   * @param request   查询广告金充值账户请求对象
+   * @param sigParams 签名参数对象
+   * @return 广告金充值账户查询结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayQueryTransferAccountResponse queryTransferAccount(WxMaXPayQueryTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 查询广告金发放记录。
+   *
+   * @param request   查询广告金发放记录请求对象
+   * @param sigParams 签名参数对象
+   * @return 查询广告金发放记录结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayQueryAdverFundsResponse queryAdverFunds(WxMaXPayQueryAdverFundsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 充值广告金。
+   *
+   * @param request   充值广告金请求对象
+   * @param sigParams 签名参数对象
+   * @return 充值广告金结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayCreateFundsBillResponse createFundsBill(WxMaXPayCreateFundsBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 绑定广告金充值账户。
+   *
+   * @param request   绑定广告金充值账户请求对象
+   * @param sigParams 签名参数对象
+   * @return 绑定广告金充值账户结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaBaseResponse bindTransferAccount(WxMaXPayBindTransferAccountRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 查询广告金充值记录。
+   *
+   * @param request   查询广告金充值记录请求对象
+   * @param sigParams 签名参数对象
+   * @return 查询广告金充值记录结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayQueryFundsBillResponse queryFundsBill(WxMaXPayQueryFundsBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
+   * 查询广告金回收记录。
+   *
+   * @param request   查询广告金回收记录请求对象
+   * @param sigParams 签名参数对象
+   * @return 查询广告金回收记录结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayQueryRecoverBillResponse queryRecoverBill(WxMaXPayQueryRecoverBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+
+ /**
+   * 获取投诉列表。
+   *
+   * @param request          获取投诉列表请求对象
+   * @param sigParams        签名参数对象
+   * @return                 获取投诉列表结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayGetComplaintListResponse getComplaintList(WxMaXPayGetComplaintListRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 获取投诉详情。
+   *
+   * @param request          获取投诉详情请求对象
+   * @param sigParams        签名参数对象
+   * @return                 获取投诉详情结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayGetComplaintDetailResponse getComplaintDetail(WxMaXPayGetComplaintDetailRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 获取协商历史。
+   *
+   * @param request          获取协商历史请求对象
+   * @param sigParams        签名参数对象
+   * @return                 获取协商历史结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayGetNegotiationHistoryResponse getNegotiationHistory(WxMaXPayGetNegotiationHistoryRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 回复用户。
+   *
+   * @param request          回复用户请求对象
+   * @param sigParams        签名参数对象
+   * @return                 回复用户结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaBaseResponse responseComplaint(WxMaXPayResponseComplaintRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 完成投诉处理。
+   *
+   * @param request          完成投诉处理请求对象
+   * @param sigParams        签名参数对象
+   * @return                 完成投诉处理结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+ WxMaBaseResponse completeComplaint(WxMaXPayCompleteComplaintRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 上传媒体文件（如图片，凭证等）。
+   *
+   * @param request          上传媒体文件（如图片，凭证等）请求对象
+   * @param sigParams        签名参数对象
+   * @return                 上传媒体文件（如图片，凭证等）结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayUploadVpFileResponse uploadVpFile(WxMaXPayUploadVpFileRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 获取微信支付反馈投诉图片的签名头部。
+   *
+   * @param request          获取微信支付反馈投诉图片的签名头部请求对象
+   * @param sigParams        签名参数对象
+   * @return                 获取微信支付反馈投诉图片的签名头部结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayGetUploadFileSignResponse getUploadFileSign(WxMaXPayGetUploadFileSignRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+ /**
+   * 下载广告金对应的商户订单信息。
+   *
+   * @param request          下载广告金对应的商户订单信息请求对象
+   * @param sigParams        签名参数对象
+   * @return                 下载广告金对应的商户订单信息结果
+   * @throws WxErrorException 查询失败时抛出
+   */
+  WxMaXPayDownloadAdverfundsOrderResponse downloadAdverfundsOrder(WxMaXPayDownloadAdverfundsOrderRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
 }

@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -53,19 +54,23 @@ public interface WxOpenMaBasicService {
    */
   String OPEN_GET_ALL_CATEGORIES = "https://api.weixin.qq.com/cgi-bin/wxopen/getallcategories";
   /**
-   * 8.2 添加类目
+   * 8.2 获取不同类型主体可设置的类目
+   */
+  String OPEN_GET_ALL_CATEGORIES_BY_TYPE = "https://api.weixin.qq.com/cgi-bin/wxopen/getcategoriesbytype";
+  /**
+   * 8.3 添加类目
    */
   String OPEN_ADD_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/addcategory";
   /**
-   * 8.3 删除类目
+   * 8.4 删除类目
    */
   String OPEN_DELETE_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/deletecategory";
   /**
-   * 8.4 获取账号已经设置的所有类目
+   * 8.5 获取账号已经设置的所有类目
    */
   String OPEN_GET_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/getcategory";
   /**
-   * 8.5 修改类目
+   * 8.6 修改类目
    */
   String OPEN_MODIFY_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/modifycategory";
 
@@ -73,6 +78,8 @@ public interface WxOpenMaBasicService {
    * 获取订单页path信息
    */
   String OPEN_GET_ORDER_PATH_INFO = "https://api.weixin.qq.com/wxa/security/getorderpathinfo";
+
+  String URL_COMPONENT_REBIND_ADMIN = "https://mp.weixin.qq.com/wxopen/componentrebindadmin?appid=%s&component_appid=%s&redirect_uri=%s";
 
 
   /**
@@ -145,6 +152,14 @@ public interface WxOpenMaBasicService {
   WxOpenResult modifySignature(String signature) throws WxErrorException;
 
   /**
+   * 7.1 获取换绑管理员URL
+   * @param redirectUri 跳转URL
+   * @param appId 公众号的 appid
+   * @return 换绑管理员URL
+   */
+  String getComponentRebindAdminUrl(String redirectUri, String appId) throws UnsupportedEncodingException;
+
+  /**
    * 7.3 管理员换绑
    *
    * @param taskId 换绑管理员任务序列号(公众平台最终点击提交回跳到第三方平台时携带)
@@ -167,7 +182,12 @@ public interface WxOpenMaBasicService {
   String getAllCategories() throws WxErrorException;
 
   /**
-   * 8.2添加类目
+   * 8.2获取不同类型主体可设置的类目
+   */
+  WxOpenGetAllCategoriesByTypeResult getAllCategoriesByType(String verifyType) throws WxErrorException;
+
+  /**
+   * 8.3添加类目
    *
    * @param categoryList 类目列表
    * @return .
@@ -176,7 +196,7 @@ public interface WxOpenMaBasicService {
   WxOpenResult addCategory(List<WxFastMaCategory> categoryList) throws WxErrorException;
 
   /**
-   * 8.3删除类目
+   * 8.4删除类目
    *
    * @param first  一级类目ID
    * @param second 二级类目ID
@@ -186,7 +206,7 @@ public interface WxOpenMaBasicService {
   WxOpenResult deleteCategory(int first, int second) throws WxErrorException;
 
   /**
-   * 8.4获取账号已经设置的所有类目
+   * 8.5获取账号已经设置的所有类目
    *
    * @return .
    * @throws WxErrorException .
@@ -194,7 +214,7 @@ public interface WxOpenMaBasicService {
   WxFastMaBeenSetCategoryResult getCategory() throws WxErrorException;
 
   /**
-   * 8.5修改类目
+   * 8.6修改类目
    *
    * @param category 实体
    * @return .

@@ -25,8 +25,9 @@ public class WxOpenIcpCreateIcpVerifyTaskResult extends WxOpenResult {
   private String taskId;
 
   /**
-   * 人脸核验任务url，along_with_auth 填 true 时返回。
+   * 人脸核验任务url，{@link WxOpenCreateIcpVerifyTaskParam#alongWithAuth } 填 true 时返回
    */
   @SerializedName("verify_url")
   private String verifyUrl;
+
 }

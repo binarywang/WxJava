@@ -2,6 +2,8 @@ package com.binarywang.spring.starter.wxjava.miniapp.config.storage;
 
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaProperties;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -10,6 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 public abstract class AbstractWxMaConfigStorageConfiguration {
 
   protected WxMaDefaultConfigImpl config(WxMaDefaultConfigImpl config, WxMaProperties properties) {
+    WxMaProperties.ConfigStorage storage = properties.getConfigStorage();
     config.setAppid(StringUtils.trimToNull(properties.getAppid()));
     config.setSecret(StringUtils.trimToNull(properties.getSecret()));
     config.setToken(StringUtils.trimToNull(properties.getToken()));
@@ -23,6 +26,19 @@ public abstract class AbstractWxMaConfigStorageConfiguration {
     config.setHttpProxyPassword(configStorageProperties.getHttpProxyPassword());
     if (configStorageProperties.getHttpProxyPort() != null) {
       config.setHttpProxyPort(configStorageProperties.getHttpProxyPort());
+    }
+
+    // 设置自定义的HttpClient超时配置
+    ApacheHttpClientBuilder clientBuilder = config.getApacheHttpClientBuilder();
+    if (clientBuilder == null) {
+      clientBuilder = DefaultApacheHttpClientBuilder.get();
+    }
+    if (clientBuilder instanceof DefaultApacheHttpClientBuilder) {
+      DefaultApacheHttpClientBuilder defaultBuilder = (DefaultApacheHttpClientBuilder) clientBuilder;
+      defaultBuilder.setConnectionTimeout(storage.getConnectionTimeout());
+      defaultBuilder.setSoTimeout(storage.getSoTimeout());
+      defaultBuilder.setConnectionRequestTimeout(storage.getConnectionRequestTimeout());
+      config.setApacheHttpClientBuilder(defaultBuilder);
     }
 
     int maxRetryTimes = configStorageProperties.getMaxRetryTimes();

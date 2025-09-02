@@ -34,6 +34,11 @@ public class WxMaSingleProperties implements Serializable {
   private String aesKey;
 
   /**
+   * 消息格式，XML或者JSON.
+   */
+  private String msgDataFormat;
+
+  /**
    * 是否使用稳定版 Access Token
    */
   private boolean useStableAccessToken = false;

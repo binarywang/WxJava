@@ -279,6 +279,13 @@ public interface WxMaService extends WxService {
   WxMaCodeService getCodeService();
 
   /**
+   * 获取小程序 - 微信客服。
+   *
+   * @return                 微信客服服务对象WxMaCustomserviceWorkService
+   */
+  WxMaCustomserviceWorkService getCustomserviceWorkService();
+
+  /**
    * 获取jsapi操作相关服务对象。
    *
    * @return                 jsapi服务对象WxMaJsapiService

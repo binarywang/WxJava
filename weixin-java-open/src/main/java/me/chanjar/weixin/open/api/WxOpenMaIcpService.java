@@ -122,14 +122,6 @@ public interface WxOpenMaIcpService {
   /**
    * 发起小程序管理员人脸核身
    *
-   * @return 人脸核验任务结果
-   * @throws WxErrorException e
-   */
-  WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask() throws WxErrorException;
-
-  /**
-   * 发起小程序管理员人脸核身
-   *
    * @param alongWithAuth 小程序认证及备案二合一场景，填 true，否则为小程序备案场景。默认值为 false。
    * @return 人脸核验任务结果
    * @throws WxErrorException e
@@ -226,22 +218,5 @@ public interface WxOpenMaIcpService {
    * @throws WxErrorException e
    */
   File getIcpMedia(String mediaId) throws WxErrorException;
-
-  /**
-   * 申请小程序认证及备案
-   *
-   * @param param 参数
-   * @return r
-   * @throws WxErrorException e
-   */
-  WxOpenSubmitAuthAndIcpResult submitAuthAndIcp(WxOpenSubmitAuthAndIcpParam param) throws WxErrorException;
-
-  /**
-   * 查询小程序认证及备案进度
-   * @param procedureId 小程序认证及备案任务流程id
-   * @return r
-   * @throws WxErrorException e
-   */
-  WxOpenQueryAuthAndIcpResult queryAuthAndIcp(String procedureId) throws WxErrorException;
 
 }

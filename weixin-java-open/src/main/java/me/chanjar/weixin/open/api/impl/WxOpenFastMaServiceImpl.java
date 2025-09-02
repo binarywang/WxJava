@@ -11,6 +11,7 @@ import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,6 +101,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   }
 
   @Override
+  public String getComponentRebindAdminUrl(String redirectUri, String appId) {
+    return "";
+  }
+
+  @Override
   public WxOpenResult componentRebindAdmin(String taskid) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("taskid", taskid);
@@ -110,6 +116,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   @Override
   public String getAllCategories() throws WxErrorException {
     return get(OPEN_GET_ALL_CATEGORIES, "");
+  }
+
+  @Override
+  public WxOpenGetAllCategoriesByTypeResult getAllCategoriesByType(String verifyType)  {
+    return null;
   }
 
   @Override

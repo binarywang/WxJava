@@ -1,11 +1,3 @@
-/*
- * KINGSTAR MEDIA SOLUTIONS Co.,LTD. Copyright c 2005-2013. All rights reserved.
- *
- * This source code is the property of KINGSTAR MEDIA SOLUTIONS LTD. It is intended
- * only for the use of KINGSTAR MEDIA application development. Reengineering, reproduction
- * arose from modification of the original source, or other redistribution of this source
- * is not permitted without written permission of the KINGSTAR MEDIA SOLUTIONS LTD.
- */
 package me.chanjar.weixin.common.util.json;
 
 import com.google.gson.*;
@@ -14,6 +6,7 @@ import me.chanjar.weixin.common.bean.menu.WxMenuButton;
 import me.chanjar.weixin.common.bean.menu.WxMenuRule;
 
 import java.lang.reflect.Type;
+import java.util.Optional;
 
 
 /**
@@ -21,96 +14,111 @@ import java.lang.reflect.Type;
  */
 public class WxMenuGsonAdapter implements JsonSerializer<WxMenu>, JsonDeserializer<WxMenu> {
 
+  // JSON字段常量定义
+  private static final String FIELD_BUTTON = "button";
+  private static final String FIELD_MATCH_RULE = "matchrule";
+  private static final String FIELD_SUB_BUTTON = "sub_button";
+  private static final String FIELD_MENU = "menu";
+
+  // 菜单按钮字段常量
+  private static final String FIELD_TYPE = "type";
+  private static final String FIELD_NAME = "name";
+  private static final String FIELD_KEY = "key";
+  private static final String FIELD_URL = "url";
+  private static final String FIELD_MEDIA_ID = "media_id";
+  private static final String FIELD_ARTICLE_ID = "article_id";
+  private static final String FIELD_APP_ID = "appid";
+  private static final String FIELD_PAGE_PATH = "pagepath";
+
+  // 菜单规则字段常量
+  private static final String FIELD_TAG_ID = "tag_id";
+  private static final String FIELD_SEX = "sex";
+  private static final String FIELD_COUNTRY = "country";
+  private static final String FIELD_PROVINCE = "province";
+  private static final String FIELD_CITY = "city";
+  private static final String FIELD_CLIENT_PLATFORM_TYPE = "client_platform_type";
+  private static final String FIELD_LANGUAGE = "language";
+
   @Override
   public JsonElement serialize(WxMenu menu, Type typeOfSrc, JsonSerializationContext context) {
     JsonObject json = new JsonObject();
-
     JsonArray buttonArray = new JsonArray();
-    for (WxMenuButton button : menu.getButtons()) {
-      JsonObject buttonJson = convertToJson(button);
-      buttonArray.add(buttonJson);
-    }
-    json.add("button", buttonArray);
-
+    Optional.ofNullable(menu.getButtons())
+        .ifPresent(buttons -> buttons.stream()
+            .map(this::convertToJson)
+            .forEach(buttonArray::add));
+    json.add(FIELD_BUTTON, buttonArray);
     if (menu.getMatchRule() != null) {
-      json.add("matchrule", convertToJson(menu.getMatchRule()));
+      json.add(FIELD_MATCH_RULE, convertToJson(menu.getMatchRule()));
     }
-
     return json;
   }
 
   protected JsonObject convertToJson(WxMenuButton button) {
     JsonObject buttonJson = new JsonObject();
-    buttonJson.addProperty("type", button.getType());
-    buttonJson.addProperty("name", button.getName());
-    buttonJson.addProperty("key", button.getKey());
-    buttonJson.addProperty("url", button.getUrl());
-    buttonJson.addProperty("media_id", button.getMediaId());
-    buttonJson.addProperty("article_id", button.getArticleId());
-    buttonJson.addProperty("appid", button.getAppId());
-    buttonJson.addProperty("pagepath", button.getPagePath());
+    addPropertyIfNotNull(buttonJson, FIELD_TYPE, button.getType());
+    addPropertyIfNotNull(buttonJson, FIELD_NAME, button.getName());
+    addPropertyIfNotNull(buttonJson, FIELD_KEY, button.getKey());
+    addPropertyIfNotNull(buttonJson, FIELD_URL, button.getUrl());
+    addPropertyIfNotNull(buttonJson, FIELD_MEDIA_ID, button.getMediaId());
+    addPropertyIfNotNull(buttonJson, FIELD_ARTICLE_ID, button.getArticleId());
+    addPropertyIfNotNull(buttonJson, FIELD_APP_ID, button.getAppId());
+    addPropertyIfNotNull(buttonJson, FIELD_PAGE_PATH, button.getPagePath());
     if (button.getSubButtons() != null && !button.getSubButtons().isEmpty()) {
       JsonArray buttonArray = new JsonArray();
-      for (WxMenuButton sub_button : button.getSubButtons()) {
-        buttonArray.add(convertToJson(sub_button));
-      }
-      buttonJson.add("sub_button", buttonArray);
+      button.getSubButtons().stream()
+          .map(this::convertToJson)
+          .forEach(buttonArray::add);
+      buttonJson.add(FIELD_SUB_BUTTON, buttonArray);
     }
     return buttonJson;
   }
 
   protected JsonObject convertToJson(WxMenuRule menuRule) {
     JsonObject matchRule = new JsonObject();
-    matchRule.addProperty("tag_id", menuRule.getTagId());
-    matchRule.addProperty("sex", menuRule.getSex());
-    matchRule.addProperty("country", menuRule.getCountry());
-    matchRule.addProperty("province", menuRule.getProvince());
-    matchRule.addProperty("city", menuRule.getCity());
-    matchRule.addProperty("client_platform_type", menuRule.getClientPlatformType());
-    matchRule.addProperty("language", menuRule.getLanguage());
+    addPropertyIfNotNull(matchRule, FIELD_TAG_ID, menuRule.getTagId());
+    addPropertyIfNotNull(matchRule, FIELD_SEX, menuRule.getSex());
+    addPropertyIfNotNull(matchRule, FIELD_COUNTRY, menuRule.getCountry());
+    addPropertyIfNotNull(matchRule, FIELD_PROVINCE, menuRule.getProvince());
+    addPropertyIfNotNull(matchRule, FIELD_CITY, menuRule.getCity());
+    addPropertyIfNotNull(matchRule, FIELD_CLIENT_PLATFORM_TYPE, menuRule.getClientPlatformType());
+    addPropertyIfNotNull(matchRule, FIELD_LANGUAGE, menuRule.getLanguage());
     return matchRule;
   }
 
-  @Deprecated
-  private WxMenuRule convertToRule(JsonObject json) {
-    WxMenuRule menuRule = new WxMenuRule();
-    //变态的微信接口，这里居然反人类的使用和序列化时不一样的名字
-    //menuRule.setTagId(GsonHelper.getString(json,"tag_id"));
-    menuRule.setTagId(GsonHelper.getString(json, "group_id"));
-    menuRule.setSex(GsonHelper.getString(json, "sex"));
-    menuRule.setCountry(GsonHelper.getString(json, "country"));
-    menuRule.setProvince(GsonHelper.getString(json, "province"));
-    menuRule.setCity(GsonHelper.getString(json, "city"));
-    menuRule.setClientPlatformType(GsonHelper.getString(json, "client_platform_type"));
-    menuRule.setLanguage(GsonHelper.getString(json, "language"));
-    return menuRule;
+  private void addPropertyIfNotNull(JsonObject obj, String key, String value) {
+    if (value != null) {
+      obj.addProperty(key, value);
+    }
   }
 
   @Override
   public WxMenu deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-    /*
-     * 操蛋的微信
-     * 创建菜单时是 { button : ... }
-     * 查询菜单时是 { menu : { button : ... } }
-     * 现在企业号升级为企业微信后，没有此问题，因此需要单独处理
-     */
-    JsonArray buttonsJson = json.getAsJsonObject().get("menu").getAsJsonObject().get("button").getAsJsonArray();
-    return this.buildMenuFromJson(buttonsJson);
+    JsonObject root = json.getAsJsonObject();
+    JsonArray buttonsJson = null;
+    if (root.has(FIELD_MENU)) {
+      JsonObject menuObj = root.getAsJsonObject(FIELD_MENU);
+      buttonsJson = menuObj.getAsJsonArray(FIELD_BUTTON);
+    } else if (root.has(FIELD_BUTTON)) {
+      buttonsJson = root.getAsJsonArray(FIELD_BUTTON);
+    }
+    if (buttonsJson == null) {
+      throw new JsonParseException("No button array found in menu JSON");
+    }
+    return buildMenuFromJson(buttonsJson);
   }
 
   protected WxMenu buildMenuFromJson(JsonArray buttonsJson) {
     WxMenu menu = new WxMenu();
-    for (int i = 0; i < buttonsJson.size(); i++) {
-      JsonObject buttonJson = buttonsJson.get(i).getAsJsonObject();
+    for (JsonElement btnElem : buttonsJson) {
+      JsonObject buttonJson = btnElem.getAsJsonObject();
       WxMenuButton button = convertFromJson(buttonJson);
       menu.getButtons().add(button);
-      if (buttonJson.get("sub_button") == null || buttonJson.get("sub_button").isJsonNull()) {
-        continue;
-      }
-      JsonArray sub_buttonsJson = buttonJson.get("sub_button").getAsJsonArray();
-      for (int j = 0; j < sub_buttonsJson.size(); j++) {
-        JsonObject sub_buttonJson = sub_buttonsJson.get(j).getAsJsonObject();
-        button.getSubButtons().add(convertFromJson(sub_buttonJson));
+      if (buttonJson.has(FIELD_SUB_BUTTON) && buttonJson.get(FIELD_SUB_BUTTON).isJsonArray()) {
+        JsonArray sub_buttonsJson = buttonJson.getAsJsonArray(FIELD_SUB_BUTTON);
+        for (JsonElement subBtnElem : sub_buttonsJson) {
+          button.getSubButtons().add(convertFromJson(subBtnElem.getAsJsonObject()));
+        }
       }
     }
     return menu;
@@ -118,14 +126,14 @@ public class WxMenuGsonAdapter implements JsonSerializer<WxMenu>, JsonDeserializ
 
   protected WxMenuButton convertFromJson(JsonObject json) {
     WxMenuButton button = new WxMenuButton();
-    button.setName(GsonHelper.getString(json, "name"));
-    button.setKey(GsonHelper.getString(json, "key"));
-    button.setUrl(GsonHelper.getString(json, "url"));
-    button.setType(GsonHelper.getString(json, "type"));
-    button.setMediaId(GsonHelper.getString(json, "media_id"));
-    button.setArticleId(GsonHelper.getString(json, "article_id"));
-    button.setAppId(GsonHelper.getString(json, "appid"));
-    button.setPagePath(GsonHelper.getString(json, "pagepath"));
+    button.setName(GsonHelper.getString(json, FIELD_NAME));
+    button.setKey(GsonHelper.getString(json, FIELD_KEY));
+    button.setUrl(GsonHelper.getString(json, FIELD_URL));
+    button.setType(GsonHelper.getString(json, FIELD_TYPE));
+    button.setMediaId(GsonHelper.getString(json, FIELD_MEDIA_ID));
+    button.setArticleId(GsonHelper.getString(json, FIELD_ARTICLE_ID));
+    button.setAppId(GsonHelper.getString(json, FIELD_APP_ID));
+    button.setPagePath(GsonHelper.getString(json, FIELD_PAGE_PATH));
     return button;
   }
 

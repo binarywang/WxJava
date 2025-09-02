@@ -154,4 +154,11 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
     wxWithholdOrderQueryResult.checkResult(payService, wxWithholdOrderQueryRequest.getSignType(), true);
     return wxWithholdOrderQueryResult;
   }
+
+  @Override
+  public WxSignQueryResult parseSignNotifyResult(String xmlData) throws WxPayException {
+    WxSignQueryResult result = BaseWxPayResult.fromXML(xmlData, WxSignQueryResult.class);
+    result.checkResult(payService, WxPayConstants.SignType.MD5, true);
+    return result;
+  }
 }

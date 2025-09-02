@@ -163,15 +163,40 @@ public class WxOpenXmlMessage implements Serializable {
   //region 认证及备案流程的主要节点均有事件推送到第三方平台的授权事件接收接口，包括支付完成、派单给审核机构、审核打回、审核通过、审核失败等。消息类型，固定为 notify_3rd_wxa_auth_and_icp
 
   /**
-   * 小程序认证及备案任务流程 id
+   * 小程序认证及备案任务流程id
    */
   @XStreamAlias("procedure_id")
   private String procedureId;
+
   /**
-   * 当前任务流程状态，见“小程序认证及备案进度查询” API 文档中的任务流程状态枚举
+   * 任务流程状态
+   * 9	手机验证成功
+   * 15	等待支付认证审核费用
+   * 16	认证审核费用支付成功
+   * 17	认证审核中
+   * 18	认证审核驳回
+   * 19	认证审核通过
+   * 20	认证审核最终失败（不能再修改）
+   * 21	创建备案审核单失败
+   * 22	备案平台审核中
+   * 23	备案平台审核驳回
+   * 24	备案管局审核中
+   * 25	管局审核驳回
+   * 26	认证及备案完成
+   * 27	流程已过期
+   * 28	流程已终止
+   * 29	备案已撤回
    */
   @XStreamAlias("procedure_status")
   private Integer procedureStatus;
+
+  //endregion
+
+  /**
+   * 原始通知内容
+   */
+  private String context;
+
   //endregion
 
   /**
@@ -296,7 +321,9 @@ public class WxOpenXmlMessage implements Serializable {
     WxOpenCryptUtil cryptUtil = new WxOpenCryptUtil(wxOpenConfigStorage);
     String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
-    return fromXml(plainText);
+    WxOpenXmlMessage wxOpenXmlMessage = fromXml(plainText);
+    wxOpenXmlMessage.setContext(plainText);
+    return wxOpenXmlMessage;
   }
 
   public static WxMpXmlMessage fromEncryptedMpXml(String encryptedXml, WxOpenConfigStorage wxOpenConfigStorage,

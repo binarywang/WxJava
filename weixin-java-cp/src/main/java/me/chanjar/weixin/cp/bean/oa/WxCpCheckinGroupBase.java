@@ -151,6 +151,30 @@ public class WxCpCheckinGroupBase implements Serializable {
      */
     @SerializedName("flex_off_duty_time")
     private Integer flexOffDutyTime;
+
+    /**
+     * 是否允许弹性时间
+     */
+    @SerializedName("allow_flex")
+    private Boolean allowFlex;
+
+    /**
+     * 迟到规则
+     */
+    @SerializedName("late_rule")
+    private LateRule lateRule;
+
+    /**
+     * 最早可打卡时间限制
+     */
+    @SerializedName("max_allow_arrive_early")
+    private Integer maxAllowArriveEarly;
+
+    /**
+     * 最晚可打卡时间限制
+     */
+    @SerializedName("max_allow_arrive_late")
+    private Integer maxAllowArriveLate;
   }
 
   /**
@@ -160,6 +184,13 @@ public class WxCpCheckinGroupBase implements Serializable {
   public static class CheckinTime implements Serializable {
 
     private static final long serialVersionUID = -5507709858609705279L;
+
+    /**
+     * 时段id，为班次中某一堆上下班时间组合的id
+     */
+    @SerializedName("time_id")
+    private Integer timeId;
+
     /**
      * 上班时间，表示为距离当天0点的秒数。
      */
@@ -183,6 +214,60 @@ public class WxCpCheckinGroupBase implements Serializable {
      */
     @SerializedName("remind_off_work_sec")
     private Integer remindOffWorkSec;
+
+    /**
+     * 休息开始时间，仅单时段支持，距离0点的秒
+     */
+    @SerializedName("rest_begin_time")
+    private Integer restBeginTime;
+
+    /**
+     * 休息结束时间，仅单时段支持，距离0点的秒
+     */
+    @SerializedName("rest_end_time")
+    private Integer restEndTime;
+
+    /**
+     * 是否允许休息
+     */
+    @SerializedName("allow_rest")
+    private Boolean allowRest;
+
+    /**
+     * 最早可打卡时间，距离0点的秒数
+     */
+    @SerializedName("earliest_work_sec")
+    private Integer earliestWorkSec;
+
+    /**
+     * 最晚可打卡时间，距离0点的秒数
+     */
+    @SerializedName("latest_work_sec")
+    private Integer latestWorkSec;
+
+    /**
+     * 最早可下班打卡时间，距离0点的秒数
+     */
+    @SerializedName("earliest_off_work_sec")
+    private Integer earliestOffWorkSec;
+
+    /**
+     * 最晚可下班打卡时间，距离0点的秒数
+     */
+    @SerializedName("latest_off_work_sec")
+    private Integer latestOffWorkSec;
+
+    /**
+     * 上班无需打卡
+     */
+    @SerializedName("no_need_checkon")
+    private Boolean noNeedCheckon;
+
+    /**
+     * 下班无需打卡
+     */
+    @SerializedName("no_need_checkoff")
+    private Boolean noNeedCheckoff;
   }
 
   /**
@@ -438,6 +523,17 @@ public class WxCpCheckinGroupBase implements Serializable {
 
     private static final long serialVersionUID = 5604969713950037053L;
 
+    /**
+     * 晚走的时间 距离最晚一个下班的时间单位：秒
+     */
+    @SerializedName("offwork_after_time")
+    private Integer offWorkAfterTime;
+
+    /**
+     * 第二天第一个班次允许迟到的弹性时间单位：秒
+     */
+    @SerializedName("onwork_flex_time")
+    private Integer onWorkFlexTime;
 
     /**
      * 是否允许超时下班（下班晚走次日晚到）允许时onwork_flex_time，offwork_after_time才有意义
