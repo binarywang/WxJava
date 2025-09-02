@@ -86,8 +86,8 @@ public class WxMpImgProcServiceImpl implements WxImgProcService {
       ratios = "";
     }
 
-    final String result = this.wxMpService.get(String.format(AI_CROP.getUrl(this.wxMpService.getWxMpConfigStorage()),
-      imgUrl, ratios), null);
+    final String result = this.wxMpService.post(String.format(AI_CROP.getUrl(this.wxMpService.getWxMpConfigStorage()),
+      imgUrl, ratios), "");
     return WxImgProcAiCropResult.fromJson(result);
   }
 
