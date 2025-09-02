@@ -6,7 +6,7 @@
     <dependencies>
         <dependency>
             <groupId>com.github.binarywang</groupId>
-            <artifactId>wx-java-channel-multi-spring-boot-starter</artifactId>
+            <artifactId>wx-java-channel-spring-boot-starter</artifactId>
             <version>${version}</version>
         </dependency>
    
