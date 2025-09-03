@@ -49,6 +49,12 @@ public class WxCpProperties {
   private String msgAuditLibPath;
 
   /**
+   * 自定义企业微信服务器baseUrl，用于替换默认的 https://qyapi.weixin.qq.com
+   * 例如：http://proxy.company.com:8080
+   */
+  private String baseApiUrl;
+
+  /**
    * 配置存储策略，默认内存
    */
   private ConfigStorage configStorage = new ConfigStorage();

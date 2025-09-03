@@ -50,15 +50,18 @@ public class WxPayAutoConfiguration {
     payConfig.setSubMchId(StringUtils.trimToNull(this.properties.getSubMchId()));
     payConfig.setKeyPath(StringUtils.trimToNull(this.properties.getKeyPath()));
     payConfig.setUseSandboxEnv(this.properties.isUseSandboxEnv());
+    payConfig.setNotifyUrl(StringUtils.trimToNull(this.properties.getNotifyUrl()));
     //以下是apiv3以及支付分相关
     payConfig.setServiceId(StringUtils.trimToNull(this.properties.getServiceId()));
     payConfig.setPayScoreNotifyUrl(StringUtils.trimToNull(this.properties.getPayScoreNotifyUrl()));
+    payConfig.setPayScorePermissionNotifyUrl(StringUtils.trimToNull(this.properties.getPayScorePermissionNotifyUrl()));
     payConfig.setPrivateKeyPath(StringUtils.trimToNull(this.properties.getPrivateKeyPath()));
     payConfig.setPrivateCertPath(StringUtils.trimToNull(this.properties.getPrivateCertPath()));
     payConfig.setCertSerialNo(StringUtils.trimToNull(this.properties.getCertSerialNo()));
     payConfig.setApiV3Key(StringUtils.trimToNull(this.properties.getApiv3Key()));
     payConfig.setPublicKeyId(StringUtils.trimToNull(this.properties.getPublicKeyId()));
     payConfig.setPublicKeyPath(StringUtils.trimToNull(this.properties.getPublicKeyPath()));
+    payConfig.setApiHostUrl(StringUtils.trimToNull(this.properties.getApiHostUrl()));
 
     wxPayService.setConfig(payConfig);
     return wxPayService;

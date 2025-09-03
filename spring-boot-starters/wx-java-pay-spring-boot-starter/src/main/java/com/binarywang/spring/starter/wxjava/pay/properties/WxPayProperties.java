@@ -60,9 +60,19 @@ public class WxPayProperties {
   private String apiv3Key;
 
   /**
+   * 微信支付异步回调地址，通知url必须为直接可访问的url，不能携带参数
+   */
+  private String notifyUrl;
+
+  /**
    * 微信支付分回调地址
    */
   private String payScoreNotifyUrl;
+
+  /**
+   * 微信支付分授权回调地址
+   */
+  private String payScorePermissionNotifyUrl;
 
   /**
    * apiv3 商户apiclient_key.pem
@@ -89,5 +99,11 @@ public class WxPayProperties {
    * 默认不使用
    */
   private boolean useSandboxEnv;
+
+  /**
+   * 自定义API主机地址，用于替换默认的 https://api.mch.weixin.qq.com
+   * 例如：http://proxy.company.com:8080
+   */
+  private String apiHostUrl;
 
 }

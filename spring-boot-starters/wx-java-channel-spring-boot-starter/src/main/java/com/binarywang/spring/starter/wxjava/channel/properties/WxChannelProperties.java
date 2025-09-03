@@ -47,6 +47,18 @@ public class WxChannelProperties {
   private boolean useStableAccessToken = false;
 
   /**
+   * 自定义API主机地址，用于替换默认的 https://api.weixin.qq.com
+   * 例如：http://proxy.company.com:8080
+   */
+  private String apiHostUrl;
+
+  /**
+   * 自定义获取AccessToken地址，用于向自定义统一服务获取AccessToken
+   * 例如：http://proxy.company.com:8080/oauth/token
+   */
+  private String accessTokenUrl;
+
+  /**
    * 存储策略
    */
   private final ConfigStorage configStorage = new ConfigStorage();
