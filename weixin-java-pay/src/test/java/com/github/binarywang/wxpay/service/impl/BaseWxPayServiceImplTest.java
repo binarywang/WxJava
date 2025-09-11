@@ -936,7 +936,7 @@ public class BaseWxPayServiceImplTest {
       WxPayOrderQueryV3Request request = new WxPayOrderQueryV3Request();
       request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
       WxPayConfig config = this.payService.getConfig();
-      config.setPayBaseUrl("http://api.mch.weixin.qq.com");
+      config.setApiHostUrl("http://api.mch.weixin.qq.com");
       config.setHttpProxyHost("12.11.1.113");
       config.setHttpProxyPort(8015);
       WxPayOrderQueryV3Result result = this.payService.queryOrderV3(request);

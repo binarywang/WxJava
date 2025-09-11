@@ -61,14 +61,14 @@ public class WxMpImgProcServiceImplTest {
 
   @Test
   public void testAiCrop() throws WxErrorException {
-    final WxImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png");
+    final WxImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/images/banners/wiki.jpg");
     assertThat(result).isNotNull();
     System.out.println(result);
   }
 
   @Test
   public void testAiCrop2() throws WxErrorException {
-    final WxImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/raw/master/images/qrcodes/mp.png", "1,2.35");
+    final WxImgProcAiCropResult result = this.mpService.getImgProcService().aiCrop("https://gitee.com/binary/weixin-java-tools/images/banners/wiki.jpg", "1,2.35");
     assertThat(result).isNotNull();
     System.out.println(result);
   }

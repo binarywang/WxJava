@@ -217,9 +217,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       if (StringUtils.isNotBlank(this.getConfig().getApiV3Key())) {
         throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
       }
-      return this.getConfig().getPayBaseUrl() + "/xdc/apiv2sandbox";
+      return this.getConfig().getApiHostUrl() + "/xdc/apiv2sandbox";
     }
-    return this.getConfig().getPayBaseUrl();
+    return this.getConfig().getApiHostUrl();
   }
 
   @Override
