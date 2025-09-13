@@ -856,6 +856,10 @@ public interface WxCpApiPathConsts {
      */
     String GET_PERMANENT_CODE = "/cgi-bin/service/get_permanent_code";
     /**
+     * The constant GET_V2_PERMANENT_CODE.
+     */
+    String GET_V2_PERMANENT_CODE = "/cgi-bin/service/v2/get_permanent_code";
+    /**
      * The constant GET_SUITE_TOKEN.
      */
     String GET_SUITE_TOKEN = "/cgi-bin/service/get_suite_token";

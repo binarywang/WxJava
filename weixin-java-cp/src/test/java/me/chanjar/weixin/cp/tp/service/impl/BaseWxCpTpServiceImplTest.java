@@ -9,6 +9,8 @@ import me.chanjar.weixin.cp.bean.WxCpTpPermanentCodeInfo;
 import me.chanjar.weixin.cp.bean.WxTpCustomizedAuthUrl;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
+import me.chanjar.weixin.cp.config.impl.AbstractWxCpTpInRedisConfigImpl;
+import me.chanjar.weixin.cp.config.impl.WxCpTpRedisTemplateConfigImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpTpRedissonConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import org.mockito.Mockito;
@@ -69,7 +71,10 @@ public class BaseWxCpTpServiceImplTest {
    * @return the wx cp tp config storage
    */
   public WxCpTpConfigStorage wxCpTpConfigStorage() {
-    return WxCpTpRedissonConfigImpl.builder().corpId(PROVIDER_CORP_ID).providerSecret(PROVIDER_SECRET).wxRedisOps(new RedissonWxRedisOps(redissonClient())).build();
+    WxCpTpRedissonConfigImpl wxCpTpRedissonConfig=new WxCpTpRedissonConfigImpl(redissonClient(),"");
+    wxCpTpRedissonConfig.setCorpId(PROVIDER_CORP_ID);
+    wxCpTpRedissonConfig.setProviderSecret(PROVIDER_SECRET);
+    return wxCpTpRedissonConfig;
   }
 
   /**
