@@ -18,10 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * @author <a href="mailto:huangbing0730@gmail">hb0730</a>  2025/9/10
  */
 @Configuration
-@ConditionalOnProperty(
-        prefix = WxMaMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "redis_template",
-        matchIfMissing = true
-)
+@ConditionalOnProperty(prefix = WxMaMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "redis_template")
 @RequiredArgsConstructor
 public class WxMaInRedisTemplateConfiguration extends AbstractWxMaConfiguration {
     private final WxMaMultiProperties wxMaMultiProperties;
