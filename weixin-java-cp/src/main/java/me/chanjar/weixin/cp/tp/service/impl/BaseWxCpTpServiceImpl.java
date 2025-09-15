@@ -679,7 +679,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
    * @return                     the wx cp tp xml message
    */
   @Override
-  public  WxCpTpXmlMessage fromEncryptedXml(String encryptedXml,
+  public WxCpTpXmlMessage fromEncryptedXml(String encryptedXml,
                                             String timestamp, String nonce, String msgSignature) {
    return WxCpTpXmlMessage.fromEncryptedXml(encryptedXml,this.configStorage,timestamp,nonce,msgSignature);
   }
