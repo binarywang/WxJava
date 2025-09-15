@@ -56,7 +56,7 @@ public abstract class AbstractWxCpTpConfiguration {
       this.configCorp(storage, wxCpTpSingleProperties);
       this.configHttp(storage, wxCpTpMultiProperties.getConfigStorage());
       WxCpTpService wxCpTpService = this.wxCpTpService(storage, wxCpTpMultiProperties.getConfigStorage());
-      if(services.getWxCpTpService(tenantId)==null){
+      if (services.getWxCpTpService(tenantId) == null) {
         // 不存在的才会添加到服务列表中
         services.addWxCpTpService(tenantId, wxCpTpService);
       }
