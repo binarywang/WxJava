@@ -44,7 +44,7 @@ public abstract class AbstractWxCpTpConfiguration {
       return new WxCpTpMultiServicesImpl();
     }
 
-    if(services==null){
+    if (services == null) {
        services = new WxCpTpMultiServicesImpl();
     }
 
