@@ -29,8 +29,8 @@ public abstract class AbstractWxCpTpInRedisConfigImpl extends WxCpTpDefaultConfi
   }
 
   public AbstractWxCpTpInRedisConfigImpl(@NonNull WxRedisOps wxRedisOps, String keyPrefix) {
-    this.wxRedisOps=wxRedisOps;
-    this.keyPrefix=keyPrefix;
+    this.wxRedisOps = wxRedisOps;
+    this.keyPrefix = keyPrefix;
   }
   /**
    * The constant LOCK_KEY.
