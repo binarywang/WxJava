@@ -6,7 +6,7 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.util.Pool;
 
 /**
- * 基于 jdis 的实现
+ * 基于 jedis 的实现
  *
  * @author yl
  * created on  2023/04/23
