@@ -53,7 +53,7 @@ public class WxCpTpServiceApacheHttpClientImplTest {
   /**
    * The constant PROVIDER_SECRET.
    */
-  public static final String PROVIDER_SECRET = "xxxxxx";;
+  public static final String PROVIDER_SECRET = "xxxxxx";
   /**
    * The constant REDIS_ADDR.
    */
