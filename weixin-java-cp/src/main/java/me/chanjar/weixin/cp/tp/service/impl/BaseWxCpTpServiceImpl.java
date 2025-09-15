@@ -685,7 +685,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   }
 
   @Override
-  public  String getVerifyDecrypt(String sVerifyEchoStr) {
+  public String getVerifyDecrypt(String sVerifyEchoStr) {
     WxCpTpCryptUtil cryptUtil = new WxCpTpCryptUtil(this.configStorage);
     return cryptUtil.decrypt(sVerifyEchoStr);
   }
