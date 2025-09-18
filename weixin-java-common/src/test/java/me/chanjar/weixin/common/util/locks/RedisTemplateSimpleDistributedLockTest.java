@@ -1,8 +1,10 @@
 package me.chanjar.weixin.common.util.locks;
 
 import lombok.extern.slf4j.Slf4j;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -13,9 +15,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.testng.Assert.*;
 
 @Slf4j
-@Test(enabled = false)
+@Test(enabled = true)
 public class RedisTemplateSimpleDistributedLockTest {
 
+  private static final String KEY_PREFIX = "System:";
   RedisTemplateSimpleDistributedLock redisLock;
 
   StringRedisTemplate redisTemplate;
@@ -29,6 +32,28 @@ public class RedisTemplateSimpleDistributedLockTest {
     connectionFactory.setPort(6379);
     connectionFactory.afterPropertiesSet();
     StringRedisTemplate redisTemplate = new StringRedisTemplate(connectionFactory);
+    // 自定义序列化器，为 key 自动加前缀
+    redisTemplate.setKeySerializer(new StringRedisSerializer() {
+      @NotNull
+      @Override
+      public byte[] serialize(String string) {
+        if (string == null) {
+          return super.serialize(null);
+        }
+        // 添加前缀
+        return super.serialize(KEY_PREFIX + string);
+      }
+
+      @NotNull
+      @Override
+      public String deserialize(byte[] bytes) {
+        String key = super.deserialize(bytes);
+        if (key.startsWith(KEY_PREFIX)) {
+          return key.substring(KEY_PREFIX.length());
+        }
+        return key;
+      }
+    });
     this.redisTemplate = redisTemplate;
     this.redisLock = new RedisTemplateSimpleDistributedLock(redisTemplate, 60000);
     this.lockCurrentExecuteCounter = new AtomicInteger(0);

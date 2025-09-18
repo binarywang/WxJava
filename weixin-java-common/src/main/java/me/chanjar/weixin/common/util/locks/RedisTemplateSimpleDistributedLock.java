@@ -7,10 +7,12 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.data.redis.serializer.RedisSerializer;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Condition;
@@ -70,8 +72,10 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
       value = UUID.randomUUID().toString();
       valueThreadLocal.set(value);
     }
-    final byte[] keyBytes = key.getBytes(StandardCharsets.UTF_8);
-    final byte[] valueBytes = value.getBytes(StandardCharsets.UTF_8);
+    RedisSerializer<String> keySerializer = (RedisSerializer<String>) redisTemplate.getKeySerializer();
+    RedisSerializer<String> valueSerializer = (RedisSerializer<String>) redisTemplate.getValueSerializer();
+    final byte[] keyBytes = Objects.requireNonNull(keySerializer.serialize(key));
+    final byte[] valueBytes = Objects.requireNonNull(valueSerializer.serialize(value));
     List<Object> redisResults = redisTemplate.executePipelined((RedisCallback<String>) connection -> {
       connection.set(keyBytes, valueBytes, Expiration.milliseconds(leaseMilliseconds), RedisStringCommands.SetOption.SET_IF_ABSENT);
       connection.get(keyBytes);
