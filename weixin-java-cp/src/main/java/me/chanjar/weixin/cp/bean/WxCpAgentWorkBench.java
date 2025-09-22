@@ -168,9 +168,13 @@ public class WxCpAgentWorkBench implements Serializable {
         webview.addProperty("url", this.url);
         webview.addProperty("jump_url", this.jumpUrl);
         webview.addProperty("pagepath", this.pagePath);
-        webview.addProperty("enable_webview_click", this.enableWebviewClick);
+        if (this.enableWebviewClick != null) {
+          webview.addProperty("enable_webview_click", this.enableWebviewClick);
+        }
         webview.addProperty("height", this.height);
-        webview.addProperty("hide_title", this.hideTitle);
+        if (this.hideTitle != null) {
+          webview.addProperty("hide_title", this.hideTitle);
+        }
         templateObject.add("webview", webview);
         break;
       }
@@ -236,9 +240,13 @@ public class WxCpAgentWorkBench implements Serializable {
         webview.addProperty("url", this.url);
         webview.addProperty("jump_url", this.jumpUrl);
         webview.addProperty("pagepath", this.pagePath);
-        webview.addProperty("enable_webview_click", this.enableWebviewClick);
+        if (this.enableWebviewClick != null) {
+          webview.addProperty("enable_webview_click", this.enableWebviewClick);
+        }
         webview.addProperty("height", this.height);
-        webview.addProperty("hide_title", this.hideTitle);
+        if (this.hideTitle != null) {
+          webview.addProperty("hide_title", this.hideTitle);
+        }
         JsonObject dataObject = new JsonObject();
         dataObject.addProperty("type", WxCpConsts.WorkBenchType.WEBVIEW);
         dataObject.add("webview", webview);
