@@ -28,20 +28,32 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private final transient Map<String, Lock> accessTokenLocker = new ConcurrentHashMap<>();
   private final transient Map<String, Lock> authCorpJsapiTicketLocker = new ConcurrentHashMap<>();
   private final transient Map<String, Lock> authSuiteJsapiTicketLocker = new ConcurrentHashMap<>();
-  private volatile String corpId;
-  private volatile String corpSecret;
+  /**
+   * 企微服务商企业ID & 企业secret，来自于企微配置
+   */
+  protected volatile String corpId;
   /**
    * 服务商secret
    */
-  private volatile String providerSecret;
+  protected volatile String providerSecret;
   private volatile String providerToken;
   private volatile long providerTokenExpiresTime;
-  private volatile String suiteId;
-  private volatile String suiteSecret;
-  private volatile String token;
+  /**
+   * 第三方应用的其他配置，来自于企微配置
+   */
+  protected volatile String suiteId;
+
+  protected volatile String suiteSecret;
+  /**
+   * 第三方应用的token，用来检查应用的签名
+   */
+  protected volatile String token;
   private volatile String suiteAccessToken;
   private volatile long suiteAccessTokenExpiresTime;
-  private volatile String aesKey;
+  /**
+   * 第三方应用的EncodingAESKey，用来检查签名
+   */
+  protected volatile String encodingAESKey;
   private volatile String suiteTicket;
   private volatile long suiteTicketExpiresTime;
   private volatile String oauth2redirectUri;
@@ -186,11 +198,10 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   /**
    * Sets suite id.
    *
-   * @param corpId the corp id
+   * @param suiteId
    */
-  @Deprecated
-  public void setSuiteId(String corpId) {
-    this.suiteId = corpId;
+  public void setSuiteId(String suiteId) {
+    this.suiteId = suiteId;
   }
 
   @Override
@@ -200,10 +211,7 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
 
   /**
    * Sets suite secret.
-   *
-   * @param corpSecret the corp secret
    */
-  @Deprecated
   public void setSuiteSecret(String corpSecret) {
     this.suiteSecret = corpSecret;
   }
@@ -218,24 +226,22 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
    *
    * @param token the token
    */
-  @Deprecated
   public void setToken(String token) {
     this.token = token;
   }
 
   @Override
-  public String getAesKey() {
-    return this.aesKey;
+  public String getEncodingAESKey() {
+    return this.encodingAESKey;
   }
 
   /**
-   * Sets aes key.
+   * Sets aes key. encodingAESKey
    *
-   * @param aesKey the aes key
+   * @param encodingAESKey the aes key
    */
-  @Deprecated
-  public void setAesKey(String aesKey) {
-    this.aesKey = aesKey;
+  public void setEncodingAESKey(String encodingAESKey) {
+    this.encodingAESKey = encodingAESKey;
   }
 
 
@@ -249,25 +255,15 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
    *
    * @param corpId the corp id
    */
-  @Deprecated
   public void setCorpId(String corpId) {
     this.corpId = corpId;
   }
 
   @Override
   public String getCorpSecret() {
-    return this.corpSecret;
+    return this.providerSecret;
   }
 
-  /**
-   * Sets corp secret.
-   *
-   * @param corpSecret the corp secret
-   */
-  @Deprecated
-  public void setCorpSecret(String corpSecret) {
-    this.corpSecret = corpSecret;
-  }
 
   @Override
   public void setProviderSecret(String providerSecret) {

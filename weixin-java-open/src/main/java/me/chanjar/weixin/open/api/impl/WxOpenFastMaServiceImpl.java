@@ -11,6 +11,7 @@ import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,6 +98,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
     params.addProperty("signature", signature);
     String response = post(OPEN_MODIFY_SIGNATURE, GSON.toJson(params));
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public String getComponentRebindAdminUrl(String redirectUri, String appId) {
+    return "";
   }
 
   @Override

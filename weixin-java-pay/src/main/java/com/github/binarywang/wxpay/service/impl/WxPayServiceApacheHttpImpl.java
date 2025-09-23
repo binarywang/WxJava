@@ -52,15 +52,15 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException {
     try {
-      HttpClientBuilder httpClientBuilder = createHttpClientBuilder(useKey);
       HttpPost httpPost = this.createHttpPost(url, requestStr);
-      try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-        final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
-        final String responseData = Base64.getEncoder().encodeToString(bytes);
-        this.logRequestAndResponse(url, requestStr, responseData);
-        wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
-        return bytes;
-      }
+      CloseableHttpClient httpClient = this.createHttpClient(useKey);
+      
+      // 使用连接池的客户端，不需要手动关闭
+      final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
+      final String responseData = Base64.getEncoder().encodeToString(bytes);
+      this.logRequestAndResponse(url, requestStr, responseData);
+      wxApiData.set(new WxPayApiData(url, requestStr, responseData, null));
+      return bytes;
     } catch (Exception e) {
       this.logError(url, requestStr, e);
       wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
@@ -71,17 +71,17 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   @Override
   public String post(String url, String requestStr, boolean useKey) throws WxPayException {
     try {
-      HttpClientBuilder httpClientBuilder = this.createHttpClientBuilder(useKey);
       HttpPost httpPost = this.createHttpPost(url, requestStr);
-      try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
-        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
-          String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
-          this.logRequestAndResponse(url, requestStr, responseString);
-          if (this.getConfig().isIfSaveApiData()) {
-            wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
-          }
-          return responseString;
+      CloseableHttpClient httpClient = this.createHttpClient(useKey);
+      
+      // 使用连接池的客户端，不需要手动关闭
+      try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        this.logRequestAndResponse(url, requestStr, responseString);
+        if (this.getConfig().isIfSaveApiData()) {
+          wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
         }
+        return responseString;
       } finally {
         httpPost.releaseConnection();
       }
@@ -279,6 +279,26 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       return this.getConfig().initApiV3HttpClient();
     }
     return apiV3HttpClient;
+  }
+
+  CloseableHttpClient createHttpClient(boolean useKey) throws WxPayException {
+    if (useKey) {
+      // 使用SSL连接池客户端
+      CloseableHttpClient sslHttpClient = this.getConfig().getSslHttpClient();
+      if (null == sslHttpClient) {
+        this.getConfig().initSslHttpClient();
+        sslHttpClient = this.getConfig().getSslHttpClient();
+      }
+      return sslHttpClient;
+    } else {
+      // 使用普通连接池客户端
+      CloseableHttpClient httpClient = this.getConfig().getHttpClient();
+      if (null == httpClient) {
+        this.getConfig().initHttpClient();
+        httpClient = this.getConfig().getHttpClient();
+      }
+      return httpClient;
+    }
   }
 
   private static StringEntity createEntry(String requestStr) {

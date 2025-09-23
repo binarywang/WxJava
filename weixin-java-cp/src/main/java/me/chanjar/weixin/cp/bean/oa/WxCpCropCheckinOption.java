@@ -54,6 +54,12 @@ public class WxCpCropCheckinOption extends WxCpCheckinGroupBase implements Seria
   private OtInfo otInfo;
 
   /**
+   * 加班信息V2，新版API返回的加班信息结构
+   */
+  @SerializedName("ot_info_v2")
+  private OtInfoV2 otInfoV2;
+
+  /**
    * 每月最多补卡次数，默认-1表示不限制
    */
   @SerializedName("allow_apply_bk_cnt")
@@ -417,5 +423,95 @@ public class WxCpCropCheckinOption extends WxCpCheckinGroupBase implements Seria
     @SerializedName("ot_nonworkingday_spanday_time")
     private Integer otNonworkingDaySpanDayTime;
 
+  }
+
+  /**
+   * 加班信息V2，新版API返回的加班信息结构
+   */
+  @Data
+  public static class OtInfoV2 implements Serializable {
+
+    private static final long serialVersionUID = 1610150484871066200L;
+
+    /**
+     * 工作日加班配置
+     */
+    @SerializedName("workdayconf")
+    private WorkdayConf workdayConf;
+
+    /**
+     * 非工作日加班配置
+     */
+    @SerializedName("restdayconf")
+    private RestdayConf restdayConf;
+
+    /**
+     * 节假日加班配置
+     */
+    @SerializedName("holidayconf")
+    private HolidayConf holidayConf;
+
+    /**
+     * 工作日加班配置
+     */
+    @Data
+    public static class WorkdayConf implements Serializable {
+      private static final long serialVersionUID = 1610150484871066201L;
+
+      /**
+       * 是否允许工作日加班，true为允许，false为不允许
+       */
+      @SerializedName("allow_ot")
+      private Boolean allowOt;
+
+      /**
+       * 加班类型
+       * 0：以加班申请核算打卡记录（根据打卡记录和加班申请核算）,
+       * 1：以打卡时间为准（根据打卡时间计算），
+       * 2: 以加班申请审批为准（只根据加班申请计算）
+       */
+      @SerializedName("type")
+      private Integer type;
+    }
+
+    /**
+     * 非工作日加班配置
+     */
+    @Data
+    public static class RestdayConf implements Serializable {
+      private static final long serialVersionUID = 1610150484871066202L;
+
+      /**
+       * 是否允许非工作日加班，true为允许，false为不允许
+       */
+      @SerializedName("allow_ot")
+      private Boolean allowOt;
+
+      /**
+       * 加班类型
+       */
+      @SerializedName("type")
+      private Integer type;
+    }
+
+    /**
+     * 节假日加班配置
+     */
+    @Data
+    public static class HolidayConf implements Serializable {
+      private static final long serialVersionUID = 1610150484871066203L;
+
+      /**
+       * 是否允许节假日加班，true为允许，false为不允许
+       */
+      @SerializedName("allow_ot")
+      private Boolean allowOt;
+
+      /**
+       * 加班类型
+       */
+      @SerializedName("type")
+      private Integer type;
+    }
   }
 }

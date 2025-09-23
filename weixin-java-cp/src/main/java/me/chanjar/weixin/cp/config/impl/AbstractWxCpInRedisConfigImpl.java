@@ -180,4 +180,17 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
     Long expire = redisOps.getExpire(this.agentJsapiTicketKey);
     return expire == null || expire < 2;
   }
+
+  @Override
+  public String toString() {
+    return "AbstractWxCpInRedisConfigImpl{" +
+      "corpId='" + getCorpId() + '\'' +
+      ", agentId=" + getAgentId() +
+      ", keyPrefix='" + keyPrefix + '\'' +
+      ", accessTokenKey='" + accessTokenKey + '\'' +
+      ", jsapiTicketKey='" + jsapiTicketKey + '\'' +
+      ", agentJsapiTicketKey='" + agentJsapiTicketKey + '\'' +
+      ", lockKey='" + lockKey + '\'' +
+      '}';
+  }
 }

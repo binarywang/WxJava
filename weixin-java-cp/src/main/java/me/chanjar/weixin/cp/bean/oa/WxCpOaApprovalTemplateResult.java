@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 审批模板详情
  *
- * @author gyv12345 @163.com / Wang_Wong
+ * @author gyv12345@163.com / Wang_Wong
  */
 @Data
 @Builder
@@ -121,7 +121,7 @@ public class WxCpOaApprovalTemplateResult implements Serializable {
 
     /**
      * 获取审批模板详情，value为list类型
-     * https://developer.work.weixin.qq.com/document/path/91982
+     * <a href="https://developer.work.weixin.qq.com/document/path/91982">文档链接</a>
      */
     @SerializedName("value")
     private List<TemplateTitle> value;

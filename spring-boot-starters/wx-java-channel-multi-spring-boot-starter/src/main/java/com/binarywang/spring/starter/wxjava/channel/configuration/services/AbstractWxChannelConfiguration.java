@@ -119,6 +119,8 @@ public abstract class AbstractWxChannelConfiguration {
       config.setAesKey(aesKey);
     }
     config.setStableAccessToken(useStableAccessToken);
+    config.setApiHostUrl(StringUtils.trimToNull(wxChannelSingleProperties.getApiHostUrl()));
+    config.setAccessTokenUrl(StringUtils.trimToNull(wxChannelSingleProperties.getAccessTokenUrl()));
   }
 
   private void configHttp(WxChannelDefaultConfigImpl config, WxChannelMultiProperties.ConfigStorage storage) {

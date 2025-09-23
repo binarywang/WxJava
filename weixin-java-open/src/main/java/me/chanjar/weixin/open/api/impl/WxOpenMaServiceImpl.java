@@ -63,7 +63,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
-    this.basicService = new WxOpenMaBasicServiceImpl(this);
+    this.basicService = new WxOpenMaBasicServiceImpl(this, wxOpenComponentService);
     this.authService = new WxOpenMaAuthServiceImpl(this);
     this.icpService = new WxOpenMaIcpServiceImpl(this);
     this.privacyService = new WxOpenMaPrivacyServiceImpl(this);

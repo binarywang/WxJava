@@ -34,7 +34,9 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
     String url = String.format("%s/v3/marketing/favor/coupon-stocks", this.payService.getPayBaseUrl());
     RsaCryptoUtil.encryptFields(request, this.payService.getConfig().getVerifier().getValidCertificate());
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
-    return GSON.fromJson(result, FavorStocksCreateResult.class);
+    FavorStocksCreateResult favorStocksCreateResult = GSON.fromJson(result, FavorStocksCreateResult.class);
+    favorStocksCreateResult.setRawJsonString(result);
+    return favorStocksCreateResult;
   }
 
   @Override
@@ -75,7 +77,9 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
     String url = String.format("%s/v3/marketing/favor/stocks/%s", this.payService.getPayBaseUrl(), stockId);
     String query = String.format("?stock_creator_mchid=%s", stockCreatorMchid);
     String result = this.payService.getV3(url + query);
-    return GSON.fromJson(result, FavorStocksGetResult.class);
+    FavorStocksGetResult favorStocksGetResult = GSON.fromJson(result, FavorStocksGetResult.class);
+    favorStocksGetResult.setRawJsonString(result);
+    return favorStocksGetResult;
   }
 
   @Override
@@ -83,7 +87,9 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
     String url = String.format("%s/v3/marketing/favor/users/%s/coupons/%s", this.payService.getPayBaseUrl(), openid, couponId);
     String query = String.format("?appid=%s", appid);
     String result = this.payService.getV3(url + query);
-    return GSON.fromJson(result, FavorCouponsGetResult.class);
+    FavorCouponsGetResult favorCouponsGetResult = GSON.fromJson(result, FavorCouponsGetResult.class);
+    favorCouponsGetResult.setRawJsonString(result);
+    return favorCouponsGetResult;
   }
 
   @Override

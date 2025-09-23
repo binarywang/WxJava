@@ -117,6 +117,13 @@ public class ApacheHttpDnsClientBuilder implements ApacheHttpClientBuilder {
     return this;
   }
 
+  @Override
+  public ApacheHttpClientBuilder supportedProtocols(String[] supportedProtocols) {
+    // This implementation doesn't use the supportedProtocols parameter as it relies on the provided SSLConnectionSocketFactory
+    // Users should configure the SSLConnectionSocketFactory with desired protocols before setting it
+    return this;
+  }
+
   /**
    * 获取链接的超时时间设置,默认3000ms
    * <p>

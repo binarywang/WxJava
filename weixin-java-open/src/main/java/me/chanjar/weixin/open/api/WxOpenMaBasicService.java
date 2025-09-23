@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -78,6 +79,8 @@ public interface WxOpenMaBasicService {
    */
   String OPEN_GET_ORDER_PATH_INFO = "https://api.weixin.qq.com/wxa/security/getorderpathinfo";
 
+  String URL_COMPONENT_REBIND_ADMIN = "https://mp.weixin.qq.com/wxopen/componentrebindadmin?appid=%s&component_appid=%s&redirect_uri=%s";
+
 
   /**
    * 1.获取小程序的信息
@@ -147,6 +150,14 @@ public interface WxOpenMaBasicService {
    * @throws WxErrorException .
    */
   WxOpenResult modifySignature(String signature) throws WxErrorException;
+
+  /**
+   * 7.1 获取换绑管理员URL
+   * @param redirectUri 跳转URL
+   * @param appId 公众号的 appid
+   * @return 换绑管理员URL
+   */
+  String getComponentRebindAdminUrl(String redirectUri, String appId) throws UnsupportedEncodingException;
 
   /**
    * 7.3 管理员换绑
