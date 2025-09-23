@@ -130,7 +130,7 @@ public interface WxCpTpConfigStorage {
    * @return the aes key
    */
 //第三方应用的EncodingAESKey，用来检查签名
-  String getAesKey();
+  String getEncodingAESKey();
 
   /**
    * 企微服务商企业ID & 企业secret

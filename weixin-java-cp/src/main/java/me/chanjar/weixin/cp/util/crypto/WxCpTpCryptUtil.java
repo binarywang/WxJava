@@ -23,7 +23,7 @@ public class WxCpTpCryptUtil extends WxCryptUtil {
      * @param encodingAesKey 公众平台上，开发者设置的EncodingAESKey
      * @param appidOrCorpid          公众平台corpId
      */
-    String encodingAesKey = wxCpTpConfigStorage.getAesKey();
+    String encodingAesKey = wxCpTpConfigStorage.getEncodingAESKey();
     String token = wxCpTpConfigStorage.getToken();
     String corpId = wxCpTpConfigStorage.getCorpId();
 

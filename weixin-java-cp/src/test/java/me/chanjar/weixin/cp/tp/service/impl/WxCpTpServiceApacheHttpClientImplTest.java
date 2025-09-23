@@ -6,6 +6,8 @@ import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.cp.bean.WxCpProviderToken;
 import me.chanjar.weixin.cp.bean.WxCpTpCorpId2OpenCorpId;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
+import me.chanjar.weixin.cp.config.impl.AbstractWxCpTpInRedisConfigImpl;
+import me.chanjar.weixin.cp.config.impl.WxCpTpRedisTemplateConfigImpl;
 import me.chanjar.weixin.cp.config.impl.WxCpTpRedissonConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 import org.apache.commons.lang3.StringUtils;
@@ -49,13 +51,9 @@ public class WxCpTpServiceApacheHttpClientImplTest {
    */
   public static final String PROVIDER_CORP_ID = "xxxxxx";
   /**
-   * The constant CORP_SECRET.
-   */
-  public static final String CORP_SECRET = "xxxxxx";
-  /**
    * The constant PROVIDER_SECRET.
    */
-  public static final String PROVIDER_SECRET = CORP_SECRET;
+  public static final String PROVIDER_SECRET = "xxxxxx";
   /**
    * The constant REDIS_ADDR.
    */
@@ -85,9 +83,15 @@ public class WxCpTpServiceApacheHttpClientImplTest {
    * @return the wx cp tp config storage
    */
   public WxCpTpConfigStorage wxCpTpConfigStorage() {
-    return WxCpTpRedissonConfigImpl.builder().baseApiUrl(API_URL).suiteId(SUITE_ID).suiteSecret(SUITE_SECRET)
-      .token(TOKEN).aesKey(AES_KEY).corpId(PROVIDER_CORP_ID).corpSecret(CORP_SECRET).providerSecret(PROVIDER_SECRET)
-      .wxRedisOps(new RedissonWxRedisOps(redissonClient())).build();
+    WxCpTpRedissonConfigImpl wxCpTpRedissonConfig=new WxCpTpRedissonConfigImpl(redissonClient(),"");
+    wxCpTpRedissonConfig.setBaseApiUrl(API_URL);
+    wxCpTpRedissonConfig.setSuiteId(SUITE_ID);
+    wxCpTpRedissonConfig.setSuiteSecret(SUITE_SECRET);
+    wxCpTpRedissonConfig.setToken(TOKEN);
+    wxCpTpRedissonConfig.setEncodingAESKey(AES_KEY);
+    wxCpTpRedissonConfig.setCorpId(PROVIDER_CORP_ID);
+    wxCpTpRedissonConfig.setProviderSecret(PROVIDER_SECRET);
+    return wxCpTpRedissonConfig;
   }
 
   /**

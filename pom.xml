@@ -468,6 +468,21 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.0</version> <!-- 建议使用最新版本 -->
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <!-- 绑定到 verify 阶段，在 install 之前执行 -->
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal> <!-- 使用 jar-no-fork 效率更高 -->
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 
