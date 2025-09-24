@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.example;
 import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.transfer.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.TransferService;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -216,6 +217,100 @@ public class NewTransferApiExample {
     }
 
     /**
+     * 使用免确认收款授权模式进行转账示例
+     * 注意：使用此模式前，用户需要先进行授权
+     */
+    public void transferWithNoConfirmAuthModeExample() {
+        try {
+            // 构建转账请求，使用免确认收款授权模式
+            TransferBillsRequest request = TransferBillsRequest.newBuilder()
+                .appid("wx1234567890123456")
+                .outBillNo("NO_CONFIRM_" + System.currentTimeMillis()) // 商户转账单号
+                .transferSceneId("1005")                       // 转账场景ID（佣金报酬）
+                .openid("oUpF8uMuAJO_M2pxb1Q9zNjWeS6o")       // 收款用户的openid
+                .transferAmount(200)                           // 转账金额，单位：分（此处为2元）
+                .transferRemark("免确认收款转账")               // 转账备注
+                .receiptAuthorizationMode(WxPayConstants.ReceiptAuthorizationMode.NO_CONFIRM_RECEIPT_AUTHORIZATION)
+                .userRecvPerception("Y")                       // 用户收款感知
+                .build();
+
+            // 发起转账
+            TransferBillsResult result = transferService.transferBills(request);
+
+            System.out.println("=== 免确认授权模式转账成功 ===");
+            System.out.println("商户单号: " + result.getOutBillNo());
+            System.out.println("微信转账单号: " + result.getTransferBillNo());
+            System.out.println("状态: " + result.getState());
+            System.out.println("说明: 使用免确认授权模式，转账直接到账，无需用户确认");
+
+        } catch (WxPayException e) {
+            System.err.println("免确认授权转账失败: " + e.getMessage());
+            System.err.println("错误代码: " + e.getErrCode());
+            
+            // 可能的错误原因
+            if ("USER_NOT_AUTHORIZED".equals(e.getErrCode())) {
+                System.err.println("用户未授权免确认收款，请先引导用户进行授权");
+            }
+        }
+    }
+
+    /**
+     * 使用需确认收款授权模式进行转账示例（默认模式）
+     */
+    public void transferWithConfirmAuthModeExample() {
+        try {
+            // 构建转账请求，显式设置为需确认收款授权模式
+            TransferBillsRequest request = TransferBillsRequest.newBuilder()
+                .appid("wx1234567890123456")
+                .outBillNo("CONFIRM_" + System.currentTimeMillis()) // 商户转账单号
+                .transferSceneId("1005")                       // 转账场景ID
+                .openid("oUpF8uMuAJO_M2pxb1Q9zNjWeS6o")       // 收款用户的openid
+                .transferAmount(150)                           // 转账金额，单位：分（此处为1.5元）
+                .transferRemark("需确认收款转账")               // 转账备注
+                .receiptAuthorizationMode(WxPayConstants.ReceiptAuthorizationMode.CONFIRM_RECEIPT_AUTHORIZATION)
+                .userRecvPerception("Y")                       // 用户收款感知
+                .build();
+
+            // 发起转账
+            TransferBillsResult result = transferService.transferBills(request);
+
+            System.out.println("=== 需确认授权模式转账成功 ===");
+            System.out.println("商户单号: " + result.getOutBillNo());
+            System.out.println("微信转账单号: " + result.getTransferBillNo());
+            System.out.println("状态: " + result.getState());
+            System.out.println("packageInfo: " + result.getPackageInfo());
+            System.out.println("说明: 使用需确认授权模式，用户需要手动确认才能收款");
+
+        } catch (WxPayException e) {
+            System.err.println("需确认授权转账失败: " + e.getMessage());
+        }
+    }
+
+    /**
+     * 权限模式对比示例
+     * 展示两种权限模式的区别和使用场景
+     */
+    public void authModeComparisonExample() {
+        System.out.println("\n=== 收款授权模式对比 ===");
+        System.out.println("1. 需确认收款授权模式 (CONFIRM_RECEIPT_AUTHORIZATION):");
+        System.out.println("   - 这是默认模式");
+        System.out.println("   - 用户收到转账后需要手动点击确认才能到账");
+        System.out.println("   - 适用于一般的转账场景");
+        System.out.println("   - 转账状态可能包含 WAIT_USER_CONFIRM 等待确认状态");
+        
+        System.out.println("\n2. 免确认收款授权模式 (NO_CONFIRM_RECEIPT_AUTHORIZATION):");
+        System.out.println("   - 用户事先授权后，转账直接到账，无需确认");
+        System.out.println("   - 提升用户体验，减少操作步骤");
+        System.out.println("   - 适用于高频转账场景，如佣金发放等");
+        System.out.println("   - 需要用户先进行授权，否则会返回授权错误");
+        
+        System.out.println("\n使用建议:");
+        System.out.println("- 高频业务场景推荐使用免确认模式，提升用户体验");
+        System.out.println("- 首次使用需引导用户进行授权");
+        System.out.println("- 处理授权相关异常，提供友好的错误提示");
+    }
+
+    /**
      * 使用配置示例
      */
     public static void main(String[] args) {
@@ -230,20 +325,29 @@ public class NewTransferApiExample {
         // 创建示例实例
         NewTransferApiExample example = new NewTransferApiExample(config);
 
+        // 权限模式对比说明
+        example.authModeComparisonExample();
+
         // 运行示例
         System.out.println("新版商户转账API使用示例");
         System.out.println("===============================");
 
-        // 1. 发起单笔转账
+        // 1. 发起转账（使用免确认授权模式）
+        // example.transferWithNoConfirmAuthModeExample();
+        
+        // 2. 发起转账（使用需确认授权模式）
+        // example.transferWithConfirmAuthModeExample();
+
+        // 3. 发起单笔转账（默认模式）
         example.transferExample();
 
-        // 2. 查询转账结果
+        // 4. 查询转账结果
         // example.queryByOutBillNoExample();
 
-        // 3. 撤销转账
+        // 5. 撤销转账
         // example.cancelTransferExample();
 
-        // 4. 批量转账（传统API）
+        // 6. 批量转账（传统API）
         // example.batchTransferExample();
     }
 }
