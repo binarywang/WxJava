@@ -80,11 +80,11 @@ public class AesUtils {
     try {
       Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
 
-      SecretKeySpec key = new SecretKeySpec(apiV3Key.getBytes(), "AES");
-      GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH_BIT, nonce.getBytes());
+      SecretKeySpec key = new SecretKeySpec(apiV3Key.getBytes(StandardCharsets.UTF_8), "AES");
+      GCMParameterSpec spec = new GCMParameterSpec(TAG_LENGTH_BIT, nonce.getBytes(StandardCharsets.UTF_8));
 
       cipher.init(Cipher.DECRYPT_MODE, key, spec);
-      cipher.updateAAD(associatedData.getBytes());
+      cipher.updateAAD(associatedData.getBytes(StandardCharsets.UTF_8));
 
       return new String(cipher.doFinal(Base64.getDecoder().decode(ciphertext)), StandardCharsets.UTF_8);
     } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
