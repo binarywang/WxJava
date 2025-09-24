@@ -338,6 +338,27 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
+  public WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+      throw new WxPayException("非法请求，头部信息验证失败");
+    }
+    NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
+    NotifyResponse.Resource resource = response.getResource();
+    String cipherText = resource.getCiphertext();
+    String associatedData = resource.getAssociatedData();
+    String nonce = resource.getNonce();
+    String apiV3Key = this.payService.getConfig().getApiV3Key();
+    try {
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
+      WithdrawNotifyResult notifyResult = GSON.fromJson(result, WithdrawNotifyResult.class);
+      notifyResult.setRawData(response);
+      return notifyResult;
+    } catch (GeneralSecurityException | IOException e) {
+      throw new WxPayException("解析报文异常！", e);
+    }
+  }
+
+  @Override
   public SubWithdrawResult subWithdraw(SubWithdrawRequest request) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/fund/withdraw", this.payService.getPayBaseUrl());
     String response = this.payService.postV3(url, GSON.toJson(request));

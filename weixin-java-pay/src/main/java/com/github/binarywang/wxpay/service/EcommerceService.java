@@ -419,8 +419,21 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 提现状态变更通知回调数据处理
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013049135
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 withdraw notify result
+   * @throws WxPayException the wx pay exception
+   */
+  WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
    * 二级商户账户余额提现API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_2.shtml
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476652
    * </pre>
    *
    * @param request 提现请求
@@ -432,7 +445,7 @@ public interface EcommerceService {
   /**
    * <pre>
    * 电商平台提现API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_5.shtml
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476670
    * </pre>
    *
    * @param request 提现请求
