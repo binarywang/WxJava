@@ -469,7 +469,11 @@ public interface WxMpApiUrl {
     /**
      * queryrecoresultfortext.
      */
-    VOICE_QUERY_RESULT_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/voice/queryrecoresultfortext");
+    VOICE_QUERY_RESULT_URL(API_DEFAULT_HOST_URL, "/cgi-bin/media/voice/queryrecoresultfortext"),
+    /**
+     * 智能对话.
+     */
+    INTELLIGENT_CONVERSATION_URL(API_DEFAULT_HOST_URL, "/cgi-bin/aispeech/conversation");
 
     private final String prefix;
     private final String path;

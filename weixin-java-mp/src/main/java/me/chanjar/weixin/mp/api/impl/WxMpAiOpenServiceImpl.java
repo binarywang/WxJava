@@ -1,5 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
+import com.google.gson.JsonObject;
 import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -7,6 +8,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.mp.api.WxMpAiOpenService;
 import me.chanjar.weixin.mp.api.WxMpService;
+import me.chanjar.weixin.mp.bean.WxMpAiConversationRequest;
+import me.chanjar.weixin.mp.bean.WxMpAiConversationResponse;
 import me.chanjar.weixin.mp.enums.AiLangType;
 import me.chanjar.weixin.mp.util.requestexecuter.voice.VoiceUploadRequestExecutor;
 
@@ -69,5 +72,60 @@ public class WxMpAiOpenServiceImpl implements WxMpAiOpenService {
     }
 
     return GsonParser.parse(response).get("result").getAsString();
+  }
+
+  @Override
+  public String intelligentConversation(String query, String sessionId) throws WxErrorException {
+    return this.intelligentConversation(query, sessionId, AiLangType.zh_CN);
+  }
+
+  @Override
+  public String intelligentConversation(String query, String sessionId, AiLangType lang) throws WxErrorException {
+    if (lang == null) {
+      lang = AiLangType.zh_CN;
+    }
+
+    // 构建请求JSON
+    JsonObject request = new JsonObject();
+    request.addProperty("query", query);
+    request.addProperty("session_id", sessionId);
+    request.addProperty("lang", lang.getCode());
+
+    final String response = this.wxMpService.post(INTELLIGENT_CONVERSATION_URL.getUrl(this.wxMpService.getWxMpConfigStorage()), 
+      request.toString());
+    
+    WxError error = WxError.fromJson(response, WxType.MP);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
+    }
+
+    return GsonParser.parse(response).get("reply").getAsString();
+  }
+
+  @Override
+  public WxMpAiConversationResponse intelligentConversation(WxMpAiConversationRequest request) throws WxErrorException {
+    // 构建请求JSON
+    JsonObject requestJson = new JsonObject();
+    requestJson.addProperty("query", request.getQuery());
+    requestJson.addProperty("session_id", request.getSessionId());
+    requestJson.addProperty("lang", request.getLang() != null ? request.getLang().getCode() : AiLangType.zh_CN.getCode());
+
+    final String response = this.wxMpService.post(INTELLIGENT_CONVERSATION_URL.getUrl(this.wxMpService.getWxMpConfigStorage()), 
+      requestJson.toString());
+    
+    WxError error = WxError.fromJson(response, WxType.MP);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
+    }
+
+    WxMpAiConversationResponse result = WxMpAiConversationResponse.fromJson(response);
+    if (result.getReply() == null) {
+      result.setReply(GsonParser.parse(response).get("reply").getAsString());
+    }
+    if (result.getSessionId() == null) {
+      result.setSessionId(request.getSessionId());
+    }
+    
+    return result;
   }
 }
