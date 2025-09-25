@@ -3,8 +3,6 @@ package me.chanjar.weixin.mp.api;
 import java.io.File;
 
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.mp.bean.WxMpAiConversationRequest;
-import me.chanjar.weixin.mp.bean.WxMpAiConversationResponse;
 import me.chanjar.weixin.mp.enums.AiLangType;
 
 /**
@@ -78,49 +76,4 @@ public interface WxMpAiOpenService {
    * @throws WxErrorException the wx error exception
    */
   String translate(AiLangType langFrom, AiLangType langTo, String content) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 微信智能对话.
-   * 基于WeChat AI Speech平台的智能对话功能
-   * 
-   * 文档地址：https://developers.weixin.qq.com/doc/aispeech/platform/INTRODUCTION.html
-   * </pre>
-   *
-   * @param query 用户输入的对话内容
-   * @param sessionId 会话ID，用于保持对话上下文
-   * @return 智能对话回复内容
-   * @throws WxErrorException the wx error exception
-   */
-  String intelligentConversation(String query, String sessionId) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 微信智能对话（带语言参数）.
-   * 基于WeChat AI Speech平台的智能对话功能
-   * 
-   * 文档地址：https://developers.weixin.qq.com/doc/aispeech/platform/INTRODUCTION.html
-   * </pre>
-   *
-   * @param query 用户输入的对话内容
-   * @param sessionId 会话ID，用于保持对话上下文
-   * @param lang 语言类型，默认中文
-   * @return 智能对话回复内容
-   * @throws WxErrorException the wx error exception
-   */
-  String intelligentConversation(String query, String sessionId, AiLangType lang) throws WxErrorException;
-
-  /**
-   * <pre>
-   * 微信智能对话（使用请求对象）.
-   * 基于WeChat AI Speech平台的智能对话功能，支持更复杂的请求参数
-   * 
-   * 文档地址：https://developers.weixin.qq.com/doc/aispeech/platform/INTRODUCTION.html
-   * </pre>
-   *
-   * @param request 智能对话请求对象
-   * @return 智能对话响应对象
-   * @throws WxErrorException the wx error exception
-   */
-  WxMpAiConversationResponse intelligentConversation(WxMpAiConversationRequest request) throws WxErrorException;
 }
