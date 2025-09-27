@@ -7,6 +7,7 @@ import com.github.binarywang.wxpay.bean.profitsharing.request.*;
 import com.github.binarywang.wxpay.bean.profitsharing.result.*;
 import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.exception.WxSignTestException;
 import com.github.binarywang.wxpay.service.ProfitSharingService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.auth.Verifier;
@@ -293,7 +294,11 @@ public class ProfitSharingServiceImpl implements ProfitSharingService {
    * @return true:校验通过 false:校验不通过
    */
   private boolean verifyNotifySign(SignatureHeader header, String data) throws WxPayException {
-    String beforeSign = String.format("%s%n%s%n%s%n", header.getTimeStamp(), header.getNonce(), data);
+    String wxPaySign = header.getSignature();
+    if (wxPaySign.startsWith("WECHATPAY/SIGNTEST/")) {
+      throw new WxSignTestException("微信支付签名探测流量");
+    }
+    String beforeSign = String.format("%s\n%s\n%s\n", header.getTimeStamp(), header.getNonce(), data);
     Verifier verifier = this.payService.getConfig().getVerifier();
     if (verifier == null) {
       throw new WxPayException("证书检验对象为空");
