@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
@@ -641,6 +642,17 @@ public interface WxPayService {
   <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
+   * 境外微信支付调用统一下单接口，并组装生成支付所需参数对象.
+   *
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param tradeType the global trade type
+   * @param request   境外统一下单请求参数
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @throws WxPayException the wx pay exception
+   */
+  <T> T createOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException;
+
+  /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
    *
    * @param tradeType the trade type
@@ -659,6 +671,16 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayUnifiedOrderV3Result unifiedOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * 境外微信支付在发起支付前，需要调用统一下单接口，获取"预支付交易会话标识"
+   *
+   * @param tradeType the global trade type
+   * @param request   境外请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
+   * @return the wx pay unified order result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayUnifiedOrderV3Result unifiedOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException;
 
   /**
    * <pre>
