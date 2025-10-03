@@ -180,4 +180,31 @@ public class WxCpUserGsonAdapterTest {
       "{\"type\":2,\"name\":\"测试app\"," +
       "\"miniprogram\":{\"appid\":\"wx8bd80126147df384\",\"pagepath\":\"/index\",\"title\":\"my miniprogram\"}}]}}");
   }
+
+  /**
+   * Test directLeader empty array serialization.
+   * This test verifies that empty directLeader arrays are included in JSON as "direct_leader":[]
+   * instead of being omitted, which is required for WeChat Work API to reset user direct leaders.
+   */
+  @Test
+  public void testDirectLeaderEmptyArraySerialization() {
+    WxCpUser user = new WxCpUser();
+    user.setUserId("testuser");
+    user.setName("Test User");
+    
+    // Test with empty array - should be serialized as "direct_leader":[]
+    user.setDirectLeader(new String[]{});
+    String json = user.toJson();
+    assertThat(json).contains("\"direct_leader\":[]");
+    
+    // Test with null - should not include direct_leader field
+    user.setDirectLeader(null);
+    json = user.toJson();
+    assertThat(json).doesNotContain("direct_leader");
+    
+    // Test with non-empty array - should be serialized normally
+    user.setDirectLeader(new String[]{"leader1", "leader2"});
+    json = user.toJson();
+    assertThat(json).contains("\"direct_leader\":[\"leader1\",\"leader2\"]");
+  }
 }
