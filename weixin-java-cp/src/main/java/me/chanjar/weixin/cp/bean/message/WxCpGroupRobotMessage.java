@@ -252,6 +252,12 @@ public class WxCpGroupRobotMessage implements Serializable {
         messageJson.add("markdown", text);
         break;
       }
+      case MARKDOWN_V2: {
+        JsonObject text = new JsonObject();
+        text.addProperty("content", this.getContent());
+        messageJson.add("markdown_v2", text);
+        break;
+      }
       case IMAGE: {
         JsonObject text = new JsonObject();
         text.addProperty("base64", this.getBase64());
