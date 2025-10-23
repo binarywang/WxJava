@@ -33,6 +33,11 @@ public interface WxOpenMaService extends WxMaService {
   String API_MODIFY_DOMAIN = "https://api.weixin.qq.com/wxa/modify_domain";
 
   /**
+   * 快速配置小程序服务器域名
+   */
+  String API_MODIFY_DOMAIN_DIRECTLY = "https://api.weixin.qq.com/wxa/modify_domain_directly";
+
+  /**
    * 设置小程序业务域名（仅供第三方代小程序调用）
    * <pre>
    *     授权给第三方的小程序，其业务域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的业务域名将被删除，
@@ -43,6 +48,11 @@ public interface WxOpenMaService extends WxMaService {
    * </pre>
    */
   String API_SET_WEBVIEW_DOMAIN = "https://api.weixin.qq.com/wxa/setwebviewdomain";
+
+  /**
+   * 快速配置小程序业务域名
+   */
+  String API_SET_WEBVIEW_DOMAIN_DIRECTLY = "https://api.weixin.qq.com/wxa/setwebviewdomain_directly";
 
   /**
    * 获取业务域名校验文件（仅供第三方代小程序调用）
@@ -311,6 +321,24 @@ public interface WxOpenMaService extends WxMaService {
                                     List<String> udpDomains, List<String> tcpDomains) throws WxErrorException;
 
   /**
+   * 快速配置小程序服务器域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modify_domain_directly.html">文档地址</a>
+   *
+   * @param action           add添加, delete删除, set覆盖, get获取
+   * @param requestDomains   request 合法域名；当 action 是 get 时不需要此字段
+   * @param wsRequestDomains socket 合法域名；当 action 是 get 时不需要此字段
+   * @param uploadDomains    uploadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param downloadDomains  downloadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param tcpDomains       tcp 合法域名；当 action 是 get 时不需要此字段
+   * @param udpDomains       udp 合法域名；当 action 是 get 时不需要此字段
+   * @return the wx open ma domain result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaDomainResult modifyDomainDirectly(String action, List<String> requestDomains, List<String> wsRequestDomains,
+                                            List<String> uploadDomains, List<String> downloadDomains,
+                                            List<String> udpDomains, List<String> tcpDomains) throws WxErrorException;
+
+  /**
    * 获取小程序的业务域名
    *
    * @return 直接返回字符串 web view domain
@@ -345,6 +373,28 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 快速配置小程序业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/setwebviewdomain_directly.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return 直接返回字符串
+   * @throws WxErrorException the wx error exception
+   */
+  String setWebViewDomainDirectly(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 快速配置小程序业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/setwebviewdomain_directly.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return web view domain info
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaWebDomainResult setWebViewDomainDirectlyInfo(String action, List<String> domainList) throws WxErrorException;
 
   /**
    * 获取业务域名校验文件
