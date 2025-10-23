@@ -481,6 +481,43 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 平台查询预约提现状态（根据微信支付预约提现单号查询）
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476674
+   * </pre>
+   *
+   * @param withdrawId 微信支付提现单号
+   * @return 返回数据 return sp withdraw status result
+   * @throws WxPayException the wx pay exception
+   */
+  SpWithdrawStatusResult querySpWithdrawByWithdrawId(String withdrawId) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户按日终余额预约提现
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013328143
+   * </pre>
+   *
+   * @param request 提现请求
+   * @return 返回数据 return day-end balance withdraw result
+   * @throws WxPayException the wx pay exception
+   */
+  SubDayEndBalanceWithdrawResult subDayEndBalanceWithdraw(SubDayEndBalanceWithdrawRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询二级商户按日终余额预约提现状态
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013328163
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param outRequestNo 商户提现单号
+   * @return 返回数据 return day-end balance withdraw status result
+   * @throws WxPayException the wx pay exception
+   */
+  SubDayEndBalanceWithdrawStatusResult querySubDayEndBalanceWithdraw(String subMchid, String outRequestNo) throws WxPayException;
+
+  /**
+   * <pre>
    * 修改结算账号API
    * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_4.shtml
    * </pre>

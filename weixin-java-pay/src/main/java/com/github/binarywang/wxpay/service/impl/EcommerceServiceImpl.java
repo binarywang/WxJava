@@ -387,6 +387,27 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
+  public SpWithdrawStatusResult querySpWithdrawByWithdrawId(String withdrawId) throws WxPayException {
+    String url = String.format("%s/v3/merchant/fund/withdraw/withdraw-id/%s", this.payService.getPayBaseUrl(), withdrawId);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, SpWithdrawStatusResult.class);
+  }
+
+  @Override
+  public SubDayEndBalanceWithdrawResult subDayEndBalanceWithdraw(SubDayEndBalanceWithdrawRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance-withdraw", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, SubDayEndBalanceWithdrawResult.class);
+  }
+
+  @Override
+  public SubDayEndBalanceWithdrawStatusResult querySubDayEndBalanceWithdraw(String subMchid, String outRequestNo) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance-withdraw/out-request-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRequestNo, subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, SubDayEndBalanceWithdrawStatusResult.class);
+  }
+
+  @Override
   public void modifySettlement(String subMchid, SettlementRequest request) throws WxPayException {
     String url = String.format("%s/v3/apply4sub/sub_merchants/%s/modify-settlement", this.payService.getPayBaseUrl(), subMchid);
     RsaCryptoUtil.encryptFields(request, this.payService.getConfig().getVerifier().getValidCertificate());

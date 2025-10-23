@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 提现状态变更通知结果
+ * 查询二级商户按日终余额预约提现状态
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4013049135
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4013328163
  * </pre>
  *
  * @author copilot
@@ -17,37 +17,18 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
-public class WithdrawNotifyResult implements Serializable {
+public class SubDayEndBalanceWithdrawStatusResult implements Serializable {
 
-  private static final long serialVersionUID = -7451351849088368701L;
-
-  /**
-   * 源数据
-   */
-  private NotifyResponse rawData;
-
-  /**
-   * <pre>
-   * 字段名：电商平台商户号
-   * 变量名：sp_mchid
-   * 是否必填：是
-   * 类型：string（32）
-   * 描述：
-   *  微信支付分配给电商平台的商户号
-   * 示例值：1900000100
-   * </pre>
-   */
-  @SerializedName(value = "sp_mchid")
-  private String spMchid;
+  private static final long serialVersionUID = -8745123456789012347L;
 
   /**
    * <pre>
    * 字段名：二级商户号
    * 变量名：sub_mchid
-   * 是否必填：否
+   * 是否必填：是
    * 类型：string（32）
    * 描述：
-   *  微信支付分配给二级商户的商户号，仅二级商户提现时返回
+   *  电商平台二级商户号，由微信支付生成并下发。
    * 示例值：1900000109
    * </pre>
    */
@@ -56,12 +37,60 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
+   * 字段名：电商平台商户号
+   * 变量名：sp_mchid
+   * 是否必填：是
+   * 类型：string（32）
+   * 描述：
+   *  电商平台商户号
+   * 示例值：1800000123
+   * </pre>
+   */
+  @SerializedName(value = "sp_mchid")
+  private String spMchid;
+
+  /**
+   * <pre>
+   * 字段名：提现单状态
+   * 变量名：status
+   * 是否必填：是
+   * 类型：string（16）
+   * 描述：
+   *  枚举值：
+   *  CREATE_SUCCESS：受理成功
+   *  SUCCESS：提现成功
+   *  FAIL：提现失败
+   *  REFUND：提现退票
+   *  CLOSE：关单
+   *  INIT：业务单已创建
+   * 示例值：CREATE_SUCCESS
+   * </pre>
+   */
+  @SerializedName(value = "status")
+  private String status;
+
+  /**
+   * <pre>
+   * 字段名：微信支付提现单号
+   * 变量名：withdraw_id
+   * 是否必填：是
+   * 类型：string（128）
+   * 描述：
+   *  电商平台提交二级商户提现申请后，由微信支付返回的申请单号，作为查询申请状态的唯一标识。
+   * 示例值：12321937198237912739132791732912793127931279317929791239112123
+   * </pre>
+   */
+  @SerializedName(value = "withdraw_id")
+  private String withdrawId;
+
+  /**
+   * <pre>
    * 字段名：商户提现单号
    * 变量名：out_request_no
    * 是否必填：是
    * 类型：string（32）
    * 描述：
-   *  商户提现单号，由商户自定义生成
+   *  商户提现单号，由商户自定义生成。
    * 示例值：20190611222222222200000000012122
    * </pre>
    */
@@ -70,46 +99,13 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：微信支付提现单号
-   * 变量名：withdraw_id
-   * 是否必填：是
-   * 类型：string（32）
-   * 描述：
-   *  微信支付提现单号
-   * 示例值：12321002198704230011101200
-   * </pre>
-   */
-  @SerializedName(value = "withdraw_id")
-  private String withdrawId;
-
-  /**
-   * <pre>
-   * 字段名：提现状态
-   * 变量名：status
-   * 是否必填：是
-   * 类型：string（16）
-   * 描述：
-   *  提现状态：
-   *  CREATE_SUCCESS：受理成功
-   *  SUCCESS：提现成功
-   *  FAILED：提现失败
-   *  REFUND：提现退票
-   *  CLOSE：关单
-   * 示例值：SUCCESS
-   * </pre>
-   */
-  @SerializedName(value = "status")
-  private String status;
-
-  /**
-   * <pre>
    * 字段名：提现金额
    * 变量名：amount
    * 是否必填：是
    * 类型：int64
    * 描述：
-   *  提现金额，单位：分（人民币）
-   * 示例值：100
+   *  单位：分
+   * 示例值：1
    * </pre>
    */
   @SerializedName(value = "amount")
@@ -117,16 +113,16 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：提现发起时间
+   * 字段名：发起提现时间
    * 变量名：create_time
    * 是否必填：是
    * 类型：string（29）
    * 描述：
-   *  提现发起时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
+   *  遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
    *  YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss:sss表示时分秒毫秒，
    *  TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。
-   *  例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日13点29分35秒
-   * 示例值：2018-06-08T10:34:56+08:00
+   *  例如：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日13点29分35秒。
+   * 示例值：2015-05-20T13:29:35.120+08:00
    * </pre>
    */
   @SerializedName(value = "create_time")
@@ -134,16 +130,16 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：提现更新时间
+   * 字段名：提现状态更新时间
    * 变量名：update_time
    * 是否必填：是
    * 类型：string（29）
    * 描述：
-   *  提现更新时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
+   *  遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
    *  YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss:sss表示时分秒毫秒，
    *  TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。
-   *  例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日13点29分35秒
-   * 示例值：2018-06-08T10:34:56+08:00
+   *  例如：2015-05-20T13:29:35+08:00表示，北京时间2015年5月20日13点29分35秒。
+   * 示例值：2015-05-20T13:29:35.120+08:00
    * </pre>
    */
   @SerializedName(value = "update_time")
@@ -154,10 +150,10 @@ public class WithdrawNotifyResult implements Serializable {
    * 字段名：失败原因
    * 变量名：reason
    * 是否必填：否
-   * 类型：string（256）
+   * 类型：string（255）
    * 描述：
-   *  提现失败原因，仅在提现失败、退票时有值
-   * 示例值：账户余额不足
+   *  仅在提现失败、退票、关单时有值
+   * 示例值：卡号错误
    * </pre>
    */
   @SerializedName(value = "reason")
@@ -165,12 +161,12 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：备注
+   * 字段名：提现备注
    * 变量名：remark
    * 是否必填：否
-   * 类型：string（256）
+   * 类型：string（56）
    * 描述：
-   *  商户对提现单的备注，若提现申请时未传递，则无此字段
+   *  商户对提现单的备注，若发起提现时未传入相应值或输入不合法，则该值为空
    * 示例值：交易提现
    * </pre>
    */
@@ -182,10 +178,10 @@ public class WithdrawNotifyResult implements Serializable {
    * 字段名：银行附言
    * 变量名：bank_memo
    * 是否必填：否
-   * 类型：string（256）
+   * 类型：string（32）
    * 描述：
-   *  展示在收款银行系统中的附言，若提现申请时未传递，则无此字段
-   * 示例值：微信支付提现
+   *  展示在收款银行系统中的附言，由数字、字母、汉字组成（能否成功展示依赖银行系统支持）。若发起提现时未传入相应值或输入不合法，则该值为空
+   * 示例值：微信提现
    * </pre>
    */
   @SerializedName(value = "bank_memo")
@@ -193,13 +189,12 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：账户类型
+   * 字段名：出款账户类型
    * 变量名：account_type
-   * 是否必填：否
+   * 是否必填：是
    * 类型：string（16）
    * 描述：
-   *  提现账户类型，仅电商平台提现时返回：
-   *  BASIC：基本账户
+   *  BASIC：基本户
    *  OPERATION：运营账户
    *  FEES：手续费账户
    * 示例值：BASIC
