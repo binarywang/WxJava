@@ -18,6 +18,10 @@ import org.apache.http.HttpHost;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
@@ -579,7 +583,20 @@ public class WxPayConfig {
     }
 
     // 创建支持SSL的连接池管理器
-    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+      sslContext,
+      new DefaultHostnameVerifier()
+    );
+
+    Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
+      .<ConnectionSocketFactory>create()
+      .register("https", sslsf)
+      .register("http", PlainConnectionSocketFactory.getSocketFactory())
+      .build();
+    PoolingHttpClientConnectionManager connectionManager =
+      new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+
+    // PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
     connectionManager.setMaxTotal(this.maxConnTotal);
     connectionManager.setDefaultMaxPerRoute(this.maxConnPerRoute);
 
