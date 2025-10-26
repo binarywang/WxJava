@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 售后单同意信息
+ * 售后单换货拒绝发货信息
  *
  * @author <a href="https://gitee.com/cchengg">Chu</a>
  */

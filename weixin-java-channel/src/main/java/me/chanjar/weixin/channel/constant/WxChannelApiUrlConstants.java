@@ -236,6 +236,8 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_ACCEPT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/acceptexchangereship";
     /** 换货拒绝发货*/
     String AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectexchangereship";
+    /** 商家协商*/
+    String AFTER_SALE_MERCHANT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantupdateaftersale";
   }
 
   /** 纠纷相关接口 */

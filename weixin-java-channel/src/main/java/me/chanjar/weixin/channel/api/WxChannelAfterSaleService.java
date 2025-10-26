@@ -2,11 +2,8 @@ package me.chanjar.weixin.channel.api;
 
 
 import java.util.List;
-import me.chanjar.weixin.channel.bean.after.AfterSaleInfoResponse;
-import me.chanjar.weixin.channel.bean.after.AfterSaleListParam;
-import me.chanjar.weixin.channel.bean.after.AfterSaleListResponse;
-import me.chanjar.weixin.channel.bean.after.AfterSaleReasonResponse;
-import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
+
+import me.chanjar.weixin.channel.bean.after.*;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.complaint.ComplaintOrderResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -176,4 +173,14 @@ public interface WxChannelAfterSaleService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse rejectExchangeReship(String afterSaleOrderId, String rejectReason, Integer rejectReasonType, List<String> rejectCertificates) throws WxErrorException;
+
+  /**
+   * 商家协商
+   * 文档地址：https://developers.weixin.qq.com/doc/store/shop/API/channels-shop-aftersale/api_merchantupdateaftersale.html
+   * @param param 参数
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse merchantUpdateAfterSale(AfterSaleMerchantUpdateParam param) throws WxErrorException;
 }

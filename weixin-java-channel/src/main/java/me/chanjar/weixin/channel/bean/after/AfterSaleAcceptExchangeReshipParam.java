@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
- * 售后单同意信息
+ * 售后单换货发货信息
  *
  * @author <a href="https://gitee.com/cchengg">Chu</a>
  */
