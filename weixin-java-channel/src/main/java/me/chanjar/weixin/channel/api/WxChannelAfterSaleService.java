@@ -149,4 +149,31 @@ public interface WxChannelAfterSaleService {
    * @throws WxErrorException 异常
    */
   AfterSaleRejectReasonResponse getRejectReason() throws WxErrorException;
+
+  /**
+   * 换货发货
+   * 文档地址：https://developers.weixin.qq.com/doc/store/shop/API/channels-shop-aftersale/api_acceptexchangereship.html
+   *
+   * @param afterSaleOrderId 售后单号
+   * @param waybillId        快递单号
+   * @param deliveryId       快递公司id
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse acceptExchangeReship(String afterSaleOrderId, String waybillId, String deliveryId) throws WxErrorException;
+
+  /**
+   * 换货拒绝发货
+   * 文档地址：https://developers.weixin.qq.com/doc/store/shop/API/channels-shop-aftersale/api_rejectexchangereship.html
+   *
+   * @param afterSaleOrderId 售后单号
+   * @param rejectReason 拒绝原因具体描述 ,可使用默认描述，也可以自定义描述
+   * @param rejectReasonType 拒绝原因枚举值
+   * @param rejectCertificates 退款凭证，可使用图片上传接口获取media_id（数据类型填0）
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse rejectExchangeReship(String afterSaleOrderId, String rejectReason, Integer rejectReasonType, List<String> rejectCertificates) throws WxErrorException;
 }
