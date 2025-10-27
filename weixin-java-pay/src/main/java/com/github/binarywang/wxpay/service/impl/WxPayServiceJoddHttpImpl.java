@@ -64,6 +64,24 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
+  public String post(String url, String requestStr, boolean useKey, String mimeType) throws WxPayException {
+    try {
+      HttpRequest request = this.buildHttpRequest(url, requestStr, useKey, mimeType);
+      String responseString = this.getResponseString(request.send());
+
+      log.info("\n【请求地址】：{}\n【请求数据】：{}\n【响应数据】：{}", url, requestStr, responseString);
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+      }
+      return responseString;
+    } catch (Exception e) {
+      log.error("\n【请求地址】：{}\n【请求数据】：{}\n【异常信息】：{}", url, requestStr, e.getMessage());
+      wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      throw new WxPayException(e.getMessage(), e);
+    }
+  }
+
+  @Override
   public String postV3(String url, String requestStr) throws WxPayException {
     return null;
   }
@@ -116,6 +134,40 @@ public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
   private HttpRequest buildHttpRequest(String url, String requestStr, boolean useKey) throws WxPayException {
     HttpRequest request = HttpRequest
       .post(url)
+      .timeout(this.getConfig().getHttpTimeout())
+      .connectionTimeout(this.getConfig().getHttpConnectionTimeout())
+      .bodyText(requestStr);
+
+    if (useKey) {
+      SSLContext sslContext = this.getConfig().getSslContext();
+      if (null == sslContext) {
+        sslContext = this.getConfig().initSSLContext();
+      }
+      final SSLSocketHttpConnectionProvider provider = new SSLSocketHttpConnectionProvider(sslContext);
+      request.withConnectionProvider(provider);
+    }
+
+    if (StringUtils.isNotBlank(this.getConfig().getHttpProxyHost()) && this.getConfig().getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getConfig().getHttpProxyUsername())) {
+        this.getConfig().setHttpProxyUsername("whatever");
+      }
+
+      ProxyInfo httpProxy = new ProxyInfo(ProxyType.HTTP, this.getConfig().getHttpProxyHost(), this.getConfig().getHttpProxyPort(),
+        this.getConfig().getHttpProxyUsername(), this.getConfig().getHttpProxyPassword());
+      HttpConnectionProvider provider = request.connectionProvider();
+      if (null == provider) {
+        provider = new SocketHttpConnectionProvider();
+      }
+      provider.useProxy(httpProxy);
+      request.withConnectionProvider(provider);
+    }
+    return request;
+  }
+
+  private HttpRequest buildHttpRequest(String url, String requestStr, boolean useKey, String mimeType) throws WxPayException {
+    HttpRequest request = HttpRequest
+      .post(url)
+      .contentType(mimeType)
       .timeout(this.getConfig().getHttpTimeout())
       .connectionTimeout(this.getConfig().getHttpConnectionTimeout())
       .bodyText(requestStr);
