@@ -369,7 +369,6 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
     return httpPost;
   }
 
-
   private void initSSLContext(HttpClientBuilder httpClientBuilder) throws WxPayException {
     SSLContext sslContext = this.getConfig().getSslContext();
     if (null == sslContext) {
