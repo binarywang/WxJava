@@ -29,9 +29,9 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param message the message
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param message 客服消息对象，包含消息类型、内容、接收者等信息
+     * @return 发送是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean sendKefuMessage(WxMpKefuMessage message) throws WxErrorException;
 
@@ -42,9 +42,9 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param message the message
-     * @return the response
-     * @throws WxErrorException 异常
+     * @param message 客服消息对象，包含消息类型、内容、接收者等信息
+     * @return 微信API响应结果，JSON格式字符串
+     * @throws WxErrorException 微信API调用异常
      */
     String sendKefuMessageWithResponse(WxMpKefuMessage message) throws WxErrorException;
 
@@ -57,8 +57,8 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/customservice/getkflist?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @return the wx mp kf list
-     * @throws WxErrorException 异常
+     * @return 客服基本信息列表，包含客服账号、昵称、头像等信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfList kfList() throws WxErrorException;
 
@@ -69,8 +69,8 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/customservice/getonlinekflist?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @return the wx mp kf online list
-     * @throws WxErrorException 异常
+     * @return 在线客服接待信息列表，包含在线客服账号、接待状态等信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfOnlineList kfOnlineList() throws WxErrorException;
 
@@ -81,9 +81,9 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/add?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param request the request
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param request 客服账号请求对象，包含客服账号、昵称等信息
+     * @return 添加是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfAccountAdd(WxMpKfAccountRequest request) throws WxErrorException;
 
@@ -94,22 +94,22 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/update?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param request the request
-     * @return the boolean
-     * @throws WxErrorException the wx error exception
+     * @param request 客服账号请求对象，包含客服账号、昵称等信息
+     * @return 更新是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfAccountUpdate(WxMpKfAccountRequest request) throws WxErrorException;
 
     /**
      * <pre>
-     * 设置客服信息（即更新客服信息）
+     * 邀请绑定客服账号
      * 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1458044813&token=&lang=zh_CN">客服管理</a>
      * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/inviteworker?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param request the request
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param request 客服账号请求对象，包含客服账号、邀请者微信号等信息
+     * @return 邀请是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfAccountInviteWorker(WxMpKfAccountRequest request) throws WxErrorException;
 
@@ -120,10 +120,10 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/uploadheadimg?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT
      * </pre>
      *
-     * @param kfAccount the kf account
-     * @param imgFile   the img file
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param kfAccount 客服账号，格式为：账号前缀@微信号
+     * @param imgFile   头像图片文件，支持JPG、PNG格式，大小不超过2MB
+     * @return 上传是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfAccountUploadHeadImg(String kfAccount, File imgFile) throws WxErrorException;
 
@@ -134,9 +134,9 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/customservice/kfaccount/del?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT
      * </pre>
      *
-     * @param kfAccount the kf account
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param kfAccount 客服账号，格式为：账号前缀@微信号
+     * @return 删除是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfAccountDel(String kfAccount) throws WxErrorException;
 
@@ -150,10 +150,10 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/kfsession/create?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param openid    the openid
-     * @param kfAccount the kf account
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param openid    用户的openid，标识具体的用户
+     * @param kfAccount 客服账号，格式为：账号前缀@微信号
+     * @return 创建是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfSessionCreate(String openid, String kfAccount) throws WxErrorException;
 
@@ -165,10 +165,10 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/kfsession/close?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param openid    the openid
-     * @param kfAccount the kf account
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param openid    用户的openid，标识具体的用户
+     * @param kfAccount 客服账号，格式为：账号前缀@微信号
+     * @return 关闭是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean kfSessionClose(String openid, String kfAccount) throws WxErrorException;
 
@@ -180,9 +180,9 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/kfsession/getsession?access_token=ACCESS_TOKEN&openid=OPENID
      * </pre>
      *
-     * @param openid the openid
-     * @return the wx mp kf session get result
-     * @throws WxErrorException 异常
+     * @param openid 用户的openid，标识具体的用户
+     * @return 客户会话状态信息，包含客服账号、会话状态等
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfSessionGetResult kfSessionGet(String openid) throws WxErrorException;
 
@@ -194,9 +194,9 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/kfsession/getsessionlist?access_token=ACCESS_TOKEN&kf_account=KFACCOUNT
      * </pre>
      *
-     * @param kfAccount the kf account
-     * @return the wx mp kf session list
-     * @throws WxErrorException 异常
+     * @param kfAccount 客服账号，格式为：账号前缀@微信号
+     * @return 客服会话列表，包含正在接待的会话信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfSessionList kfSessionList(String kfAccount) throws WxErrorException;
 
@@ -208,8 +208,8 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/kfsession/getwaitcase?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @return the wx mp kf session wait case list
-     * @throws WxErrorException 异常
+     * @return 未接入会话列表，包含等待接入的会话信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfSessionWaitCaseList kfSessionGetWaitCase() throws WxErrorException;
 
@@ -223,12 +223,12 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/msgrecord/getmsglist?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param startTime 起始时间
-     * @param endTime   结束时间
-     * @param msgId     消息id顺序从小到大，从1开始
-     * @param number    每次获取条数，最多10000条
-     * @return 聊天记录对象 wx mp kf msg list
-     * @throws WxErrorException 异常
+     * @param startTime 起始时间，用于筛选聊天记录的时间范围
+     * @param endTime   结束时间，用于筛选聊天记录的时间范围
+     * @param msgId     消息id顺序从小到大，从1开始，用于分页获取
+     * @param number    每次获取条数，最多10000条，用于分页控制
+     * @return 聊天记录对象，包含客服和用户的聊天消息列表
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfMsgList kfMsgList(Date startTime, Date endTime, Long msgId, Integer number) throws WxErrorException;
 
@@ -240,17 +240,17 @@ public interface WxMpKefuService {
      * 接口url格式： https://api.weixin.qq.com/customservice/msgrecord/getmsglist?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param startTime 起始时间
-     * @param endTime   结束时间
-     * @return 聊天记录对象 wx mp kf msg list
-     * @throws WxErrorException 异常
+     * @param startTime 起始时间，用于筛选聊天记录的时间范围
+     * @param endTime   结束时间，用于筛选聊天记录的时间范围
+     * @return 聊天记录对象，包含客服和用户的聊天消息列表
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpKfMsgList kfMsgList(Date startTime, Date endTime) throws WxErrorException;
 
     /**
      * <pre>
      * 客服输入状态
-     * 开发者可通过调用“客服输入状态”接口，返回客服当前输入状态给用户。
+     * 开发者可通过调用"客服输入状态"接口，返回客服当前输入状态给用户。
      * 此接口需要客服消息接口权限。
      * 如果不满足发送客服消息的触发条件，则无法下发输入状态。
      * 下发输入状态，需要客服之前30秒内跟用户有过消息交互。
@@ -261,10 +261,10 @@ public interface WxMpKefuService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/message/custom/typing?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param openid  用户id
-     * @param command "Typing"：对用户下发“正在输入"状态 "CancelTyping"：取消对用户的”正在输入"状态
-     * @return the boolean
-     * @throws WxErrorException 异常
+     * @param openid  用户的openid，标识具体的用户
+     * @param command 输入状态命令，可选值："Typing"：对用户下发"正在输入"状态；"CancelTyping"：取消对用户的"正在输入"状态
+     * @return 发送是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean sendKfTypingState(String openid, String command) throws WxErrorException;
 }
