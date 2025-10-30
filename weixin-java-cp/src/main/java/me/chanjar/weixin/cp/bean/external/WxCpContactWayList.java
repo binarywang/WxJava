@@ -27,6 +27,12 @@ public class WxCpContactWayList extends WxCpBaseResp implements Serializable {
   private List<ContactWay> contactWay;
 
   /**
+   * 分页参数，用于查询下一个分页的数据，为空时表示没有更多的分页
+   */
+  @SerializedName("next_cursor")
+  private String nextCursor;
+
+  /**
    * The type Contact way.
    */
   @Getter
