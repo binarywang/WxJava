@@ -419,8 +419,21 @@ public interface EcommerceService {
 
   /**
    * <pre>
+   * 提现状态变更通知回调数据处理
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013049135
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 解密后通知数据 withdraw notify result
+   * @throws WxPayException the wx pay exception
+   */
+  WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
    * 二级商户账户余额提现API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_2.shtml
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476652
    * </pre>
    *
    * @param request 提现请求
@@ -432,7 +445,7 @@ public interface EcommerceService {
   /**
    * <pre>
    * 电商平台提现API
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_5.shtml
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476670
    * </pre>
    *
    * @param request 提现请求
@@ -465,6 +478,43 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   SpWithdrawStatusResult querySpWithdrawByOutRequestNo(String outRequestNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 平台查询预约提现状态（根据微信支付预约提现单号查询）
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4012476674
+   * </pre>
+   *
+   * @param withdrawId 微信支付提现单号
+   * @return 返回数据 return sp withdraw status result
+   * @throws WxPayException the wx pay exception
+   */
+  SpWithdrawStatusResult querySpWithdrawByWithdrawId(String withdrawId) throws WxPayException;
+
+  /**
+   * <pre>
+   * 二级商户按日终余额预约提现
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013328143
+   * </pre>
+   *
+   * @param request 提现请求
+   * @return 返回数据 return day-end balance withdraw result
+   * @throws WxPayException the wx pay exception
+   */
+  SubDayEndBalanceWithdrawResult subDayEndBalanceWithdraw(SubDayEndBalanceWithdrawRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 查询二级商户按日终余额预约提现状态
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/partner/4013328163
+   * </pre>
+   *
+   * @param subMchid 二级商户号
+   * @param outRequestNo 商户提现单号
+   * @return 返回数据 return day-end balance withdraw status result
+   * @throws WxPayException the wx pay exception
+   */
+  SubDayEndBalanceWithdrawStatusResult querySubDayEndBalanceWithdraw(String subMchid, String outRequestNo) throws WxPayException;
 
   /**
    * <pre>
