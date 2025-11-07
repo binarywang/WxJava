@@ -22,9 +22,9 @@ public interface WxMpUserService {
      * 接口地址：https://api.weixin.qq.com/cgi-bin/user/info/updateremark?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param openid 用户openid
-     * @param remark 备注名
-     * @throws WxErrorException the wx error exception
+     * @param openid 用户openid，标识具体的用户
+     * @param remark 备注名，长度限制为30字符以内
+     * @throws WxErrorException 微信API调用异常
      */
     void userUpdateRemark(String openid, String remark) throws WxErrorException;
 
@@ -36,9 +36,9 @@ public interface WxMpUserService {
      * 接口地址：https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
      * </pre>
      *
-     * @param openid 用户openid
-     * @return the wx mp user
-     * @throws WxErrorException the wx error exception
+     * @param openid 用户openid，标识具体的用户
+     * @return 用户基本信息，包含昵称、头像、性别、关注时间等
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpUser userInfo(String openid) throws WxErrorException;
 
@@ -50,10 +50,10 @@ public interface WxMpUserService {
      * 接口地址：https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
      * </pre>
      *
-     * @param openid 用户openid
+     * @param openid 用户openid，标识具体的用户
      * @param lang   语言，zh_CN 简体(默认)，zh_TW 繁体，en 英语
-     * @return the wx mp user
-     * @throws WxErrorException the wx error exception
+     * @return 用户基本信息，包含昵称、头像、性别、关注时间等
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpUser userInfo(String openid, String lang) throws WxErrorException;
 
@@ -66,9 +66,9 @@ public interface WxMpUserService {
      * 接口地址：https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param openidList 用户openid列表
-     * @return the list
-     * @throws WxErrorException the wx error exception
+     * @param openidList 用户openid列表，最多100个
+     * @return 用户基本信息列表，包含每个用户的基本信息
+     * @throws WxErrorException 微信API调用异常
      */
     List<WxMpUser> userInfoList(List<String> openidList) throws WxErrorException;
 
@@ -81,9 +81,9 @@ public interface WxMpUserService {
      * 接口地址：https://api.weixin.qq.com/cgi-bin/user/info/batchget?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param userQuery 详细查询参数
-     * @return the list
-     * @throws WxErrorException the wx error exception
+     * @param userQuery 详细查询参数，包含openid列表和语言设置
+     * @return 用户基本信息列表，包含每个用户的基本信息
+     * @throws WxErrorException 微信API调用异常
      */
     List<WxMpUser> userInfoList(WxMpUserQuery userQuery) throws WxErrorException;
 
@@ -99,8 +99,8 @@ public interface WxMpUserService {
      * </pre>
      *
      * @param nextOpenid 可选，第一个拉取的OPENID，null为从头开始拉取
-     * @return the wx mp user list
-     * @throws WxErrorException the wx error exception
+     * @return 用户列表，包含关注者OpenID列表和下一个OpenID
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpUserList userList(String nextOpenid) throws WxErrorException;
 
@@ -109,9 +109,13 @@ public interface WxMpUserService {
      * 获取用户列表（全部）
      * 公众号可通过本接口来获取账号的关注者列表，
      * 关注者列表由一串OpenID（加密后的微信号，每个用户对每个公众号的OpenID是唯一的）组成。
-     * @return the wx mp user list
-     * @throws WxErrorException the wx error exception
-     * @see #userList(java.lang.String) #userList(java.lang.String)的增强，内部进行了多次数据拉取的汇总 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840&token=&lang=zh_CN http请求方式: GET（请使用https协议） 接口地址：https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID </pre>
+     * @return 用户列表，包含所有关注者的OpenID列表
+     * @throws WxErrorException 微信API调用异常
+     * @see #userList(String) #userList(String)的增强，内部进行了多次数据拉取的汇总
+     * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140840&token=&lang=zh_CN
+     * http请求方式: GET（请使用https协议）
+     * 接口地址：https://api.weixin.qq.com/cgi-bin/user/get?access_token=ACCESS_TOKEN&next_openid=NEXT_OPENID
+     * </pre>
      */
     WxMpUserList userList() throws WxErrorException;
 
@@ -126,8 +130,8 @@ public interface WxMpUserService {
      *
      * @param fromAppid  原公众号的 appid
      * @param openidList 需要转换的openid，这些必须是旧账号目前关注的才行，否则会出错；一次最多100个
-     * @return the list
-     * @throws WxErrorException the wx error exception
+     * @return openid转换结果列表，包含原openid和新openid的映射关系
+     * @throws WxErrorException 微信API调用异常
      */
     List<WxMpChangeOpenid> changeOpenid(String fromAppid, List<String> openidList) throws WxErrorException;
 }

@@ -22,8 +22,8 @@ public interface WxMpQrcodeService {
      *
      * @param sceneId       场景值ID，临时二维码时为32位非0整型
      * @param expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
-     * @return the wx mp qr code ticket
-     * @throws WxErrorException the wx error exception
+     * @return 二维码ticket，可用于获取二维码图片
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpQrCodeTicket qrCodeCreateTmpTicket(int sceneId, Integer expireSeconds) throws WxErrorException;
 
@@ -36,8 +36,8 @@ public interface WxMpQrcodeService {
      *
      * @param sceneStr      场景值ID（字符串形式的ID），字符串类型，长度限制为1到64
      * @param expireSeconds 该二维码有效时间，以秒为单位。 最大不超过2592000（即30天），此字段如果不填，则默认有效期为30秒。
-     * @return the wx mp qr code ticket
-     * @throws WxErrorException the wx error exception
+     * @return 二维码ticket，可用于获取二维码图片
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpQrCodeTicket qrCodeCreateTmpTicket(String sceneStr, Integer expireSeconds) throws WxErrorException;
 
@@ -48,8 +48,8 @@ public interface WxMpQrcodeService {
      * </pre>
      *
      * @param sceneId 场景值ID，最大值为100000（目前参数只支持1--100000）
-     * @return the wx mp qr code ticket
-     * @throws WxErrorException the wx error exception
+     * @return 二维码ticket，可用于获取二维码图片
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpQrCodeTicket qrCodeCreateLastTicket(int sceneId) throws WxErrorException;
 
@@ -60,8 +60,8 @@ public interface WxMpQrcodeService {
      * </pre>
      *
      * @param sceneStr 参数。字符串类型长度现在为1到64
-     * @return the wx mp qr code ticket
-     * @throws WxErrorException the wx error exception
+     * @return 二维码ticket，可用于获取二维码图片
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpQrCodeTicket qrCodeCreateLastTicket(String sceneStr) throws WxErrorException;
 
@@ -71,9 +71,9 @@ public interface WxMpQrcodeService {
      * 详情请见: <a href="https://mp.weixin.qq.com/wiki?action=doc&id=mp1443433542&t=0.9274944716856435">生成带参数的二维码</a>
      * </pre>
      *
-     * @param ticket 二维码ticket
-     * @return the file
-     * @throws WxErrorException the wx error exception
+     * @param ticket 二维码ticket，通过创建二维码接口获取
+     * @return 二维码图片文件，jpg格式
+     * @throws WxErrorException 微信API调用异常
      */
     File qrCodePicture(WxMpQrCodeTicket ticket) throws WxErrorException;
 
@@ -85,8 +85,9 @@ public interface WxMpQrcodeService {
      *
      * @param ticket       二维码ticket
      * @param needShortUrl 是否需要压缩的二维码地址
-     * @return the string
-     * @throws WxErrorException the wx error exception
+     * @return 二维码图片的URL地址
+     * @throws WxErrorException 微信API调用异常
+     * @deprecated 请使用 {@link #qrCodePictureUrl(String)} 方法
      */
     @Deprecated
     String qrCodePictureUrl(String ticket, boolean needShortUrl) throws WxErrorException;
@@ -97,9 +98,9 @@ public interface WxMpQrcodeService {
      * 详情请见: <a href="https://mp.weixin.qq.com/wiki?action=doc&id=mp1443433542&t=0.9274944716856435">生成带参数的二维码</a>
      * </pre>
      *
-     * @param ticket 二维码ticket
-     * @return the string
-     * @throws WxErrorException the wx error exception
+     * @param ticket 二维码ticket，通过创建二维码接口获取
+     * @return 二维码图片的URL地址
+     * @throws WxErrorException 微信API调用异常
      */
     String qrCodePictureUrl(String ticket) throws WxErrorException;
 

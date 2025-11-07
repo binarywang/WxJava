@@ -37,6 +37,19 @@ public class WxCryptUtil {
   private static final Base64 BASE64 = new Base64();
   private static final Charset CHARSET = StandardCharsets.UTF_8;
 
+  private static volatile Random random;
+
+  private static Random getRandom() {
+    if (random == null) {
+      synchronized (WxCryptUtil.class) {
+        if (random == null) {
+          random = new Random();
+        }
+      }
+    }
+    return random;
+  }
+
   private static final ThreadLocal<DocumentBuilder> BUILDER_LOCAL = ThreadLocal.withInitial(() -> {
     try {
       final DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -109,10 +122,10 @@ public class WxCryptUtil {
    */
   private static String genRandomStr() {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    Random random = new Random();
+    Random r = getRandom();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < 16; i++) {
-      int number = random.nextInt(base.length());
+      int number = r.nextInt(base.length());
       sb.append(base.charAt(number));
     }
     return sb.toString();

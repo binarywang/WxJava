@@ -7,14 +7,19 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 二级商户账户余额提现
+ * 二级商户按日终余额预约提现
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012476652
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4013328143
  * </pre>
+ *
+ * @author copilot
+ * created on  2024/12/24
  */
 @Data
 @NoArgsConstructor
-public class SubWithdrawRequest implements Serializable {
+public class SubDayEndBalanceWithdrawRequest implements Serializable {
+
+  private static final long serialVersionUID = -8745123456789012345L;
 
   /**
    * <pre>
@@ -38,7 +43,7 @@ public class SubWithdrawRequest implements Serializable {
    * 类型：string（32）
    * 描述：
    *  必须是字母数字
-   * 示例值： 20190611222222222200000000012122
+   * 示例值：20190611222222222200000000012122
    * </pre>
    */
   @SerializedName(value = "out_request_no")
@@ -88,6 +93,23 @@ public class SubWithdrawRequest implements Serializable {
 
   /**
    * <pre>
+   * 字段名：出款账户类型
+   * 变量名：account_type
+   * 是否必填：是
+   * 类型：string（16）
+   * 描述：
+   *  枚举值：
+   *    BASIC：基本户
+   *    OPERATION：运营账户
+   *    FEES：手续费账户
+   * 示例值：BASIC
+   * </pre>
+   */
+  @SerializedName(value = "account_type")
+  private String accountType;
+
+  /**
+   * <pre>
    * 字段名：回调通知地址
    * 变量名：notify_url
    * 是否必填：否
@@ -100,5 +122,4 @@ public class SubWithdrawRequest implements Serializable {
    */
   @SerializedName(value = "notify_url")
   private String notifyUrl;
-
 }

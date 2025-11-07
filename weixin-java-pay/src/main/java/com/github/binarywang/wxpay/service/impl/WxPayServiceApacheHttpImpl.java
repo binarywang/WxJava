@@ -54,7 +54,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     try {
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       CloseableHttpClient httpClient = this.createHttpClient(useKey);
-      
+
       // 使用连接池的客户端，不需要手动关闭
       final byte[] bytes = httpClient.execute(httpPost, ByteArrayResponseHandler.INSTANCE);
       final String responseData = Base64.getEncoder().encodeToString(bytes);
@@ -73,7 +73,33 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     try {
       HttpPost httpPost = this.createHttpPost(url, requestStr);
       CloseableHttpClient httpClient = this.createHttpClient(useKey);
-      
+
+      // 使用连接池的客户端，不需要手动关闭
+      try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+        String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+        this.logRequestAndResponse(url, requestStr, responseString);
+        if (this.getConfig().isIfSaveApiData()) {
+          wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+        }
+        return responseString;
+      } finally {
+        httpPost.releaseConnection();
+      }
+    } catch (Exception e) {
+      this.logError(url, requestStr, e);
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      }
+      throw new WxPayException(e.getMessage(), e);
+    }
+  }
+
+  @Override
+  public String post(String url, String requestStr, boolean useKey, String mimeType) throws WxPayException {
+    try {
+      HttpPost httpPost = this.createHttpPost(url, requestStr, mimeType);
+      CloseableHttpClient httpClient = this.createHttpClient(useKey);
+
       // 使用连接池的客户端，不需要手动关闭
       try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
         String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
@@ -306,6 +332,10 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
     //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
   }
 
+  private static StringEntity createEntry(String requestStr, String mimeType) {
+    return new StringEntity(requestStr, ContentType.create(mimeType, StandardCharsets.UTF_8));
+    //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+  }
   private HttpClientBuilder createHttpClientBuilder(boolean useKey) throws WxPayException {
     HttpClientBuilder httpClientBuilder = HttpClients.custom();
     if (useKey) {
@@ -338,6 +368,19 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   private HttpPost createHttpPost(String url, String requestStr) {
     HttpPost httpPost = new HttpPost(url);
     httpPost.setEntity(createEntry(requestStr));
+
+    httpPost.setConfig(RequestConfig.custom()
+      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setSocketTimeout(this.getConfig().getHttpTimeout())
+      .build());
+
+    return httpPost;
+  }
+
+  private HttpPost createHttpPost(String url, String requestStr, String mimeType) throws WxPayException {
+    HttpPost httpPost = new HttpPost(url);
+    httpPost.setEntity(createEntry(requestStr, mimeType));
 
     httpPost.setConfig(RequestConfig.custom()
       .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
