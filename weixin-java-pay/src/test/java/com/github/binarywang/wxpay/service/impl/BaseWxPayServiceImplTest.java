@@ -990,7 +990,6 @@ public class BaseWxPayServiceImplTest {
     );
     wxPayConfig.setPublicKeyId("xxx");
     wxPayConfig.setPublicKeyContent("xxx".getBytes(StandardCharsets.UTF_8));
-    wxPayConfig.setAppId("xxx");
     //创建支付服务
     WxPayService wxPayService = new WxPayServiceImpl();
     wxPayService.setConfig(wxPayConfig);
