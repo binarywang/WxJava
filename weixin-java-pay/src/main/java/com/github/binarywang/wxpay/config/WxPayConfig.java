@@ -341,7 +341,7 @@ public class WxPayConfig {
         certificate = (X509Certificate) objects[1];
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
-      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && StringUtils.isNotBlank(this.getPrivateCertPath())) {
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && (StringUtils.isNotBlank(this.getPrivateCertPath()) || StringUtils.isNotBlank(this.getPrivateCertString())) || this.getPrivateCertContent() != null) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath")) {
           certificate = PemUtils.loadCertificate(certInputStream);
@@ -349,7 +349,7 @@ public class WxPayConfig {
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
 
-      if (this.getPublicKeyString() != null || this.getPublicKeyPath() != null || this.publicKeyContent != null) {
+      if (StringUtils.isNotBlank(this.getPublicKeyString()) || StringUtils.isNotBlank(this.getPublicKeyPath()) || this.publicKeyContent != null) {
         if (StringUtils.isBlank(this.getPublicKeyId())) {
           throw new WxPayException("请确保和publicKeyId配套使用");
         }

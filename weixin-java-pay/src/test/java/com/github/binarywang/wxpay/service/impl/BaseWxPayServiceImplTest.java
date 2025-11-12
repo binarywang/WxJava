@@ -33,6 +33,7 @@ import org.testng.annotations.Test;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
@@ -976,4 +977,44 @@ public class BaseWxPayServiceImplTest {
     WxPayUnifiedOrderV3Result.JsapiResult result = payService.createPartnerOrderV3(TradeTypeEnum.JSAPI, request);
     System.out.println(result);
   }
+
+  @Test
+  public void test_certSerialNoExtractedFromPrivateCertContentOrPrivateCertString() throws Exception {
+    WxPayConfig wxPayConfig = new WxPayConfig();
+    //服务商的参数
+    wxPayConfig.setMchId("xxx");
+    wxPayConfig.setAppId("xxx");
+    wxPayConfig.setApiV3Key("xxx");
+    wxPayConfig.setPrivateKeyContent("xxx".getBytes(StandardCharsets.UTF_8));
+    wxPayConfig.setPrivateCertContent("xxx".getBytes(StandardCharsets.UTF_8)
+    );
+    wxPayConfig.setPublicKeyId("xxx");
+    wxPayConfig.setPublicKeyContent("xxx".getBytes(StandardCharsets.UTF_8));
+    //创建支付服务
+    WxPayService wxPayService = new WxPayServiceImpl();
+    wxPayService.setConfig(wxPayConfig);
+
+    String outTradeNo = RandomUtils.getRandomStr();
+    String notifyUrl = "https://api.qq.com/";
+    System.out.println("outTradeNo = " + outTradeNo);
+    WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
+    request.setOutTradeNo(outTradeNo);
+    request.setNotifyUrl(notifyUrl);
+    request.setDescription("test");
+
+    WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
+    payer.setOpenid("xxx");
+    request.setPayer(payer);
+
+    //构建金额信息
+    WxPayUnifiedOrderV3Request.Amount amount = new WxPayUnifiedOrderV3Request.Amount();
+    //设置币种信息
+    amount.setCurrency(WxPayConstants.CurrencyType.CNY);
+    //设置金额
+    amount.setTotal(BaseWxPayRequest.yuan2Fen(BigDecimal.ONE));
+    request.setAmount(amount);
+
+    wxPayService.createOrderV3(TradeTypeEnum.JSAPI, request);
+  }
+
 }
