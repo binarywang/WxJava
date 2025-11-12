@@ -350,7 +350,11 @@ public class WxCryptUtil {
       xmlContent = new String(Arrays.copyOfRange(bytes, startIndex, endIndex), CHARSET);
       fromAppid = new String(Arrays.copyOfRange(bytes, endIndex, bytes.length), CHARSET);
     } catch (Exception e) {
-      throw new WxRuntimeException(e);
+      if (e instanceof WxRuntimeException) {
+        throw (WxRuntimeException) e;
+      } else {
+        throw new WxRuntimeException(e);
+      }
     }
 
     // appid不相同的情况 暂时忽略这段判断
