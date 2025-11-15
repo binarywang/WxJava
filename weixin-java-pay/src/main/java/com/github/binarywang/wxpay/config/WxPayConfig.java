@@ -33,6 +33,7 @@ import org.apache.http.ssl.SSLContexts;
 import javax.net.ssl.SSLContext;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -435,7 +436,14 @@ public class WxPayConfig {
     }
 
     if (StringUtils.isNotEmpty(configString)) {
-      configContent = Base64.getDecoder().decode(configString);
+      // 判断是否为PEM格式的字符串（包含-----BEGIN和-----END标记）
+      if (configString.contains("-----BEGIN") && configString.contains("-----END")) {
+        // PEM格式直接转为字节流，让PemUtils处理
+        configContent = configString.getBytes(StandardCharsets.UTF_8);
+      } else {
+        // 纯Base64格式，需要先解码
+        configContent = Base64.getDecoder().decode(configString);
+      }
       return new ByteArrayInputStream(configContent);
     }
 
