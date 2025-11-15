@@ -299,7 +299,9 @@ public class WxOpenXmlMessage implements Serializable {
 
   public static WxOpenXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
-    xml = xml.replace("</PicList><PicList>", "");
+    if (xml != null) {
+      xml = xml.replace("</PicList><PicList>", "");
+    }
     return XStreamTransformer.fromXml(WxOpenXmlMessage.class, xml);
   }
 
@@ -321,6 +323,11 @@ public class WxOpenXmlMessage implements Serializable {
     WxOpenCryptUtil cryptUtil = new WxOpenCryptUtil(wxOpenConfigStorage);
     String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
+    
+    if (plainText == null || plainText.trim().isEmpty()) {
+      throw new WxRuntimeException("解密后的xml消息内容为空，请检查加密参数是否正确");
+    }
+    
     WxOpenXmlMessage wxOpenXmlMessage = fromXml(plainText);
     wxOpenXmlMessage.setContext(plainText);
     return wxOpenXmlMessage;
