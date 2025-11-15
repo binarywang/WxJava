@@ -130,6 +130,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
 
+  @Getter
+  private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
   @Override
@@ -1414,5 +1417,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public TransferService getTransferService() {
     return transferService;
+  }
+
+  @Override
+  public BusinessOperationTransferService getBusinessOperationTransferService() {
+    return businessOperationTransferService;
   }
 }

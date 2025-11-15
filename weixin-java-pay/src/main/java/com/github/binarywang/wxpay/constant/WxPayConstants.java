@@ -413,6 +413,29 @@ public class WxPayConstants {
   }
 
   /**
+   * 【运营工具转账场景ID】 运营工具专用转账场景，用于商户日常运营活动
+   * 
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
+   */
+  @UtilityClass
+  public static class OperationSceneId {
+    /**
+     * 运营工具现金营销
+     */
+    public static final String OPERATION_CASH_MARKETING = "2001";
+    
+    /**
+     * 运营工具佣金报酬
+     */
+    public static final String OPERATION_COMMISSION = "2002";
+    
+    /**
+     * 运营工具推广奖励
+     */
+    public static final String OPERATION_PROMOTION = "2003";
+  }
+
+  /**
    * 用户收款感知
    *
    * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988#3.3-%E5%8F%91%E8%B5%B7%E8%BD%AC%E8%B4%A6">官方文档</a>

@@ -1647,6 +1647,13 @@ public interface WxPayService {
   TransferService getTransferService();
 
   /**
+   * 获取运营工具-商家转账服务类
+   *
+   * @return the business operation transfer service
+   */
+  BusinessOperationTransferService getBusinessOperationTransferService();
+
+  /**
    * 获取服务商支付分服务类
    *
    * @return the partner pay score service
