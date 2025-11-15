@@ -338,6 +338,13 @@ public interface WxPayService {
   BrandMerchantTransferService getBrandMerchantTransferService();
 
   /**
+   * 获取微信支付预约扣费服务类 (连续包月功能)
+   *
+   * @return the subscription billing service
+   */
+  SubscriptionBillingService getSubscriptionBillingService();
+
+  /**
    * 设置企业付款服务类，允许开发者自定义实现类.
    *
    * @param entPayService the ent pay service

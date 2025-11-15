@@ -134,6 +134,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
 
   @Getter
+  private final SubscriptionBillingService subscriptionBillingService = new SubscriptionBillingServiceImpl(this);
+
+  @Getter
   private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
