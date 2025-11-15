@@ -170,7 +170,7 @@ public class WxMaIntracityServiceImpl implements WxMaIntracityService {
   @Override
   public WxMaStoreBalance balanceQuery(String wxStoreId, String serviceTransId, PayMode payMode)
       throws WxErrorException {
-    if (wxStoreId == null && (payMode != null && payMode != PayMode.STORE)) {
+    if (wxStoreId == null && (payMode == null || payMode == PayMode.STORE)) {
       throw new IllegalArgumentException("payMode是PAY_MODE_STORE或null时，必须传递wxStoreId");
     }
     Map<String, Object> request = new HashMap<>();
