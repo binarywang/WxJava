@@ -92,7 +92,7 @@ public class WxCpXmlMessage implements Serializable {
   private String content;
 
   @XStreamAlias("MsgId")
-  private Long msgId;
+  private String msgId;
 
   @XStreamAlias("PicUrl")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -158,6 +158,14 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("MemChangeList")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String MemChangeList;
+
+  @XStreamAlias("LastMemVer")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String lastMemVer;
+
+  @XStreamAlias("CurMemVer")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String curMemVer;
 
   @XStreamAlias("Source")
   @XStreamConverter(value = XStreamCDataConverter.class)

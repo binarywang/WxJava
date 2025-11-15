@@ -33,6 +33,19 @@ public class SignUtils {
     return genRandomStr(32);
   }
 
+  private static volatile Random random;
+
+  private static Random getRandom() {
+    if (random == null) {
+      synchronized (SignUtils.class) {
+        if (random == null) {
+          random = new Random();
+        }
+      }
+    }
+    return random;
+  }
+
   /**
    * 生成随机字符串
    *
@@ -41,10 +54,10 @@ public class SignUtils {
    */
   public static String genRandomStr(int length) {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    Random random = new Random();
+    Random r = getRandom();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < length; i++) {
-      int number = random.nextInt(base.length());
+      int number = r.nextInt(base.length());
       sb.append(base.charAt(number));
     }
     return sb.toString();

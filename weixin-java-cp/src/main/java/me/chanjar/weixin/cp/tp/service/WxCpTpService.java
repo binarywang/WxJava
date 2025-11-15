@@ -8,6 +8,7 @@ import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.cp.bean.*;
+import me.chanjar.weixin.cp.bean.message.WxCpTpXmlMessage;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 
 import java.util.List;
@@ -186,6 +187,8 @@ public interface WxCpTpService {
   @Deprecated
   WxCpTpCorp getPermanentCode(String authCode) throws WxErrorException;
 
+  WxCpTpCorp getV2PermanentCode(String authCode) throws WxErrorException;
+
   /**
    * 获取企业永久授权码信息
    * <pre>
@@ -199,6 +202,8 @@ public interface WxCpTpService {
    * @since 2020 -03-18
    */
   WxCpTpPermanentCodeInfo getPermanentCodeInfo(String authCode) throws WxErrorException;
+
+  WxCpTpPermanentCodeInfo getV2PermanentCodeInfo(String authCode) throws WxErrorException;
 
   /**
    * <pre>
@@ -343,9 +348,7 @@ public interface WxCpTpService {
    * 获取WxCpTpConfigStorage 对象.
    *
    * @return WxCpTpConfigStorage wx cp tp config storage
-   * @deprecated storage应该在service内部使用 ，提供这个接口，容易破坏这个封装
    */
-  @Deprecated
   WxCpTpConfigStorage getWxCpTpConfigStorage();
 
   /**
@@ -526,6 +529,11 @@ public interface WxCpTpService {
    * @return getCpTPLicenseService wx cp tp license service
    */
   WxCpTpLicenseService getWxCpTpLicenseService();
+
+  WxCpTpXmlMessage fromEncryptedXml(String encryptedXml,
+                                    String timestamp, String nonce, String msgSignature);
+
+  String getVerifyDecrypt(String sVerifyEchoStr);
 
   /**
    * 获取应用的管理员列表

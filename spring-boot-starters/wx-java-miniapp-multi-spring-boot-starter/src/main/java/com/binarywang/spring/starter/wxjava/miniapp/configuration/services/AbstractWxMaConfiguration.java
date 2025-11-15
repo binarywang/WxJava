@@ -125,6 +125,8 @@ public abstract class AbstractWxMaConfiguration {
     }
     config.setMsgDataFormat(properties.getMsgDataFormat());
     config.useStableAccessToken(useStableAccessToken);
+    config.setApiHostUrl(StringUtils.trimToNull(properties.getApiHostUrl()));
+    config.setAccessTokenUrl(StringUtils.trimToNull(properties.getAccessTokenUrl()));
   }
 
   private void configHttp(WxMaDefaultConfigImpl config, WxMaMultiProperties.ConfigStorage storage) {

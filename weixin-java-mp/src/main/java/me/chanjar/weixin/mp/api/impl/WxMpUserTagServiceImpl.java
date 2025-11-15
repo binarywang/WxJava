@@ -46,10 +46,10 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
   }
 
   @Override
-  public Boolean tagUpdate(Long id, String name) throws WxErrorException {
+  public Boolean tagUpdate(Long tagId, String name) throws WxErrorException {
     JsonObject json = new JsonObject();
     JsonObject tagJson = new JsonObject();
-    tagJson.addProperty("id", id);
+    tagJson.addProperty("id", tagId);
     tagJson.addProperty("name", name);
     json.add("tag", tagJson);
 
@@ -63,10 +63,10 @@ public class WxMpUserTagServiceImpl implements WxMpUserTagService {
   }
 
   @Override
-  public Boolean tagDelete(Long id) throws WxErrorException {
+  public Boolean tagDelete(Long tagId) throws WxErrorException {
     JsonObject json = new JsonObject();
     JsonObject tagJson = new JsonObject();
-    tagJson.addProperty("id", id);
+    tagJson.addProperty("id", tagId);
     json.add("tag", tagJson);
 
     String responseContent = this.wxMpService.post(TAGS_DELETE, json.toString());

@@ -631,6 +631,11 @@ public class WxCpConsts {
     public static final String MARKDOWN = "markdown";
 
     /**
+     * markdown_v2消息.
+     */
+    public static final String MARKDOWN_V2 = "markdown_v2";
+
+    /**
      * 图文消息（点击跳转到外链）.
      */
     public static final String NEWS = "news";

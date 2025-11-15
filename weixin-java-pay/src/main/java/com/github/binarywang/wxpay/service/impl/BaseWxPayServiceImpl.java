@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
@@ -34,6 +35,7 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.apache.http.entity.ContentType;
 
 import java.io.File;
 import java.io.IOException;
@@ -102,6 +104,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
 
   @Getter
+  private final WxDepositService wxDepositService = new WxDepositServiceImpl(this);
+
+  @Getter
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
 
   @Getter
@@ -130,6 +135,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Getter
   private final SubscriptionBillingService subscriptionBillingService = new SubscriptionBillingServiceImpl(this);
+
+  @Getter
+  private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
@@ -220,9 +228,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       if (StringUtils.isNotBlank(this.getConfig().getApiV3Key())) {
         throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
       }
-      return this.getConfig().getPayBaseUrl() + "/xdc/apiv2sandbox";
+      return this.getConfig().getApiHostUrl() + "/xdc/apiv2sandbox";
     }
-    return this.getConfig().getPayBaseUrl();
+    return this.getConfig().getApiHostUrl();
   }
 
   @Override
@@ -750,6 +758,14 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public <T> T createOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException {
+    WxPayUnifiedOrderV3Result result = this.unifiedOrderV3Global(tradeType, request);
+    // Convert GlobalTradeTypeEnum to TradeTypeEnum for getPayInfo method
+    TradeTypeEnum domesticTradeType = TradeTypeEnum.valueOf(tradeType.name());
+    return result.getPayInfo(domesticTradeType, request.getAppid(), request.getMchid(), this.getConfig().getPrivateKey());
+  }
+
+  @Override
   public WxPayUnifiedOrderV3Result unifiedPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException {
     if (StringUtils.isBlank(request.getSpAppid())) {
       request.setSpAppid(this.getConfig().getAppId());
@@ -789,6 +805,28 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     }
 
     String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
+  }
+
+  @Override
+  public WxPayUnifiedOrderV3Result unifiedOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException {
+    if (StringUtils.isBlank(request.getAppid())) {
+      request.setAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getMchid())) {
+      request.setMchid(this.getConfig().getMchId());
+    }
+    if (StringUtils.isBlank(request.getNotifyUrl())) {
+      request.setNotifyUrl(this.getConfig().getNotifyUrl());
+    }
+    if (StringUtils.isBlank(request.getTradeType())) {
+      request.setTradeType(tradeType.name());
+    }
+
+    // Use global WeChat Pay base URL for overseas payments
+    String globalBaseUrl = "https://apihk.mch.weixin.qq.com";
+    String url = globalBaseUrl + tradeType.getUrl();
     String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
@@ -1234,7 +1272,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     request.checkAndSign(this.getConfig());
 
     String url = "https://api.mch.weixin.qq.com/xdc/apiv2getsignkey/sign/getsignkey";
-    String responseContent = this.post(url, request.toXML(), false);
+    String responseContent = this.post(url, request.toXML(), false, ContentType.APPLICATION_XML.getMimeType());
     WxPaySandboxSignKeyResult result = BaseWxPayResult.fromXML(responseContent, WxPaySandboxSignKeyResult.class);
     result.checkResult(this, request.getSignType(), true);
     return result.getSandboxSignKey();
@@ -1385,5 +1423,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public TransferService getTransferService() {
     return transferService;
+  }
+
+  @Override
+  public BusinessOperationTransferService getBusinessOperationTransferService() {
+    return businessOperationTransferService;
   }
 }

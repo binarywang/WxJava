@@ -19,6 +19,8 @@ public abstract class AbstractWxMaConfigStorageConfiguration {
     config.setAesKey(StringUtils.trimToNull(properties.getAesKey()));
     config.setMsgDataFormat(StringUtils.trimToNull(properties.getMsgDataFormat()));
     config.useStableAccessToken(properties.isUseStableAccessToken());
+    config.setApiHostUrl(StringUtils.trimToNull(properties.getApiHostUrl()));
+    config.setAccessTokenUrl(StringUtils.trimToNull(properties.getAccessTokenUrl()));
 
     WxMaProperties.ConfigStorage configStorageProperties = properties.getConfigStorage();
     config.setHttpProxyHost(configStorageProperties.getHttpProxyHost());

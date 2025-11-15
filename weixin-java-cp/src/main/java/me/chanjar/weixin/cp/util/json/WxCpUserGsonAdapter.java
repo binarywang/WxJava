@@ -281,7 +281,12 @@ public class WxCpUserGsonAdapter implements JsonDeserializer<WxCpUser>, JsonSeri
     }
     addProperty(o, MAIN_DEPARTMENT, user.getMainDepartment());
 
-    addArrayProperty(o, DIRECT_LEADER, user.getDirectLeader());
+    // Special handling for directLeader: include empty arrays to support WeChat Work API reset functionality
+    if (user.getDirectLeader() != null) {
+      JsonArray directLeaderArray = new JsonArray();
+      Arrays.stream(user.getDirectLeader()).forEach(directLeaderArray::add);
+      o.add(DIRECT_LEADER, directLeaderArray);
+    }
 
     if (!user.getExtAttrs().isEmpty()) {
       JsonArray attrsJsonArray = new JsonArray();
