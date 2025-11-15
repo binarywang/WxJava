@@ -24,9 +24,17 @@ public class PublicCertificateVerifier implements Verifier{
 
     @Override
     public boolean verify(String serialNumber, byte[] message, String signature) {
+        // 如果序列号不包含"PUB_KEY_ID"且有证书验证器，先尝试证书验证
         if (!serialNumber.contains("PUB_KEY_ID") && this.certificateVerifier != null) {
-            return this.certificateVerifier.verify(serialNumber, message, signature);
+            try {
+                if (this.certificateVerifier.verify(serialNumber, message, signature)) {
+                    return true;
+                }
+            } catch (Exception e) {
+                // 证书验证失败，继续尝试公钥验证
+            }
         }
+        // 使用公钥验证（兜底方案，适用于公钥转账等场景）
         try {
             Signature sign = Signature.getInstance("SHA256withRSA");
             sign.initVerify(publicKey);
