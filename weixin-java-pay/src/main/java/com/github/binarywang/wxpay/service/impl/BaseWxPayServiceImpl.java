@@ -104,6 +104,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
 
   @Getter
+  private final WxDepositService wxDepositService = new WxDepositServiceImpl(this);
+
+  @Getter
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
 
   @Getter

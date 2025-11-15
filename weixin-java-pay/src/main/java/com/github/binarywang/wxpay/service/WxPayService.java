@@ -230,6 +230,13 @@ public interface WxPayService {
   WxEntrustPapService getWxEntrustPapService();
 
   /**
+   * 获取微信押金支付服务类
+   *
+   * @return deposit service
+   */
+  WxDepositService getWxDepositService();
+
+  /**
    * 获取批量转账到零钱服务类.
    *
    * @return the Batch transfer to change service
