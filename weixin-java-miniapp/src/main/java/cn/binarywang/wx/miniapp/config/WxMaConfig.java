@@ -16,9 +16,9 @@ public interface WxMaConfig {
   default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {}
 
   /**
-   * Gets access token.
+   * 获取当前的 access_token
    *
-   * @return the access token
+   * @return 当前的 access_token 字符串
    */
   String getAccessToken();
 
@@ -30,26 +30,28 @@ public interface WxMaConfig {
   // endregion
 
   /**
-   * Gets access token lock.
+   * 获取用于保护 access_token 更新的锁（线程安全用）
    *
-   * @return the access token lock
+   * @return access_token 的锁对象
    */
   Lock getAccessTokenLock();
 
   /**
-   * Is access token expired boolean.
+   * 判断 access_token 是否已过期
    *
-   * @return the boolean
+   * @return 如果已过期则返回 true，否则返回 false
    */
   boolean isAccessTokenExpired();
 
-  /** 强制将access token过期掉 */
+  /**
+   * 强制将 access_token 标记为已过期
+   */
   void expireAccessToken();
 
   /**
    * 应该是线程安全的
    *
-   * @param accessToken 要更新的WxAccessToken对象
+   * @param accessToken 要更新的 WxAccessToken 对象
    */
   default void updateAccessToken(WxAccessToken accessToken) {
     updateAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
@@ -58,8 +60,8 @@ public interface WxMaConfig {
   /**
    * 应该是线程安全的
    *
-   * @param accessToken 新的accessToken值
-   * @param expiresInSeconds 过期时间，以秒为单位
+   * @param accessToken 新的 access_token 值
+   * @param expiresInSeconds 过期时间，单位：秒
    */
   void updateAccessToken(String accessToken, int expiresInSeconds);
 
@@ -75,229 +77,237 @@ public interface WxMaConfig {
   default void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {}
 
   /**
-   * Gets jsapi ticket.
+   * 获取当前的 JSAPI ticket
    *
-   * @return the jsapi ticket
+   * @return 当前的 jsapi_ticket 字符串
    */
   String getJsapiTicket();
 
   /**
-   * Gets jsapi ticket lock.
+   * 获取用于保护 jsapi_ticket 更新的锁（线程安全用）
    *
-   * @return the jsapi ticket lock
+   * @return jsapi_ticket 的锁对象
    */
   Lock getJsapiTicketLock();
 
   /**
-   * Is jsapi ticket expired boolean.
+   * 判断 jsapi_ticket 是否已过期
    *
-   * @return the boolean
+   * @return 如果已过期则返回 true，否则返回 false
    */
   boolean isJsapiTicketExpired();
 
-  /** 强制将jsapi ticket过期掉 */
+  /**
+   * 强制将 jsapi_ticket 标记为已过期
+   */
   void expireJsapiTicket();
 
   /**
    * 应该是线程安全的
    *
-   * @param jsapiTicket 新的jsapi ticket值
-   * @param expiresInSeconds 过期时间，以秒为单位
+   * @param jsapiTicket 新的 jsapi_ticket 值
+   * @param expiresInSeconds 过期时间，单位：秒
    */
   void updateJsapiTicket(String jsapiTicket, int expiresInSeconds);
 
   /**
-   * 卡券api_ticket.
+   * 获取卡券相关的 api_ticket
    *
-   * @return the card api ticket
+   * @return 卡券 api_ticket 字符串
    */
   String getCardApiTicket();
 
   /**
-   * Gets card api ticket lock.
+   * 获取用于保护卡券 api_ticket 更新的锁（线程安全用）
    *
-   * @return the card api ticket lock
+   * @return 卡券 api_ticket 的锁对象
    */
   Lock getCardApiTicketLock();
 
   /**
-   * Is card api ticket expired boolean.
+   * 判断卡券 api_ticket 是否已过期
    *
-   * @return the boolean
+   * @return 如果已过期则返回 true，否则返回 false
    */
   boolean isCardApiTicketExpired();
 
-  /** 强制将卡券api ticket过期掉. */
+  /**
+   * 强制将卡券 api_ticket 标记为已过期
+   */
   void expireCardApiTicket();
 
   /**
-   * 应该是线程安全的.
+   * 应该是线程安全的
    *
-   * @param apiTicket 新的卡券api ticket值
-   * @param expiresInSeconds 过期时间，以秒为单位
+   * @param apiTicket 新的卡券 api_ticket 值
+   * @param expiresInSeconds 过期时间，单位：秒
    */
   void updateCardApiTicket(String apiTicket, int expiresInSeconds);
 
   /**
-   * Gets appid.
+   * 获取小程序的 appId
    *
-   * @return the appid
+   * @return 小程序的 appId
    */
   String getAppid();
 
   /**
-   * Gets secret.
+   * 获取小程序的 secret
    *
-   * @return the secret
+   * @return 小程序的 secret
    */
   String getSecret();
 
   /**
-   * Gets token.
+   * 获取消息校验用的 token
    *
-   * @return the token
+   * @return token 字符串
    */
   String getToken();
 
   /**
-   * Gets aes key.
+   * 获取消息加解密使用的 AES 密钥（用于消息加密/解密）
    *
-   * @return the aes key
+   * @return AES 密钥字符串
    */
   String getAesKey();
 
   /**
-   * Gets original id.
+   * 获取原始 ID（原始公众号/小程序 ID）
    *
-   * @return the original id
+   * @return 原始 ID 字符串
    */
   String getOriginalId();
 
   /**
-   * Gets cloud env.
+   * 获取云开发（Cloud）环境标识
    *
-   * @return the cloud env
+   * @return 云环境 ID
    */
   String getCloudEnv();
 
   /**
-   * Gets msg data format.
+   * 获取消息数据的格式（例如 json）
    *
-   * @return the msg data format
+   * @return 消息数据格式字符串
    */
   String getMsgDataFormat();
 
   /**
-   * Gets expires time.
+   * 获取 access_token 或 ticket 的过期时间（时间戳）
    *
-   * @return the expires time
+   * @return 过期时间的毫秒时间戳
    */
   long getExpiresTime();
 
   /**
-   * Gets http proxy host.
+   * 获取 HTTP 代理主机
    *
-   * @return the http proxy host
+   * @return 代理主机名或 IP
    */
   String getHttpProxyHost();
 
   /**
-   * Gets http proxy port.
+   * 获取 HTTP 代理端口
    *
-   * @return the http proxy port
+   * @return 代理端口号
    */
   int getHttpProxyPort();
 
   /**
-   * Gets http proxy username.
+   * 获取 HTTP 代理用户名
    *
-   * @return the http proxy username
+   * @return 代理用户名
    */
   String getHttpProxyUsername();
 
   /**
-   * Gets http proxy password.
+   * 获取 HTTP 代理密码
    *
-   * @return the http proxy password
+   * @return 代理密码
    */
   String getHttpProxyPassword();
 
   /**
-   * http 请求重试间隔
+   * HTTP 请求重试间隔（毫秒）
    *
    * <pre>
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
    * </pre>
+   *
+   * @return 重试间隔，单位：毫秒
    */
   int getRetrySleepMillis();
 
   /**
-   * http 请求最大重试次数
+   * HTTP 请求最大重试次数
    *
    * <pre>
    *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setMaxRetryTimes(int)}
    * </pre>
+   *
+   * @return 最大重试次数
    */
   int getMaxRetryTimes();
 
   /**
-   * http client builder
+   * 获取用于创建 HTTP 客户端的 ApacheHttpClientBuilder
    *
-   * @return ApacheHttpClientBuilder apache http client builder
+   * @return ApacheHttpClientBuilder 实例
    */
   ApacheHttpClientBuilder getApacheHttpClientBuilder();
 
   /**
-   * 是否自动刷新token
+   * 是否在 token 失效时自动刷新
    *
-   * @return the boolean
+   * @return 如果自动刷新则返回 true，否则返回 false
    */
   boolean autoRefreshToken();
 
   /**
-   * 设置自定义的apiHost地址
-   * 具体取值，可以参考https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Interface_field_description.html
+   * 设置自定义的 apiHost 地址
+   * 具体取值，可以参考 <a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Interface_field_description.html">API 域名文档</a>
    *
-   * @param apiHostUrl api域名地址
+   * @param apiHostUrl api 域名地址
    */
   void setApiHostUrl(String apiHostUrl);
 
   /**
-   * 获取自定义的apiHost地址，用于替换原请求中的https://api.weixin.qq.com
-   * 具体取值，可以参考https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Interface_field_description.html
+   * 获取自定义的 apiHost 地址，用于替换原请求中的 <a href="https://api.weixin.qq.com">https://api.weixin.qq.com</a>
+   * 具体取值，可以参考 <a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Interface_field_description.html">API 域名文档</a>
    *
-   * @return 自定义的api域名地址
+   * @return 自定义的 api 域名地址
    */
   String getApiHostUrl();
 
   /**
-   * 获取自定义的获取accessToken地址，用于向自定义统一服务获取accessToken
+   * 获取自定义的获取 accessToken 地址，用于向自定义统一服务获取 accessToken
    *
-   * @return 自定义的获取accessToken地址
+   * @return 自定义的获取 accessToken 地址
    */
   String getAccessTokenUrl();
 
   /**
-   * 设置自定义的获取accessToken地址 可用于设置获取accessToken的自定义服务
+   * 设置自定义的获取 accessToken 地址，可用于设置获取 accessToken 的自定义服务
    *
-   * @param accessTokenUrl 自定义的获取accessToken地址
+   * @param accessTokenUrl 自定义的获取 accessToken 地址
    */
   void setAccessTokenUrl(String accessTokenUrl);
 
   /**
-   * 服务端API签名用到的RSA私钥【pkcs8格式，会以 -----BEGIN PRIVATE KEY-----开头， 'BEGIN RSA PRIVATE
-   * KEY'的是pkcs1格式，需要转换（可用openssl转换）。 设置参考：
-   * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html
+   * 服务端 API 签名用到的 RSA 私钥（pkcs8 格式，会以 -----BEGIN PRIVATE KEY----- 开头，
+   * 'BEGIN RSA PRIVATE KEY' 的是 pkcs1 格式，需要转换（可用 openssl 转换）。设置参考：
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html">API 签名文档</a>
    *
-   * @return rsa private key string
+   * @return RSA 私钥字符串（pkcs8 格式）
    */
   String getApiSignatureRsaPrivateKey();
 
   /**
-   * 服务端API签名用到的AES密钥
-   * https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html
+   * 服务端 API 签名用到的 AES 密钥
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html">API 签名文档</a>
    *
-   * @return aes key string
+   * @return AES 密钥字符串
    */
   String getApiSignatureAesKey();
 
@@ -307,6 +317,6 @@ public interface WxMaConfig {
   /** 密钥对应的序号 */
   String getApiSignatureRsaPrivateKeySn();
 
-  /** 密钥对应的小程序ID （普通小程序同 appId， 托管第三方平台的是 componentAppId） */
+  /** 密钥对应的小程序 ID（普通小程序为 appId，托管第三方平台为 componentAppId） */
   String getWechatMpAppid();
 }
