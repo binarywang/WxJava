@@ -6,8 +6,6 @@ import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -127,74 +125,6 @@ public class ContentValue implements Serializable {
     private static final long serialVersionUID = 1094978100200056100L;
     @SerializedName("tips_content")
     private List<TipsContent> tipsContent;
-
-    /**
-     * Creates a simple Tips control with mixed plain text and clickable links.
-     *
-     * @param lang the language code (e.g., "zh_CN")
-     * @param textAndLinks array of objects where strings become plain text and Link objects become clickable links
-     * @return NewTips instance with the specified content
-     */
-    public static NewTips of(String lang, Object... textAndLinks) {
-      NewTips tips = new NewTips();
-      TipsContent content = new TipsContent();
-      TipsContent.Text text = new TipsContent.Text();
-      
-      List<TipsContent.SubText> subTexts = new ArrayList<>();
-      
-      for (Object item : textAndLinks) {
-        TipsContent.SubText subText = new TipsContent.SubText();
-        TipsContent.SubText.Content subContent = new TipsContent.SubText.Content();
-        
-        if (item instanceof String) {
-          // Plain text
-          TipsContent.SubText.Content.PlainText plainText = new TipsContent.SubText.Content.PlainText();
-          plainText.setContent((String) item);
-          subContent.setPlainText(plainText);
-          subText.setType(1);
-        } else if (item instanceof TipsContent.SubText.Content.Link) {
-          // Link
-          subContent.setLink((TipsContent.SubText.Content.Link) item);
-          subText.setType(2);
-        }
-        
-        subText.setContent(subContent);
-        subTexts.add(subText);
-      }
-      
-      text.setSubText(subTexts);
-      content.setText(text);
-      content.setLang(lang);
-      tips.setTipsContent(Arrays.asList(content));
-      
-      return tips;
-    }
-
-    /**
-     * Creates a simple Tips control with only plain text.
-     *
-     * @param lang the language code (e.g., "zh_CN")
-     * @param textContent the plain text content
-     * @return NewTips instance with plain text content
-     */
-    public static NewTips ofText(String lang, String textContent) {
-      return of(lang, textContent);
-    }
-
-    /**
-     * Creates a Tips control with a single clickable link.
-     *
-     * @param lang the language code (e.g., "zh_CN")
-     * @param linkTitle the display text for the link
-     * @param linkUrl the URL to link to
-     * @return NewTips instance with a single clickable link
-     */
-    public static NewTips ofLink(String lang, String linkTitle, String linkUrl) {
-      TipsContent.SubText.Content.Link link = new TipsContent.SubText.Content.Link();
-      link.setTitle(linkTitle);
-      link.setUrl(linkUrl);
-      return of(lang, link);
-    }
 
     /**
      * The type tips_content.
