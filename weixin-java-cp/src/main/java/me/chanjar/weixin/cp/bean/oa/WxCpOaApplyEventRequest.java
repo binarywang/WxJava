@@ -44,7 +44,13 @@ public class WxCpOaApplyEventRequest implements Serializable {
   private Integer chooseDepartment;
 
   /**
-   * 审批流程信息，用于指定审批申请的审批流程，支持单人审批、多人会签、多人或签，可能有多个审批节点，仅use_template_approver为0时生效。
+   * 审批流程信息（新版流程列表），用于指定审批申请的审批流程，支持单人审批、多人会签、多人或签，可能有多个审批节点，仅use_template_approver为0时生效。
+   */
+  @SerializedName("process")
+  private Process process;
+
+  /**
+   * 审批流程信息（旧版），用于指定审批申请的审批流程，支持单人审批、多人会签、多人或签，可能有多个审批节点，仅use_template_approver为0时生效。
    */
   @SerializedName("approver")
   private List<Approver> approvers;
@@ -116,6 +122,48 @@ public class WxCpOaApplyEventRequest implements Serializable {
      */
     @SerializedName("contents")
     private List<ApplyDataContent> contents;
+  }
+
+  /**
+   * 审批流程信息（新版）.
+   */
+  @Data
+  @Accessors(chain = true)
+  public static class Process implements Serializable {
+    private static final long serialVersionUID = 4758206091546930988L;
+
+    /**
+     * 审批流程节点列表，当use_template_approver为0时必填
+     */
+    @SerializedName("node_list")
+    private List<ProcessNode> nodeList;
+  }
+
+  /**
+   * 审批流程节点.
+   */
+  @Data
+  @Accessors(chain = true)
+  public static class ProcessNode implements Serializable {
+    private static final long serialVersionUID = 1758206091546930988L;
+
+    /**
+     * 节点类型：1-审批人，2-抄送人，3-抄送人
+     */
+    @SerializedName("type")
+    private Integer type;
+
+    /**
+     * 多人审批方式：1-全签，2-或签，3-依次审批
+     */
+    @SerializedName("apv_rel")
+    private Integer apvRel;
+
+    /**
+     * 审批节点审批人userid列表，若为多人会签、多人或签，需填写每个人的userid
+     */
+    @SerializedName("userid")
+    private String[] userIds;
   }
 
 }
