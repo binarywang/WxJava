@@ -26,7 +26,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class WxMaXmlOutMessage implements Serializable {
+public class WxMaXmlOutMessage implements WxMaOutMessage {
   private static final long serialVersionUID = 4241135225946919153L;
 
   @XStreamAlias("ToUserName")
@@ -45,16 +45,36 @@ public class WxMaXmlOutMessage implements Serializable {
   protected String msgType;
 
   @SuppressWarnings("unchecked")
+  @Override
   public String toXml() {
     return XStreamTransformer.toXml((Class<WxMaXmlOutMessage>) this.getClass(), this);
   }
 
   /**
+   * 转换成JSON格式（对于XML消息类型，返回XML格式）.
+   */
+  @Override
+  public String toJson() {
+    // XML消息类型默认返回XML格式
+    return toXml();
+  }
+
+  /**
    * 转换成加密的xml格式.
    */
+  @Override
   public String toEncryptedXml(WxMaConfig config) {
     String plainXml = toXml();
     WxMaCryptUtils pc = new WxMaCryptUtils(config);
     return pc.encrypt(plainXml);
+  }
+
+  /**
+   * 转换成加密的JSON格式（对于XML消息类型，返回加密的XML格式）.
+   */
+  @Override
+  public String toEncryptedJson(WxMaConfig config) {
+    // XML消息类型默认返回加密的XML格式
+    return toEncryptedXml(config);
   }
 }
