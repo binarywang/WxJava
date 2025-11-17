@@ -34,4 +34,23 @@ public class WxMaJsonOutMessageTest {
     System.out.println("Empty message JSON:");
     System.out.println(jsonResult);
   }
+
+  @Test
+  public void testImplementsInterface() {
+    WxMaJsonOutMessage message = WxMaJsonOutMessage.builder()
+      .fromUserName("test_from_user")
+      .toUserName("test_to_user")
+      .msgType(WxConsts.XmlMsgType.TEXT)
+      .createTime(System.currentTimeMillis() / 1000)
+      .build();
+
+    // Test that it implements WxMaOutMessage interface
+    WxMaOutMessage outMessage = message;
+    assertThat(outMessage).isNotNull();
+    
+    // Test both toJson and toXml methods (for JSON messages, both return JSON format)
+    assertThat(outMessage.toJson()).isNotEmpty();
+    assertThat(outMessage.toXml()).isNotEmpty();
+    assertThat(outMessage.toJson()).isEqualTo(outMessage.toXml());
+  }
 }
