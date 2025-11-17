@@ -10,7 +10,6 @@ import java.io.Serializable;
  * 微信小程序群入口信息.
  * 对应 wx.getGroupEnterInfo 接口返回的解密数据
  *
- * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/group/wx.getGroupEnterInfo.html">wx.getGroupEnterInfo 官方文档</a>
  */
 @Data
