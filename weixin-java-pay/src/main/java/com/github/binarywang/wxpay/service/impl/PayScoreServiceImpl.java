@@ -230,7 +230,7 @@ public class PayScoreServiceImpl implements PayScoreService {
     if(Strings.isNullOrEmpty(request.getAppid())){
       request.setAppid(config.getAppId());
     }
-    if(Strings.isNullOrEmpty(config.getServiceId())){
+    if(Strings.isNullOrEmpty(request.getServiceId())){
       request.setServiceId(config.getServiceId());
     }
     request.setOutOrderNo(null);
