@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class MainProductInfo implements Serializable {
 
-  private static final long serialVersionUID = -4562618835611282016L;
+  private static final long serialVersionUID = 2024061212345678901L;
 
   /**
    * 赠品数量
