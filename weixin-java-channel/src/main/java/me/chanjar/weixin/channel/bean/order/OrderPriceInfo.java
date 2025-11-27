@@ -114,7 +114,7 @@ public class OrderPriceInfo implements Serializable {
   private Integer vipDiscountedPrice;
 
   /**
-   * 订单维度一起买优惠金额
+   * 订单维度一起买优惠金额，单位为分
    */
   @JsonProperty("bulkbuy_discounted_price")
   private Integer bulkbuyDiscountedPrice;
