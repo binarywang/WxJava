@@ -132,7 +132,7 @@ public class OrderPriceInfo implements Serializable {
   private Integer cashCouponDiscountedPrice;
 
   /**
-   * 订单维度地方补贴优惠(商家出资)
+   * 订单维度地方补贴优惠金额(商家出资)，单位为分
    */
   @JsonProperty("national_subsidy_merchant_discounted_price")
   private Integer nationalSubsidyMerchantDiscountedPrice;
