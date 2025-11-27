@@ -236,7 +236,7 @@ public class OrderProductInfo implements Serializable {
   private Boolean flashSale;
 
   /**
-   * 订单内商品维度地方补贴优惠金额(商家出资)
+   * 订单内商品维度地方补贴优惠金额(商家出资)，单位为分
    */
   @JsonProperty("national_subsidy_merchant_discounted_price")
   private Integer nationalSubsidyMerchantDiscountedPrice;
