@@ -55,6 +55,7 @@ public class WxPayConfig {
   private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";
   private static final String PROBLEM_MSG = "证书文件【%s】有问题，请核实！";
   private static final String NOT_FOUND_MSG = "证书文件【%s】不存在，请核实！";
+  private static final String CERT_NAME_P12 = "p12证书";
 
   /**
    * 微信支付接口请求地址域名部分.
@@ -306,7 +307,7 @@ public class WxPayConfig {
     }
 
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书")) {
+      this.keyContent, CERT_NAME_P12)) {
       KeyStore keystore = KeyStore.getInstance("PKCS12");
       char[] partnerId2charArray = this.getMchId().toCharArray();
       keystore.load(inputStream, partnerId2charArray);
@@ -437,12 +438,34 @@ public class WxPayConfig {
 
     if (StringUtils.isNotEmpty(configString)) {
       // 判断是否为PEM格式的字符串（包含-----BEGIN和-----END标记）
-      if (configString.contains("-----BEGIN") && configString.contains("-----END")) {
+      if (isPemFormat(configString)) {
         // PEM格式直接转为字节流，让PemUtils处理
         configContent = configString.getBytes(StandardCharsets.UTF_8);
       } else {
-        // 纯Base64格式，需要先解码
-        configContent = Base64.getDecoder().decode(configString);
+        // 尝试Base64解码
+        try {
+          byte[] decoded = Base64.getDecoder().decode(configString);
+          // 检查解码后的内容是否为PEM格式（即用户传入的是base64编码的完整PEM文件）
+          String decodedString = new String(decoded, StandardCharsets.UTF_8);
+          if (isPemFormat(decodedString)) {
+            // 解码后是PEM格式，使用解码后的内容
+            configContent = decoded;
+          } else {
+            // 解码后不是PEM格式，可能是：
+            // 1. p12证书的二进制内容 - 应该返回解码后的二进制数据
+            // 2. 私钥/公钥的纯base64内容（不含PEM头尾） - 应该返回原始字符串，让PemUtils处理
+            // 通过certName区分：p12证书使用解码后的数据，其他情况返回原始字符串
+            if (CERT_NAME_P12.equals(certName)) {
+              configContent = decoded;
+            } else {
+              // 对于私钥/公钥/证书，返回原始字符串字节，让PemUtils处理base64解码
+              configContent = configString.getBytes(StandardCharsets.UTF_8);
+            }
+          }
+        } catch (IllegalArgumentException e) {
+          // Base64解码失败，可能是格式不正确，抛出异常
+          throw new WxPayException(String.format("【%s】的Base64格式不正确", certName), e);
+        }
       }
       return new ByteArrayInputStream(configContent);
     }
@@ -452,6 +475,16 @@ public class WxPayConfig {
     }
 
     return this.loadConfigInputStream(configPath);
+  }
+
+  /**
+   * 判断字符串是否为PEM格式（包含-----BEGIN和-----END标记）
+   *
+   * @param content 要检查的字符串
+   * @return 是否为PEM格式
+   */
+  private boolean isPemFormat(String content) {
+    return content != null && content.contains("-----BEGIN") && content.contains("-----END");
   }
 
 
@@ -523,7 +556,7 @@ public class WxPayConfig {
 
     // 分解p12证书文件
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书")) {
+      this.keyContent, CERT_NAME_P12)) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, key.toCharArray());
 
