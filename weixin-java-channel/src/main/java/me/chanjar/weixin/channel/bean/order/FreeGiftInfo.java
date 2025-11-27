@@ -20,6 +20,6 @@ public class FreeGiftInfo implements Serializable {
    * 赠品对应的主品信息
    */
   @JsonProperty("main_product_list")
-  private List<MainProductInfo> main_product_list;
+  private List<MainProductInfo> mainProductList;
 
 }
