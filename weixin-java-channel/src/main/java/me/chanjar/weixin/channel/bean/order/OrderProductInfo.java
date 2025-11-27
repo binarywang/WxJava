@@ -188,7 +188,7 @@ public class OrderProductInfo implements Serializable {
   private Boolean freeGift;
 
   /**
-   * 订单内商品维度会员权益优惠金额
+   * 订单内商品维度会员权益优惠金额，单位为分
    */
   @JsonProperty("vip_discounted_price")
   private Integer vipDiscountedPrice;
