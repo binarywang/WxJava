@@ -212,7 +212,7 @@ public class OrderProductInfo implements Serializable {
   private FreeGiftInfo freeGiftInfo;
 
   /**
-   * 订单内商品维度一起买优惠金额
+   * 订单内商品维度一起买优惠金额，单位为分
    */
   @JsonProperty("bulkbuy_discounted_price")
   private Integer bulkbuyDiscountedPrice;
