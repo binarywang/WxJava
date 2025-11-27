@@ -218,7 +218,7 @@ public class OrderProductInfo implements Serializable {
   private Integer bulkbuyDiscountedPrice;
 
   /**
-   * 订单内商品维度国补优惠金额
+   * 订单内商品维度国补优惠金额，单位为分
    */
   @JsonProperty("national_subsidy_discounted_price")
   private Integer nationalSubsidyDiscountedPrice;
