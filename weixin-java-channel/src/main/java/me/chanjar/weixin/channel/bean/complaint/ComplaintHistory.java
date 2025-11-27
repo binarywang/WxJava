@@ -26,7 +26,7 @@ public class ComplaintHistory implements Serializable {
 
   /** 用户联系电话 */
   @JsonProperty("phone_number")
-  private Integer phoneNumber;
+  private String phoneNumber;
 
   /** 相关文本内容 */
   @JsonProperty("content")

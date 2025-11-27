@@ -31,4 +31,12 @@ public class AfterSaleExchangeProductInfo implements Serializable {
   /** 数量 */
   @JsonProperty("product_cnt")
   private String productCnt;
+
+  /** 旧商品价格 */
+  @JsonProperty("old_sku_price")
+  private Integer oldSkuPrice;
+
+  /** 新商品价格 */
+  @JsonProperty("new_sku_price")
+  private Integer newSkuPrice;
 }
