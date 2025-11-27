@@ -441,8 +441,25 @@ public class WxPayConfig {
         // PEM格式直接转为字节流，让PemUtils处理
         configContent = configString.getBytes(StandardCharsets.UTF_8);
       } else {
-        // 纯Base64格式，需要先解码
-        configContent = Base64.getDecoder().decode(configString);
+        // 尝试Base64解码
+        byte[] decoded = Base64.getDecoder().decode(configString);
+        // 检查解码后的内容是否为PEM格式（即用户传入的是base64编码的完整PEM文件）
+        String decodedString = new String(decoded, StandardCharsets.UTF_8);
+        if (decodedString.contains("-----BEGIN") && decodedString.contains("-----END")) {
+          // 解码后是PEM格式，使用解码后的内容
+          configContent = decoded;
+        } else {
+          // 解码后不是PEM格式，可能是：
+          // 1. p12证书的二进制内容 - 应该返回解码后的二进制数据
+          // 2. 私钥/公钥的纯base64内容（不含PEM头尾） - 应该返回原始字符串，让PemUtils处理
+          // 通过certName区分：p12证书使用解码后的数据，其他情况返回原始字符串
+          if ("p12证书".equals(certName)) {
+            configContent = decoded;
+          } else {
+            // 对于私钥/公钥/证书，返回原始字符串字节，让PemUtils处理base64解码
+            configContent = configString.getBytes(StandardCharsets.UTF_8);
+          }
+        }
       }
       return new ByteArrayInputStream(configContent);
     }
