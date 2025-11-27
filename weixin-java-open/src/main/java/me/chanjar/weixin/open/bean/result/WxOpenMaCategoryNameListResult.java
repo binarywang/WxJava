@@ -10,8 +10,12 @@ import java.util.List;
 
 /**
  * 获取类目名称信息的返回结果.
+ * <p>
+ * 用于获取所有小程序类目的 ID 和名称信息，包括一级类目和二级类目。
+ * </p>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
+ * @see <a href="https://developers.weixin.qq.com/doc/oplatform/openApi/miniprogram-management/category-management/api_getallcategoryname.html">官方文档</a>
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,6 +33,12 @@ public class WxOpenMaCategoryNameListResult extends WxOpenResult {
     return WxOpenGsonBuilder.create().toJson(this);
   }
 
+  /**
+   * 类目名称信息.
+   * <p>
+   * 包含一级类目和二级类目的 ID 和名称。
+   * </p>
+   */
   @Data
   public static class CategoryName implements Serializable {
     private static final long serialVersionUID = 8989721350285449880L;
