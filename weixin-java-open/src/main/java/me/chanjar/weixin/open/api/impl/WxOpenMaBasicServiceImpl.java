@@ -146,6 +146,12 @@ public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+  @Override
+  public WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException {
+    String response = wxMaService.get(OPEN_GET_ALL_CATEGORY_NAME, "");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaCategoryNameListResult.class);
+  }
+
   /**
    * 获取订单页Path信息
    *
