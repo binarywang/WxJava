@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 电商平台提现 结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/fund/chapter3_5.shtml
  * </pre>
  */
 @Data

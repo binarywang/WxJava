@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <pre>
  * 微信支付-申请退款返回结果.
- * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml
  * </pre>
  *
  * @author thinsstar

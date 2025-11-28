@@ -39,7 +39,7 @@ public class WxPayOrderQueryRequest extends BaseWxPayRequest {
    * 示例值：1.0
    * 描述：单品优惠新增字段，区分原接口，固定填写1.0，
    * 查单接口上传version后查询结果才返回单品信息，不上传不返回单品信息。
-   * 更多信息，详见文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 更多信息，详见文档：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2
    * </pre>
    */
   @XStreamAlias("version")

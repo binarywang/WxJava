@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 发起批量转账API
  * <pre>
- * 文档地址:<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+ * 文档地址:<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer_partner/chapter3_1.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer_partner/chapter3_1.shtml</a>
  * </pre>
  *
  * @author xiaoqiang

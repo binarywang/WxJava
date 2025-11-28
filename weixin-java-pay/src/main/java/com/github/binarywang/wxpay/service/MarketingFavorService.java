@@ -15,7 +15,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-创建代金券批次API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/coupon-stocks
    * </pre>
    *
@@ -28,7 +28,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-发放代金券API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_2.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/users/{openid}/coupons
    * </pre>
    *
@@ -42,7 +42,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-激活代金券批次API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_3.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/start
    * </pre>
    *
@@ -56,7 +56,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-条件查询代金券批次列表API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_4.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks
    * </pre>
    *
@@ -69,7 +69,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-查询批次详情API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_5.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}
    * </pre>
    *
@@ -83,7 +83,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-查询代金券详情API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_6.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/users/{openid}/coupons/{coupon_id}
    * </pre>
    *
@@ -98,7 +98,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-查询代金券可用商户API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_7.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/merchants
    * </pre>
    *
@@ -114,7 +114,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-查询代金券可用单品API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_8.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/items
    * </pre>
    *
@@ -130,7 +130,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-根据商户号查用户的券API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_9.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/users/{openid}/coupons
    * </pre>
    *
@@ -143,7 +143,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-下载批次核销明细API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_10.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/use-flow
    * </pre>
    *
@@ -156,7 +156,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-下载批次退款明细API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_11.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/refund-flow
    * </pre>
    *
@@ -169,7 +169,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-设置消息通知地址API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_12.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/callbacks
    * </pre>
    *
@@ -182,7 +182,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-暂停代金券批次API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_13.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/pause
    * </pre>
    *
@@ -195,7 +195,7 @@ public interface MarketingFavorService {
   /**
    * <pre>
    * 代金券接口-重启代金券批次API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_14.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/stocks/{stock_id}/restart
    * </pre>
    *

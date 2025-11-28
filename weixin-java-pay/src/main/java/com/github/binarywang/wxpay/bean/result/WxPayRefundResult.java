@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * <pre>
  * 微信支付-申请退款返回结果.
- * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4
  * </pre>
  *
  * @author liukaitj & Binary Wang

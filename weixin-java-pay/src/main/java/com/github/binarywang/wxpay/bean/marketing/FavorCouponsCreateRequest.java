@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 发放代金券
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_2.shtml
  * </pre>
  *
  * @author thinsstar

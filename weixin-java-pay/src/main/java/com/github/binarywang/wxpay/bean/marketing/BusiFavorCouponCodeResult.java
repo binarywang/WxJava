@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 上传预存code返回对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_6.shtml
  * </pre>
  *
  * @author yujam

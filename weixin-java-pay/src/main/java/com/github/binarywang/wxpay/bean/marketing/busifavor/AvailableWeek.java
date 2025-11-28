@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 固定周期有效时间段
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_1.shtml
  * </pre>
  *
  * @author yujam

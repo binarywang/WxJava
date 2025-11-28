@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 请求URL：https://api.mch.weixin.qq.com/v3/transfer-detail/electronic-receipts
  * 请求方式：POST
  * 前置条件：只支持受理最近90天内的转账明细单
- * 接口规则：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 接口规则：https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay-1.shtml
  *
  * @author xiaoqiang
  * created on  2021-12-06

@@ -44,7 +44,7 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
    * 类型：String(32)
    * 示例值：1.0
    * 描述：单品优惠新增字段，区分原接口，固定填写1.0
-   * 更多信息，详见文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 更多信息，详见文档：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_101&index=1
    * </pre>
    */
   @XStreamAlias("version")
@@ -247,7 +247,7 @@ public class WxPayMicropayRequest extends BaseWxPayRequest {
    * 变量名：profit_sharing
    * 是否必填：否
    * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
-   * 详细参考 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
    * </pre>
    */
   @XStreamAlias("profit_sharing")

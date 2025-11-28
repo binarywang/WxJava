@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 
 /**
  * 微信支付订单和退款的异步通知，V3版本共用的响应类.
- * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_11.shtml
  *
  * @author <a href="https://github.com/0katekate0">Wang_Wong</a>
  * created on  2022-08-15

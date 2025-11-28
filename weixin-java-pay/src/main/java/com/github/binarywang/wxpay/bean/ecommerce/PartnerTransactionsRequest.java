@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 普通支付（电商收付通）API
  * <pre>
- * 文档地址:<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+ * 文档地址:<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e_transactions.shtml</a>
  * </pre>
  *
  * @author cloudX
@@ -623,7 +623,7 @@ public class PartnerTransactionsRequest implements Serializable {
      * 是否必填：是
      * 类型：string(32)
      * 描述：
-     *  地区编码，详细请见省市区编号对照表(https://pay.weixin.qq.com/doc/v3/merchant/4012068166)。
+     *  地区编码，详细请见省市区编号对照表(https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter4_1.shtml)。
      * 示例值：440305
      * </pre>
      */

@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 券发放相关规则
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_1.shtml
  * </pre>
  *
  * @author yujam

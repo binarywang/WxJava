@@ -200,7 +200,7 @@ public interface PartnerPayScoreService {
   /**
    * <pre>
    * 收付通子商户申请绑定支付分服务API.
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter9_1.shtml
    * 请求URL： https://api.mch.weixin.qq.com/v3/payscore/partner/service-account-applications
    * </pre>
    *
@@ -213,7 +213,7 @@ public interface PartnerPayScoreService {
   /**
    * <pre>
    * 查询收付通子商户服务绑定结果API.
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore_partner/chapter9_2.shtml
    * 请求URL： https://api.mch.weixin.qq.com/v3/payscore/partner/service-account-applications/{out_apply_no}
    * </pre>
    *

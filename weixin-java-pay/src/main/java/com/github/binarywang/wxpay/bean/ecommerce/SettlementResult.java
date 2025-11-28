@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 查询结算账户结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_5.shtml
  * </pre>
  */
 @Data

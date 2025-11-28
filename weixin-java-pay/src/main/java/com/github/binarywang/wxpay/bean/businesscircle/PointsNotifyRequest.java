@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 商圈积分同步
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/businesscircle/chapter3_2.shtml
  * </pre>
  *
  * @author thinsstar

@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * APP支付调用统一下单接口后的组装所需参数的实现类
- * 参考 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 参考 https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_12
  * Created by Binary Wang on 2017-9-1.
  * </pre>
  *

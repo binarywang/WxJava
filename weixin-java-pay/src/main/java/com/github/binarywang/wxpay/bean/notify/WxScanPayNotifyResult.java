@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 扫码支付通知回调类.
- * 具体定义，请查看文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 具体定义，请查看文档：https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
  * </pre>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>

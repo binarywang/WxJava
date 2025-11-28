@@ -113,7 +113,7 @@ public class RedeclareRequest implements Serializable {
    * 是否必填：是
    * 类型：string（32）
    * 描述：
-   *  海关代码, 枚举值参见参数规定-海关列表（https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   *  海关代码, 枚举值参见参数规定-海关列表（https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter2_3.shtml#menu11）
    *  示例值：SHANGHAI_ZS
    * </pre>
    */

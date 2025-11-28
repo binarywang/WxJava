@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  * 授权/解除授权服务回调通知结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter4_4.shtml
  * </pre>
  */
 @Data

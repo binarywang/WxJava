@@ -10,7 +10,7 @@ import java.io.Serializable;
  * add by 306932545@qq.com
  * 取消补差请求对象
  * <pre>
- *   https://pay.weixin.qq.com/doc/v3/partner/4012068167
+ *   https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_5_3.shtml
  * </pre>
  */
 @Data

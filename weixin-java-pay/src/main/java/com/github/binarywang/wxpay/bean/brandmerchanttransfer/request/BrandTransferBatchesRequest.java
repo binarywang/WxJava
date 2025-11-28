@@ -206,7 +206,7 @@ public class BrandTransferBatchesRequest implements Serializable {
      * 描述：
      *  接收红包的用户OpenID，该OpenID为用户在上方指定的AppID下的唯一标识。
      *  注：openid是微信用户在公众号appid下的唯一用户标识（appid不同，则获取到的openid就不同），可用于永久标记一个用户。
-     *  获取openid：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+     *  获取openid：https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml
      * 示例值：o-MYE42l80oelYMDE34nYD456Xoy
      * </pre>
      */

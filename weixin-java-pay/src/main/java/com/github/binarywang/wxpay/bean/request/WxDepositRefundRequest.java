@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * <pre>
  *   押金退款请求
- *   详见：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+ *   详见：<a href="https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_7&index=6">https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_7&index=6</a>
  * </pre>
  *
  * @author Binary Wang

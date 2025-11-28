@@ -18,7 +18,7 @@ public interface MerchantMediaService {
   /**
    * <pre>
    * 通用接口-图片上传API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/merchant/media/upload
    * </pre>
    *
@@ -31,7 +31,7 @@ public interface MerchantMediaService {
   /**
    * <pre>
    * 通用接口-图片上传API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/chapter3_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/merchant/media/upload
    * </pre>
    *

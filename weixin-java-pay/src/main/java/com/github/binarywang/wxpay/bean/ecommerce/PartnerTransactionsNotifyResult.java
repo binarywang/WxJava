@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 普通支付 通知结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_11.shtml
  * </pre>
  */
 @Data

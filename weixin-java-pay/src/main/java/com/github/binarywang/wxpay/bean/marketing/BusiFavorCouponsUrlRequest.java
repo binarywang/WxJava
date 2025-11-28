@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * H5发券请求对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_4_1.shtml
  * </pre>
  *
  * @author yujam
@@ -55,7 +55,7 @@ public class BusiFavorCouponsUrlRequest implements Serializable {
    * 描述：
    *  签名计算值。
    *  签名方式：HMAC-SHA256。
-   *  签名规则：详见《V2 签名规则》 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   *  签名规则：详见《V2 签名规则》 https://pay.weixin.qq.com/wiki/doc/api/wxpay_v2/jiekouguize/chapter1_1.shtml
    *  参与签名字段说明
    *  注意：为了安全，签名必须在后台服务器计算，禁止在H5中计算，签名 key 为微信支付 apiv2 的 signkey
    *  示例值：9A0A8659F005D6984697E2CA0A9CF3B79A0A8659F005D6984697E2CA0A9CF3B7

@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 申请单个子商户资金账单
- * 文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012068167
+ * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter4_1_25.shtml
  *
  * 适用对象：服务商
  * 请求URL：https://api.mch.weixin.qq.com/v3/bill/sub-merchant-fundflowbill

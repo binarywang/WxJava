@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 申请退券请求对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_13.shtml
  * </pre>
  *
  * @author yujam

@@ -11,7 +11,7 @@ package com.github.binarywang.wxpay.constant;
 public class WxPayErrorCode {
   /**
    * 统一下单接口的错误码.
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1
    */
   public static class UnifiedOrder {
     /**
@@ -138,7 +138,7 @@ public class WxPayErrorCode {
 
   /**
    * 关闭订单.
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_3&index=5
    */
   public static class OrderClose {
     /**
@@ -184,7 +184,7 @@ public class WxPayErrorCode {
 
   /**
    * 退款申请.
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_4&index=6
    */
   public static class Refund {
     /**
@@ -319,7 +319,7 @@ public class WxPayErrorCode {
 
   /**
    * 退款查询.
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_4&index=7
    */
   public static class RefundQuery {
     /**
@@ -406,7 +406,7 @@ public class WxPayErrorCode {
 
   /**
    * 下载对账单.
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_4&index=8
    */
   public static class DownloadBill {
     /**

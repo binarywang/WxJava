@@ -776,7 +776,7 @@ public class BaseWxPayServiceImplTest {
 
   /**
    * 测试V3支付成功回调
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_5.shtml
    *
    * @throws Exception the exception
    */
@@ -807,7 +807,7 @@ public class BaseWxPayServiceImplTest {
 
   /**
    * 测试V3退款成功回调
-   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_11.shtml
    *
    * @throws Exception the exception
    */

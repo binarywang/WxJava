@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * <pre>
  * 电商平台，可使用该接口，帮助其二级商户进件成为微信支付商户。
- * 文档地址:https://pay.weixin.qq.com/doc/v3/partner/4012068167
+ * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_1_8.shtml
  * </pre>
  */
 @Data

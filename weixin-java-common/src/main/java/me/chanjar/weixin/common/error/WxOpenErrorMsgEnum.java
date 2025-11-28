@@ -4927,9 +4927,9 @@ public enum WxOpenErrorMsgEnum {
   CODE_73214(73214, "the user is already a member"),
 
   /**
-   * 支付打通券能力已下线，请直接使用微信支付代金券API：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 支付打通券能力已下线，请直接使用微信支付代金券API：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter1_1.shtml
    */
-  CODE_73215(73215, "支付打通券能力已下线，请直接使用微信支付代金券API：https://pay.weixin.qq.com/doc/v3/merchant/4012068166"),
+  CODE_73215(73215, "支付打通券能力已下线，请直接使用微信支付代金券API：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter1_1.shtml"),
 
   /**
    * 不合法的按钮名字，请从中选择一个:使用礼品卡/立即使用/去点外卖

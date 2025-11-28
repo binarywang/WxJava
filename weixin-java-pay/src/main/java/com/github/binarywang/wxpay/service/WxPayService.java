@@ -354,7 +354,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 查询订单.
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
    * 该接口提供所有微信支付订单的查询，商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。
    * 需要调用查询接口的情况：
    * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知；
@@ -374,7 +374,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 查询订单（适合于需要自定义子商户号和子商户appid的情形）.
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
    * 该接口提供所有微信支付订单的查询，商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。
    * 需要调用查询接口的情况：
    * ◆ 当商户后台、网络、服务器等出现异常，商户系统最终未接收到支付通知；
@@ -393,7 +393,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 查询订单
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml</a>
    * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
    * 注意：
    *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
@@ -417,7 +417,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 查询订单
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_2.shtml</a>
    * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
    * 注意：
    *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
@@ -440,7 +440,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 服务商模式查询订单
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
    * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
    * 注意：
    *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
@@ -464,7 +464,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 服务商模式查询订单
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml</a>
    * 商户可以通过查询订单接口主动查询订单状态，完成下一步的业务逻辑。查询订单状态可通过微信支付订单号或商户订单号两种方式查询
    * 注意：
    *  查询订单可通过微信支付订单号和商户订单号两种方式查询，两种查询方式返回结果相同
@@ -488,7 +488,7 @@ public interface WxPayService {
    * <pre>
    * 合单查询订单API
    * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}
-   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml</a>
    * </pre>
    *
    * @param combineOutTradeNo 合单商户订单号
@@ -541,7 +541,7 @@ public interface WxPayService {
    * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
    * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
    * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
-   * 接口地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
    * </pre>
    *
    * @param outTradeNo 商户系统内部的订单号
@@ -558,7 +558,7 @@ public interface WxPayService {
    * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
    * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
    * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
-   * 接口地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
    * </pre>
    *
    * @param outTradeNo 商户系统内部的订单号
@@ -575,7 +575,7 @@ public interface WxPayService {
    * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
    * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
    * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
-   * 接口地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
    * </pre>
    *
    * @param request 关闭订单请求对象
@@ -592,7 +592,7 @@ public interface WxPayService {
    * 1、商户订单支付失败需要生成新单号重新发起支付，要对原订单号调用关单，避免重复支付；
    * 2、系统下单后，用户支付超时，系统退出不再受理，避免用户继续，请调用关单接口。
    * 注意：关单没有时间限制，建议在订单生成后间隔几分钟（最短5分钟）再调用关单接口，避免出现订单状态同步不及时导致关单失败。
-   * 接口地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 接口地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_3.shtml
    * </pre>
    *
    * @param request 关闭订单请求对象
@@ -605,7 +605,7 @@ public interface WxPayService {
    * <pre>
    * 合单关闭订单API
    * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}/close
-   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_12.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_12.shtml</a>
    * </pre>
    *
    * @param request 请求对象
@@ -636,7 +636,7 @@ public interface WxPayService {
   <T> T createOrder(WxPayConstants.TradeType.Specific<T> specificTradeType, WxPayUnifiedOrderRequest request) throws WxPayException;
 
   /**
-   * 统一下单(详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166)
+   * 统一下单(详见https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=9_1)
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
    * 接口地址：https://api.mch.weixin.qq.com/pay/unifiedorder
    *
@@ -717,7 +717,7 @@ public interface WxPayService {
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/h5
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/jsapi
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/native
-   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml</a>
    * </pre>
    *
    * @param tradeType 支付方式
@@ -735,7 +735,7 @@ public interface WxPayService {
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/h5
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/jsapi
    *  https://api.mch.weixin.qq.com/v3/combine-transactions/native
-   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_9_3.shtml</a>
    * </pre>
    *
    * @param <T>       the type parameter
@@ -748,7 +748,7 @@ public interface WxPayService {
 
   /**
    * 该接口调用“统一下单”接口，并拼装发起支付请求需要的参数.
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/app/app.php?chapter=8_5
    *
    * @param request 请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
    * @return the pay info
@@ -775,7 +775,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 微信支付-申请退款.
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4">https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_4</a>
    * 接口链接：https://api.mch.weixin.qq.com/secapi/pay/refund
    * </pre>
    *
@@ -788,7 +788,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 申请退款API（支持单品）.
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3">https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3</a>
    *
    * 应用场景
    * 当交易发生之后一段时间内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付款退还给买家，微信支付将在收到退款请求并且验证成功之后，按照退款规则将支付款按原路退到买家帐号上。
@@ -799,7 +799,7 @@ public interface WxPayService {
    * 3、请求频率限制：150qps，即每秒钟正常的申请退款请求次数不超过150次
    *     错误或无效请求频率限制：6qps，即每秒钟异常或错误的退款申请请求不超过6次
    * 4、每个支付订单的部分退款次数不能超过50次
-   * 5、本接口支持单品优惠订单全额退款和单品优惠订单部分退款，推荐使用本接口，如果使用不支持单品优惠部分退款的历史接口，请看https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 5、本接口支持单品优惠订单全额退款和单品优惠订单部分退款，推荐使用本接口，如果使用不支持单品优惠部分退款的历史接口，请看https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_4
    *
    * 接口地址
    * https://api.mch.weixin.qq.com/secapi/pay/refundv2
@@ -815,7 +815,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 申请退款API（支持单品）.
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_9.shtml</a>
    *
    * 应用场景
    * 当交易发生之后一年内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付金额退还给买家，微信支付将在收到退款请求并且验证成功之后，将支付款按原路退还至买家账号上。
@@ -854,7 +854,7 @@ public interface WxPayService {
    * 6、申请退款接口的返回仅代表业务的受理情况，具体退款是否成功，需要通过退款查询接口获取结果
    * 7、一个月之前的订单申请退款频率限制为：5000/min
    *
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml</a>
    * 接口地址
    * https://api.mch.weixin.qq.com/v3/refund/domestic/refunds
    * </pre>
@@ -871,7 +871,7 @@ public interface WxPayService {
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，
    *  银行卡支付的退款3个工作日后重新查询退款状态。
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5">https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5</a>
    * 接口链接：https://api.mch.weixin.qq.com/pay/refundquery
    * </pre>
    * 以下四个参数四选一
@@ -892,7 +892,7 @@ public interface WxPayService {
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，
    *  银行卡支付的退款3个工作日后重新查询退款状态。
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5">https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_5</a>
    * 接口链接：https://api.mch.weixin.qq.com/pay/refundquery
    * </pre>
    *
@@ -909,14 +909,14 @@ public interface WxPayService {
    *    提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，银行卡支付的退款3个工作日后重新查询退款状态。
    * 注意：
    * 1、本接口支持查询单品优惠相关退款信息，且仅支持按微信退款单号或商户退款单号查询，若继续调用老查询退款接口，
-   *    请见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   *    请见https://pay.weixin.qq.com/wiki/doc/api/jsapi_sl.php?chapter=9_5
    * 2、请求频率限制：300qps，即每秒钟正常的退款查询请求次数不超过300次
    * 3、错误或无效请求频率限制：6qps，即每秒钟异常或错误的退款查询请求不超过6次
    *
    * 接口地址
    * https://api.mch.weixin.qq.com/pay/refundqueryv2
    * https://api2.mch.weixin.qq.com/pay/refundqueryv2(备用域名)见跨城冗灾方案
-   * 详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_104&index=4">https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_104&index=4</a>
    * </pre>
    *
    * @param request 微信退款单号
@@ -930,7 +930,7 @@ public interface WxPayService {
    * 微信支付-查询退款
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，建议在提交退款申请后1分钟发起查询退款状态，一般来说零钱支付的退款5分钟内到账，银行卡支付的退款1-3个工作日到账。
-   *  详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   *  详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml</a>
    * 接口链接：https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/{out_refund_no}
    * </pre>
    *
@@ -945,7 +945,7 @@ public interface WxPayService {
    * 微信支付-查询退款-直连商户
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，建议在提交退款申请后1分钟发起查询退款状态，一般来说零钱支付的退款5分钟内到账，银行卡支付的退款1-3个工作日到账。
-   *  详见 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   *  详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_10.shtml</a>
    * 接口链接：https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/{out_refund_no}
    * </pre>
    *
@@ -960,7 +960,7 @@ public interface WxPayService {
    * 微信支付-查询退款-服务商
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，建议在提交退款申请后1分钟发起查询退款状态，一般来说零钱支付的退款5分钟内到账，银行卡支付的退款1-3个工作日到账。
-   *  详见 <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
+   *  详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_10.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_10.shtml</a>
    * 接口链接：https://api.mch.weixin.qq.com/v3/refund/domestic/refunds/{out_refund_no}?sub_mchid={sub_mchid}
    * </pre>
    *
@@ -972,7 +972,7 @@ public interface WxPayService {
 
   /**
    * 解析支付结果通知.
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
    *
    * @param xmlData the xml data
    * @return the wx pay order notify result
@@ -982,7 +982,7 @@ public interface WxPayService {
 
   /**
    * 解析支付结果通知.
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_7
    *
    * @param xmlData  the xml data
    * @param signType 签名类型
@@ -993,7 +993,7 @@ public interface WxPayService {
 
   /**
    * 解析支付结果v3通知. 直连商户模式
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
@@ -1004,7 +1004,7 @@ public interface WxPayService {
 
   /**
    * 服务商模式解析支付结果v3通知.
-   * 详见https://pay.weixin.qq.com/doc/v3/partner/4012068167
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_5.shtml
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
@@ -1015,7 +1015,7 @@ public interface WxPayService {
 
   /**
    * 支付服务商和直连商户两种模式
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
@@ -1029,7 +1029,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 合单支付通知回调数据处理
-   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_13.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_13.shtml</a>
    * </pre>
    *
    * @param notifyData 通知数据
@@ -1041,7 +1041,7 @@ public interface WxPayService {
 
   /**
    * 解析退款结果通知
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=9
    *
    * @param xmlData the xml data
    * @return the wx pay refund notify result
@@ -1051,7 +1051,7 @@ public interface WxPayService {
 
   /**
    * 解析直连商户退款结果通知
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_16&index=9
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
@@ -1084,7 +1084,7 @@ public interface WxPayService {
 
   /**
    * 解析服务商模式退款结果通知
-   * 详见https://pay.weixin.qq.com/doc/v3/partner/4012068167
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_11.shtml
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
@@ -1095,7 +1095,7 @@ public interface WxPayService {
 
   /**
    * 解析扫码支付回调通知
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
    *
    * @param xmlData  the xml data
    * @param signType 签名类型
@@ -1106,7 +1106,7 @@ public interface WxPayService {
 
   /**
    * 解析扫码支付回调通知
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
    *
    * @param xmlData the xml data
    * @return the wx scan pay notify result
@@ -1120,7 +1120,7 @@ public interface WxPayService {
    * 二维码中的内容为链接，形式为：
    * weixin://wxpay/bizpayurl?sign=XXXXX&appid=XXXXX&mch_id=XXXXX&product_id=XXXXXX&time_stamp=XXXXXX&nonce_str=XXXXX
    * 其中XXXXX为商户需要填写的内容，商户将该链接生成二维码，如需要打印发布二维码，需要采用此格式。商户可调用第三方库生成二维码图片。
-   * 文档详见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档详见: <a href="https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4">https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4</a>
    * </pre>
    *
    * @param productId  产品Id
@@ -1136,7 +1136,7 @@ public interface WxPayService {
    * 二维码中的内容为链接，形式为：
    * weixin://wxpay/bizpayurl?sign=XXXXX&appid=XXXXX&mch_id=XXXXX&product_id=XXXXXX&time_stamp=XXXXXX&nonce_str=XXXXX
    * 其中XXXXX为商户需要填写的内容，商户将该链接生成二维码，如需要打印发布二维码，需要采用此格式。商户可调用第三方库生成二维码图片。
-   * 文档详见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档详见: <a href="https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4">https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4</a>
    * </pre>
    *
    * @param productId 产品Id
@@ -1149,7 +1149,7 @@ public interface WxPayService {
    * 扫码支付模式二生成二维码的方法.
    * 对应链接格式：weixin：//wxpay/bizpayurl?sr=XXXXX。请商户调用第三方库将code_url生成二维码图片。
    * 该模式链接较短，生成的二维码打印到结账小票上的识别率较高。
-   * 文档详见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档详见: <a href="https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_5">https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_5</a>
    * </pre>
    *
    * @param codeUrl    微信返回的交易会话的二维码链接
@@ -1185,7 +1185,7 @@ public interface WxPayService {
    * 3、对账单中涉及金额的字段单位为“元”。
    * 4、对账单接口只能下载三个月以内的账单。
    * 接口链接：<a href="https://api.mch.weixin.qq.com/pay/downloadbill">https://api.mch.weixin.qq.com/pay/downloadbill</a>
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a>
    * </pre>
    *
    * @param billDate   对账单日期 bill_date 下载对账单的日期，格式：20140603
@@ -1207,7 +1207,7 @@ public interface WxPayService {
    * 3、对账单中涉及金额的字段单位为“元”。
    * 4、对账单接口只能下载三个月以内的账单。
    * 接口链接：https://api.mch.weixin.qq.com/pay/downloadbill
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a>
    * </pre>
    *
    * @param request 下载对账单请求
@@ -1226,7 +1226,7 @@ public interface WxPayService {
    * 3、对账单中涉及金额的字段单位为“元”。
    * 4、对账单接口只能下载三个月以内的账单。
    * 接口链接：https://api.mch.weixin.qq.com/pay/downloadbill
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a>
    * </pre>
    *
    * @param billDate   对账单日期 bill_date 下载对账单的日期，格式：20140603
@@ -1248,7 +1248,7 @@ public interface WxPayService {
    * 3、对账单中涉及金额的字段单位为“元”。
    * 4、对账单接口只能下载三个月以内的账单。
    * 接口链接：https://api.mch.weixin.qq.com/pay/downloadbill
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_6">下载对账单</a>
    * </pre>
    *
    * @param request 下载对账单请求
@@ -1266,7 +1266,7 @@ public interface WxPayService {
    * 2、当日账单在次日上午9点开始生成，建议商户在上午10点以后获取；
    * 3、资金账单中涉及金额的字段单位为“元”。
    * 接口链接：https://api.mch.weixin.qq.com/pay/downloadfundflow
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_18">下载对账单</a>
    * </pre>
    *
    * @param billDate    资金账单日期 bill_date 下载对账单的日期，格式：20140603
@@ -1286,7 +1286,7 @@ public interface WxPayService {
    * 2、当日账单在次日上午9点开始生成，建议商户在上午10点以后获取；
    * 3、资金账单中涉及金额的字段单位为“元”。
    * 接口链接：https://api.mch.weixin.qq.com/pay/downloadfundflow
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载对账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_18">下载对账单</a>
    * </pre>
    *
    * @param request 下载资金流水请求
@@ -1304,7 +1304,7 @@ public interface WxPayService {
    * • 对账单中涉及金额的字段单位为“元”；
    * • 对账单接口只能下载三个月以内的账单。
    * 接口链接：<a href="https://api.mch.weixin.qq.com/v3/bill/tradebill">https://api.mch.weixin.qq.com/v3/bill/tradebill</a>
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">申请交易账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_6.shtml">申请交易账单</a>
    * </pre>
    *
    * @param request 申请账单请求
@@ -1321,7 +1321,7 @@ public interface WxPayService {
    * • 资金账单中的数据反映的是商户微信支付账户资金变动情况；
    * • 对账单中涉及金额的字段单位为“元”。
    * 接口链接：<a href="https://api.mch.weixin.qq.com/v3/bill/fundflowbill">https://api.mch.weixin.qq.com/v3/bill/fundflowbill</a>
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">申请资金账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_7.shtml">申请资金账单</a>
    * </pre>
    *
    * @param request 申请账单请求
@@ -1339,7 +1339,7 @@ public interface WxPayService {
    * • 强烈建议商户将实际账单文件的哈希值和之前从接口获取到的哈希值进行比对，以确认数据的完整性。
    * • 该接口响应的信息请求头中不包含微信接口响应的签名值，因此需要跳过验签的流程
    * 接口链接：通过申请账单接口获取到“download_url”，URL有效期30s
-   * 详情请见: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">下载账单</a>
+   * 详情请见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_8.shtml">下载账单</a>
    * </pre>
    *
    * @param url 微信返回的账单地址。
@@ -1351,7 +1351,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 提交付款码支付.
-   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1">https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_10&index=1</a>
    * 应用场景：
    * 收银员使用扫码设备读取微信用户刷卡授权码以后，二维码或条码信息传送至商户收银台，由商户收银台或者商户后台调用该接口发起支付。
    * 提醒1：提交支付请求后微信会同步返回支付结果。当返回结果为“系统错误”时，商户系统等待5秒后调用【查询订单API】，查询支付实际交易结果；当返回结果为“USERPAYING”时，商户系统可设置间隔时间(建议10秒)重新查询支付结果，直到支付成功或超时(建议30秒)；
@@ -1388,7 +1388,7 @@ public interface WxPayService {
   /**
    * <pre>
    * 撤销订单API.
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_11&index=3
    * 应用场景：
    *  支付交易返回失败或支付系统超时，调用该接口撤销交易。如果此订单用户支付失败，微信支付系统会将此订单关闭；
    *  如果用户支付成功，微信支付系统会将此订单资金退还给用户。
@@ -1450,7 +1450,7 @@ public interface WxPayService {
    * <pre>
    *  转换短链接.
    *  文档地址：
-   *     <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   *     <a href="https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_9&index=8">https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_9&index=8</a>
    *  应用场景：
    *     该接口主要用于扫码原生支付模式一中的二维码链接转成短链接(weixin://wxpay/s/XXXXXX)，减小二维码数据量，提升扫描速度和精确度。
    *  接口地址：<a href="https://api.mch.weixin.qq.com/tools/shorturl">https://api.mch.weixin.qq.com/tools/shorturl</a>
@@ -1480,7 +1480,7 @@ public interface WxPayService {
    * 授权码查询OPENID接口.
    *    通过授权码查询公众号Openid，调用查询后，该授权码只能由此商户号发起扣款，直至授权码更新。
    * 文档地址：
-   *    <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
+   *    <a href="https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9">https://pay.weixin.qq.com/wiki/doc/api/micropay.php?chapter=9_13&index=9</a>
    * 接口链接:
    *    https://api.mch.weixin.qq.com/tools/authcodetoopenid
    * </pre>
@@ -1509,7 +1509,7 @@ public interface WxPayService {
    * 请求Url： https://api.mch.weixin.qq.com/xdc/apiv2getsignkey/sign/getsignkey
    * 是否需要证书： 否
    * 请求方式： POST
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_1
    * 注意: 微信暂不支持api v3
    * </pre>
    *
@@ -1523,7 +1523,7 @@ public interface WxPayService {
    * 发放代金券
    * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/send_coupon
    * 是否需要证书：请求需要双向证书。
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_3
    * </pre>
    *
    * @param request the request
@@ -1536,7 +1536,7 @@ public interface WxPayService {
    * <pre>
    * 查询代金券批次.
    * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/query_coupon_stock
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_4
    * </pre>
    *
    * @param request the request
@@ -1549,7 +1549,7 @@ public interface WxPayService {
    * <pre>
    * 查询代金券信息.
    * 接口请求链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/querycouponsinfo
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
    * </pre>
    *
    * @param request the request
@@ -1575,7 +1575,7 @@ public interface WxPayService {
    * 3. 接口只能拉取最近三个月以内的评价数据
    * 接口链接：https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment
    * 是否需要证书：需要
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=10
    * </pre>
    *
    * @param beginDate 开始时间
@@ -1597,7 +1597,7 @@ public interface WxPayService {
    * 3. 接口只能拉取最近三个月以内的评价数据
    * 接口链接：https://api.mch.weixin.qq.com/billcommentsp/batchquerycomment
    * 是否需要证书：需要
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_17&index=10
    * </pre>
    *
    * @param request 查询请求
@@ -1610,7 +1610,7 @@ public interface WxPayService {
    * <pre>
    * 获取微信刷脸支付凭证.
    * 接口请求链接：https://payapp.weixin.qq.com/face/get_wxpayface_authinfo
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_5
    * </pre>
    *
    * @param request the request
@@ -1642,7 +1642,7 @@ public interface WxPayService {
    * 查询汇率
    * <pre>
    * 应用场景：商户网站的商品以外币标价时，通过该接口可以实时查询到微信使用的转换汇率。汇率更新时间为北京时间上午10:00，一天更新一次。
-   * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/app/app_jw.php?chapter=9_15&index=12
    * 接口链接：https://api.mch.weixin.qq.com/pay/queryexchagerate
    * </pre>
    *
@@ -1655,7 +1655,7 @@ public interface WxPayService {
 
   /**
    * 解析投诉通知
-   * 详见https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 详见https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_16.shtml
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头

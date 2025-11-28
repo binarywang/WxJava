@@ -8,7 +8,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * 微信支付服务商下单回调，文档：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">文档</a>
+ * 微信支付服务商下单回调，文档：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_5.shtml">文档</a>
  *
  * @author Pursuer
  * @version 1.0
@@ -169,7 +169,7 @@ public class WxPayPartnerNotifyV3Result implements Serializable, WxPayBaseNotify
      * 是否必填：是
      * 类型：string[1,16]
      * 描述：
-     *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+     *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6
      *  示例值：CMC
      * </pre>
      */

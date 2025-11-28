@@ -50,7 +50,7 @@ public class WxPayRefundResultTest {
 
   @Test
   public void testFromXML_danpin() {
-    //样例来自：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+    //样例来自：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_103&index=3
     String xmlString = "<xml>\n" +
       "<return_code><![CDATA[SUCCESS]]></return_code>\n" +
       "<return_msg><![CDATA[OK]]></return_msg>\n" +

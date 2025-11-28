@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 普通服务商（支付机构、银行不可用），可使用本接口修改其进件、已签约的特约商户-结算账户信息。
- * 文档地址:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter3_4.shtml
  * </pre>
  */
 @Data
@@ -46,7 +46,7 @@ public class SettlementRequest implements Serializable {
    * 是否必填：是
    * 类型：string(128)
    * 描述：
-   *  请填写开户银行名称，详细参见《开户银行对照表》https://pay.weixin.qq.com/doc/v3/merchant/4012068166。
+   *  请填写开户银行名称，详细参见《开户银行对照表》https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/applyments/chapter4_1.shtml。
    * 示例值：工商银行
    * </pre>
    */

@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * 查询结算账户返回对象信息
  *
- * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">查询结算账户</a>
+ * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_4.shtml">查询结算账户</a>
  */
 @Data
 @Builder

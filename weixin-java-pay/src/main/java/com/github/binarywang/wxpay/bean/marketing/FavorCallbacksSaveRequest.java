@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 设置消息通知地址
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_12.shtml
  * </pre>
  *
  * @author thinsstar

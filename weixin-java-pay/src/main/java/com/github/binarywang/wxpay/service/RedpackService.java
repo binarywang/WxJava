@@ -18,7 +18,7 @@ public interface RedpackService {
   /**
    * <pre>
    * 发送小程序红包.
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/tools/miniprogram_hb.php?chapter=13_9&index=2
    *  接口地址：https://api.mch.weixin.qq.com/mmpaymkttransfers/sendminiprogramhb
    * </pre>
    *
@@ -32,9 +32,9 @@ public interface RedpackService {
    * 发送微信红包给个人用户.
    * <pre>
    * 文档详见:
-   * 发送普通红包 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 发送普通红包 https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
    *  接口地址：https://api.mch.weixin.qq.com/mmpaymkttransfers/sendredpack
-   * 发送裂变红包 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 发送裂变红包 https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_5&index=4
    *  接口地址：https://api.mch.weixin.qq.com/mmpaymkttransfers/sendgroupredpack
    * </pre>
    *

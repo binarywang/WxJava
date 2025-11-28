@@ -12,7 +12,7 @@ import java.io.Serializable;
  * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/out-batch-no/{out_batch_no}
  * 请求方式：GET
  * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
- * 接口规则：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 接口规则：https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay-1.shtml
  *
  * @author xiaoqiang
  * created on  2021-12-06

@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 修改批次预算请求对象
- * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_11.shtml
  *
  * @author yujam
  */

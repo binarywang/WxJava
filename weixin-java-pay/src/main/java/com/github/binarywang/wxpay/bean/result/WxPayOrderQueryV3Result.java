@@ -130,7 +130,7 @@ public class WxPayOrderQueryV3Result implements Serializable {
    * 是否必填：否
    * 类型：string[1,16]
    * 描述：
-   *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6
    *  示例值：CMC
    * </pre>
    */

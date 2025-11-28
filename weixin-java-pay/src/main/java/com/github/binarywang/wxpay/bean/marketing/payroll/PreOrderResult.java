@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 微工卡核身预下单
- * 文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012068167
+ * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter4_1_3.shtml
  *
  * 适用对象：服务商
  * 请求URL：https://api.mch.weixin.qq.com/v3/payroll-card/authentications/pre-order

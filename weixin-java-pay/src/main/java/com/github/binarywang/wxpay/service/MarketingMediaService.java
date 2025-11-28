@@ -18,7 +18,7 @@ public interface MarketingMediaService {
   /**
    * <pre>
    * 营销专用接口-图片上传API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_0_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/media/image-upload
    * </pre>
    *
@@ -31,7 +31,7 @@ public interface MarketingMediaService {
   /**
    * <pre>
    * 营销专用接口-图片上传API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_0_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/favor/media/image-upload
    * </pre>
    *

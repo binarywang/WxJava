@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * 服务商关闭订单请求对象类
- * 文档见：https://pay.weixin.qq.com/doc/v3/partner/4012068167
+ * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_3.shtml
  *
  * @author Pursuer
  * @version 1.0

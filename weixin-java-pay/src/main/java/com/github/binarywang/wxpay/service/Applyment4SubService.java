@@ -5,14 +5,14 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
  * 特约商户进件
- * 产品介绍：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * 产品介绍：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter1_1.shtml
  *
  * @author zhouyongshen
  */
 public interface Applyment4SubService {
   /**
    * 提交申请单API
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter3_1.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/applyment4sub/applyment/
    *
    * @param request 请求对象
@@ -23,7 +23,7 @@ public interface Applyment4SubService {
 
   /**
    * 通过业务申请编号查询申请状态
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter3_2.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/applyment4sub/applyment/business_code/{business_code}
    *
    * @param businessCode 业务申请编号
@@ -39,7 +39,7 @@ public interface Applyment4SubService {
 
   /**
    * 通过申请单号查询申请状态
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/tool/applyment4sub/chapter3_2.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/applyment4sub/applyment/applyment_id/{applyment_id}
    *
    * @param applymentId 微信支付分的申请单号。示例值：2000001234567890
@@ -50,7 +50,7 @@ public interface Applyment4SubService {
 
   /**
    * 根据特约子商户ID查询结算账户
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_4.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/settlement
    *
    * @param subMchid 本服务商进件、已签约的特约商户号。
@@ -61,7 +61,7 @@ public interface Applyment4SubService {
 
   /**
    * 修改结算帐号
-   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
+   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_3.shtml
    * 接口链接：https://api.mch.weixin.qq.com/v3/apply4sub/sub_merchants/{sub_mchid}/modify-settlement
    *
    * @param subMchid 特约商户号
