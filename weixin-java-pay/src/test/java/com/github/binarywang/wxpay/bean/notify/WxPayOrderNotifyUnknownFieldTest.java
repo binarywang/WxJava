@@ -19,7 +19,7 @@ import java.util.*;
  * 直接从原始 XML 解析所有字段，而不是使用 SignUtils.xmlBean2Map(this)。
  * </p>
  *
- * @see <a href="https://github.com/binarywang/WxJava/issues/XXXX">Issue链接</a>
+ * @see <a href="https://github.com/binarywang/WxJava/issues/3750">Issue #3750</a>
  */
 public class WxPayOrderNotifyUnknownFieldTest {
 
