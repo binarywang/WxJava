@@ -19,4 +19,9 @@ public enum HttpClientType {
    * JoddHttp.
    */
   JoddHttp,
+  /**
+   * HttpComponents (Apache HttpClient 5.x).
+   * 适用于 Spring Boot 3.x 环境.
+   */
+  HttpComponents,
 }
