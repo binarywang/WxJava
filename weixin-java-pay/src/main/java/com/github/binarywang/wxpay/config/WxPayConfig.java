@@ -377,6 +377,9 @@ public class WxPayConfig {
       Verifier certificatesVerifier;
       if (this.fullPublicKeyModel) {
         // 使用完全公钥模式时，只加载公钥相关配置，避免下载平台证书使灰度切换无法达到100%覆盖
+        if (publicKey == null) {
+          throw new WxPayException("完全公钥模式下，请确保公钥配置（publicKeyPath/publicKeyString/publicKeyContent）及publicKeyId已设置");
+        }
         certificatesVerifier = VerifierBuilder.buildPublicCertVerifier(this.publicKeyId, publicKey);
       } else {
         certificatesVerifier = VerifierBuilder.build(
