@@ -18,7 +18,7 @@ public interface BusinessCircleService {
   /**
    * <pre>
    * 智慧商圈接口-商圈积分同步API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/businesscircle/chapter3_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/businesscircle/points/notify
    * </pre>
    *

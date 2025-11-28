@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 根据过滤条件查询用户券返回对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_4.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author yujam

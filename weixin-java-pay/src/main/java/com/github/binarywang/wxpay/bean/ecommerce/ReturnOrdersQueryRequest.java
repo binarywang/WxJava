@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 查询分账回退结果请求
  * * <pre>
- *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_3.shtml
+ *  *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *  * </pre>
  *
  * @author wangrui

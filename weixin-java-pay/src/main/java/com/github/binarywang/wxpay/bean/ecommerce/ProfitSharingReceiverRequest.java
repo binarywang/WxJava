@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * 添加分账接收方API
  * <pre>
- * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_7.shtml
+ * 文档地址: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  */
 @Data

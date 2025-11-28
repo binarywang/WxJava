@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * 授权/解除授权服务回调通知结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter6_2_23.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012068167
  * </pre>
  */
 @Data

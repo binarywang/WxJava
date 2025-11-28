@@ -14,7 +14,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-创建商家券API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/stocks
    * </pre>
    *
@@ -27,7 +27,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-查询商家券详情API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/stocks/{stock_id}
    * </pre>
    *
@@ -40,7 +40,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-核销用户券API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/coupons/use
    * </pre>
    *
@@ -53,7 +53,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-H5发券API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_4_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://action.weixin.qq.com/busifavor/getcouponinfo
    * </pre>
    *
@@ -66,7 +66,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-根据过滤条件查询用户券API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_4.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/users/{openid}/coupons
    * </pre>
    *
@@ -79,7 +79,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-查询用户单张券详情API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/users/{openid}/coupons/{coupon_code}/appids/{appid}
    * </pre>
    *
@@ -92,7 +92,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-上传预存code API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_6.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/stocks/{stock_id}/couponcodes
    * </pre>
    *
@@ -106,7 +106,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-设置商家券事件通知地址 API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_7.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/callbacks
    * </pre>
    *
@@ -119,7 +119,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-查询商家券事件通知地址 API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_8.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/callbacks
    * </pre>
    *
@@ -132,7 +132,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-关联订单信息 API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_9.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/coupons/associate
    * </pre>
    *
@@ -145,7 +145,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-取消关联订单信息 API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_10.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/coupons/disassociate
    * </pre>
    *
@@ -158,7 +158,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-修改批次预算 API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_11.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/stocks/{stock_id}/budget
    * </pre>
    *
@@ -172,7 +172,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-创建商家券API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_12.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/stocks/{stock_id}
    * </pre>
    *
@@ -186,7 +186,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-申请退款API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_13.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/coupons/return
    * </pre>
    *
@@ -199,7 +199,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-使券失效API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_15.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/coupons/deactivate
    * </pre>
    *
@@ -212,7 +212,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-营销补差付款API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_16.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/subsidy/pay-receipts
    * </pre>
    *
@@ -225,7 +225,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-查询营销补差付款单详情API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_17.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/marketing/busifavor/subsidy/pay-receipts/{subsidy_receipt_id}
    * </pre>
    *
@@ -238,7 +238,7 @@ public interface MarketingBusiFavorService {
   /**
    * <pre>
    * 商家券接口-领券事件回调通知API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_15.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param url     回调地址

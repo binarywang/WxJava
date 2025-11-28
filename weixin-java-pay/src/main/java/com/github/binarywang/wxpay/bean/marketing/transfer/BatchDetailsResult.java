@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 微信支付明细单号查询明细单API
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer_partner/chapter3_3.shtml
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * 适用对象：服务商
  * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/{batch_id}/details/detail-id/{detail_id}

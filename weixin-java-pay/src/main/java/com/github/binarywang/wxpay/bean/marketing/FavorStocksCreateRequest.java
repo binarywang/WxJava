@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * 创建代金券批次
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_1.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

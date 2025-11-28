@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 服务商查询订单返回结果对象类
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_2.shtml
+ * 文档见：https://pay.weixin.qq.com/doc/v3/partner/4012068167
  *
  * @author Pursuer
  * @version 1.0
@@ -158,7 +158,7 @@ public class WxPayPartnerOrderQueryV3Result implements Serializable {
    * 类型：string[1,16]
    * 描述：
    *  银行类型，采用字符串类型的银行标识。
-   *  <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6">银行标识请参考《银行类型对照表》</a>
+   *  <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">银行标识请参考《银行类型对照表》</a>
    *  示例值：CMC
    * </pre>
    */

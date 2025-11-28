@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 完结分账 对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_5.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author f00lish

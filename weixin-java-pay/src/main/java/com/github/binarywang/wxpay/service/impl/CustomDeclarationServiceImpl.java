@@ -91,7 +91,7 @@ public class CustomDeclarationServiceImpl implements CustomDeclarationService {
     X509Certificate certificate = getValidCertificate();
     try {
       // 身份信息校验 RSA 加密，填充方案使用 `RSAES-PKCS1-v1_5`
-      // https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_2.shtml
+      // https://pay.weixin.qq.com/doc/v3/merchant/4012068166
       Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
       cipher.init(Cipher.ENCRYPT_MODE, certificate.getPublicKey());
 

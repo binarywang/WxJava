@@ -12,7 +12,7 @@ import java.io.Serializable;
 /**
  * <pre>
  *   查询押金订单结果
- *   详见：<a href="https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_7&index=3">https://pay.weixin.qq.com/wiki/doc/api/deposit_sl.php?chapter=27_7&index=3</a>
+ *   详见：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">https://pay.weixin.qq.com/doc/v3/merchant/4012068166</a>
  * </pre>
  *
  * @author Binary Wang

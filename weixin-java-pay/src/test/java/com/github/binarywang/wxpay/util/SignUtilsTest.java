@@ -10,7 +10,7 @@ import static org.testng.Assert.*;
 /**
  * <pre>
  * 测试中使用的测试数据参考的是官方文档，地址：
- * https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=4_3
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *  Created by BinaryWang on 2017/9/2.
  * </pre>
  *

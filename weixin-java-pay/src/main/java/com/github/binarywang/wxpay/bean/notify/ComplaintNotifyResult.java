@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 投诉通知.
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_16.shtml
+ * 文档见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author <a href="https://gitee.com/jeequan/jeepay">jmdhappy</a>
  */

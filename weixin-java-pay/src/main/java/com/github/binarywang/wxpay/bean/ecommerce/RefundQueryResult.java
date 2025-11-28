@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 查询退款结果
- * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_2.shtml
+ * 文档地址: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  */
 @Data
 @NoArgsConstructor

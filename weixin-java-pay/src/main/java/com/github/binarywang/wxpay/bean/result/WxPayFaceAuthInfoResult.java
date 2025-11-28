@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 获取微信刷脸调用凭证返回结果.
- * 详见文档：https://pay.weixin.qq.com/wiki/doc/wxfacepay/develop/sdk-android.html#获取数据-getwxpayfacerawdata
+ * 详见文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author Jmdhappy

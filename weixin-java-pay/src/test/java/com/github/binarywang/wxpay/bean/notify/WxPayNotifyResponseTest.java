@@ -46,7 +46,7 @@ public class WxPayNotifyResponseTest {
 
   /**
    * V3版本
-   * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
+   * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    */
   @Test
   public void testV3Fail() {

@@ -20,7 +20,7 @@ public interface TransferService {
    * 请求方式：POST（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/transfer/batches">请求地址</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_1.shtml">发起商家转账API</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">发起商家转账API</a>
    * </pre>
    *
    * @param request 转账请求参数
@@ -48,7 +48,7 @@ public interface TransferService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/transfer/batches/batch-id/{batch_id}">请求地址</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_2.shtml">微信批次单号查询批次单API</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信批次单号查询批次单API</a>
    * </pre>
    *
    * @param request 查询请求参数
@@ -65,7 +65,7 @@ public interface TransferService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/transfer/batches/batch-id/{batch_id}/details/detail-id/{detail_id}">请求地址</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_3.shtml">微信明细单号查询明细单API</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信明细单号查询明细单API</a>
    * </pre>
    *
    * @param batchId  微信批次单号
@@ -83,7 +83,7 @@ public interface TransferService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/transfer/batches/out-batch-no/{out_batch_no}">请求地址</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_5.shtml">商家批次单号查询批次单API</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">商家批次单号查询批次单API</a>
    * </pre>
    *
    * @param request 查询请求参数
@@ -101,7 +101,7 @@ public interface TransferService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/transfer/batches/out-batch-no/{out_batch_no}/details/out-detail-no/{out_detail_no}">请求地址</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_6.shtml">商家明细单号查询明细单API</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">商家明细单号查询明细单API</a>
    * </pre>
    *
    * @param outBatchNo  商家明细单号

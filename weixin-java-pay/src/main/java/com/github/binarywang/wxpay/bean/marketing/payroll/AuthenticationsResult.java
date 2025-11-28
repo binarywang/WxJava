@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 获取核身结果
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter4_1_4.shtml
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012068167
  *
  * 适用对象：服务商
  * 请求URL：https://api.mch.weixin.qq.com/v3/payroll-card/authentications/{authenticate_number}

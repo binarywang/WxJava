@@ -13,11 +13,11 @@ import java.security.PrivateKey;
 /**
  * <pre>
  * 使用合单支付接口，用户只输入一次密码，即可完成多个订单的支付。目前最多一次可支持50笔订单进行合单支付。
- * 参考文档：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_1.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_2.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_3.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_4.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_5.shtml
+ * 参考文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

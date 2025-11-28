@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 根据过滤条件查询用户券请求对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_4.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author yujam

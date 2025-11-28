@@ -10,7 +10,7 @@ import java.io.Serializable;
 /**
  * 垫付退款回补API结果
  * * <pre>
- *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter7_6_4.shtml
+ *  *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012068167
  *  * </pre>
  *
  * @author yantao

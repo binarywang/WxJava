@@ -21,7 +21,7 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关API
-   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_1.shtml">...</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">...</a>
    * </pre>
    *
    * @param request the request
@@ -33,7 +33,7 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关查询API
-   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_3.shtml">...</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">...</a>
    * </pre>
    *
    * @param request the request
@@ -45,7 +45,7 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 身份信息校验API
-   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_2.shtml">...</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">...</a>
    * </pre>
    *
    * @param request the request
@@ -57,7 +57,7 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关信息修改API
-   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_5.shtml">...</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">...</a>
    * </pre>
    *
    * @param request the request
@@ -69,7 +69,7 @@ public interface CustomDeclarationService {
   /**
    * <pre>
    * 报关重推API
-   * 文档地址: <a href="https://pay.weixin.qq.com/wiki/doc/api/wxpay/ch/declarecustom_ch/chapter3_4.shtml">...</a>
+   * 文档地址: <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">...</a>
    * </pre>
    *
    * @param request the request

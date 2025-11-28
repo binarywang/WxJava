@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 支付结果通知.
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_5.shtml
+ * 文档见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author thinsstar
  */
@@ -144,7 +144,7 @@ public class WxPayNotifyV3Result implements Serializable, WxPayBaseNotifyV3Resul
      * 是否必填：是
      * 类型：string[1,16]
      * 描述：
-     *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/wiki/doc/apiv3/terms_definition/chapter1_1_3.shtml#part-6
+     *  银行类型，采用字符串类型的银行标识。银行标识请参考《银行类型对照表》https://pay.weixin.qq.com/doc/v3/merchant/4012068166
      *  示例值：CMC
      * </pre>
      */

@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 请求分账 对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/profitsharing/chapter3_1.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author f00lish
@@ -139,7 +139,7 @@ public class ProfitSharingRequest implements Serializable {
      * 描述：
      *  分账接收方账号：
      *  类型是MERCHANT_ID时，是商户ID
-     *  类型是PERSONAL_OPENID时，是个人openid，openid获取方法 https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/guide/chapter2_1.shtml#menu1
+     *  类型是PERSONAL_OPENID时，是个人openid，openid获取方法 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
      *  示例值：1900000109
      * </pre>
      */

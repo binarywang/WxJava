@@ -19,7 +19,7 @@ public interface PartnerTransferService {
   /**
    * 发起批量转账API
    * 适用对象：服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter3_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches
    * 请求方式：POST
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
@@ -34,7 +34,7 @@ public interface PartnerTransferService {
    * 微信支付批次单号查询批次单API
    * 接口说明
    * 适用对象：服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter3_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/{batch_id}
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
@@ -49,7 +49,7 @@ public interface PartnerTransferService {
    * 微信支付明细单号查询明细单API
    * 接口说明
    * 适用对象：服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter3_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/batch-id/{batch_id}/details/detail-id/{detail_id}
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
@@ -66,7 +66,7 @@ public interface PartnerTransferService {
    * 商家批次单号查询批次单API
    * 接口说明
    * 适用对象：服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter3_4.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/out-batch-no/{out_batch_no}
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
@@ -81,7 +81,7 @@ public interface PartnerTransferService {
    * 商家明细单号查询明细单API
    * 接口说明
    * 适用对象：服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter3_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/partner-transfer/batches/out-batch-no/{out_batch_no}/details/out-detail-no/{out_detail_no}
    * 请求方式：GET
    * 接口限频：单个服务商 50QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
@@ -99,7 +99,7 @@ public interface PartnerTransferService {
    * 转账电子回单申请受理API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt
    * 请求方式：POST
    *
@@ -114,7 +114,7 @@ public interface PartnerTransferService {
    * 查询转账电子回单API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt/{out_batch_no}
    * 请求方式：GET
    *
@@ -128,7 +128,7 @@ public interface PartnerTransferService {
    * 转账明细电子回单受理API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_4.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/transfer-detail/electronic-receipts
    * 请求方式：POST
    * 前置条件：只支持受理最近90天内的转账明细单
@@ -143,7 +143,7 @@ public interface PartnerTransferService {
    * 查询转账明细电子回单受理结果API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/transfer-detail/electronic-receipts
    * 请求方式：GET
    * 前置条件：只支持查询最近90天内的转账明细单
@@ -158,7 +158,7 @@ public interface PartnerTransferService {
    * 下载电子回单API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：通过申请账单接口获取到“download_url”，URL有效期10min
    * 请求方式：GET
    * 前置条件：调用申请账单接口并获取到“download_url”
@@ -174,7 +174,7 @@ public interface PartnerTransferService {
    * 查询账户实时余额API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter5_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/merchant/fund/balance/{account_type}
    * 请求方式：GET
    * </pre>
@@ -188,8 +188,8 @@ public interface PartnerTransferService {
   /**
    * <pre>
    * 服务商账户日终余额
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter5_2.shtml
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/amount.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param accountType 服务商账户类型

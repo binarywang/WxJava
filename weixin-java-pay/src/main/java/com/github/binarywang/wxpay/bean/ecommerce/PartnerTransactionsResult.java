@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 普通支付 查询结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/e_transactions/chapter3_5.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  * @author cloudX
  */

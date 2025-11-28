@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 创建商家券返回对象
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_1.shtml
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author yujam
  */

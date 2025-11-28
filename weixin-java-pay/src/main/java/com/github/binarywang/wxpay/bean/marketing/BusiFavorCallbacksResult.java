@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 设置商家券事件通知地址返回对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter9_2_7.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author yujam

@@ -14,9 +14,9 @@ import java.io.Serializable;
  * 重启代金券批次
  * <pre>
  *   文档地址：
- *   https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_3.shtml
- *   https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_13.shtml
- *   https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_14.shtml
+ *   https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * 条件查询代金券批次列表
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/marketing/convention/chapter3_4.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

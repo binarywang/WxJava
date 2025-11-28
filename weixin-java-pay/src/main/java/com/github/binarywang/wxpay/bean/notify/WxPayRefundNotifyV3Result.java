@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 退款结果通知.
- * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_11.shtml
+ * 文档见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author thinsstar
  */

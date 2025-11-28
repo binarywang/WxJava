@@ -14,11 +14,11 @@ import java.security.PrivateKey;
 /**
  * <pre>
  * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"返回的结果
- * 参考文档：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_1_1.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_2_1.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_3_1.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_4_1.shtml
- * https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter3_5_1.shtml
+ * 参考文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

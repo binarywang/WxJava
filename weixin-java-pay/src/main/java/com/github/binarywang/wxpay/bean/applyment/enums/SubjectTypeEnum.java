@@ -11,7 +11,7 @@ package com.github.binarywang.wxpay.bean.applyment.enums;
  * @since 2023.01.14 新增{@link #SUBJECT_TYPE_GOVERNMENT}
  * @since 2023.09.19 移除SUBJECT_TYPE_MICRO小微主体
  * @since 2024.11.02 回退SUBJECT_TYPE_MICRO小微主体
- * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter11_1_1.shtml">服务商平台>>商户进件>>特约商户进件>>提交申请单>>请求参数>>主体资料>>主体类型</a>
+ * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">服务商平台>>商户进件>>特约商户进件>>提交申请单>>请求参数>>主体资料>>主体类型</a>
  */
 public enum SubjectTypeEnum {
   /**

@@ -26,7 +26,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分商户预授权API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions
    * </pre>
    *
@@ -40,7 +40,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分查询与用户授权记录（授权协议号）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/authorization-code/{authorization_code}
    * </pre>
    *
@@ -55,7 +55,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 解除用户授权关系（授权协议号）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/authorization-code/{authorization_code}/terminate
    * </pre>
    *
@@ -73,7 +73,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分查询与用户授权记录（openid）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_4shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/openid/{openid}
    * </pre>
    *
@@ -90,7 +90,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 解除用户授权关系（openid）API
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/permissions/openid/{openid}/terminate
    * </pre>
    *
@@ -108,7 +108,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分创建订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/serviceorder
    * </pre>
    *
@@ -121,7 +121,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分查询订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/serviceorder
    * </pre>
    *
@@ -135,7 +135,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分取消订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/serviceorder/{out_order_no}/cancel
    * </pre>
    *
@@ -149,7 +149,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分修改订单金额API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_4.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/payscore/serviceorder/{out_order_no}/modify
    * </pre>
    *
@@ -162,7 +162,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分完结订单API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/serviceorder/{out_order_no}/complete
    * </pre>
    *
@@ -175,7 +175,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分订单收款API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_6.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL：https://api.mch.weixin.qq.com/v3/payscore/serviceorder/{out_order_no}/pay
    *
    * </pre>
@@ -189,7 +189,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分订单收款API.
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter3_7.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 请求URL： https://api.mch.weixin.qq.com/v3/payscore/serviceorder/{out_order_no}/sync
    * </pre>
    *
@@ -202,7 +202,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 授权/解除授权服务回调数据处理
-   * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter4_4.shtml
+   * 文档地址: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param notifyData 通知数据
@@ -215,7 +215,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分回调内容解析方法
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param data the data
@@ -226,7 +226,7 @@ public interface PayScoreService {
   /**
    * <pre>
    * 支付分回调NotifyData解密resource
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/payscore/chapter5_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param data the data

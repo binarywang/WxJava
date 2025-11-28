@@ -14,7 +14,7 @@ import java.io.Serializable;
 /**
  * 退款结果
  * * <pre>
- *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_1.shtml
+ *  *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *  * </pre>
  *
  * @author f00lish
@@ -230,7 +230,7 @@ public class RefundsResult implements Serializable {
      * 是否必填：是
      * 类型：int
      * 描述：
-     *  代金券退款金额<=退款金额，退款金额-代金券或立减优惠退款金额为现金，说明详见《代金券或立减优惠》https://pay.weixin.qq.com/wiki/doc/api/tools/sp_coupon.php?chapter=12_1 。
+     *  代金券退款金额<=退款金额，退款金额-代金券或立减优惠退款金额为现金，说明详见《代金券或立减优惠》https://pay.weixin.qq.com/doc/v3/merchant/4012068166 。
      *  示例值：CNY
      * </pre>
      */

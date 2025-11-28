@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * <pre>
  * 统一下单请求参数对象.
- * 参考文档：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_1
+ * 参考文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * Created by Binary Wang on 2016/9/25.
  * </pre>
  *
@@ -41,7 +41,7 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    * 示例值：1.0
    * 描述：单品优惠新增字段，接口版本号，区分原接口，默认填写1.0。
    * 入参新增version后，则支付通知接口也将返回单品优惠信息字段promotion_detail，请确保支付通知的签名验证能通过。
-   * 更多信息，详见文档：https://pay.weixin.qq.com/wiki/doc/api/danpin.php?chapter=9_102&index=2
+   * 更多信息，详见文档：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    */
   @XStreamAlias("version")
@@ -347,7 +347,7 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    * 字段名：浏览器指纹.
    * 变量名：fingerprint
    * 是否必填：否
-   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/H5.php?chapter=15_7&index=6
+   * 详细参考 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    */
   @XStreamAlias("fingerprint")
@@ -358,7 +358,7 @@ public class WxPayUnifiedOrderRequest extends BaseWxPayRequest {
    * 变量名：profit_sharing
    * 是否必填：否
    * 详情：Y-是，需要分账  N-否，不分账，字母要求大写，不传默认不分账
-   * 详细参考 https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=24_3&index=3
+   * 详细参考 https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    */
   @XStreamAlias("profit_sharing")

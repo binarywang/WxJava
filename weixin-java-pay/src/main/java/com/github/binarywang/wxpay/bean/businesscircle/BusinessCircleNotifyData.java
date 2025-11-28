@@ -9,8 +9,8 @@ import java.io.Serializable;
 /**
  * 智慧商圈回调通知对象
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/businesscircle/chapter3_1.shtml
- *   https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/businesscircle/chapter3_3.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
+ *   https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

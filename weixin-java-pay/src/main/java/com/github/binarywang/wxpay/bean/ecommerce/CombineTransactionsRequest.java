@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * 合单支付API
  * <pre>
- * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/e-combine.shtml
+ * 文档地址:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  */
 @Data

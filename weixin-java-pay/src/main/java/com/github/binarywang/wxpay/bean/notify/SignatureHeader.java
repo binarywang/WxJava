@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * 微信通知接口头部信息，需要做签名验证
- * 文档地址: https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay4_1.shtml
+ * 文档地址: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author thinstar
  */

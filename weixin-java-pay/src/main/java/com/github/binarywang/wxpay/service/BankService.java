@@ -19,7 +19,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/search-banks-by-bank-account">https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/search-banks-by-bank-account</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_1.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_1.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @param accountNumber 银行卡号
@@ -36,7 +36,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/personal-banking">https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/personal-banking</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_2.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_2.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @param offset 本次查询偏移量
@@ -54,7 +54,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/corporate-banking">https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/corporate-banking</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_3.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_3.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @param offset 本次查询偏移量
@@ -73,7 +73,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/areas/provinces">https://api.mch.weixin.qq.com/v3/capital/capitallhh/areas/provinces</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_4.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_4.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @return ProvincesResult 省份列表信息
@@ -90,7 +90,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/areas/provinces/{province_code}/cities">https://api.mch.weixin.qq.com/v3/capital/capitallhh/areas/provinces/{province_code}/cities</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_5.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_5.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @return CitiesResult 城市列表信息
@@ -107,7 +107,7 @@ public interface BankService {
    * 请求方式：GET（HTTPS）
    * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/{bank_alias_code}/branches">https://api.mch.weixin.qq.com/v3/capital/capitallhh/banks/{bank_alias_code}/branches</a>
    *
-   * 文档地址：<a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_5.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/Offline/apis/chapter11_2_5.shtml</a>
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">https://pay.weixin.qq.com/doc/v3/partner/4012068167</a>
    * </pre>
    *
    * @param bankAliasCode 银行别名的编码，查询支行接口仅支持需要填写支行的银行别名编码。示例值：1000006247

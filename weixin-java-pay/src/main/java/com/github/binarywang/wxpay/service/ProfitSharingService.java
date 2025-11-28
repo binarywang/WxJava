@@ -19,7 +19,7 @@ public interface ProfitSharingService {
    * <pre>
    * 单次分账请求按照传入的分账接收方账号和资金进行分账，同时会将订单剩余的待分账金额解冻给特约商户。故操作成功后，订单不能再进行分账，也不能进行分账完结。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_1&index=1
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/secapi/pay/profitsharing
    * </pre>
    *
@@ -36,7 +36,7 @@ public interface ProfitSharingService {
    * 对同一笔订单最多能发起20次多次分账请求
    * 接口频率：30QPS
    * </pre>
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_6&index=2
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/secapi/pay/multiprofitsharing
    *
    * @param request .
@@ -50,7 +50,7 @@ public interface ProfitSharingService {
    * 请求分账API
    *
    * 微信订单支付成功后，商户发起分账请求，将结算后的资金分到分账接收方
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/orders
    *
    * 注意：
@@ -61,7 +61,7 @@ public interface ProfitSharingService {
    * @param request {@link ProfitSharingV3Request} 针对某一笔支付订单的分账方法
    * @return {@link ProfitSharingV3Result} 微信返回的分账结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_1.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingV3Result profitSharingV3(ProfitSharingV3Request request) throws WxPayException;
 
@@ -71,7 +71,7 @@ public interface ProfitSharingService {
    * 2、调用多次分账接口后，需要解冻剩余资金时，调用本接口将剩余的分账金额全部解冻给特约商户
    * 3、已调用请求单次分账后，剩余待分账金额为零，不需要再调用此接口。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_5&index=6
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/secapi/pay/profitsharingfinish
    * </pre>
    *
@@ -84,7 +84,7 @@ public interface ProfitSharingService {
   /**
    * <pre>
    * 服务商代子商户发起添加分账接收方请求，后续可通过发起分账请求将结算后的钱分到该分账接收方。
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_3&index=4
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingaddreceiver
    * </pre>
    *
@@ -97,7 +97,7 @@ public interface ProfitSharingService {
   /**
    * <pre>
    * 服务商代子商户发起删除分账接收方请求，删除后不支持将结算后的钱分到该分账接收方。
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_4&index=5
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingremovereceiver
    * </pre>
    *
@@ -112,14 +112,14 @@ public interface ProfitSharingService {
    * 添加分账接收方API
    *
    * 商户发起添加分账接收方请求，建立分账接收方列表。后续可通过发起分账请求，将分账方商户结算后的资金，分到该分账接收方
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/receivers/add
    * </pre>
    *
    * @param request 分账接收方实体 {@link ProfitSharingReceiverV3Request}
    * @return {@link ProfitSharingReceiverV3Result} 微信返回的分账接收方结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_8.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingReceiverV3Result addReceiverV3(ProfitSharingReceiverV3Request request) throws WxPayException;
 
@@ -128,14 +128,14 @@ public interface ProfitSharingService {
    * 删除分账接收方API
    *
    * 商户发起删除分账接收方请求。删除后，不支持将分账方商户结算后的资金，分到该分账接收方
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/receivers/delete
    * </pre>
    *
    * @param request 分账接收方实体 {@link ProfitSharingReceiverV3Request}
    * @return {@link ProfitSharingReceiverV3Result} 微信返回的删除的分账接收方结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_9.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingReceiverV3Result removeReceiverV3(ProfitSharingReceiverV3Request request) throws WxPayException;
 
@@ -157,7 +157,7 @@ public interface ProfitSharingService {
    * 查询分账结果API（商户平台）
    *
    * 发起分账请求后，可调用此接口查询分账结果
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/profitsharing/orders/{out_order_no}
    *
    * 注意：
@@ -168,7 +168,7 @@ public interface ProfitSharingService {
    * @param transactionId 微信支付订单号
    * @return {@link ProfitSharingV3Result} 微信返回的分账结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingV3Result profitSharingQueryV3(String outOrderNo, String transactionId) throws WxPayException;
 
@@ -177,7 +177,7 @@ public interface ProfitSharingService {
    * 查询分账结果API（服务商平台）
    *
    * 发起分账请求后，可调用此接口查询分账结果
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
    * 接口链接：https://api.mch.weixin.qq.com/v3/profitsharing/orders/{out_order_no}
    *
    * 注意：
@@ -189,7 +189,7 @@ public interface ProfitSharingService {
    * @param subMchId      微信支付分配的子商户号，即分账的出资商户号。
    * @return {@link ProfitSharingV3Result} 微信返回的分账结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_2.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">微信文档</a>
    */
   ProfitSharingV3Result profitSharingQueryV3(String outOrderNo, String transactionId, String subMchId) throws WxPayException;
 
@@ -198,7 +198,7 @@ public interface ProfitSharingService {
    * 请求分账查询API
    *
    * 发起分账请求后，可调用此接口查询分账结果
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/orders/{out_order_no}
    *
    * 注意：
@@ -208,7 +208,7 @@ public interface ProfitSharingService {
    * @param request {@link ProfitSharingQueryV3Request} 针对某一笔分账订单的分账方法
    * @return {@link ProfitSharingV3Result} 微信返回的分账查询结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_2.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingV3Result profitSharingQueryV3(ProfitSharingQueryV3Request request) throws WxPayException;
 
@@ -216,7 +216,7 @@ public interface ProfitSharingService {
    * <pre>
    * 服务商可通过调用此接口查询订单剩余待分金额。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_10&index=7
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingorderamountquery
    * </pre>
    *
@@ -231,14 +231,14 @@ public interface ProfitSharingService {
    * 查询剩余待分金额API
    *
    * 可调用此接口查询订单剩余待分金额
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/transactions/{transaction_id}/amounts
    * </pre>
    *
    * @param transactionId 微信订单号，微信支付订单号
    * @return {@link ProfitSharingOrderAmountQueryV3Result} 微信返回的订单剩余待分金额结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_6.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingOrderAmountQueryV3Result profitSharingUnsplitAmountQueryV3(String transactionId) throws WxPayException;
 
@@ -246,7 +246,7 @@ public interface ProfitSharingService {
    * <pre>
    * 服务商可以查询子商户设置的允许服务商分账的最大比例。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_11&index=8
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：	https://api.mch.weixin.qq.com/pay/profitsharingmerchantratioquery
    * </pre>
    *
@@ -261,14 +261,14 @@ public interface ProfitSharingService {
    * 查询最大分账比例
    *
    * 可调用此接口查询特约商户设置的允许服务商分账的最大比例
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_7.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/merchant-configs/{sub_mchid}
    * </pre>
    *
    * @param subMchId 子商户号（微信支付分配的子商户号，即分账的出资商户号）
    * @return {@link ProfitSharingMerchantRatioQueryV3Result} 特约商户设置的允许服务商分账的最大比例结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_7.shtml">服务商平台>>API字典>>资金应用>>分账>>查询最大分账比例</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">服务商平台>>API字典>>资金应用>>分账>>查询最大分账比例</a>
    * @since 4.4.0
    * @date 2022-12-09
    */
@@ -282,7 +282,7 @@ public interface ProfitSharingService {
    * 此接口采用同步处理模式，即在接收到商户请求后，会实时返回处理结果。
    * 此功能需要接收方在商户平台-交易中心-分账-分账接收设置下，开启同意分账回退后，才能使用。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_7&index=7
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/secapi/pay/profitsharingreturn
    * </pre>
    *
@@ -297,7 +297,7 @@ public interface ProfitSharingService {
    * 请求分账回退API
    *
    * 如果订单已经分账，在退款时，可以先调此接口，将已分账的资金从分账接收方的账户回退给分账方，再发起退款
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/return-orders
    *
    * 注意：
@@ -311,7 +311,7 @@ public interface ProfitSharingService {
    * @param request {@link ProfitSharingReturnV3Request} 针对某一笔支付订单的分账方法
    * @return {@link ProfitSharingReturnV3Result} 微信返回的分账回退结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_3.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingReturnV3Result profitSharingReturnV3(ProfitSharingReturnV3Request request) throws WxPayException;
 
@@ -321,7 +321,7 @@ public interface ProfitSharingService {
    * 商户需要核实回退结果，可调用此接口查询回退结果。
    * 如果分账回退接口返回状态为处理中，可调用此接口查询回退结果。
    * 接口频率：30QPS
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/allocation_sl.php?chapter=25_8&index=8
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/pay/profitsharingreturnquery
    * </pre>
    *
@@ -336,7 +336,7 @@ public interface ProfitSharingService {
    * 查询分账回退结果API（商户平台）
    *
    * 商户需要核实回退结果，可调用此接口查询回退结果
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_4.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/v3/profitsharing/return-orders/{out_return_no}
    *
    * 注意：
@@ -347,7 +347,7 @@ public interface ProfitSharingService {
    * @param outReturnNo 调用回退接口提供的商户系统内部的回退单号
    * @return {@link ProfitSharingReturnV3Result} 微信返回的分账回退结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_4.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingReturnV3Result profitSharingReturnQueryV3(String outOrderNo, String outReturnNo) throws WxPayException;
 
@@ -356,7 +356,7 @@ public interface ProfitSharingService {
    * 查询分账回退结果API（服务商平台）
    *
    * 商户需要核实回退结果，可调用此接口查询回退结果
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_3.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
    * 接口链接：https://api.mch.weixin.qq.com/v3/profitsharing/return-orders/{out_return_no}
    *
    * 注意：
@@ -368,7 +368,7 @@ public interface ProfitSharingService {
    * @param subMchId      微信支付分配的子商户号，即分账的回退方商户号。
    * @return {@link ProfitSharingReturnV3Result} 微信返回的分账回退结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_3.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">微信文档</a>
    */
   ProfitSharingReturnV3Result profitSharingReturnQueryV3(String outOrderNo, String outReturnNo, String subMchId) throws WxPayException;
 
@@ -377,7 +377,7 @@ public interface ProfitSharingService {
    * 解冻剩余资金API
    *
    * 不需要进行分账的订单，可直接调用本接口将订单的金额全部解冻给特约商户
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/orders/unfreeze
    *
    * 注意：
@@ -388,7 +388,7 @@ public interface ProfitSharingService {
    * @param request 解冻剩余资金请求实体 {@link ProfitSharingUnfreezeV3Request}
    * @return {@link ProfitSharingReturnV3Result} 微信返回的解冻剩余资金结果
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_5.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingUnfreezeV3Result profitSharingUnfreeze(ProfitSharingUnfreezeV3Request request) throws WxPayException;
 
@@ -398,14 +398,14 @@ public interface ProfitSharingService {
    *
    * 分账或分账回退成功后，微信会把相关变动结果发送给分账接收方（只支持商户）。
    * 对后台通知交互时，如果微信收到应答不是成功或超时，微信认为通知失败，微信会通过一定的策略定期重新发起通知，尽可能提高通知的成功率，但微信不保证通知最终能成功。
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_10.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * </pre>
    *
    * @param notifyData 分账通知实体
    * @param header     分账通知头 {@link SignatureHeader}
    * @return {@link ProfitSharingNotifyV3Response} 资源对象
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter8_1_10.shtml">微信文档</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012068166">微信文档</a>
    */
   ProfitSharingNotifyV3Result parseProfitSharingNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
@@ -414,14 +414,14 @@ public interface ProfitSharingService {
    * 申请分账账单
    *
    * 微信支付按天提供分账账单文件，商户可以通过该接口获取账单文件的下载地址
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_11.shtml
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/partner/4012068167
    * 接口链接: https://api.mch.weixin.qq.com/v3/profitsharing/bills
    * </pre>
    *
    * @param request 申请分账账单请求实体（{@link ProfitSharingBillV3Request}）
    * @return {@link ProfitSharingBillV3Result} 申请分账账单结果类
    * @throws WxPayException the wx pay exception
-   * @see <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter8_1_11.shtml">服务商平台>>API字典>>资金应用>>分账>>申请分账账单API</a>
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4012068167">服务商平台>>API字典>>资金应用>>分账>>申请分账账单API</a>
    * @since 4.4.0
    * @date 2022-12-09
    */

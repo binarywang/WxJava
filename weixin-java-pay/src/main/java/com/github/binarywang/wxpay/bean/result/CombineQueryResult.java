@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <pre>
  * 商户通过合单查询订单API查询订单状态，完成下一步的业务逻辑。
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_11.shtml
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

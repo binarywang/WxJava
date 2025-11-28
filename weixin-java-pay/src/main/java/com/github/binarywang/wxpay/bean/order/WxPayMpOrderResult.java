@@ -11,7 +11,7 @@ import java.io.Serializable;
 /**
  * <pre>
  * 微信公众号支付进行统一下单后组装所需参数的类
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=7_7&index=6
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * Created by Binary Wang on 2017-9-1.
  * </pre>
  *

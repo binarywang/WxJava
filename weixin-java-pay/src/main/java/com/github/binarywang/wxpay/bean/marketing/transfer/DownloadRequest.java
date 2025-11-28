@@ -13,7 +13,7 @@ import java.io.Serializable;
  * 请求URL：通过申请账单接口获取到“download_url”，URL有效期10min
  * 请求方式：GET
  * 前置条件：调用申请账单接口并获取到“download_url”
- * 接口规则：https://pay.weixin.qq.com/wiki/doc/apiv3/wechatpay/wechatpay-1.shtml
+ * 接口规则：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author xiaoqiang
  * created on  2021-12-06

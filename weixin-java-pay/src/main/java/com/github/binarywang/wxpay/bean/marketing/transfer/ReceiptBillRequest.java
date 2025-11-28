@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 转账电子回单申请受理API
  * <pre>
- * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_1.shtml
+ * 文档地址:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author xiaoqiang

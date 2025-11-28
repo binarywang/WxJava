@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 /**
  * 向微信用户个人发现金红包返回结果
- * https://pay.weixin.qq.com/wiki/doc/api/tools/cash_coupon.php?chapter=13_4&index=3
+ * https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *
  * @author kane
  */

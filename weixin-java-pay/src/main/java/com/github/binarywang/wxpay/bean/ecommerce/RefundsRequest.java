@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 退款申请
  * * <pre>
- *  *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/ecommerce/refunds/chapter3_1.shtml
+ *  *   文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  *  * </pre>
  *
  * @author f00lish

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * <pre>
  * 合单支付订单只能使用此合单关单api完成关单。
- * 文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter5_1_12.shtml
+ * 文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar

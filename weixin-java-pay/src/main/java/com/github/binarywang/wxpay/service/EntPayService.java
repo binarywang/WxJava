@@ -20,7 +20,7 @@ public interface EntPayService {
    * 比如目前的保险行业向客户退保、给付、理赔。
    * 企业付款将使用商户的可用余额，需确保可用余额充足。查看可用余额、充值、提现请登录商户平台“资金管理”https://pay.weixin.qq.com/进行操作。
    * 注意：与商户微信支付收款资金并非同一账户，需要单独充值。
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_2
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/promotion/transfers
    * </pre>
    *
@@ -34,7 +34,7 @@ public interface EntPayService {
    * <pre>
    * 查询企业付款API.
    * 用于商户的企业付款操作进行结果查询，返回付款操作详细结果。
-   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
+   * 文档详见:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo
    * </pre>
    *
@@ -47,7 +47,7 @@ public interface EntPayService {
    * <pre>
    * 查询企业付款API.
    * 用于商户的企业付款操作进行结果查询，返回付款操作详细结果。
-   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=14_3
+   * 文档详见:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaymkttransfers/gettransferinfo
    * </pre>
    *
@@ -69,7 +69,7 @@ public interface EntPayService {
    * 5、 将密文传给微信侧相应字段，如付款接口（enc_bank_no/enc_true_name）
    *
    * 接口默认输出PKCS#1格式的公钥，商户需根据自己开发的语言选择公钥格式
-   * 文档详见:https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_7&index=4
+   * 文档详见:https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://fraud.mch.weixin.qq.com/risk/getpublickey
    * </pre>
    *
@@ -83,7 +83,7 @@ public interface EntPayService {
    * <pre>
    * 用于企业向微信用户银行卡付款
    * 目前支持接口API的方式向指定微信用户的银行卡付款。
-   * 文档详见：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_2
+   * 文档详见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaysptrans/pay_bank
    * </pre>
    *
@@ -97,7 +97,7 @@ public interface EntPayService {
    * 企业付款到银行卡查询.
    * <pre>
    * 用于对商户企业付款到银行卡操作进行结果查询，返回付款操作详细结果。
-   * 文档详见：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_3
+   * 文档详见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaysptrans/query_bank
    * </pre>
    *
@@ -111,7 +111,7 @@ public interface EntPayService {
    * 企业付款到银行卡查询.
    * <pre>
    * 用于对商户企业付款到银行卡操作进行结果查询，返回付款操作详细结果。
-   * 文档详见：https://pay.weixin.qq.com/wiki/doc/api/tools/mch_pay.php?chapter=24_3
+   * 文档详见：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
    * 接口链接：https://api.mch.weixin.qq.com/mmpaysptrans/query_bank
    * </pre>
    *

@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 商圈退款成功通知内容
  * <pre>
- *  文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/businesscircle/chapter3_3.shtml
+ *  文档地址：https://pay.weixin.qq.com/doc/v3/merchant/4012068166
  * </pre>
  *
  * @author thinsstar
