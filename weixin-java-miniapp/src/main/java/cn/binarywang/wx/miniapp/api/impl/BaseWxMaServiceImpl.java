@@ -113,6 +113,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private final WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
   private final WxMaCustomserviceWorkService customserviceWorkService = new WxMaCustomserviceWorkServiceImpl(this);
+  private final WxMaKefuService maKefuService = new WxMaKefuServiceImpl(this);
   private final WxMaInternetService internetService = new WxMaInternetServiceImpl(this);
   private final WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
   private final WxMaJsapiService jsapiService = new WxMaJsapiServiceImpl(this);
@@ -656,6 +657,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaCustomserviceWorkService getCustomserviceWorkService() {
     return this.customserviceWorkService;
+  }
+
+  @Override
+  public WxMaKefuService getKefuService() {
+    return this.maKefuService;
   }
 
   @Override
