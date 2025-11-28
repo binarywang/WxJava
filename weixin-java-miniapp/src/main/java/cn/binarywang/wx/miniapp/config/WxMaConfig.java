@@ -319,4 +319,28 @@ public interface WxMaConfig {
 
   /** 密钥对应的小程序 ID（普通小程序为 appId，托管第三方平台为 componentAppId） */
   String getWechatMpAppid();
+
+  /**
+   * 是否使用微信云托管内网模式
+   * 当部署在微信云托管环境时，api.weixin.qq.com 会被解析为内网地址，此时需要使用 HTTP 协议访问
+   * 开启此配置后，SDK 会自动将 https://api.weixin.qq.com 替换为 http://api.weixin.qq.com
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/weixin/open.html">微信云托管内网调用微信接口</a>
+   * @return 是否使用微信云托管模式
+   */
+  default boolean isUseWxCloudRun() {
+    return false;
+  }
+
+  /**
+   * 设置是否使用微信云托管内网模式
+   * 当部署在微信云托管环境时，api.weixin.qq.com 会被解析为内网地址，此时需要使用 HTTP 协议访问
+   * 开启此配置后，SDK 会自动将 https://api.weixin.qq.com 替换为 http://api.weixin.qq.com
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/weixin/open.html">微信云托管内网调用微信接口</a>
+   * @param useWxCloudRun 是否使用微信云托管模式
+   */
+  default void setUseWxCloudRun(boolean useWxCloudRun) {
+    // 默认空实现
+  }
 }
