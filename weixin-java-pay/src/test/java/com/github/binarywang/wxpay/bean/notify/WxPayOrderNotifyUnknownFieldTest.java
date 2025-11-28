@@ -1,9 +1,6 @@
 package com.github.binarywang.wxpay.bean.notify;
 
-import com.github.binarywang.wxpay.bean.result.BaseWxPayResult;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
-import com.github.binarywang.wxpay.util.SignUtils;
-import com.github.binarywang.wxpay.util.XmlConfig;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,7 +8,18 @@ import org.testng.annotations.Test;
 import java.util.*;
 
 /**
- * 测试当 XML 包含未知字段时，签名验证是否正常
+ * 测试当微信支付回调 XML 包含未在 Java Bean 中定义的字段时，签名验证是否正常。
+ * <p>
+ * 问题背景：当微信返回的 XML 包含某些未在 WxPayOrderNotifyResult 中定义的字段时，
+ * 这些字段会被微信服务器用于签名计算。如果 toMap() 方法丢失了这些字段，
+ * 则签名验证会失败，抛出 "参数格式校验错误！" 异常。
+ * </p>
+ * <p>
+ * 解决方案：修改 WxPayOrderNotifyResult.toMap() 方法，使用父类的 toMap() 方法
+ * 直接从原始 XML 解析所有字段，而不是使用 SignUtils.xmlBean2Map(this)。
+ * </p>
+ *
+ * @see <a href="https://github.com/binarywang/WxJava/issues/XXXX">Issue链接</a>
  */
 public class WxPayOrderNotifyUnknownFieldTest {
 
@@ -77,7 +85,7 @@ public class WxPayOrderNotifyUnknownFieldTest {
     System.out.println("原始签名: " + result.getSign());
     System.out.println("计算签名: " + verifySign);
     
-    // 这个测试应该会失败，因为 toMap() 丢失了 unknown_field
+    // 这个测试验证修复后 toMap() 能正确包含所有字段
     Assert.assertTrue(hasUnknownField, "toMap() 应该包含 unknown_field");
     Assert.assertEquals(verifySign, result.getSign(), "签名应该匹配");
   }

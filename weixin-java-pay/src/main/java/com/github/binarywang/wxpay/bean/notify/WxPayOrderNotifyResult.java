@@ -342,7 +342,9 @@ public class WxPayOrderNotifyResult extends BaseWxPayResult implements Serializa
 
   @Override
   public Map<String, String> toMap() {
-    Map<String, String> resultMap = SignUtils.xmlBean2Map(this);
+    // 使用父类的 toMap() 方法，直接从原始 XML 解析所有字段，
+    // 确保包含未在 Java Bean 中定义的字段，避免签名验证失败
+    Map<String, String> resultMap = super.toMap();
     if (this.getCouponCount() != null && this.getCouponCount() > 0) {
       for (int i = 0; i < this.getCouponCount(); i++) {
         WxPayOrderNotifyCoupon coupon = couponList.get(i);
