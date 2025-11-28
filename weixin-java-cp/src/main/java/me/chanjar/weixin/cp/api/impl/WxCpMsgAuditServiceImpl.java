@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpMsgAuditService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.msgaudit.*;
+import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
@@ -35,20 +36,59 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.MsgAudit.*;
 public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   private final WxCpService cpService;
 
+  /**
+   * SDK初始化有效期，根据企微文档为7200秒
+   */
+  private static final int SDK_EXPIRES_TIME = 7200;
+
   @Override
   public WxCpChatDatas getChatDatas(long seq, @NonNull long limit, String proxy, String passwd,
                                     @NonNull long timeout) throws Exception {
-    String configPath = cpService.getWxCpConfigStorage().getMsgAuditLibPath();
+    // 获取或初始化SDK
+    long sdk = this.initSdk();
+
+    long slice = Finance.NewSlice();
+    long ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
+    if (ret != 0) {
+      Finance.FreeSlice(slice);
+      throw new WxErrorException("getchatdata err ret " + ret);
+    }
+
+    // 拉取会话存档
+    String content = Finance.GetContentFromSlice(slice);
+    Finance.FreeSlice(slice);
+    WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
+    if (chatDatas.getErrCode().intValue() != 0) {
+      throw new WxErrorException(chatDatas.toJson());
+    }
+
+    chatDatas.setSdk(sdk);
+    return chatDatas;
+  }
+
+  /**
+   * 获取或初始化SDK，如果SDK已过期则重新初始化
+   *
+   * @return sdk id
+   * @throws WxErrorException 初始化失败时抛出异常
+   */
+  private synchronized long initSdk() throws WxErrorException {
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 检查SDK是否已缓存且未过期
+    if (!configStorage.isMsgAuditSdkExpired()) {
+      long cachedSdk = configStorage.getMsgAuditSdk();
+      if (cachedSdk > 0) {
+        return cachedSdk;
+      }
+    }
+
+    // SDK未初始化或已过期，需要重新初始化
+    String configPath = configStorage.getMsgAuditLibPath();
     if (StringUtils.isEmpty(configPath)) {
       throw new WxErrorException("请配置会话存档sdk文件的路径，不要配错了！！");
     }
 
-    /**
-     * 完整的文件库路径：
-     *
-     * /www/osfile/libcrypto-1_1-x64.dll,libssl-1_1-x64.dll,libcurl-x64.dll,WeWorkFinanceSdk.dll,
-     * libWeWorkFinanceSdk_Java.so
-     */
     // 替换斜杠
     String replacePath = configPath.replace("\\", "/");
     // 获取最后一个斜杠的下标，用作分割路径
@@ -79,36 +119,22 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
     Finance.loadingLibraries(osLib, prefixPath);
     long sdk = Finance.NewSdk();
-    //因为会话存档单独有个secret,优先使用会话存档的secret
-    String msgAuditSecret = cpService.getWxCpConfigStorage().getMsgAuditSecret();
+    // 因为会话存档单独有个secret,优先使用会话存档的secret
+    String msgAuditSecret = configStorage.getMsgAuditSecret();
     if (StringUtils.isEmpty(msgAuditSecret)) {
-      msgAuditSecret = cpService.getWxCpConfigStorage().getCorpSecret();
+      msgAuditSecret = configStorage.getCorpSecret();
     }
-    long ret = Finance.Init(sdk, cpService.getWxCpConfigStorage().getCorpId(), msgAuditSecret);
+    long ret = Finance.Init(sdk, configStorage.getCorpId(), msgAuditSecret);
     if (ret != 0) {
       Finance.DestroySdk(sdk);
       throw new WxErrorException("init sdk err ret " + ret);
     }
 
-    long slice = Finance.NewSlice();
-    ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
-    if (ret != 0) {
-      Finance.FreeSlice(slice);
-      Finance.DestroySdk(sdk);
-      throw new WxErrorException("getchatdata err ret " + ret);
-    }
+    // 缓存SDK
+    configStorage.updateMsgAuditSdk(sdk, SDK_EXPIRES_TIME);
+    log.debug("初始化会话存档SDK成功，sdk={}", sdk);
 
-    // 拉取会话存档
-    String content = Finance.GetContentFromSlice(slice);
-    Finance.FreeSlice(slice);
-    WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
-    if (chatDatas.getErrCode().intValue() != 0) {
-      Finance.DestroySdk(sdk);
-      throw new WxErrorException(chatDatas.toJson());
-    }
-
-    chatDatas.setSdk(sdk);
-    return chatDatas;
+    return sdk;
   }
 
   @Override
@@ -128,36 +154,27 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
    * @throws Exception the exception
    */
   public String decryptChatData(long sdk, WxCpChatDatas.WxCpChatData chatData, Integer pkcs1) throws Exception {
-    /**
-     * 企业获取的会话内容，使用企业自行配置的消息加密公钥进行加密，企业可用自行保存的私钥解开会话内容数据。
-     * msgAuditPriKey 会话存档私钥不能为空
-     */
+    // 企业获取的会话内容，使用企业自行配置的消息加密公钥进行加密，企业可用自行保存的私钥解开会话内容数据。
+    // msgAuditPriKey 会话存档私钥不能为空
     String priKey = cpService.getWxCpConfigStorage().getMsgAuditPriKey();
     if (StringUtils.isEmpty(priKey)) {
       throw new WxErrorException("请配置会话存档私钥【msgAuditPriKey】");
     }
 
     String decryptByPriKey = WxCpCryptUtil.decryptPriKey(chatData.getEncryptRandomKey(), priKey, pkcs1);
-    /**
-     * 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
-     */
+    // 每次使用DecryptData解密会话存档前需要调用NewSlice获取一个slice，在使用完slice中数据后，还需要调用FreeSlice释放。
     long msg = Finance.NewSlice();
 
-    /**
-     * 解密会话存档内容
-     * sdk不会要求用户传入rsa私钥，保证用户会话存档数据只有自己能够解密。
-     * 此处需要用户先用rsa私钥解密encrypt_random_key后，作为encrypt_key参数传入sdk来解密encrypt_chat_msg获取会话存档明文。
-     */
+    // 解密会话存档内容
+    // sdk不会要求用户传入rsa私钥，保证用户会话存档数据只有自己能够解密。
+    // 此处需要用户先用rsa私钥解密encrypt_random_key后，作为encrypt_key参数传入sdk来解密encrypt_chat_msg获取会话存档明文。
     int ret = Finance.DecryptData(sdk, decryptByPriKey, chatData.getEncryptChatMsg(), msg);
     if (ret != 0) {
       Finance.FreeSlice(msg);
-      Finance.DestroySdk(sdk);
       throw new WxErrorException("msg err ret " + ret);
     }
 
-    /**
-     * 明文
-     */
+    // 明文
     String plainText = Finance.GetContentFromSlice(msg);
     Finance.FreeSlice(msg);
     return plainText;
@@ -209,7 +226,6 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       ret = Finance.GetMediaData(sdk, indexbuf, sdkfileid, proxy, passwd, timeout, mediaData);
       if (ret != 0) {
         Finance.FreeMediaData(mediaData);
-        Finance.DestroySdk(sdk);
         throw new WxErrorException("getmediadata err ret " + ret);
       }
 

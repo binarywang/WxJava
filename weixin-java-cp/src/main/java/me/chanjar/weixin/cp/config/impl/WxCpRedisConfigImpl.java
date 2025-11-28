@@ -50,6 +50,11 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile File tmpDirFile;
   private volatile ApacheHttpClientBuilder apacheHttpClientBuilder;
   private volatile String webhookKey;
+  /**
+   * 会话存档SDK及其过期时间（SDK是本地JVM变量，不适合存储到Redis）
+   */
+  private volatile long msgAuditSdk;
+  private volatile long msgAuditSdkExpiresTime;
 
   /**
    * Instantiates a new Wx cp redis config.
@@ -469,5 +474,27 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public String getMsgAuditSecret() {
     return null;
+  }
+
+  @Override
+  public long getMsgAuditSdk() {
+    return this.msgAuditSdk;
+  }
+
+  @Override
+  public boolean isMsgAuditSdkExpired() {
+    return System.currentTimeMillis() > this.msgAuditSdkExpiresTime;
+  }
+
+  @Override
+  public synchronized void updateMsgAuditSdk(long sdk, int expiresInSeconds) {
+    this.msgAuditSdk = sdk;
+    // 预留200秒的时间
+    this.msgAuditSdkExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+  }
+
+  @Override
+  public void expireMsgAuditSdk() {
+    this.msgAuditSdkExpiresTime = 0;
   }
 }
