@@ -64,14 +64,10 @@ public class WxMaServiceHttpClientImpl extends BaseWxMaServiceImpl {
 
   @Override
   protected String doGetAccessTokenRequest() throws IOException {
-
     String url = StringUtils.isNotEmpty(this.getWxMaConfig().getAccessTokenUrl()) ?
-      this.getWxMaConfig().getAccessTokenUrl() : StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
-      WxMaService.GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
-      this.getWxMaConfig().isUseWxCloudRun() ?
-      WxMaService.GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com") :
-      WxMaService.GET_ACCESS_TOKEN_URL;
-
+      this.getWxMaConfig().getAccessTokenUrl() :
+      WxMaService.GET_ACCESS_TOKEN_URL.replace(
+        WxMaConfig.DEFAULT_API_HOST_URL, this.getWxMaConfig().getEffectiveApiHostUrl());
 
     url = String.format(url, this.getWxMaConfig().getAppid(), this.getWxMaConfig().getSecret());
 
@@ -86,11 +82,9 @@ public class WxMaServiceHttpClientImpl extends BaseWxMaServiceImpl {
   @Override
   protected String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException {
     String url = StringUtils.isNotEmpty(this.getWxMaConfig().getAccessTokenUrl()) ?
-      this.getWxMaConfig().getAccessTokenUrl() : StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
-      GET_STABLE_ACCESS_TOKEN.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
-      this.getWxMaConfig().isUseWxCloudRun() ?
-      GET_STABLE_ACCESS_TOKEN.replace("https://api.weixin.qq.com", "http://api.weixin.qq.com") :
-      GET_STABLE_ACCESS_TOKEN;
+      this.getWxMaConfig().getAccessTokenUrl() :
+      GET_STABLE_ACCESS_TOKEN.replace(
+        WxMaConfig.DEFAULT_API_HOST_URL, this.getWxMaConfig().getEffectiveApiHostUrl());
 
     HttpPost httpPost = new HttpPost(url);
     if (this.getRequestHttpProxy() != null) {
