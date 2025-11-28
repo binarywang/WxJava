@@ -912,6 +912,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     String rndStr = UUID.randomUUID().toString().replace("-", "").substring(0, 30);
     String aesKey = this.getWxMaConfig().getApiSignatureAesKey();
     String aesKeySn = this.getWxMaConfig().getApiSignatureAesKeySn();
+    String rsaKeySn = this.getWxMaConfig().getApiSignatureRsaPrivateKeySn();
+    if (rsaKeySn == null || rsaKeySn.isEmpty()) {
+      throw new SecurityException("ApiSignatureRsaPrivateKeySn不能为空，请检查配置");
+    }
 
     jsonObject.addProperty("_n", rndStr);
     jsonObject.addProperty("_appid", appId);
@@ -956,7 +960,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       String requestJson = reqData.toString();
 
       // 计算签名 RSA
-      String payload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + requestJson;
+      String payload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + rsaKeySn + "\n" + requestJson;
       byte[] dataBuffer = payload.getBytes(StandardCharsets.UTF_8);
       RSAPrivateKey priKey;
       try {
@@ -985,6 +989,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       header.put("Wechatmp-Signature", signatureString);
       header.put("Wechatmp-Appid", appId);
       header.put("Wechatmp-TimeStamp", String.valueOf(timestamp));
+      header.put("Wechatmp-Serial", rsaKeySn);
       log.debug("发送请求uri:{}, headers:{}, postData:{}", url, header, requestJson);
       WxMaApiResponse response =
           this.execute(ApiSignaturePostRequestExecutor.create(this), url, header, requestJson);
