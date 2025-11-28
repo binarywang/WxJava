@@ -36,4 +36,9 @@ public class AfterSaleRejectReason implements Serializable {
   @JsonProperty("reject_reason")
   private String rejectReason;
 
+  /**
+   * 售后拒绝原因适用场景
+   */
+  @JsonProperty("reject_scene")
+  private Integer rejectScene;
 }

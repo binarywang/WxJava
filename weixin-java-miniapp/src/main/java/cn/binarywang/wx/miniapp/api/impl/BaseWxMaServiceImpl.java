@@ -113,6 +113,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaAnalysisService analysisService = new WxMaAnalysisServiceImpl(this);
   private final WxMaCodeService codeService = new WxMaCodeServiceImpl(this);
   private final WxMaCustomserviceWorkService customserviceWorkService = new WxMaCustomserviceWorkServiceImpl(this);
+  private final WxMaKefuService maKefuService = new WxMaKefuServiceImpl(this);
   private final WxMaInternetService internetService = new WxMaInternetServiceImpl(this);
   private final WxMaSettingService settingService = new WxMaSettingServiceImpl(this);
   private final WxMaJsapiService jsapiService = new WxMaJsapiServiceImpl(this);
@@ -165,6 +166,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       new WxMaExpressDeliveryReturnServiceImpl(this);
   private final WxMaPromotionService wxMaPromotionService = new WxMaPromotionServiceImpl(this);
   private final WxMaIntracityService intracityService = new WxMaIntracityServiceImpl(this);
+  private final WxMaComplaintService complaintService = new WxMaComplaintServiceImpl(this);
 
   private Map<String, WxMaConfig> configMap = new HashMap<>();
   private int retrySleepMillis = 1000;
@@ -658,6 +660,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  public WxMaKefuService getKefuService() {
+    return this.maKefuService;
+  }
+
+  @Override
   public WxMaJsapiService getJsapiService() {
     return this.jsapiService;
   }
@@ -1029,5 +1036,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaIntracityService getIntracityService() {
     return this.intracityService;
+  }
+
+  @Override
+  public WxMaComplaintService getComplaintService() {
+    return this.complaintService;
   }
 }

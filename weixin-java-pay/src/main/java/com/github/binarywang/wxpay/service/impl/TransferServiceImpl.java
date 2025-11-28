@@ -124,4 +124,85 @@ public class TransferServiceImpl implements TransferService {
   public TransferBillsNotifyResult parseTransferBillsNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
     return this.payService.baseParseOrderNotifyV3Result(notifyData, header, TransferBillsNotifyResult.class, TransferBillsNotifyResult.DecryptNotifyResult.class);
   }
+
+  // ===================== 用户授权免确认模式相关接口实现 =====================
+
+  @Override
+  public UserAuthorizationStatusResult getUserAuthorizationStatus(String openid, String transferSceneId) throws WxPayException {
+    String url = String.format("%s/v3/fund-app/mch-transfer/authorization/openid/%s?transfer_scene_id=%s",
+      this.payService.getPayBaseUrl(), openid, transferSceneId);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, UserAuthorizationStatusResult.class);
+  }
+
+  @Override
+  public ReservationTransferBatchResult reservationTransferBatch(ReservationTransferBatchRequest request) throws WxPayException {
+    String url = String.format("%s/v3/fund-app/mch-transfer/reservation/transfer-batches", this.payService.getPayBaseUrl());
+    List<ReservationTransferBatchRequest.TransferDetail> transferDetailList = request.getTransferDetailList();
+    if (transferDetailList != null && !transferDetailList.isEmpty()) {
+      X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+      for (ReservationTransferBatchRequest.TransferDetail detail : transferDetailList) {
+        if (detail.getUserName() != null && !detail.getUserName().isEmpty()) {
+          RsaCryptoUtil.encryptFields(detail, validCertificate);
+        }
+      }
+    }
+    String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(result, ReservationTransferBatchResult.class);
+  }
+
+  @Override
+  public ReservationTransferBatchGetResult getReservationTransferBatchByOutBatchNo(String outBatchNo, Boolean needQueryDetail,
+                                                                                   Integer offset, Integer limit, String detailState) throws WxPayException {
+    String url = buildReservationBatchQueryUrl("out-batch-no", outBatchNo, needQueryDetail, offset, limit, detailState);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, ReservationTransferBatchGetResult.class);
+  }
+
+  @Override
+  public ReservationTransferBatchGetResult getReservationTransferBatchByReservationBatchNo(String reservationBatchNo, Boolean needQueryDetail,
+                                                                                           Integer offset, Integer limit, String detailState) throws WxPayException {
+    String url = buildReservationBatchQueryUrl("reservation-batch-no", reservationBatchNo, needQueryDetail, offset, limit, detailState);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, ReservationTransferBatchGetResult.class);
+  }
+
+  private String buildReservationBatchQueryUrl(String batchNoType, String batchNo, Boolean needQueryDetail,
+                                               Integer offset, Integer limit, String detailState) {
+    StringBuilder url = new StringBuilder();
+    url.append(this.payService.getPayBaseUrl())
+      .append("/v3/fund-app/mch-transfer/reservation/transfer-batches/")
+      .append(batchNoType).append("/").append(batchNo);
+
+    boolean hasParams = false;
+    if (needQueryDetail != null) {
+      url.append("?need_query_detail=").append(needQueryDetail);
+      hasParams = true;
+    }
+    if (offset != null) {
+      url.append(hasParams ? "&" : "?").append("offset=").append(offset);
+      hasParams = true;
+    }
+    if (limit != null) {
+      url.append(hasParams ? "&" : "?").append("limit=").append(limit);
+      hasParams = true;
+    }
+    if (detailState != null && !detailState.isEmpty()) {
+      url.append(hasParams ? "&" : "?").append("detail_state=").append(detailState);
+    }
+    return url.toString();
+  }
+
+  @Override
+  public ReservationTransferNotifyResult parseReservationTransferNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.payService.baseParseOrderNotifyV3Result(notifyData, header, ReservationTransferNotifyResult.class,
+      ReservationTransferNotifyResult.DecryptNotifyResult.class);
+  }
+
+  @Override
+  public void closeReservationTransferBatch(String outBatchNo) throws WxPayException {
+    String url = String.format("%s/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/%s/close",
+      this.payService.getPayBaseUrl(), outBatchNo);
+    this.payService.postV3(url, "");
+  }
 }

@@ -139,4 +139,16 @@ public class SpuInfo extends SpuSimpleInfo {
   /** 尺码表信息 */
   @JsonProperty("size_chart")
   private SpuSizeChart sizeChart;
+
+  /** 短标题 */
+  @JsonProperty("short_title")
+  private String shortTitle;
+
+  /** 销量	 */
+  @JsonProperty("total_sold_num")
+  private Integer totalSoldNum;
+
+  /** 发布模式，0: 普通模式；1: 极简模式 */
+  @JsonProperty("release_mode")
+  private Integer releaseMode;
 }
