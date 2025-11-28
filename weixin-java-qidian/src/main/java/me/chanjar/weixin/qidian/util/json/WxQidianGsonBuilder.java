@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 
 import java.io.File;
-import java.util.Objects;
 
 /**
  * @author someone
@@ -15,7 +14,6 @@ import java.util.Objects;
 public class WxQidianGsonBuilder {
 
   private static final GsonBuilder INSTANCE = new GsonBuilder();
-  private static volatile Gson GSON_INSTANCE;
 
   static {
     INSTANCE.disableHtmlEscaping();
@@ -34,14 +32,7 @@ public class WxQidianGsonBuilder {
   }
 
   public static Gson create() {
-    if (Objects.isNull(GSON_INSTANCE)) {
-      synchronized (INSTANCE) {
-        if (Objects.isNull(GSON_INSTANCE)) {
-          GSON_INSTANCE = INSTANCE.create();
-        }
-      }
-    }
-    return GSON_INSTANCE;
+    return INSTANCE.create();
   }
 
 }
