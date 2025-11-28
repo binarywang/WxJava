@@ -319,4 +319,50 @@ public interface WxMaConfig {
 
   /** 密钥对应的小程序 ID（普通小程序为 appId，托管第三方平台为 componentAppId） */
   String getWechatMpAppid();
+
+  /** 微信 API 默认主机地址 */
+  String DEFAULT_API_HOST_URL = "https://api.weixin.qq.com";
+  /** 微信云托管使用的 HTTP 协议主机地址 */
+  String CLOUD_RUN_API_HOST_URL = "http://api.weixin.qq.com";
+
+  /**
+   * 是否使用微信云托管内网模式
+   * 当部署在微信云托管环境时，api.weixin.qq.com 会被解析为内网地址，此时需要使用 HTTP 协议访问
+   * 开启此配置后，SDK 会自动将 https://api.weixin.qq.com 替换为 http://api.weixin.qq.com
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/weixin/open.html">微信云托管内网调用微信接口</a>
+   * @return 是否使用微信云托管模式
+   */
+  default boolean isUseWxCloudRun() {
+    return false;
+  }
+
+  /**
+   * 设置是否使用微信云托管内网模式
+   * 当部署在微信云托管环境时，api.weixin.qq.com 会被解析为内网地址，此时需要使用 HTTP 协议访问
+   * 开启此配置后，SDK 会自动将 https://api.weixin.qq.com 替换为 http://api.weixin.qq.com
+   *
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/wxcloudservice/wxcloudrun/src/guide/weixin/open.html">微信云托管内网调用微信接口</a>
+   * @param useWxCloudRun 是否使用微信云托管模式
+   */
+  default void setUseWxCloudRun(boolean useWxCloudRun) {
+    // 默认空实现
+  }
+
+  /**
+   * 根据配置获取实际应使用的 API 主机地址
+   * 优先级：自定义 apiHostUrl > 微信云托管模式 > 默认 HTTPS 地址
+   *
+   * @return 实际应使用的 API 主机地址
+   */
+  default String getEffectiveApiHostUrl() {
+    String apiHostUrl = getApiHostUrl();
+    if (apiHostUrl != null && !apiHostUrl.isEmpty()) {
+      return apiHostUrl;
+    }
+    if (isUseWxCloudRun()) {
+      return CLOUD_RUN_API_HOST_URL;
+    }
+    return DEFAULT_API_HOST_URL;
+  }
 }

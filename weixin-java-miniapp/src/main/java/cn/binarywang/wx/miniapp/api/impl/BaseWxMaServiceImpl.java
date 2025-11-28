@@ -427,8 +427,9 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     }
     String accessToken = getAccessToken(false);
 
-    if (StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl())) {
-      uri = uri.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl());
+    String effectiveApiHostUrl = this.getWxMaConfig().getEffectiveApiHostUrl();
+    if (!WxMaConfig.DEFAULT_API_HOST_URL.equals(effectiveApiHostUrl)) {
+      uri = uri.replace(WxMaConfig.DEFAULT_API_HOST_URL, effectiveApiHostUrl);
     }
 
     String uriWithAccessToken =
