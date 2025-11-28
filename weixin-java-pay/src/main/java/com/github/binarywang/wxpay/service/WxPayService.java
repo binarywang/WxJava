@@ -841,6 +841,32 @@ public interface WxPayService {
 
   /**
    * <pre>
+   * 微信支付-服务商申请退款.
+   * 应用场景
+   * 当交易发生之后一年内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付金额退还给买家，微信支付将在收到退款请求并且验证成功之后，将支付款按原路退还至买家账号上。
+   *
+   * 注意：
+   * 1、交易时间超过一年的订单无法提交退款
+   * 2、微信支付退款支持单笔交易分多次退款（不超50次），多次退款需要提交原支付订单的商户订单号和设置不同的退款单号。申请退款总金额不能超过订单金额。 一笔退款失败后重新提交，请不要更换退款单号，请使用原商户退款单号
+   * 3、错误或无效请求频率限制：6qps，即每秒钟异常或错误的退款申请请求不超过6次
+   * 4、每个支付订单的部分退款次数不能超过50次
+   * 5、如果同一个用户有多笔退款，建议分不同批次进行退款，避免并发退款导致退款失败
+   * 6、申请退款接口的返回仅代表业务的受理情况，具体退款是否成功，需要通过退款查询接口获取结果
+   * 7、一个月之前的订单申请退款频率限制为：5000/min
+   *
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml</a>
+   * 接口地址
+   * https://api.mch.weixin.qq.com/v3/refund/domestic/refunds
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return 退款操作结果 wx pay refund result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayRefundV3Result partnerRefundV3(WxPayPartnerRefundV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
    * 微信支付-查询退款.
    * 应用场景：
    *  提交退款申请后，通过调用该接口查询退款状态。退款有一定延时，用零钱支付的退款20分钟内到账，

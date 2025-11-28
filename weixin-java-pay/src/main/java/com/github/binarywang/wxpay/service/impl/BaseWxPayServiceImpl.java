@@ -265,6 +265,16 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public WxPayRefundV3Result partnerRefundV3(WxPayPartnerRefundV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getSubMchid())) {
+      request.setSubMchid(this.getConfig().getSubMchId());
+    }
+    String url = String.format("%s/v3/refund/domestic/refunds", this.getPayBaseUrl());
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayRefundV3Result.class);
+  }
+
+  @Override
   public WxPayRefundQueryResult refundQuery(String transactionId, String outTradeNo, String outRefundNo, String refundId)
     throws WxPayException {
     WxPayRefundQueryRequest request = new WxPayRefundQueryRequest();
