@@ -32,12 +32,12 @@ public class WxMaServiceOkHttpImpl extends BaseWxMaServiceImpl<OkHttpClient, OkH
       OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
       //设置授权
-      clientBuilder.authenticator(new Authenticator() {
+      clientBuilder.proxyAuthenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
           return response.request().newBuilder()
-            .header("Authorization", credential)
+            .header("Proxy-Authorization", credential)
             .build();
         }
       });
