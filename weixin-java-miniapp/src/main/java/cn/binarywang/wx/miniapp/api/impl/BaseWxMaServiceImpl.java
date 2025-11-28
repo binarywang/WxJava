@@ -165,6 +165,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       new WxMaExpressDeliveryReturnServiceImpl(this);
   private final WxMaPromotionService wxMaPromotionService = new WxMaPromotionServiceImpl(this);
   private final WxMaIntracityService intracityService = new WxMaIntracityServiceImpl(this);
+  private final WxMaComplaintService complaintService = new WxMaComplaintServiceImpl(this);
 
   private Map<String, WxMaConfig> configMap = new HashMap<>();
   private int retrySleepMillis = 1000;
@@ -1029,5 +1030,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaIntracityService getIntracityService() {
     return this.intracityService;
+  }
+
+  @Override
+  public WxMaComplaintService getComplaintService() {
+    return this.complaintService;
   }
 }
