@@ -189,4 +189,123 @@ public interface TransferService {
    * @throws WxPayException the wx pay exception
    */
   TransferBillsNotifyResult parseTransferBillsNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  // ===================== 用户授权免确认模式相关接口 =====================
+
+  /**
+   * <pre>
+   * 商户查询用户授权信息接口
+   *
+   * 商户通过此接口可查询用户是否对商户的商家转账场景进行了授权。
+   *
+   * 请求方式：GET（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/authorization/openid/{openid}">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">商户查询用户授权信息</a>
+   * </pre>
+   *
+   * @param openid          用户在直连商户应用下的用户标识
+   * @param transferSceneId 转账场景ID
+   * @return UserAuthorizationStatusResult 用户授权信息
+   * @throws WxPayException .
+   */
+  UserAuthorizationStatusResult getUserAuthorizationStatus(String openid, String transferSceneId) throws WxPayException;
+
+  /**
+   * <pre>
+   * 批量预约商家转账接口
+   *
+   * 商户可以通过批量预约接口一次发起批量转账请求，最多可以同时向50个用户发起转账。
+   * 批量预约接口适用于用户已授权免确认的场景，在转账时无需用户确认即可完成转账。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">批量预约商家转账</a>
+   * </pre>
+   *
+   * @param request 批量预约商家转账请求参数
+   * @return ReservationTransferBatchResult 批量预约商家转账结果
+   * @throws WxPayException .
+   */
+  ReservationTransferBatchResult reservationTransferBatch(ReservationTransferBatchRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 商户预约批次单号查询批次单接口
+   *
+   * 通过商户预约批次单号查询批量预约商家转账批次单基本信息。
+   *
+   * 请求方式：GET（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/{out_batch_no}">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">商户预约批次单号查询批次单</a>
+   * </pre>
+   *
+   * @param outBatchNo      商户预约批次单号
+   * @param needQueryDetail 是否需要查询明细
+   * @param offset          分页偏移量
+   * @param limit           分页大小
+   * @param detailState     明细状态（PROCESSING/SUCCESS/FAIL）
+   * @return ReservationTransferBatchGetResult 批量预约商家转账批次查询结果
+   * @throws WxPayException .
+   */
+  ReservationTransferBatchGetResult getReservationTransferBatchByOutBatchNo(String outBatchNo, Boolean needQueryDetail,
+                                                                            Integer offset, Integer limit, String detailState) throws WxPayException;
+
+  /**
+   * <pre>
+   * 微信预约批次单号查询批次单接口
+   *
+   * 通过微信预约批次单号查询批量预约商家转账批次单基本信息。
+   *
+   * 请求方式：GET（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/reservation-batch-no/{reservation_batch_no}">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">微信预约批次单号查询批次单</a>
+   * </pre>
+   *
+   * @param reservationBatchNo 微信预约批次单号
+   * @param needQueryDetail    是否需要查询明细
+   * @param offset             分页偏移量
+   * @param limit              分页大小
+   * @param detailState        明细状态（PROCESSING/SUCCESS/FAIL）
+   * @return ReservationTransferBatchGetResult 批量预约商家转账批次查询结果
+   * @throws WxPayException .
+   */
+  ReservationTransferBatchGetResult getReservationTransferBatchByReservationBatchNo(String reservationBatchNo, Boolean needQueryDetail,
+                                                                                    Integer offset, Integer limit, String detailState) throws WxPayException;
+
+  /**
+   * <pre>
+   * 解析预约商家转账通知回调结果
+   *
+   * 预约批次单中的明细单在转账成功或转账失败时，微信会把相关结果信息发送给商户。
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">预约商家转账通知</a>
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return ReservationTransferNotifyResult 预约商家转账通知结果
+   * @throws WxPayException the wx pay exception
+   */
+  ReservationTransferNotifyResult parseReservationTransferNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * <pre>
+   * 关闭预约商家转账批次接口
+   *
+   * 商户可以通过此接口关闭预约商家转账批次单。关闭后，该批次内所有未成功的转账将被取消。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/{out_batch_no}/close">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">关闭预约商家转账批次</a>
+   * </pre>
+   *
+   * @param outBatchNo 商户预约批次单号
+   * @throws WxPayException .
+   */
+  void closeReservationTransferBatch(String outBatchNo) throws WxPayException;
 }

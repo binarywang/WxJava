@@ -401,6 +401,71 @@ public class WxPayConstants {
 
   }
 
+
+  /**
+   * 用户授权状态
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">商户查询用户授权信息</a>
+   */
+  @UtilityClass
+  public static class AuthorizationState {
+    /**
+     * 未授权
+     */
+    public static final String UNAUTHORIZED = "UNAUTHORIZED";
+
+    /**
+     * 已授权
+     */
+    public static final String AUTHORIZED = "AUTHORIZED";
+  }
+
+  /**
+   * 预约转账批次状态
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">批量预约商家转账</a>
+   */
+  @UtilityClass
+  public static class ReservationBatchState {
+    /**
+     * 批次已受理
+     */
+    public static final String ACCEPTED = "ACCEPTED";
+
+    /**
+     * 批次处理中
+     */
+    public static final String PROCESSING = "PROCESSING";
+
+    /**
+     * 批次处理完成
+     */
+    public static final String FINISHED = "FINISHED";
+
+    /**
+     * 批次已关闭
+     */
+    public static final String CLOSED = "CLOSED";
+  }
+
+  /**
+   * 预约转账批次关闭原因
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">预约转账批次单号查询</a>
+   */
+  @UtilityClass
+  public static class ReservationBatchCloseReason {
+    /**
+     * 商户主动撤销
+     */
+    public static final String MERCHANT_REVOCATION = "MERCHANT_REVOCATION";
+
+    /**
+     * 系统超时关闭
+     */
+    public static final String OVERDUE_CLOSE = "OVERDUE_CLOSE";
+  }
+
   /**
    * 【转账场景ID】 该笔转账使用的转账场景，可前往“商户平台-产品中心-商家转账”中申请。
    */
