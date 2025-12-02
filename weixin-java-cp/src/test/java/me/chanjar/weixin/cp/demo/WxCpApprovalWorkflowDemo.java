@@ -4,6 +4,7 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalDetailResult;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfo;
 import me.chanjar.weixin.cp.bean.oa.WxCpOaApplyEventRequest;
+import me.chanjar.weixin.cp.bean.oa.WxCpOaApprovalTemplateResult;
 import me.chanjar.weixin.cp.bean.oa.applydata.ApplyDataContent;
 import me.chanjar.weixin.cp.bean.oa.applydata.ContentValue;
 
@@ -86,14 +87,14 @@ public class WxCpApprovalWorkflowDemo {
         
         System.out.println("审批单号: " + detail.getSpNo());
         System.out.println("审批名称: " + detail.getSpName());
-        System.out.println("审批状态: " + detail.getSpStatus().getCode());
-        System.out.println("申请人: " + detail.getApplyer().getUserId());
+        System.out.println("审批状态: " + detail.getSpStatus());
+        System.out.println("申请人: " + detail.getApplier().getUserId());
         System.out.println("申请时间: " + detail.getApplyTime());
         
         // 打印审批记录
-        if (detail.getSpRecord() != null) {
-            detail.getSpRecord().forEach(record -> {
-                System.out.println("审批节点状态: " + record.getSpStatus());
+        if (detail.getSpRecords() != null) {
+            Arrays.stream(detail.getSpRecords()).forEach(record -> {
+                System.out.println("审批节点状态: " + record.getStatus());
                 System.out.println("审批人: " + record.getDetails());
             });
         }
@@ -112,7 +113,7 @@ public class WxCpApprovalWorkflowDemo {
         WxCpApprovalInfo approvalInfo = wxCpService.getOaService()
             .getApprovalInfo(startTime, endTime, "0", 100, null);
         
-        System.out.println("获取到的审批单数量: " + approvalInfo.getCount());
+        System.out.println("获取到的审批单数量: " + (approvalInfo.getSpNoList() != null ? approvalInfo.getSpNoList().size() : 0));
         
         // 遍历审批单号
         if (approvalInfo.getSpNoList() != null) {
@@ -130,7 +131,7 @@ public class WxCpApprovalWorkflowDemo {
     public void templateManagement() throws Exception {
         // 获取模板详情
         String templateId = "3Tka1eD6v6JfzhDMqPd3aMkFdxqtJMc2ZRioUBGCNS";
-        var templateResult = wxCpService.getOaService().getTemplateDetail(templateId);
+        WxCpOaApprovalTemplateResult templateResult = wxCpService.getOaService().getTemplateDetail(templateId);
         
         System.out.println("模板名称: " + templateResult.getTemplateNames());
         System.out.println("模板内容: " + templateResult.getTemplateContent());
