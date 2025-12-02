@@ -4,6 +4,7 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalDetailResult;
 import me.chanjar.weixin.cp.bean.oa.WxCpApprovalInfo;
 import me.chanjar.weixin.cp.bean.oa.WxCpOaApplyEventRequest;
+import me.chanjar.weixin.cp.bean.oa.WxCpOaApprovalTemplateResult;
 import me.chanjar.weixin.cp.bean.oa.applydata.ApplyDataContent;
 import me.chanjar.weixin.cp.bean.oa.applydata.ContentValue;
 
@@ -130,7 +131,7 @@ public class WxCpApprovalWorkflowDemo {
     public void templateManagement() throws Exception {
         // 获取模板详情
         String templateId = "3Tka1eD6v6JfzhDMqPd3aMkFdxqtJMc2ZRioUBGCNS";
-        var templateResult = wxCpService.getOaService().getTemplateDetail(templateId);
+        WxCpOaApprovalTemplateResult templateResult = wxCpService.getOaService().getTemplateDetail(templateId);
         
         System.out.println("模板名称: " + templateResult.getTemplateNames());
         System.out.println("模板内容: " + templateResult.getTemplateContent());
