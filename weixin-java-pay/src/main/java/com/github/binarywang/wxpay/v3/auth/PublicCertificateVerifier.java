@@ -24,8 +24,8 @@ public class PublicCertificateVerifier implements Verifier{
 
     @Override
     public boolean verify(String serialNumber, byte[] message, String signature) {
-        // 如果序列号不包含"PUB_KEY_ID"且有证书验证器，先尝试证书验证
-        if (!serialNumber.contains("PUB_KEY_ID") && this.certificateVerifier != null) {
+        // 如果序列号不为空且不包含"PUB_KEY_ID"且有证书验证器，先尝试证书验证
+        if (serialNumber != null && !serialNumber.contains("PUB_KEY_ID") && this.certificateVerifier != null) {
             try {
                 if (this.certificateVerifier.verify(serialNumber, message, signature)) {
                     return true;
