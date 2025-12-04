@@ -471,7 +471,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
       private String microAddress;
 
       /**
-       * 门店门头照片/线上商品/服务交易场景的截图
+       * 门店门头照片/经营场景照片
        * 1、门店场所：请上传门头正面照片（要求门店招牌、门框完整、清晰、可辨识）；若为停车场等无固定门头照片的经营场所，可上传岗亭/出入闸口；
        * 2、流动经营/便民服务：填写媒体文件ID列表，最多5张；
        * 3、线上商品/服务交易：请上传线上店铺网页截图（清晰度足够识别店铺名称的首页截图）；
