@@ -2,6 +2,7 @@ package com.github.binarywang.wxpay.bean.profitsharing.request;
 
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
 import com.google.gson.annotations.SerializedName;
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProfitSharingReceiverV3Request implements Serializable {
+
   private static final long serialVersionUID = 1L;
   /**
    * <pre>
@@ -87,6 +89,26 @@ public class ProfitSharingReceiverV3Request implements Serializable {
   @SerializedName("name")
   @SpecEncrypt
   private String name;
+
+  /**
+   * <pre>
+   * 字段名：分账金额
+   * 是否必填：是
+   * 描述：分账金额，单位为分，只能为整数，不能超过原订单支付金额及最大分账比例金额。调整最大分账比例：特约商户登录商户平台，进入以下页面：产品中心-授权的产品-分账授权
+   * </pre>
+   */
+  @SerializedName("amount")
+  private Integer amount;
+
+  /**
+   * <pre>
+   * 字段名：分账描述
+   * 是否必填：是
+   * 描述：分账的原因描述，会在查询分账结果接口和分账账单中原样返回
+   * </pre>
+   */
+  @SerializedName("description")
+  private String description;
 
   /**
    * <pre>
