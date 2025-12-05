@@ -33,7 +33,7 @@ public class BusinessOperationTransferServiceImpl implements BusinessOperationTr
       request.setAppid(this.wxPayService.getConfig().getAppId());
     }
 
-    String url = String.format("%s/v3/fund-app/operation/mch-transfer/transfer-bills", this.wxPayService.getPayBaseUrl());
+    String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills", this.wxPayService.getPayBaseUrl());
     
     // 如果传入了用户姓名，需要进行RSA加密
     if (StringUtils.isNotEmpty(request.getUserName())) {
@@ -58,7 +58,7 @@ public class BusinessOperationTransferServiceImpl implements BusinessOperationTr
 
   @Override
   public BusinessOperationTransferQueryResult queryOperationTransferByOutBillNo(String outBillNo) throws WxPayException {
-    String url = String.format("%s/v3/fund-app/operation/mch-transfer/transfer-bills/out-bill-no/%s",
+    String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/%s",
       this.wxPayService.getPayBaseUrl(), outBillNo);
     String response = wxPayService.getV3(url);
     return GSON.fromJson(response, BusinessOperationTransferQueryResult.class);
@@ -66,7 +66,7 @@ public class BusinessOperationTransferServiceImpl implements BusinessOperationTr
 
   @Override
   public BusinessOperationTransferQueryResult queryOperationTransferByTransferBillNo(String transferBillNo) throws WxPayException {
-    String url = String.format("%s/v3/fund-app/operation/mch-transfer/transfer-bills/transfer-bill-no/%s",
+    String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills/transfer-bill-no/%s",
       this.wxPayService.getPayBaseUrl(), transferBillNo);
     String response = wxPayService.getV3(url);
     return GSON.fromJson(response, BusinessOperationTransferQueryResult.class);
