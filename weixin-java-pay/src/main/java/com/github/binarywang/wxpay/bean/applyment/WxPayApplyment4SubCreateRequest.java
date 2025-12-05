@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class WxPayApplyment4SubCreateRequest implements Serializable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 4104022969945059126L;
 
   /**
    * 业务申请编号
@@ -78,7 +78,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class ContactInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -9087348002744428474L;
 
     /**
      * 超级管理员类型
@@ -211,7 +211,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SubjectInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6651911735969445765L;
 
     /**
      * 主体类型
@@ -692,7 +692,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BusinessInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8605049544105644011L;
 
     /**
      * 商户简称
@@ -965,7 +965,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SettlementInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5025743467243760522L;
 
     /**
      * 入驻结算规则ID
@@ -1026,7 +1026,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BankAccountInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5853122395888860086L;
 
     /**
      * 账户类型
@@ -1084,7 +1084,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class AdditionInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7526912529114022379L;
 
     /**
      * 法人开户承诺函
