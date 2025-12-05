@@ -21,7 +21,7 @@ public interface BusinessOperationTransferService {
    * 发起运营工具商家转账
    *
    * 请求方式：POST（HTTPS）
-   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/operation/mch-transfer/transfer-bills
+   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills
    *
    * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
    * </pre>
@@ -37,7 +37,7 @@ public interface BusinessOperationTransferService {
    * 查询运营工具转账结果
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/operation/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}
+   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}
    *
    * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
    * </pre>
@@ -53,7 +53,7 @@ public interface BusinessOperationTransferService {
    * 通过商户单号查询运营工具转账结果
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/operation/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}
+   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/{out_bill_no}
    *
    * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
    * </pre>
@@ -69,7 +69,7 @@ public interface BusinessOperationTransferService {
    * 通过微信转账单号查询运营工具转账结果
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/operation/mch-transfer/transfer-bills/transfer-bill-no/{transfer_bill_no}
+   * 请求地址：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills/transfer-bill-no/{transfer_bill_no}
    *
    * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
    * </pre>
