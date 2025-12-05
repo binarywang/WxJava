@@ -410,7 +410,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
     @Accessors(chain = true)
     public static class MicroBizInfo implements Serializable {
 
-      private static final long serialVersionUID = 1234567890123456789L;
+      private static final long serialVersionUID = 2327302539406612422L;
 
       /**
        * 小微经营类型
