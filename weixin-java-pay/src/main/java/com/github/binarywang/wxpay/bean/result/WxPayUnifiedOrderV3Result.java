@@ -58,7 +58,7 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   /**
    * <pre>
    * 字段名：二维码链接（NATIVE支付 会返回）
-   * 变量名：h5_url
+   * 变量名：code_url
    * 是否必填：是
    * 类型：string[1,512]
    * 描述：
