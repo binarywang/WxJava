@@ -491,7 +491,7 @@ public class WxConsts {
      */
     public static final String WX_VERIFY_DISPATCH = "wx_verify_dispatch";
     /**
-     * 提醒需要上传发货信息事件 曾经发过货的小程序，订单超过48小时未发货时
+     * 提醒需要上传发货信息事件：曾经发过货的小程序，订单超过48小时未发货时
      */
     public static final String TRADE_MANAGE_REMIND_SHIPPING = "trade_manage_remind_shipping";
     /**
