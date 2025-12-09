@@ -288,7 +288,7 @@ public class WxMaMessage implements Serializable {
   @XStreamAlias("msg")
   private String msg;
   /**
-   * 支付成功时间，秒级时间戳
+   * 发货时间，秒级时间戳
    */
   @XStreamAlias("shipped_time")
   private Long shippedTime;
