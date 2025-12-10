@@ -5,7 +5,7 @@ import cn.binarywang.wx.miniapp.bean.WxMaMessage;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.message.WxMaMessageRouter;
-import cn.binarywang.wx.miniapp.message.WxMaXmlOutMessage;
+import cn.binarywang.wx.miniapp.message.WxMaOutMessage;
 import lombok.AllArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -62,9 +62,13 @@ public class WxMaPortalServlet extends HttpServlet {
         inMessage = WxMaMessage.fromXml(request.getInputStream());
       }
 
-      final WxMaXmlOutMessage outMessage = this.messageRouter.route(inMessage);
+      final WxMaOutMessage outMessage = this.messageRouter.route(inMessage);
       if (outMessage != null) {
-        response.getWriter().write(outMessage.toXml());
+        if (isJson) {
+          response.getWriter().write(outMessage.toJson());
+        } else {
+          response.getWriter().write(outMessage.toXml());
+        }
         return;
       }
 
@@ -82,9 +86,13 @@ public class WxMaPortalServlet extends HttpServlet {
         inMessage = WxMaMessage.fromEncryptedXml(request.getInputStream(), this.config, timestamp, nonce, msgSignature);
       }
 
-      final WxMaXmlOutMessage outMessage = this.messageRouter.route(inMessage);
+      final WxMaOutMessage outMessage = this.messageRouter.route(inMessage);
       if (outMessage != null) {
-        response.getWriter().write(outMessage.toEncryptedXml(this.config));
+        if (isJson) {
+          response.getWriter().write(outMessage.toEncryptedJson(this.config));
+        } else {
+          response.getWriter().write(outMessage.toEncryptedXml(this.config));
+        }
         return;
       }
       response.getWriter().write("success");

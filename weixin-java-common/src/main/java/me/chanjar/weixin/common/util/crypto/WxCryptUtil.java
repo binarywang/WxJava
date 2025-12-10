@@ -333,14 +333,28 @@ public class WxCryptUtil {
       byte[] bytes = PKCS7Encoder.decode(original);
 
       // 分离16位随机字符串,网络字节序和AppId
+      if (bytes == null || bytes.length < 20) {
+        throw new WxRuntimeException("解密后数据长度异常，可能为错误的密文或EncodingAESKey");
+      }
       byte[] networkOrder = Arrays.copyOfRange(bytes, 16, 20);
 
       int xmlLength = bytesNetworkOrder2Number(networkOrder);
 
-      xmlContent = new String(Arrays.copyOfRange(bytes, 20, 20 + xmlLength), CHARSET);
-      fromAppid = new String(Arrays.copyOfRange(bytes, 20 + xmlLength, bytes.length), CHARSET);
+      // 长度边界校验，避免非法长度导致的越界/参数异常
+      int startIndex = 20;
+      int endIndex = startIndex + xmlLength;
+      if (xmlLength < 0 || endIndex > bytes.length) {
+        throw new WxRuntimeException("解密后数据格式非法：消息长度不正确，可能为错误的密文或EncodingAESKey");
+      }
+
+      xmlContent = new String(Arrays.copyOfRange(bytes, startIndex, endIndex), CHARSET);
+      fromAppid = new String(Arrays.copyOfRange(bytes, endIndex, bytes.length), CHARSET);
     } catch (Exception e) {
-      throw new WxRuntimeException(e);
+      if (e instanceof WxRuntimeException) {
+        throw (WxRuntimeException) e;
+      } else {
+        throw new WxRuntimeException(e);
+      }
     }
 
     // appid不相同的情况 暂时忽略这段判断

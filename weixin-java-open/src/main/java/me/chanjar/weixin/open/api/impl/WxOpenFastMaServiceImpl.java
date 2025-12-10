@@ -152,6 +152,12 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+  @Override
+  public WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException {
+    String response = get(OPEN_GET_ALL_CATEGORY_NAME, "");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaCategoryNameListResult.class);
+  }
+
   /**
    * 获取订单页Path信息
    *

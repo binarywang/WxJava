@@ -73,6 +73,10 @@ public interface WxOpenMaBasicService {
    * 8.6 修改类目
    */
   String OPEN_MODIFY_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/modifycategory";
+  /**
+   * 8.7 获取类目名称信息
+   */
+  String OPEN_GET_ALL_CATEGORY_NAME = "https://api.weixin.qq.com/cgi-bin/wxopen/getallcategorynamelist";
 
   /**
    * 获取订单页path信息
@@ -221,6 +225,18 @@ public interface WxOpenMaBasicService {
    * @throws WxErrorException .
    */
   WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException;
+
+  /**
+   * 8.7 获取类目名称信息
+   * <pre>
+   *     获取所有类目名称信息，用于给用户展示选择
+   *     https://developers.weixin.qq.com/doc/oplatform/openApi/miniprogram-management/category-management/api_getallcategoryname.html
+   * </pre>
+   *
+   * @return 类目名称列表
+   * @throws WxErrorException .
+   */
+  WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException;
 
   /**
    * 获取订单页Path信息

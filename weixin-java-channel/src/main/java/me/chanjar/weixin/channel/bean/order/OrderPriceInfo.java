@@ -107,4 +107,34 @@ public class OrderPriceInfo implements Serializable {
   @JsonProperty("finder_discounted_price")
   private Integer finderDiscountedPrice;
 
+  /**
+   * 订单维度会员权益优惠金额
+   */
+  @JsonProperty("vip_discounted_price")
+  private Integer vipDiscountedPrice;
+
+  /**
+   * 订单维度一起买优惠金额，单位为分
+   */
+  @JsonProperty("bulkbuy_discounted_price")
+  private Integer bulkbuyDiscountedPrice;
+
+  /**
+   * 订单维度国补优惠金额
+   */
+  @JsonProperty("national_subsidy_discounted_price")
+  private Integer nationalSubsidyDiscountedPrice;
+
+  /**
+   * 订单维度平台券优惠金额，单位为分
+   */
+  @JsonProperty("cash_coupon_discounted_price")
+  private Integer cashCouponDiscountedPrice;
+
+  /**
+   * 订单维度地方补贴优惠金额(商家出资)，单位为分
+   */
+  @JsonProperty("national_subsidy_merchant_discounted_price")
+  private Integer nationalSubsidyMerchantDiscountedPrice;
+
 }

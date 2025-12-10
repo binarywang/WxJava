@@ -82,4 +82,40 @@ public class WxPayProperties {
    */
   private boolean useSandboxEnv;
 
+  /**
+   * 微信支付异步回调地址，通知url必须为直接可访问的url，不能携带参数
+   */
+  private String notifyUrl;
+
+  /**
+   * 微信支付分授权回调地址
+   */
+  private String payScorePermissionNotifyUrl;
+
+  /**
+   * 公钥ID
+   */
+  private String publicKeyId;
+
+  /**
+   * pub_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
+   */
+  private String publicKeyPath;
+
+  /**
+   * 自定义API主机地址，用于替换默认的 https://api.mch.weixin.qq.com
+   * 例如：http://proxy.company.com:8080
+   */
+  private String apiHostUrl;
+
+  /**
+   * 是否将全部v3接口的请求都添加Wechatpay-Serial请求头，默认不添加
+   */
+  private boolean strictlyNeedWechatPaySerial = false;
+
+  /**
+   * 是否完全使用公钥模式(用以微信从平台证书到公钥的灰度切换)，默认不使用
+   */
+  private boolean fullPublicKeyModel = false;
+
 }

@@ -104,6 +104,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final WxEntrustPapService wxEntrustPapService = new WxEntrustPapServiceImpl(this);
 
   @Getter
+  private final WxDepositService wxDepositService = new WxDepositServiceImpl(this);
+
+  @Getter
   private final PartnerTransferService partnerTransferService = new PartnerTransferServiceImpl(this);
 
   @Getter
@@ -129,6 +132,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Getter
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
+
+  @Getter
+  private final SubscriptionBillingService subscriptionBillingService = new SubscriptionBillingServiceImpl(this);
+
+  @Getter
+  private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
@@ -250,6 +259,16 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayRefundV3Result refundV3(WxPayRefundV3Request request) throws WxPayException {
+    String url = String.format("%s/v3/refund/domestic/refunds", this.getPayBaseUrl());
+    String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(response, WxPayRefundV3Result.class);
+  }
+
+  @Override
+  public WxPayRefundV3Result partnerRefundV3(WxPayPartnerRefundV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getSubMchid())) {
+      request.setSubMchid(this.getConfig().getSubMchId());
+    }
     String url = String.format("%s/v3/refund/domestic/refunds", this.getPayBaseUrl());
     String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayRefundV3Result.class);
@@ -1414,5 +1433,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public TransferService getTransferService() {
     return transferService;
+  }
+
+  @Override
+  public BusinessOperationTransferService getBusinessOperationTransferService() {
+    return businessOperationTransferService;
   }
 }

@@ -20,10 +20,10 @@ public interface WxMaMessageHandler {
    * @param context        上下文
    * @param service        服务类
    * @param sessionManager session管理器
-   * @return 输出消息
+   * @return 输出消息，可以是XML格式或JSON格式
    * @throws WxErrorException 异常
    */
-  WxMaXmlOutMessage handle(WxMaMessage message, Map<String, Object> context,
-                           WxMaService service, WxSessionManager sessionManager) throws WxErrorException;
+  WxMaOutMessage handle(WxMaMessage message, Map<String, Object> context,
+                        WxMaService service, WxSessionManager sessionManager) throws WxErrorException;
 
 }

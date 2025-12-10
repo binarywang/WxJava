@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.WxMaCode2VerifyInfoResult;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaPhoneNumberInfo;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
@@ -87,4 +88,18 @@ public interface WxMaUserService {
    * @return .
    */
   boolean checkUserInfo(String sessionKey, String rawData, String signature);
+
+  /**
+   * 多端登录验证接口.
+   * <p>
+   * 通过 code 换取用户登录态信息，用于多端登录场景（如手表端）。
+   * </p>
+   * 文档地址：<a href="https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/miniapp/openapi/code2Verifyinfo.html">多端登录</a>
+   *
+   * @param code      登录时获取的 code
+   * @param checkcode 手表授权页面返回的 checkcode
+   * @return 登录验证结果，包含 session_key、openid、unionid 和 is_limit 字段
+   * @throws WxErrorException 调用微信接口失败时抛出
+   */
+  WxMaCode2VerifyInfoResult getCode2VerifyInfo(String code, String checkcode) throws WxErrorException;
 }

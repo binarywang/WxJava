@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.8.B</version>
+    <version>4.7.9.B</version>
   </parent>
   <packaging>pom</packaging>
   <artifactId>wx-java-solon-plugins</artifactId>

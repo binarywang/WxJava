@@ -176,7 +176,7 @@ public class OrderProductInfo implements Serializable {
   private Integer merchantDiscountedPrice;
 
   /**
-   * 商家优惠金额，单位为分
+   * 达人优惠金额，单位为分
    */
   @JsonProperty("finder_discounted_price")
   private Integer finderDiscountedPrice;
@@ -186,4 +186,59 @@ public class OrderProductInfo implements Serializable {
    */
   @JsonProperty("is_free_gift")
   private Boolean freeGift;
+
+  /**
+   * 订单内商品维度会员权益优惠金额，单位为分
+   */
+  @JsonProperty("vip_discounted_price")
+  private Integer vipDiscountedPrice;
+
+  /**
+   * 商品常量编号，订单内商品唯一标识，下单后不会发生变化
+   */
+  @JsonProperty("product_unique_id")
+  private String productUniqueId;
+
+  /**
+   * 更换sku信息
+   */
+  @JsonProperty("change_sku_info")
+  private ChangeSkuInfo changeSkuInfo;
+
+  /**
+   * 赠品信息
+   */
+  @JsonProperty("free_gift_info")
+  private FreeGiftInfo freeGiftInfo;
+
+  /**
+   * 订单内商品维度一起买优惠金额，单位为分
+   */
+  @JsonProperty("bulkbuy_discounted_price")
+  private Integer bulkbuyDiscountedPrice;
+
+  /**
+   * 订单内商品维度国补优惠金额，单位为分
+   */
+  @JsonProperty("national_subsidy_discounted_price")
+  private Integer nationalSubsidyDiscountedPrice;
+
+  /**
+   * 代发相关信息
+   */
+  @JsonProperty("dropship_info")
+  private DropshipInfo dropshipInfo;
+
+  /**
+   * 是否闪购商品
+   */
+  @JsonProperty("is_flash_sale")
+  private Boolean flashSale;
+
+  /**
+   * 订单内商品维度地方补贴优惠金额(商家出资)，单位为分
+   */
+  @JsonProperty("national_subsidy_merchant_discounted_price")
+  private Integer nationalSubsidyMerchantDiscountedPrice;
+
 }

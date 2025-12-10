@@ -258,6 +258,62 @@ public class WxMaMessage implements Serializable {
   private String context;
 
   /**
+   * 微信支付订单号
+   */
+  @XStreamAlias("transaction_id")
+  private String transactionId;
+  /**
+   * 商户号
+   */
+  @XStreamAlias("merchant_id")
+  private String merchantId;
+  /**
+   * 子商户号
+   */
+  @XStreamAlias("sub_merchant_id")
+  private String subMerchantId;
+  /**
+   * 商户订单号
+   */
+  @XStreamAlias("merchant_trade_no")
+  private String merchantTradeNo;
+  /**
+   * 支付成功时间，秒级时间戳
+   */
+  @XStreamAlias("pay_time")
+  private Long payTime;
+  /**
+   * 消息文本内容
+   */
+  @XStreamAlias("msg")
+  private String msg;
+  /**
+   * 发货时间，秒级时间戳
+   */
+  @XStreamAlias("shipped_time")
+  private Long shippedTime;
+  /**
+   * 预计结算时间，秒级时间戳。发货时推送才有该字段
+   */
+  @XStreamAlias("estimated_settlement_time")
+  private Long estimatedSettlementTime;
+  /**
+   * 确认收货方式：1. 手动确认收货；2. 自动确认收货。结算时推送才有该字段
+   */
+  @XStreamAlias("confirm_receive_method")
+  private Integer confirmReceiveMethod;
+  /**
+   * 确认收货时间，秒级时间戳。结算时推送才有该字段
+   */
+  @XStreamAlias("confirm_receive_time")
+  private Long confirmReceiveTime;
+  /**
+   * 订单结算时间，秒级时间戳。结算时推送才有该字段
+   */
+  @XStreamAlias("settlement_time")
+  private Long settlementTime;
+
+  /**
    * 不要直接使用这个字段，
    * 这个字段只是为了适配 SubscribeMsgPopupEvent SubscribeMsgChangeEvent SubscribeMsgSentEvent
    * 在json里面名称都是List并且有时候是对象有时候是数组的问题
