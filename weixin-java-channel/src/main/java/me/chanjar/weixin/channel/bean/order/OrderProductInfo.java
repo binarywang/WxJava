@@ -248,7 +248,7 @@ public class OrderProductInfo implements Serializable {
   private Integer platformActivityMerchantDiscountedPrice;
 
   /**
-   * 订单内商品维度平台券优惠金额
+   * 订单内商品维度平台券优惠金额，单位为分
    */
   @JsonProperty("cash_coupon_discounted_price")
   private Integer cashCouponDiscountedPrice;
