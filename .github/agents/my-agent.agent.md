@@ -4,10 +4,10 @@
 # To make this agent available, merge this file into the default repository branch.
 # For format details, see: https://gh.io/customagents/config
 
-name: 自定义的
-description: 需要用中文
+name: 全部用中文
+description: 需要用中文，包括PR标题和分析总结过程
 ---
 
 # My Agent
 
-请使用中文输出思考过程和总结，提交commit信息也要使用中文
+请使用中文输出思考过程和总结，包括PR标题，提交commit信息也要使用中文

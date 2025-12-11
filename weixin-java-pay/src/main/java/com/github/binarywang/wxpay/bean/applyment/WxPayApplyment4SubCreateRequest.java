@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class WxPayApplyment4SubCreateRequest implements Serializable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 4104022969945059126L;
 
   /**
    * 业务申请编号
@@ -78,7 +78,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class ContactInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -9087348002744428474L;
 
     /**
      * 超级管理员类型
@@ -211,7 +211,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SubjectInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6651911735969445765L;
 
     /**
      * 主体类型
@@ -241,6 +241,13 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
      */
     @SerializedName("certificate_letter_copy")
     private String certificateLetterCopy;
+
+    /**
+     * 小微辅助证明材料
+     * 主体类型为小微商户时，小微辅助证明材料必填
+     */
+    @SerializedName("micro_biz_info")
+    private MicroBizInfo microBizInfo;
 
     /**
      * 金融机构许可证信息
@@ -391,6 +398,88 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        */
       @SerializedName("finance_license_pics")
       private List<String> financeLicensePics;
+    }
+
+    /**
+     * 小微辅助证明材料
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Accessors(chain = true)
+    public static class MicroBizInfo implements Serializable {
+
+      private static final long serialVersionUID = 2327302539406612422L;
+
+      /**
+       * 小微经营类型
+       * 枚举值：
+       * MICRO_TYPE_STORE：门店场所
+       * MICRO_TYPE_MOBILE：流动经营/便民服务
+       * MICRO_TYPE_ONLINE：线上商品/服务交易
+       * 示例值：MICRO_TYPE_STORE
+       */
+      @SerializedName("micro_biz_type")
+      private MicroBizTypeEnum microBizType;
+
+      /**
+       * 门店名称
+       * 1、填写规范：
+       * 门店场所：填写门店名称
+       * 流动经营/便民服务：填写经营/服务名称
+       * 线上商品/服务交易：填写线上店铺名称
+       * 2、格式规范：
+       * 长度为1-50个字符
+       * 前后不能有空格、制表符、换行符
+       * 不能仅含数字、特殊字符
+       * 仅能填写数字、英文字母、汉字及特殊字符
+       * 仅支持utf-8格式
+       * 示例值：大郎烧饼
+       */
+      @SerializedName("micro_name")
+      private String microName;
+
+      /**
+       * 门店省市编码
+       * 1、只能由数字组成
+       * 2、详细参见微信支付提供的省市对照表
+       * 3、填写规范：
+       * 门店场所：填写门店省市编码
+       * 流动经营/便民服务：填写经营/服务所在地省市编码
+       * 线上商品/服务交易：填写卖家所在地省市编码
+       * 示例值：440305
+       */
+      @SerializedName("micro_address_code")
+      private String microAddressCode;
+
+      /**
+       * 门店地址
+       * 1、填写规范：
+       * 门店场所：填写店铺详细地址，具体区/县及街道门牌号或大厦楼层
+       * 流动经营/便民服务：填写"无"
+       * 线上商品/服务交易：填写电商平台名称
+       * 2、格式规范：
+       * 长度为4-512个字符
+       * 前后不能有空格、制表符、换行符
+       * 不能仅含数字、特殊字符
+       * 仅能填写数字、英文字母、汉字及特殊字符
+       * 仅支持utf-8格式
+       * 示例值：广东省深圳市南山区xx大厦x层xxxx室
+       */
+      @SerializedName("micro_address")
+      private String microAddress;
+
+      /**
+       * 门店门头照片/经营场景照片
+       * 1、门店场所：请上传门头正面照片（要求门店招牌、门框完整、清晰、可辨识）；若为停车场等无固定门头照片的经营场所，可上传岗亭/出入闸口；
+       * 2、流动经营/便民服务：填写媒体文件ID列表，最多5张；
+       * 3、线上商品/服务交易：请上传线上店铺网页截图（清晰度足够识别店铺名称的首页截图）；
+       * 4、请填写通过《图片上传API》预先上传图片生成好的MediaID
+       * 示例值：0P3ng6KTIW4-Q_l2FjKLZuhHjBWoMAjmVtCz7ScmhEIThCaV-4BBgVwtNkCHO_XXqK5dE5YdOmFJBZR9FwczhJehHhAZN6BKXQPcs-VvdSo
+       */
+      @SerializedName("micro_pics")
+      private List<String> microPics;
     }
 
     @Data
@@ -603,7 +692,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BusinessInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8605049544105644011L;
 
     /**
      * 商户简称
@@ -876,7 +965,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SettlementInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5025743467243760522L;
 
     /**
      * 入驻结算规则ID
@@ -937,7 +1026,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BankAccountInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5853122395888860086L;
 
     /**
      * 账户类型
@@ -995,7 +1084,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class AdditionInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7526912529114022379L;
 
     /**
      * 法人开户承诺函

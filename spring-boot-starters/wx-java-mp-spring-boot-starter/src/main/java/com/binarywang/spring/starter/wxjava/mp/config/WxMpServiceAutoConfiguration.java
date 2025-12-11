@@ -4,6 +4,7 @@ import com.binarywang.spring.starter.wxjava.mp.enums.HttpClientType;
 import com.binarywang.spring.starter.wxjava.mp.properties.WxMpProperties;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpComponentsImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceJoddHttpImpl;
 import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
@@ -35,6 +36,9 @@ public class WxMpServiceAutoConfiguration {
       case HttpClient:
         wxMpService = newWxMpServiceHttpClientImpl();
         break;
+      case HttpComponents:
+        wxMpService = newWxMpServiceHttpComponentsImpl();
+        break;
       default:
         wxMpService = newWxMpServiceImpl();
         break;
@@ -58,6 +62,10 @@ public class WxMpServiceAutoConfiguration {
 
   private WxMpService newWxMpServiceJoddHttpImpl() {
     return new WxMpServiceJoddHttpImpl();
+  }
+
+  private WxMpService newWxMpServiceHttpComponentsImpl() {
+    return new WxMpServiceHttpComponentsImpl();
   }
 
 }

@@ -364,6 +364,8 @@ public class WxMaApiUrlConstants {
     String SET_USER_STORAGE =
         "https://api.weixin.qq.com/wxa/set_user_storage?appid=%s&signature=%s&openid=%s&sig_method=%s";
     String GET_PHONE_NUMBER_URL = "https://api.weixin.qq.com/wxa/business/getuserphonenumber";
+    /** 多端登录验证接口 */
+    String CODE_2_VERIFY_INFO_URL = "https://api.weixin.qq.com/wxa/sec/checkcode2verifyinfo";
   }
 
   public interface Ocr {

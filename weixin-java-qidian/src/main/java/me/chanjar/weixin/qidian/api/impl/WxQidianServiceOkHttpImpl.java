@@ -80,11 +80,11 @@ public class WxQidianServiceOkHttpImpl extends BaseWxQidianServiceImpl<OkHttpCli
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 
       // 设置授权
-      clientBuilder.authenticator(new Authenticator() {
+      clientBuilder.proxyAuthenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
-          return response.request().newBuilder().header("Authorization", credential).build();
+          return response.request().newBuilder().header("Proxy-Authorization", credential).build();
         }
       });
       httpClient = clientBuilder.build();

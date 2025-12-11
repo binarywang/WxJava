@@ -4,7 +4,7 @@
   <parent>
     <artifactId>wx-java-solon-plugins</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>4.7.8.B</version>
+    <version>4.7.9.B</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 

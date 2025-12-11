@@ -40,6 +40,9 @@ public class WxMaKefuMessage implements Serializable {
   @SerializedName("miniprogrampage")
   private KfMaPage maPage;
 
+  @SerializedName("aimsgcontext")
+  private AiMsgContext aiMsgContext;
+
   @Data
   @AllArgsConstructor
   @NoArgsConstructor
@@ -88,6 +91,16 @@ public class WxMaKefuMessage implements Serializable {
 
     @SerializedName("thumb_media_id")
     private String thumbMediaId;
+  }
+
+  @Data
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class AiMsgContext implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @SerializedName("msgid")
+    private String msgId;
   }
 
   /**
