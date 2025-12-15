@@ -543,7 +543,8 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         private static final long serialVersionUID = -4672635122639034461L;
 
         /**
-         * 【门店名称】请填写门店名称
+         * 【门店名称】
+         * 请填写门店名称
          * 1、长度为1-50个字符；
          * 2、前后不能有空格、制表符、换行符；
          * 3、不能仅含数字、特殊字符；
@@ -554,31 +555,20 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         private String microName;
 
         /**
-         * 门店省市编码
-         * 1、只能由数字组成
-         * 2、详细参见微信支付提供的省市对照表
-         * 3、填写规范：
-         * 门店场所：填写门店省市编码
-         * 流动经营/便民服务：填写经营/服务所在地省市编码
-         * 线上商品/服务交易：填写卖家所在地省市编码
-         * 示例值：440305
+         * 【门店省市编码】
+         * 填写门店省市编码，只能由数字组成，详细参见微信支付提供的省市对照表
          */
         @SerializedName("micro_address_code")
         private String microAddressCode;
 
         /**
-         * 门店地址
-         * 1、填写规范：
-         * 门店场所：填写店铺详细地址，具体区/县及街道门牌号或大厦楼层
-         * 流动经营/便民服务：填写"无"
-         * 线上商品/服务交易：填写电商平台名称
-         * 2、格式规范：
-         * 长度为4-512个字符
-         * 前后不能有空格、制表符、换行符
-         * 不能仅含数字、特殊字符
-         * 仅能填写数字、英文字母、汉字及特殊字符
-         * 仅支持utf-8格式
-         * 示例值：广东省深圳市南山区xx大厦x层xxxx室
+         * 【门店地址】
+         * 请填写详细的经营场所信息，如有多个场所，选择一个主要场所填写即可。
+         * 1、长度为4-512个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
          */
         @SerializedName("micro_address")
         private String microAddress;
@@ -600,7 +590,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
         private String microIndoorCopy;
 
         /**
-         * 【门店经度 】 数字或小数，商户自定义字段
+         * 【门店经度】 数字或小数，商户自定义字段
          */
         @SerializedName("store_longitude")
         private String storeLongitude;
