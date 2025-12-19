@@ -139,6 +139,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
 
+  @Getter
+  private final RealNameService realNameService = new RealNameServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
   @Override
