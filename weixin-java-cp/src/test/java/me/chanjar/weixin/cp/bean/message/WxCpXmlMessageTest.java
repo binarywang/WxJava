@@ -471,4 +471,30 @@ public class WxCpXmlMessageTest {
     WxCpXmlMessage wxMessageString = WxCpXmlMessage.fromXml(xmlWithString);
     assertEquals(wxMessageString.getMsgId(), "CAIQg/PKxgYY2sC9tpuAgAMg9/zKaw==");
   }
+
+  /**
+   * Test intelligent robot message parsing
+   * 测试智能机器人消息解析
+   */
+  public void testIntelligentRobotMessage() {
+    String xml = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[fromUser]]></FromUserName>"
+      + "<CreateTime>1348831860</CreateTime>"
+      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<Content><![CDATA[你好，智能机器人]]></Content>"
+      + "<MsgId>msg123456</MsgId>"
+      + "<RobotId><![CDATA[robot_id_123]]></RobotId>"
+      + "<SessionId><![CDATA[session_id_456]]></SessionId>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "fromUser");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(1348831860));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
+    assertEquals(wxMessage.getContent(), "你好，智能机器人");
+    assertEquals(wxMessage.getMsgId(), "msg123456");
+    assertEquals(wxMessage.getRobotId(), "robot_id_123");
+    assertEquals(wxMessage.getSessionId(), "session_id_456");
+  }
 }

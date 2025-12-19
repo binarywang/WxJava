@@ -1666,5 +1666,11 @@ public interface WxCpApiPathConsts {
      * 重置智能机器人会话
      */
     String RESET_SESSION = "/cgi-bin/intelligent_robot/reset_session";
+
+    /**
+     * 智能机器人主动发送消息
+     * 官方文档: https://developer.work.weixin.qq.com/document/path/100719
+     */
+    String SEND_MESSAGE = "/cgi-bin/intelligent_robot/send_message";
   }
 }
