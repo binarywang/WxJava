@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 小游戏道具直购响应.
+ * 小游戏道具直购API响应.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */

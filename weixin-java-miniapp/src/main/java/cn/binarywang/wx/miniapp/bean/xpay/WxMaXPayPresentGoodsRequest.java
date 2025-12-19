@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * 小游戏道具直购请求.
+ * 小游戏道具直购API请求.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
