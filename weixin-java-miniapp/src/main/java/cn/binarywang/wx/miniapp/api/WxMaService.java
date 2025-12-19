@@ -621,4 +621,13 @@ public interface WxMaService extends WxService {
    * @return                 交易投诉服务对象WxMaComplaintService
    */
   WxMaComplaintService getComplaintService();
+
+  /**
+   * 获取用工关系服务对象。
+   * <br>
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/laboruse/intro.html
+   *
+   * @return                 用工关系服务对象WxMaEmployeeRelationService
+   */
+  WxMaEmployeeRelationService getEmployeeRelationService();
 }
