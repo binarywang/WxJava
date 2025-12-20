@@ -7,10 +7,7 @@ import com.github.binarywang.wxpay.bean.mipay.enums.OrderTypeEnum;
 import com.github.binarywang.wxpay.bean.mipay.enums.SelfPayStatusEnum;
 import com.google.gson.annotations.SerializedName;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 /**
  * 医保自费混合收款下单响应
@@ -21,9 +18,6 @@ import lombok.NoArgsConstructor;
  * @date 2025/12/19 14:37
  */
 @Data
-@Builder(builderMethodName = "newBuilder")
-@NoArgsConstructor
-@AllArgsConstructor
 public class MedInsOrdersResult {
   /**
    * <pre>

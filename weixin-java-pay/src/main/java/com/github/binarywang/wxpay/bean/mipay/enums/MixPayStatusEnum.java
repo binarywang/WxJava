@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * 混合支付状态枚举
  * <p>
  * 描述医保自费混合支付的整体状态
+ *
  * @author xgl
  * @date 2025/12/20
  */

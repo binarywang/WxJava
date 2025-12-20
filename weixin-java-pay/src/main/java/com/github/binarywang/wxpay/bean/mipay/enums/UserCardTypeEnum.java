@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * 用户证件类型枚举
  * <p>
  * 描述医保自费混合支付中用户的证件类型
+ *
  * @author xgl
  * @date 2025/12/20
  */

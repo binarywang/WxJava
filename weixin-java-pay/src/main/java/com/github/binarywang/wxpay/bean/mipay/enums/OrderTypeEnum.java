@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * <p>
  * 描述医保自费混合支付的订单类型
  * 文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012503131
+ *
  * @author xgl
  * @date 2025/12/20
  */

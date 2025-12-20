@@ -6,6 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * 现金减少类型枚举
  * <p>
  * 描述医保自费混合支付中现金减少的类型
+ *
  * @author xgl
  * @date 2025/12/20
  */
