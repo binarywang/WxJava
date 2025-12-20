@@ -1706,4 +1706,12 @@ public interface WxPayService {
    * @return the partner pay score sign plan service
    */
   PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
+
+  /**
+   * 获取医保支付服务类
+   *
+   * @return the merchant transfer service
+   */
+  MiPayService getMiPayService();
+
 }

@@ -1,17 +1,21 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import com.github.binarywang.utils.qrcode.QrcodeUtils;
-import com.github.binarywang.wxpay.bean.WxPayApiData;
+import static com.github.binarywang.wxpay.constant.WxPayConstants.QUERY_COMMENT_DATE_FORMAT;
+import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
 import com.github.binarywang.wxpay.bean.coupon.*;
 import com.github.binarywang.wxpay.bean.notify.*;
+import com.github.binarywang.wxpay.bean.request.*;
+import com.github.binarywang.wxpay.bean.result.*;
+import com.github.binarywang.wxpay.service.*;
+import java.util.*;
+import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.utils.qrcode.QrcodeUtils;
+import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.bean.order.WxPayAppOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMpOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayMwebOrderResult;
 import com.github.binarywang.wxpay.bean.order.WxPayNativeOrderResult;
-import com.github.binarywang.wxpay.bean.request.*;
-import com.github.binarywang.wxpay.bean.result.*;
-import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
-import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
 import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.config.WxPayConfigHolder;
@@ -19,7 +23,6 @@ import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.github.binarywang.wxpay.constant.WxPayConstants.TradeType;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.exception.WxSignTestException;
-import com.github.binarywang.wxpay.service.*;
 import com.github.binarywang.wxpay.util.SignUtils;
 import com.github.binarywang.wxpay.util.XmlConfig;
 import com.github.binarywang.wxpay.util.ZipUtils;
@@ -29,14 +32,6 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxRuntimeException;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.reflect.ConstructorUtils;
-import org.apache.http.entity.ContentType;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -45,12 +40,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.GeneralSecurityException;
-import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.zip.ZipException;
-
-import static com.github.binarywang.wxpay.constant.WxPayConstants.QUERY_COMMENT_DATE_FORMAT;
-import static com.github.binarywang.wxpay.constant.WxPayConstants.TarType;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.apache.http.entity.ContentType;
 
 /**
  * <pre>
@@ -138,6 +136,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Getter
   private final BusinessOperationTransferService businessOperationTransferService = new BusinessOperationTransferServiceImpl(this);
+
+  @Getter
+  private final MiPayService miPayService = new MiPayServiceImpl(this);
 
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
