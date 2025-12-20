@@ -1708,6 +1708,13 @@ public interface WxPayService {
   PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
 
   /**
+   * 获取实名验证服务类
+   *
+   * @return the real name service
+   */
+  RealNameService getRealNameService();
+  
+  /**
    * 获取医保支付服务类
    *
    * @return the merchant transfer service
