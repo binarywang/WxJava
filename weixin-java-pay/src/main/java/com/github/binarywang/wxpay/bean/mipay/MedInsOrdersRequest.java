@@ -67,7 +67,7 @@ public class MedInsOrdersRequest {
    * </pre>
    */
   @SerializedName("order_type")
-  public OrderTypeEnum orderTypeEnum;
+  public OrderTypeEnum orderType;
 
   /**
    * <pre>
@@ -530,7 +530,7 @@ public class MedInsOrdersRequest {
      * </pre>
      */
     @SerializedName("cash_add_type")
-    public CashAddTypeEnum cashAddTypeEnum;
+    public CashAddTypeEnum cashAddType;
   }
 
   /**
@@ -561,7 +561,7 @@ public class MedInsOrdersRequest {
      * </pre>
      */
     @SerializedName("cash_reduce_type")
-    public CashReduceTypeEnum cashReduceTypeEnum;
+    public CashReduceTypeEnum cashReduceType;
   }
 
 

@@ -5,7 +5,6 @@ import com.github.binarywang.wxpay.bean.mipay.MedInsOrdersResult;
 import com.github.binarywang.wxpay.bean.mipay.MedInsRefundNotifyRequest;
 import com.github.binarywang.wxpay.bean.notify.MiPayNotifyV3Result;
 import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
-import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.MiPayService;
 import com.github.binarywang.wxpay.service.WxPayService;

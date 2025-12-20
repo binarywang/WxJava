@@ -59,7 +59,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("self_pay_status")
-  public SelfPayStatusEnum selfPayStatusEnum;
+  public SelfPayStatusEnum selfPayStatus;
 
   /**
    * <pre>

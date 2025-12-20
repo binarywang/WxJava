@@ -1708,7 +1708,7 @@ public interface WxPayService {
   PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
 
   /**
-   * 获取商家转账到零钱服务类
+   * 获取医保支付服务类
    *
    * @return the merchant transfer service
    */
