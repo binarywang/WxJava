@@ -41,7 +41,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("mix_pay_status")
-  public MixPayStatusEnum mixPayStatusEnum;
+  public MixPayStatusEnum mixPayStatus;
 
   /**
    * <pre>
