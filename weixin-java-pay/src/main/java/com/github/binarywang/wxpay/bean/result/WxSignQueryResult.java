@@ -86,7 +86,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
    * 协议解约方式
    * 非必传
    */
-  @XStreamAlias("contract_terminated_mode")
+  @XStreamAlias("contract_termination_mode")
   private Integer contractTerminatedMode;
 
   /**
@@ -114,7 +114,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
     contractSignedTime = readXmlString(d, "contract_signed_time");
     contractExpiredTime = readXmlString(d, "contrace_Expired_time");
     contractTerminatedTime = readXmlString(d, "contract_terminated_time");
-    contractTerminatedMode = readXmlInteger(d, "contract_terminate_mode");
+    contractTerminatedMode = readXmlInteger(d, "contract_termination_mode");
     contractTerminationRemark = readXmlString(d, "contract_termination_remark");
     openId = readXmlString(d, "openid");
   }
