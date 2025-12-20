@@ -35,6 +35,7 @@ public class WxCpIntelligentRobotSendMessageResponse extends WxCpBaseResp implem
     return WxCpGsonBuilder.create().fromJson(json, WxCpIntelligentRobotSendMessageResponse.class);
   }
 
+  @Override
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
