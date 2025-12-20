@@ -2,6 +2,10 @@ package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.mipay.MedInsOrdersRequest;
 import com.github.binarywang.wxpay.bean.mipay.MedInsOrdersResult;
+import com.github.binarywang.wxpay.bean.mipay.MedInsRefundNotifyRequest;
+import com.github.binarywang.wxpay.bean.notify.MiPayNotifyV3Result;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.MiPayService;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -37,10 +41,29 @@ public class MiPayServiceImpl implements MiPayService {
   }
 
   @Override
-  public MedInsOrdersResult getMedInsOrderByMixTradeNo(String mixTradeNo, String subMchId) throws WxPayException {
-    String url = String.format("%s/v3/med-ins/orders/mix-trade-no/%s?sub_mchid=%s",
-        this.payService.getPayBaseUrl(), mixTradeNo, subMchId);
+  public MedInsOrdersResult getMedInsOrderByMixTradeNo(String mixTradeNo, String subMchid) throws WxPayException {
+    String url = String.format("%s/v3/med-ins/orders/mix-trade-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), mixTradeNo, subMchid);
     String result = this.payService.getV3(url);
     return GSON.fromJson(result, MedInsOrdersResult.class);
   }
+
+  @Override
+  public MedInsOrdersResult getMedInsOrderByOutTradeNo(String outTradeNo, String subMchid) throws WxPayException {
+    String url = String.format("%s/v3/med-ins/orders/out-trade-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outTradeNo, subMchid);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, MedInsOrdersResult.class);
+  }
+
+  @Override
+  public MiPayNotifyV3Result parseMiPayNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.payService.baseParseOrderNotifyV3Result(notifyData, header, MiPayNotifyV3Result.class, MiPayNotifyV3Result.DecryptNotifyResult.class);
+  }
+
+  @Override
+  public void medInsRefundNotify(MedInsRefundNotifyRequest request) throws WxPayException {
+    String url = String.format("%s/v3/med-ins/refunds/notify?mix_trade_no=%s", this.payService.getPayBaseUrl(), request.getMixTradeNo());
+    this.payService.postV3(url, GSON.toJson(request));
+  }
+
+
 }
