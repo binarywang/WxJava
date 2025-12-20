@@ -64,4 +64,14 @@ public interface WxCpIntelligentRobotService {
    */
   void resetSession(String robotId, String userid, String sessionId) throws WxErrorException;
 
+  /**
+   * 智能机器人主动发送消息
+   * 官方文档: https://developer.work.weixin.qq.com/document/path/100719
+   *
+   * @param request 发送消息请求参数
+   * @return 发送消息响应
+   * @throws WxErrorException 微信接口异常
+   */
+  WxCpIntelligentRobotSendMessageResponse sendMessage(WxCpIntelligentRobotSendMessageRequest request) throws WxErrorException;
+
 }

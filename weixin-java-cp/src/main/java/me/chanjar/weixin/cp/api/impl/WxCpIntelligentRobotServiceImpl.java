@@ -61,4 +61,10 @@ public class WxCpIntelligentRobotServiceImpl implements WxCpIntelligentRobotServ
     this.cpService.post(RESET_SESSION, jsonObject.toString());
   }
 
+  @Override
+  public WxCpIntelligentRobotSendMessageResponse sendMessage(WxCpIntelligentRobotSendMessageRequest request) throws WxErrorException {
+    String responseText = this.cpService.post(SEND_MESSAGE, request.toJson());
+    return WxCpIntelligentRobotSendMessageResponse.fromJson(responseText);
+  }
+
 }

@@ -254,6 +254,24 @@ public class WxCpXmlMessage implements Serializable {
   private String linkId;
 
   /**
+   * 智能机器人ID
+   * 接收智能机器人消息时使用
+   * https://developer.work.weixin.qq.com/document/path/100719
+   */
+  @XStreamAlias("RobotId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String robotId;
+
+  /**
+   * 智能机器人会话ID
+   * 接收智能机器人消息时使用，用于保持会话连续性
+   * https://developer.work.weixin.qq.com/document/path/100719
+   */
+  @XStreamAlias("SessionId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String sessionId;
+
+  /**
    * 通讯录变更事件.
    * 请参考常量 me.chanjar.weixin.cp.constant.WxCpConsts.ContactChangeType
    */
