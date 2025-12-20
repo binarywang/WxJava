@@ -1713,4 +1713,12 @@ public interface WxPayService {
    * @return the real name service
    */
   RealNameService getRealNameService();
+  
+  /**
+   * 获取医保支付服务类
+   *
+   * @return the merchant transfer service
+   */
+  MiPayService getMiPayService();
+
 }
