@@ -46,5 +46,22 @@ public class MiPayServiceImplTest {
     log.info(result.toString());
   }
 
+  /**
+   * 使用医保自费混合订单号查看下单结果测试
+   * @throws WxPayException
+   */
+  @Test
+  public void getMedInsOrderByMixTradeNo() throws WxPayException {
+    // 测试用的医保自费混合订单号和医疗机构商户号
+    String mixTradeNo = "202204022005169952975171534816";
+    String subMchid = "1900000109";
+
+    MiPayService miPayService = wxPayService.getMiPayService();
+
+    MedInsOrdersResult result = miPayService.getMedInsOrderByMixTradeNo(mixTradeNo, subMchid);
+
+    log.info(result.toString());
+  }
+
 
 }

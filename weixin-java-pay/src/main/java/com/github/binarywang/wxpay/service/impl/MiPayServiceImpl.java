@@ -34,7 +34,13 @@ public class MiPayServiceImpl implements MiPayService {
 
     String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(result, MedInsOrdersResult.class);
+  }
 
-
+  @Override
+  public MedInsOrdersResult getMedInsOrderByMixTradeNo(String mixTradeNo, String subMchId) throws WxPayException {
+    String url = String.format("%s/v3/med-ins/orders/mix-trade-no/%s?sub_mchid=%s",
+        this.payService.getPayBaseUrl(), mixTradeNo, subMchId);
+    String result = this.payService.getV3(url);
+    return GSON.fromJson(result, MedInsOrdersResult.class);
   }
 }

@@ -27,8 +27,20 @@ public interface MiPayService {
    */
   MedInsOrdersResult medInsOrders(MedInsOrdersRequest request) throws WxPayException;
 
-
-
-
+  /**
+   * <pre>
+   * 使用医保自费混合订单号查看下单结果
+   *
+   * 从业机构使用混合下单订单号，通过该接口主动查询订单状态，完成下一步的业务逻辑。
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4012503155">使用医保自费混合订单号查看下单结果</a>
+   * </pre>
+   *
+   * @param mixTradeNo 医保自费混合订单号
+   * @param subMchId   医疗机构的商户号
+   * @return MedInsOrdersResult 下单结果
+   * @throws WxPayException the wx pay exception
+   */
+  MedInsOrdersResult getMedInsOrderByMixTradeNo(String mixTradeNo, String subMchId) throws WxPayException;
 
 }
