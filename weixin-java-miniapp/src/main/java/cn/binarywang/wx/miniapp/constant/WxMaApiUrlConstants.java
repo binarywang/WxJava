@@ -875,6 +875,7 @@ public class WxMaApiUrlConstants {
     String NOTIFY_PROVIDE_GOODS_URL =
         "https://api.weixin.qq.com/xpay/notify_provide_goods?pay_sig=%s";
     String PRESENT_CURRENCY_URL = "https://api.weixin.qq.com/xpay/present_currency?pay_sig=%s";
+    String PRESENT_GOODS_URL = "https://api.weixin.qq.com/xpay/present_goods?pay_sig=%s";
     String DOWNLOAD_BILL_URL = "https://api.weixin.qq.com/xpay/download_bill?pay_sig=%s";
     String REFUND_ORDER_URL = "https://api.weixin.qq.com/xpay/refund_order?pay_sig=%s";
     String CREATE_WITHDRAW_ORDER_URL =

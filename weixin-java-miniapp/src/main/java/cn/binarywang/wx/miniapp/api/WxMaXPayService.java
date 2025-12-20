@@ -72,6 +72,16 @@ public interface WxMaXPayService {
   WxMaXPayPresentCurrencyResponse presentCurrency(WxMaXPayPresentCurrencyRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
 
   /**
+   * 道具直购。
+   *
+   * @param request          道具直购请求对象
+   * @param sigParams        签名参数对象
+   * @return                 道具直购结果
+   * @throws WxErrorException 直购失败时抛出
+   */
+  WxMaXPayPresentGoodsResponse presentGoods(WxMaXPayPresentGoodsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
+
+  /**
    * 下载对账单。
    *
    * @param request          下载对账单请求对象
