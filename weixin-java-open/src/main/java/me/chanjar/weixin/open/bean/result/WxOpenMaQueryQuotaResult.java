@@ -6,16 +6,16 @@ import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 /**
- * 微信开放平台小程序提审额度查询结果
+ * 微信开放平台小程序提交审核额度查询结果
  * <p>
- * 用于查询第三方平台服务商的当月提审限额和加急次数
+ * 用于查询第三方平台服务商的当月提交审核限额和加急次数
  * </p>
  * <p>
  * <b>字段说明：</b>
  * </p>
  * <ul>
- *   <li>rest: 当月剩余提审次数</li>
- *   <li>limit: 当月提审额度上限（默认20次，可联系微信开放平台增加）</li>
+ *   <li>rest: 当月剩余提交审核次数</li>
+ *   <li>limit: 当月提交审核额度上限（默认20次，可联系微信开放平台增加）</li>
  *   <li>speedupRest: 剩余加急次数</li>
  *   <li>speedupLimit: 加急额度上限</li>
  * </ul>
@@ -39,13 +39,13 @@ public class WxOpenMaQueryQuotaResult extends WxOpenResult {
   private static final long serialVersionUID = 5915265985261653007L;
 
   /**
-   * 当月剩余提审次数
+   * 当月剩余提交审核次数
    */
   @SerializedName("rest")
   private Integer rest;
 
   /**
-   * 当月提审额度上限
+   * 当月提交审核额度上限
    */
   @SerializedName("limit")
   private Integer limit;

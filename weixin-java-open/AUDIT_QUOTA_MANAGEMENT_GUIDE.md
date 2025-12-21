@@ -29,15 +29,15 @@
 // 查询当前审核额度
 WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
 
-System.out.println("当月剩余提审次数: " + quota.getRest());         // 剩余额度
-System.out.println("当月提审额度上限: " + quota.getLimit());        // 总额度
+System.out.println("当月剩余提交审核次数: " + quota.getRest());         // 剩余额度
+System.out.println("当月提交审核额度上限: " + quota.getLimit());        // 总额度
 System.out.println("剩余加急次数: " + quota.getSpeedupRest());      // 剩余加急次数
 System.out.println("加急额度上限: " + quota.getSpeedupLimit());     // 加急额度上限
 ```
 
 **返回字段说明**:
-- `rest`: 当月剩余提审次数
-- `limit`: 当月提审额度上限（默认 20）
+- `rest`: 当月剩余提交审核次数
+- `limit`: 当月提交审核额度上限（默认 20）
 - `speedupRest`: 剩余加急次数
 - `speedupLimit`: 加急额度上限
 

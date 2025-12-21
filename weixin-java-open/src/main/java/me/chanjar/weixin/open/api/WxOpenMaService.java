@@ -716,7 +716,7 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaGetCodePrivacyInfoResult getCodePrivacyInfo() throws WxErrorException;
 
   /**
-   * 查询服务商的当月提审限额和加急次数（Quota）
+   * 查询服务商的当月提交审核限额和加急次数（Quota）
    * <p>
    * 文档地址：
    * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html">查询额度</a>
@@ -725,8 +725,8 @@ public interface WxOpenMaService extends WxMaService {
    * <b>返回字段说明：</b>
    * </p>
    * <ul>
-   *   <li>rest: 当月剩余提审次数</li>
-   *   <li>limit: 当月提审额度上限（默认20次）</li>
+   *   <li>rest: 当月剩余提交审核次数</li>
+   *   <li>limit: 当月提交审核额度上限（默认20次）</li>
    *   <li>speedup_rest: 剩余加急次数</li>
    *   <li>speedup_limit: 加急额度上限</li>
    * </ul>
