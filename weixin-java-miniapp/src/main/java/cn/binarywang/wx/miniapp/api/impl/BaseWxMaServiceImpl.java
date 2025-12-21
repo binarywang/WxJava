@@ -167,6 +167,8 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   private final WxMaPromotionService wxMaPromotionService = new WxMaPromotionServiceImpl(this);
   private final WxMaIntracityService intracityService = new WxMaIntracityServiceImpl(this);
   private final WxMaComplaintService complaintService = new WxMaComplaintServiceImpl(this);
+  private final WxMaEmployeeRelationService employeeRelationService =
+      new WxMaEmployeeRelationServiceImpl(this);
 
   private Map<String, WxMaConfig> configMap = new HashMap<>();
   private int retrySleepMillis = 1000;
@@ -1047,5 +1049,10 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaComplaintService getComplaintService() {
     return this.complaintService;
+  }
+
+  @Override
+  public WxMaEmployeeRelationService getEmployeeRelationService() {
+    return this.employeeRelationService;
   }
 }

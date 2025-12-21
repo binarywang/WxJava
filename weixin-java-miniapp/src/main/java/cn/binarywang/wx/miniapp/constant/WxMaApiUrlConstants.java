@@ -997,4 +997,12 @@ public class WxMaApiUrlConstants {
     /** 上传反馈图片 */
     String UPLOAD_RESPONSE_IMAGE_URL = "https://api.weixin.qq.com/cgi-bin/miniapp/complaint/upload";
   }
+
+  /** 用工关系 */
+  public interface Employee {
+    /** 解绑用工关系 */
+    String UNBIND_EMPLOYEE_URL = "https://api.weixin.qq.com/wxa/unbinduserb2cauthinfo";
+    /** 推送用工消息 */
+    String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/wxa/sendemployeerelationmsg";
+  }
 }
