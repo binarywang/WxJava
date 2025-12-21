@@ -145,8 +145,16 @@ public class BatchAuditSubmitter {
     BatchSubmitResult result = new BatchSubmitResult();
     result.setFailedAppIds(new ArrayList<>());
     
+    // 基本参数校验：避免空指针和空集合导致的 NoSuchElementException
+    if (appIdToMessageMap == null || appIdToMessageMap.isEmpty()) {
+      System.err.println("错误：待提交的小程序列表为空，未执行任何审核提交");
+      return result;
+    }
+    
     try {
       // 1. 检查总体额度是否充足
+      // 使用任意一个已授权的小程序 appId 获取 WxMaService 来查询审核额度。
+      // 注意：审核额度是以第三方平台维度统计的，因此这里选择任意一个 appId 即可。
       WxOpenMaQueryQuotaResult quota = wxOpenComponentService
           .getWxMaServiceByAppid(appIdToMessageMap.keySet().iterator().next())
           .queryQuota();
