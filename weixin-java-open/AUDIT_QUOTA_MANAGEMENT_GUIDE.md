@@ -18,7 +18,7 @@
 
 **回答**: 是的，每个授权的小程序（appId）都需要单独调用 `submitAudit()` 提交审核，每次提交会消耗 1 个审核额度。默认的 20 个额度对于管理大量小程序的第三方平台来说可能不够用，建议：
 1. 提交审核前先查询剩余额度
-2. 合理规划审核计划，避免重复提审
+2. 合理规划审核计划，避免重复提交审核
 3. 联系微信开放平台申请增加额度
 
 ## API 使用说明
@@ -52,7 +52,7 @@ item.setFirstClass("工具");            // 一级类目
 item.setSecondClass("效率");           // 二级类目
 item.setTitle("首页");                 // 页面标题
 
-// 构建提审消息
+// 构建提交审核消息
 WxOpenMaSubmitAuditMessage message = new WxOpenMaSubmitAuditMessage();
 message.setItemList(Collections.singletonList(item));
 message.setVersionDesc("版本描述");
@@ -303,7 +303,7 @@ A: 是的。同一个第三方平台账号下，所有授权的小程序共享�
 A: 建议采取以下措施：
 - 在批量提交审核前，先调用 `queryQuota()` 检查剩余额度
 - 实现审核额度监控和告警机制
-- 合理规划审核计划，避免不必要的重复提审
+- 合理规划审核计划，避免不必要的重复提交审核
 - 提高代码质量，减少审核不通过的情况
 - 联系微信开放平台申请增加额度
 
