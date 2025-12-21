@@ -188,6 +188,7 @@ public class BatchAuditSubmitter {
           System.err.println("AppId: " + appId + " 提交失败: " + e.getMessage());
           result.setFailCount(result.getFailCount() + 1);
           result.getFailedAppIds().add(appId);
+          count++;
         }
       }
       
