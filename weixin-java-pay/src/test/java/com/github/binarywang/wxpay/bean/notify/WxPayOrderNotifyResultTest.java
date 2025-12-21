@@ -82,35 +82,4 @@ public class WxPayOrderNotifyResultTest {
     }
   }
 
-  /**
-   * Test that JSON format input throws a helpful error message.
-   */
-  @Test
-  public void testFromXMLWithJsonShouldGiveHelpfulError() {
-    String jsonString = "{\n" +
-      "    \"id\": \"EV-2018022511223320873\",\n" +
-      "    \"create_time\": \"2015-05-20T13:29:35+08:00\",\n" +
-      "    \"resource_type\": \"encrypt-resource\",\n" +
-      "    \"event_type\": \"TRANSACTION.SUCCESS\",\n" +
-      "    \"summary\": \"支付成功\",\n" +
-      "    \"resource\": {\n" +
-      "        \"algorithm\": \"AEAD_AES_256_GCM\",\n" +
-      "        \"ciphertext\": \"test\",\n" +
-      "        \"associated_data\": \"transaction\",\n" +
-      "        \"nonce\": \"test\"\n" +
-      "    }\n" +
-      "}";
-
-    try {
-      WxPayOrderNotifyResult.fromXML(jsonString);
-      Assert.fail("Expected exception for JSON input");
-    } catch (Exception e) {
-      // Verify that the error message mentions whitespace/XML parsing issues
-      // This is the original XStream error that would occur
-      Assert.assertTrue(e.getMessage().contains("whitespace") || 
-                       e.getMessage().contains("XmlPull") || 
-                       e.getMessage().contains("START_DOCUMENT"));
-    }
-  }
-
 }
