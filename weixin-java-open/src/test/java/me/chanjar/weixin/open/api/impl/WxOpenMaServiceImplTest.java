@@ -387,14 +387,19 @@ public class WxOpenMaServiceImplTest {
   @Test
   public void testBatchSubmitAuditWithQuotaManagement() {
     // 此测试方法演示批量提交审核时的额度管理策略
-    // 注意：实际运行需要真实的微信 API 凭据
+    // 注意：实际运行需要真实的微信 API 凭据，以及 WxOpenComponentService 实例
     /*
+    // 假设已经初始化了 wxOpenComponentService
+    // WxOpenComponentService wxOpenComponentService = ...;
+
     try {
       // 假设需要为多个小程序提交审核
       List<String> appIds = Arrays.asList("appid1", "appid2", "appid3");
 
-      // 步骤1：检查总体额度是否充足
-      WxOpenMaQueryQuotaResult quota = wxOpenComponentService.queryQuota();
+      // 步骤1：通过任意一个小程序服务查询总体额度
+      // 注意：审核额度是第三方平台级别的，所有授权小程序共享
+      WxOpenMaService firstMaService = wxOpenComponentService.getWxMaServiceByAppid(appIds.get(0));
+      WxOpenMaQueryQuotaResult quota = firstMaService.queryQuota();
       System.out.println("当前剩余审核额度: " + quota.getRest());
 
       if (quota.getRest() < appIds.size()) {
@@ -429,7 +434,7 @@ public class WxOpenMaServiceImplTest {
       System.out.println("  失败: " + (appIds.size() - successCount));
 
       // 步骤4：查询剩余额度
-      quota = wxOpenComponentService.queryQuota();
+      quota = firstMaService.queryQuota();
       System.out.println("  剩余额度: " + quota.getRest());
 
     } catch (Exception e) {
