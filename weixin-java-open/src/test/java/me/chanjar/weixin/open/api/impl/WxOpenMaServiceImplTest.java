@@ -314,8 +314,8 @@ public class WxOpenMaServiceImplTest {
       WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
 
       System.out.println("审核额度信息：");
-      System.out.println("  当月剩余提审次数: " + quota.getRest());
-      System.out.println("  当月提审额度上限: " + quota.getLimit());
+      System.out.println("  当月剩余提交审核次数: " + quota.getRest());
+      System.out.println("  当月提交审核额度上限: " + quota.getLimit());
       System.out.println("  剩余加急次数: " + quota.getSpeedupRest());
       System.out.println("  加急额度上限: " + quota.getSpeedupLimit());
 
