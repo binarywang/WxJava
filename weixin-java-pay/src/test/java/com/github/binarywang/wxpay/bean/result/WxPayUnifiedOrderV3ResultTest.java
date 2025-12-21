@@ -198,4 +198,70 @@ public class WxPayUnifiedOrderV3ResultTest {
     Assert.assertNotNull(appResult.getPrepayId(), "prepayId不应为null");
     Assert.assertEquals(appResult.getPrepayId(), testPrepayId, "prepayId应该与设置的值相同");
   }
+
+  /**
+   * 测试getJsapiPayInfo方法的空值验证
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class, 
+        expectedExceptionsMessageRegExp = "prepayId, appId 和 privateKey 不能为空")
+  public void testGetJsapiPayInfoWithNullPrepayId() {
+    WxPayUnifiedOrderV3Result.getJsapiPayInfo(null, "appId", null);
+  }
+
+  /**
+   * 测试getJsapiPayInfo方法的空值验证 - appId为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId 和 privateKey 不能为空")
+  public void testGetJsapiPayInfoWithNullAppId() throws Exception {
+    KeyPair keyPair = generateKeyPair();
+    WxPayUnifiedOrderV3Result.getJsapiPayInfo("prepayId", null, keyPair.getPrivate());
+  }
+
+  /**
+   * 测试getJsapiPayInfo方法的空值验证 - privateKey为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId 和 privateKey 不能为空")
+  public void testGetJsapiPayInfoWithNullPrivateKey() {
+    WxPayUnifiedOrderV3Result.getJsapiPayInfo("prepayId", "appId", null);
+  }
+
+  /**
+   * 测试getAppPayInfo方法的空值验证 - prepayId为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId, mchId 和 privateKey 不能为空")
+  public void testGetAppPayInfoWithNullPrepayId() {
+    WxPayUnifiedOrderV3Result.getAppPayInfo(null, "appId", "mchId", null);
+  }
+
+  /**
+   * 测试getAppPayInfo方法的空值验证 - appId为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId, mchId 和 privateKey 不能为空")
+  public void testGetAppPayInfoWithNullAppId() throws Exception {
+    KeyPair keyPair = generateKeyPair();
+    WxPayUnifiedOrderV3Result.getAppPayInfo("prepayId", null, "mchId", keyPair.getPrivate());
+  }
+
+  /**
+   * 测试getAppPayInfo方法的空值验证 - mchId为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId, mchId 和 privateKey 不能为空")
+  public void testGetAppPayInfoWithNullMchId() throws Exception {
+    KeyPair keyPair = generateKeyPair();
+    WxPayUnifiedOrderV3Result.getAppPayInfo("prepayId", "appId", null, keyPair.getPrivate());
+  }
+
+  /**
+   * 测试getAppPayInfo方法的空值验证 - privateKey为null
+   */
+  @Test(expectedExceptions = IllegalArgumentException.class,
+        expectedExceptionsMessageRegExp = "prepayId, appId, mchId 和 privateKey 不能为空")
+  public void testGetAppPayInfoWithNullPrivateKey() {
+    WxPayUnifiedOrderV3Result.getAppPayInfo("prepayId", "appId", "mchId", null);
+  }
 }

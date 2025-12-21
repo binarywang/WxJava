@@ -119,27 +119,13 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
   }
 
   public <T> T getPayInfo(TradeTypeEnum tradeType, String appId, String mchId, PrivateKey privateKey) {
-    String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
-    String nonceStr = SignUtils.genRandomStr();
     switch (tradeType) {
       case JSAPI:
-        JsapiResult jsapiResult = new JsapiResult();
-        jsapiResult.setAppId(appId).setTimeStamp(timestamp)
-          .setPackageValue("prepay_id=" + this.prepayId).setNonceStr(nonceStr)
-          .setPrepayId(this.prepayId)
-          //签名类型，默认为RSA，仅支持RSA。
-          .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
-        return (T) jsapiResult;
+        return (T) buildJsapiResult(this.prepayId, appId, privateKey);
       case H5:
         return (T) this.h5Url;
       case APP:
-        AppResult appResult = new AppResult();
-        appResult.setAppid(appId).setPrepayId(this.prepayId).setPartnerId(mchId)
-          .setNoncestr(nonceStr).setTimestamp(timestamp)
-          //暂填写固定值Sign=WXPay
-          .setPackageValue("Sign=WXPay")
-          .setSign(SignUtils.sign(appResult.getSignStr(), privateKey));
-        return (T) appResult;
+        return (T) buildAppResult(this.prepayId, appId, mchId, privateKey);
       case NATIVE:
         return (T) this.codeUrl;
       default:
@@ -173,15 +159,10 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
    * @return JSAPI支付所需的参数对象
    */
   public static JsapiResult getJsapiPayInfo(String prepayId, String appId, PrivateKey privateKey) {
-    String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
-    String nonceStr = SignUtils.genRandomStr();
-    JsapiResult jsapiResult = new JsapiResult();
-    jsapiResult.setAppId(appId).setTimeStamp(timestamp)
-      .setPackageValue("prepay_id=" + prepayId).setNonceStr(nonceStr)
-      .setPrepayId(prepayId)
-      //签名类型，默认为RSA，仅支持RSA。
-      .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
-    return jsapiResult;
+    if (prepayId == null || appId == null || privateKey == null) {
+      throw new IllegalArgumentException("prepayId, appId 和 privateKey 不能为空");
+    }
+    return buildJsapiResult(prepayId, appId, privateKey);
   }
 
   /**
@@ -211,6 +192,42 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
    * @return APP支付所需的参数对象
    */
   public static AppResult getAppPayInfo(String prepayId, String appId, String mchId, PrivateKey privateKey) {
+    if (prepayId == null || appId == null || mchId == null || privateKey == null) {
+      throw new IllegalArgumentException("prepayId, appId, mchId 和 privateKey 不能为空");
+    }
+    return buildAppResult(prepayId, appId, mchId, privateKey);
+  }
+
+  /**
+   * 构建JSAPI支付结果对象
+   *
+   * @param prepayId   预支付交易会话标识
+   * @param appId      应用ID
+   * @param privateKey 商户私钥，用于签名
+   * @return JSAPI支付所需的参数对象
+   */
+  private static JsapiResult buildJsapiResult(String prepayId, String appId, PrivateKey privateKey) {
+    String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+    String nonceStr = SignUtils.genRandomStr();
+    JsapiResult jsapiResult = new JsapiResult();
+    jsapiResult.setAppId(appId).setTimeStamp(timestamp)
+      .setPackageValue("prepay_id=" + prepayId).setNonceStr(nonceStr)
+      .setPrepayId(prepayId)
+      //签名类型，默认为RSA，仅支持RSA。
+      .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
+    return jsapiResult;
+  }
+
+  /**
+   * 构建APP支付结果对象
+   *
+   * @param prepayId   预支付交易会话标识
+   * @param appId      应用ID
+   * @param mchId      商户号
+   * @param privateKey 商户私钥，用于签名
+   * @return APP支付所需的参数对象
+   */
+  private static AppResult buildAppResult(String prepayId, String appId, String mchId, PrivateKey privateKey) {
     String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
     String nonceStr = SignUtils.genRandomStr();
     AppResult appResult = new AppResult();
