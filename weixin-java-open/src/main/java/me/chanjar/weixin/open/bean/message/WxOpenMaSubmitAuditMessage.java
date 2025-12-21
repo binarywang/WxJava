@@ -30,7 +30,7 @@ import java.util.List;
  * item.setSecondClass("休闲游戏");
  * item.setTitle("首页");
  *
- * // 2. 构建提审消息
+ * // 2. 构建提交审核消息
  * WxOpenMaSubmitAuditMessage message = new WxOpenMaSubmitAuditMessage();
  * message.setItemList(Collections.singletonList(item));
  * message.setVersionDesc("版本描述");
