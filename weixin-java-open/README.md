@@ -57,7 +57,7 @@ message.setItemList(itemList);
 WxOpenMaSubmitAuditResult result = wxOpenMaService.submitAudit(message);
 ```
 
-**详细说明**: 请参考 [审核额度管理最佳实践.md](审核额度管理最佳实践.md)
+**详细说明**: 请参考 [AUDIT_QUOTA_MANAGEMENT_GUIDE.md](AUDIT_QUOTA_MANAGEMENT_GUIDE.md)
 
 ---
 
