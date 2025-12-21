@@ -323,7 +323,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       // 检测数据格式并给出适当的处理建议
       if (xmlData != null && xmlData.trim().startsWith("{")) {
         throw new WxPayException("检测到V3版本的JSON格式通知数据，请使用parseOrderNotifyV3Result方法解析。" +
-            "V3 API需要传入SignatureHeader参数进行签名验证。");
+            " V3 API需要传入SignatureHeader参数进行签名验证。");
       }
       
       WxPayOrderNotifyResult result = WxPayOrderNotifyResult.fromXML(xmlData);
