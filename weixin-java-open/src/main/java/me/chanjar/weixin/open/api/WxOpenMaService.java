@@ -539,10 +539,36 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 将第三方提交的代码包提交审核（仅供第三方开发者代小程序调用）
+   * <p>
+   * <b>重要提示：审核额度限制</b>
+   * </p>
+   * <ul>
+   *   <li>每个第三方平台账号每月有审核额度限制（默认20次，可通过 {@link #queryQuota()} 查询）</li>
+   *   <li>每次调用 submitAudit 提交一个小程序审核时，会消耗1个审核额度</li>
+   *   <li>建议在提交审核前，先调用 {@link #queryQuota()} 检查剩余额度</li>
+   *   <li>如需增加额度，请联系微信开放平台客服</li>
+   * </ul>
+   * <p>
+   * <b>最佳实践：</b>
+   * </p>
+   * <pre>{@code
+   * // 1. 先查询剩余额度
+   * WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
+   * if (quota.getRest() <= 0) {
+   *   throw new RuntimeException("审核额度不足，剩余：" + quota.getRest());
+   * }
+   *
+   * // 2. 提交审核
+   * WxOpenMaSubmitAuditMessage message = new WxOpenMaSubmitAuditMessage();
+   * message.setItemList(itemList);
+   * WxOpenMaSubmitAuditResult result = wxOpenMaService.submitAudit(message);
+   * }</pre>
    *
    * @param submitAuditMessage the submit audit message
    * @return the wx open ma submit audit result
    * @throws WxErrorException the wx error exception
+   * @see #queryQuota() 查询审核额度
+   * @see #speedAudit(Long) 加急审核
    */
   WxOpenMaSubmitAuditResult submitAudit(WxOpenMaSubmitAuditMessage submitAuditMessage) throws WxErrorException;
 
@@ -691,10 +717,42 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 查询服务商的当月提审限额和加急次数（Quota）
-   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+   * <p>
+   * 文档地址：
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html">查询额度</a>
+   * </p>
+   * <p>
+   * <b>返回字段说明：</b>
+   * </p>
+   * <ul>
+   *   <li>rest: 当月剩余提审次数</li>
+   *   <li>limit: 当月提审额度上限（默认20次）</li>
+   *   <li>speedup_rest: 剩余加急次数</li>
+   *   <li>speedup_limit: 加急额度上限</li>
+   * </ul>
+   * <p>
+   * <b>重要说明：</b>
+   * </p>
+   * <ul>
+   *   <li>每个第三方平台账号每月初会重置审核额度</li>
+   *   <li>每次调用 {@link #submitAudit} 提交审核会消耗1个额度</li>
+   *   <li>审核撤回不会返还额度</li>
+   *   <li>建议在批量提交审核前，先调用此接口检查额度是否充足</li>
+   * </ul>
+   * <p>
+   * <b>使用示例：</b>
+   * </p>
+   * <pre>{@code
+   * WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
+   * System.out.println("剩余审核次数：" + quota.getRest());
+   * System.out.println("审核额度上限：" + quota.getLimit());
+   * System.out.println("剩余加急次数：" + quota.getSpeedupRest());
+   * }</pre>
    *
-   * @return the wx open ma query quota result
-   * @throws WxErrorException the wx error exception
+   * @return 审核额度信息
+   * @throws WxErrorException 调用微信接口失败时抛出
+   * @see #submitAudit(WxOpenMaSubmitAuditMessage) 提交审核
+   * @see #speedAudit(Long) 加急审核
    */
   WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException;
 
