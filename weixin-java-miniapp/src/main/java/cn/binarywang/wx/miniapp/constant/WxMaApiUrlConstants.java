@@ -569,6 +569,14 @@ public class WxMaApiUrlConstants {
     /** 发送设备订阅消息 */
     String SEND_DEVICE_SUBSCRIBE_MSG_URL =
         "https://api.weixin.qq.com/cgi-bin/message/device/subscribe/send";
+    /** 创建设备组 */
+    String CREATE_IOT_GROUP_ID_URL = "https://api.weixin.qq.com/wxa/business/group/createid";
+    /** 设备组添加设备 */
+    String ADD_IOT_GROUP_DEVICE_URL = "https://api.weixin.qq.com/wxa/business/group/adddevice";
+    /** 设备组删除设备 */
+    String REMOVE_IOT_GROUP_DEVICE_URL = "https://api.weixin.qq.com/wxa/business/group/removedevice";
+    /** 查询设备组信息 */
+    String GET_IOT_GROUP_INFO_URL = "https://api.weixin.qq.com/wxa/business/group/getinfo";
   }
 
   /**
