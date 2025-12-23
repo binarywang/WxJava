@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 医保自费混合收款下单请求
@@ -22,9 +23,10 @@ import lombok.NoArgsConstructor;
  * @date 2025/12/19 14:37
  */
 @Data
-@Builder(builderMethodName = "newBuilder")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
 public class MedInsOrdersRequest {
 
   /**
@@ -91,7 +93,7 @@ public class MedInsOrdersRequest {
    * </pre>
    */
   @SerializedName("sub_appid")
-  public String subAppid;
+  public String subAppId;
 
   /**
    * <pre>
@@ -103,7 +105,7 @@ public class MedInsOrdersRequest {
    * </pre>
    */
   @SerializedName("sub_mchid")
-  public String subMchid;
+  public String subMchId;
 
   /**
    * <pre>
@@ -282,72 +284,72 @@ public class MedInsOrdersRequest {
    * 字段名：总金额
    * 变量名：total_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：总金额
    * </pre>
    */
   @SerializedName("total_fee")
-  public Long totalFee;
+  public Integer totalFee;
 
   /**
    * <pre>
    * 字段名：医保统筹基金支付金额
    * 变量名：med_ins_gov_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保统筹基金支付金额
    * </pre>
    */
   @SerializedName("med_ins_gov_fee")
-  public Long medInsGovFee;
+  public Integer medInsGovFee;
 
   /**
    * <pre>
    * 字段名：医保个人账户支付金额
    * 变量名：med_ins_self_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保个人账户支付金额
    * </pre>
    */
   @SerializedName("med_ins_self_fee")
-  public Long medInsSelfFee;
+  public Integer medInsSelfFee;
 
   /**
    * <pre>
    * 字段名：医保其他基金支付金额
    * 变量名：med_ins_other_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保其他基金支付金额
    * </pre>
    */
   @SerializedName("med_ins_other_fee")
-  public Long medInsOtherFee;
+  public Integer medInsOtherFee;
 
   /**
    * <pre>
    * 字段名：医保现金支付金额
    * 变量名：med_ins_cash_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保现金支付金额
    * </pre>
    */
   @SerializedName("med_ins_cash_fee")
-  public Long medInsCashFee;
+  public Integer medInsCashFee;
 
   /**
    * <pre>
    * 字段名：微信支付现金支付金额
    * 变量名：wechat_pay_cash_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：微信支付现金支付金额
    * </pre>
    */
   @SerializedName("wechat_pay_cash_fee")
-  public Long wechatPayCashFee;
+  public Integer wechatPayCashFee;
 
   /**
    * <pre>
@@ -462,6 +464,11 @@ public class MedInsOrdersRequest {
    * 支付人身份信息
    * </pre>
    */
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(chain = true)
   public static class PersonIdentification {
     /**
      * <pre>
@@ -507,18 +514,23 @@ public class MedInsOrdersRequest {
    * 现金增加明细实体
    * </pre>
    */
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(chain = true)
   public static class CashAddEntity {
     /**
      * <pre>
      * 字段名：现金增加金额
      * 变量名：cash_add_fee
      * 必填：是
-     * 类型：long
+     * 类型：Integer
      * 描述：现金增加金额
      * </pre>
      */
     @SerializedName("cash_add_fee")
-    public Long cashAddFee;
+    public Integer cashAddFee;
 
     /**
      * <pre>
@@ -538,18 +550,23 @@ public class MedInsOrdersRequest {
    * 现金减少明细实体
    * </pre>
    */
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @Accessors(chain = true)
   public static class CashReduceEntity {
     /**
      * <pre>
      * 字段名：现金减少金额
      * 变量名：cash_reduce_fee
      * 必填：是
-     * 类型：long
+     * 类型：Integer
      * 描述：现金减少金额
      * </pre>
      */
     @SerializedName("cash_reduce_fee")
-    public Long cashReduceFee;
+    public Integer cashReduceFee;
 
     /**
      * <pre>

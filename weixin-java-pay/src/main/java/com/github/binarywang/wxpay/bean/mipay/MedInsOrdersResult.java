@@ -65,7 +65,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("med_ins_pay_status")
-  public MedInsPayStatusEnum medInsPayStatusEnum;
+  public MedInsPayStatusEnum medInsPayStatus;
 
   /**
    * <pre>
@@ -155,7 +155,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("sub_appid")
-  public String subAppid;
+  public String subAppId;
 
   /**
    * <pre>
@@ -167,7 +167,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("sub_mchid")
-  public String subMchid;
+  public String subMchId;
 
   /**
    * <pre>
@@ -320,72 +320,72 @@ public class MedInsOrdersResult {
    * 字段名：总金额
    * 变量名：total_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：总金额
    * </pre>
    */
   @SerializedName("total_fee")
-  public Long totalFee;
+  public Integer totalFee;
 
   /**
    * <pre>
    * 字段名：医保统筹基金支付金额
    * 变量名：med_ins_gov_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保统筹基金支付金额
    * </pre>
    */
   @SerializedName("med_ins_gov_fee")
-  public Long medInsGovFee;
+  public Integer medInsGovFee;
 
   /**
    * <pre>
    * 字段名：医保个人账户支付金额
    * 变量名：med_ins_self_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保个人账户支付金额
    * </pre>
    */
   @SerializedName("med_ins_self_fee")
-  public Long medInsSelfFee;
+  public Integer medInsSelfFee;
 
   /**
    * <pre>
    * 字段名：医保其他基金支付金额
    * 变量名：med_ins_other_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保其他基金支付金额
    * </pre>
    */
   @SerializedName("med_ins_other_fee")
-  public Long medInsOtherFee;
+  public Integer medInsOtherFee;
 
   /**
    * <pre>
    * 字段名：医保现金支付金额
    * 变量名：med_ins_cash_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：医保现金支付金额
    * </pre>
    */
   @SerializedName("med_ins_cash_fee")
-  public Long medInsCashFee;
+  public Integer medInsCashFee;
 
   /**
    * <pre>
    * 字段名：微信支付现金支付金额
    * 变量名：wechat_pay_cash_fee
    * 必填：否
-   * 类型：long
+   * 类型：Integer
    * 描述：微信支付现金支付金额
    * </pre>
    */
   @SerializedName("wechat_pay_cash_fee")
-  public Long wechatPayCashFee;
+  public Integer wechatPayCashFee;
 
   /**
    * <pre>

@@ -87,8 +87,9 @@ public interface MiPayService {
    * </pre>
    *
    * @param request 医保退款通知请求参数
+   * @param mixTradeNo 【医保自费混合订单号】 医保自费混合订单号
    * @throws WxPayException the wx pay exception
    */
-  void medInsRefundNotify(MedInsRefundNotifyRequest request) throws WxPayException;
+  void medInsRefundNotify(MedInsRefundNotifyRequest request, String mixTradeNo) throws WxPayException;
 
 }

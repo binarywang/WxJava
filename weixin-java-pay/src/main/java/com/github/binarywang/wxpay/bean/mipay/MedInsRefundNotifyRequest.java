@@ -22,16 +22,6 @@ public class MedInsRefundNotifyRequest {
 
   /**
    * <pre>
-   * 字段名：医保自费混合订单号
-   * 必填：是
-   * 类型：string(32)
-   * 描述：医保自费混合订单号
-   * </pre>
-   */
-  private String mixTradeNo;
-
-  /**
-   * <pre>
    * 字段名：医疗机构的商户号
    * 变量名：sub_mchid
    * 必填：是
@@ -40,7 +30,7 @@ public class MedInsRefundNotifyRequest {
    * </pre>
    */
   @SerializedName("sub_mchid")
-  private String subMchid;
+  private String subMchId;
 
   /**
    * <pre>

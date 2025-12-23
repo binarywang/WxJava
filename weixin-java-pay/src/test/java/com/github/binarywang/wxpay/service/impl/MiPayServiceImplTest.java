@@ -131,13 +131,12 @@ public class MiPayServiceImplTest {
 
     // 解析请求参数
     MedInsRefundNotifyRequest request = GSON.fromJson(requestParamStr, MedInsRefundNotifyRequest.class);
-    request.setMixTradeNo(mixTradeNo);
 
     MiPayService miPayService = wxPayService.getMiPayService();
 
     try {
       // 调用医保退款通知方法，预期会失败，因为是模拟数据
-      miPayService.medInsRefundNotify(request);
+      miPayService.medInsRefundNotify(request,mixTradeNo);
       log.info("医保退款通知调用成功");
     } catch (WxPayException e) {
       // 预期会抛出异常，因为是模拟数据

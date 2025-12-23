@@ -59,8 +59,8 @@ public class MiPayServiceImpl implements MiPayService {
   }
 
   @Override
-  public void medInsRefundNotify(MedInsRefundNotifyRequest request) throws WxPayException {
-    String url = String.format("%s/v3/med-ins/refunds/notify?mix_trade_no=%s", this.payService.getPayBaseUrl(), request.getMixTradeNo());
+  public void medInsRefundNotify(MedInsRefundNotifyRequest request, String mixTradeNo) throws WxPayException {
+    String url = String.format("%s/v3/med-ins/refunds/notify?mix_trade_no=%s", this.payService.getPayBaseUrl(), mixTradeNo);
     this.payService.postV3(url, GSON.toJson(request));
   }
 
