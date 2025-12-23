@@ -12,8 +12,6 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
