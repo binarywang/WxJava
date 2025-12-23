@@ -26,7 +26,7 @@ public class WxMaCreateIotGroupIdRequest implements Serializable {
   @SerializedName("model_id")
   private String modelId;
   /**
-   * 设备组的名称（创建时时决定，无法修改）
+   * 设备组的名称（创建时决定，无法修改）
    */
   @SerializedName("group_name")
   private String groupName;
