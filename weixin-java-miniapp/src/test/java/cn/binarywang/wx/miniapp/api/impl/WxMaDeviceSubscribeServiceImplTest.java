@@ -4,16 +4,14 @@ import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.device.*;
 import cn.binarywang.wx.miniapp.test.ApiTestModule;
 import com.google.common.collect.Lists;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -23,6 +21,7 @@ import java.util.List;
  * @author <a href="https://github.com/leejuncheng">JCLee</a>
  * @since 2021-12-16 17:13:35
  */
+@Slf4j
 @Test
 @Guice(modules = ApiTestModule.class)
 public class WxMaDeviceSubscribeServiceImplTest {
@@ -75,7 +74,7 @@ public class WxMaDeviceSubscribeServiceImplTest {
     WxMaGetIotGroupInfoRequest request = new WxMaGetIotGroupInfoRequest();
     request.setGroupId("12313123");
     WxMaIotGroupDeviceInfoResponse response = this.wxService.getDeviceSubscribeService().getIotGroupInfo(request);
-    System.out.println(response.toString());
+    log.info("testGetIotGroupInfo = {}", response);
   }
 
   @Test
@@ -88,7 +87,7 @@ public class WxMaDeviceSubscribeServiceImplTest {
     request.setDeviceList(Collections.singletonList(deviceTicketRequest));
     request.setForceAdd(true);
     List<WxMaDeviceTicketRequest> response = this.wxService.getDeviceSubscribeService().addIotGroupDevice(request);
-    System.out.println(response.toString());
+    log.info("testAddIotGroupDevice = {}", response);
   }
 
   @Test
@@ -99,8 +98,7 @@ public class WxMaDeviceSubscribeServiceImplTest {
     WxMaIotGroupDeviceRequest request = new WxMaIotGroupDeviceRequest();
     request.setGroupId("12313123");
     request.setDeviceList(Collections.singletonList(deviceTicketRequest));
-    request.setForceAdd(true);
     List<WxMaDeviceTicketRequest> response = this.wxService.getDeviceSubscribeService().removeIotGroupDevice(request);
-    System.out.println(response.toString());
+    log.info("testRemoveIotGroupDevice = {}", response);
   }
 }

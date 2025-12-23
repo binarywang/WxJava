@@ -39,15 +39,11 @@ public class WxMaIotGroupDeviceInfoResponse implements Serializable {
   @SerializedName("model_id")
   private String modelId;
   /**
-   * 门禁机
+   * 设备类型
    */
   @SerializedName("model_type")
   private String modelType;
-  /**
-   * 组最大设备数量
-   */
-  @SerializedName("max_device_count")
-  private String maxDeviceCount;
+
 
   public String toJson() {
     return WxMaGsonBuilder.create().toJson(this);

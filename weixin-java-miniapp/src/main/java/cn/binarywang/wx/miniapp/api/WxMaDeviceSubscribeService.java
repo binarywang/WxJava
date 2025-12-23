@@ -79,7 +79,6 @@ public interface WxMaDeviceSubscribeService {
   /**
    * <pre>
    * 设备组删除设备
-   * 一个设备组最多添加 50 个设备。 一个设备同一时间只能被添加到一个设备组中。
    * 详情请见：https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/hardware-device/removeIotGroupDevice.html
    * </pre>
    *
