@@ -115,6 +115,45 @@
 
 
 ---------------------------------
+### HTTP 客户端支持
+
+本项目同时支持多种 HTTP 客户端实现，默认推荐使用 **Apache HttpClient 5.x**（最新稳定版本）。
+
+#### 支持的 HTTP 客户端类型
+
+| HTTP 客户端 | 说明 | 配置值 | 推荐程度 |
+|------------|------|--------|---------|
+| Apache HttpClient 5.x | Apache HttpComponents Client 5.x，最新版本 | `HttpComponents` | ⭐⭐⭐⭐⭐ 推荐 |
+| Apache HttpClient 4.x | Apache HttpClient 4.x，向后兼容 | `HttpClient` | ⭐⭐⭐⭐ 兼容 |
+| OkHttp | Square OkHttp 客户端 | `OkHttp` | ⭐⭐⭐ 可选 |
+| Jodd-http | Jodd 轻量级 HTTP 客户端 | `JoddHttp` | ⭐⭐ 可选 |
+
+#### 配置方式
+
+**Spring Boot 配置示例：**
+
+```properties
+# 使用 HttpClient 5.x（推荐，MP/CP/Channel/QiDian 模块默认）
+wx.mp.config-storage.http-client-type=HttpComponents
+
+# 使用 HttpClient 4.x（兼容模式，MiniApp 模块默认）
+wx.mp.config-storage.http-client-type=HttpClient
+
+# 使用 OkHttp
+wx.mp.config-storage.http-client-type=OkHttp
+
+# 使用 Jodd-http
+wx.mp.config-storage.http-client-type=JoddHttp
+```
+
+**注意事项：**
+1. **MiniApp 模块**目前暂不支持 HttpClient 5.x，默认使用 HttpClient 4.x
+2. **MP、CP、Channel、QiDian 模块**已支持 HttpClient 5.x，默认推荐使用
+3. 如需使用 OkHttp 或 Jodd-http，需在项目中添加对应的依赖（scope为provided）
+4. HttpClient 4.x 和 HttpClient 5.x 可以共存，按需配置即可
+
+
+---------------------------------
 ### 版本说明
 
 <details>
