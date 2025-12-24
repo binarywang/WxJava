@@ -112,6 +112,10 @@ public interface WxCpApiPathConsts {
      * The constant AGENT_LIST.
      */
     String AGENT_LIST = "/cgi-bin/agent/list";
+    /**
+     * The constant AGENT_GET_ADMIN_LIST.
+     */
+    String AGENT_GET_ADMIN_LIST = "/cgi-bin/agent/get_admin_list";
   }
 
   /**

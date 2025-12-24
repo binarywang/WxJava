@@ -83,6 +83,20 @@ public class WxCpAgentServiceImplTest {
   }
 
   /**
+   * Test get admin list.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testGetAdminList() throws WxErrorException {
+    final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
+    me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = this.wxCpService.getAgentService().getAdminList(agentId);
+
+    assertThat(adminList).isNotNull();
+    assertThat(adminList.getErrCode()).isEqualTo(0);
+  }
+
+  /**
    * The type Mock test.
    */
   public static class MockTest {
@@ -116,6 +130,31 @@ public class WxCpAgentServiceImplTest {
       assertEquals(new Integer[]{23, 22, 35, 19, 32, 125, 133, 46, 150, 38, 183, 9, 7},
         wxCpAgent.getAllowTags().getTagIds().toArray());
 
+    }
+
+    /**
+     * Test get admin list.
+     *
+     * @throws Exception the exception
+     */
+    @Test
+    public void testGetAdminList() throws Exception {
+      String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"admin\": [{\"userid\": \"zhangsan\"," +
+        "\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH71w\",\"auth_type\": 1}," +
+        "{\"userid\": \"lisi\",\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH72w\",\"auth_type\": 2}]}";
+      final WxCpConfigStorage configStorage = new WxCpDefaultConfigImpl();
+      when(wxService.getWxCpConfigStorage()).thenReturn(configStorage);
+      when(wxService.post(configStorage.getApiUrl(WxCpApiPathConsts.Agent.AGENT_GET_ADMIN_LIST), "{\"agentid\":9}")).thenReturn(returnJson);
+      when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
+
+      WxCpAgentService wxAgentService = this.wxService.getAgentService();
+      me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = wxAgentService.getAdminList(9);
+
+      assertEquals(0, adminList.getErrCode().intValue());
+      assertEquals(2, adminList.getAdmin().size());
+      assertEquals("zhangsan", adminList.getAdmin().get(0).getUserId());
+      assertEquals("woAJ2GCAAAXtWyujaWJHDDGi0mACH71w", adminList.getAdmin().get(0).getOpenUserId());
+      assertEquals(1, adminList.getAdmin().get(0).getAuthType().intValue());
     }
 
   }
