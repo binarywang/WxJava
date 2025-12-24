@@ -23,7 +23,7 @@ import lombok.experimental.Accessors;
  * @date 2025/12/19 14:37
  */
 @Data
-@Builder
+@Builder(builderMethodName = "newBuilder")
 @NoArgsConstructor
 @AllArgsConstructor
 @Accessors(chain = true)
