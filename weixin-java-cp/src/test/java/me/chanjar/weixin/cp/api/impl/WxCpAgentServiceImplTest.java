@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
@@ -93,7 +94,7 @@ public class WxCpAgentServiceImplTest {
     me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = this.wxCpService.getAgentService().getAdminList(agentId);
 
     assertThat(adminList).isNotNull();
-    assertThat(adminList.getErrCode()).isEqualTo(0);
+    assertThat(adminList.getErrcode()).isEqualTo(0L);
   }
 
   /**
@@ -142,15 +143,17 @@ public class WxCpAgentServiceImplTest {
       String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"admin\": [{\"userid\": \"zhangsan\"," +
         "\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH71w\",\"auth_type\": 1}," +
         "{\"userid\": \"lisi\",\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH72w\",\"auth_type\": 2}]}";
+      JsonObject requestJson = new JsonObject();
+      requestJson.addProperty("agentid", 9);
       final WxCpConfigStorage configStorage = new WxCpDefaultConfigImpl();
       when(wxService.getWxCpConfigStorage()).thenReturn(configStorage);
-      when(wxService.post(configStorage.getApiUrl(WxCpApiPathConsts.Agent.AGENT_GET_ADMIN_LIST), "{\"agentid\":9}")).thenReturn(returnJson);
+      when(wxService.post(configStorage.getApiUrl(WxCpApiPathConsts.Agent.AGENT_GET_ADMIN_LIST), requestJson.toString())).thenReturn(returnJson);
       when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
 
       WxCpAgentService wxAgentService = this.wxService.getAgentService();
       me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = wxAgentService.getAdminList(9);
 
-      assertEquals(0, adminList.getErrCode().intValue());
+      assertEquals(0, adminList.getErrcode().intValue());
       assertEquals(2, adminList.getAdmin().size());
       assertEquals("zhangsan", adminList.getAdmin().get(0).getUserId());
       assertEquals("woAJ2GCAAAXtWyujaWJHDDGi0mACH71w", adminList.getAdmin().get(0).getOpenUserId());

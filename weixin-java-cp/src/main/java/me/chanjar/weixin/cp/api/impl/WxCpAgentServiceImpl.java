@@ -76,7 +76,11 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
     jsonObject.addProperty("agentid", agentId);
     String url = this.mainService.getWxCpConfigStorage().getApiUrl(AGENT_GET_ADMIN_LIST);
     String responseContent = this.mainService.post(url, jsonObject.toString());
-    return WxCpTpAdmin.fromJson(responseContent);
+    WxCpTpAdmin result = WxCpTpAdmin.fromJson(responseContent);
+    if (result.getErrcode() != null && result.getErrcode() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.CP));
+    }
+    return result;
   }
 
 }
