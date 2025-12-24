@@ -136,6 +136,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
+    <httpclient5.version>5.5</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
   </properties>
   <dependencyManagement>
@@ -157,13 +158,14 @@
         <version>4.12.0</version>
         <scope>provided</scope>
       </dependency>
+      <!-- HttpClient 5.x - 默认依赖（推荐使用） -->
       <dependency>
         <groupId>org.apache.httpcomponents.client5</groupId>
         <artifactId>httpclient5</artifactId>
-        <version>5.5</version>
-        <scope>provided</scope>
+        <version>${httpclient5.version}</version>
       </dependency>
 
+      <!-- HttpClient 4.x - 默认依赖（为了保持向后兼容） -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>

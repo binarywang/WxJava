@@ -16,4 +16,8 @@ public enum HttpClientType {
 //   * OkHttp.
 //   */
 //  OK_HTTP,
+  /**
+   * HttpComponents (Apache HttpClient 5.x).
+   */
+  HttpComponents,
 }
