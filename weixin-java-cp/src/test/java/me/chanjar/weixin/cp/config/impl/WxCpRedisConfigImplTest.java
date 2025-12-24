@@ -46,7 +46,7 @@ public class WxCpRedisConfigImplTest {
       }
     } finally {
       // 清理资源
-      if (jedisPool != null && !jedisPool.isClosed()) {
+      if (!jedisPool.isClosed()) {
         jedisPool.close();
       }
     }
