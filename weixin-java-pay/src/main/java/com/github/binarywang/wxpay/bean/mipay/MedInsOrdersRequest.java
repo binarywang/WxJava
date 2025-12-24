@@ -93,7 +93,7 @@ public class MedInsOrdersRequest {
    * </pre>
    */
   @SerializedName("sub_appid")
-  public String subAppId;
+  public String subAppid;
 
   /**
    * <pre>
