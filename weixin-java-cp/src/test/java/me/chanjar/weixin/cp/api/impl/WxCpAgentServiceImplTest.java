@@ -140,9 +140,27 @@ public class WxCpAgentServiceImplTest {
      */
     @Test
     public void testGetAdminList() throws Exception {
-      String returnJson = "{\"errcode\": 0,\"errmsg\": \"ok\",\"admin\": [{\"userid\": \"zhangsan\"," +
-        "\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH71w\",\"auth_type\": 1}," +
-        "{\"userid\": \"lisi\",\"open_userid\": \"woAJ2GCAAAXtWyujaWJHDDGi0mACH72w\",\"auth_type\": 2}]}";
+      // 构建响应JSON
+      JsonObject admin1 = new JsonObject();
+      admin1.addProperty("userid", "zhangsan");
+      admin1.addProperty("open_userid", "woAJ2GCAAAXtWyujaWJHDDGi0mACH71w");
+      admin1.addProperty("auth_type", 1);
+
+      JsonObject admin2 = new JsonObject();
+      admin2.addProperty("userid", "lisi");
+      admin2.addProperty("open_userid", "woAJ2GCAAAXtWyujaWJHDDGi0mACH72w");
+      admin2.addProperty("auth_type", 2);
+
+      com.google.gson.JsonArray adminArray = new com.google.gson.JsonArray();
+      adminArray.add(admin1);
+      adminArray.add(admin2);
+
+      JsonObject returnJsonObj = new JsonObject();
+      returnJsonObj.addProperty("errcode", 0);
+      returnJsonObj.addProperty("errmsg", "ok");
+      returnJsonObj.add("admin", adminArray);
+      String returnJson = returnJsonObj.toString();
+
       JsonObject requestJson = new JsonObject();
       requestJson.addProperty("agentid", 9);
       final WxCpConfigStorage configStorage = new WxCpDefaultConfigImpl();
