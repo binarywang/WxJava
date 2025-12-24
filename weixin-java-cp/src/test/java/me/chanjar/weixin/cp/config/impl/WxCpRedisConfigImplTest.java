@@ -30,12 +30,17 @@ public class WxCpRedisConfigImplTest {
       // 我们通过反射来设置这个字段以测试 getter 的正确性
       try {
         java.lang.reflect.Field field = WxCpRedisConfigImpl.class.getDeclaredField("webhookKey");
+        boolean originalAccessible = field.isAccessible();
         field.setAccessible(true);
-        String testWebhookKey = "test-webhook-key-123";
-        field.set(config, testWebhookKey);
-        
-        String retrievedKey = config.getWebhookKey();
-        Assert.assertEquals(retrievedKey, testWebhookKey, "应该返回设置的 webhookKey 值");
+        try {
+          String testWebhookKey = "test-webhook-key-123";
+          field.set(config, testWebhookKey);
+
+          String retrievedKey = config.getWebhookKey();
+          Assert.assertEquals(retrievedKey, testWebhookKey, "应该返回设置的 webhookKey 值");
+        } finally {
+          field.setAccessible(originalAccessible);
+        }
       } catch (NoSuchFieldException | IllegalAccessException e) {
         Assert.fail("反射设置 webhookKey 失败: " + e.getMessage());
       }
