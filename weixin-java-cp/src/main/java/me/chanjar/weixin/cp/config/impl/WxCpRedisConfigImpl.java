@@ -468,7 +468,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   @Override
   public String getWebhookKey() {
-    return this.getWebhookKey();
+    return this.webhookKey;
   }
 
   @Override
