@@ -30,7 +30,7 @@ public class MedInsRefundNotifyRequest {
    * </pre>
    */
   @SerializedName("sub_mchid")
-  private String subMchId;
+  private String subMchid;
 
   /**
    * <pre>
