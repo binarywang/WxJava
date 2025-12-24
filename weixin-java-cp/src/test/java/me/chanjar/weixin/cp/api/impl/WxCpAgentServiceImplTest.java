@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.api.impl;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.inject.Inject;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -7,6 +8,7 @@ import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.WxCpAgentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
+import me.chanjar.weixin.cp.bean.WxCpTpAdmin;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
@@ -91,7 +93,7 @@ public class WxCpAgentServiceImplTest {
   @Test
   public void testGetAdminList() throws WxErrorException {
     final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
-    me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = this.wxCpService.getAgentService().getAdminList(agentId);
+    WxCpTpAdmin adminList = this.wxCpService.getAgentService().getAdminList(agentId);
 
     assertThat(adminList).isNotNull();
     assertThat(adminList.getErrcode()).isEqualTo(0L);
@@ -151,7 +153,7 @@ public class WxCpAgentServiceImplTest {
       admin2.addProperty("open_userid", "woAJ2GCAAAXtWyujaWJHDDGi0mACH72w");
       admin2.addProperty("auth_type", 2);
 
-      com.google.gson.JsonArray adminArray = new com.google.gson.JsonArray();
+      JsonArray adminArray = new JsonArray();
       adminArray.add(admin1);
       adminArray.add(admin2);
 
@@ -169,7 +171,7 @@ public class WxCpAgentServiceImplTest {
       when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
 
       WxCpAgentService wxAgentService = this.wxService.getAgentService();
-      me.chanjar.weixin.cp.bean.WxCpTpAdmin adminList = wxAgentService.getAdminList(9);
+      WxCpTpAdmin adminList = wxAgentService.getAdminList(9);
 
       assertEquals(0, adminList.getErrcode().intValue());
       assertEquals(2, adminList.getAdmin().size());
