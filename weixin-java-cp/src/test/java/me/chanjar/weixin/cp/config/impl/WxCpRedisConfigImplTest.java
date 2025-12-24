@@ -6,8 +6,6 @@ import redis.clients.jedis.JedisPool;
 
 /**
  * WxCpRedisConfigImpl 测试类
- *
- * @author Copilot
  */
 public class WxCpRedisConfigImplTest {
 
