@@ -155,7 +155,7 @@ public class MedInsOrdersResult {
    * </pre>
    */
   @SerializedName("sub_appid")
-  public String subAppId;
+  public String subAppid;
 
   /**
    * <pre>
