@@ -105,7 +105,7 @@ public class MedInsOrdersRequest {
    * </pre>
    */
   @SerializedName("sub_mchid")
-  public String subMchId;
+  public String subMchid;
 
   /**
    * <pre>
