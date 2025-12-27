@@ -96,10 +96,10 @@ A: 不会。项目保持完全向后兼容，HttpClient 4.x 的所有实现都�
 A: 大多数情况下不需要。如果希望继续使用 HttpClient 4.x，只需在配置中指定 `http-client-type=HttpClient` 即可。
 
 ### Q: 为什么 MiniApp 模块不支持 HttpClient 5.x？
-A: MiniApp 模块的 HttpClient 5.x 实现正在开发中，将在未来版本中提供。目前 MiniApp 模块会继续使用 HttpClient 4.x。
+A: MiniApp 模块在核心 SDK 中已经提供了基于 HttpClient 5.x（`HttpComponents`）的支持，但默认仍会使用 HttpClient 4.x（`HttpClient`）。如果你使用的是框架集成（例如 Spring Boot Starter），相关自动配置可能暂未默认切换到 5.x，此时可以通过显式配置 `http-client-type=HttpComponents` 或关注后续版本说明。
 
 ### Q: 我可以在同一个项目中同时使用两个版本吗？
-A: 可以。不同的模块可以配置使用不同的 HTTP 客户端。例如，MP 模块使用 HttpClient 5.x，MiniApp 模块使用 HttpClient 4.x。
+A: 可以。不同的模块可以配置使用不同的 HTTP 客户端。例如，MP 模块使用 HttpClient 5.x，MiniApp 模块默认使用 HttpClient 4.x，但也可以按需配置为 HttpClient 5.x。
 
 ### Q: 如何排除不需要的依赖？
 A: 如果只想使用一个版本，可以在 `pom.xml` 中排除另一个：
