@@ -2,7 +2,7 @@
 
 ## 概述
 
-从 WxJava 4.7.9.B 版本开始，项目开始支持并推荐使用 **Apache HttpClient 5.x**（HttpComponents Client 5），同时保持对 HttpClient 4.x 的向后兼容。
+从 WxJava 4.7.x 版本开始，项目开始支持并推荐使用 **Apache HttpClient 5.x**（HttpComponents Client 5），同时保持对 HttpClient 4.x 的向后兼容。
 
 ## 为什么升级？
 
@@ -55,7 +55,7 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-mp</artifactId>
-  <version>4.7.9.B</version> <!-- 或更高版本 -->
+  <version>最新版本</version> <!-- 请参考 Maven Central 或项目 README 获取最新版本号 -->
 </dependency>
 ```
 
@@ -108,7 +108,7 @@ A: 如果只想使用一个版本，可以在 `pom.xml` 中排除另一个：
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>weixin-java-mp</artifactId>
-  <version>4.7.9.B</version>
+  <version>最新版本</version>
   <exclusions>
     <!-- 排除 HttpClient 4.x -->
     <exclusion>

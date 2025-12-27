@@ -7,11 +7,11 @@ package com.binarywang.spring.starter.wxjava.channel.enums;
  */
 public enum HttpClientType {
   /**
-   * HttpClient (Apache HttpClient 4.x)
+   * HttpClient.
    */
   HttpClient,
   /**
-   * HttpComponents (Apache HttpClient 5.x)
+   * HttpComponents.
    */
   HttpComponents,
 }

@@ -20,7 +20,7 @@ public enum HttpClientType {
    */
   JoddHttp,
   /**
-   * HttpComponents (Apache HttpClient 5.x).
+   * HttpComponents.
    */
   HttpComponents,
 }

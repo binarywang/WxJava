@@ -8,7 +8,7 @@ package com.binarywang.spring.starter.wxjava.channel.enums;
  */
 public enum HttpClientType {
   /**
-   * HttpClient
+   * HttpClient.
    */
   HTTP_CLIENT,
   // WxChannelServiceOkHttpImpl 实现经测试无法正常完成业务固暂不支持OK_HTTP方式
@@ -17,7 +17,7 @@ public enum HttpClientType {
 //   */
 //  OK_HTTP,
   /**
-   * HttpComponents (Apache HttpClient 5.x).
+   * HttpComponents.
    */
   HttpComponents,
 }
