@@ -25,7 +25,7 @@
 | 模块 | HttpClient 5.x 支持 | 默认客户端 |
 |------|-------------------|-----------|
 | weixin-java-mp（公众号） | ✅ 是 | HttpComponents (5.x) |
-| weixin-java-cp（企业微信） | ✅ 是 | HttpComponents (5.x) |
+| weixin-java-cp（企业微信） | ⚠️ 视集成方式而定 | 参考对应 starter 配置 |
 | weixin-java-channel（视频号） | ✅ 是 | HttpComponents (5.x) |
 | weixin-java-qidian（企点） | ✅ 是 | HttpComponents (5.x) |
 | weixin-java-miniapp（小程序） | ⚠️ 否 | HttpClient (4.x) |
