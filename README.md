@@ -147,8 +147,8 @@ wx.mp.config-storage.http-client-type=JoddHttp
 ```
 
 **注意事项：**
-1. **MiniApp 模块**目前暂不支持 HttpClient 5.x，默认使用 HttpClient 4.x
-2. **MP、CP、Channel、QiDian 模块**已支持 HttpClient 5.x，默认推荐使用
+1. **MiniApp 模块**已提供 `HttpComponents`（HttpClient 5.x）类型的配置选项，但当前默认仍为 HttpClient 4.x；如需启用 HttpClient 5.x，请确保所使用的集成模块（如 `wx-java-miniapp-spring-boot-starter`、`wx-java-miniapp-solon-plugin`）版本已支持该选项
+2. **MP、CP、Channel、QiDian 模块**已完整支持 HttpClient 5.x，默认推荐使用
 3. 如需使用 OkHttp 或 Jodd-http，需在项目中添加对应的依赖（scope为provided）
 4. HttpClient 4.x 和 HttpClient 5.x 可以共存，按需配置即可
 
