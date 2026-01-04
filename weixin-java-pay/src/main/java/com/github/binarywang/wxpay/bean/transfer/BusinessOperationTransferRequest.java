@@ -6,8 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 运营工具-商家转账请求参数
@@ -37,11 +39,11 @@ public class BusinessOperationTransferRequest implements Serializable {
   private String outBillNo;
 
   /**
-   * 运营工具转账场景ID
-   * 必须，用于标识运营工具转账的具体业务场景
+   * 转账场景ID
+   * 必须，该笔转账使用的转账场景，可前往“商户平台-产品中心-商家转账”中申请。如：1000（现金营销），1006（企业报销）等
    */
-  @SerializedName("operation_scene_id")
-  private String operationSceneId;
+  @SerializedName("transfer_scene_id")
+  private String transferSceneId;
 
   /**
    * 用户在直连商户应用下的用户标示
@@ -86,4 +88,35 @@ public class BusinessOperationTransferRequest implements Serializable {
    */
   @SerializedName("notify_url")
   private String notifyUrl;
+
+  /**
+   * 转账场景报备信息
+   * 必须，需按转账场景准确填写报备信息，参考 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013774588">转账场景报备信息字段说明</a>
+   */
+  @SerializedName("transfer_scene_report_infos")
+  private List<TransferSceneReportInfo> transferSceneReportInfos;
+
+  /**
+   * 转账场景报备信息
+   */
+  @Data
+  @Accessors(chain = true)
+  public static class TransferSceneReportInfo implements Serializable {
+
+    /**
+     * 信息类型
+     * 必须，不能超过15个字符，商户所属转账场景下的信息类型，此字段内容为固定值，需严格按照 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013774588">转账场景报备信息字段说明</a> 传参。
+     */
+    @SerializedName("info_type")
+    private String infoType;
+
+    /**
+     * 信息内容
+     * 必须，不能超过32个字符，商户所属转账场景下的信息内容，商户可按实际业务场景自定义传参，需严格按照 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013774588">转账场景报备信息字段说明</a> 传参。
+     */
+    @SerializedName("info_content")
+    private String infoContent;
+
+  }
+
 }
