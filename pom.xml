@@ -177,7 +177,7 @@
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-        <version>1.13</version>
+        <version>1.20.0</version>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
