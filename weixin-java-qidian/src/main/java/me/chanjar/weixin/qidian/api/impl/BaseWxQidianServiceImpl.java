@@ -27,6 +27,7 @@ import me.chanjar.weixin.qidian.config.WxQidianConfigStorage;
 import me.chanjar.weixin.qidian.enums.WxQidianApiUrl;
 import me.chanjar.weixin.qidian.util.WxQidianConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.IOException;
 import java.util.Map;
@@ -279,7 +280,7 @@ public abstract class BaseWxQidianServiceImpl<H, P> implements WxQidianService, 
         Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)) {
+          if (Strings.CS.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)) {
             this.getWxMpConfigStorage().expireAccessToken();
           }
         } catch (Exception ex) {

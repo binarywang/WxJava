@@ -202,7 +202,7 @@ public class DefaultHttpComponentsClientBuilder implements HttpComponentsClientB
       );
 
     // 设置重试策略，没有则使用默认
-    httpClientBuilder.setRetryStrategy(ObjectUtils.defaultIfNull(httpRequestRetryStrategy, NoopRetryStrategy.INSTANCE));
+    httpClientBuilder.setRetryStrategy(ObjectUtils.getIfNull(httpRequestRetryStrategy, NoopRetryStrategy.INSTANCE));
 
     // 设置KeepAliveStrategy，没有使用默认
     if (connectionKeepAliveStrategy != null) {

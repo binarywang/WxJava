@@ -42,14 +42,14 @@ public class WxLeadComponentServiceImpl implements WxLeadComponentService {
   private final ObjectMapper objectMapper = new ObjectMapper();
   @Override
   public LeadInfoResponse getLeadsInfoByComponentId(GetLeadInfoByComponentRequest req) throws WxErrorException {
-    req.setVersion(ObjectUtils.defaultIfNull(req.getVersion(), 1));
+    req.setVersion(ObjectUtils.getIfNull(req.getVersion(), 1));
     String resJson = shopService.post(GET_LEADS_INFO_BY_COMPONENT_ID, req);
     return this.convertLeadInfoResponse(resJson);
   }
 
   @Override
   public LeadInfoResponse getLeadsInfoByRequestId(GetLeadsInfoByRequestIdRequest req) throws WxErrorException {
-    req.setVersion(ObjectUtils.defaultIfNull(req.getVersion(), 1));
+    req.setVersion(ObjectUtils.getIfNull(req.getVersion(), 1));
     String resJson = shopService.post(GET_LEADS_INFO_BY_REQUEST_ID, req);
     return this.convertLeadInfoResponse(resJson);
   }

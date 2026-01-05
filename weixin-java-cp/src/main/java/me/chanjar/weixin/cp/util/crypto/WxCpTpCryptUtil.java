@@ -2,7 +2,7 @@ package me.chanjar.weixin.cp.util.crypto;
 
 import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.util.Base64;
 
@@ -29,7 +29,7 @@ public class WxCpTpCryptUtil extends WxCryptUtil {
 
     this.token = token;
     this.appidOrCorpid = corpId;
-    this.aesKey = Base64.getDecoder().decode(StringUtils.remove(encodingAesKey, " "));
+    this.aesKey = Base64.getDecoder().decode(Strings.CS.remove(encodingAesKey, " "));
   }
 
 

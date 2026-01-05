@@ -14,22 +14,6 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.security.KeyFactory;
-import java.security.SecureRandom;
-import java.security.Signature;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.spec.MGF1ParameterSpec;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.PSSParameterSpec;
-import java.util.*;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.Lock;
-import java.util.function.Function;
-import javax.crypto.Cipher;
-import javax.crypto.spec.GCMParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
@@ -45,10 +29,31 @@ import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.util.DataUtils;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.common.util.http.*;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
+import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.GCMParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.security.KeyFactory;
+import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.spec.MGF1ParameterSpec;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.PSSParameterSpec;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.Lock;
+import java.util.function.Function;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -447,7 +452,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
         Lock lock = this.getWxMaConfig().getAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(this.getWxMaConfig().getAccessToken(), accessToken)) {
+          if (Strings.CS.equals(this.getWxMaConfig().getAccessToken(), accessToken)) {
             this.getWxMaConfig().expireAccessToken();
           }
         } catch (Exception ex) {

@@ -3,7 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import lombok.Data;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.Serializable;
 
@@ -23,7 +23,7 @@ public class WxOpenResult implements Serializable {
    * 请求是否成功.
    */
   public boolean isSuccess() {
-    return StringUtils.equalsIgnoreCase(errcode, "0");
+    return Strings.CI.equals(errcode, "0");
   }
 
   public static WxOpenResult fromJson(String json) {

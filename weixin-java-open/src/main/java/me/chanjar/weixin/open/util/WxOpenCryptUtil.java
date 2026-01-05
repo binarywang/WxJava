@@ -1,7 +1,7 @@
 package me.chanjar.weixin.open.util;
 
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.util.Base64;
 
@@ -26,6 +26,6 @@ public class WxOpenCryptUtil extends me.chanjar.weixin.common.util.crypto.WxCryp
 
     this.token = token;
     this.appidOrCorpid = appId;
-    this.aesKey = Base64.getDecoder().decode(StringUtils.remove(encodingAesKey, " "));
+    this.aesKey = Base64.getDecoder().decode(Strings.CS.remove(encodingAesKey, " "));
   }
 }

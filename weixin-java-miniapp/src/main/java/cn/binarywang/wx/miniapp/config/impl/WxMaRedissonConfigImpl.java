@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.RedissonWxRedisOps;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.redisson.api.RedissonClient;
 
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class WxMaRedissonConfigImpl extends WxMaDefaultConfigImpl {
   public void setAppid(String appid) {
     super.setAppid(appid);
     String prefix = StringUtils.isBlank(keyPrefix) ? "" :
-      (StringUtils.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
+      (Strings.CS.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
     lockKey = prefix + LOCK_KEY.concat(appid);
     accessTokenKey = prefix + MA_ACCESS_TOKEN_KEY.concat(appid);
     jsapiTicketKey = prefix + MA_JSAPI_TICKET_KEY.concat(appid);

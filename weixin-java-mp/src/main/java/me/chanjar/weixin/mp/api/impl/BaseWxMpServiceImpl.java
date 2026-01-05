@@ -35,6 +35,7 @@ import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.WxMpConfigStorageHolder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -482,7 +483,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
         Lock lock = this.getWxMpConfigStorage().getAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)) {
+          if (Strings.CS.equals(this.getWxMpConfigStorage().getAccessToken(), accessToken)) {
             this.getWxMpConfigStorage().expireAccessToken();
           }
         } catch (Exception ex) {

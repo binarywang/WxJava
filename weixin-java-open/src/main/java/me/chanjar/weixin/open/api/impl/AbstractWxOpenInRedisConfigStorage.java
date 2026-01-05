@@ -2,6 +2,7 @@ package me.chanjar.weixin.open.api.impl;
 
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 /**
  * @author yangyidian
@@ -35,7 +36,7 @@ public abstract class AbstractWxOpenInRedisConfigStorage extends WxOpenInMemoryC
   public void setComponentAppId(String componentAppId) {
     super.setComponentAppId(componentAppId);
     String prefix = StringUtils.isBlank(keyPrefix) ? "" :
-      (StringUtils.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
+      (Strings.CS.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
     componentVerifyTicketKey = prefix + COMPONENT_VERIFY_TICKET_KEY.concat(componentAppId);
     componentAccessTokenKey = prefix + COMPONENT_ACCESS_TOKEN_KEY.concat(componentAppId);
     authorizerRefreshTokenKey = prefix + AUTHORIZER_REFRESH_TOKEN_KEY.concat(componentAppId);

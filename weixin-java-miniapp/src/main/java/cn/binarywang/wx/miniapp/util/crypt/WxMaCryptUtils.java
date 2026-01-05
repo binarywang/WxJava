@@ -1,22 +1,21 @@
 package cn.binarywang.wx.miniapp.util.crypt;
 
+import cn.binarywang.wx.miniapp.config.WxMaConfig;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.crypto.PKCS7Encoder;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.lang3.Strings;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.AlgorithmParameters;
 import java.security.Key;
 import java.security.Security;
 import java.util.Arrays;
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-
-import me.chanjar.weixin.common.error.WxRuntimeException;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.StringUtils;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
-
-import cn.binarywang.wx.miniapp.config.WxMaConfig;
-import me.chanjar.weixin.common.util.crypto.PKCS7Encoder;
 
 /**
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
@@ -27,7 +26,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
   public WxMaCryptUtils(WxMaConfig config) {
     this.appidOrCorpid = config.getAppid();
     this.token = config.getToken();
-    this.aesKey = java.util.Base64.getDecoder().decode(StringUtils.remove(config.getAesKey(), " "));
+    this.aesKey = java.util.Base64.getDecoder().decode(Strings.CS.remove(config.getAesKey(), " "));
   }
 
   /**

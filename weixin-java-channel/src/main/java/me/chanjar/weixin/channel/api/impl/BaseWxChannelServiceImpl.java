@@ -22,6 +22,7 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -241,7 +242,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
         Lock lock = config.getAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(config.getAccessToken(), accessToken)) {
+          if (Strings.CS.equals(config.getAccessToken(), accessToken)) {
             config.expireAccessToken();
           }
         } catch (Exception ex) {

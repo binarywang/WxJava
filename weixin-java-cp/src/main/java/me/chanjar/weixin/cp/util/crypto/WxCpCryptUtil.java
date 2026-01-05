@@ -3,7 +3,7 @@ package me.chanjar.weixin.cp.util.crypto;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.crypto.WxCryptUtil;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey;
 
 import javax.crypto.Cipher;
@@ -38,7 +38,7 @@ public class WxCpCryptUtil extends WxCryptUtil {
 
     this.token = token;
     this.appidOrCorpid = corpId;
-    this.aesKey = Base64.getDecoder().decode(StringUtils.remove(encodingAesKey, " "));
+    this.aesKey = Base64.getDecoder().decode(Strings.CS.remove(encodingAesKey, " "));
   }
 
   /**

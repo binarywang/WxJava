@@ -4,6 +4,7 @@ import lombok.NonNull;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -80,7 +81,7 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
       ukey = getCorpId();
     }
     String prefix = StringUtils.isBlank(keyPrefix) ? "" :
-      (StringUtils.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
+      (Strings.CS.endsWith(keyPrefix, ":") ? keyPrefix : (keyPrefix + ":"));
     lockKey = prefix + LOCK_KEY.concat(ukey);
     accessTokenKey = prefix + CP_ACCESS_TOKEN_KEY.concat(ukey);
     jsapiTicketKey = prefix + CP_JSAPI_TICKET_KEY.concat(ukey);

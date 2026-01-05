@@ -13,6 +13,7 @@ import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.mapper.Mapper;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
@@ -88,13 +89,13 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
       if (fieldMap.containsKey(reader.getNodeName())) {
         Field field = fieldMap.get(reader.getNodeName());
         this.setFieldValue(context, obj, field);
-      } else if (StringUtils.startsWith(reader.getNodeName(), "coupon_id_")) {
+      } else if (Strings.CS.startsWith(reader.getNodeName(), "coupon_id_")) {
         String id = (String) context.convertAnother(obj, String.class);
         this.getElement(coupons, reader.getNodeName()).setCouponId(id);
-      } else if (StringUtils.startsWith(reader.getNodeName(), "coupon_type_")) {
+      } else if (Strings.CS.startsWith(reader.getNodeName(), "coupon_type_")) {
         String type = (String) context.convertAnother(obj, String.class);
         this.getElement(coupons, reader.getNodeName()).setCouponType(type);
-      } else if (StringUtils.startsWith(reader.getNodeName(), "coupon_fee_")) {
+      } else if (Strings.CS.startsWith(reader.getNodeName(), "coupon_fee_")) {
         Integer fee = (Integer) context.convertAnother(obj, Integer.class);
         this.getElement(coupons, reader.getNodeName()).setCouponFee(fee);
       }

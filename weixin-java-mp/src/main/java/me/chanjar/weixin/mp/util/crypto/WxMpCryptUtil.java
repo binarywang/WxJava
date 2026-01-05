@@ -18,7 +18,7 @@
 package me.chanjar.weixin.mp.util.crypto;
 
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.util.Base64;
 
@@ -41,7 +41,7 @@ public class WxMpCryptUtil extends me.chanjar.weixin.common.util.crypto.WxCryptU
 
     this.token = token;
     this.appidOrCorpid = appId;
-    this.aesKey = Base64.getDecoder().decode(StringUtils.remove(encodingAesKey, " "));
+    this.aesKey = Base64.getDecoder().decode(Strings.CS.remove(encodingAesKey, " "));
   }
 
 }

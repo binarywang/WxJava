@@ -13,7 +13,7 @@ import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -381,11 +381,11 @@ public class WxMaMessage implements Serializable {
     WxMaMessage message =  WxMaGsonBuilder.create().fromJson(json, WxMaMessage.class);
     // 在这里处理 event的json格式时候的 list 问题，让json和xml的程序接口可以保持一致， 详见 uselessMsg 字段的注释
     if (message.getUselessMsg() != null) {
-      if (StringUtils.equals(message.getEvent(), "subscribe_msg_popup_event")) {
+      if (Strings.CS.equals(message.getEvent(), "subscribe_msg_popup_event")) {
         message.setSubscribeMsgPopupEvent(message.getUselessMsg().getPopupEvents());
-      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_change_event")) {
+      } else if (Strings.CS.equals(message.getEvent(), "subscribe_msg_change_event")) {
         message.setSubscribeMsgChangeEvent(message.getUselessMsg().getChangeEvents());
-      } else if (StringUtils.equals(message.getEvent(), "subscribe_msg_sent_event")) {
+      } else if (Strings.CS.equals(message.getEvent(), "subscribe_msg_sent_event")) {
         message.setSubscribeMsgSentEvent(message.getUselessMsg().getSentEvent());
       }
       message.setUselessMsg(null);

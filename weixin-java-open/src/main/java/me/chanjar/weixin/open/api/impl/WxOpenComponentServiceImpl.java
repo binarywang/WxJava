@@ -36,13 +36,11 @@ import me.chanjar.weixin.open.bean.tcbComponent.GetShareCloudBaseEnvResponse;
 import me.chanjar.weixin.open.bean.tcbComponent.GetTcbEnvListResponse;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.File;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
@@ -210,7 +208,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         Lock lock = this.getWxOpenConfigStorage().getComponentAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken())) {
+          if (Strings.CS.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken())) {
             this.getWxOpenConfigStorage().expireComponentAccessToken();
           }
         } catch (Exception ex) {
@@ -263,7 +261,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
         Lock lock = this.getWxOpenConfigStorage().getComponentAccessTokenLock();
         lock.lock();
         try {
-          if (StringUtils.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken())) {
+          if (Strings.CS.equals(componentAccessToken, this.getWxOpenConfigStorage().getComponentAccessToken())) {
             this.getWxOpenConfigStorage().expireComponentAccessToken();
           }
         } catch (Exception ex) {
@@ -335,12 +333,12 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     if (wxMessage == null) {
       throw new NullPointerException("message is empty");
     }
-    if (StringUtils.equalsIgnoreCase(wxMessage.getInfoType(), "component_verify_ticket")) {
+    if (Strings.CI.equals(wxMessage.getInfoType(), "component_verify_ticket")) {
       getWxOpenConfigStorage().setComponentVerifyTicket(wxMessage.getComponentVerifyTicket());
       return "success";
     }
     //新增、更新授权
-    if (StringUtils.equalsAnyIgnoreCase(wxMessage.getInfoType(), "authorized", "updateauthorized")) {
+    if (Strings.CI.equalsAny(wxMessage.getInfoType(), "authorized", "updateauthorized")) {
       WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(wxMessage.getAuthorizationCode());
       if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
         throw new NullPointerException("getQueryAuth");
@@ -348,7 +346,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       return "success";
     }
     //快速创建小程序
-    if (StringUtils.equalsIgnoreCase(wxMessage.getInfoType(), "notify_third_fasteregister") && wxMessage.getStatus() == 0) {
+    if (Strings.CI.equals(wxMessage.getInfoType(), "notify_third_fasteregister") && wxMessage.getStatus() == 0) {
       WxOpenQueryAuthResult queryAuth = wxOpenService.getWxOpenComponentService().getQueryAuth(wxMessage.getAuthCode());
       if (queryAuth == null || queryAuth.getAuthorizationInfo() == null || queryAuth.getAuthorizationInfo().getAuthorizerAppid() == null) {
         throw new NullPointerException("getQueryAuth");
@@ -502,7 +500,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   @Override
   public List<WxOpenMaCodeTemplate> getTemplateDraftList() throws WxErrorException {
     String responseContent = get(GET_TEMPLATE_DRAFT_LIST_URL, "access_token");
-    JsonObject response = GsonParser.parse(StringUtils.defaultString(responseContent, "{}"));
+    JsonObject response = GsonParser.parse(Objects.toString(responseContent, "{}"));
     boolean hasDraftList = response.has("draft_list");
     if (hasDraftList) {
       return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("draft_list"),
@@ -522,7 +520,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   public List<WxOpenMaCodeTemplate> getTemplateList(Integer templateType) throws WxErrorException {
     String url = GET_TEMPLATE_LIST_URL + (templateType == null ? "" : "?template_type=" + templateType);
     String responseContent = get(url, "access_token");
-    JsonObject response = GsonParser.parse(StringUtils.defaultString(responseContent, "{}"));
+    JsonObject response = GsonParser.parse(Objects.toString(responseContent, "{}"));
     boolean hasTemplateList = response.has("template_list");
     if (hasTemplateList) {
       return WxOpenGsonBuilder.create().fromJson(response.getAsJsonArray("template_list"),

@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.bean.template;
 import lombok.*;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -76,15 +77,15 @@ public class WxMpTemplateMessage implements Serializable {
     String name = datum.getName();
     String value = datum.getValue();
 
-    if (StringUtils.startsWith(name, "thing") && value.length() > 20) {
+    if (Strings.CS.startsWith(name, "thing") && value.length() > 20) {
       value = StringUtils.substring(value, 0, 17) + "...";
-    } else if (StringUtils.startsWith(name, "character_string") && value.length() > 32) {
+    } else if (Strings.CS.startsWith(name, "character_string") && value.length() > 32) {
       value = StringUtils.substring(value, 0, 29) + "...";
-    } else if (StringUtils.startsWith(name, "phone_number") && value.length() > 17) {
+    } else if (Strings.CS.startsWith(name, "phone_number") && value.length() > 17) {
       value = StringUtils.substring(value, 0, 14) + "...";
-    } else if (StringUtils.startsWith(name, "car_number") && value.length() > 8) {
+    } else if (Strings.CS.startsWith(name, "car_number") && value.length() > 8) {
       value = StringUtils.substring(value, 0, 5) + "...";
-    } else if (StringUtils.startsWith(name, "const") && value.length() > 20) {
+    } else if (Strings.CS.startsWith(name, "const") && value.length() > 20) {
       value = StringUtils.substring(value, 0, 17) + "...";
     }
 

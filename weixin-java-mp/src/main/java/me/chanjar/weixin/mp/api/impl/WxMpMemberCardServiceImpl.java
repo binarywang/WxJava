@@ -1,34 +1,30 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.HashMap;
-import java.util.Map;
-
-import lombok.RequiredArgsConstructor;
-import me.chanjar.weixin.mp.bean.card.membercard.*;
-import me.chanjar.weixin.mp.enums.WxMpApiUrl;
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpMemberCardService;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.bean.card.AdvancedInfo;
-import me.chanjar.weixin.mp.bean.card.BaseInfo;
-import me.chanjar.weixin.mp.bean.card.CardUpdateResult;
-import me.chanjar.weixin.mp.bean.card.DateInfo;
-import me.chanjar.weixin.mp.bean.card.WxMpCardCreateResult;
+import me.chanjar.weixin.mp.bean.card.*;
 import me.chanjar.weixin.mp.bean.card.enums.BusinessServiceType;
 import me.chanjar.weixin.mp.bean.card.enums.CardColor;
 import me.chanjar.weixin.mp.bean.card.enums.DateInfoType;
+import me.chanjar.weixin.mp.bean.card.membercard.*;
+import me.chanjar.weixin.mp.enums.WxMpApiUrl;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 会员卡相关接口的实现类
@@ -77,7 +73,7 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
       return WxMpCardCreateResult.failure("会员卡对象不能为空");
     }
     String cardType = cardCreateRequest.getCardType();
-    if (!StringUtils.equals(cardType, "MEMBER_CARD")) {
+    if (!Strings.CS.equals(cardType, "MEMBER_CARD")) {
       return WxMpCardCreateResult.failure("卡券类型必须等于MEMBER_CARD");
     }
     MemberCard memberCard = cardCreateRequest.getMemberCard();
