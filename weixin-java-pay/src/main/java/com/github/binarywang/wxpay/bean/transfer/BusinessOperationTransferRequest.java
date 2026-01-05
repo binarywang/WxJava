@@ -104,7 +104,6 @@ public class BusinessOperationTransferRequest implements Serializable {
   public static class TransferSceneReportInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private static final long serialVersionUID = 1L;
     /**
      * 信息类型
      * 必须，不能超过15个字符，商户所属转账场景下的信息类型，此字段内容为固定值，需严格按照 <a href="https://pay.weixin.qq.com/doc/v3/merchant/4013774588">转账场景报备信息字段说明</a> 传参。
