@@ -51,7 +51,7 @@ public class BusinessOperationTransferExample {
         .appid("your_app_id")                                    // 应用ID
         .outBillNo("OT" + System.currentTimeMillis())           // 商户转账单号
         .transferSceneId(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING) // 运营工具转账场景ID
-        .transferSceneReportInfos(Arrays.asList(reportInfo))// 转账场景报备信息
+        .transferSceneReportInfos(Arrays.asList(reportInfo)) // 转账场景报备信息
         .openid("user_openid")                                   // 用户openid
         .userName("张三")                                          // 用户姓名（可选）
         .transferAmount(100)                                     // 转账金额，单位分

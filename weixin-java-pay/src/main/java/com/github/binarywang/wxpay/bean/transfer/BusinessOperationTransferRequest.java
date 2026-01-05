@@ -102,6 +102,7 @@ public class BusinessOperationTransferRequest implements Serializable {
   @Data
   @Accessors(chain = true)
   public static class TransferSceneReportInfo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 信息类型
