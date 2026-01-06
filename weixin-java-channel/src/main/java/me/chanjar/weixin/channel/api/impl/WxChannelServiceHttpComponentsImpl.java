@@ -5,7 +5,6 @@ import me.chanjar.weixin.channel.bean.token.StableTokenParam;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.common.util.http.HttpClientType;
-import me.chanjar.weixin.common.util.http.apache.ApacheBasicResponseHandler;
 import me.chanjar.weixin.common.util.http.hc.BasicResponseHandler;
 import me.chanjar.weixin.common.util.http.hc.DefaultHttpComponentsClientBuilder;
 import me.chanjar.weixin.common.util.http.hc.HttpComponentsClientBuilder;
@@ -41,7 +40,7 @@ public class WxChannelServiceHttpComponentsImpl extends BaseWxChannelServiceImpl
     apacheHttpClientBuilder.httpProxyHost(config.getHttpProxyHost())
       .httpProxyPort(config.getHttpProxyPort())
       .httpProxyUsername(config.getHttpProxyUsername())
-      .httpProxyPassword(config.getHttpProxyPassword().toCharArray());
+      .httpProxyPassword(config.getHttpProxyPassword() == null ? null : config.getHttpProxyPassword().toCharArray());
 
     if (config.getHttpProxyHost() != null && config.getHttpProxyPort() > 0) {
       this.httpProxy = new HttpHost(config.getHttpProxyHost(), config.getHttpProxyPort());
