@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.result;
 
+import com.github.binarywang.wxpay.util.XmlConfig;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,31 +42,38 @@ public class WxSignQueryResultTest {
       "  <sign><![CDATA[8FC9DACB7DDF9B48333DCCC2224E0CAC]]></sign>\n" +
       "</xml>";
 
-    WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
+    // 启用 fastMode 以覆盖 WxSignQueryResult#loadXml 分支
+    XmlConfig.fastMode = true;
+    try {
+      WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
 
-    // 验证基本字段
-    Assert.assertEquals(result.getReturnCode(), "SUCCESS");
-    Assert.assertEquals(result.getResultCode(), "SUCCESS");
-    Assert.assertEquals(result.getMchId(), "80000000");
-    Assert.assertEquals(result.getAppid(), "wx426b3015555b46be");
+      // 验证基本字段
+      Assert.assertEquals(result.getReturnCode(), "SUCCESS");
+      Assert.assertEquals(result.getResultCode(), "SUCCESS");
+      Assert.assertEquals(result.getMchId(), "80000000");
+      Assert.assertEquals(result.getAppid(), "wx426b3015555b46be");
 
-    // 验证签约相关字段
-    Assert.assertEquals(result.getContractId(), "203");
-    Assert.assertEquals(result.getPlanId(), "66");
-    Assert.assertEquals(result.getOpenId(), "oHZx6uMbIG46UXQ3SKxVYEgw1LZs");
-    Assert.assertEquals(result.getRequestSerial().longValue(), 123L);
-    Assert.assertEquals(result.getContractCode(), "1005");
-    Assert.assertEquals(result.getContractDisplayAccount(), "test");
-    Assert.assertEquals(result.getContractState().intValue(), 1);
+      // 验证签约相关字段
+      Assert.assertEquals(result.getContractId(), "203");
+      Assert.assertEquals(result.getPlanId(), "66");
+      Assert.assertEquals(result.getOpenId(), "oHZx6uMbIG46UXQ3SKxVYEgw1LZs");
+      Assert.assertEquals(result.getRequestSerial().longValue(), 123L);
+      Assert.assertEquals(result.getContractCode(), "1005");
+      Assert.assertEquals(result.getContractDisplayAccount(), "test");
+      Assert.assertEquals(result.getContractState().intValue(), 1);
 
-    // 重点测试时间字段，特别是 contract_expired_time
-    Assert.assertEquals(result.getContractSignedTime(), "2015-07-01 10:00:00");
-    Assert.assertEquals(result.getContractExpiredTime(), "2015-07-01 10:00:00");
-    Assert.assertEquals(result.getContractTerminatedTime(), "2015-07-01 10:00:00");
+      // 重点测试时间字段，特别是 contract_expired_time
+      Assert.assertEquals(result.getContractSignedTime(), "2015-07-01 10:00:00");
+      Assert.assertEquals(result.getContractExpiredTime(), "2015-07-01 10:00:00");
+      Assert.assertEquals(result.getContractTerminatedTime(), "2015-07-01 10:00:00");
 
-    // 验证其他字段
-    Assert.assertEquals(result.getContractTerminatedMode().intValue(), 3);
-    Assert.assertEquals(result.getContractTerminationRemark(), "delete ....");
+      // 验证其他字段
+      Assert.assertEquals(result.getContractTerminatedMode().intValue(), 3);
+      Assert.assertEquals(result.getContractTerminationRemark(), "delete ....");
+    } finally {
+      // 恢复默认值
+      XmlConfig.fastMode = false;
+    }
   }
 
   /**
@@ -90,21 +98,28 @@ public class WxSignQueryResultTest {
       "  <sign><![CDATA[C380BEC2BFD727A4B6845133519F3AD6]]></sign>\n" +
       "</xml>";
 
-    WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
+    // 启用 fastMode 以覆盖 WxSignQueryResult#loadXml 分支
+    XmlConfig.fastMode = true;
+    try {
+      WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
 
-    // 验证必填字段
-    Assert.assertEquals(result.getReturnCode(), "SUCCESS");
-    Assert.assertEquals(result.getResultCode(), "SUCCESS");
-    Assert.assertEquals(result.getContractId(), "Wx15463511252015071056489715");
-    Assert.assertEquals(result.getPlanId(), "123");
-    Assert.assertEquals(result.getContractState().intValue(), 0);
-    
-    // 验证 contract_expired_time 字段能正确解析
-    Assert.assertEquals(result.getContractExpiredTime(), "2016-07-01 10:00:00");
-    
-    // 验证非必填字段为 null
-    Assert.assertNull(result.getContractTerminatedTime());
-    Assert.assertNull(result.getContractTerminatedMode());
-    Assert.assertNull(result.getContractTerminationRemark());
+      // 验证必填字段
+      Assert.assertEquals(result.getReturnCode(), "SUCCESS");
+      Assert.assertEquals(result.getResultCode(), "SUCCESS");
+      Assert.assertEquals(result.getContractId(), "Wx15463511252015071056489715");
+      Assert.assertEquals(result.getPlanId(), "123");
+      Assert.assertEquals(result.getContractState().intValue(), 0);
+
+      // 验证 contract_expired_time 字段能正确解析
+      Assert.assertEquals(result.getContractExpiredTime(), "2016-07-01 10:00:00");
+
+      // 验证非必填字段为 null
+      Assert.assertNull(result.getContractTerminatedTime());
+      Assert.assertNull(result.getContractTerminatedMode());
+      Assert.assertNull(result.getContractTerminationRemark());
+    } finally {
+      // 恢复默认值
+      XmlConfig.fastMode = false;
+    }
   }
 }
