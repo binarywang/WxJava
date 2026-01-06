@@ -112,7 +112,7 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
     contractDisplayAccount = readXmlString(d, "contract_display_account");
     contractState = readXmlInteger(d, "contract_state");
     contractSignedTime = readXmlString(d, "contract_signed_time");
-    contractExpiredTime = readXmlString(d, "contrace_Expired_time");
+    contractExpiredTime = readXmlString(d, "contract_expired_time");
     contractTerminatedTime = readXmlString(d, "contract_terminated_time");
     contractTerminatedMode = readXmlInteger(d, "contract_termination_mode");
     contractTerminationRemark = readXmlString(d, "contract_termination_remark");
