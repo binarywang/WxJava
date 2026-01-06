@@ -19,5 +19,5 @@ public enum HttpClientType {
   /**
    * HttpComponents.
    */
-  HttpComponents,
+  HTTP_COMPONENTS,
 }
