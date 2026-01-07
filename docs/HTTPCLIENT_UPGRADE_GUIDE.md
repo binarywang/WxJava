@@ -28,12 +28,11 @@
 | weixin-java-cp（企业微信） | ⚠️ 视集成方式而定 | 参考对应 starter 配置 |
 | weixin-java-channel（视频号） | ✅ 是 | HttpComponents (5.x) |
 | weixin-java-qidian（企点） | ✅ 是 | HttpComponents (5.x) |
-| weixin-java-miniapp（小程序） | ✅ 是 | HttpClient (4.x) |
+| weixin-java-miniapp（小程序） | ✅ 是 | HttpComponents (5.x) |
 | weixin-java-pay（支付） | ✅ 是 | HttpComponents (5.x) |
 | weixin-java-open（开放平台） | ✅ 是 | HttpComponents (5.x) |
 
 **注意**：
-- **weixin-java-miniapp 模块**已在核心 SDK 中提供 HttpClient 5.x（`HttpComponents`）支持，但默认仍使用 HttpClient 4.x（`HttpClient`）。如需启用 HttpClient 5.x，可通过配置 `http-client-type=HttpComponents` 显式指定。
 - **weixin-java-cp 模块**的支持情况取决于具体使用的 Starter 版本，请参考对应模块文档。
 
 ## 对现有项目的影响
@@ -96,9 +95,6 @@ A: 不会。项目保持完全向后兼容，HttpClient 4.x 的所有实现都�
 
 ### Q: 我需要修改代码吗？
 A: 大多数情况下不需要。如果希望继续使用 HttpClient 4.x，只需在配置中指定 `http-client-type=HttpClient` 即可。
-
-### Q: MiniApp 模块支持 HttpClient 5.x 吗？
-A: 支持。MiniApp 模块在核心 SDK 中已经提供了基于 HttpClient 5.x（`HttpComponents`）的支持，但默认仍会使用 HttpClient 4.x（`HttpClient`）以保持向后兼容。如果你使用的是框架集成（例如 Spring Boot Starter 或 Solon Plugin），可以通过显式配置 `http-client-type=HttpComponents` 来启用 HttpClient 5.x。
 
 ### Q: 我可以在同一个项目中同时使用两个版本吗？
 A: 可以。不同的模块可以配置使用不同的 HTTP 客户端。例如，MP 模块使用 HttpClient 5.x，MiniApp 模块默认使用 HttpClient 4.x，但也可以按需配置为 HttpClient 5.x。
