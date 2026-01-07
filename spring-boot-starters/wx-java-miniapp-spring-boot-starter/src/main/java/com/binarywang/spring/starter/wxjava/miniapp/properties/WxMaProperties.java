@@ -88,7 +88,7 @@ public class WxMaProperties {
     /**
      * http客户端类型.
      */
-    private HttpClientType httpClientType = HttpClientType.HttpClient;
+    private HttpClientType httpClientType = HttpClientType.HttpComponents;
 
     /**
      * http代理主机.
