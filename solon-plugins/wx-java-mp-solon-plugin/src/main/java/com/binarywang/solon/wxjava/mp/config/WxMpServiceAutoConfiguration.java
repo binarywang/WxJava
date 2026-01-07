@@ -37,7 +37,7 @@ public class WxMpServiceAutoConfiguration {
         wxMpService = newWxMpServiceHttpClientImpl();
         break;
       case HttpComponents:
-        wxMpService= newWxMpServiceHttpComponentsImpl();
+        wxMpService = newWxMpServiceHttpComponentsImpl();
         break;
       default:
         wxMpService = newWxMpServiceImpl();
