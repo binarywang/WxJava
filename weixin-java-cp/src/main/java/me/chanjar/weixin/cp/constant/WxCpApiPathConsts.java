@@ -576,6 +576,21 @@ public interface WxCpApiPathConsts {
     String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
 
     /**
+     * The constant WEDOC_SPREADSHEET_BATCH_UPDATE.
+     */
+    String WEDOC_SPREADSHEET_BATCH_UPDATE = "/cgi-bin/wedoc/spreadsheet/batch_update";
+
+    /**
+     * The constant WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES.
+     */
+    String WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES = "/cgi-bin/wedoc/spreadsheet/get_sheet_properties";
+
+    /**
+     * The constant WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA.
+     */
+    String WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA = "/cgi-bin/wedoc/spreadsheet/get_sheet_range_data";
+
+    /**
      * 邮件
      * https://developer.work.weixin.qq.com/document/path/95486
      */
