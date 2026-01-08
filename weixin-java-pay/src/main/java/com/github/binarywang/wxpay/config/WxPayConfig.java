@@ -101,6 +101,10 @@ public class WxPayConfig {
    */
   private String notifyUrl;
   /**
+   * 退款结果异步回调地址，通知url必须为直接可访问的url，不能携带参数.
+   */
+  private String refundNotifyUrl;
+  /**
    * 交易类型.
    * <pre>
    * JSAPI--公众号支付

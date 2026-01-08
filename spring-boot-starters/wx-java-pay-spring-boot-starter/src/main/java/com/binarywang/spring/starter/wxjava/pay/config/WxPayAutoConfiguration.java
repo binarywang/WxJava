@@ -51,6 +51,7 @@ public class WxPayAutoConfiguration {
     payConfig.setKeyPath(StringUtils.trimToNull(this.properties.getKeyPath()));
     payConfig.setUseSandboxEnv(this.properties.isUseSandboxEnv());
     payConfig.setNotifyUrl(StringUtils.trimToNull(this.properties.getNotifyUrl()));
+    payConfig.setRefundNotifyUrl(StringUtils.trimToNull(this.properties.getRefundNotifyUrl()));
     //以下是apiv3以及支付分相关
     payConfig.setServiceId(StringUtils.trimToNull(this.properties.getServiceId()));
     payConfig.setPayScoreNotifyUrl(StringUtils.trimToNull(this.properties.getPayScoreNotifyUrl()));
