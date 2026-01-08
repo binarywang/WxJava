@@ -28,10 +28,10 @@ public class WxCpDocSheetData extends WxCpBaseResp implements Serializable {
     private GridData gridData;
 
     /**
-     * From json space info.
+     * From json sheet data.
      *
      * @param json the json
-     * @return the space info
+     * @return the sheet data
      */
     public static WxCpDocSheetData fromJson(String json) {
         return WxCpGsonBuilder.create().fromJson(json, WxCpDocSheetData.class);
@@ -42,6 +42,7 @@ public class WxCpDocSheetData extends WxCpBaseResp implements Serializable {
      *
      * @return the string
      */
+    @Override
     public String toJson() {
         return WxCpGsonBuilder.create().toJson(this);
     }

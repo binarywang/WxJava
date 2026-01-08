@@ -44,10 +44,10 @@ public class WxCpDocSheetGetDataRequest implements Serializable {
     private String range;
 
     /**
-     * From json wx cp doc shreadsheet get data request.
+     * From json to {@link WxCpDocSheetGetDataRequest}.
      *
-     * @param json the json
-     * @return the wx cp doc shreadsheet get data request
+     * @param json the json string representing {@link WxCpDocSheetGetDataRequest}
+     * @return the {@link WxCpDocSheetGetDataRequest} object
      */
     public static WxCpDocSheetGetDataRequest fromJson(String json) {
         return WxCpGsonBuilder.create().fromJson(json, WxCpDocSheetGetDataRequest.class);

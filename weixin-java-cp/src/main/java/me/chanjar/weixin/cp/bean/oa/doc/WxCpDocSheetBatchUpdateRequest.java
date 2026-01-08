@@ -42,10 +42,10 @@ public class WxCpDocSheetBatchUpdateRequest implements Serializable {
     private List<Request> requests;
 
     /**
-     * From json wx cp space rename request.
+     * From json wx cp doc sheet batch update request.
      *
      * @param json the json
-     * @return the wx cp space rename request
+     * @return the wx cp doc sheet batch update request
      */
     public static WxCpDocSheetBatchUpdateRequest fromJson(String json) {
         return WxCpGsonBuilder.create().fromJson(json, WxCpDocSheetBatchUpdateRequest.class);
@@ -84,7 +84,7 @@ public class WxCpDocSheetBatchUpdateRequest implements Serializable {
          * 更新范围内单元格内容
          */
         @SerializedName("update_range_request")
-        private UpdateRangeRequest updateSheetRequest;
+        private UpdateRangeRequest updateRangeRequest;
 
         /**
          * 删除表格连续的行或列

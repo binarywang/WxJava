@@ -25,10 +25,10 @@ public class WxCpDocSheetProperties extends WxCpBaseResp implements Serializable
     private List<Properties> properties;
 
     /**
-     * From json space info.
+     * From json sheet properties.
      *
      * @param json the json
-     * @return the space info
+     * @return the sheet properties
      */
     public static WxCpDocSheetProperties fromJson(String json) {
         return WxCpGsonBuilder.create().fromJson(json, WxCpDocSheetProperties.class);

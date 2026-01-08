@@ -45,10 +45,10 @@ public class WxCpDocSheetBatchUpdateResponse implements Serializable {
     private DeleteDimensionResponse deleteDimensionResponse;
 
     /**
-     * From json wx cp space rename request.
+     * 从 JSON 字符串反序列化为 WxCpDocSheetBatchUpdateResponse 对象。
      *
      * @param json the json
-     * @return the wx cp space rename request
+     * @return 反序列化得到的 WxCpDocSheetBatchUpdateResponse 对象
      */
     public static WxCpDocSheetBatchUpdateResponse fromJson(String json) {
         return WxCpGsonBuilder.create().fromJson(json, WxCpDocSheetBatchUpdateResponse.class);

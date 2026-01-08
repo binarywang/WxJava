@@ -92,7 +92,7 @@ public interface WxCpOaWeDocService {
    * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/spreadsheet/batch_update?access_token=ACCESS_TOKEN
    *
    * @param request 编辑表格内容请求参数
-   * @return wx cp base resp
+   * @return 编辑表格内容批量更新的响应结果
    * @throws WxErrorException the wx error exception
    */
   WxCpDocSheetBatchUpdateResponse docBatchUpdate(@NonNull WxCpDocSheetBatchUpdateRequest request) throws WxErrorException;
