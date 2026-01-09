@@ -43,7 +43,8 @@
 
 ### 对现有项目
 - **向后兼容**：不需要修改任何代码
-- 如果希望继续使用 HttpClient 4.x，只需在配置中显式指定，引入HttpClient 4.x依赖
+- 如果希望继续使用 HttpClient 4.x，只需在配置中显式指定，pay 模块会自动包含 httpclient4 依赖（因为某些接口必须使用 httpclient4）
+  其他模块（mp、miniapp、cp、open、channel、qidian）如果需要使用 httpclient4，必须显式在项目中添加 httpclient4 依赖
 
 ## 迁移步骤
 
