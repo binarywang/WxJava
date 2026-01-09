@@ -32,22 +32,15 @@ public class WxPayMultiServicesImpl implements WxPayMultiServices {
       return null;
     }
 
-    WxPayService wxPayService = services.get(configKey);
-    if (wxPayService == null) {
-      synchronized (this) {
-        wxPayService = services.get(configKey);
-        if (wxPayService == null) {
-          WxPaySingleProperties properties = wxPayMultiProperties.getConfigs().get(configKey);
-          if (properties == null) {
-            log.warn("未找到配置标识为[{}]的微信支付配置", configKey);
-            return null;
-          }
-          wxPayService = this.buildWxPayService(properties);
-          services.put(configKey, wxPayService);
-        }
+    // 使用 computeIfAbsent 实现线程安全的懒加载，避免使用 synchronized(this) 带来的性能问题
+    return services.computeIfAbsent(configKey, key -> {
+      WxPaySingleProperties properties = wxPayMultiProperties.getConfigs().get(key);
+      if (properties == null) {
+        log.warn("未找到配置标识为[{}]的微信支付配置", key);
+        return null;
       }
-    }
-    return wxPayService;
+      return this.buildWxPayService(properties);
+    });
   }
 
   @Override

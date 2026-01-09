@@ -1,7 +1,10 @@
 package com.binarywang.spring.starter.wxjava.pay.example;
 
 import com.binarywang.spring.starter.wxjava.pay.service.WxPayMultiServices;
+import com.github.binarywang.wxpay.bean.request.WxPayRefundV3Request;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
+import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryV3Result;
+import com.github.binarywang.wxpay.bean.result.WxPayRefundV3Result;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -137,7 +140,7 @@ public class WxPayMultiExample {
       }
 
       // 查询订单
-      var result = wxPayService.queryOrderV3(null, outTradeNo);
+      WxPayOrderQueryV3Result result = wxPayService.queryOrderV3(null, outTradeNo);
       String tradeState = result.getTradeState();
 
       log.info("查询订单状态成功，appId: {}, outTradeNo: {}, 状态: {}", appId, outTradeNo, tradeState);
@@ -188,7 +191,7 @@ public class WxPayMultiExample {
       request.setAmount(amount);
 
       // 调用微信支付API申请退款
-      var result = wxPayService.refundV3(request);
+      WxPayRefundV3Result result = wxPayService.refundV3(request);
 
       log.info("申请退款成功，appId: {}, outTradeNo: {}, outRefundNo: {}",
         appId, outTradeNo, request.getOutRefundNo());

@@ -195,7 +195,7 @@ public class PayService {
     }
     
     // 查询订单
-    var result = wxPayService.queryOrderV3(null, outTradeNo);
+    WxPayOrderQueryV3Result result = wxPayService.queryOrderV3(null, outTradeNo);
     // 处理查询结果
     // ...
   }
