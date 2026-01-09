@@ -36,10 +36,28 @@ public class RsaCryptoUtil {
     }
   }
 
+  /**
+   * 递归获取类的所有字段，包括父类中的字段
+   *
+   * @param clazz 要获取字段的类
+   * @return 所有字段的列表
+   */
+  private static java.util.List<Field> getAllFields(Class<?> clazz) {
+    java.util.List<Field> fields = new java.util.ArrayList<>();
+    while (clazz != null) {
+      Field[] declaredFields = clazz.getDeclaredFields();
+      for (Field field : declaredFields) {
+        fields.add(field);
+      }
+      clazz = clazz.getSuperclass();
+    }
+    return fields;
+  }
+
   private static void encryptField(Object encryptObject, X509Certificate certificate) throws IllegalAccessException, IllegalBlockSizeException {
     Class<?> infoClass = encryptObject.getClass();
-    Field[] infoFieldArray = infoClass.getDeclaredFields();
-    for (Field field : infoFieldArray) {
+    java.util.List<Field> infoFieldList = getAllFields(infoClass);
+    for (Field field : infoFieldList) {
       if (field.isAnnotationPresent(SpecEncrypt.class)) {
         //字段使用了@SpecEncrypt进行标识
         if (field.getType().getTypeName().equals(JAVA_LANG_STRING)) {

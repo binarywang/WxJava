@@ -4,6 +4,8 @@ import com.github.binarywang.wxpay.bean.profitsharing.request.ProfitSharingRecei
 import com.github.binarywang.wxpay.bean.profitsharing.request.ProfitSharingV3Request;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.SpecEncrypt;
+import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 import org.testng.annotations.Test;
 
 import java.lang.reflect.Field;
@@ -125,5 +127,72 @@ public class RsaCryptoUtilTest {
     // 验证name字段不为null
     assertNotNull(request.getName());
     assertEquals(request.getName(), "李四");
+  }
+
+  /**
+   * 测试类继承场景下的字段加密
+   * 验证父类中带 @SpecEncrypt 注解的字段是否能被正确找到和加密
+   */
+  @Test
+  public void testEncryptFieldsWithInheritance() {
+    // 定义测试用的父类和子类
+    @Data
+    class ParentRequest {
+      @SpecEncrypt
+      @SerializedName("parent_name")
+      private String parentName;
+    }
+    
+    @Data
+    @lombok.EqualsAndHashCode(callSuper = false)
+    class ChildRequest extends ParentRequest {
+      @SpecEncrypt
+      @SerializedName("child_name")
+      private String childName;
+    }
+    
+    // 创建子类实例
+    ChildRequest request = new ChildRequest();
+    request.setParentName("父类字段");
+    request.setChildName("子类字段");
+    
+    // 验证能够找到父类和子类的字段
+    System.out.println("=== 测试继承场景 ===");
+    System.out.println("父类字段值: " + request.getParentName());
+    System.out.println("子类字段值: " + request.getChildName());
+    
+    // 使用 getDeclaredFields 只能找到子类字段
+    Field[] childFields = ChildRequest.class.getDeclaredFields();
+    System.out.println("使用 getDeclaredFields 找到的字段数: " + childFields.length);
+    
+    // 使用 getAllFields 辅助方法应该能找到父类和子类的所有字段
+    java.util.List<Field> allFields = getAllFields(ChildRequest.class);
+    System.out.println("使用 getAllFields 找到的字段数: " + allFields.size());
+    
+    int annotatedFieldCount = 0;
+    for (Field field : allFields) {
+      if (field.isAnnotationPresent(SpecEncrypt.class)) {
+        annotatedFieldCount++;
+        System.out.println("  -> 找到带 @SpecEncrypt 注解的字段: " + field.getName());
+      }
+    }
+    
+    // 应该找到2个带注解的字段（parentName 和 childName）
+    assertTrue(annotatedFieldCount >= 2, "应该能找到至少2个带 @SpecEncrypt 注解的字段");
+  }
+
+  /**
+   * 辅助方法：递归获取类的所有字段，包括父类中的字段
+   */
+  private java.util.List<Field> getAllFields(Class<?> clazz) {
+    java.util.List<Field> fields = new ArrayList<>();
+    while (clazz != null) {
+      Field[] declaredFields = clazz.getDeclaredFields();
+      for (Field field : declaredFields) {
+        fields.add(field);
+      }
+      clazz = clazz.getSuperclass();
+    }
+    return fields;
   }
 }
