@@ -166,7 +166,7 @@ public class RsaCryptoUtilTest {
     System.out.println("使用 getDeclaredFields 找到的字段数: " + childFields.length);
     
     // 使用 getAllFields 辅助方法应该能找到父类和子类的所有字段
-    java.util.List<Field> allFields = getAllFields(ChildRequest.class);
+    List<Field> allFields = getAllFields(ChildRequest.class);
     System.out.println("使用 getAllFields 找到的字段数: " + allFields.size());
     
     int annotatedFieldCount = 0;
@@ -184,8 +184,8 @@ public class RsaCryptoUtilTest {
   /**
    * 辅助方法：递归获取类的所有字段，包括父类中的字段
    */
-  private java.util.List<Field> getAllFields(Class<?> clazz) {
-    java.util.List<Field> fields = new ArrayList<>();
+  private List<Field> getAllFields(Class<?> clazz) {
+    List<Field> fields = new ArrayList<>();
     while (clazz != null) {
       Field[] declaredFields = clazz.getDeclaredFields();
       for (Field field : declaredFields) {
