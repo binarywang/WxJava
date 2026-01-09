@@ -88,6 +88,11 @@ public class WxPayProperties {
   private String notifyUrl;
 
   /**
+   * 退款结果异步回调地址，通知url必须为直接可访问的url，不能携带参数.
+   */
+  private String refundNotifyUrl;
+
+  /**
    * 微信支付分授权回调地址
    */
   private String payScorePermissionNotifyUrl;
