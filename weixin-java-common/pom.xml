@@ -34,6 +34,7 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
+      <scope>provided</scope>
       <exclusions>
         <exclusion>
           <artifactId>commons-logging</artifactId>
@@ -44,6 +45,7 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpmime</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

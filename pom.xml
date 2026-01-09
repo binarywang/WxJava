@@ -136,7 +136,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
-    <httpclient5.version>5.5</httpclient5.version>
+    <httpclient5.version>5.5.2</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
   </properties>
   <dependencyManagement>
