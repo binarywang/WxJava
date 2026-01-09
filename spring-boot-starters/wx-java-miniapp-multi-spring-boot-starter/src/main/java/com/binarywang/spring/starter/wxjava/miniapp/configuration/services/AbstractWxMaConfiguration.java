@@ -16,7 +16,11 @@ import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -98,16 +102,12 @@ public abstract class AbstractWxMaConfiguration {
     WxMaService sharedService = createWxMaServiceByType(storage.getHttpClientType());
     configureWxMaService(sharedService, storage);
     
-    // 准备所有租户的配置
+    // 准备所有租户的配置，使用 TreeMap 保证顺序一致性
     Map<String, WxMaConfig> configsMap = new HashMap<>();
-    String defaultTenantId = null;
+    String defaultTenantId = new TreeMap<>(appsMap).firstKey();
     
     for (Map.Entry<String, WxMaSingleProperties> entry : appsMap.entrySet()) {
       String tenantId = entry.getKey();
-      if (defaultTenantId == null) {
-        defaultTenantId = tenantId;
-      }
-      
       WxMaSingleProperties wxMaSingleProperties = entry.getValue();
       WxMaDefaultConfigImpl config = this.wxMaConfigStorage(wxMaMultiProperties);
       this.configApp(config, wxMaSingleProperties);

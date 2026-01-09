@@ -8,13 +8,21 @@ import com.binarywang.spring.starter.wxjava.mp.service.WxMpMultiServicesSharedIm
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.mp.api.impl.*;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpClientImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceHttpComponentsImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceJoddHttpImpl;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceOkHttpImpl;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.mp.config.WxMpHostConfig;
 import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 /**
@@ -97,16 +105,12 @@ public abstract class AbstractWxMpConfiguration {
     WxMpService sharedService = createWxMpServiceByType(storage.getHttpClientType());
     configureWxMpService(sharedService, storage);
     
-    // 准备所有租户的配置
+    // 准备所有租户的配置，使用 TreeMap 保证顺序一致性
     Map<String, WxMpConfigStorage> configsMap = new HashMap<>();
-    String defaultTenantId = null;
+    String defaultTenantId = new TreeMap<>(appsMap).firstKey();
     
     for (Map.Entry<String, WxMpSingleProperties> entry : appsMap.entrySet()) {
       String tenantId = entry.getKey();
-      if (defaultTenantId == null) {
-        defaultTenantId = tenantId;
-      }
-      
       WxMpSingleProperties wxMpSingleProperties = entry.getValue();
       WxMpDefaultConfigImpl config = this.wxMpConfigStorage(wxMpMultiProperties);
       this.configApp(config, wxMpSingleProperties);
