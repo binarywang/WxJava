@@ -70,6 +70,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得文本消息builder
+   *
+   * @return 文本消息构建器
    */
   public static TextBuilder TEXT() {
     return new TextBuilder();
@@ -77,6 +79,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得图片消息builder
+   *
+   * @return 图片消息构建器
    */
   public static ImageBuilder IMAGE() {
     return new ImageBuilder();
@@ -84,6 +88,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得语音消息builder
+   *
+   * @return 语音消息构建器
    */
   public static VoiceBuilder VOICE() {
     return new VoiceBuilder();
@@ -91,6 +97,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得视频消息builder
+   *
+   * @return 视频消息构建器
    */
   public static VideoBuilder VIDEO() {
     return new VideoBuilder();
@@ -98,6 +106,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得音乐消息builder
+   *
+   * @return 音乐消息构建器
    */
   public static MusicBuilder MUSIC() {
     return new MusicBuilder();
@@ -105,6 +115,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得图文消息builder
+   *
+   * @return 图文消息构建器
    */
   public static NewsBuilder NEWS() {
     return new NewsBuilder();
@@ -112,6 +124,8 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得客服消息builder
+   *
+   * @return 客服消息构建器
    */
   public static TransferCustomerServiceBuilder TRANSFER_CUSTOMER_SERVICE() {
     return new TransferCustomerServiceBuilder();
@@ -119,11 +133,18 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 获得设备消息builder
+   *
+   * @return 设备消息builder
    */
   public static DeviceBuilder DEVICE() {
       return new DeviceBuilder();
   }
 
+  /**
+   * 转换成xml格式
+   *
+   * @return xml格式字符串
+   */
   @SuppressWarnings("unchecked")
   public String toXml() {
     return XStreamTransformer.toXml((Class<WxMpXmlOutMessage>) this.getClass(), this);
@@ -131,6 +152,9 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 转换成加密的结果
+   *
+   * @param wxMpConfigStorage 公众号配置
+   * @return 加密后的消息对象
    */
   public WxMpXmlOutMessage toEncrypted(WxMpConfigStorage wxMpConfigStorage) {
     String plainXml = toXml();
@@ -146,6 +170,9 @@ public abstract class WxMpXmlOutMessage implements Serializable {
 
   /**
    * 转换成加密的xml格式
+   *
+   * @param wxMpConfigStorage 公众号配置
+   * @return 加密后的xml格式字符串
    */
   public String toEncryptedXml(WxMpConfigStorage wxMpConfigStorage) {
     String plainXml = toXml();

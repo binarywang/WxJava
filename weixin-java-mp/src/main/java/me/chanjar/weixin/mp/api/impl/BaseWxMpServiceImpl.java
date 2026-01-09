@@ -304,8 +304,9 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
   /**
    * 通过网络请求获取稳定版接口调用凭据
    *
-   * @return .
-   * @throws IOException .
+   * @param forceRefresh 是否强制刷新
+   * @return access_token字符串
+   * @throws IOException IO异常
    */
   protected abstract String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException;
 

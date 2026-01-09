@@ -35,7 +35,8 @@ public class WxCpCgServiceHttpComponentsImpl extends BaseWxCpCgServiceImpl<Close
     apacheHttpClientBuilder.httpProxyHost(this.configStorage.getHttpProxyHost())
       .httpProxyPort(this.configStorage.getHttpProxyPort())
       .httpProxyUsername(this.configStorage.getHttpProxyUsername())
-      .httpProxyPassword(this.configStorage.getHttpProxyPassword().toCharArray());
+      .httpProxyPassword(this.configStorage.getHttpProxyPassword() == null ? null :
+        this.configStorage.getHttpProxyPassword().toCharArray());
 
     if (this.configStorage.getHttpProxyHost() != null && this.configStorage.getHttpProxyPort() > 0) {
       this.httpProxy = new HttpHost(this.configStorage.getHttpProxyHost(), this.configStorage.getHttpProxyPort());

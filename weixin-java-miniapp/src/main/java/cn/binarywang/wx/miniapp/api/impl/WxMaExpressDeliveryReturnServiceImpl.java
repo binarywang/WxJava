@@ -14,23 +14,23 @@ public class WxMaExpressDeliveryReturnServiceImpl implements WxMaExpressDelivery
 
     @Override
     public WxMaExpressReturnInfoResult addDeliveryReturn(WxMaExpressDeliveryReturnAddRequest wxMaExpressDeliveryReturnAddRequest) throws WxErrorException {
-        String result= this.service.get(ADD_DELIVERY_RETURN_URL,wxMaExpressDeliveryReturnAddRequest.toJson());
+        String result = this.service.post(ADD_DELIVERY_RETURN_URL, wxMaExpressDeliveryReturnAddRequest.toJson());
         return WxMaExpressReturnInfoResult.fromJson(result);
     }
 
     @Override
     public WxMaExpressReturnInfoResult getDeliveryReturn(String returnId) throws WxErrorException {
         JsonObject param = new JsonObject();
-        param.addProperty("return_id",returnId);
-        String result= this.service.get(GET_DELIVERY_RETURN_URL,param.toString());
+        param.addProperty("return_id", returnId);
+        String result = this.service.post(GET_DELIVERY_RETURN_URL, param);
         return WxMaExpressReturnInfoResult.fromJson(result);
     }
 
     @Override
     public WxMaExpressReturnInfoResult unbindDeliveryReturn(String returnId) throws WxErrorException {
         JsonObject param = new JsonObject();
-        param.addProperty("return_id",returnId);
-        String result= this.service.get(UNBIND_DELIVERY_RETURN_URL,param.toString());
+        param.addProperty("return_id", returnId);
+        String result = this.service.post(UNBIND_DELIVERY_RETURN_URL, param);
         return WxMaExpressReturnInfoResult.fromJson(result);
     }
 }

@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpAgentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
+import me.chanjar.weixin.cp.bean.WxCpTpAdmin;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
@@ -63,6 +64,23 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
 
     return WxCpGsonBuilder.create().fromJson(jsonObject.get("agentlist").toString(), new TypeToken<List<WxCpAgent>>() {
     }.getType());
+  }
+
+  @Override
+  public WxCpTpAdmin getAdminList(Integer agentId) throws WxErrorException {
+    if (agentId == null) {
+      throw new IllegalArgumentException("缺少agentid参数");
+    }
+
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("agentid", agentId);
+    String url = this.mainService.getWxCpConfigStorage().getApiUrl(AGENT_GET_ADMIN_LIST);
+    String responseContent = this.mainService.post(url, jsonObject.toString());
+    JsonObject respObj = GsonParser.parse(responseContent);
+    if (respObj.get(WxConsts.ERR_CODE).getAsInt() != 0) {
+      throw new WxErrorException(WxError.fromJson(responseContent, WxType.CP));
+    }
+    return WxCpTpAdmin.fromJson(responseContent);
   }
 
 }

@@ -24,7 +24,7 @@ public interface WxMpConfigStorage {
    * Is use stable access token api
    *
    * @return the boolean
-   * @link https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html
+   * @see <a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html">文档</a>
    */
   boolean isStableAccessToken();
 
@@ -211,6 +211,8 @@ public interface WxMpConfigStorage {
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
    * </pre>
+   *
+   * @return 重试间隔毫秒数
    */
   int getRetrySleepMillis();
 
@@ -219,6 +221,8 @@ public interface WxMpConfigStorage {
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
    * </pre>
+   *
+   * @return 最大重试次数
    */
   int getMaxRetryTimes();
 

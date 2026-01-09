@@ -5,8 +5,9 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 /**
  * 生成异步上传任务
+ *
  * @author <a href="https://github.com/imyzt">imyzt</a>
- * @date 2025/04/27
+ * @since 2025/04/27
  */
 @Data
 public class MediaUploadByUrlReq {

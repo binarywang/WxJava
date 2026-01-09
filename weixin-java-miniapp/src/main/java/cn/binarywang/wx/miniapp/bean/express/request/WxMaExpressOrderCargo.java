@@ -34,7 +34,7 @@ public class WxMaExpressOrderCargo implements Serializable {
    * 描述： 单位是千克(kg)
    * </pre>
    */
-  private Integer weight;
+  private Double weight;
 
   /**
    * 包裹长度
@@ -44,7 +44,7 @@ public class WxMaExpressOrderCargo implements Serializable {
    * </pre>
    */
   @SerializedName("space_x")
-  private Integer spaceLength;
+  private Double spaceLength;
 
   /**
    * 包裹宽度
@@ -54,7 +54,7 @@ public class WxMaExpressOrderCargo implements Serializable {
    * </pre>
    */
   @SerializedName("space_y")
-  private Integer spaceWidth;
+  private Double spaceWidth;
 
   /**
    * 包裹高度
@@ -64,7 +64,7 @@ public class WxMaExpressOrderCargo implements Serializable {
    * </pre>
    */
   @SerializedName("space_z")
-  private Integer spaceHeight;
+  private Double spaceHeight;
 
   /**
    * 包裹中商品详情列表

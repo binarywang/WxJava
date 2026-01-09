@@ -18,7 +18,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.CorpGroup.LIST_SHA
  * 企业互联相关接口实现类
  *
  * @author libo <422423229@qq.com>
- * Created on 27/2/2023 9:57 PM
+ * @since 2023-02-27 9:57 PM
  */
 @RequiredArgsConstructor
 public class WxCpCorpGroupServiceImpl implements WxCpCorpGroupService {

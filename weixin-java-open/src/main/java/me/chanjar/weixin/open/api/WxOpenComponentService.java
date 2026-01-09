@@ -204,6 +204,21 @@ public interface WxOpenComponentService {
   String COMPONENT_CLEAR_QUOTA_URL = "https://api.weixin.qq.com/cgi-bin/component/clear_quota/v2";
 
   /**
+   * 设置第三方平台服务器域名
+   */
+  String API_MODIFY_WXA_SERVER_DOMAIN = "https://api.weixin.qq.com/cgi-bin/component/modify_wxa_server_domain";
+
+  /**
+   * 获取第三方平台业务域名校验文件
+   */
+  String API_GET_DOMAIN_CONFIRM_FILE = "https://api.weixin.qq.com/cgi-bin/component/get_domain_confirmfile";
+
+  /**
+   * 设置第三方平台业务域名
+   */
+  String API_MODIFY_WXA_JUMP_DOMAIN = "https://api.weixin.qq.com/cgi-bin/component/modify_wxa_jump_domain";
+
+  /**
    * Gets wx mp service by appid.
    *
    * @param appid the appid
@@ -1116,5 +1131,54 @@ public interface WxOpenComponentService {
    * @throws WxErrorException .
    */
   WxOpenResult applySetOrderPathInfo(WxOpenMaApplyOrderPathInfo info) throws WxErrorException;
+
+  /**
+   * 设置第三方平台服务器域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/domain/modify_server_domain.html">文档地址</a>
+   *
+   * @param action           add添加, delete删除, set覆盖, get获取
+   * @param requestDomains   request 合法域名；当 action 是 get 时不需要此字段
+   * @param wsRequestDomains socket 合法域名；当 action 是 get 时不需要此字段
+   * @param uploadDomains    uploadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param downloadDomains  downloadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param tcpDomains       tcp 合法域名；当 action 是 get 时不需要此字段
+   * @param udpDomains       udp 合法域名；当 action 是 get 时不需要此字段
+   * @return the wx open ma domain result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaDomainResult modifyWxaServerDomain(String action, List<String> requestDomains, List<String> wsRequestDomains,
+                                             List<String> uploadDomains, List<String> downloadDomains,
+                                             List<String> udpDomains, List<String> tcpDomains) throws WxErrorException;
+
+  /**
+   * 获取第三方平台业务域名校验文件
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/domain/get_domain_confirmfile.html">文档地址</a>
+   *
+   * @return 业务域名校验文件信息
+   * @throws WxErrorException 操作失败时抛出，具体错误码请看文档
+   */
+  WxOpenMaDomainConfirmFileResult getDomainConfirmFile() throws WxErrorException;
+
+  /**
+   * 设置第三方平台业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/domain/modify_jump_domain.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return 直接返回字符串
+   * @throws WxErrorException the wx error exception
+   */
+  String modifyWxaJumpDomain(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 设置第三方平台业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/ThirdParty/domain/modify_jump_domain.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return web view domain info
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaWebDomainResult modifyWxaJumpDomainInfo(String action, List<String> domainList) throws WxErrorException;
 
 }

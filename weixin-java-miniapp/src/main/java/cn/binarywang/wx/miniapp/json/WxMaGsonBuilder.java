@@ -9,8 +9,13 @@ import cn.binarywang.wx.miniapp.bean.analysis.WxMaVisitDistribution;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeCommitRequest;
 import cn.binarywang.wx.miniapp.bean.code.WxMaCodeVersionDistribution;
 import cn.binarywang.wx.miniapp.json.adaptor.*;
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
+
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -30,6 +35,18 @@ public class WxMaGsonBuilder {
     INSTANCE.registerTypeAdapter(WxMaRetainInfo.class, new WxMaRetainInfoGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaUserPortrait.class, new WxMaUserPortraitGsonAdapter());
     INSTANCE.registerTypeAdapter(WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson.class, new WxMaSubscribeMsgEventJsonAdapter());
+
+    INSTANCE.setExclusionStrategies(new ExclusionStrategy() {
+      @Override
+      public boolean shouldSkipField(FieldAttributes fieldAttributes) {
+        return false;
+      }
+
+      @Override
+      public boolean shouldSkipClass(Class<?> aClass) {
+        return aClass == File.class || aClass == ApacheHttpClientBuilder.class;
+      }
+    });
   }
 
   public static Gson create() {

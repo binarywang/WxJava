@@ -116,10 +116,10 @@ public class WxMaExpressServiceImplTest {
       goodsCount ++;
     }
     cargo.setCount(detailList.size());
-    cargo.setWeight(5);
-    cargo.setSpaceHeight(10);
-    cargo.setSpaceLength(10);
-    cargo.setSpaceWidth(10);
+    cargo.setWeight(1.2);
+    cargo.setSpaceHeight(10.0);
+    cargo.setSpaceLength(20.0);
+    cargo.setSpaceWidth(15.0);
     cargo.setDetailList(detailList);
 
 

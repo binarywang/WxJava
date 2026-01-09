@@ -11,7 +11,8 @@ import java.util.List;
 /**
  * 企业微信OA相关接口.
  *
- * @author Element & Wang_Wong created on  2019-04-06 10:52
+ * @author Element, Wang_Wong
+ * @since 2019-04-06 10:52
  */
 public interface WxCpOaService {
 
@@ -331,7 +332,7 @@ public interface WxCpOaService {
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/checkin/addcheckinuserface?access_token=ACCESS_TOKEN</a>
    * 文档地址：
    * <a href="https://developer.work.weixin.qq.com/document/path/93378">https://developer.work.weixin.qq.com/document/path/93378</a>
-   * <pre>
+   * </pre>
    * @param userId 需要录入的用户id
    * @param userFace 需要录入的人脸图片数据，需要将图片数据base64处理后填入，对已录入的人脸会进行更新处理
    * @throws WxErrorException the wx error exception

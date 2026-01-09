@@ -16,6 +16,100 @@
 - **API前缀**: `/v3/fund-app/mch-transfer/transfer-bills`
 - **特点**: 单笔转账，支持更丰富的转账场景
 
+## 收款授权模式功能
+
+### 授权模式说明
+
+微信支付转账支持两种收款授权模式：
+
+#### 1. 需确认收款授权模式（默认）
+- **常量**: `WxPayConstants.ReceiptAuthorizationMode.CONFIRM_RECEIPT_AUTHORIZATION`
+- **特点**: 用户收到转账后需要手动点击确认才能到账
+- **适用场景**: 一般的转账场景
+- **用户体验**: 安全性高，但需要额外操作
+
+#### 2. 免确认收款授权模式  
+- **常量**: `WxPayConstants.ReceiptAuthorizationMode.NO_CONFIRM_RECEIPT_AUTHORIZATION`
+- **特点**: 用户事先授权后，转账直接到账，无需确认
+- **适用场景**: 高频转账场景，如佣金发放、返现等
+- **用户体验**: 体验流畅，无需额外操作
+- **前提条件**: 需要用户事先进行授权
+
+### 使用示例
+
+#### 免确认授权模式转账
+
+```java
+TransferBillsRequest request = TransferBillsRequest.newBuilder()
+    .appid("your_appid")
+    .outBillNo("NO_CONFIRM_" + System.currentTimeMillis())
+    .transferSceneId("1005")                       // 佣金报酬场景
+    .openid("user_openid")
+    .transferAmount(200)                           // 2元
+    .transferRemark("免确认收款转账")
+    .receiptAuthorizationMode(WxPayConstants.ReceiptAuthorizationMode.NO_CONFIRM_RECEIPT_AUTHORIZATION)
+    .userRecvPerception("Y")
+    .build();
+
+try {
+    TransferBillsResult result = transferService.transferBills(request);
+    System.out.println("转账成功，直接到账：" + result.getTransferBillNo());
+} catch (WxPayException e) {
+    if ("USER_NOT_AUTHORIZED".equals(e.getErrCode())) {
+        System.err.println("用户未授权免确认收款，请先引导用户进行授权");
+    }
+}
+```
+
+#### 需确认授权模式转账（默认）
+
+```java
+TransferBillsRequest request = TransferBillsRequest.newBuilder()
+    .appid("your_appid")
+    .outBillNo("CONFIRM_" + System.currentTimeMillis())
+    .transferSceneId("1005")
+    .openid("user_openid")
+    .transferAmount(150)                           // 1.5元
+    .transferRemark("需确认收款转账")
+    // .receiptAuthorizationMode(...) // 不设置时使用默认的确认模式
+    .userRecvPerception("Y")
+    .build();
+
+TransferBillsResult result = transferService.transferBills(request);
+System.out.println("转账发起成功，等待用户确认：" + result.getPackageInfo());
+```
+
+### 错误处理
+
+使用免确认授权模式时，需要处理以下可能的错误：
+
+```java
+try {
+    TransferBillsResult result = transferService.transferBills(request);
+} catch (WxPayException e) {
+    switch (e.getErrCode()) {
+        case "USER_NOT_AUTHORIZED":
+            // 用户未授权免确认收款
+            System.err.println("请先引导用户进行免确认收款授权");
+            // 可以引导用户到授权页面
+            break;
+        case "AUTHORIZATION_EXPIRED":
+            // 授权已过期
+            System.err.println("用户授权已过期，请重新授权");
+            break;
+        default:
+            System.err.println("转账失败：" + e.getMessage());
+    }
+}
+```
+
+### 使用建议
+
+1. **高频转账场景**推荐使用免确认模式，提升用户体验
+2. **首次使用**需引导用户进行授权
+3. **处理异常**妥善处理授权相关异常，提供友好的错误提示
+4. **场景选择**根据业务场景选择合适的授权模式
+
 ## 使用新版转账API
 
 ### 1. 获取服务实例

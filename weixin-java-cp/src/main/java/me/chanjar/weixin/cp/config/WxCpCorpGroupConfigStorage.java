@@ -31,8 +31,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * Update corp access token.
    *
-   * @param corpId
-   * @param agentId
+   * @param corpId           企业ID
+   * @param agentId          应用ID
    * @param corpAccessToken  the corp access token
    * @param expiresInSeconds the expires in seconds
    */
@@ -41,8 +41,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * 授权企业的access token相关
    *
-   * @param corpId  the corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    * @return the access token
    */
   String getCorpAccessToken(String corpId, Integer agentId);
@@ -50,8 +50,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * Gets access token entity.
    *
-   * @param corpId  the  corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    * @return the access token entity
    */
   WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId);
@@ -59,8 +59,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * Is access token expired boolean.
    *
-   * @param corpId  the  corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    * @return the boolean
    */
   boolean isCorpAccessTokenExpired(String corpId, Integer agentId);
@@ -68,8 +68,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * Expire access token.
    *
-   * @param corpId  the  corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    */
   void expireCorpAccessToken(String corpId, Integer agentId);
 
@@ -118,7 +118,8 @@ public interface WxCpCorpGroupConfigStorage {
   /**
    * Gets access token lock.
    *
-   * @param corpId the corp id
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    * @return the access token lock
    */
   Lock getCorpAccessTokenLock(String corpId, Integer agentId);

@@ -33,7 +33,22 @@ jobs:
             VERSION="${BASE_VER}.B"
             TAG="v${BASE_VER}"
             IS_RELEASE="true"
-            echo "Matched release commit: VERSION=$VERSION, TAG=$TAG"
+            echo "Matched test release commit: VERSION=$VERSION, TAG=$TAG"
+            # 检查并打tag
+            if git tag | grep -q "^$TAG$"; then
+              echo "Tag $TAG already exists."
+            else
+              git config user.name "Binary Wang"
+              git config user.email "a@binarywang.com"
+              git tag -a "$TAG" -m "Release $TAG"
+              git push origin "$TAG"
+              echo "Tag $TAG created and pushed."
+            fi
+          elif [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\ 正式版本 ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            TAG="v${VERSION}"
+            IS_RELEASE="true"
+            echo "Matched formal release commit:  VERSION=$VERSION, TAG=$TAG"
             # 检查并打tag
             if git tag | grep -q "^$TAG$"; then
               echo "Tag $TAG already exists."

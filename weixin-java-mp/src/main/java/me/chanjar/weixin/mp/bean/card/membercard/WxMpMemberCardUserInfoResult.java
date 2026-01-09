@@ -6,11 +6,10 @@ import lombok.Data;
 import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
 
 /**
- * <pre>
  * 拉取会员信息返回的结果
- *
- * 字段格式参考https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283  6.2.1小节的步骤5
- * </pre>
+ * <p>
+ * {@code 字段格式参考：<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283">会员卡接口</a>  6.2.1小节的步骤5}
+ * </p>
  *
  * @author YuJian
  * @version 2017/7/9

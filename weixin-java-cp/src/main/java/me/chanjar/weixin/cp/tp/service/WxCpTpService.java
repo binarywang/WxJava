@@ -199,7 +199,7 @@ public interface WxCpTpService {
    * @return permanent code info
    * @throws WxErrorException the wx error exception
    * @author yuan
-   * @since 2020 -03-18
+   * @since 2020-03-18
    */
   WxCpTpPermanentCodeInfo getPermanentCodeInfo(String authCode) throws WxErrorException;
 
@@ -227,7 +227,7 @@ public interface WxCpTpService {
    * @param authType    授权类型：0 正式授权， 1 测试授权。
    * @return pre auth url
    * @throws WxErrorException the wx error exception
-   * @link https ://work.weixin.qq.com/api/doc/90001/90143/90602
+   * @see <a href="https://work.weixin.qq.com/api/doc/90001/90143/90602">文档地址</a>
    */
   String getPreAuthUrl(String redirectUri, String state, int authType) throws WxErrorException;
 
@@ -558,12 +558,12 @@ public interface WxCpTpService {
   WxCpTpAppQrcode getAppQrcode(String suiteId, String appId, String state, Integer style, Integer resultType) throws WxErrorException ;
 
   /**
-   *
    * 明文corpid转换为加密corpid 为更好地保护企业与用户的数据，第三方应用获取的corpid不再是明文的corpid，将升级为第三方服务商级别的加密corpid。<a href="https://developer.work.weixin.qq.com/document/path/95327">文档说明</a>
    * 第三方可以将已有的明文corpid转换为第三方的加密corpid。
-   * @param corpId
-   * @return
-   * @throws WxErrorException
+   *
+   * @param corpId 企业ID
+   * @return 加密的企业ID
+   * @throws WxErrorException 微信错误异常
    */
   WxCpTpCorpId2OpenCorpId corpId2OpenCorpId(String corpId) throws WxErrorException;
 
@@ -655,6 +655,8 @@ public interface WxCpTpService {
 
   /**
    * 构造第三方应用oauth2链接
+   *
+   * @return OAuth2服务
    */
   WxCpTpOAuth2Service getWxCpTpOAuth2Service();
 

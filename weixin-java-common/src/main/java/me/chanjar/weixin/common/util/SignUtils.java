@@ -25,6 +25,7 @@ public class SignUtils {
    *
    * @param message 签名数据
    * @param key     签名密钥
+   * @return 签名结果
    */
   public static String createHmacSha256Sign(String message, String key) {
     try {

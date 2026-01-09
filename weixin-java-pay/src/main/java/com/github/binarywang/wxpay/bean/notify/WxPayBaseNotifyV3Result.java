@@ -5,7 +5,8 @@ package com.github.binarywang.wxpay.bean.notify;
  *
  * @author Pursuer
  * @version 1.0
- * @date 2023/6/15
+ * @since 2023/6/15
+ * @param <T> 解密后的数据类型
  */
 public interface WxPayBaseNotifyV3Result<T> {
   /**
@@ -13,9 +14,8 @@ public interface WxPayBaseNotifyV3Result<T> {
    *
    * @param rawData 原始数据
    * @author Pursuer
-   * @date 2023/6/15
-   * @since 1.0
-   **/
+   * @since 2023/6/15
+   */
   void setRawData(OriginNotifyResponse rawData);
 
   /**
@@ -23,8 +23,7 @@ public interface WxPayBaseNotifyV3Result<T> {
    *
    * @param data 解密后的数据
    * @author Pursuer
-   * @date 2023/6/15
-   * @since 1.0
-   **/
+   * @since 2023/6/15
+   */
   void setResult(T data);
 }

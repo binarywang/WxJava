@@ -222,7 +222,7 @@ public interface WxCpKfService {
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/kf/get_corp_statistic?access_token=ACCESS_TOKEN</a>
    * 文档地址：
    * <a href="https://developer.work.weixin.qq.com/document/path/95489">https://developer.work.weixin.qq.com/document/path/95489</a>
-   * <pre>
+   * </pre>
    * @param request 查询参数
    * @return 客户数据统计 -企业汇总数据
    * @throws WxErrorException the wx error exception
@@ -238,7 +238,7 @@ public interface WxCpKfService {
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/kf/get_servicer_statistic?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/kf/get_servicer_statistic?access_token=ACCESS_TOKEN</a>
    * 文档地址：
    * <a href="https://developer.work.weixin.qq.com/document/path/95490">https://developer.work.weixin.qq.com/document/path/95490</a>
-   * <pre>
+   * </pre>
    * @param request 查询参数
    * @return 客户数据统计 -企业汇总数据
    * @throws WxErrorException the wx error exception

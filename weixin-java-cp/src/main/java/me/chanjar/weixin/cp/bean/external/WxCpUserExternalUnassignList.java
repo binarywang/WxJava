@@ -12,7 +12,8 @@ import java.util.List;
 /**
  * 离职员工外部联系人列表
  *
- * @author yqx & Wang_Wong created on  2020/3/15
+ * @author yqx, Wang_Wong
+ * @since 2020/3/15
  */
 @Getter
 @Setter

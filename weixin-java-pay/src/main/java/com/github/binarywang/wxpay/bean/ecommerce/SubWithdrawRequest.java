@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 二级商户账户余额提现
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/combine/chapter3_3.shtml
+ *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4012476652
  * </pre>
  */
 @Data
@@ -85,5 +85,20 @@ public class SubWithdrawRequest implements Serializable {
    */
   @SerializedName(value = "bank_memo")
   private String bankMemo;
+
+  /**
+   * <pre>
+   * 字段名：回调通知地址
+   * 变量名：notify_url
+   * 是否必填：否
+   * 类型：string（256）
+   * 描述：
+   *  异步接收提现状态变更通知的回调地址，通知url必须为外网可访问的url，不能携带参数。
+   *  如果参数中传了notify_url，则商户平台上配置的回调地址将不会生效，优先回调当前传的地址。
+   * 示例值：https://www.weixin.qq.com/wxpay/pay.php
+   * </pre>
+   */
+  @SerializedName(value = "notify_url")
+  private String notifyUrl;
 
 }

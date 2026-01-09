@@ -33,6 +33,7 @@ public class Attachment implements Serializable {
    * Sets image.
    *
    * @param image the image
+   * @return this
    */
   public Attachment setImage(Image image) {
     this.image = image;
@@ -44,6 +45,7 @@ public class Attachment implements Serializable {
    * Sets link.
    *
    * @param link the link
+   * @return this
    */
   public Attachment setLink(Link link) {
     this.link = link;
@@ -55,6 +57,7 @@ public class Attachment implements Serializable {
    * Sets mini program.
    *
    * @param miniProgram the mini program
+   * @return this
    */
   public Attachment setMiniProgram(MiniProgram miniProgram) {
     this.miniProgram = miniProgram;
@@ -66,6 +69,7 @@ public class Attachment implements Serializable {
    * Sets video.
    *
    * @param video the video
+   * @return this
    */
   public Attachment setVideo(Video video) {
     this.video = video;
@@ -77,6 +81,7 @@ public class Attachment implements Serializable {
    * Sets file.
    *
    * @param file the file
+   * @return this
    */
   public Attachment setFile(File file) {
     this.file = file;

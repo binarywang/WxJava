@@ -19,9 +19,9 @@ public interface WxMpMenuService {
      * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
      * </pre>
      *
-     * @param menu the menu
-     * @return 如果是个性化菜单 ，则返回menuid，否则返回null
-     * @throws WxErrorException the wx error exception
+     * @param menu 菜单对象，包含菜单结构和配置信息
+     * @return 如果是个性化菜单，则返回menuid，否则返回null
+     * @throws WxErrorException 微信API调用异常
      */
     String menuCreate(WxMenu menu) throws WxErrorException;
 
@@ -33,9 +33,9 @@ public interface WxMpMenuService {
      * 详情请见：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
      * </pre>
      *
-     * @param json the json
-     * @return 如果是个性化菜单 ，则返回menuid，否则返回null
-     * @throws WxErrorException the wx error exception
+     * @param json 菜单配置的JSON字符串，包含菜单结构和配置信息
+     * @return 如果是个性化菜单，则返回menuid，否则返回null
+     * @throws WxErrorException 微信API调用异常
      */
     String menuCreate(String json) throws WxErrorException;
 
@@ -45,7 +45,7 @@ public interface WxMpMenuService {
      * 详情请见: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141015&token=&lang=zh_CN
      * </pre>
      *
-     * @throws WxErrorException the wx error exception
+     * @throws WxErrorException 微信API调用异常
      */
     void menuDelete() throws WxErrorException;
 
@@ -55,8 +55,8 @@ public interface WxMpMenuService {
      * 详情请见: https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1455782296&token=&lang=zh_CN
      * </pre>
      *
-     * @param menuId 个性化菜单的menuid
-     * @throws WxErrorException the wx error exception
+     * @param menuId 个性化菜单的menuid，通过创建个性化菜单时返回
+     * @throws WxErrorException 微信API调用异常
      */
     void menuDelete(String menuId) throws WxErrorException;
 
@@ -66,8 +66,8 @@ public interface WxMpMenuService {
      * 详情请见： https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141014&token=&lang=zh_CN
      * </pre>
      *
-     * @return the wx mp menu
-     * @throws WxErrorException the wx error exception
+     * @return 当前公众号的自定义菜单配置
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMenu menuGet() throws WxErrorException;
 
@@ -77,9 +77,9 @@ public interface WxMpMenuService {
      * 详情请见: http://mp.weixin.qq.com/wiki/0/c48ccd12b69ae023159b4bfaa7c39c20.html
      * </pre>
      *
-     * @param userid 可以是粉丝的OpenID，也可以是粉丝的微信号。
-     * @return the wx menu
-     * @throws WxErrorException the wx error exception
+     * @param userid 可以是粉丝的OpenID，也可以是粉丝的微信号
+     * @return 匹配到的菜单配置
+     * @throws WxErrorException 微信API调用异常
      */
     WxMenu menuTryMatch(String userid) throws WxErrorException;
 
@@ -98,8 +98,8 @@ public interface WxMpMenuService {
      * https://api.weixin.qq.com/cgi-bin/get_current_selfmenu_info?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @return the self menu info
-     * @throws WxErrorException the wx error exception
+     * @return 自定义菜单配置信息，包含菜单结构和配置详情
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpGetSelfMenuInfoResult getSelfMenuInfo() throws WxErrorException;
 }

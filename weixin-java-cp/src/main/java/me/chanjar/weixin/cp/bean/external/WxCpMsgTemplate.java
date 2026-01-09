@@ -14,10 +14,9 @@ import java.util.List;
 
 /**
  * 企业群发消息任务
- * <p>
- * Created by songfan on 2020/7/14.
  *
- * @author songfan & Mr.Pan
+ * @author songfan, Mr.Pan
+ * @since 2020/7/14
  */
 @Data
 @Builder

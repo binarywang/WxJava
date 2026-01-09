@@ -17,7 +17,7 @@ public class RequestUtils {
   /**
    * 获取请求头数据，微信V3版本回调使用
    *
-   * @param request
+   * @param request HTTP请求对象
    * @return 字符串
    */
   public static String readData(HttpServletRequest request) {

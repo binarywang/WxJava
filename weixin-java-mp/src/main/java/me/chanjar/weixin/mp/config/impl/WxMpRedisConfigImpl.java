@@ -39,6 +39,8 @@ public class WxMpRedisConfigImpl extends WxMpDefaultConfigImpl {
 
   /**
    * 每个公众号生成独有的存储key.
+   *
+   * @param appId 公众号appId
    */
   @Override
   public void setAppId(String appId) {

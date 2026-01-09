@@ -64,14 +64,14 @@
 ### 重要信息
 1. [`WxJava` 荣获 `GitCode` 2024年度十大开源社区奖项](https://mp.weixin.qq.com/s/wM_UlMsDm3IZ1CPPDvcvQw)。
 2. 项目合作洽谈请联系微信`binary0000`（在微信里自行搜索并添加好友，请注明来意，如有关于SDK问题需讨论请参考下文入群讨论，不要加此微信）。
-3. **2024-12-30 发布 [【4.7.0正式版】](https://mp.weixin.qq.com/s/_7k-XLYBqeJJhvHWCsdT0A)**！
-4. 贡献源码可以参考视频：[【贡献源码全过程（上集）】](https://mp.weixin.qq.com/s/3xUZSATWwHR_gZZm207h7Q)、[【贡献源码全过程（下集）】](https://mp.weixin.qq.com/s/nyzJwVVoYSJ4hSbwyvTx9A) ，友情提供：[程序员小山与Bug](https://space.bilibili.com/473631007)
-5. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；
-6. 微信开发新手请务必阅读【开发文档】（[Gitee Wiki](https://gitee.com/binary/weixin-java-tools/wikis/Home) 或者 [Github Wiki](https://github.com/binarywang/WxJava/wiki)）的常见问题部分，可以少走很多弯路，节省不少时间。
-7. 技术交流群：想获得QQ群/微信群/钉钉企业群等信息的同学，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可获取加入方式，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
-8. 钉钉技术交流群：`32206329`（技术交流2群）, `30294972`（技术交流1群，目前已满），`35724728`（通知群，实时通知Github项目变更记录）。
-9. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/binarywang/WxJava/wiki) ，避免浪费大家的宝贵时间；
-10. 寻求帮助时需贴代码或大长串异常信息的，请利用 http://paste.ubuntu.com 
+3. **2026-01-03 发布 [【4.8.0正式版】](https://mp.weixin.qq.com/s/mJoFtGc25pXCn3uZRh6Q-w)**！
+5. 贡献源码可以参考视频：[【贡献源码全过程（上集）】](https://mp.weixin.qq.com/s/3xUZSATWwHR_gZZm207h7Q)、[【贡献源码全过程（下集）】](https://mp.weixin.qq.com/s/nyzJwVVoYSJ4hSbwyvTx9A) ，友情提供：[程序员小山与Bug](https://space.bilibili.com/473631007)
+6. 新手重要提示：本项目仅是一个SDK开发工具包，未提供Web实现，建议使用 `maven` 或 `gradle` 引用本项目即可使用本SDK提供的各种功能，详情可参考 **[【Demo项目】](demo.md)** 或本项目中的部分单元测试代码；
+7. 微信开发新手请务必阅读【开发文档】（[Gitee Wiki](https://gitee.com/binary/weixin-java-tools/wikis/Home) 或者 [Github Wiki](https://github.com/binarywang/WxJava/wiki)）的常见问题部分，可以少走很多弯路，节省不少时间。
+8. 技术交流群：想获得QQ群/微信群/钉钉企业群等信息的同学，请使用微信扫描上面的微信公众号二维码关注 `WxJava` 后点击相关菜单即可获取加入方式，同时也可以在微信中搜索 `weixin-java-tools` 或 `WxJava` 后选择正确的公众号进行关注，该公众号会及时通知SDK相关更新信息，并不定期分享微信Java开发相关技术知识；
+9. 钉钉技术交流群：`32206329`（技术交流2群）, `30294972`（技术交流1群，目前已满），`35724728`（通知群，实时通知Github项目变更记录）。
+10. 微信开发新手或者Java开发新手在群内提问或新开Issue提问前，请先阅读[【提问的智慧】](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/master/README-zh_CN.md)，并确保已查阅过 [【开发文档Wiki】](https://github.com/binarywang/WxJava/wiki) ，避免浪费大家的宝贵时间；
+11. 寻求帮助时需贴代码或大长串异常信息的，请利用 http://paste.ubuntu.com 
 
 --------------------------------
 ### 其他说明
@@ -95,7 +95,7 @@
 <dependency>
   <groupId>com.github.binarywang</groupId>
   <artifactId>（不同模块参考下文）</artifactId>
-  <version>4.7.0</version>
+  <version>4.8.0</version>
 </dependency>
 ```
 
@@ -105,6 +105,59 @@
   - 微信公众号：`weixin-java-mp`    
   - 企业微信：`weixin-java-cp`
   - 微信视频号/微信小店：`weixin-java-channel`
+
+**注意**：
+- **移动应用开发**：如果你的移动应用（iOS/Android App）需要接入微信登录、分享等功能：
+  - 微信登录（网页授权）：使用 `weixin-java-open` 模块，在服务端处理 OAuth 授权
+  - 微信支付：使用 `weixin-java-pay` 模块
+  - 客户端集成：需使用微信官方提供的移动端SDK（iOS/Android），本项目为服务端SDK
+- **微信开放平台**（`weixin-java-open`）主要用于第三方平台，代公众号或小程序进行开发和管理
+
+
+---------------------------------
+### HTTP 客户端支持
+
+本项目同时支持多种 HTTP 客户端实现，默认推荐使用 **Apache HttpClient 5.x**（最新稳定版本）。
+
+#### 支持的 HTTP 客户端类型
+
+| HTTP 客户端 | 说明 | 配置值 | 推荐程度 |
+|------------|------|--------|---------|
+| Apache HttpClient 5.x | Apache HttpComponents Client 5.x，最新版本 | `HttpComponents` | ⭐⭐⭐⭐⭐ 推荐 |
+| Apache HttpClient 4.x | Apache HttpClient 4.x，向后兼容 | `HttpClient` | ⭐⭐⭐⭐ 兼容 |
+| OkHttp | Square OkHttp 客户端 | `OkHttp` | ⭐⭐⭐ 可选 |
+| Jodd-http | Jodd 轻量级 HTTP 客户端 | `JoddHttp` | ⭐⭐ 可选 |
+
+#### 配置方式
+
+**Spring Boot 配置示例：**
+
+```properties
+# 使用 HttpClient 5.x（推荐，MP/CP/Channel/QiDian 模块默认）
+wx.mp.config-storage.http-client-type=HttpComponents
+
+# 使用 HttpClient 4.x（兼容模式，MiniApp 模块默认）
+wx.mp.config-storage.http-client-type=HttpClient
+
+# 使用 OkHttp
+wx.mp.config-storage.http-client-type=OkHttp
+
+# 使用 Jodd-http
+wx.mp.config-storage.http-client-type=JoddHttp
+```
+
+**注意**：如果使用 Multi-Starter（如 `wx-java-mp-multi-spring-boot-starter`），枚举值需使用大写下划线格式：
+```properties
+# Multi-Starter 配置格式
+wx.mp.config-storage.http-client-type=HTTP_COMPONENTS  # 注意使用大写下划线
+```
+
+**注意事项：**
+1. **MiniApp 模块**已提供 `HttpComponents`（HttpClient 5.x）类型的配置选项，但当前默认仍为 HttpClient 4.x；如需启用 HttpClient 5.x，请确保所使用的集成模块（如 `wx-java-miniapp-spring-boot-starter`、`wx-java-miniapp-solon-plugin`）版本已支持该选项
+2. **MP、Channel、QiDian 模块**已完整支持 HttpClient 5.x，默认推荐使用
+3. **CP 模块**的支持情况取决于具体使用的 Starter 版本，请参考对应模块文档
+4. 如需使用 OkHttp 或 Jodd-http，需在项目中添加对应的依赖（scope为provided）
+5. HttpClient 4.x 和 HttpClient 5.x 可以共存，按需配置即可
 
 
 ---------------------------------

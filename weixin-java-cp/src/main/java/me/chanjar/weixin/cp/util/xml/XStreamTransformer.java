@@ -20,7 +20,7 @@ public class XStreamTransformer {
   protected static final Map<Class<?>, XStream> CLASS_2_XSTREAM_INSTANCE = configXStreamInstance();
 
   /**
-   * xml -> pojo
+   * {@code xml -> pojo}
    *
    * @param <T>   the type parameter
    * @param clazz the clazz
@@ -58,7 +58,7 @@ public class XStreamTransformer {
   }
 
   /**
-   * pojo -> xml.
+   * {@code pojo -> xml.}
    *
    * @param <T>    the type parameter
    * @param clazz  the clazz

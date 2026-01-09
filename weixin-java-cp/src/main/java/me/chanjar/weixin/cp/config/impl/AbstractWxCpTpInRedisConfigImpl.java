@@ -187,7 +187,9 @@ public abstract class AbstractWxCpTpInRedisConfigImpl extends WxCpTpDefaultConfi
 
 
   /**
-   * 企微服务商企业ID & 企业secret, 来自于企微配置
+   * {@code 企微服务商企业ID & 企业secret, 来自于企微配置}
+   *
+   * @return 企业ID
    */
   @Override
   public String getCorpId() {

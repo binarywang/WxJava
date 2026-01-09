@@ -1,0 +1,14 @@
+[
+  {
+    "name": "me.chanjar.weixin.common.util.RandomUtils",
+    "methods": [
+      {"name": "getRandomStr", "parameterTypes": []}
+    ]
+  },
+  {
+    "name": "me.chanjar.weixin.common.util.crypto.WxCryptUtil",
+    "allDeclaredConstructors": true,
+    "allDeclaredMethods": true,
+    "allDeclaredFields": true
+  }
+]

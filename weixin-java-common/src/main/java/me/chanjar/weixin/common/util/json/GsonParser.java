@@ -12,14 +12,14 @@ import java.io.Reader;
 public class GsonParser {
 
   public static JsonObject parse(String json) {
-    return JsonParser.parseString(json).getAsJsonObject();
+    return new JsonParser().parse(json).getAsJsonObject();
   }
 
   public static JsonObject parse(Reader json) {
-    return JsonParser.parseReader(json).getAsJsonObject();
+    return new JsonParser().parse(json).getAsJsonObject();
   }
 
   public static JsonObject parse(JsonReader json) {
-    return JsonParser.parseReader(json).getAsJsonObject();
+    return new JsonParser().parse(json).getAsJsonObject();
   }
 }

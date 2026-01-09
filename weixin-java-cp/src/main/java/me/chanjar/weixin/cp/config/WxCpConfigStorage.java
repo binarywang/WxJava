@@ -260,7 +260,36 @@ public interface WxCpConfigStorage {
 
   /**
    * 获取会话存档的secret
+   *
    * @return msg audit secret
    */
   String getMsgAuditSecret();
+
+  /**
+   * 获取会话存档SDK
+   * 会话存档SDK初始化后有效期为7200秒，无需每次重新初始化
+   *
+   * @return sdk id，如果未初始化或已过期返回0
+   */
+  long getMsgAuditSdk();
+
+  /**
+   * 检查会话存档SDK是否已过期
+   *
+   * @return true: 已过期, false: 未过期
+   */
+  boolean isMsgAuditSdkExpired();
+
+  /**
+   * 更新会话存档SDK
+   *
+   * @param sdk             sdk id
+   * @param expiresInSeconds 过期时间（秒）
+   */
+  void updateMsgAuditSdk(long sdk, int expiresInSeconds);
+
+  /**
+   * 使会话存档SDK过期
+   */
+  void expireMsgAuditSdk();
 }

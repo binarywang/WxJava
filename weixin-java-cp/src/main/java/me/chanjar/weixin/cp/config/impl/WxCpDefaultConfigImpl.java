@@ -49,6 +49,11 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String msgAuditSecret;
   private volatile String msgAuditPriKey;
   private volatile String msgAuditLibPath;
+  /**
+   * 会话存档SDK及其过期时间
+   */
+  private volatile long msgAuditSdk;
+  private volatile long msgAuditSdkExpiresTime;
   private volatile String oauth2redirectUri;
   private volatile String httpProxyHost;
   private volatile int httpProxyPort;
@@ -444,10 +449,34 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   /**
    * 设置会话存档secret
-   * @param msgAuditSecret
+   *
+   * @param msgAuditSecret the msg audit secret
+   * @return this
    */
   public WxCpDefaultConfigImpl setMsgAuditSecret(String msgAuditSecret) {
     this.msgAuditSecret = msgAuditSecret;
     return this;
+  }
+
+  @Override
+  public long getMsgAuditSdk() {
+    return this.msgAuditSdk;
+  }
+
+  @Override
+  public boolean isMsgAuditSdkExpired() {
+    return System.currentTimeMillis() > this.msgAuditSdkExpiresTime;
+  }
+
+  @Override
+  public synchronized void updateMsgAuditSdk(long sdk, int expiresInSeconds) {
+    this.msgAuditSdk = sdk;
+    // 预留200秒的时间
+    this.msgAuditSdkExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+  }
+
+  @Override
+  public void expireMsgAuditSdk() {
+    this.msgAuditSdkExpiresTime = 0;
   }
 }

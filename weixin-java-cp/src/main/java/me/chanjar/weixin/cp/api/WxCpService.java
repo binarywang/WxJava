@@ -584,7 +584,14 @@ public interface WxCpService extends WxService {
   /**
    * 企业互联的服务类对象
    *
-   * @return
+   * @return 企业互联服务对象
    */
   WxCpCorpGroupService getCorpGroupService();
+
+  /**
+   * 获取智能机器人服务
+   *
+   * @return 智能机器人服务 intelligent robot service
+   */
+  WxCpIntelligentRobotService getIntelligentRobotService();
 }

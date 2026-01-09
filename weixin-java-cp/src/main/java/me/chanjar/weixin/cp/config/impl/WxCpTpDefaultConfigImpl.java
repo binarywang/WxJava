@@ -29,7 +29,7 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   private final transient Map<String, Lock> authCorpJsapiTicketLocker = new ConcurrentHashMap<>();
   private final transient Map<String, Lock> authSuiteJsapiTicketLocker = new ConcurrentHashMap<>();
   /**
-   * 企微服务商企业ID & 企业secret，来自于企微配置
+   * {@code 企微服务商企业ID & 企业secret，来自于企微配置}
    */
   protected volatile String corpId;
   /**
@@ -198,7 +198,7 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
   /**
    * Sets suite id.
    *
-   * @param suiteId
+   * @param suiteId 套件ID
    */
   public void setSuiteId(String suiteId) {
     this.suiteId = suiteId;
@@ -211,6 +211,8 @@ public class WxCpTpDefaultConfigImpl implements WxCpTpConfigStorage, Serializabl
 
   /**
    * Sets suite secret.
+   *
+   * @param corpSecret 套件密钥
    */
   public void setSuiteSecret(String corpSecret) {
     this.suiteSecret = corpSecret;

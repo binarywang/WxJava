@@ -66,4 +66,14 @@ public class WxMaKefuMessageTest {
         "\"link\":{\"title\":\"title\",\"description\":\"description\",\"url\":\"https://mp.weixin.qq.com/s?__biz=MzI0MDA2OTY5NQ==\",\"thumb_url\":\"thumbUrl\"}}");
   }
 
+  public void testTextBuilderWithAiMsgContext() {
+    WxMaKefuMessage reply = WxMaKefuMessage.newTextBuilder()
+      .toUser("OPENID")
+      .content("回复内容")
+      .aiMsgContextMsgId("MSG_ID_123")
+      .build();
+    assertThat(reply.toJson())
+      .isEqualTo("{\"touser\":\"OPENID\",\"msgtype\":\"text\",\"text\":{\"content\":\"回复内容\"},\"aimsgcontext\":{\"msgid\":\"MSG_ID_123\"}}");
+  }
+
 }

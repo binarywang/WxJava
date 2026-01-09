@@ -43,6 +43,11 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
   }
 
   @Override
+  public void sendMarkdownV2(String content) throws WxErrorException {
+    this.sendMarkdownV2(this.getWebhookUrl(), content);
+  }
+
+  @Override
   public void sendImage(String base64, String md5) throws WxErrorException {
     this.sendImage(this.getWebhookUrl(), base64, md5);
   }
@@ -66,6 +71,14 @@ public class WxCpGroupRobotServiceImpl implements WxCpGroupRobotService {
   public void sendMarkdown(String webhookUrl, String content) throws WxErrorException {
     this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
       .setMsgType(GroupRobotMsgType.MARKDOWN)
+      .setContent(content)
+      .toJson());
+  }
+
+  @Override
+  public void sendMarkdownV2(String webhookUrl, String content) throws WxErrorException {
+    this.cpService.postWithoutToken(webhookUrl, new WxCpGroupRobotMessage()
+      .setMsgType(GroupRobotMsgType.MARKDOWN_V2)
       .setContent(content)
       .toJson());
   }
