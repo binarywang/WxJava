@@ -17,6 +17,7 @@ import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -46,11 +47,9 @@ public class RsaCryptoUtil {
    */
   private static List<Field> getAllFields(Class<?> clazz) {
     List<Field> fields = new ArrayList<>();
-    while (clazz != null) {
+    while (clazz != null && clazz != Object.class) {
       Field[] declaredFields = clazz.getDeclaredFields();
-      for (Field field : declaredFields) {
-        fields.add(field);
-      }
+      java.util.Collections.addAll(fields, declaredFields);
       clazz = clazz.getSuperclass();
     }
     return fields;

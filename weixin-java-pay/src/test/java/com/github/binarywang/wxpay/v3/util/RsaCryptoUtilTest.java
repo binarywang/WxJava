@@ -186,11 +186,9 @@ public class RsaCryptoUtilTest {
    */
   private List<Field> getAllFields(Class<?> clazz) {
     List<Field> fields = new ArrayList<>();
-    while (clazz != null) {
+    while (clazz != null && clazz != Object.class) {
       Field[] declaredFields = clazz.getDeclaredFields();
-      for (Field field : declaredFields) {
-        fields.add(field);
-      }
+      java.util.Collections.addAll(fields, declaredFields);
       clazz = clazz.getSuperclass();
     }
     return fields;
