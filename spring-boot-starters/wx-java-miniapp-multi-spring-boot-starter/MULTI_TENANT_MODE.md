@@ -175,7 +175,7 @@ public class MiniAppService {
 
 ## 源码分析
 
-issue讨论地址：[#3909](https://github.com/binarywang/WxJava/issues/3909)
+issue讨论地址：[#3835](https://github.com/binarywang/WxJava/issues/3835)
 
 ### 为什么有两种设计？
 
