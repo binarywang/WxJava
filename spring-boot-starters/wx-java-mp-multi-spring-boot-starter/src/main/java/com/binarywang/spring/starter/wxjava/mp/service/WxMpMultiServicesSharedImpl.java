@@ -25,8 +25,11 @@ public class WxMpMultiServicesSharedImpl implements WxMpMultiServices {
     if (tenantId == null) {
       return null;
     }
-    // 切换到指定租户的配置
-    return sharedWxMpService.switchoverTo(tenantId);
+    // 使用 switchover 检查配置是否存在，保持与隔离模式 API 行为一致（不存在时返回 null）
+    if (!sharedWxMpService.switchover(tenantId)) {
+      return null;
+    }
+    return sharedWxMpService;
   }
 
   @Override

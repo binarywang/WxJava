@@ -2,7 +2,7 @@
 
 ## 问题背景
 
-用户在 issue #3909 中提出了一个架构设计问题：
+用户在 issue #3835 中提出了一个架构设计问题：
 
 > 基础 Wx 实现类中已经有 configMap 了，可以用 configMap 来存储不同的小程序配置。不同的配置，都是复用同一个 http 客户端。为什么在各个 spring-boot-starter 中又单独创建类来存储不同的配置？从 spring 的配置来看，http 客户端只有一个，不同小程序配置可以实现多租户，所以似乎没必要单独再建新类存放？重复创建，增加了 http 客户端的成本？直接使用 Wx 实现类中已经有 configMap 不是更好吗？
 
@@ -152,8 +152,8 @@ CompletableFuture.runAsync(() -> {
 
 ## 相关链接
 
-- Issue: [#3909](https://github.com/binarywang/WxJava/issues/3909)
-- Pull Request: [待填写]
+- Issue: [#3835](https://github.com/binarywang/WxJava/issues/3835)
+- Pull Request: [#3840](https://github.com/binarywang/WxJava/pull/3840)
 
 ## 致谢
 
