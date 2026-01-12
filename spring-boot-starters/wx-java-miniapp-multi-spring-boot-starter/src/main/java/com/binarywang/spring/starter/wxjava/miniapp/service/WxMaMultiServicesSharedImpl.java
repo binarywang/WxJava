@@ -6,7 +6,7 @@ import lombok.RequiredArgsConstructor;
 /**
  * 微信小程序 {@link WxMaMultiServices} 共享式实现.
  * <p>
- * 使用单个 WxMaService 实例管理多个租户配置，通过 switchoverTo 切换租户。
+ * 使用单个 WxMaService 实例管理多个租户配置，通过 switchover 切换租户。
  * 相比 {@link WxMaMultiServicesImpl}，此实现共享 HTTP 客户端，节省资源。
  * </p>
  * <p>
