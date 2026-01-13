@@ -151,4 +151,8 @@ public class SpuInfo extends SpuSimpleInfo {
   /** 发布模式，0: 普通模式；1: 极简模式 */
   @JsonProperty("release_mode")
   private Integer releaseMode;
+
+  /** 商品待开售信息 */
+  @JsonProperty("timing_onsale_info")
+  private TimingOnSaleInfo timingOnSaleInfo;
 }
