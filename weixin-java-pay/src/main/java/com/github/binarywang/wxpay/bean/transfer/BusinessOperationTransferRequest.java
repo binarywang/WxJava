@@ -40,7 +40,9 @@ public class BusinessOperationTransferRequest implements Serializable {
 
   /**
    * 转账场景ID
-   * 必须，该笔转账使用的转账场景，可前往“商户平台-产品中心-商家转账”中申请。如：1000（现金营销），1006（企业报销）等
+   * 必须，该笔转账使用的转账场景，可前往"商户平台-产品中心-商家转账"中申请。
+   * 运营工具场景ID如：2001（现金营销）、2002（佣金报酬）、2003（推广奖励）等
+   * 可使用 {@link com.github.binarywang.wxpay.constant.WxPayConstants.OperationSceneId} 中定义的常量
    */
   @SerializedName("transfer_scene_id")
   private String transferSceneId;
