@@ -19,7 +19,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  */
 @Configuration
 @ConditionalOnProperty(
-  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "redis_template"
+  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "redistemplate"
 )
 @ConditionalOnClass(StringRedisTemplate.class)
 @RequiredArgsConstructor
