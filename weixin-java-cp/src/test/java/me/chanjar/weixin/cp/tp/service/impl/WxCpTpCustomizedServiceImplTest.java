@@ -13,8 +13,8 @@ import org.testng.annotations.Test;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_CUSTOMIZED_APP_DETAIL;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_TEMPLATE_LIST;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;

@@ -7,7 +7,6 @@ import me.chanjar.weixin.cp.bean.WxCpTpCustomizedAppDetail;
 import me.chanjar.weixin.cp.bean.WxCpTpTemplateList;
 import me.chanjar.weixin.cp.tp.service.WxCpTpCustomizedService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
-import org.apache.commons.lang3.StringUtils;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_CUSTOMIZED_APP_DETAIL;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_TEMPLATE_LIST;
