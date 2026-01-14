@@ -55,6 +55,10 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
    */
   private volatile long msgAuditSdk;
   private volatile long msgAuditSdkExpiresTime;
+  /**
+   * 会话存档SDK引用计数，用于多线程安全的生命周期管理
+   */
+  private volatile int msgAuditSdkRefCount;
 
   /**
    * Instantiates a new Wx cp redis config.
@@ -491,10 +495,36 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     this.msgAuditSdk = sdk;
     // 预留200秒的时间
     this.msgAuditSdkExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+    // 重置引用计数
+    this.msgAuditSdkRefCount = 0;
   }
 
   @Override
   public void expireMsgAuditSdk() {
     this.msgAuditSdkExpiresTime = 0;
+  }
+
+  @Override
+  public synchronized int incrementMsgAuditSdkRefCount(long sdk) {
+    if (this.msgAuditSdk == sdk) {
+      return ++this.msgAuditSdkRefCount;
+    }
+    return 0;
+  }
+
+  @Override
+  public synchronized int decrementMsgAuditSdkRefCount(long sdk) {
+    if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
+      return --this.msgAuditSdkRefCount;
+    }
+    return 0;
+  }
+
+  @Override
+  public synchronized int getMsgAuditSdkRefCount(long sdk) {
+    if (this.msgAuditSdk == sdk) {
+      return this.msgAuditSdkRefCount;
+    }
+    return 0;
   }
 }

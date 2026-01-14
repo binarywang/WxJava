@@ -280,4 +280,139 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     return WxCpAgreeInfo.fromJson(responseContent);
   }
 
+  @Override
+  public List<WxCpChatDatas.WxCpChatData> getChatRecords(long seq, @NonNull long limit, String proxy, String passwd,
+                                                         @NonNull long timeout) throws Exception {
+    // 获取或初始化SDK
+    long sdk = this.initSdk();
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 增加引用计数
+    configStorage.incrementMsgAuditSdkRefCount(sdk);
+
+    try {
+      long slice = Finance.NewSlice();
+      long ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
+      if (ret != 0) {
+        Finance.FreeSlice(slice);
+        throw new WxErrorException("getchatdata err ret " + ret);
+      }
+
+      // 拉取会话存档
+      String content = Finance.GetContentFromSlice(slice);
+      Finance.FreeSlice(slice);
+      WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
+      if (chatDatas.getErrCode().intValue() != 0) {
+        throw new WxErrorException(chatDatas.toJson());
+      }
+
+      return chatDatas.getChatData();
+    } finally {
+      // 减少引用计数
+      configStorage.decrementMsgAuditSdkRefCount(sdk);
+    }
+  }
+
+  @Override
+  public WxCpChatModel getDecryptChatData(@NonNull WxCpChatDatas.WxCpChatData chatData,
+                                          @NonNull Integer pkcs1) throws Exception {
+    // 获取或初始化SDK
+    long sdk = this.initSdk();
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 增加引用计数
+    configStorage.incrementMsgAuditSdkRefCount(sdk);
+
+    try {
+      String plainText = this.decryptChatData(sdk, chatData, pkcs1);
+      return WxCpChatModel.fromJson(plainText);
+    } finally {
+      // 减少引用计数
+      configStorage.decrementMsgAuditSdkRefCount(sdk);
+    }
+  }
+
+  @Override
+  public String getChatRecordPlainText(@NonNull WxCpChatDatas.WxCpChatData chatData,
+                                       @NonNull Integer pkcs1) throws Exception {
+    // 获取或初始化SDK
+    long sdk = this.initSdk();
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 增加引用计数
+    configStorage.incrementMsgAuditSdkRefCount(sdk);
+
+    try {
+      return this.decryptChatData(sdk, chatData, pkcs1);
+    } finally {
+      // 减少引用计数
+      configStorage.decrementMsgAuditSdkRefCount(sdk);
+    }
+  }
+
+  @Override
+  public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
+                                @NonNull String targetFilePath) throws WxErrorException {
+    // 获取或初始化SDK
+    long sdk;
+    try {
+      sdk = this.initSdk();
+    } catch (WxErrorException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new WxErrorException(e);
+    }
+
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 增加引用计数
+    configStorage.incrementMsgAuditSdkRefCount(sdk);
+
+    try {
+      File targetFile = new File(targetFilePath);
+      if (!targetFile.getParentFile().exists()) {
+        targetFile.getParentFile().mkdirs();
+      }
+      this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
+        try {
+          // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
+          FileOutputStream outputStream = new FileOutputStream(targetFile, true);
+          outputStream.write(i);
+          outputStream.close();
+        } catch (Exception e) {
+          e.printStackTrace();
+        }
+      });
+    } finally {
+      // 减少引用计数
+      configStorage.decrementMsgAuditSdkRefCount(sdk);
+    }
+  }
+
+  @Override
+  public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
+                                @NonNull Consumer<byte[]> action) throws WxErrorException {
+    // 获取或初始化SDK
+    long sdk;
+    try {
+      sdk = this.initSdk();
+    } catch (WxErrorException e) {
+      throw e;
+    } catch (Exception e) {
+      throw new WxErrorException(e);
+    }
+
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+
+    // 增加引用计数
+    configStorage.incrementMsgAuditSdkRefCount(sdk);
+
+    try {
+      this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, action);
+    } finally {
+      // 减少引用计数
+      configStorage.decrementMsgAuditSdkRefCount(sdk);
+    }
+  }
+
 }
