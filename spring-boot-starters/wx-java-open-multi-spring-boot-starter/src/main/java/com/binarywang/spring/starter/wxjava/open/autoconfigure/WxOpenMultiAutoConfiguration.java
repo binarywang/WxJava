@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 /**
  * 微信开放平台多账号自动配置
  *
- * @author someone
+ * @author Binary Wang
  */
 @Configuration
 @Import(WxOpenMultiServiceConfiguration.class)
