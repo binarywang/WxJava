@@ -803,15 +803,23 @@ public class WxCpMsgAuditTest {
             suffix = "." + decryptData.getFile().getFileExt();
             sdkFileId = decryptData.getFile().getSdkFileId();
             break;
+          default:
+            // 未知消息类型，跳过处理
+            continue;
         }
         
         // 测试新的downloadMediaFile方法 - 不需要传入SDK
         String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
         String targetPath = path + "testfile-new/" + md5Sum + suffix;
         File file = new File(targetPath);
+        
+        // 确保父目录存在
         if (!file.getParentFile().exists()) {
           file.getParentFile().mkdirs();
-        } else {
+        }
+        
+        // 删除已存在的文件
+        if (file.exists()) {
           file.delete();
         }
         

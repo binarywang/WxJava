@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.config.impl;
 
+import com.tencent.wework.Finance;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
@@ -515,7 +516,14 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   @Override
   public synchronized int decrementMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
-      return --this.msgAuditSdkRefCount;
+      int newCount = --this.msgAuditSdkRefCount;
+      // 当引用计数降为0时，自动销毁SDK以释放资源
+      if (newCount == 0) {
+        Finance.DestroySdk(sdk);
+        this.msgAuditSdk = 0;
+        this.msgAuditSdkExpiresTime = 0;
+      }
+      return newCount;
     }
     return 0;
   }

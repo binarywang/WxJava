@@ -304,7 +304,7 @@ public interface WxCpConfigStorage {
 
   /**
    * 减少会话存档SDK的引用计数
-   * 当引用计数降为0时，自动销毁SDK
+   * 当引用计数降为0时，自动销毁SDK以释放资源
    *
    * @param sdk sdk id
    * @return 减少后的引用计数，如果返回0表示SDK已被销毁
