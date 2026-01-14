@@ -131,6 +131,18 @@ public class WxOpenMultiProperties implements Serializable {
     /**
      * HttpClient
      */
-    HTTP_CLIENT
+    HTTP_CLIENT,
+    /**
+     * Apache HttpComponents
+     */
+    HTTP_COMPONENTS,
+    /**
+     * OkHttp
+     */
+    OK_HTTP,
+    /**
+     * Jodd Http
+     */
+    JODD_HTTP
   }
 }
