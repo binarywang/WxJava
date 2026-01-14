@@ -127,8 +127,11 @@ public class WxChannelCategoryServiceImpl implements WxChannelCategoryService {
 
   @Override
   public RelationCategoryResponse listRelationCategory(Boolean isFilterStatus, Integer status) throws WxErrorException {
-    String reqJson = "{\"is_filter_status\": " + (isFilterStatus != null ? isFilterStatus : false) +
-      ", \"status\": " + (status != null ? status : 0) + "}";
+    RelationCategoryRequest request = new RelationCategoryRequest(
+      isFilterStatus != null ? isFilterStatus : false,
+      status != null ? status : 0
+    );
+    String reqJson = JsonUtils.encode(request);
     String resJson = shopService.post(LIST_RELATION_CATEGORY_URL, reqJson);
     return ResponseUtils.decode(resJson, RelationCategoryResponse.class);
   }
