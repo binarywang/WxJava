@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConditionalOnProperty(
-  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "memory", matchIfMissing = true
+  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "MEMORY", matchIfMissing = true
 )
 @RequiredArgsConstructor
 public class WxOpenInMemoryConfiguration extends AbstractWxOpenConfiguration {
