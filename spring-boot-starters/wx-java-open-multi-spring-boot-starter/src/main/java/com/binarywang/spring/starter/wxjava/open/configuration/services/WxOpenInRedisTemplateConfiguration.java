@@ -15,7 +15,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 /**
  * 自动装配基于 redis template 策略配置
  *
- * @author someone
+ * @author Binary Wang
  */
 @Configuration
 @ConditionalOnProperty(

@@ -31,7 +31,7 @@
     wx.open.apps.tenantId2.access-token-url=@accessTokenUrl
    
     # ConfigStorage 配置（选填）
-    ## 配置类型: memory(默认), jedis, redisson, redis_template
+    ## 配置类型: memory(默认), jedis, redisson, redistemplate
     wx.open.config-storage.type=memory
     ## 相关redis前缀配置: wx:open:multi(默认)
     wx.open.config-storage.key-prefix=wx:open:multi

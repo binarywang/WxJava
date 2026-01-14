@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Import;
 /**
  * 微信开放平台相关服务自动注册
  *
- * @author someone
+ * @author Binary Wang
  */
 @Configuration
 @EnableConfigurationProperties(WxOpenMultiProperties.class)

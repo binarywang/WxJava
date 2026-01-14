@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * 微信开放平台多账号Redis配置.
  *
- * @author someone
+ * @author Binary Wang
  */
 @Data
 @NoArgsConstructor

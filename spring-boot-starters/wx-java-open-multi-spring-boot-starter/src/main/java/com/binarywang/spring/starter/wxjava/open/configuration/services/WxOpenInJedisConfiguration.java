@@ -19,7 +19,7 @@ import redis.clients.jedis.JedisPoolConfig;
 /**
  * 自动装配基于 jedis 策略配置
  *
- * @author someone
+ * @author Binary Wang
  */
 @Configuration
 @ConditionalOnProperty(

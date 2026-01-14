@@ -12,7 +12,7 @@ import java.util.Map;
 /**
  * 微信开放平台多账号配置属性.
  *
- * @author someone
+ * @author Binary Wang
  */
 @Data
 @NoArgsConstructor
@@ -36,7 +36,7 @@ public class WxOpenMultiProperties implements Serializable {
     /**
      * 存储类型.
      */
-    private StorageType type = StorageType.MEMORY;
+    private StorageType type = StorageType.memory;
 
     /**
      * 指定key前缀.
@@ -52,7 +52,7 @@ public class WxOpenMultiProperties implements Serializable {
     /**
      * http客户端类型.
      */
-    private HttpClientType httpClientType = HttpClientType.HTTP_CLIENT;
+    private HttpClientType httpClientType = HttpClientType.httpclient;
 
     /**
      * http代理主机.
@@ -112,37 +112,25 @@ public class WxOpenMultiProperties implements Serializable {
     /**
      * 内存
      */
-    MEMORY,
+    memory,
     /**
      * jedis
      */
-    JEDIS,
+    jedis,
     /**
      * redisson
      */
-    REDISSON,
+    redisson,
     /**
      * redisTemplate
      */
-    REDIS_TEMPLATE
+    redistemplate
   }
 
   public enum HttpClientType {
     /**
      * HttpClient
      */
-    HTTP_CLIENT,
-    /**
-     * Apache HttpComponents
-     */
-    HTTP_COMPONENTS,
-    /**
-     * OkHttp
-     */
-    OK_HTTP,
-    /**
-     * Jodd Http
-     */
-    JODD_HTTP
+    httpclient
   }
 }

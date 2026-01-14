@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 微信开放平台 {@link WxOpenMultiServices} 默认实现
  *
- * @author someone
+ * @author Binary Wang
  */
 public class WxOpenMultiServicesImpl implements WxOpenMultiServices {
   private final Map<String, WxOpenService> services = new ConcurrentHashMap<>();
