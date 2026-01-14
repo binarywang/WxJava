@@ -40,9 +40,10 @@ public abstract class AbstractWxOpenConfiguration {
     Collection<WxOpenSingleProperties> apps = appsMap.values();
     if (apps.size() > 1) {
       // 校验 appId 是否唯一
+      String nullAppIdPlaceholder = "__NULL_APP_ID__";
       boolean multi = apps.stream()
         // 没有 appId，如果不判断是否为空，这里会报 NPE 异常
-        .collect(Collectors.groupingBy(c -> c.getAppId() == null ? 0 : c.getAppId(), Collectors.counting()))
+        .collect(Collectors.groupingBy(c -> c.getAppId() == null ? nullAppIdPlaceholder : c.getAppId(), Collectors.counting()))
         .entrySet().stream().anyMatch(e -> e.getValue() > 1);
       if (multi) {
         throw new RuntimeException("请确保微信开放平台配置 appId 的唯一性");
@@ -84,6 +85,14 @@ public abstract class AbstractWxOpenConfiguration {
     String aesKey = appProperties.getAesKey();
     String apiHostUrl = appProperties.getApiHostUrl();
     String accessTokenUrl = appProperties.getAccessTokenUrl();
+
+    // appId 和 secret 是必需的
+    if (StringUtils.isBlank(appId)) {
+      throw new IllegalArgumentException("微信开放平台 appId 不能为空");
+    }
+    if (StringUtils.isBlank(secret)) {
+      throw new IllegalArgumentException("微信开放平台 secret 不能为空");
+    }
 
     config.setComponentAppId(appId);
     config.setComponentAppSecret(secret);
