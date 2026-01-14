@@ -1,4 +1,3 @@
-
 package me.chanjar.weixin.channel.bean.category;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
