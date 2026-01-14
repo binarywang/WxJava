@@ -32,19 +32,14 @@ public class RsaCryptoUtilTest {
     Class<?> receiverClass = receiver.getClass();
     Field[] fields = receiverClass.getDeclaredFields();
     
-    System.out.println("=== Receiver 类中的所有字段 ===");
     boolean foundNameField = false;
     boolean nameFieldHasAnnotation = false;
     
     for (Field field : fields) {
-      System.out.println("字段名: " + field.getName() + ", 类型: " + field.getType().getName());
       if (field.getName().equals("name")) {
         foundNameField = true;
         if (field.isAnnotationPresent(SpecEncrypt.class)) {
           nameFieldHasAnnotation = true;
-          System.out.println("  -> name 字段有 @SpecEncrypt 注解");
-        } else {
-          System.out.println("  -> name 字段没有 @SpecEncrypt 注解");
         }
       }
     }
@@ -85,13 +80,11 @@ public class RsaCryptoUtilTest {
     try {
       Field receiversField = ProfitSharingV3Request.class.getDeclaredField("receivers");
       boolean hasAnnotation = receiversField.isAnnotationPresent(SpecEncrypt.class);
-      System.out.println("ProfitSharingV3Request.receivers 字段有 @SpecEncrypt 注解: " + hasAnnotation);
       assertTrue(hasAnnotation, "receivers 字段应该有 @SpecEncrypt 注解");
     } catch (NoSuchFieldException e) {
       fail("应该能找到 receivers 字段");
     }
     
-    System.out.println("测试对象创建成功，name字段: " + receiver.getName());
     // 验证name字段不为null
     assertNotNull(receiver.getName());
     assertEquals(receiver.getName(), "张三");
@@ -147,6 +140,11 @@ public class RsaCryptoUtilTest {
       @SpecEncrypt
       @SerializedName("child_name")
       private String childName;
+
+      @Override
+      protected boolean canEqual(final Object other) {
+        return other instanceof ChildRequest;
+      }
     }
     
     // 创建子类实例
@@ -155,40 +153,27 @@ public class RsaCryptoUtilTest {
     request.setChildName("子类字段");
     
     // 验证能够找到父类和子类的字段
-    System.out.println("=== 测试继承场景 ===");
-    System.out.println("父类字段值: " + request.getParentName());
-    System.out.println("子类字段值: " + request.getChildName());
-    
     // 使用 getDeclaredFields 只能找到子类字段
     Field[] childFields = ChildRequest.class.getDeclaredFields();
-    System.out.println("使用 getDeclaredFields 找到的字段数: " + childFields.length);
     
-    // 使用 getAllFields 辅助方法应该能找到父类和子类的所有字段
-    List<Field> allFields = getAllFields(ChildRequest.class);
-    System.out.println("使用 getAllFields 找到的字段数: " + allFields.size());
-    
+    // 使用反射调用 RsaCryptoUtil 的私有 getAllFields 方法
     int annotatedFieldCount = 0;
-    for (Field field : allFields) {
-      if (field.isAnnotationPresent(SpecEncrypt.class)) {
-        annotatedFieldCount++;
-        System.out.println("  -> 找到带 @SpecEncrypt 注解的字段: " + field.getName());
+    try {
+      java.lang.reflect.Method getAllFieldsMethod = RsaCryptoUtil.class.getDeclaredMethod("getAllFields", Class.class);
+      getAllFieldsMethod.setAccessible(true);
+      @SuppressWarnings("unchecked")
+      List<Field> allFields = (List<Field>) getAllFieldsMethod.invoke(null, ChildRequest.class);
+      
+      for (Field field : allFields) {
+        if (field.isAnnotationPresent(SpecEncrypt.class)) {
+          annotatedFieldCount++;
+        }
       }
+    } catch (Exception e) {
+      fail("无法调用 getAllFields 方法: " + e.getMessage());
     }
     
     // 应该找到2个带注解的字段（parentName 和 childName）
     assertTrue(annotatedFieldCount >= 2, "应该能找到至少2个带 @SpecEncrypt 注解的字段");
-  }
-
-  /**
-   * 辅助方法：递归获取类的所有字段，包括父类中的字段
-   */
-  private List<Field> getAllFields(Class<?> clazz) {
-    List<Field> fields = new ArrayList<>();
-    while (clazz != null && clazz != Object.class) {
-      Field[] declaredFields = clazz.getDeclaredFields();
-      java.util.Collections.addAll(fields, declaredFields);
-      clazz = clazz.getSuperclass();
-    }
-    return fields;
   }
 }
