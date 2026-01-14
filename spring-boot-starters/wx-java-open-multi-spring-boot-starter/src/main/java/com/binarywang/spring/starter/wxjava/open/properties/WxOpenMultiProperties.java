@@ -75,15 +75,6 @@ public class WxOpenMultiProperties implements Serializable {
     private String httpProxyPassword;
 
     /**
-     * http 请求重试间隔
-     * <pre>
-     *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
-     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
-     * </pre>
-     */
-    private int retrySleepMillis = 1000;
-
-    /**
      * http 请求最大重试次数
      * <pre>
      *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
@@ -91,6 +82,15 @@ public class WxOpenMultiProperties implements Serializable {
      * </pre>
      */
     private int maxRetryTimes = 5;
+
+    /**
+     * http 请求重试间隔
+     * <pre>
+     *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
+     *   {@link cn.binarywang.wx.miniapp.api.impl.BaseWxMaServiceImpl#setRetrySleepMillis(int)}
+     * </pre>
+     */
+    private int retrySleepMillis = 1000;
 
     /**
      * 连接超时时间，单位毫秒
