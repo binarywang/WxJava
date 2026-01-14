@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RelationCategoryRequest implements Serializable {
 
-  private static final long serialVersionUID = 1234567890123456789L;
+  private static final long serialVersionUID = -8765432109876543210L;
 
   /** 是否按状态筛选 */
   @JsonProperty("is_filter_status")
