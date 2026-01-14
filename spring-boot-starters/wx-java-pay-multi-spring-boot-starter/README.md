@@ -127,6 +127,7 @@ wx.pay.configs.wx9876543210fedcba.notify-url=https://example.com/pay/notify
 ```java
 import com.binarywang.spring.starter.wxjava.pay.service.WxPayMultiServices;
 import com.github.binarywang.wxpay.bean.request.WxPayUnifiedOrderV3Request;
+import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryV3Result;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.service.WxPayService;
