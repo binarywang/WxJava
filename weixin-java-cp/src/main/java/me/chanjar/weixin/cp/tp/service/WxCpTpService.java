@@ -662,4 +662,18 @@ public interface WxCpTpService {
 
   void setWxCpTpOAuth2Service(WxCpTpOAuth2Service wxCpTpOAuth2Service);
 
+  /**
+   * 获取代开发服务
+   *
+   * @return 代开发服务
+   */
+  WxCpTpCustomizedService getWxCpTpCustomizedService();
+
+  /**
+   * 设置代开发服务
+   *
+   * @param wxCpTpCustomizedService 代开发服务
+   */
+  void setWxCpTpCustomizedService(WxCpTpCustomizedService wxCpTpCustomizedService);
+
 }

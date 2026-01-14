@@ -60,6 +60,7 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   private WxCpTpLicenseService wxCpTpLicenseService = new WxCpTpLicenseServiceImpl(this);
   private WxCpTpIdConvertService wxCpTpIdConvertService = new WxCpTpIdConvertServiceImpl(this);
   private WxCpTpOAuth2Service wxCpTpOAuth2Service = new WxCpTpOAuth2ServiceImpl(this);
+  private WxCpTpCustomizedService wxCpTpCustomizedService = new WxCpTpCustomizedServiceImpl(this);
   /**
    * 全局的是否正在刷新access token的锁.
    */
@@ -807,6 +808,16 @@ public abstract class BaseWxCpTpServiceImpl<H, P> implements WxCpTpService, Requ
   @Override
   public void setWxCpTpOAuth2Service(WxCpTpOAuth2Service wxCpTpOAuth2Service) {
     this.wxCpTpOAuth2Service = wxCpTpOAuth2Service;
+  }
+
+  @Override
+  public WxCpTpCustomizedService getWxCpTpCustomizedService() {
+    return wxCpTpCustomizedService;
+  }
+
+  @Override
+  public void setWxCpTpCustomizedService(WxCpTpCustomizedService wxCpTpCustomizedService) {
+    this.wxCpTpCustomizedService = wxCpTpCustomizedService;
   }
 
   @Override
