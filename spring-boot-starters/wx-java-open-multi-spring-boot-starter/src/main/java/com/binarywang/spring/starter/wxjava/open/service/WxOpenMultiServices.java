@@ -6,7 +6,7 @@ import me.chanjar.weixin.open.api.WxOpenService;
 /**
  * 微信开放平台 {@link WxOpenService} 所有实例存放类.
  *
- * @author someone
+ * @author binarywang
  */
 public interface WxOpenMultiServices {
   /**
