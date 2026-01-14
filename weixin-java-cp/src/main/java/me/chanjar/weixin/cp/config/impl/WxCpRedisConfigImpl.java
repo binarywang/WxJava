@@ -493,6 +493,10 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   @Override
   public synchronized void updateMsgAuditSdk(long sdk, int expiresInSeconds) {
+    // 如果有旧的SDK且引用计数为0，先销毁旧的SDK
+    if (this.msgAuditSdk > 0 && this.msgAuditSdk != sdk && this.msgAuditSdkRefCount == 0) {
+      Finance.DestroySdk(this.msgAuditSdk);
+    }
     this.msgAuditSdk = sdk;
     // 预留200秒的时间
     this.msgAuditSdkExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
@@ -507,10 +511,10 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   @Override
   public synchronized int incrementMsgAuditSdkRefCount(long sdk) {
-    if (this.msgAuditSdk == sdk) {
+    if (this.msgAuditSdk == sdk && sdk > 0) {
       return ++this.msgAuditSdkRefCount;
     }
-    return 0;
+    return -1; // SDK不匹配，返回-1表示错误
   }
 
   @Override
@@ -518,21 +522,46 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
       // 当引用计数降为0时，自动销毁SDK以释放资源
-      if (newCount == 0) {
+      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
+      if (newCount == 0 && this.msgAuditSdk == sdk) {
         Finance.DestroySdk(sdk);
         this.msgAuditSdk = 0;
         this.msgAuditSdkExpiresTime = 0;
       }
       return newCount;
     }
-    return 0;
+    return -1; // SDK不匹配或引用计数已为0，返回-1表示错误
   }
 
   @Override
   public synchronized int getMsgAuditSdkRefCount(long sdk) {
-    if (this.msgAuditSdk == sdk) {
+    if (this.msgAuditSdk == sdk && sdk > 0) {
       return this.msgAuditSdkRefCount;
     }
-    return 0;
+    return -1; // SDK不匹配，返回-1表示错误
+  }
+
+  @Override
+  public synchronized long acquireMsgAuditSdk() {
+    // 检查SDK是否有效（已初始化且未过期）
+    if (this.msgAuditSdk > 0 && !isMsgAuditSdkExpired()) {
+      this.msgAuditSdkRefCount++;
+      return this.msgAuditSdk;
+    }
+    return 0; // SDK未初始化或已过期
+  }
+
+  @Override
+  public synchronized void releaseMsgAuditSdk(long sdk) {
+    if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
+      int newCount = --this.msgAuditSdkRefCount;
+      // 当引用计数降为0时，自动销毁SDK以释放资源
+      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
+      if (newCount == 0 && this.msgAuditSdk == sdk) {
+        Finance.DestroySdk(sdk);
+        this.msgAuditSdk = 0;
+        this.msgAuditSdkExpiresTime = 0;
+      }
+    }
   }
 }

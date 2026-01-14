@@ -137,6 +137,49 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     return sdk;
   }
 
+  /**
+   * 获取SDK并增加引用计数（原子操作）
+   * 如果SDK未初始化或已过期，会自动初始化
+   *
+   * @return sdk id
+   * @throws WxErrorException 初始化失败时抛出异常
+   */
+  private long acquireSdk() throws WxErrorException {
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+    
+    // 尝试获取现有的有效SDK并增加引用计数（原子操作）
+    long sdk = configStorage.acquireMsgAuditSdk();
+    
+    if (sdk > 0) {
+      // 成功获取到有效的SDK
+      return sdk;
+    }
+    
+    // SDK未初始化或已过期，需要初始化
+    // initSdk()方法已经是synchronized的，确保只有一个线程初始化
+    sdk = this.initSdk();
+    
+    // 初始化后增加引用计数
+    int refCount = configStorage.incrementMsgAuditSdkRefCount(sdk);
+    if (refCount < 0) {
+      // SDK已经被替换，需要重新获取
+      return acquireSdk();
+    }
+    
+    return sdk;
+  }
+
+  /**
+   * 释放SDK引用计数
+   *
+   * @param sdk sdk id
+   */
+  private void releaseSdk(long sdk) {
+    if (sdk > 0) {
+      cpService.getWxCpConfigStorage().releaseMsgAuditSdk(sdk);
+    }
+  }
+
   @Override
   public WxCpChatModel getDecryptData(@NonNull long sdk, @NonNull WxCpChatDatas.WxCpChatData chatData,
                                       @NonNull Integer pkcs1) throws Exception {
@@ -283,12 +326,8 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   @Override
   public List<WxCpChatDatas.WxCpChatData> getChatRecords(long seq, @NonNull long limit, String proxy, String passwd,
                                                          @NonNull long timeout) throws Exception {
-    // 获取或初始化SDK
-    long sdk = this.initSdk();
-    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
-
-    // 增加引用计数
-    configStorage.incrementMsgAuditSdkRefCount(sdk);
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
 
     try {
       long slice = Finance.NewSlice();
@@ -308,65 +347,50 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
       return chatDatas.getChatData();
     } finally {
-      // 减少引用计数
-      configStorage.decrementMsgAuditSdkRefCount(sdk);
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
     }
   }
 
   @Override
   public WxCpChatModel getDecryptChatData(@NonNull WxCpChatDatas.WxCpChatData chatData,
                                           @NonNull Integer pkcs1) throws Exception {
-    // 获取或初始化SDK
-    long sdk = this.initSdk();
-    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
-
-    // 增加引用计数
-    configStorage.incrementMsgAuditSdkRefCount(sdk);
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
 
     try {
       String plainText = this.decryptChatData(sdk, chatData, pkcs1);
       return WxCpChatModel.fromJson(plainText);
     } finally {
-      // 减少引用计数
-      configStorage.decrementMsgAuditSdkRefCount(sdk);
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
     }
   }
 
   @Override
   public String getChatRecordPlainText(@NonNull WxCpChatDatas.WxCpChatData chatData,
                                        @NonNull Integer pkcs1) throws Exception {
-    // 获取或初始化SDK
-    long sdk = this.initSdk();
-    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
-
-    // 增加引用计数
-    configStorage.incrementMsgAuditSdkRefCount(sdk);
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
 
     try {
       return this.decryptChatData(sdk, chatData, pkcs1);
     } finally {
-      // 减少引用计数
-      configStorage.decrementMsgAuditSdkRefCount(sdk);
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
     }
   }
 
   @Override
   public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
                                 @NonNull String targetFilePath) throws WxErrorException {
-    // 获取或初始化SDK
+    // 获取SDK并自动增加引用计数（原子操作）
     long sdk;
     try {
-      sdk = this.initSdk();
-    } catch (WxErrorException e) {
-      throw e;
+      sdk = this.acquireSdk();
     } catch (Exception e) {
       throw new WxErrorException(e);
     }
-
-    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
-
-    // 增加引用计数
-    configStorage.incrementMsgAuditSdkRefCount(sdk);
 
     try {
       File targetFile = new File(targetFilePath);
@@ -384,34 +408,27 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
         }
       });
     } finally {
-      // 减少引用计数
-      configStorage.decrementMsgAuditSdkRefCount(sdk);
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
     }
   }
 
   @Override
   public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
                                 @NonNull Consumer<byte[]> action) throws WxErrorException {
-    // 获取或初始化SDK
+    // 获取SDK并自动增加引用计数（原子操作）
     long sdk;
     try {
-      sdk = this.initSdk();
-    } catch (WxErrorException e) {
-      throw e;
+      sdk = this.acquireSdk();
     } catch (Exception e) {
       throw new WxErrorException(e);
     }
 
-    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
-
-    // 增加引用计数
-    configStorage.incrementMsgAuditSdkRefCount(sdk);
-
     try {
       this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, action);
     } finally {
-      // 减少引用计数
-      configStorage.decrementMsgAuditSdkRefCount(sdk);
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
     }
   }
 
