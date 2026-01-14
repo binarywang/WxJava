@@ -117,13 +117,11 @@ public class RsaCryptoUtilTest {
     try {
       Field nameField = ProfitSharingReceiverV3Request.class.getDeclaredField("name");
       boolean hasAnnotation = nameField.isAnnotationPresent(SpecEncrypt.class);
-      System.out.println("ProfitSharingReceiverV3Request.name 字段有 @SpecEncrypt 注解: " + hasAnnotation);
       assertTrue(hasAnnotation, "name 字段应该有 @SpecEncrypt 注解");
     } catch (NoSuchFieldException e) {
       fail("应该能找到 name 字段");
     }
     
-    System.out.println("测试对象创建成功，name字段: " + request.getName());
     // 验证name字段不为null
     assertNotNull(request.getName());
     assertEquals(request.getName(), "李四");
