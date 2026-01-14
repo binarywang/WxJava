@@ -20,7 +20,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * 自动装配基于 redisson 策略配置
  *
- * @author someone
+ * @author Binary Wang
  */
 @Configuration
 @ConditionalOnProperty(
