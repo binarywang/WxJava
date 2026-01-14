@@ -23,6 +23,7 @@
     <module>wx-java-mp-multi-spring-boot-starter</module>
     <module>wx-java-mp-spring-boot-starter</module>
     <module>wx-java-pay-spring-boot-starter</module>
+    <module>wx-java-open-multi-spring-boot-starter</module>
     <module>wx-java-open-spring-boot-starter</module>
     <module>wx-java-qidian-spring-boot-starter</module>
     <module>wx-java-cp-multi-spring-boot-starter</module>
