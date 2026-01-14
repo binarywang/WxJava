@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 /**
  * WxOpenConfigStorage 抽象配置类
  *
- * @author someone
+ * @author Binary Wang
  */
 @RequiredArgsConstructor
 @Slf4j
