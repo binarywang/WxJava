@@ -213,6 +213,28 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public boolean switchover(String mchId) {
+    // 先尝试精确匹配（针对只有mchId没有appId的配置）
+    if (this.configMap.containsKey(mchId)) {
+      WxPayConfigHolder.set(mchId);
+      return true;
+    }
+
+    // 尝试前缀匹配（查找以 mchId_ 开头的配置）
+    String prefix = mchId + "_";
+    for (String key : this.configMap.keySet()) {
+      if (key.startsWith(prefix)) {
+        WxPayConfigHolder.set(key);
+        log.debug("根据mchId=【{}】找到配置key=【{}】", mchId, key);
+        return true;
+      }
+    }
+
+    log.error("无法找到对应mchId=【{}】的商户号配置信息，请核实！", mchId);
+    return false;
+  }
+
+  @Override
   public WxPayService switchoverTo(String mchId, String appId) {
     String configKey = this.getConfigKey(mchId, appId);
     if (this.configMap.containsKey(configKey)) {
@@ -220,6 +242,27 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       return this;
     }
     throw new WxRuntimeException(String.format("无法找到对应mchId=【%s】,appId=【%s】的商户号配置信息，请核实！", mchId, appId));
+  }
+
+  @Override
+  public WxPayService switchoverTo(String mchId) {
+    // 先尝试精确匹配（针对只有mchId没有appId的配置）
+    if (this.configMap.containsKey(mchId)) {
+      WxPayConfigHolder.set(mchId);
+      return this;
+    }
+
+    // 尝试前缀匹配（查找以 mchId_ 开头的配置）
+    String prefix = mchId + "_";
+    for (String key : this.configMap.keySet()) {
+      if (key.startsWith(prefix)) {
+        WxPayConfigHolder.set(key);
+        log.debug("根据mchId=【{}】找到配置key=【{}】", mchId, key);
+        return this;
+      }
+    }
+
+    throw new WxRuntimeException(String.format("无法找到对应mchId=【%s】的商户号配置信息，请核实！", mchId));
   }
 
   public String getConfigKey(String mchId, String appId) {

@@ -79,6 +79,15 @@ public interface WxPayService {
   boolean switchover(String mchId, String appId);
 
   /**
+   * 仅根据商户号进行切换.
+   * 适用于一个商户号对应多个appId的场景，切换时会匹配第一个符合该商户号的配置.
+   *
+   * @param mchId 商户标识
+   * @return 切换是否成功 boolean
+   */
+  boolean switchover(String mchId);
+
+  /**
    * 进行相应的商户切换.
    *
    * @param mchId 商户标识
@@ -86,6 +95,15 @@ public interface WxPayService {
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
   WxPayService switchoverTo(String mchId, String appId);
+
+  /**
+   * 仅根据商户号进行切换.
+   * 适用于一个商户号对应多个appId的场景，切换时会匹配第一个符合该商户号的配置.
+   *
+   * @param mchId 商户标识
+   * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
+   */
+  WxPayService switchoverTo(String mchId);
 
   /**
    * 发送post请求，得到响应字节数组.
