@@ -49,7 +49,7 @@ public class RsaCryptoUtil {
     List<Field> fields = new ArrayList<>();
     while (clazz != null && clazz != Object.class) {
       Field[] declaredFields = clazz.getDeclaredFields();
-      java.util.Collections.addAll(fields, declaredFields);
+      Collections.addAll(fields, declaredFields);
       clazz = clazz.getSuperclass();
     }
     return fields;
