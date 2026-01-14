@@ -39,7 +39,7 @@ public class WxCpTpCustomizedServiceImplTest {
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpCustomizedService = new WxCpTpCustomizedServiceImpl(wxCpTpService);
@@ -75,7 +75,7 @@ public class WxCpTpCustomizedServiceImplTest {
     final WxCpTpTemplateList templateList = wxCpTpCustomizedService.getTemplateList();
 
     assertNotNull(templateList);
-    assertEquals(templateList.getErrcode(), Integer.valueOf(0));
+    assertEquals(templateList.getErrcode(), Long.valueOf(0));
     assertNotNull(templateList.getTemplateList());
     assertEquals(templateList.getTemplateList().size(), 1);
     assertEquals(templateList.getTemplateList().get(0).getTemplateId(), "tpl001");
@@ -137,7 +137,7 @@ public class WxCpTpCustomizedServiceImplTest {
     final WxCpTpCustomizedAppDetail appDetail = wxCpTpCustomizedService.getCustomizedAppDetail(authCorpId, agentId);
 
     assertNotNull(appDetail);
-    assertEquals(appDetail.getErrcode(), Integer.valueOf(0));
+    assertEquals(appDetail.getErrcode(), Long.valueOf(0));
     assertEquals(appDetail.getAuthCorpId(), authCorpId);
     assertEquals(appDetail.getAuthCorpName(), "测试企业");
     assertNotNull(appDetail.getCustomizedAppList());
@@ -172,7 +172,7 @@ public class WxCpTpCustomizedServiceImplTest {
     final WxCpTpCustomizedAppDetail appDetail = wxCpTpCustomizedService.getCustomizedAppDetail(authCorpId, null);
 
     assertNotNull(appDetail);
-    assertEquals(appDetail.getErrcode(), Integer.valueOf(0));
+    assertEquals(appDetail.getErrcode(), Long.valueOf(0));
     assertEquals(appDetail.getAuthCorpId(), authCorpId);
   }
 }
