@@ -23,7 +23,7 @@ import redis.clients.jedis.JedisPoolConfig;
  */
 @Configuration
 @ConditionalOnProperty(
-  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "jedis"
+  prefix = WxOpenMultiProperties.PREFIX + ".config-storage", name = "type", havingValue = "JEDIS"
 )
 @ConditionalOnClass({JedisPool.class, JedisPoolConfig.class})
 @RequiredArgsConstructor
