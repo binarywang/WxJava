@@ -39,10 +39,11 @@ public class CommonWxRedisOpsTest {
   public void testGetExpireForNonExistentKey() {
     String nonExistentKey = "non_existent_key_" + System.currentTimeMillis();
     Long expire = wxRedisOps.getExpire(nonExistentKey);
-    // For non-existent keys, getExpire should return a negative value
-    // In Spring Data Redis 2.x: may return null (but our implementation should handle this)
-    // In Spring Data Redis 3.x: returns -2
-    Assert.assertTrue(expire == null || expire < 0, "Non-existent key should have null or negative expiration");
+    // 对于不存在的 key，底层使用 getExpire(key, TimeUnit.SECONDS) 时应返回负值
+    // Spring Data Redis 2.x 和 3.x 约定：-2 表示 key 不存在，-1 表示 key 没有过期时间
+    // 因此这里不应返回 null，而应返回一个小于 0 的值
+    Assert.assertNotNull(expire, "Non-existent key should not have null expiration");
+    Assert.assertTrue(expire < 0, "Non-existent key should have negative expiration");
   }
 
   @Test
