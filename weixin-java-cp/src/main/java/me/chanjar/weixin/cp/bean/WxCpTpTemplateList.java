@@ -32,6 +32,7 @@ public class WxCpTpTemplateList extends WxCpBaseResp {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTpTemplateList.class);
   }
 
+  @Override
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
