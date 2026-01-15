@@ -50,11 +50,6 @@ public class WxOpenMultiProperties implements Serializable {
     private final WxOpenMultiRedisProperties redis = new WxOpenMultiRedisProperties();
 
     /**
-     * http客户端类型.
-     */
-    private HttpClientType httpClientType = HttpClientType.httpclient;
-
-    /**
      * http代理主机.
      */
     private String httpProxyHost;
@@ -127,10 +122,4 @@ public class WxOpenMultiProperties implements Serializable {
     redistemplate
   }
 
-  public enum HttpClientType {
-    /**
-     * HttpClient
-     */
-    httpclient
-  }
 }

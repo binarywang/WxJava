@@ -37,13 +37,11 @@
     wx.open.config-storage.key-prefix=wx:open:multi
     wx.open.config-storage.redis.host=127.0.0.1
     wx.open.config-storage.redis.port=6379
-    ## 单机和 sentinel 同时存在时，优先使用sentinel配置
+    ## 注意：当前版本暂不支持 sentinel 配置，以下配置仅作为预留
     # wx.open.config-storage.redis.sentinel-ips=127.0.0.1:16379,127.0.0.1:26379
-    # wx.open.config-storage.redis.sentinel-name=mymaster 
+    # wx.open.config-storage.redis.sentinel-name=mymaster
    
     # http 客户端配置（选填）
-    ## # http客户端类型: http_client(默认)
-    wx.open.config-storage.http-client-type=http_client
     wx.open.config-storage.http-proxy-host=
     wx.open.config-storage.http-proxy-port=
     wx.open.config-storage.http-proxy-username=
