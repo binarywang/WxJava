@@ -104,6 +104,7 @@ public class WxCpTpCustomizedAppDetail extends WxCpBaseResp {
     return WxCpGsonBuilder.create().fromJson(json, WxCpTpCustomizedAppDetail.class);
   }
 
+  @Override
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
   }
