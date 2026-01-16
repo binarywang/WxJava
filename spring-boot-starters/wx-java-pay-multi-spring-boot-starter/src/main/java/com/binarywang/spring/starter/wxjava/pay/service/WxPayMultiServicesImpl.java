@@ -45,6 +45,10 @@ public class WxPayMultiServicesImpl implements WxPayMultiServices {
 
   @Override
   public void removeWxPayService(String configKey) {
+    if (StringUtils.isBlank(configKey)) {
+      log.warn("配置标识为空，无法移除WxPayService");
+      return;
+    }
     services.remove(configKey);
   }
 

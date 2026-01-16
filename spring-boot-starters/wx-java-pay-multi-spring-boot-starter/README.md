@@ -141,13 +141,15 @@ public class PayService {
 
   /**
    * 为不同的公众号创建支付订单
+   *
+   * @param configKey 配置标识（即 wx.pay.configs.&lt;configKey&gt; 中的 key，可以是 appId 或自定义标识）
    */
-  public void createOrder(String appId, String openId, Integer totalFee, String body) throws Exception {
-    // 根据appId获取对应的WxPayService
-    WxPayService wxPayService = wxPayMultiServices.getWxPayService(appId);
-    
+  public void createOrder(String configKey, String openId, Integer totalFee, String body) throws Exception {
+    // 根据配置标识获取对应的WxPayService
+    WxPayService wxPayService = wxPayMultiServices.getWxPayService(configKey);
+
     if (wxPayService == null) {
-      throw new IllegalArgumentException("未找到appId对应的微信支付配置: " + appId);
+      throw new IllegalArgumentException("未找到配置标识对应的微信支付配置: " + configKey);
     }
     
     // 使用WxPayService进行支付操作
@@ -187,12 +189,14 @@ public class PayService {
   
   /**
    * 查询订单示例
+   *
+   * @param configKey 配置标识（即 wx.pay.configs.&lt;configKey&gt; 中的 key）
    */
-  public void queryOrder(String appId, String outTradeNo) throws Exception {
-    WxPayService wxPayService = wxPayMultiServices.getWxPayService(appId);
-    
+  public void queryOrder(String configKey, String outTradeNo) throws Exception {
+    WxPayService wxPayService = wxPayMultiServices.getWxPayService(configKey);
+
     if (wxPayService == null) {
-      throw new IllegalArgumentException("未找到appId对应的微信支付配置: " + appId);
+      throw new IllegalArgumentException("未找到配置标识对应的微信支付配置: " + configKey);
     }
     
     // 查询订单
@@ -260,9 +264,11 @@ public class PayService {
 
 ### 1. 如何选择配置的key？
 
-配置的key（如 `wx.pay.configs.` 后面的部分）可以自由选择：
-- 可以使用appId作为key，便于直接通过appId获取服务
-- 可以使用自定义标识（如config1、config2），更灵活
+配置的key（即 `wx.pay.configs.<configKey>` 中的 `<configKey>` 部分）可以自由选择：
+- 可以使用appId作为key（如 `wx.pay.configs.wx1234567890abcdef`），这样调用 `getWxPayService("wx1234567890abcdef")` 时就像直接用 appId 获取服务
+- 可以使用自定义标识（如 `wx.pay.configs.config1`），调用时使用 `getWxPayService("config1")`
+
+**注意**：`getWxPayService(configKey)` 方法的参数是配置文件中定义的 key，而不是 appId。只有当你使用 appId 作为配置 key 时，才能直接传入 appId。
 
 ### 2. V2和V3配置可以混用吗？
 
