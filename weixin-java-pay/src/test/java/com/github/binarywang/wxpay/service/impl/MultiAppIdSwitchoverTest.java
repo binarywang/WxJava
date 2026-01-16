@@ -220,4 +220,91 @@ public class MultiAppIdSwitchoverTest {
     success = singlePayService.switchover("single_mch_id");
     assertTrue(success);
   }
+
+  /**
+   * 测试空参数或null参数的处理
+   */
+  @Test
+  public void testSwitchoverWithNullOrEmptyMchId() {
+    // 测试 null 参数
+    boolean success = payService.switchover(null);
+    assertFalse(success, "使用null作为mchId应该返回false");
+
+    // 测试空字符串
+    success = payService.switchover("");
+    assertFalse(success, "使用空字符串作为mchId应该返回false");
+
+    // 测试空白字符串
+    success = payService.switchover("   ");
+    assertFalse(success, "使用空白字符串作为mchId应该返回false");
+  }
+
+  /**
+   * 测试 switchoverTo 方法对空参数或null参数的处理
+   */
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithNullMchId() {
+    payService.switchoverTo((String) null);
+  }
+
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithEmptyMchId() {
+    payService.switchoverTo("");
+  }
+
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithBlankMchId() {
+    payService.switchoverTo("   ");
+  }
+
+  /**
+   * 测试商户号存在包含关系的场景
+   * 例如同时配置 "123" 和 "1234"，验证前缀匹配不会错误匹配
+   */
+  @Test
+  public void testSwitchoverWithOverlappingMchIds() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    // 配置两个有包含关系的商户号
+    String mchId1 = "123";
+    String mchId2 = "1234";
+    String appId1 = "wx_app_123";
+    String appId2 = "wx_app_1234";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId(mchId1);
+    config1.setAppId(appId1);
+    config1.setMchKey("key_123");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId(mchId2);
+    config2.setAppId(appId2);
+    config2.setMchKey("key_1234");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(mchId1 + "_" + appId1, config1);
+    configMap.put(mchId2 + "_" + appId2, config2);
+    testService.setMultiConfig(configMap);
+
+    // 切换到 "123"，应该只匹配 "123_wx_app_123"
+    boolean success = testService.switchover(mchId1);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getMchId(), mchId1);
+    assertEquals(testService.getConfig().getAppId(), appId1);
+
+    // 切换到 "1234"，应该只匹配 "1234_wx_app_1234"
+    success = testService.switchover(mchId2);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getMchId(), mchId2);
+    assertEquals(testService.getConfig().getAppId(), appId2);
+
+    // 精确切换验证
+    success = testService.switchover(mchId1, appId1);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getAppId(), appId1);
+
+    success = testService.switchover(mchId2, appId2);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getAppId(), appId2);
+  }
 }

@@ -214,6 +214,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public boolean switchover(String mchId) {
+    // 参数校验
+    if (StringUtils.isBlank(mchId)) {
+      log.error("商户号mchId不能为空");
+      return false;
+    }
+
     // 先尝试精确匹配（针对只有mchId没有appId的配置）
     if (this.configMap.containsKey(mchId)) {
       WxPayConfigHolder.set(mchId);
@@ -246,6 +252,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayService switchoverTo(String mchId) {
+    // 参数校验
+    if (StringUtils.isBlank(mchId)) {
+      throw new WxRuntimeException("商户号mchId不能为空");
+    }
+
     // 先尝试精确匹配（针对只有mchId没有appId的配置）
     if (this.configMap.containsKey(mchId)) {
       WxPayConfigHolder.set(mchId);
