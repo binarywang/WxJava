@@ -475,14 +475,16 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
 
   @Override
   public synchronized void updateMsgAuditSdk(long sdk, int expiresInSeconds) {
-    // 如果有旧的SDK且引用计数为0，先销毁旧的SDK
-    if (this.msgAuditSdk > 0 && this.msgAuditSdk != sdk && this.msgAuditSdkRefCount == 0) {
+    // 如果有旧的SDK且不同于新的SDK，需要销毁旧的SDK
+    if (this.msgAuditSdk > 0 && this.msgAuditSdk != sdk) {
+      // 无论旧SDK是否仍有引用，都需要销毁它以避免资源泄漏
+      // 如果有飞行中的请求使用旧SDK，这些请求可能会失败，但这比资源泄漏更安全
       Finance.DestroySdk(this.msgAuditSdk);
     }
     this.msgAuditSdk = sdk;
     // 预留200秒的时间
     this.msgAuditSdkExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
-    // 重置引用计数
+    // 重置引用计数，因为这是一个全新的SDK
     this.msgAuditSdkRefCount = 0;
   }
 

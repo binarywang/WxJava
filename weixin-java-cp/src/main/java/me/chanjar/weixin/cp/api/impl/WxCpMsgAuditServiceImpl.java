@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -345,7 +346,8 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
         throw new WxErrorException(chatDatas.toJson());
       }
 
-      return chatDatas.getChatData();
+      List<WxCpChatDatas.WxCpChatData> chatDataList = chatDatas.getChatData();
+      return chatDataList != null ? chatDataList : Collections.emptyList();
     } finally {
       // 释放SDK引用计数（原子操作）
       this.releaseSdk(sdk);
@@ -392,21 +394,34 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       throw new WxErrorException(e);
     }
 
+    // 使用AtomicReference捕获Lambda中的异常，以便在执行完后抛出
+    final java.util.concurrent.atomic.AtomicReference<Exception> exceptionHolder = new java.util.concurrent.atomic.AtomicReference<>();
+
     try {
       File targetFile = new File(targetFilePath);
       if (!targetFile.getParentFile().exists()) {
         targetFile.getParentFile().mkdirs();
       }
       this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
+        // 如果之前已经发生异常，不再继续处理
+        if (exceptionHolder.get() != null) {
+          return;
+        }
         try {
           // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
           FileOutputStream outputStream = new FileOutputStream(targetFile, true);
           outputStream.write(i);
           outputStream.close();
         } catch (Exception e) {
-          e.printStackTrace();
+          exceptionHolder.set(e);
         }
       });
+
+      // 检查是否发生异常，如果有则抛出
+      Exception caughtException = exceptionHolder.get();
+      if (caughtException != null) {
+        throw new WxErrorException(caughtException);
+      }
     } finally {
       // 释放SDK引用计数（原子操作）
       this.releaseSdk(sdk);
