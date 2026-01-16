@@ -19,10 +19,10 @@ import static org.testng.Assert.*;
 public class MultiAppIdSwitchoverTest {
 
   private WxPayService payService;
-  private String testMchId = "1234567890";
-  private String testAppId1 = "wx1111111111111111";
-  private String testAppId2 = "wx2222222222222222";
-  private String testAppId3 = "wx3333333333333333";
+  private final String testMchId = "1234567890";
+  private final String testAppId1 = "wx1111111111111111";
+  private final String testAppId2 = "wx2222222222222222";
+  private final String testAppId3 = "wx3333333333333333";
 
   @BeforeMethod
   public void setup() {
