@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -135,6 +136,49 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     log.debug("初始化会话存档SDK成功，sdk={}", sdk);
 
     return sdk;
+  }
+
+  /**
+   * 获取SDK并增加引用计数（原子操作）
+   * 如果SDK未初始化或已过期，会自动初始化
+   *
+   * @return sdk id
+   * @throws WxErrorException 初始化失败时抛出异常
+   */
+  private long acquireSdk() throws WxErrorException {
+    WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
+    
+    // 尝试获取现有的有效SDK并增加引用计数（原子操作）
+    long sdk = configStorage.acquireMsgAuditSdk();
+    
+    if (sdk > 0) {
+      // 成功获取到有效的SDK
+      return sdk;
+    }
+    
+    // SDK未初始化或已过期，需要初始化
+    // initSdk()方法已经是synchronized的，确保只有一个线程初始化
+    sdk = this.initSdk();
+    
+    // 初始化后增加引用计数
+    int refCount = configStorage.incrementMsgAuditSdkRefCount(sdk);
+    if (refCount < 0) {
+      // SDK已经被替换，需要重新获取
+      return acquireSdk();
+    }
+    
+    return sdk;
+  }
+
+  /**
+   * 释放SDK引用计数
+   *
+   * @param sdk sdk id
+   */
+  private void releaseSdk(long sdk) {
+    if (sdk > 0) {
+      cpService.getWxCpConfigStorage().releaseMsgAuditSdk(sdk);
+    }
   }
 
   @Override
@@ -278,6 +322,129 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(CHECK_SINGLE_AGREE);
     String responseContent = this.cpService.post(apiUrl, checkAgreeRequest.toJson());
     return WxCpAgreeInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public List<WxCpChatDatas.WxCpChatData> getChatRecords(long seq, @NonNull long limit, String proxy, String passwd,
+                                                         @NonNull long timeout) throws Exception {
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
+
+    try {
+      long slice = Finance.NewSlice();
+      long ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
+      if (ret != 0) {
+        Finance.FreeSlice(slice);
+        throw new WxErrorException("getchatdata err ret " + ret);
+      }
+
+      // 拉取会话存档
+      String content = Finance.GetContentFromSlice(slice);
+      Finance.FreeSlice(slice);
+      WxCpChatDatas chatDatas = WxCpChatDatas.fromJson(content);
+      if (chatDatas.getErrCode().intValue() != 0) {
+        throw new WxErrorException(chatDatas.toJson());
+      }
+
+      List<WxCpChatDatas.WxCpChatData> chatDataList = chatDatas.getChatData();
+      return chatDataList != null ? chatDataList : Collections.emptyList();
+    } finally {
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
+    }
+  }
+
+  @Override
+  public WxCpChatModel getDecryptChatData(@NonNull WxCpChatDatas.WxCpChatData chatData,
+                                          @NonNull Integer pkcs1) throws Exception {
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
+
+    try {
+      String plainText = this.decryptChatData(sdk, chatData, pkcs1);
+      return WxCpChatModel.fromJson(plainText);
+    } finally {
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
+    }
+  }
+
+  @Override
+  public String getChatRecordPlainText(@NonNull WxCpChatDatas.WxCpChatData chatData,
+                                       @NonNull Integer pkcs1) throws Exception {
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk = this.acquireSdk();
+
+    try {
+      return this.decryptChatData(sdk, chatData, pkcs1);
+    } finally {
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
+    }
+  }
+
+  @Override
+  public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
+                                @NonNull String targetFilePath) throws WxErrorException {
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk;
+    try {
+      sdk = this.acquireSdk();
+    } catch (Exception e) {
+      throw new WxErrorException(e);
+    }
+
+    // 使用AtomicReference捕获Lambda中的异常，以便在执行完后抛出
+    final java.util.concurrent.atomic.AtomicReference<Exception> exceptionHolder = new java.util.concurrent.atomic.AtomicReference<>();
+
+    try {
+      File targetFile = new File(targetFilePath);
+      if (!targetFile.getParentFile().exists()) {
+        targetFile.getParentFile().mkdirs();
+      }
+      this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
+        // 如果之前已经发生异常，不再继续处理
+        if (exceptionHolder.get() != null) {
+          return;
+        }
+        try {
+          // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
+          FileOutputStream outputStream = new FileOutputStream(targetFile, true);
+          outputStream.write(i);
+          outputStream.close();
+        } catch (Exception e) {
+          exceptionHolder.set(e);
+        }
+      });
+
+      // 检查是否发生异常，如果有则抛出
+      Exception caughtException = exceptionHolder.get();
+      if (caughtException != null) {
+        throw new WxErrorException(caughtException);
+      }
+    } finally {
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
+    }
+  }
+
+  @Override
+  public void downloadMediaFile(@NonNull String sdkfileid, String proxy, String passwd, @NonNull long timeout,
+                                @NonNull Consumer<byte[]> action) throws WxErrorException {
+    // 获取SDK并自动增加引用计数（原子操作）
+    long sdk;
+    try {
+      sdk = this.acquireSdk();
+    } catch (Exception e) {
+      throw new WxErrorException(e);
+    }
+
+    try {
+      this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, action);
+    } finally {
+      // 释放SDK引用计数（原子操作）
+      this.releaseSdk(sdk);
+    }
   }
 
 }

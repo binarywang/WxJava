@@ -17,7 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tag.*;
-import static org.mockito.Matchers.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
 
@@ -41,7 +41,7 @@ public class WxCpTpTagServiceImplTest {
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpTagService = new WxCpTpTagServiceImpl(wxCpTpService);

@@ -920,6 +920,15 @@ public interface WxCpApiPathConsts {
      */
     String GET_CUSTOMIZED_AUTH_URL = "/cgi-bin/service/get_customized_auth_url";
 
+    /**
+     * The constant GET_TEMPLATE_LIST.
+     */
+    String GET_TEMPLATE_LIST = "/cgi-bin/service/get_template_list";
+
+    /**
+     * The constant GET_CUSTOMIZED_APP_DETAIL.
+     */
+    String GET_CUSTOMIZED_APP_DETAIL = "/cgi-bin/service/get_customized_app_detail";
 
     /**
      * The constant CONTACT_SEARCH.

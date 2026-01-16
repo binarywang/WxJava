@@ -292,4 +292,47 @@ public interface WxCpConfigStorage {
    * 使会话存档SDK过期
    */
   void expireMsgAuditSdk();
+
+  /**
+   * 增加会话存档SDK的引用计数
+   * 用于支持多线程安全的SDK生命周期管理
+   *
+   * @param sdk sdk id
+   * @return 增加后的引用计数，如果SDK不匹配返回-1
+   */
+  int incrementMsgAuditSdkRefCount(long sdk);
+
+  /**
+   * 减少会话存档SDK的引用计数
+   * 当引用计数降为0时，自动销毁SDK以释放资源
+   *
+   * @param sdk sdk id
+   * @return 减少后的引用计数，如果返回0表示SDK已被销毁，如果SDK不匹配返回-1
+   */
+  int decrementMsgAuditSdkRefCount(long sdk);
+
+  /**
+   * 获取会话存档SDK的引用计数
+   *
+   * @param sdk sdk id
+   * @return 当前引用计数，如果SDK不匹配返回-1
+   */
+  int getMsgAuditSdkRefCount(long sdk);
+
+  /**
+   * 获取当前SDK并增加引用计数（原子操作）
+   * 如果SDK未初始化或已过期，返回0而不增加引用计数
+   * 此方法用于在获取SDK后立即增加引用计数，避免并发问题
+   *
+   * @return 当前有效的SDK id并已增加引用计数，如果SDK无效返回0
+   */
+  long acquireMsgAuditSdk();
+
+  /**
+   * 减少SDK引用计数并在必要时释放（原子操作）
+   * 此方法确保引用计数递减和SDK检查在同一个同步块内完成
+   *
+   * @param sdk sdk id
+   */
+  void releaseMsgAuditSdk(long sdk);
 }

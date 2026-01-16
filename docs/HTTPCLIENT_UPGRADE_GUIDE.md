@@ -43,8 +43,8 @@
 
 ### 对现有项目
 - **向后兼容**：不需要修改任何代码
-- HttpClient 4.x 依然可用，项目同时包含两个版本的依赖
-- 如果希望继续使用 HttpClient 4.x，只需在配置中显式指定
+- 如果希望继续使用 HttpClient 4.x，只需在配置中显式指定，pay 模块会自动包含 httpclient4 依赖（因为某些接口必须使用 httpclient4）
+  其他模块（mp、miniapp、cp、open、channel、qidian）如果需要使用 httpclient4，必须显式在项目中添加 httpclient4 依赖
 
 ## 迁移步骤
 
@@ -94,10 +94,10 @@ WxMpService wxMpService = new WxMpServiceHttpClientImpl();
 A: 不会。项目保持完全向后兼容，HttpClient 4.x 的所有实现都保持不变。
 
 ### Q: 我需要修改代码吗？
-A: 大多数情况下不需要。如果希望继续使用 HttpClient 4.x，只需在配置中指定 `http-client-type=HttpClient` 即可。
+A: 大多数情况下不需要。如果希望继续使用 HttpClient 4.x，只需在配置中指定 `http-client-type=HttpClient` ，并引入 HttpClient 4.x 依赖即可。
 
 ### Q: 我可以在同一个项目中同时使用两个版本吗？
-A: 可以。不同的模块可以配置使用不同的 HTTP 客户端。例如，MP 模块使用 HttpClient 5.x，MiniApp 模块默认使用 HttpClient 4.x，但也可以按需配置为 HttpClient 5.x。
+A: 可以。不同的模块可以配置使用不同的 HTTP 客户端。例如，MP 模块使用 HttpClient 5.x，pay 模块部分接口仍使用 HttpClient 4.x，但也可以按需配置为 HttpClient 5.x。
 
 ### Q: 如何排除不需要的依赖？
 A: 如果只想使用一个版本，可以在 `pom.xml` 中排除另一个：
@@ -196,4 +196,4 @@ weixin-java-common/
 - ✅ **推荐使用 HttpClient 5.x**：性能更好，功能更强
 - ✅ **向后兼容**：可以继续使用 HttpClient 4.x
 - ✅ **灵活配置**：支持多种 HTTP 客户端，按需选择
-- ✅ **平滑迁移**：无需修改代码，仅需配置即可
+- ✅ **平滑迁移**：无需修改代码，仅需配置，若不使用 HttpClient 5.x ，引入其他依赖即可

@@ -16,8 +16,8 @@ import org.testng.annotations.Test;
 import java.util.*;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.License.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -41,7 +41,7 @@ public class WxCpTpLicenseServiceImplTest {
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpLicenseService = new WxCpTpLicenseServiceImpl(wxCpTpService);
