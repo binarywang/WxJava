@@ -86,7 +86,9 @@ public interface WxPayService {
    * @param mchId 商户标识
    * @return 切换是否成功，如果找不到匹配的配置则返回false
    */
-  boolean switchover(String mchId);
+  default boolean switchover(String mchId) {
+    return false;
+  }
 
   /**
    * 进行相应的商户切换.
@@ -104,9 +106,11 @@ public interface WxPayService {
    *
    * @param mchId 商户标识
    * @return 切换成功，则返回当前对象，方便链式调用
-   * @throws WxRuntimeException 如果找不到匹配的配置
+   * @throws me.chanjar.weixin.common.error.WxRuntimeException 如果找不到匹配的配置
    */
-  WxPayService switchoverTo(String mchId);
+  default WxPayService switchoverTo(String mchId) {
+    throw new me.chanjar.weixin.common.error.WxRuntimeException("子类需要实现此方法");
+  }
 
   /**
    * 发送post请求，得到响应字节数组.
