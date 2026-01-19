@@ -155,6 +155,45 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public WxPayConfig getConfig(String mchId, String appId) {
+    if (StringUtils.isBlank(mchId)) {
+      log.warn("商户号mchId不能为空");
+      return null;
+    }
+    if (StringUtils.isBlank(appId)) {
+      log.warn("应用ID appId不能为空");
+      return null;
+    }
+    String configKey = this.getConfigKey(mchId, appId);
+    return this.configMap.get(configKey);
+  }
+
+  @Override
+  public WxPayConfig getConfig(String mchId) {
+    if (StringUtils.isBlank(mchId)) {
+      log.warn("商户号mchId不能为空");
+      return null;
+    }
+
+    // 先尝试精确匹配（针对只有mchId没有appId的配置）
+    if (this.configMap.containsKey(mchId)) {
+      return this.configMap.get(mchId);
+    }
+
+    // 尝试前缀匹配（查找以 mchId_ 开头的配置）
+    String prefix = mchId + "_";
+    for (Map.Entry<String, WxPayConfig> entry : this.configMap.entrySet()) {
+      if (entry.getKey().startsWith(prefix)) {
+        log.debug("根据mchId=【{}】找到配置key=【{}】", mchId, entry.getKey());
+        return entry.getValue();
+      }
+    }
+
+    log.warn("无法找到对应mchId=【{}】的商户号配置信息", mchId);
+    return null;
+  }
+
+  @Override
   public void setConfig(WxPayConfig config) {
     final String defaultKey = this.getConfigKey(config.getMchId(), config.getAppId());
     this.setMultiConfig(ImmutableMap.of(defaultKey, config), defaultKey);

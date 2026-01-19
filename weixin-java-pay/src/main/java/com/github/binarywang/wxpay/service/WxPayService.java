@@ -785,10 +785,32 @@ public interface WxPayService {
 
   /**
    * 获取配置.
+   * 在多商户配置场景下，会根据 WxPayConfigHolder 中的值获取对应的配置.
    *
    * @return the config
    */
   WxPayConfig getConfig();
+
+  /**
+   * 根据商户号和 appId 直接获取配置.
+   * 此方法不依赖 ThreadLocal，可以在任何上下文中使用，适用于多商户管理场景.
+   *
+   * @param mchId 商户号
+   * @param appId 微信应用 id
+   * @return 对应的配置对象，如果不存在则返回 null
+   */
+  WxPayConfig getConfig(String mchId, String appId);
+
+  /**
+   * 根据商户号直接获取配置.
+   * 此方法不依赖 ThreadLocal，可以在任何上下文中使用.
+   * 适用于一个商户号对应多个 appId 的场景，会返回该商户号的任意一个配置.
+   * 注意：当存在多个匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   *
+   * @param mchId 商户号
+   * @return 对应的配置对象，如果不存在则返回 null
+   */
+  WxPayConfig getConfig(String mchId);
 
   /**
    * 设置配置对象.

@@ -53,6 +53,113 @@ public class MultiAppIdSwitchoverTest {
   }
 
   /**
+   * 测试直接通过 mchId 和 appId 获取配置（新功能）
+   */
+  @Test
+  public void testGetConfigWithMchIdAndAppId() {
+    // 测试获取第一个配置
+    WxPayConfig config1 = payService.getConfig(testMchId, testAppId1);
+    assertNotNull(config1, "应该能够获取到配置");
+    assertEquals(config1.getMchId(), testMchId);
+    assertEquals(config1.getAppId(), testAppId1);
+    assertEquals(config1.getMchKey(), "test_key_1");
+
+    // 测试获取第二个配置
+    WxPayConfig config2 = payService.getConfig(testMchId, testAppId2);
+    assertNotNull(config2);
+    assertEquals(config2.getAppId(), testAppId2);
+    assertEquals(config2.getMchKey(), "test_key_2");
+
+    // 测试获取第三个配置
+    WxPayConfig config3 = payService.getConfig(testMchId, testAppId3);
+    assertNotNull(config3);
+    assertEquals(config3.getAppId(), testAppId3);
+    assertEquals(config3.getMchKey(), "test_key_3");
+  }
+
+  /**
+   * 测试直接通过 mchId 获取配置（新功能）
+   */
+  @Test
+  public void testGetConfigWithMchIdOnly() {
+    WxPayConfig config = payService.getConfig(testMchId);
+    assertNotNull(config, "应该能够通过mchId获取配置");
+    assertEquals(config.getMchId(), testMchId);
+
+    // appId应该是三个中的一个
+    String currentAppId = config.getAppId();
+    assertTrue(
+      testAppId1.equals(currentAppId) || testAppId2.equals(currentAppId) || testAppId3.equals(currentAppId),
+      "获取的配置的appId应该是配置的appId之一"
+    );
+  }
+
+  /**
+   * 测试 getConfig 方法不依赖 ThreadLocal
+   * 在不切换配置的情况下也能直接获取
+   */
+  @Test
+  public void testGetConfigWithoutSwitchover() {
+    // 不进行任何switchover操作，直接通过参数获取配置
+    WxPayConfig config1 = payService.getConfig(testMchId, testAppId1);
+    WxPayConfig config2 = payService.getConfig(testMchId, testAppId2);
+    WxPayConfig config3 = payService.getConfig(testMchId, testAppId3);
+
+    // 验证可以同时获取到所有配置，不受 ThreadLocal 影响
+    assertNotNull(config1);
+    assertNotNull(config2);
+    assertNotNull(config3);
+
+    assertEquals(config1.getAppId(), testAppId1);
+    assertEquals(config2.getAppId(), testAppId2);
+    assertEquals(config3.getAppId(), testAppId3);
+  }
+
+  /**
+   * 测试 getConfig 方法处理不存在的配置
+   */
+  @Test
+  public void testGetConfigWithNonexistentConfig() {
+    // 测试不存在的商户号和appId组合
+    WxPayConfig config = payService.getConfig("nonexistent_mch_id", "nonexistent_app_id");
+    assertNull(config, "获取不存在的配置应该返回null");
+
+    // 测试存在商户号但不存在的appId
+    config = payService.getConfig(testMchId, "wx9999999999999999");
+    assertNull(config, "获取不存在的appId配置应该返回null");
+  }
+
+  /**
+   * 测试 getConfig 方法处理空参数或null参数
+   */
+  @Test
+  public void testGetConfigWithNullOrEmptyParameters() {
+    // 测试 null 商户号
+    WxPayConfig config = payService.getConfig(null, testAppId1);
+    assertNull(config, "商户号为null时应该返回null");
+
+    // 测试空商户号
+    config = payService.getConfig("", testAppId1);
+    assertNull(config, "商户号为空字符串时应该返回null");
+
+    // 测试 null appId
+    config = payService.getConfig(testMchId, null);
+    assertNull(config, "appId为null时应该返回null");
+
+    // 测试空 appId
+    config = payService.getConfig(testMchId, "");
+    assertNull(config, "appId为空字符串时应该返回null");
+
+    // 测试仅mchId方法的null参数
+    config = payService.getConfig((String) null);
+    assertNull(config, "商户号为null时应该返回null");
+
+    // 测试仅mchId方法的空字符串
+    config = payService.getConfig("");
+    assertNull(config, "商户号为空字符串时应该返回null");
+  }
+
+  /**
    * 测试使用 mchId + appId 精确切换（原有功能，确保向后兼容）
    */
   @Test
