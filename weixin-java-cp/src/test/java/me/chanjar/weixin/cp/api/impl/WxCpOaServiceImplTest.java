@@ -444,6 +444,80 @@ public class WxCpOaServiceImplTest {
   }
 
   /**
+   * Test sum_money field deserialization in approval detail.
+   * 测试审批详情中总费用金额字段的反序列化
+   */
+  @Test
+  public void testApprovalDetailSumMoney() {
+    // 测试包含总费用金额的审批详情JSON
+    String jsonWithSumMoney = "{\n" +
+      "  \"errcode\": 0,\n" +
+      "  \"errmsg\": \"ok\",\n" +
+      "  \"info\": {\n" +
+      "    \"sp_no\": \"202601140001\",\n" +
+      "    \"sp_name\": \"报销申请\",\n" +
+      "    \"sp_status\": 2,\n" +
+      "    \"template_id\": \"test_template_id\",\n" +
+      "    \"apply_time\": 1610000000,\n" +
+      "    \"applyer\": {\n" +
+      "      \"userid\": \"test_user\",\n" +
+      "      \"partyid\": \"1\"\n" +
+      "    },\n" +
+      "    \"sp_record\": [],\n" +
+      "    \"notifyer\": [],\n" +
+      "    \"apply_data\": {\n" +
+      "      \"contents\": []\n" +
+      "    },\n" +
+      "    \"comments\": [],\n" +
+      "    \"sum_money\": 100000\n" +
+      "  }\n" +
+      "}";
+
+    WxCpApprovalDetailResult result = WxCpGsonBuilder.create().fromJson(jsonWithSumMoney, WxCpApprovalDetailResult.class);
+    assertThat(result).isNotNull();
+    assertThat(result.getErrCode()).isEqualTo(0);
+    assertThat(result.getInfo()).isNotNull();
+    assertThat(result.getInfo().getSpNo()).isEqualTo("202601140001");
+    assertThat(result.getInfo().getSpName()).isEqualTo("报销申请");
+    assertThat(result.getInfo().getSumMoney()).isNotNull();
+    assertThat(result.getInfo().getSumMoney()).isEqualTo(100000L);
+
+    System.out.println("成功解析总费用金额字段 sum_money: " + result.getInfo().getSumMoney());
+
+    // 测试不包含 sum_money 字段的情况（向后兼容）
+    String jsonWithoutSumMoney = "{\n" +
+      "  \"errcode\": 0,\n" +
+      "  \"errmsg\": \"ok\",\n" +
+      "  \"info\": {\n" +
+      "    \"sp_no\": \"202601140002\",\n" +
+      "    \"sp_name\": \"请假申请\",\n" +
+      "    \"sp_status\": 1,\n" +
+      "    \"template_id\": \"test_template_id\",\n" +
+      "    \"apply_time\": 1610000000,\n" +
+      "    \"applyer\": {\n" +
+      "      \"userid\": \"test_user\",\n" +
+      "      \"partyid\": \"1\"\n" +
+      "    },\n" +
+      "    \"sp_record\": [],\n" +
+      "    \"notifyer\": [],\n" +
+      "    \"apply_data\": {\n" +
+      "      \"contents\": []\n" +
+      "    },\n" +
+      "    \"comments\": []\n" +
+      "  }\n" +
+      "}";
+
+    WxCpApprovalDetailResult resultWithoutMoney = WxCpGsonBuilder.create().fromJson(jsonWithoutSumMoney, WxCpApprovalDetailResult.class);
+    assertThat(resultWithoutMoney).isNotNull();
+    assertThat(resultWithoutMoney.getInfo()).isNotNull();
+    assertThat(resultWithoutMoney.getInfo().getSpNo()).isEqualTo("202601140002");
+    assertThat(resultWithoutMoney.getInfo().getSumMoney()).isNull();
+
+    System.out.println("成功处理不包含 sum_money 字段的情况（向后兼容）");
+    System.out.println("完整测试通过！");
+  }
+
+  /**
    * Test get template detail.
    *
    * @throws WxErrorException the wx error exception
