@@ -75,6 +75,12 @@ public class CommonUploadParam implements Serializable {
    * @return 当前对象，支持链式调用
    */
   public CommonUploadParam addFormField(String fieldName, String fieldValue) {
+    if (fieldName == null || fieldName.trim().isEmpty()) {
+      throw new IllegalArgumentException("表单字段名不能为空");
+    }
+    if (fieldValue == null) {
+      throw new IllegalArgumentException("表单字段值不能为null");
+    }
     if (this.formFields == null) {
       this.formFields = new HashMap<>();
     }

@@ -95,4 +95,25 @@ public class CommonUploadParamTest {
     Assert.assertTrue(str.contains("name:media"));
     Assert.assertTrue(str.contains("formFields:"));
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testAddFormFieldWithNullFieldName() {
+    File file = new File("test.txt");
+    CommonUploadParam param = CommonUploadParam.fromFile("media", file);
+    param.addFormField(null, "value");
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testAddFormFieldWithEmptyFieldName() {
+    File file = new File("test.txt");
+    CommonUploadParam param = CommonUploadParam.fromFile("media", file);
+    param.addFormField("", "value");
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testAddFormFieldWithNullFieldValue() {
+    File file = new File("test.txt");
+    CommonUploadParam param = CommonUploadParam.fromFile("media", file);
+    param.addFormField("fieldName", null);
+  }
 }
