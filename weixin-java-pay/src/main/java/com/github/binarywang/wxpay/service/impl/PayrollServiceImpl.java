@@ -206,18 +206,13 @@ public class PayrollServiceImpl implements PayrollService {
     @Override
     public PayrollTransferBatchesResult payrollCardTransferBatches(PayrollTransferBatchesRequest request) throws WxPayException {
         String url = String.format("%s/v3/payroll-card/transfer-batches", payService.getPayBaseUrl());
-        try {
-            // 对敏感信息进行加密
-            if (request.getTransferDetailList() != null && !request.getTransferDetailList().isEmpty()) {
-                for (PayrollTransferBatchesRequest.TransferDetail detail : request.getTransferDetailList()) {
-                    if (StringUtils.isNotEmpty(detail.getUserName())) {
-                        String userName = RsaCryptoUtil.encryptOAEP(detail.getUserName(), payService.getConfig().getVerifier().getValidCertificate());
-                        detail.setUserName(userName);
-                    }
+        // 对敏感信息进行加密
+        if (request.getTransferDetailList() != null && !request.getTransferDetailList().isEmpty()) {
+            for (PayrollTransferBatchesRequest.TransferDetail detail : request.getTransferDetailList()) {
+                if (StringUtils.isNotEmpty(detail.getUserName())) {
+                    RsaCryptoUtil.encryptFields(detail, payService.getConfig().getVerifier().getValidCertificate());
                 }
             }
-        } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException("加密异常!", e);
         }
         String response = payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
         return GSON.fromJson(response, PayrollTransferBatchesResult.class);
