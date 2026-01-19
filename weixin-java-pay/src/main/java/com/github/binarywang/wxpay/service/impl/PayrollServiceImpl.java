@@ -193,4 +193,34 @@ public class PayrollServiceImpl implements PayrollService {
         return GSON.fromJson(response, WxPayApplyBillV3Result.class);
     }
 
+    /**
+     * 微工卡批量转账API
+     * 适用对象：服务商
+     * 请求URL：https://api.mch.weixin.qq.com/v3/payroll-card/transfer-batches
+     * 请求方式：POST
+     *
+     * @param request 请求参数
+     * @return 返回数据
+     * @throws WxPayException the wx pay exception
+     */
+    @Override
+    public PayrollTransferBatchesResult payrollCardTransferBatches(PayrollTransferBatchesRequest request) throws WxPayException {
+        String url = String.format("%s/v3/payroll-card/transfer-batches", payService.getPayBaseUrl());
+        try {
+            // 对敏感信息进行加密
+            if (request.getTransferDetailList() != null && !request.getTransferDetailList().isEmpty()) {
+                for (PayrollTransferBatchesRequest.TransferDetail detail : request.getTransferDetailList()) {
+                    if (StringUtils.isNotEmpty(detail.getUserName())) {
+                        String userName = RsaCryptoUtil.encryptOAEP(detail.getUserName(), payService.getConfig().getVerifier().getValidCertificate());
+                        detail.setUserName(userName);
+                    }
+                }
+            }
+        } catch (IllegalBlockSizeException e) {
+            throw new RuntimeException("敏感信息加密异常!", e);
+        }
+        String response = payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
+        return GSON.fromJson(response, PayrollTransferBatchesResult.class);
+    }
+
 }

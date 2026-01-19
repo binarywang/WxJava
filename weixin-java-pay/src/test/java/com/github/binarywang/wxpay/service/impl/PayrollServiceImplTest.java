@@ -125,4 +125,29 @@ public class PayrollServiceImplTest {
     log.info(result.toString());
   }
 
+  @Test
+  public void payrollCardTransferBatches() throws WxPayException {
+    PayrollTransferBatchesRequest request = PayrollTransferBatchesRequest.builder()
+      .appid("wxa1111111")
+      .subMchid("1111111")
+      .subAppid("wxa1111111")
+      .outBatchNo("plfk2020042013" + System.currentTimeMillis())
+      .batchName("2019年1月深圳分部报销单")
+      .batchRemark("2019年1月深圳分部报销单")
+      .totalAmount(200000L)
+      .totalNum(1)
+      .transferDetailList(java.util.Collections.singletonList(
+        PayrollTransferBatchesRequest.TransferDetail.builder()
+          .outDetailNo("x23zy545Bd5436" + System.currentTimeMillis())
+          .transferAmount(200000L)
+          .transferRemark("2020年4月报销")
+          .openid("o-MYE42l80oelYMDE34nYD456Xoy")
+          .userName("张三")
+          .build()
+      ))
+      .build();
+    PayrollTransferBatchesResult result = wxPayService.getPayrollService().payrollCardTransferBatches(request);
+    log.info(result.toString());
+  }
+
 }
