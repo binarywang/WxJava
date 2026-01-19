@@ -112,6 +112,7 @@ public class PayrollServiceImplTest {
     request.setIdCardNumber("7FzH5XksJG3a8HLLsaaUV6K54y1OnPMY5");
     request.setProjectName("某项目");
     request.setUserName("LP7bT4hQXUsOZCEvK2YrSiqFsnP0oRMfeoLN0vBg");
+    request.setAuthenticateType("NORMAL_AUTHENTICATE");
     PreOrderWithAuthResult preOrderWithAuthResult = wxPayService.getPayrollService().payrollCardPreOrderWithAuth(request);
     log.info(preOrderWithAuthResult.toString());
 
