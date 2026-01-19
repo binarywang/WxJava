@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
+import java.util.Collections;
+
 /**
  * 微工卡（服务商）
  *
@@ -136,7 +138,7 @@ public class PayrollServiceImplTest {
       .batchRemark("2019年1月深圳分部报销单")
       .totalAmount(200000L)
       .totalNum(1)
-      .transferDetailList(java.util.Collections.singletonList(
+      .transferDetailList(Collections.singletonList(
         PayrollTransferBatchesRequest.TransferDetail.builder()
           .outDetailNo("x23zy545Bd5436" + System.currentTimeMillis())
           .transferAmount(200000L)

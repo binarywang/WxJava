@@ -217,7 +217,7 @@ public class PayrollServiceImpl implements PayrollService {
                 }
             }
         } catch (IllegalBlockSizeException e) {
-            throw new RuntimeException("Sensitive information encryption failed!", e);
+            throw new RuntimeException("加密异常!", e);
         }
         String response = payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
         return GSON.fromJson(response, PayrollTransferBatchesResult.class);
