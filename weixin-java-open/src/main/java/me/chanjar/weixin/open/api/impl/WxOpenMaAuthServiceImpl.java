@@ -38,7 +38,7 @@ public class WxOpenMaAuthServiceImpl implements WxOpenMaAuthService {
 
   @Override
   public MaAuthUploadResult upload(CommonUploadData data) throws WxErrorException {
-    String response = wxMaService.upload(OPEN_MA_AUTH_UPLOAD, new CommonUploadParam("media", data));
+    String response = wxMaService.upload(OPEN_MA_AUTH_UPLOAD, new CommonUploadParam("media", data, null));
     return WxMaGsonBuilder.create().fromJson(response, MaAuthUploadResult.class);
   }
 

@@ -57,7 +57,7 @@ public class WxOpenUploadIcpMediaParam implements Serializable {
         CommonUploadMultiParam.NormalParam.builder().name("certificate_type").value(String.valueOf(certificateType)).build(),
         CommonUploadMultiParam.NormalParam.builder().name("icp_order_field").value(icpOrderField).build()
       ))
-      .uploadParam(new CommonUploadParam("media", media))
+      .uploadParam(new CommonUploadParam("media", media, null))
       .build();
   }
 

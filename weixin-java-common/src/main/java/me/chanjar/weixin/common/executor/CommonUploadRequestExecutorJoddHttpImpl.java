@@ -39,6 +39,14 @@ public class CommonUploadRequestExecutorJoddHttpImpl extends CommonUploadRequest
     }
     request.withConnectionProvider(requestHttp.getRequestHttpClient());
     request.form(param.getName(), new CommonUploadParamToUploadableAdapter(param.getData()));
+
+    // 添加额外的表单字段
+    if (param.getFormFields() != null && !param.getFormFields().isEmpty()) {
+      for (java.util.Map.Entry<String, String> entry : param.getFormFields().entrySet()) {
+        request.form(entry.getKey(), entry.getValue());
+      }
+    }
+
     HttpResponse response = request.send();
     response.charset(StandardCharsets.UTF_8.name());
     String responseContent = response.bodyText();

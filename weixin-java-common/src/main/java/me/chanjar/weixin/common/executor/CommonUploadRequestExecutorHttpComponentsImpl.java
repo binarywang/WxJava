@@ -41,11 +41,19 @@ public class CommonUploadRequestExecutorHttpComponentsImpl extends CommonUploadR
     if (param != null) {
       CommonUploadData data = param.getData();
       InnerStreamBody part = new InnerStreamBody(data.getInputStream(), ContentType.DEFAULT_BINARY, data.getFileName(), data.getLength());
-      HttpEntity entity = MultipartEntityBuilder
+      MultipartEntityBuilder entityBuilder = MultipartEntityBuilder
         .create()
         .addPart(param.getName(), part)
-        .setMode(HttpMultipartMode.EXTENDED)
-        .build();
+        .setMode(HttpMultipartMode.EXTENDED);
+
+      // 添加额外的表单字段
+      if (param.getFormFields() != null && !param.getFormFields().isEmpty()) {
+        for (java.util.Map.Entry<String, String> entry : param.getFormFields().entrySet()) {
+          entityBuilder.addTextBody(entry.getKey(), entry.getValue(), ContentType.TEXT_PLAIN.withCharset("UTF-8"));
+        }
+      }
+
+      HttpEntity entity = entityBuilder.build();
       httpPost.setEntity(entity);
     }
     String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);

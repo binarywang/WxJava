@@ -31,10 +31,18 @@ public class CommonUploadRequestExecutorOkHttpImpl extends CommonUploadRequestEx
   @Override
   public String execute(String uri, CommonUploadParam param, WxType wxType) throws WxErrorException, IOException {
     RequestBody requestBody = new CommonUpdateDataToRequestBodyAdapter(param.getData());
-    RequestBody body = new MultipartBody.Builder()
+    MultipartBody.Builder bodyBuilder = new MultipartBody.Builder()
       .setType(MediaType.get("multipart/form-data"))
-      .addFormDataPart(param.getName(), param.getData().getFileName(), requestBody)
-      .build();
+      .addFormDataPart(param.getName(), param.getData().getFileName(), requestBody);
+
+    // 添加额外的表单字段
+    if (param.getFormFields() != null && !param.getFormFields().isEmpty()) {
+      for (java.util.Map.Entry<String, String> entry : param.getFormFields().entrySet()) {
+        bodyBuilder.addFormDataPart(entry.getKey(), entry.getValue());
+      }
+    }
+
+    RequestBody body = bodyBuilder.build();
     Request request = new Request.Builder().url(uri).post(body).build();
 
     try (Response response = requestHttp.getRequestHttpClient().newCall(request).execute()) {
