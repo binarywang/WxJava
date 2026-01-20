@@ -209,9 +209,7 @@ public class PayrollServiceImpl implements PayrollService {
         // 对敏感信息进行加密
         if (request.getTransferDetailList() != null && !request.getTransferDetailList().isEmpty()) {
             for (PayrollTransferBatchesRequest.TransferDetail detail : request.getTransferDetailList()) {
-                if (StringUtils.isNotEmpty(detail.getUserName())) {
-                    RsaCryptoUtil.encryptFields(detail, payService.getConfig().getVerifier().getValidCertificate());
-                }
+                RsaCryptoUtil.encryptFields(detail, payService.getConfig().getVerifier().getValidCertificate());
             }
         }
         String response = payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
