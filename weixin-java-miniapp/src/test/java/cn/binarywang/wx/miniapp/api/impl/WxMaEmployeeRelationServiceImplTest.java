@@ -53,7 +53,7 @@ public class WxMaEmployeeRelationServiceImplTest {
   }
 
   @Test
-  public void testUnbindEmployeeWithCorrectUrl() throws WxErrorException {
+  public void testUnbindEmployeeWithCorrectUrl() {
     // 验证URL是否包含正确的路径
     String expectedUrl = "https://api.weixin.qq.com/wxa/laboruse/unbinduserb2cauthinfo";
     Assert.assertEquals(WxMaApiUrlConstants.Employee.UNBIND_EMPLOYEE_URL, expectedUrl,
