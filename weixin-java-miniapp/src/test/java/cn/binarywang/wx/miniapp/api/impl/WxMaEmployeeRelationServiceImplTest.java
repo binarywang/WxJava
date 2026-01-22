@@ -83,7 +83,7 @@ public class WxMaEmployeeRelationServiceImplTest {
   }
 
   @Test
-  public void testSendEmployeeMsgWithCorrectUrl() throws WxErrorException {
+  public void testSendEmployeeMsgWithCorrectUrl() {
     // 验证URL是否包含正确的路径
     String expectedUrl = "https://api.weixin.qq.com/wxa/laboruse/sendemployeerelationmsg";
     Assert.assertEquals(WxMaApiUrlConstants.Employee.SEND_EMPLOYEE_MSG_URL, expectedUrl,
