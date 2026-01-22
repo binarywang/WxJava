@@ -1006,11 +1006,16 @@ public class WxMaApiUrlConstants {
     String UPLOAD_RESPONSE_IMAGE_URL = "https://api.weixin.qq.com/cgi-bin/miniapp/complaint/upload";
   }
 
-  /** 用工关系 */
+  /**
+   * 小程序用工关系接口
+   * <pre>
+   * 文档地址: https://developers.weixin.qq.com/miniprogram/dev/server/API/laboruse/
+   * </pre>
+   */
   public interface Employee {
     /** 解绑用工关系 */
-    String UNBIND_EMPLOYEE_URL = "https://api.weixin.qq.com/wxa/unbinduserb2cauthinfo";
+    String UNBIND_EMPLOYEE_URL = "https://api.weixin.qq.com/wxa/business/unbinduserb2cauthinfo";
     /** 推送用工消息 */
-    String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/wxa/sendemployeerelationmsg";
+    String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/employeerelationmsg/send";
   }
 }

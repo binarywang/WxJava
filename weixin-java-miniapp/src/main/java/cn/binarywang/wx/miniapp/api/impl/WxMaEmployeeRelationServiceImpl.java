@@ -15,6 +15,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Employee.UNB
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * created on 2025-12-19
+ * update on 2026-01-22 15:06:33
  */
 @RequiredArgsConstructor
 public class WxMaEmployeeRelationServiceImpl implements WxMaEmployeeRelationService {

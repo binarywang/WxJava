@@ -625,7 +625,8 @@ public interface WxMaService extends WxService {
   /**
    * 获取用工关系服务对象。
    * <br>
-   * 文档：https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/laboruse/intro.html
+   * 服务端api文档：https://developers.weixin.qq.com/miniprogram/dev/server/API/laboruse/
+   * 整体流程文档: https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/laboruse/intro.html
    *
    * @return                 用工关系服务对象WxMaEmployeeRelationService
    */
