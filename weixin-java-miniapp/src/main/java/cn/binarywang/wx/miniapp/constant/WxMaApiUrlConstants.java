@@ -1009,8 +1009,8 @@ public class WxMaApiUrlConstants {
   /** 用工关系 */
   public interface Employee {
     /** 解绑用工关系 */
-    String UNBIND_EMPLOYEE_URL = "https://api.weixin.qq.com/wxa/unbinduserb2cauthinfo";
+    String UNBIND_EMPLOYEE_URL = "https://api.weixin.qq.com/wxa/laboruse/unbinduserb2cauthinfo";
     /** 推送用工消息 */
-    String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/wxa/sendemployeerelationmsg";
+    String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/wxa/laboruse/sendemployeerelationmsg";
   }
 }
