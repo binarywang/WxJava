@@ -1,8 +1,6 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
-import cn.binarywang.wx.miniapp.bean.device.WxMaDeviceSubscribeMessageRequest;
-import cn.binarywang.wx.miniapp.bean.device.WxMaDeviceTicketRequest;
 import cn.binarywang.wx.miniapp.bean.employee.WxMaSendEmployeeMsgRequest;
 import cn.binarywang.wx.miniapp.bean.employee.WxMaUnbindEmployeeRequest;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
