@@ -174,7 +174,6 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
   public void testGetMsgAuditAccessToken_WithoutSecret() {
     config.setMsgAuditSecret(null);
     BaseWxCpServiceImpl service = createTestService(config);
-    service.setWxCpConfigStorage(config);
 
     // 验证当 secret 为 null 时抛出异常
     assertThatThrownBy(() -> service.getMsgAuditAccessToken(true))
@@ -189,7 +188,6 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
   public void testGetMsgAuditAccessToken_WithEmptySecret() {
     config.setMsgAuditSecret("  ");
     BaseWxCpServiceImpl service = createTestService(config);
-    service.setWxCpConfigStorage(config);
 
     // 验证当 secret 为空字符串时抛出异常
     assertThatThrownBy(() -> service.getMsgAuditAccessToken(true))
