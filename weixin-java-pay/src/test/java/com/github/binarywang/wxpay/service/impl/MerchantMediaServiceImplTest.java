@@ -68,9 +68,7 @@ public class MerchantMediaServiceImplTest {
 
     log.info("视频上传成功，mediaId：[{}]", mediaId);
 
-    File file2 = new File(filePath);
-
-    VideoUploadResult videoUploadResult2 = merchantMediaService.videoUploadV3(file2);
+    VideoUploadResult videoUploadResult2 = merchantMediaService.videoUploadV3(file);
     String mediaId2 = videoUploadResult2.getMediaId();
 
     log.info("视频上传成功2，mediaId2：[{}]", mediaId2);
