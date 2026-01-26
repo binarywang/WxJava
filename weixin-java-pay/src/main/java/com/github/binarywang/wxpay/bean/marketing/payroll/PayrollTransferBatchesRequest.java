@@ -144,6 +144,61 @@ public class PayrollTransferBatchesRequest implements Serializable {
 
   /**
    * <pre>
+   * 字段名：用工类型
+   * 变量名：employment_type
+   * 是否必填：是
+   * 类型：string[1, 32]
+   * 描述：
+   *  微工卡服务仅支持用于与商户有用工关系的用户，需明确用工类型；参考值：
+   *  LONG_TERM_EMPLOYMENT：长期用工
+   *  SHORT_TERM_EMPLOYMENT：短期用工
+   *  COOPERATION_EMPLOYMENT：合作关系
+   *  示例值：LONG_TERM_EMPLOYMENT
+   * </pre>
+   */
+  @SerializedName(value = "employment_type")
+  private String employmentType;
+
+  /**
+   * <pre>
+   * 字段名：用工场景
+   * 变量名：employment_scene
+   * 是否必填：否
+   * 类型：string[1, 32]
+   * 描述：
+   *  用工场景，参考值：
+   *  LOGISTICS：物流
+   *  MANUFACTURING：制造业
+   *  HOTEL：酒店
+   *  CATERING：餐饮业
+   *  EVENT：活动促销
+   *  RETAIL：零售
+   *  OTHERS：其他
+   *  示例值：LOGISTICS
+   * </pre>
+   */
+  @SerializedName(value = "employment_scene")
+  private String employmentScene;
+
+  /**
+   * <pre>
+   * 字段名：特约商户授权类型
+   * 变量名：authorization_type
+   * 是否必填：是
+   * 类型：string[1, 32]
+   * 描述：
+   *  特约商户授权类型：
+   *  INFORMATION_AUTHORIZATION_TYPE：特约商户信息授权类型
+   *  FUND_AUTHORIZATION_TYPE：特约商户资金授权类型
+   *  INFORMATION_AND_FUND_AUTHORIZATION_TYPE：特约商户信息和资金授权类型
+   *  示例值：INFORMATION_AUTHORIZATION_TYPE
+   * </pre>
+   */
+  @SerializedName(value = "authorization_type")
+  private String authorizationType;
+
+  /**
+   * <pre>
    * 字段名：转账明细列表
    * 变量名：transfer_detail_list
    * 是否必填：是
@@ -235,5 +290,20 @@ public class PayrollTransferBatchesRequest implements Serializable {
     @SpecEncrypt
     @SerializedName(value = "user_name")
     private String userName;
+
+    /**
+     * <pre>
+     * 字段名：收款用户身份证
+     * 变量名：user_id_card
+     * 是否必填：否
+     * 类型：string[1, 1024]
+     * 描述：
+     *  收款用户身份证号。该字段需进行加密处理，加密方法详见敏感信息加密说明
+     *  示例值：8609cb22e1774a50a930e414cc71eca06121bcd266335cda230d24a7886a8d9f
+     * </pre>
+     */
+    @SpecEncrypt
+    @SerializedName(value = "user_id_card")
+    private String userIdCard;
   }
 }

@@ -139,6 +139,9 @@ public class PayrollServiceImplTest {
       .batchRemark("2019年1月深圳分部报销单")
       .totalAmount(200000L)
       .totalNum(1)
+      .employmentType("LONG_TERM_EMPLOYMENT")
+      .employmentScene("LOGISTICS")
+      .authorizationType("INFORMATION_AUTHORIZATION_TYPE")
       .transferDetailList(Collections.singletonList(
         PayrollTransferBatchesRequest.TransferDetail.builder()
           .outDetailNo("x23zy545Bd5436" + System.currentTimeMillis())
@@ -146,6 +149,7 @@ public class PayrollServiceImplTest {
           .transferRemark("2020年4月报销")
           .openid("o-MYE42l80oelYMDE34nYD456Xoy")
           .userName("张三")
+          .userIdCard("8609cb22e1774a50a930e414cc71eca06121bcd266335cda230d24a7886a8d9f")
           .build()
       ))
       .build();
