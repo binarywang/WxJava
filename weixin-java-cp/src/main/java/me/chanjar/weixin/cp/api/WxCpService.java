@@ -58,6 +58,19 @@ public interface WxCpService extends WxService {
   String getAccessToken(boolean forceRefresh) throws WxErrorException;
 
   /**
+   * <pre>
+   * 获取会话存档access_token，本方法线程安全
+   * 会话存档相关接口需要使用会话存档secret获取单独的access_token
+   * 详情请见: https://developer.work.weixin.qq.com/document/path/91782
+   * </pre>
+   *
+   * @param forceRefresh 强制刷新
+   * @return 会话存档专用的access token
+   * @throws WxErrorException the wx error exception
+   */
+  String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException;
+
+  /**
    * 获得jsapi_ticket,不强制刷新jsapi_ticket
    *
    * @return the jsapi ticket

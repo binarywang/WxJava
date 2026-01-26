@@ -482,6 +482,31 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   }
 
   @Override
+  public String getMsgAuditAccessToken() {
+    return null;
+  }
+
+  @Override
+  public Lock getMsgAuditAccessTokenLock() {
+    return null;
+  }
+
+  @Override
+  public boolean isMsgAuditAccessTokenExpired() {
+    return true;
+  }
+
+  @Override
+  public void expireMsgAuditAccessToken() {
+    // 不支持
+  }
+
+  @Override
+  public void updateMsgAuditAccessToken(String accessToken, int expiresInSeconds) {
+    // 不支持
+  }
+
+  @Override
   public long getMsgAuditSdk() {
     return this.msgAuditSdk;
   }

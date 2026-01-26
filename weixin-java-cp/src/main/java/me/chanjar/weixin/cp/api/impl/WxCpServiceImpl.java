@@ -71,6 +71,49 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
   }
 
   @Override
+  public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+    final WxCpConfigStorage configStorage = getWxCpConfigStorage();
+    if (!configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+      return configStorage.getMsgAuditAccessToken();
+    }
+    Lock lock = configStorage.getMsgAuditAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+        return configStorage.getMsgAuditAccessToken();
+      }
+      // 使用会话存档secret获取access_token
+      String msgAuditSecret = configStorage.getMsgAuditSecret();
+      if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
+        throw new WxErrorException("会话存档secret未配置");
+      }
+      String url = String.format(configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN),
+        this.configStorage.getCorpId(), msgAuditSecret);
+      try {
+        HttpGet httpGet = new HttpGet(url);
+        if (getRequestHttpProxy() != null) {
+          RequestConfig config = RequestConfig.custom().setProxy(getRequestHttpProxy()).build();
+          httpGet.setConfig(config);
+        }
+        String resultContent = getRequestHttpClient().execute(httpGet, ApacheBasicResponseHandler.INSTANCE);
+        WxError error = WxError.fromJson(resultContent, WxType.CP);
+        if (error.getErrorCode() != 0) {
+          throw new WxErrorException(error);
+        }
+
+        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+        configStorage.updateMsgAuditAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+      } catch (IOException e) {
+        throw new WxRuntimeException(e);
+      }
+    } finally {
+      lock.unlock();
+    }
+    return configStorage.getMsgAuditAccessToken();
+  }
+
+  @Override
   public String getAgentJsapiTicket(boolean forceRefresh) throws WxErrorException {
     final WxCpConfigStorage configStorage = getWxCpConfigStorage();
     if (forceRefresh) {

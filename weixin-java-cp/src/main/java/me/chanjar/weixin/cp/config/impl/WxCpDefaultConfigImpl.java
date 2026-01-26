@@ -51,6 +51,15 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String msgAuditPriKey;
   private volatile String msgAuditLibPath;
   /**
+   * 会话存档access token及其过期时间
+   */
+  private volatile String msgAuditAccessToken;
+  private volatile long msgAuditAccessTokenExpiresTime;
+  /**
+   * 会话存档access token锁
+   */
+  protected transient Lock msgAuditAccessTokenLock = new ReentrantLock();
+  /**
    * 会话存档SDK及其过期时间
    */
   private volatile long msgAuditSdk;
@@ -461,6 +470,33 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public WxCpDefaultConfigImpl setMsgAuditSecret(String msgAuditSecret) {
     this.msgAuditSecret = msgAuditSecret;
     return this;
+  }
+
+  @Override
+  public String getMsgAuditAccessToken() {
+    return this.msgAuditAccessToken;
+  }
+
+  @Override
+  public Lock getMsgAuditAccessTokenLock() {
+    return this.msgAuditAccessTokenLock;
+  }
+
+  @Override
+  public boolean isMsgAuditAccessTokenExpired() {
+    return System.currentTimeMillis() > this.msgAuditAccessTokenExpiresTime;
+  }
+
+  @Override
+  public void expireMsgAuditAccessToken() {
+    this.msgAuditAccessTokenExpiresTime = 0;
+  }
+
+  @Override
+  public synchronized void updateMsgAuditAccessToken(String accessToken, int expiresInSeconds) {
+    this.msgAuditAccessToken = accessToken;
+    // 预留200秒的时间
+    this.msgAuditAccessTokenExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
   @Override

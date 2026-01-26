@@ -266,6 +266,40 @@ public interface WxCpConfigStorage {
   String getMsgAuditSecret();
 
   /**
+   * 获取会话存档的access token
+   *
+   * @return msg audit access token
+   */
+  String getMsgAuditAccessToken();
+
+  /**
+   * 获取会话存档access token的锁
+   *
+   * @return msg audit access token lock
+   */
+  Lock getMsgAuditAccessTokenLock();
+
+  /**
+   * 检查会话存档access token是否已过期
+   *
+   * @return true: 已过期, false: 未过期
+   */
+  boolean isMsgAuditAccessTokenExpired();
+
+  /**
+   * 强制将会话存档access token过期掉
+   */
+  void expireMsgAuditAccessToken();
+
+  /**
+   * 更新会话存档access token
+   *
+   * @param accessToken 会话存档access token
+   * @param expiresInSeconds 过期时间（秒）
+   */
+  void updateMsgAuditAccessToken(String accessToken, int expiresInSeconds);
+
+  /**
    * 获取会话存档SDK
    * 会话存档SDK初始化后有效期为7200秒，无需每次重新初始化
    *

@@ -12,6 +12,7 @@ import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_TOKEN;
 
@@ -72,6 +73,52 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
         accessToken.getExpiresIn());
     }
     return this.configStorage.getAccessToken();
+  }
+
+  @Override
+  public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+      return this.configStorage.getMsgAuditAccessToken();
+    }
+
+    Lock lock = this.configStorage.getMsgAuditAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+        return this.configStorage.getMsgAuditAccessToken();
+      }
+      // 使用会话存档secret获取access_token
+      String msgAuditSecret = this.configStorage.getMsgAuditSecret();
+      if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
+        throw new WxErrorException("会话存档secret未配置");
+      }
+      //得到httpClient
+      OkHttpClient client = getRequestHttpClient();
+      //请求的request
+      Request request = new Request.Builder()
+        .url(String.format(this.configStorage.getApiUrl(GET_TOKEN), this.configStorage.getCorpId(),
+          msgAuditSecret))
+        .get()
+        .build();
+      String resultContent = null;
+      try (Response response = client.newCall(request).execute()) {
+        resultContent = response.body().string();
+      } catch (IOException e) {
+        log.error(e.getMessage(), e);
+      }
+
+      WxError error = WxError.fromJson(resultContent, WxType.CP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      this.configStorage.updateMsgAuditAccessToken(accessToken.getAccessToken(),
+        accessToken.getExpiresIn());
+    } finally {
+      lock.unlock();
+    }
+    return this.configStorage.getMsgAuditAccessToken();
   }
 
   @Override
