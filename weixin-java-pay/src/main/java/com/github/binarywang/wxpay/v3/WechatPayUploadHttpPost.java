@@ -35,7 +35,7 @@ public class WechatPayUploadHttpPost extends HttpPost {
       this.uri = uri;
     }
 
-    public Builder withImage(String fileName, String fileSha256, InputStream inputStream) {
+    private Builder withMedia(String fileName, String fileSha256, InputStream inputStream) {
       this.fileName = fileName;
       this.fileSha256 = fileSha256;
       this.fileInputStream = inputStream;
@@ -50,18 +50,12 @@ public class WechatPayUploadHttpPost extends HttpPost {
       return this;
     }
 
-    public Builder withVideo(String fileName, String fileSha256, InputStream inputStream) {
-      this.fileName = fileName;
-      this.fileSha256 = fileSha256;
-      this.fileInputStream = inputStream;
+    public Builder withImage(String fileName, String fileSha256, InputStream inputStream) {
+      return withMedia(fileName, fileSha256, inputStream);
+    }
 
-      String mimeType = URLConnection.guessContentTypeFromName(fileName);
-      if (mimeType == null) {
-        this.fileContentType = ContentType.APPLICATION_OCTET_STREAM;
-      } else {
-        this.fileContentType = ContentType.create(mimeType);
-      }
-      return this;
+    public Builder withVideo(String fileName, String fileSha256, InputStream inputStream) {
+      return withMedia(fileName, fileSha256, inputStream);
     }
 
     public WechatPayUploadHttpPost build() {
