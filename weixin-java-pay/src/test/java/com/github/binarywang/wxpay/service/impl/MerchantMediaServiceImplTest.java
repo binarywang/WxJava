@@ -74,4 +74,23 @@ public class MerchantMediaServiceImplTest {
     log.info("视频上传成功2，mediaId2：[{}]", mediaId2);
 
   }
+
+  @Test
+  public void testVideoUploadV3WithInputStream() throws WxPayException, IOException {
+
+    MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(wxPayService);
+
+    String filePath = "你的视频文件的路径地址";
+//    String filePath = "WxJava/test-video.mp4";
+
+    File file = new File(filePath);
+
+    try (java.io.FileInputStream inputStream = new java.io.FileInputStream(file)) {
+      VideoUploadResult videoUploadResult = merchantMediaService.videoUploadV3(inputStream, file.getName());
+      String mediaId = videoUploadResult.getMediaId();
+
+      log.info("通过InputStream上传视频成功，mediaId：[{}]", mediaId);
+    }
+
+  }
 }

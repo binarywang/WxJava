@@ -8,7 +8,7 @@ import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 /**
  * 视频文件上传返回结果对象
  *
- * @author Binary Wang
+ * @author copilot
  */
 @NoArgsConstructor
 @Data
