@@ -141,7 +141,7 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
           throw new WxErrorException("会话存档secret未配置");
         }
         
-        // 模拟HTTP请求失败，实际测试中应该返回缓存的token
+        // 返回缓存的token（用于测试缓存机制）
         return getWxCpConfigStorage().getMsgAuditAccessToken();
       }
 
