@@ -68,14 +68,8 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
    */
   @Test
   public void testGetMsgAuditAccessToken_Expired() throws WxErrorException {
-    // 设置一个已过期的token（过期时间为0）
-    config.updateMsgAuditAccessToken("expired_token", 0);
-    // 等待一下确保过期
-    try {
-      Thread.sleep(100);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    // 设置一个已过期的token（过期时间为负数，确保立即过期）
+    config.updateMsgAuditAccessToken("expired_token", -1);
     
     BaseWxCpServiceImpl service = createTestServiceWithMockToken(config, "refreshed_token");
     
