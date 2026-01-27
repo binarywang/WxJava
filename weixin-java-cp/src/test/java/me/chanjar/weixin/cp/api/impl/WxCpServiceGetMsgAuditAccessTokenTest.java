@@ -7,6 +7,8 @@ import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.locks.Lock;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -183,7 +185,7 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       @Override
       public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
         // 使用锁机制
-        var lock = getWxCpConfigStorage().getMsgAuditAccessTokenLock();
+        Lock lock = getWxCpConfigStorage().getMsgAuditAccessTokenLock();
         lock.lock();
         try {
           // 检查是否需要刷新
