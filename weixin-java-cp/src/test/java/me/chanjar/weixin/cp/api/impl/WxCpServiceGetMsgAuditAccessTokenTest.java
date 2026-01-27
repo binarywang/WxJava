@@ -97,6 +97,22 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
   }
 
   /**
+   * 检查token是否需要刷新的公共逻辑
+   */
+  private boolean shouldRefreshToken(WxCpConfigStorage storage, boolean forceRefresh) {
+    return storage.isMsgAuditAccessTokenExpired() || forceRefresh;
+  }
+
+  /**
+   * 验证会话存档secret是否已配置的公共逻辑
+   */
+  private void validateMsgAuditSecret(String msgAuditSecret) throws WxErrorException {
+    if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
+      throw new WxErrorException("会话存档secret未配置");
+    }
+  }
+
+  /**
    * 创建一个用于测试的BaseWxCpServiceImpl实现，
    * 用于测试缓存和过期逻辑
    */
@@ -125,15 +141,13 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       @Override
       public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
         // 检查是否需要刷新
-        if (!getWxCpConfigStorage().isMsgAuditAccessTokenExpired() && !forceRefresh) {
+        if (!shouldRefreshToken(getWxCpConfigStorage(), forceRefresh)) {
           return getWxCpConfigStorage().getMsgAuditAccessToken();
         }
         
         // 使用会话存档secret获取access_token
         String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
-        if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
-          throw new WxErrorException("会话存档secret未配置");
-        }
+        validateMsgAuditSecret(msgAuditSecret);
         
         // 返回缓存的token（用于测试缓存机制）
         return getWxCpConfigStorage().getMsgAuditAccessToken();
@@ -183,15 +197,13 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
         lock.lock();
         try {
           // 检查是否需要刷新
-          if (!getWxCpConfigStorage().isMsgAuditAccessTokenExpired() && !forceRefresh) {
+          if (!shouldRefreshToken(getWxCpConfigStorage(), forceRefresh)) {
             return getWxCpConfigStorage().getMsgAuditAccessToken();
           }
           
           // 使用会话存档secret获取access_token
           String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
-          if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
-            throw new WxErrorException("会话存档secret未配置");
-          }
+          validateMsgAuditSecret(msgAuditSecret);
           
           // 模拟获取新token并更新配置
           getWxCpConfigStorage().updateMsgAuditAccessToken(mockToken, 7200);
