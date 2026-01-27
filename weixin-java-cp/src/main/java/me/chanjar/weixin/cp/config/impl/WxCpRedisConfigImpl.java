@@ -62,8 +62,13 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile int msgAuditSdkRefCount;
   /**
    * 会话存档access token锁（本地锁，不支持分布式）
-   * 注意：此实现使用本地ReentrantLock，在多实例部署时无法保证跨JVM的同步
-   * 建议在生产环境中自行实现分布式锁机制，或使用其他支持分布式的配置存储实现
+   * 
+   * <p>注意：此实现使用本地ReentrantLock，在多实例部署时无法保证跨JVM的同步。
+   * 由于本类已标记为 @Deprecated，建议在生产环境中自行实现支持分布式锁的配置存储。
+   * 可以考虑使用 Redisson 或 Spring Integration 提供的 Redis 分布式锁实现。</p>
+   * 
+   * @see #expireMsgAuditAccessToken()
+   * @see #updateMsgAuditAccessToken(String, int)
    */
   private final Lock msgAuditAccessTokenLock = new ReentrantLock();
 
