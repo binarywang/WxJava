@@ -60,6 +60,10 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
    * 会话存档SDK引用计数，用于多线程安全的生命周期管理
    */
   private volatile int msgAuditSdkRefCount;
+  /**
+   * 会话存档access token锁（本地锁，不支持分布式）
+   */
+  private final Lock msgAuditAccessTokenLock = new ReentrantLock();
 
   /**
    * Instantiates a new Wx cp redis config.
@@ -488,7 +492,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   @Override
   public Lock getMsgAuditAccessTokenLock() {
-    return null;
+    return this.msgAuditAccessTokenLock;
   }
 
   @Override

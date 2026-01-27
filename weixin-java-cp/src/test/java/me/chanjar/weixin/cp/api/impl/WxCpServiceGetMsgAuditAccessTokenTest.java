@@ -29,100 +29,80 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
   }
 
   /**
-   * 测试 WxCpServiceApacheHttpClientImpl 的 getMsgAuditAccessToken 方法
+   * 测试会话存档access token的缓存机制
+   * 验证当token未过期时，直接从配置中返回缓存的token
    */
   @Test
-  public void testGetMsgAuditAccessToken_ApacheHttpClient() throws WxErrorException {
-    // 创建一个模拟实现，不实际调用HTTP请求
-    WxCpServiceApacheHttpClientImpl service = new WxCpServiceApacheHttpClientImpl() {
-      @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
-        // 验证配置是否正确使用
-        WxCpConfigStorage storage = getWxCpConfigStorage();
-        assertThat(storage.getMsgAuditSecret()).isEqualTo("testMsgAuditSecret");
-        
-        // 模拟返回 token
-        return "mock_msg_audit_access_token";
-      }
-    };
-    service.setWxCpConfigStorage(config);
-
+  public void testGetMsgAuditAccessToken_Cache() throws WxErrorException {
+    // 预先设置一个有效的token
+    config.updateMsgAuditAccessToken("cached_token", 7200);
+    
+    BaseWxCpServiceImpl service = createTestService(config);
+    
+    // 不强制刷新时应该返回缓存的token
     String token = service.getMsgAuditAccessToken(false);
-    assertThat(token).isEqualTo("mock_msg_audit_access_token");
+    assertThat(token).isEqualTo("cached_token");
   }
 
   /**
-   * 测试 WxCpServiceHttpComponentsImpl 的 getMsgAuditAccessToken 方法
+   * 测试强制刷新会话存档access token
+   * 验证forceRefresh=true时会重新获取token
    */
   @Test
-  public void testGetMsgAuditAccessToken_HttpComponents() throws WxErrorException {
-    // 创建一个模拟实现，不实际调用HTTP请求
-    WxCpServiceHttpComponentsImpl service = new WxCpServiceHttpComponentsImpl() {
-      @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
-        // 验证配置是否正确使用
-        WxCpConfigStorage storage = getWxCpConfigStorage();
-        assertThat(storage.getMsgAuditSecret()).isEqualTo("testMsgAuditSecret");
-        
-        // 模拟返回 token
-        return "mock_msg_audit_access_token";
-      }
-    };
-    service.setWxCpConfigStorage(config);
-
-    String token = service.getMsgAuditAccessToken(false);
-    assertThat(token).isEqualTo("mock_msg_audit_access_token");
+  public void testGetMsgAuditAccessToken_ForceRefresh() throws WxErrorException {
+    // 预先设置一个有效的token
+    config.updateMsgAuditAccessToken("old_token", 7200);
+    
+    BaseWxCpServiceImpl service = createTestServiceWithMockToken(config, "new_token");
+    
+    // 强制刷新应该获取新token
+    String token = service.getMsgAuditAccessToken(true);
+    assertThat(token).isEqualTo("new_token");
   }
 
   /**
-   * 测试 WxCpServiceOkHttpImpl 的 getMsgAuditAccessToken 方法
+   * 测试token过期时自动刷新
+   * 验证当token已过期时，会自动重新获取
    */
   @Test
-  public void testGetMsgAuditAccessToken_OkHttp() throws WxErrorException {
-    // 创建一个模拟实现，不实际调用HTTP请求
-    WxCpServiceOkHttpImpl service = new WxCpServiceOkHttpImpl() {
-      @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
-        // 验证配置是否正确使用
-        WxCpConfigStorage storage = getWxCpConfigStorage();
-        assertThat(storage.getMsgAuditSecret()).isEqualTo("testMsgAuditSecret");
-        
-        // 模拟返回 token
-        return "mock_msg_audit_access_token";
-      }
-    };
-    service.setWxCpConfigStorage(config);
-
+  public void testGetMsgAuditAccessToken_Expired() throws WxErrorException {
+    // 设置一个已过期的token（过期时间为0）
+    config.updateMsgAuditAccessToken("expired_token", 0);
+    // 等待一下确保过期
+    try {
+      Thread.sleep(100);
+    } catch (InterruptedException e) {
+      Thread.currentThread().interrupt();
+    }
+    
+    BaseWxCpServiceImpl service = createTestServiceWithMockToken(config, "refreshed_token");
+    
+    // 过期的token应该被自动刷新
     String token = service.getMsgAuditAccessToken(false);
-    assertThat(token).isEqualTo("mock_msg_audit_access_token");
+    assertThat(token).isEqualTo("refreshed_token");
   }
 
   /**
-   * 测试 WxCpServiceJoddHttpImpl 的 getMsgAuditAccessToken 方法
+   * 测试获取锁机制
+   * 验证配置中的锁可以正常获取和使用
    */
   @Test
-  public void testGetMsgAuditAccessToken_JoddHttp() throws WxErrorException {
-    // 创建一个模拟实现，不实际调用HTTP请求
-    WxCpServiceJoddHttpImpl service = new WxCpServiceJoddHttpImpl() {
-      @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
-        // 验证配置是否正确使用
-        WxCpConfigStorage storage = getWxCpConfigStorage();
-        assertThat(storage.getMsgAuditSecret()).isEqualTo("testMsgAuditSecret");
-        
-        // 模拟返回 token
-        return "mock_msg_audit_access_token";
-      }
-    };
-    service.setWxCpConfigStorage(config);
-
-    String token = service.getMsgAuditAccessToken(false);
-    assertThat(token).isEqualTo("mock_msg_audit_access_token");
+  public void testGetMsgAuditAccessToken_Lock() {
+    // 验证配置提供的锁不为null
+    assertThat(config.getMsgAuditAccessTokenLock()).isNotNull();
+    
+    // 验证锁可以正常使用
+    config.getMsgAuditAccessTokenLock().lock();
+    try {
+      assertThat(config.getMsgAuditAccessToken()).isNull();
+    } finally {
+      config.getMsgAuditAccessTokenLock().unlock();
+    }
   }
 
   /**
    * 创建一个用于测试的BaseWxCpServiceImpl实现，
-   * 模拟在msgAuditSecret未配置时抛出异常的行为
+   * 用于测试缓存和过期逻辑
    */
   private BaseWxCpServiceImpl createTestService(WxCpConfigStorage config) {
     return new BaseWxCpServiceImpl() {
@@ -148,12 +128,81 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
 
       @Override
       public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+        // 检查是否需要刷新
+        if (!getWxCpConfigStorage().isMsgAuditAccessTokenExpired() && !forceRefresh) {
+          return getWxCpConfigStorage().getMsgAuditAccessToken();
+        }
+        
         // 使用会话存档secret获取access_token
         String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
         if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
           throw new WxErrorException("会话存档secret未配置");
         }
-        return "mock_token";
+        
+        // 模拟HTTP请求失败，实际测试中应该返回缓存的token
+        return getWxCpConfigStorage().getMsgAuditAccessToken();
+      }
+
+      @Override
+      public void initHttp() {
+      }
+
+      @Override
+      public WxCpConfigStorage getWxCpConfigStorage() {
+        return config;
+      }
+    };
+  }
+
+  /**
+   * 创建一个用于测试的BaseWxCpServiceImpl实现，
+   * 模拟返回指定的token（用于测试刷新逻辑）
+   */
+  private BaseWxCpServiceImpl createTestServiceWithMockToken(WxCpConfigStorage config, String mockToken) {
+    return new BaseWxCpServiceImpl() {
+      @Override
+      public Object getRequestHttpClient() {
+        return null;
+      }
+
+      @Override
+      public Object getRequestHttpProxy() {
+        return null;
+      }
+
+      @Override
+      public HttpClientType getRequestType() {
+        return null;
+      }
+
+      @Override
+      public String getAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "test_access_token";
+      }
+
+      @Override
+      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+        // 使用锁机制
+        var lock = getWxCpConfigStorage().getMsgAuditAccessTokenLock();
+        lock.lock();
+        try {
+          // 检查是否需要刷新
+          if (!getWxCpConfigStorage().isMsgAuditAccessTokenExpired() && !forceRefresh) {
+            return getWxCpConfigStorage().getMsgAuditAccessToken();
+          }
+          
+          // 使用会话存档secret获取access_token
+          String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
+          if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
+            throw new WxErrorException("会话存档secret未配置");
+          }
+          
+          // 模拟获取新token并更新配置
+          getWxCpConfigStorage().updateMsgAuditAccessToken(mockToken, 7200);
+          return mockToken;
+        } finally {
+          lock.unlock();
+        }
       }
 
       @Override
