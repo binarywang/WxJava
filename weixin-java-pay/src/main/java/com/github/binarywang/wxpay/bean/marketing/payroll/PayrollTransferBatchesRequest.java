@@ -147,7 +147,7 @@ public class PayrollTransferBatchesRequest implements Serializable {
    * 字段名：用工类型
    * 变量名：employment_type
    * 是否必填：是
-   * 类型：string[1,32]
+   * 类型：string[1, 32]
    * 描述：
    *  微工卡服务仅支持用于与商户有用工关系的用户，需明确用工类型；参考值：
    *  LONG_TERM_EMPLOYMENT：长期用工，
@@ -164,7 +164,7 @@ public class PayrollTransferBatchesRequest implements Serializable {
    * 字段名：用工场景
    * 变量名：employment_scene
    * 是否必填：否
-   * 类型：string[1,32]
+   * 类型：string[1, 32]
    * 描述：
    *  用工场景，参考值：
    *  LOGISTICS：物流；
@@ -185,7 +185,7 @@ public class PayrollTransferBatchesRequest implements Serializable {
    * 字段名：特约商户授权类型
    * 变量名：authorization_type
    * 是否必填：是
-   * 类型：string[1,32]
+   * 类型：string[1, 32]
    * 描述：
    *  特约商户授权类型：
    *  INFORMATION_AUTHORIZATION_TYPE：特约商户信息授权类型，
