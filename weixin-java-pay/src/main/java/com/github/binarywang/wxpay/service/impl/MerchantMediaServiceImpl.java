@@ -77,7 +77,7 @@ public class MerchantMediaServiceImpl implements MerchantMediaService {
   @Override
   public VideoUploadResult videoUploadV3(InputStream inputStream, String fileName) throws WxPayException, IOException {
     String url = String.format("%s/v3/merchant/media/video_upload", this.payService.getPayBaseUrl());
-    try(ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+    try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
       byte[] buffer = new byte[2048];
       int len;
       while ((len = inputStream.read(buffer)) > -1) {
