@@ -67,6 +67,7 @@ public class WxCpKfMsgListResp extends WxCpBaseResp {
     private WxCpKfChannelsShopProductMsg channelsShopProduct;
     @SerializedName("channels_shop_order")
     private WxCpKfChannelsShopOrderMsg channelsShopOrder;
+    private WxCpKfChannelsMsg channels;
   }
 
   /**
