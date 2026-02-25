@@ -9,6 +9,7 @@ import lombok.Data;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author borisbao
@@ -25,6 +26,18 @@ public class WxMaMediaAsyncCheckResult implements Serializable {
 
   /**
    * 综合结果
+   */
+  @SerializedName("result")
+  private ResultBean result;
+
+  /**
+   * 详细检测结果列表
+   */
+  @SerializedName("detail")
+  private List<DetailBean> detail;
+
+  /**
+   * 综合结果内部类定义
    */
   @Data
   @Builder
