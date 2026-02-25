@@ -570,5 +570,53 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage3.getUpdateDetail(), "change_name");
     // 当XML中没有MemChangeList元素时，字段应该为null而不是空字符串
     assertThat(wxMessage3.getMemChangeList()).isNull();
+
+    // 测试企业微信4.8.0新格式：MemChangeList使用<Item>子元素（加群场景）
+    String xmlNewFormatAddMember = "<xml>"
+      + "<ToUserName><![CDATA[c2e112dad808119117371bbcd6]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>9811170016713</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChatId><![CDATA[wrxUBwDQAAa44T11Ziaed811rhUr8-3Igmug]]></ChatId>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<UpdateDetail><![CDATA[add_member]]></UpdateDetail>"
+      + "<JoinScene>3</JoinScene>"
+      + "<MemChangeCnt>1</MemChangeCnt>"
+      + "<MemChangeList><Item><![CDATA[wmxUBwDQAAO-Hn5_wFJz4wvo5TxLFibw]]></Item></MemChangeList>"
+      + "<LastMemVer><![CDATA[5807afd2ab75771d5e8ac623f534ac0b]]></LastMemVer>"
+      + "<CurMemVer><![CDATA[ea36e8b6062b803cda0ee45e9418d637]]></CurMemVer>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage4 = WxCpXmlMessage.fromXml(xmlNewFormatAddMember);
+    assertEquals(wxMessage4.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CHAT);
+    assertEquals(wxMessage4.getChangeType(), "update");
+    assertEquals(wxMessage4.getUpdateDetail(), "add_member");
+    assertEquals(wxMessage4.getJoinScene(), "3");
+    assertEquals(wxMessage4.getMemChangeCnt(), "1");
+    // 新格式：<Item>子元素中的成员ID应被正确解析
+    assertEquals(wxMessage4.getMemChangeList(), "wmxUBwDQAAO-Hn5_wFJz4wvo5TxLFibw");
+
+    // 测试企业微信4.8.0新格式：多个<Item>子元素（多成员变更）
+    String xmlNewFormatMultiMember = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>1403610513</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<ChatId><![CDATA[wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA]]></ChatId>"
+      + "<UpdateDetail><![CDATA[del_member]]></UpdateDetail>"
+      + "<QuitScene>1</QuitScene>"
+      + "<MemChangeCnt>2</MemChangeCnt>"
+      + "<MemChangeList>"
+      + "<Item><![CDATA[wmEJiCwAAA9KG2qlSq6rKwASSgAAAA]]></Item>"
+      + "<Item><![CDATA[wmEJiCwAAA9KG2qlSq6rKwBBBBBBB]]></Item>"
+      + "</MemChangeList>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage5 = WxCpXmlMessage.fromXml(xmlNewFormatMultiMember);
+    assertEquals(wxMessage5.getUpdateDetail(), "del_member");
+    assertEquals(wxMessage5.getMemChangeCnt(), "2");
+    // 多个<Item>元素应被解析为逗号分隔字符串
+    assertEquals(wxMessage5.getMemChangeList(), "wmEJiCwAAA9KG2qlSq6rKwASSgAAAA,wmEJiCwAAA9KG2qlSq6rKwBBBBBBB");
   }
 }

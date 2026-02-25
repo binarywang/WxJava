@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.LongArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XStreamCDataListConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -156,7 +157,7 @@ public class WxCpXmlMessage implements Serializable {
   private String memChangeCnt;
 
   @XStreamAlias("MemChangeList")
-  @XStreamConverter(value = XStreamCDataConverter.class)
+  @XStreamConverter(value = XStreamCDataListConverter.class)
   private String memChangeList;
 
   @XStreamAlias("LastMemVer")
