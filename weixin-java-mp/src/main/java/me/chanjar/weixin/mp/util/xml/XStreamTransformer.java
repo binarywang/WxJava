@@ -15,6 +15,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutMusicMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutNewsMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTextMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTransferKefuMessage;
+import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTransferBizAiIvrMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutVideoMessage;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlOutVoiceMessage;
 
@@ -30,6 +31,7 @@ public class XStreamTransformer {
     registerClass(WxMpXmlOutVideoMessage.class);
     registerClass(WxMpXmlOutVoiceMessage.class);
     registerClass(WxMpXmlOutTransferKefuMessage.class);
+    registerClass(WxMpXmlOutTransferBizAiIvrMessage.class);
   }
 
   /**

@@ -53,6 +53,7 @@ public class WxConsts {
     public static final String DEVICE_STATUS = "device_status";
     public static final String HARDWARE = "hardware";
     public static final String TRANSFER_CUSTOMER_SERVICE = "transfer_customer_service";
+    public static final String TRANSFER_BIZ_AI_IVR = "transfer_biz_ai_ivr";
     public static final String UPDATE_TASKCARD = "update_taskcard";
     public static final String UPDATE_BUTTON = "update_button";
   }

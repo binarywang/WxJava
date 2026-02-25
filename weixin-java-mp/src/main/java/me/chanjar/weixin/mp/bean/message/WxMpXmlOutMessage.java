@@ -132,6 +132,15 @@ public abstract class WxMpXmlOutMessage implements Serializable {
   }
 
   /**
+   * 获得转接AI回复消息builder
+   *
+   * @return 转接AI回复消息构建器
+   */
+  public static TransferBizAiIvrBuilder TRANSFER_BIZ_AI_IVR() {
+    return new TransferBizAiIvrBuilder();
+  }
+
+  /**
    * 获得设备消息builder
    *
    * @return 设备消息builder
