@@ -93,9 +93,11 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
   @Override
   public void unlock() {
     if (valueThreadLocal.get() != null) {
-      // 提示: 必须指定returnType, 类型: 此处必须为Long, 不能是Integer
-      RedisScript<Long> script = new DefaultRedisScript<>("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end", Long.class);
-      redisTemplate.execute(script, Collections.singletonList(key), valueThreadLocal.get());
+      redisTemplate.executePipelined((RedisCallback<String>) connection -> {
+          connection.eval("if redis.call('get', KEYS[1]) == ARGV[1] then return redis.call('del', KEYS[1]) else return 0 end".getBytes(),
+                          ReturnType.INTEGER, 1, key.getBytes(), valueThreadLocal.get().getBytes());
+          return null;
+      });
       valueThreadLocal.remove();
     }
   }
