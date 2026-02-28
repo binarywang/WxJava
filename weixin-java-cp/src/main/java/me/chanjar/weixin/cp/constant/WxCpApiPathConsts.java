@@ -1701,4 +1701,25 @@ public interface WxCpApiPathConsts {
      */
     String SEND_MESSAGE = "/cgi-bin/intelligent_robot/send_message";
   }
+
+  /**
+   * 人事助手相关接口.
+   * 官方文档：https://developer.work.weixin.qq.com/document/path/99132
+   */
+  interface Hr {
+    /**
+     * 获取员工档案字段信息.
+     */
+    String GET_FIELD_INFO = "/cgi-bin/hr/employee/get_field_info";
+
+    /**
+     * 获取员工档案数据.
+     */
+    String GET_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/employee/get_employee_field_info";
+
+    /**
+     * 更新员工档案数据.
+     */
+    String UPDATE_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/employee/update_employee_field_info";
+  }
 }

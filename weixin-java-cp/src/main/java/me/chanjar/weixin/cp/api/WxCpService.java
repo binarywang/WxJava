@@ -594,4 +594,11 @@ public interface WxCpService extends WxService {
    * @return 智能机器人服务 intelligent robot service
    */
   WxCpIntelligentRobotService getIntelligentRobotService();
+
+  /**
+   * 获取人事助手服务
+   *
+   * @return 人事助手服务 hr service
+   */
+  WxCpHrService getHrService();
 }
