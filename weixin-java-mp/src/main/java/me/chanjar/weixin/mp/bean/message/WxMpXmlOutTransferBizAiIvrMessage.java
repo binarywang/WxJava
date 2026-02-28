@@ -14,7 +14,7 @@ import me.chanjar.weixin.common.api.WxConsts;
  * 官方文档：https://developers.weixin.qq.com/doc/subscription/guide/product/message/Passive_user_reply_message.html
  * </pre>
  *
- * @author Binary Wang
+ * @author copilot
  */
 @Data
 @XStreamAlias("xml")

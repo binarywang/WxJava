@@ -6,7 +6,7 @@ import org.testng.annotations.Test;
 /**
  * 转接AI回复消息测试.
  *
- * @author Binary Wang
+ * @author copilot
  */
 public class WxMpXmlOutTransferBizAiIvrMessageTest {
 

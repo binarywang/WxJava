@@ -8,7 +8,7 @@ import me.chanjar.weixin.mp.bean.message.WxMpXmlOutTransferBizAiIvrMessage;
  * 用法: WxMpXmlOutTransferBizAiIvrMessage m = WxMpXmlOutMessage.TRANSFER_BIZ_AI_IVR().toUser("").fromUser("").build();
  * </pre>
  *
- * @author Binary Wang
+ * @author copilot
  */
 public final class TransferBizAiIvrBuilder
   extends BaseBuilder<TransferBizAiIvrBuilder, WxMpXmlOutTransferBizAiIvrMessage> {
