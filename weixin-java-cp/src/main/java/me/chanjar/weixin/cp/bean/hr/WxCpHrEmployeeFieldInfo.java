@@ -37,17 +37,19 @@ public class WxCpHrEmployeeFieldInfo implements Serializable {
 
   /**
    * 字段类型.
-   * 1: 文本
-   * 2: 日期
-   * 3: 数字
-   * 4: 单选
-   * 5: 多选
-   * 6: 附件
-   * 7: 手机
-   * 8: 邮箱
+   * 具体取值参见 {@link WxCpHrFieldType}
    */
   @SerializedName("field_type")
   private Integer fieldType;
+
+  /**
+   * 获取字段类型枚举.
+   *
+   * @return 字段类型枚举，未匹配时返回 null
+   */
+  public WxCpHrFieldType getFieldTypeEnum() {
+    return fieldType == null ? null : WxCpHrFieldType.fromCode(fieldType);
+  }
 
   /**
    * 是否系统字段.

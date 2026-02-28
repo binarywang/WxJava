@@ -9,6 +9,7 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldData;
 import me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldDataResp;
 import me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldInfoResp;
+import me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldValue;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -22,7 +23,6 @@ import static org.assertj.core.api.Assertions.assertThat;
  *
  * @author <a href="https://github.com/leejoker">leejoker</a> created on 2024-01-01
  */
-@Test
 @Slf4j
 @Guice(modules = ApiTestModule.class)
 public class WxCpHrServiceImplTest {
@@ -91,7 +91,7 @@ public class WxCpHrServiceImplTest {
     WxCpHrService hrService = this.wxCpService.getHrService();
     WxCpHrEmployeeFieldData.FieldItem fieldItem = new WxCpHrEmployeeFieldData.FieldItem();
     fieldItem.setFieldKey("sys_field_name");
-    me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldValue fieldValue = new me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldValue();
+    WxCpHrEmployeeFieldValue fieldValue = new WxCpHrEmployeeFieldValue();
     fieldValue.setTextValue("测试姓名");
     fieldItem.setFieldValue(fieldValue);
     hrService.updateEmployeeFieldInfo(this.configStorage.getUserId(), Arrays.asList(fieldItem));

@@ -40,6 +40,12 @@ public class WxCpHrServiceImpl implements WxCpHrService {
 
   @Override
   public WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(List<String> userids, List<String> fields) throws WxErrorException {
+    if (userids == null || userids.isEmpty()) {
+      throw new IllegalArgumentException("userids 不能为空");
+    }
+    if (userids.size() > 20) {
+      throw new IllegalArgumentException("userids 每次最多传入20个");
+    }
     JsonObject jsonObject = new JsonObject();
     jsonObject.add("userids", WxCpGsonBuilder.create().toJsonTree(userids));
     if (fields != null && !fields.isEmpty()) {
@@ -54,6 +60,12 @@ public class WxCpHrServiceImpl implements WxCpHrService {
 
   @Override
   public void updateEmployeeFieldInfo(String userid, List<WxCpHrEmployeeFieldData.FieldItem> fieldList) throws WxErrorException {
+    if (userid == null || userid.trim().isEmpty()) {
+      throw new IllegalArgumentException("userid 不能为空");
+    }
+    if (fieldList == null || fieldList.isEmpty()) {
+      throw new IllegalArgumentException("fieldList 不能为空");
+    }
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("userid", userid);
     jsonObject.add("field_list", WxCpGsonBuilder.create().toJsonTree(fieldList));
