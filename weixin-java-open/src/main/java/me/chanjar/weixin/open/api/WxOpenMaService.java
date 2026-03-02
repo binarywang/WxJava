@@ -130,6 +130,11 @@ public interface WxOpenMaService extends WxMaService {
   String API_VERIFY_BETA_WEAPP = "https://api.weixin.qq.com/wxa/verifybetaweapp";
 
   /**
+   * 3.1 修改试用小程序名称
+   */
+  String API_SET_BETAE_WEAPP_NICKNAME = "https://api.weixin.qq.com/wxa/setbetaweappnickname";
+
+  /**
    * 4. 获取授权小程序帐号的可选类目
    */
   String API_GET_CATEGORY = "https://api.weixin.qq.com/wxa/get_category";
@@ -517,6 +522,16 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenResult verifyBetaWeapp(WxOpenMaVerifyBetaWeappMessage verifyBetaWeappMessage) throws WxErrorException;
+
+  /**
+   * 设置小程序昵称
+   *
+   * @param name 小程序名称，昵称半自动设定，强制后缀“的体验小程序”。且该参数会进行关键字检查，如果命中品牌关键字则会报错。
+   *             如遇到品牌大客户要用试用小程序，建议用户先换个名字，认证后再修改成品牌名
+   * @return the wx open result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenResult setBetaWeappNickName(String name) throws WxErrorException;
 
   /**
    * 获取授权小程序帐号的可选类目
