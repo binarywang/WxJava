@@ -115,7 +115,7 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
       instant = Instant.now();
     } catch (IOException | GeneralSecurityException e) {
       log.warn("Auto update cert failed during initialization, will retry later, exception = {}", e.getMessage());
-      // 设置instant为null，在第一次使用时会触发重新下载
+      // 设置 instant 为 null，后续每次使用时都会尝试下载证书直到成功
       instant = null;
     }
   }
