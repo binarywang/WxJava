@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.bean;
 
+import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayTeamInfo;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
@@ -312,6 +313,110 @@ public class WxMaMessage implements Serializable {
    */
   @XStreamAlias("settlement_time")
   private Long settlementTime;
+
+  // xpay_refund_notify 退款推送字段
+
+  /**
+   * 微信退款单号.
+   * xpay_refund_notify
+   */
+  @SerializedName("WxRefundId")
+  @XStreamAlias("WxRefundId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String wxRefundId;
+
+  /**
+   * 商户退款单号.
+   * xpay_refund_notify
+   */
+  @SerializedName("MchRefundId")
+  @XStreamAlias("MchRefundId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String mchRefundId;
+
+  /**
+   * 退款单对应支付单的微信单号.
+   * xpay_refund_notify
+   */
+  @SerializedName("WxOrderId")
+  @XStreamAlias("WxOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String wxOrderId;
+
+  /**
+   * 退款单对应支付单的商户单号.
+   * xpay_refund_notify
+   */
+  @SerializedName("MchOrderId")
+  @XStreamAlias("MchOrderId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String mchOrderId;
+
+  /**
+   * 退款金额，单位分.
+   * xpay_refund_notify
+   */
+  @SerializedName("RefundFee")
+  @XStreamAlias("RefundFee")
+  private Integer refundFee;
+
+  /**
+   * 退款结果，0为成功，非0为失败.
+   * xpay_refund_notify
+   */
+  @SerializedName("RetCode")
+  @XStreamAlias("RetCode")
+  private Integer retCode;
+
+  /**
+   * 退款结果详情，失败时为退款失败的原因.
+   * xpay_refund_notify
+   */
+  @SerializedName("RetMsg")
+  @XStreamAlias("RetMsg")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String retMsg;
+
+  /**
+   * 开始退款时间，秒级时间戳.
+   * xpay_refund_notify
+   */
+  @SerializedName("RefundStartTimestamp")
+  @XStreamAlias("RefundStartTimestamp")
+  private Long refundStartTimestamp;
+
+  /**
+   * 结束退款时间，秒级时间戳.
+   * xpay_refund_notify
+   */
+  @SerializedName("RefundSuccTimestamp")
+  @XStreamAlias("RefundSuccTimestamp")
+  private Long refundSuccTimestamp;
+
+  /**
+   * 退款单的微信支付单号.
+   * xpay_refund_notify
+   */
+  @SerializedName("WxpayRefundTransactionId")
+  @XStreamAlias("WxpayRefundTransactionId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String wxpayRefundTransactionId;
+
+  /**
+   * 重试次数，从0开始，重试间隔为2 4 8 16...最多15次.
+   * xpay_refund_notify
+   */
+  @SerializedName("RetryTimes")
+  @XStreamAlias("RetryTimes")
+  private Integer retryTimes;
+
+  /**
+   * 拼团信息.
+   * xpay_goods_deliver_notify, xpay_refund_notify
+   */
+  @SerializedName("TeamInfo")
+  @XStreamAlias("TeamInfo")
+  private WxMaXPayTeamInfo teamInfo;
 
   /**
    * 不要直接使用这个字段，
