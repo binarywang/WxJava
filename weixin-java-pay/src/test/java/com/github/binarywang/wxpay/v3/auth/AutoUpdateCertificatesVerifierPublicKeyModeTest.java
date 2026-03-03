@@ -33,20 +33,15 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
     );
 
     // 构造函数应该不抛出异常，即使证书下载失败
-    AutoUpdateCertificatesVerifier verifier = null;
-    try {
-      verifier = new AutoUpdateCertificatesVerifier(
-        credentials,
-        invalidApiV3Key.getBytes(StandardCharsets.UTF_8),
-        60,
-        payBaseUrl,
-        null
-      );
-      // 如果没有抛出异常，测试通过
-      assertNotNull(verifier);
-    } catch (Exception e) {
-      fail("构造函数不应该抛出异常，但抛出了: " + e.getMessage());
-    }
+    AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
+      credentials,
+      invalidApiV3Key.getBytes(StandardCharsets.UTF_8),
+      60,
+      payBaseUrl,
+      null
+    );
+    // 如果没有抛出异常，测试通过
+    assertNotNull(verifier);
   }
 
   /**
