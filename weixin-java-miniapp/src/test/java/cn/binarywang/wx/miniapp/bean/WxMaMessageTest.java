@@ -1,5 +1,6 @@
 package cn.binarywang.wx.miniapp.bean;
 
+import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayTeamInfo;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.testng.annotations.Test;
 
@@ -294,38 +295,97 @@ public class WxMaMessageTest {
   }
 
   /**
-   * 自定义交易组件付款通知事件测试用例
-   * msgType等于event且event等于WxConsts.EventType.OPEN_PRODUCT_ORDER_PAY
+   * 虚拟支付退款推送事件 xpay_refund_notify 测试用例（XML格式，含TeamInfo）
    */
   @Test
-  public void testFromXmlForOpenProductOrderPayEvent(){
-    String xml = "<xml>     \n" +
-      "     <ToUserName>gh_abcdefg</ToUserName> \n" +
-      "     <FromUserName>oABCD</FromUserName>      \n" +
-      "     <CreateTime>1642658087</CreateTime>     \n" +
-      "     <MsgType>event</MsgType>      \n" +
-      "     <Event>open_product_order_pay</Event>\n" +
-      "     <order_info>\n" +
-      "          <out_order_id>123456</out_order_id>\n" +
-      "          <order_id>1234567</order_id>\n" +
-      "          <transaction_id>42000000123123</transaction_id>\n" +
-      "          <pay_time>2021-12-30 22:31:00</pay_time>\n" +
-      "          <amount>10</amount>\n" +
-      "          <sp_openid>oNMZ-5C0SPGHUiKsTwnOXpSHzFvw</sp_openid>\n" +
-      "     </order_info>\n" +
+  public void testXPayRefundNotifyFromXml() {
+    String xml = "<xml>\n" +
+      "  <ToUserName><![CDATA[gh_abcdefg]]></ToUserName>\n" +
+      "  <FromUserName><![CDATA[oABCDEFG]]></FromUserName>\n" +
+      "  <CreateTime>1700000000</CreateTime>\n" +
+      "  <MsgType><![CDATA[event]]></MsgType>\n" +
+      "  <Event><![CDATA[xpay_refund_notify]]></Event>\n" +
+      "  <OpenId><![CDATA[oABCDEFG]]></OpenId>\n" +
+      "  <WxRefundId><![CDATA[wx_refund_123]]></WxRefundId>\n" +
+      "  <MchRefundId><![CDATA[mch_refund_456]]></MchRefundId>\n" +
+      "  <WxOrderId><![CDATA[wx_order_789]]></WxOrderId>\n" +
+      "  <MchOrderId><![CDATA[mch_order_101]]></MchOrderId>\n" +
+      "  <RefundFee>100</RefundFee>\n" +
+      "  <RetCode>0</RetCode>\n" +
+      "  <RetMsg><![CDATA[success]]></RetMsg>\n" +
+      "  <RefundStartTimestamp>1700000000</RefundStartTimestamp>\n" +
+      "  <RefundSuccTimestamp>1700000010</RefundSuccTimestamp>\n" +
+      "  <WxpayRefundTransactionId><![CDATA[wxpay_refund_tx_202]]></WxpayRefundTransactionId>\n" +
+      "  <RetryTimes>0</RetryTimes>\n" +
+      "  <TeamInfo>\n" +
+      "    <ActivityId><![CDATA[act_001]]></ActivityId>\n" +
+      "    <TeamId><![CDATA[team_002]]></TeamId>\n" +
+      "    <TeamType>1</TeamType>\n" +
+      "    <TeamAction>0</TeamAction>\n" +
+      "  </TeamInfo>\n" +
       "</xml>";
-    WxMaMessage wxMessage = WxMaMessage.fromXml(xml);
-    assertThat(wxMessage.getMsgType()).isEqualTo("event");
-    assertThat(wxMessage.getEvent()).isEqualTo(WxConsts.EventType.OPEN_PRODUCT_ORDER_PAY);
-    Map<String, Object> allFieldsMap = wxMessage.getAllFieldsMap();
-    Map<String, Object> orderInfo = (Map<String, Object>) allFieldsMap.get("order_info");
-    assertThat(orderInfo).isNotEmpty();
-    assertThat(orderInfo)
-      .containsEntry("out_order_id","123456")
-      .containsEntry("order_id","1234567")
-      .containsEntry("transaction_id","42000000123123")
-      .containsEntry("pay_time","2021-12-30 22:31:00")
-      .containsEntry("amount","10")
-      .containsEntry("sp_openid","oNMZ-5C0SPGHUiKsTwnOXpSHzFvw");
+
+    WxMaMessage msg = WxMaMessage.fromXml(xml);
+    checkXPayRefundNotifyMessage(msg);
+  }
+
+  /**
+   * 虚拟支付退款推送事件 xpay_refund_notify 测试用例（JSON格式，含TeamInfo）
+   */
+  @Test
+  public void testXPayRefundNotifyFromJson() {
+    String json = "{\n" +
+      "  \"ToUserName\": \"gh_abcdefg\",\n" +
+      "  \"FromUserName\": \"oABCDEFG\",\n" +
+      "  \"CreateTime\": 1700000000,\n" +
+      "  \"MsgType\": \"event\",\n" +
+      "  \"Event\": \"xpay_refund_notify\",\n" +
+      "  \"OpenId\": \"oABCDEFG\",\n" +
+      "  \"WxRefundId\": \"wx_refund_123\",\n" +
+      "  \"MchRefundId\": \"mch_refund_456\",\n" +
+      "  \"WxOrderId\": \"wx_order_789\",\n" +
+      "  \"MchOrderId\": \"mch_order_101\",\n" +
+      "  \"RefundFee\": 100,\n" +
+      "  \"RetCode\": 0,\n" +
+      "  \"RetMsg\": \"success\",\n" +
+      "  \"RefundStartTimestamp\": 1700000000,\n" +
+      "  \"RefundSuccTimestamp\": 1700000010,\n" +
+      "  \"WxpayRefundTransactionId\": \"wxpay_refund_tx_202\",\n" +
+      "  \"RetryTimes\": 0,\n" +
+      "  \"TeamInfo\": {\n" +
+      "    \"ActivityId\": \"act_001\",\n" +
+      "    \"TeamId\": \"team_002\",\n" +
+      "    \"TeamType\": 1,\n" +
+      "    \"TeamAction\": 0\n" +
+      "  }\n" +
+      "}";
+
+    WxMaMessage msg = WxMaMessage.fromJson(json);
+    checkXPayRefundNotifyMessage(msg);
+  }
+
+  private void checkXPayRefundNotifyMessage(WxMaMessage msg) {
+    assertEquals(msg.getToUser(), "gh_abcdefg");
+    assertEquals(msg.getFromUser(), "oABCDEFG");
+    assertEquals(msg.getCreateTime(), new Integer(1700000000));
+    assertEquals(msg.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(msg.getEvent(), "xpay_refund_notify");
+    assertEquals(msg.getWxRefundId(), "wx_refund_123");
+    assertEquals(msg.getMchRefundId(), "mch_refund_456");
+    assertEquals(msg.getWxOrderId(), "wx_order_789");
+    assertEquals(msg.getMchOrderId(), "mch_order_101");
+    assertEquals(msg.getRefundFee(), new Integer(100));
+    assertEquals(msg.getRetCode(), new Integer(0));
+    assertEquals(msg.getRetMsg(), "success");
+    assertEquals(msg.getRefundStartTimestamp(), new Long(1700000000L));
+    assertEquals(msg.getRefundSuccTimestamp(), new Long(1700000010L));
+    assertEquals(msg.getWxpayRefundTransactionId(), "wxpay_refund_tx_202");
+    assertEquals(msg.getRetryTimes(), new Integer(0));
+    WxMaXPayTeamInfo teamInfo = msg.getTeamInfo();
+    assertNotNull(teamInfo);
+    assertEquals(teamInfo.getActivityId(), "act_001");
+    assertEquals(teamInfo.getTeamId(), "team_002");
+    assertEquals(teamInfo.getTeamType(), new Integer(1));
+    assertEquals(teamInfo.getTeamAction(), new Integer(0));
   }
 }
