@@ -1,6 +1,5 @@
 package com.github.binarywang.wxpay.v3.auth;
 
-import com.github.binarywang.wxpay.config.WxPayHttpProxy;
 import org.testng.annotations.Test;
 
 import java.nio.charset.StandardCharsets;
