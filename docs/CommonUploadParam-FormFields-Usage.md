@@ -165,4 +165,5 @@ public class ByteArrayUploadExample {
 
 ## 兼容性
 
-该功能向后兼容，现有的不使用额外表单字段的代码无需修改即可继续工作。
+- 对于通过 `fromFile`、`fromBytes` 等工厂方法创建 `CommonUploadParam` 的代码，本功能在行为层面是向后兼容的，现有代码无需修改即可继续工作。
+- 如果之前直接使用构造函数（例如 `new CommonUploadParam(name, data)`）创建对象，由于新增了 `formFields` 字段，构造函数签名可能发生变化，升级后需要改为使用上述工厂方法或根据新构造函数签名调整代码。
