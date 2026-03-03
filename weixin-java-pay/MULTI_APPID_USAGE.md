@@ -99,7 +99,7 @@ WxPayUnifiedOrderResult result = payService
     .unifiedOrder(request);
 ```
 
-### 2. 获取配置的方式
+### 3. 获取配置的方式
 
 #### 方式一：直接获取配置（推荐，新功能）
 
