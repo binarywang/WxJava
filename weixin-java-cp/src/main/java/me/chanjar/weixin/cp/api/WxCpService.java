@@ -209,6 +209,19 @@ public interface WxCpService extends WxService {
 
   /**
    * <pre>
+   * 使用会话存档access token发起post请求
+   * 会话存档相关API需要使用会话存档专用的secret获取独立的access token
+   * </pre>
+   *
+   * @param url      接口地址
+   * @param postData 请求body字符串
+   * @return the string
+   * @throws WxErrorException the wx error exception
+   */
+  String postForMsgAudit(String url, String postData) throws WxErrorException;
+
+  /**
+   * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
    * 可以参考，{@link MediaUploadRequestExecutor}的实现方法

@@ -297,18 +297,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
   @Override
   public List<String> getPermitUserList(Integer type) throws WxErrorException {
-    // 获取会话存档专用的access token
-    String msgAuditAccessToken = this.cpService.getMsgAuditAccessToken(false);
     final String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_PERMIT_USER_LIST);
-    // 手动拼接access_token参数
-    String urlWithToken = apiUrl + (apiUrl.contains("?") ? "&" : "?") + "access_token=" + msgAuditAccessToken;
-    
     JsonObject jsonObject = new JsonObject();
     if (type != null) {
       jsonObject.addProperty("type", type);
     }
-    // 使用不自动添加access token的post方法
-    String responseContent = this.cpService.postWithoutToken(urlWithToken, jsonObject.toString());
+    String responseContent = this.cpService.postForMsgAudit(apiUrl, jsonObject.toString());
     return WxCpGsonBuilder.create().fromJson(GsonParser.parse(responseContent).getAsJsonArray("ids"),
       new TypeToken<List<String>>() {
       }.getType());
@@ -316,29 +310,17 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
   @Override
   public WxCpGroupChat getGroupChat(@NonNull String roomid) throws WxErrorException {
-    // 获取会话存档专用的access token
-    String msgAuditAccessToken = this.cpService.getMsgAuditAccessToken(false);
     final String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(GET_GROUP_CHAT);
-    // 手动拼接access_token参数
-    String urlWithToken = apiUrl + (apiUrl.contains("?") ? "&" : "?") + "access_token=" + msgAuditAccessToken;
-    
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("roomid", roomid);
-    // 使用不自动添加access token的post方法
-    String responseContent = this.cpService.postWithoutToken(urlWithToken, jsonObject.toString());
+    String responseContent = this.cpService.postForMsgAudit(apiUrl, jsonObject.toString());
     return WxCpGroupChat.fromJson(responseContent);
   }
 
   @Override
   public WxCpAgreeInfo checkSingleAgree(@NonNull WxCpCheckAgreeRequest checkAgreeRequest) throws WxErrorException {
-    // 获取会话存档专用的access token
-    String msgAuditAccessToken = this.cpService.getMsgAuditAccessToken(false);
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(CHECK_SINGLE_AGREE);
-    // 手动拼接access_token参数
-    String urlWithToken = apiUrl + (apiUrl.contains("?") ? "&" : "?") + "access_token=" + msgAuditAccessToken;
-    
-    // 使用不自动添加access token的post方法
-    String responseContent = this.cpService.postWithoutToken(urlWithToken, checkAgreeRequest.toJson());
+    String responseContent = this.cpService.postForMsgAudit(apiUrl, checkAgreeRequest.toJson());
     return WxCpAgreeInfo.fromJson(responseContent);
   }
 

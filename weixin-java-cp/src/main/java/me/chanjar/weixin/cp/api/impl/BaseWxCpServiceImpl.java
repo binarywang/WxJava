@@ -301,6 +301,16 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     return this.executeNormal(SimplePostRequestExecutor.create(this), url, postData);
   }
 
+  @Override
+  public String postForMsgAudit(String url, String postData) throws WxErrorException {
+    // 获取会话存档专用的access token
+    String msgAuditAccessToken = getMsgAuditAccessToken(false);
+    // 拼接access_token参数
+    String urlWithToken = url + (url.contains("?") ? "&" : "?") + "access_token=" + msgAuditAccessToken;
+    // 使用executeNormal方法，不自动添加token
+    return this.executeNormal(SimplePostRequestExecutor.create(this), urlWithToken, postData);
+  }
+
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求.
    */
