@@ -215,12 +215,40 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public void addConfig(String configKey, WxPayConfig wxPayConfig) {
+    synchronized (this) {
+      if (this.configMap == null) {
+        this.setMultiConfig(ImmutableMap.of(configKey, wxPayConfig), configKey);
+      } else {
+        WxPayConfigHolder.set(configKey);
+        this.configMap.put(configKey, wxPayConfig);
+      }
+    }
+  }
+
+  @Override
   public void removeConfig(String mchId, String appId) {
     synchronized (this) {
       String configKey = this.getConfigKey(mchId, appId);
       this.configMap.remove(configKey);
       if (this.configMap.isEmpty()) {
         log.warn("已删除最后一个商户号配置：mchId[{}],appid[{}]，须立即使用setConfig或setMultiConfig添加配置", mchId, appId);
+        return;
+      }
+      if (WxPayConfigHolder.get().equals(configKey)) {
+        final String nextConfigKey = this.configMap.keySet().iterator().next();
+        WxPayConfigHolder.set(nextConfigKey);
+        log.warn("已删除默认商户号配置，商户号【{}】被设为默认配置", nextConfigKey);
+      }
+    }
+  }
+
+  @Override
+  public void removeConfig(String configKey) {
+    synchronized (this) {
+      this.configMap.remove(configKey);
+      if (this.configMap.isEmpty()) {
+        log.warn("已删除最后一个商户号配置：configKey[{}]，须立即使用setConfig或setMultiConfig添加配置", configKey);
         return;
       }
       if (WxPayConfigHolder.get().equals(configKey)) {
@@ -244,6 +272,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public boolean switchover(String mchId, String appId) {
+    // 如果appId为空，则降级为仅使用mchId进行切换
+    if (StringUtils.isBlank(appId)) {
+      return this.switchover(mchId);
+    }
     String configKey = this.getConfigKey(mchId, appId);
     if (this.configMap.containsKey(configKey)) {
       WxPayConfigHolder.set(configKey);
@@ -283,6 +315,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayService switchoverTo(String mchId, String appId) {
+    // 如果appId为空，则降级为仅使用mchId进行切换
+    if (StringUtils.isBlank(appId)) {
+      return this.switchoverTo(mchId);
+    }
     String configKey = this.getConfigKey(mchId, appId);
     if (this.configMap.containsKey(configKey)) {
       WxPayConfigHolder.set(configKey);

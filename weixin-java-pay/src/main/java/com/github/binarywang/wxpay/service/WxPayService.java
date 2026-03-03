@@ -38,6 +38,7 @@ public interface WxPayService {
 
   /**
    * Map里 加入新的 {@link WxPayConfig}，适用于动态添加新的微信商户配置.
+   * 配置键将使用 mchId + "_" + appId 的格式.
    *
    * @param mchId       商户id
    * @param appId       微信应用id
@@ -46,12 +47,29 @@ public interface WxPayService {
   void addConfig(String mchId, String appId, WxPayConfig wxPayConfig);
 
   /**
+   * Map里 加入新的 {@link WxPayConfig}，使用自定义配置键，适用于动态添加新的微信商户配置.
+   * 此方法允许使用任意唯一标识符（如租户ID）作为配置键，兼容单参数 switchover 使用方式.
+   *
+   * @param configKey   自定义的配置键（全局唯一标识符，如租户ID）
+   * @param wxPayConfig 新的微信配置
+   */
+  void addConfig(String configKey, WxPayConfig wxPayConfig);
+
+  /**
    * 从 Map中 移除 {@link String mchId} 和 {@link String appId} 所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
    *
    * @param mchId 对应商户的标识
    * @param appId 微信应用id
    */
   void removeConfig(String mchId, String appId);
+
+  /**
+   * 从 Map中 移除指定配置键所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
+   * 此方法允许使用任意唯一标识符（如租户ID）删除配置，兼容单参数 switchover 使用方式.
+   *
+   * @param configKey 自定义的配置键（全局唯一标识符，如租户ID）
+   */
+  void removeConfig(String configKey);
 
   /**
    * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String mchId} 值
@@ -79,14 +97,17 @@ public interface WxPayService {
   boolean switchover(String mchId, String appId);
 
   /**
-   * 仅根据商户号进行切换.
-   * 适用于一个商户号对应多个appId的场景，切换时会匹配符合该商户号的配置.
-   * 注意：由于HashMap迭代顺序不确定，当存在多个匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   * 根据商户号或自定义配置键进行切换.
+   * <ul>
+   *   <li>当传入商户号（mchId）时，会先尝试精确匹配，若未找到则前缀匹配（mchId_*）。</li>
+   *   <li>也可传入通过 {@link #addConfig(String, WxPayConfig)} 或 {@link #setMultiConfig(Map)} 注册的任意自定义配置键，此时直接精确匹配。</li>
+   * </ul>
+   * 注意：当存在多个前缀匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
    *
-   * @param mchId 商户标识
+   * @param mchIdOrConfigKey 商户标识或自定义配置键
    * @return 切换是否成功，如果找不到匹配的配置则返回false
    */
-  default boolean switchover(String mchId) {
+  default boolean switchover(String mchIdOrConfigKey) {
     return false;
   }
 
@@ -100,15 +121,18 @@ public interface WxPayService {
   WxPayService switchoverTo(String mchId, String appId);
 
   /**
-   * 仅根据商户号进行切换.
-   * 适用于一个商户号对应多个appId的场景，切换时会匹配符合该商户号的配置.
-   * 注意：由于HashMap迭代顺序不确定，当存在多个匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   * 根据商户号或自定义配置键进行切换，支持链式调用.
+   * <ul>
+   *   <li>当传入商户号（mchId）时，会先尝试精确匹配，若未找到则前缀匹配（mchId_*）。</li>
+   *   <li>也可传入通过 {@link #addConfig(String, WxPayConfig)} 或 {@link #setMultiConfig(Map)} 注册的任意自定义配置键，此时直接精确匹配。</li>
+   * </ul>
+   * 注意：当存在多个前缀匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
    *
-   * @param mchId 商户标识
+   * @param mchIdOrConfigKey 商户标识或自定义配置键
    * @return 切换成功，则返回当前对象，方便链式调用
    * @throws me.chanjar.weixin.common.error.WxRuntimeException 如果找不到匹配的配置
    */
-  default WxPayService switchoverTo(String mchId) {
+  default WxPayService switchoverTo(String mchIdOrConfigKey) {
     throw new me.chanjar.weixin.common.error.WxRuntimeException("子类需要实现此方法");
   }
 

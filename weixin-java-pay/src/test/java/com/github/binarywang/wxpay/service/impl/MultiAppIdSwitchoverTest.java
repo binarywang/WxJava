@@ -414,4 +414,133 @@ public class MultiAppIdSwitchoverTest {
     assertTrue(success);
     assertEquals(testService.getConfig().getAppId(), appId2);
   }
+
+  /**
+   * 测试使用自定义唯一键（非mchId格式）添加配置并切换.
+   * 验证向后兼容性：支持使用任意唯一标识符（如租户ID）管理配置
+   */
+  @Test
+  public void testAddConfigWithCustomKey() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String customKey1 = "tenant_001";
+    String customKey2 = "tenant_002";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId("mch001");
+    config1.setAppId("wxabc");
+    config1.setMchKey("key_tenant_001");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId("mch002");
+    config2.setAppId("wxdef");
+    config2.setMchKey("key_tenant_002");
+
+    // 使用自定义键添加配置
+    testService.addConfig(customKey1, config1);
+    testService.addConfig(customKey2, config2);
+
+    // 使用自定义键切换配置
+    boolean success = testService.switchover(customKey1);
+    assertTrue(success, "应该能够使用自定义键切换配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant_001");
+
+    success = testService.switchover(customKey2);
+    assertTrue(success, "应该能够切换到第二个自定义键配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant_002");
+  }
+
+  /**
+   * 测试使用自定义唯一键删除配置.
+   */
+  @Test
+  public void testRemoveConfigWithCustomKey() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String customKey1 = "tenant_A";
+    String customKey2 = "tenant_B";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId("mchA");
+    config1.setAppId("wxA");
+    config1.setMchKey("key_A");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId("mchB");
+    config2.setAppId("wxB");
+    config2.setMchKey("key_B");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(customKey1, config1);
+    configMap.put(customKey2, config2);
+    testService.setMultiConfig(configMap);
+
+    // 删除第一个自定义键配置
+    testService.removeConfig(customKey1);
+
+    // 尝试切换到已删除的配置应该失败
+    boolean success = testService.switchover(customKey1);
+    assertFalse(success, "切换到已删除的配置应该失败");
+
+    // 但仍然能够切换到第二个配置
+    success = testService.switchover(customKey2);
+    assertTrue(success, "切换到未删除的配置应该成功");
+    assertEquals(testService.getConfig().getMchKey(), "key_B");
+  }
+
+  /**
+   * 测试 switchover(mchId, appId) 当 appId 为 null 时降级为 switchover(mchId).
+   * 模拟通知回调中 appId 可能为空的场景
+   */
+  @Test
+  public void testSwitchoverWithNullAppIdFallsBackToMchId() {
+    // 切换到 appId 为 null 时，应该降级为只使用 mchId 匹配
+    boolean success = payService.switchover(testMchId, null);
+    assertTrue(success, "appId为null时应该降级为仅mchId匹配");
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+
+    // appId 为空字符串时同样应该降级
+    success = payService.switchover(testMchId, "");
+    assertTrue(success, "appId为空字符串时应该降级为仅mchId匹配");
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试 switchoverTo(mchId, appId) 当 appId 为 null 时降级为 switchoverTo(mchId).
+   */
+  @Test
+  public void testSwitchoverToWithNullAppIdFallsBackToMchId() {
+    WxPayService result = payService.switchoverTo(testMchId, null);
+    assertNotNull(result);
+    assertEquals(result, payService);
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试使用自定义键通过 setMultiConfig 注册后可以直接 switchover.
+   */
+  @Test
+  public void testSwitchoverWithCustomKeyViaSetMultiConfig() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String tenantId = "my-unique-tenant-id";
+    WxPayConfig config = new WxPayConfig();
+    config.setMchId("mchTenant");
+    config.setAppId("wxTenant");
+    config.setMchKey("key_tenant");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(tenantId, config);
+    testService.setMultiConfig(configMap);
+
+    // 使用自定义租户ID切换
+    boolean success = testService.switchover(tenantId);
+    assertTrue(success, "应该能够使用自定义租户ID切换配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant");
+
+    // switchoverTo 链式调用也应该支持
+    WxPayService result = testService.switchoverTo(tenantId);
+    assertNotNull(result);
+    assertEquals(result, testService);
+  }
 }
