@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.v3.auth;
 
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -14,23 +15,32 @@ import static org.testng.Assert.*;
  */
 public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
 
+  private String invalidMchId;
+  private String invalidApiV3Key;
+  private String invalidCertSerialNo;
+  private String payBaseUrl;
+  private WxPayCredentials credentials;
+
+  @BeforeMethod
+  public void setUp() {
+    // 使用无效的配置，模拟证书下载失败的场景
+    invalidMchId = "invalid_mch_id";
+    invalidApiV3Key = "invalid_api_v3_key_must_be_32_b";
+    invalidCertSerialNo = "invalid_serial_no";
+    payBaseUrl = "https://api.mch.weixin.qq.com";
+
+    credentials = new WxPayCredentials(
+      invalidMchId,
+      new PrivateKeySigner(invalidCertSerialNo, null)
+    );
+  }
+
   /**
    * 测试当证书下载失败时，构造函数不应该抛出异常
    * 这是为了支持公钥模式下的场景，在公钥模式下商户可能没有平台证书
    */
   @Test
   public void testConstructorShouldNotThrowExceptionWhenCertDownloadFails() {
-    // 使用一个无效的配置，模拟证书下载失败的场景
-    String invalidMchId = "invalid_mch_id";
-    String invalidApiV3Key = "invalid_api_v3_key_must_be_32_b";
-    String invalidCertSerialNo = "invalid_serial_no";
-    String payBaseUrl = "https://api.mch.weixin.qq.com";
-
-    WxPayCredentials credentials = new WxPayCredentials(
-      invalidMchId,
-      new PrivateKeySigner(invalidCertSerialNo, null)
-    );
-
     // 构造函数应该不抛出异常，即使证书下载失败
     AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
       credentials,
@@ -48,16 +58,6 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
    */
   @Test
   public void testVerifyShouldReturnFalseWhenNoCertificateAvailable() {
-    String invalidMchId = "invalid_mch_id";
-    String invalidApiV3Key = "invalid_api_v3_key_must_be_32_b";
-    String invalidCertSerialNo = "invalid_serial_no";
-    String payBaseUrl = "https://api.mch.weixin.qq.com";
-
-    WxPayCredentials credentials = new WxPayCredentials(
-      invalidMchId,
-      new PrivateKeySigner(invalidCertSerialNo, null)
-    );
-
     AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
       credentials,
       invalidApiV3Key.getBytes(StandardCharsets.UTF_8),
@@ -77,16 +77,6 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
   @Test(expectedExceptions = me.chanjar.weixin.common.error.WxRuntimeException.class,
     expectedExceptionsMessageRegExp = ".*No valid certificate available.*")
   public void testGetValidCertificateShouldThrowMeaningfulException() {
-    String invalidMchId = "invalid_mch_id";
-    String invalidApiV3Key = "invalid_api_v3_key_must_be_32_b";
-    String invalidCertSerialNo = "invalid_serial_no";
-    String payBaseUrl = "https://api.mch.weixin.qq.com";
-
-    WxPayCredentials credentials = new WxPayCredentials(
-      invalidMchId,
-      new PrivateKeySigner(invalidCertSerialNo, null)
-    );
-
     AutoUpdateCertificatesVerifier verifier = new AutoUpdateCertificatesVerifier(
       credentials,
       invalidApiV3Key.getBytes(StandardCharsets.UTF_8),
