@@ -44,6 +44,20 @@ public class CommonUploadParam implements Serializable {
   private Map<String, String> formFields;
 
   /**
+   * 为保持向后兼容保留的 2 参数构造函数。
+   * <p>
+   * 仅设置文件参数名和上传数据，额外表单字段将为 {@code null}。
+   *
+   * @param name 参数名，如：media
+   * @param data 上传数据
+   * @deprecated 请使用包含 formFields 参数的构造函数或静态工厂方法 {@link #fromFile(String, File)}、{@link #fromBytes(String, String, byte[])}
+   */
+  @Deprecated
+  public CommonUploadParam(@NotNull String name, @NotNull CommonUploadData data) {
+    this(name, data, null);
+  }
+
+  /**
    * 从文件构造
    *
    * @param name 参数名，如：media
