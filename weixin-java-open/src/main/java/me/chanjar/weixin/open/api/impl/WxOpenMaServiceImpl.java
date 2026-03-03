@@ -278,7 +278,7 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   public WxOpenResult setBetaWeappNickName(String name) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("name", name);
-    String response = post(API_SET_BETAE_WEAPP_NICKNAME, GSON.toJson(params));
+    String response = post(API_SET_BETA_WEAPP_NICKNAME, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 

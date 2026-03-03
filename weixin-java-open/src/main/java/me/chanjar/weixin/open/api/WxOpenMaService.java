@@ -132,7 +132,7 @@ public interface WxOpenMaService extends WxMaService {
   /**
    * 3.1 修改试用小程序名称
    */
-  String API_SET_BETAE_WEAPP_NICKNAME = "https://api.weixin.qq.com/wxa/setbetaweappnickname";
+  String API_SET_BETA_WEAPP_NICKNAME = "https://api.weixin.qq.com/wxa/setbetaweappnickname";
 
   /**
    * 4. 获取授权小程序帐号的可选类目
