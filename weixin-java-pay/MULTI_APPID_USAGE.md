@@ -64,13 +64,15 @@ payService.setMultiConfig(configMap);
 WxPayConfig config1 = payService.getConfig("1234567890", "wx1111111111111111");
 
 // 仅使用商户号获取配置（会返回该商户号的任意一个配置）
+// 注意：当存在多个 appId 时，返回结果基于内部存储顺序，不应依赖其稳定性
 WxPayConfig config = payService.getConfig("1234567890");
 
-// 使用获取的配置进行支付操作
+// 使用获取的配置读取信息（仅用于读取配置，不用于执行支付操作）
 if (config != null) {
   String appId = config.getAppId();
   String mchKey = config.getMchKey();
-  // ... 使用配置信息
+  String apiV3Key = config.getApiV3Key();
+  // ... 使用配置信息进行业务逻辑判断或记录
 }
 ```
 
@@ -80,9 +82,14 @@ if (config != null) {
 - 线程安全，不会因为线程切换导致配置丢失
 - 可以同时获取多个不同的配置
 
+**使用场景**：
+- 仅需读取配置信息（如获取 mchKey、appId 等）
+- 不需要执行 WxPayService 的支付相关方法
+- 如需执行支付操作，请使用方式二的 switchover 方法
+
 #### 方式二：切换配置后使用（原有方式）
 
-通过切换配置，然后调用 `getConfig()` 获取当前配置：
+通过切换配置，然后调用 `getConfig()` 获取当前配置或直接执行支付操作：
 
 ```java
 // 精确切换到指定的配置
@@ -92,9 +99,16 @@ WxPayConfig config = payService.getConfig();  // 获取当前切换的配置
 // 仅使用商户号切换
 payService.switchover("1234567890");
 config = payService.getConfig();  // 获取切换后的配置
+
+// 切换后可直接执行支付操作
+WxPayUnifiedOrderResult result = payService.unifiedOrder(request);
 ```
 
 **注意**：此方式依赖 ThreadLocal，需要注意线程上下文的问题。
+
+**使用场景**：
+- 需要执行 WxPayService 的支付相关方法（如 unifiedOrder、refund 等）
+- 在同一线程中连续执行多个支付操作
 
 ### 3. 切换配置的方式
 
@@ -239,19 +253,19 @@ public void processMerchantOrder(String mchId, String appId, Order order) {
     // ... 处理订单逻辑
 }
 
-// 或者在不确定 appId 的情况下
+// 或者在不确定 appId 的情况下，仅通过商户号发起退款
 public void processRefund(String mchId, String outTradeNo) {
-    // 获取该商户号的任意一个配置
-    WxPayConfig config = payService.getConfig(mchId);
-    
-    if (config == null) {
-        log.error("找不到商户配置：mchId={}", mchId);
+    // 直接根据商户号切换（内部会选择该商户号下的一个配置）
+    if (!payService.switchover(mchId)) {
+        log.error("商户配置切换失败：mchId={}", mchId);
         return;
     }
     
-    // 先切换到该配置，然后进行退款
-    payService.switchover(mchId, config.getAppId());
-    // ... 执行退款操作
+    // 在完成上下文切换后，执行退款操作
+    WxPayRefundRequest request = new WxPayRefundRequest();
+    request.setOutTradeNo(outTradeNo);
+    // ... 设置其他退款参数
+    WxPayRefundResult refundResult = payService.refund(request);
 }
 ```
 

@@ -182,15 +182,17 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
     // 尝试前缀匹配（查找以 mchId_ 开头的配置）
     String prefix = mchId + "_";
-    for (Map.Entry<String, WxPayConfig> entry : this.configMap.entrySet()) {
-      if (entry.getKey().startsWith(prefix)) {
+    return this.configMap.entrySet().stream()
+      .filter(entry -> entry.getKey().startsWith(prefix))
+      .findFirst()
+      .map(entry -> {
         log.debug("根据mchId=【{}】找到配置key=【{}】", mchId, entry.getKey());
         return entry.getValue();
-      }
-    }
-
-    log.warn("无法找到对应mchId=【{}】的商户号配置信息", mchId);
-    return null;
+      })
+      .orElseGet(() -> {
+        log.warn("无法找到对应mchId=【{}】的商户号配置信息", mchId);
+        return null;
+      });
   }
 
   @Override
