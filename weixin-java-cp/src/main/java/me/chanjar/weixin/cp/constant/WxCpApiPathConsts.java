@@ -1710,16 +1710,16 @@ public interface WxCpApiPathConsts {
     /**
      * 获取员工档案字段信息.
      */
-    String GET_FIELD_INFO = "/cgi-bin/hr/employee/get_field_info";
+    String GET_FIELD_INFO = "/cgi-bin/hr/get_fields";
 
     /**
      * 获取员工档案数据.
      */
-    String GET_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/employee/get_employee_field_info";
+    String GET_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/get_staff_info";
 
     /**
      * 更新员工档案数据.
      */
-    String UPDATE_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/employee/update_employee_field_info";
+    String UPDATE_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/update_staff_info";
   }
 }
