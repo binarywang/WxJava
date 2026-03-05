@@ -17,7 +17,7 @@ import static org.testng.AssertJUnit.assertNotNull;
 /**
  * 微信小程序人脸核身服务测试类
  *
- * @author <a href="https://github.com/github-copilot">Github Copilot</a>
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
  */
 @Test
 @Guice(modules = ApiTestModule.class)
