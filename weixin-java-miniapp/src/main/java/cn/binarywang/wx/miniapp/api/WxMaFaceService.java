@@ -12,7 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 文档地址：<a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/face/">微信人脸核身接口列表</a>
  * </p>
  *
- * @author <a href="https://github.com/github-copilot">Github Copilot</a>
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
  */
 public interface WxMaFaceService {
 
