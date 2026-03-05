@@ -631,4 +631,13 @@ public interface WxMaService extends WxService {
    * @return                 用工关系服务对象WxMaEmployeeRelationService
    */
   WxMaEmployeeRelationService getEmployeeRelationService();
+
+  /**
+   * 获取人脸核身服务对象。
+   * <br>
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/server/API/face/
+   *
+   * @return                 人脸核身服务对象WxMaFaceService
+   */
+  WxMaFaceService getFaceService();
 }

@@ -1018,4 +1018,17 @@ public class WxMaApiUrlConstants {
     /** 推送用工消息 */
     String SEND_EMPLOYEE_MSG_URL = "https://api.weixin.qq.com/cgi-bin/message/wxopen/employeerelationmsg/send";
   }
+
+  /**
+   * 微信人脸核身接口
+   * <pre>
+   * 文档地址: https://developers.weixin.qq.com/miniprogram/dev/server/API/face/
+   * </pre>
+   */
+  public interface Face {
+    /** 获取用户人脸核身会话唯一标识 */
+    String GET_VERIFY_ID_URL = "https://api.weixin.qq.com/cityservice/face/identify/getverifyid";
+    /** 查询用户人脸核身真实验证结果 */
+    String QUERY_VERIFY_INFO_URL = "https://api.weixin.qq.com/cityservice/face/identify/queryverifyinfo";
+  }
 }
