@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 文档地址：<a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/face/api_queryverifyinfo">查询用户人脸核身真实验证结果</a>
  * </p>
  *
- * @author <a href="https://github.com/github-copilot">Github Copilot</a>
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
  */
 @Data
 @NoArgsConstructor

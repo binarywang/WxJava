@@ -15,7 +15,7 @@ import java.io.Serializable;
  * 文档地址：<a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/face/api_getverifyid">获取用户人脸核身会话唯一标识</a>
  * </p>
  *
- * @author <a href="https://github.com/github-copilot">Github Copilot</a>
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
  */
 @Data
 @Builder
