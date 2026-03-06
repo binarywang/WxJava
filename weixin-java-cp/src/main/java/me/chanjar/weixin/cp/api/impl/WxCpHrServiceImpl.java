@@ -41,13 +41,13 @@ public class WxCpHrServiceImpl implements WxCpHrService {
   @Override
   public WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(List<String> userids, List<String> fields) throws WxErrorException {
     if (userids == null || userids.isEmpty()) {
-      throw new IllegalArgumentException("userids 不能为空");
+      throw new IllegalArgumentException("userid 不能为空");
     }
     if (userids.size() > 20) {
-      throw new IllegalArgumentException("userids 每次最多传入20个");
+      throw new IllegalArgumentException("userid 每次最多传入20个");
     }
     JsonObject jsonObject = new JsonObject();
-    jsonObject.add("userids", WxCpGsonBuilder.create().toJsonTree(userids));
+    jsonObject.add("userid", WxCpGsonBuilder.create().toJsonTree(userids));
     if (fields != null && !fields.isEmpty()) {
       jsonObject.add("fields", WxCpGsonBuilder.create().toJsonTree(fields));
     }
