@@ -37,12 +37,12 @@ public interface WxCpHrService {
    * 权限说明：
    * 需要配置人事助手的secret，调用接口前需给对应成员赋予人事小助手应用的权限。
    *
-   * @param userids 员工userid列表，不超过20个
-   * @param fields  指定字段key列表，不填则返回全部字段
+   * @param userid 员工userid
+   * @param fields 指定字段key列表，不填则返回全部字段
    * @return 员工档案数据响应 wx cp hr employee field data resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(List<String> userids, List<String> fields) throws WxErrorException;
+  WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, List<String> fields) throws WxErrorException;
 
   /**
    * 更新员工档案数据.

@@ -75,7 +75,7 @@ public class WxCpHrServiceImplTest {
   public void testGetEmployeeFieldInfo() throws WxErrorException {
     WxCpHrService hrService = this.wxCpService.getHrService();
     WxCpHrEmployeeFieldDataResp resp = hrService.getEmployeeFieldInfo(
-      Collections.singletonList(this.configStorage.getUserId()), null);
+      this.configStorage.getUserId(), null);
     assertThat(resp).isNotNull();
     assertThat(resp.getEmployeeFieldList()).isNotNull();
     log.info("获取员工档案数据: {}", resp);
