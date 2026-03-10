@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import me.chanjar.weixin.cp.bean.external.msg.Attachment;
+import me.chanjar.weixin.cp.bean.external.msg.TagFilter;
 import me.chanjar.weixin.cp.bean.external.msg.Text;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
@@ -42,6 +43,12 @@ public class WxCpMsgTemplate implements Serializable {
    */
   @SerializedName("chat_id_list")
   private List<String> chatIdList;
+
+  /**
+   * 要进行群发的客户标签列表，同组标签之间按或关系进行筛选，不同组标签按且关系筛选，每组最多指定100个标签，支持规则组标签
+   */
+  @SerializedName("tag_filter")
+  private TagFilter tagFilter;
 
   /**
    * 发送企业群发消息的成员userid，当类型为发送给客户群时必填
