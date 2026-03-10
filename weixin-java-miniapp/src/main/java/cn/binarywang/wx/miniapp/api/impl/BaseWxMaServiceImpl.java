@@ -908,6 +908,23 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     return Base64.getEncoder().encodeToString(data);
   }
 
+  /**
+   * 构造 RSA 待签名串。
+   *
+   * <p>根据微信官方 API 签名规范，待签名串格式为：<br>
+   * {@code urlpath\nappid\ntimestamp\npostdata}<br>
+   * 字段之间使用换行符 {@code \n} 分隔，共 4 个字段，末尾无额外回车符。
+   *
+   * @param urlPath     当前请求 API 的 URL，不含 Query 参数
+   * @param appId       小程序 AppId
+   * @param timestamp   签名时的时间戳
+   * @param postData    加密后的请求 POST 数据（JSON 字符串）
+   * @return 拼接好的待签名串
+   */
+  static String buildSignaturePayload(String urlPath, String appId, long timestamp, String postData) {
+    return urlPath + "\n" + appId + "\n" + timestamp + "\n" + postData;
+  }
+
   @Override
   public String postWithSignature(String url, JsonObject jsonObject) throws WxErrorException {
     long timestamp = System.currentTimeMillis() / 1000;
@@ -963,7 +980,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       String requestJson = reqData.toString();
 
       // 计算签名 RSA，待签名串格式：urlpath\nappid\ntimestamp\npostdata
-      String payload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + requestJson;
+      String payload = buildSignaturePayload(urlPath, appId, timestamp, requestJson);
       byte[] dataBuffer = payload.getBytes(StandardCharsets.UTF_8);
       RSAPrivateKey priKey;
       try {

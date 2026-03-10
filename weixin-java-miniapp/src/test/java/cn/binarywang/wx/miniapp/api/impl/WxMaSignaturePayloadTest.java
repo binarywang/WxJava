@@ -1,25 +1,17 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 
-import java.nio.charset.StandardCharsets;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.Signature;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.security.spec.MGF1ParameterSpec;
-import java.security.spec.PSSParameterSpec;
-import java.util.Base64;
 import org.testng.annotations.Test;
 
 /**
  * 验证同城配送 API 签名 payload 格式的单元测试。
  *
- * <p>根据微信官方文档，待签名串格式为：<br>
+ * <p>直接测试 {@link BaseWxMaServiceImpl#buildSignaturePayload} 生产方法，
+ * 确保待签名串格式符合微信官方规范：<br>
  * {@code urlpath\nappid\ntimestamp\npostdata}<br>
- * 字段之间使用换行符 {@code \n} 分隔，末尾无额外回车符。
+ * 共 4 个字段，字段间以换行符 {@code \n} 分隔，末尾无额外回车符。
  *
  * @author GitHub Copilot
  * @see <a
@@ -28,85 +20,52 @@ import org.testng.annotations.Test;
  */
 public class WxMaSignaturePayloadTest {
 
+  private static final String URL_PATH =
+      "https://api.weixin.qq.com/cgi-bin/express/intracity/createstore";
+  private static final String APP_ID = "wx1234567890abcdef";
+  private static final long TIMESTAMP = 1700000000L;
+  private static final String POST_DATA = "{\"iv\":\"abc\",\"data\":\"xyz\",\"authtag\":\"tag\"}";
+  private static final String RSA_KEY_SN = "some_serial_number";
+
   /**
-   * 验证正确的签名 payload 格式（不含 rsaKeySn）可以通过签名验证，
-   * 即格式为：urlpath\nappid\ntimestamp\npostdata
+   * 验证 buildSignaturePayload 返回的待签名串恰好包含 4 个字段，
+   * 格式为：urlpath\nappid\ntimestamp\npostdata
    */
   @Test
-  public void testCorrectSignaturePayloadFormat() throws Exception {
-    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-    keyGen.initialize(2048);
-    KeyPair keyPair = keyGen.generateKeyPair();
-    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+  public void testPayloadHasExactlyFourFields() {
+    String payload =
+        BaseWxMaServiceImpl.buildSignaturePayload(URL_PATH, APP_ID, TIMESTAMP, POST_DATA);
 
-    String urlPath = "https://api.weixin.qq.com/cgi-bin/express/intracity/createstore";
-    String appId = "wx1234567890abcdef";
-    long timestamp = 1700000000L;
-    String requestJson = "{\"iv\":\"abc\",\"data\":\"xyz\",\"authtag\":\"tag\"}";
-
-    // 正确格式：urlpath\nappid\ntimestamp\npostdata（不含 rsaKeySn）
-    String correctPayload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + requestJson;
-    byte[] dataBuffer = correctPayload.getBytes(StandardCharsets.UTF_8);
-
-    Signature signer = Signature.getInstance("RSASSA-PSS");
-    PSSParameterSpec pssSpec = new PSSParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, 32, 1);
-    signer.setParameter(pssSpec);
-    signer.initSign(privateKey);
-    signer.update(dataBuffer);
-    byte[] sigBytes = signer.sign();
-    String signatureStr = Base64.getEncoder().encodeToString(sigBytes);
-
-    // 使用公钥验证签名
-    Signature verifier = Signature.getInstance("RSASSA-PSS");
-    verifier.setParameter(pssSpec);
-    verifier.initVerify(publicKey);
-    verifier.update(dataBuffer);
-    assertTrue(verifier.verify(Base64.getDecoder().decode(signatureStr)),
-        "正确格式的签名应该能通过验证");
+    String[] parts = payload.split("\n", -1);
+    assertEquals(parts.length, 4, "待签名串应恰好包含 4 个字段（urlpath、appid、timestamp、postdata）");
+    assertEquals(parts[0], URL_PATH, "第 1 段应为 urlpath");
+    assertEquals(parts[1], APP_ID, "第 2 段应为 appid");
+    assertEquals(parts[2], String.valueOf(TIMESTAMP), "第 3 段应为 timestamp");
+    assertEquals(parts[3], POST_DATA, "第 4 段应为 postdata");
   }
 
   /**
-   * 验证错误的签名 payload（含 rsaKeySn）签名后，用正确 payload 验证会失败。
-   * 这证明了原来代码中将 rsaKeySn 加入 payload 是错误的。
+   * 验证 buildSignaturePayload 返回的待签名串不包含 rsaKeySn。
+   * rsaKeySn 应通过请求头 Wechatmp-Serial 传递，而不应出现在签名 payload 中。
    */
   @Test
-  public void testIncorrectPayloadWithRsaKeySnFails() throws Exception {
-    KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-    keyGen.initialize(2048);
-    KeyPair keyPair = keyGen.generateKeyPair();
-    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+  public void testPayloadDoesNotContainRsaKeySn() {
+    String payload =
+        BaseWxMaServiceImpl.buildSignaturePayload(URL_PATH, APP_ID, TIMESTAMP, POST_DATA);
 
-    String urlPath = "https://api.weixin.qq.com/cgi-bin/express/intracity/createstore";
-    String appId = "wx1234567890abcdef";
-    long timestamp = 1700000000L;
-    String rsaKeySn = "some_serial_number";
-    String requestJson = "{\"iv\":\"abc\",\"data\":\"xyz\",\"authtag\":\"tag\"}";
+    assertFalse(payload.contains(RSA_KEY_SN),
+        "待签名串不应包含 rsaKeySn，rsaKeySn 应通过请求头 Wechatmp-Serial 传递");
+  }
 
-    // 错误格式：payload 中包含了 rsaKeySn（修复前的代码逻辑）
-    String incorrectPayload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + rsaKeySn + "\n" + requestJson;
-    byte[] incorrectData = incorrectPayload.getBytes(StandardCharsets.UTF_8);
+  /**
+   * 验证 buildSignaturePayload 返回的待签名串与预期格式完全一致。
+   */
+  @Test
+  public void testPayloadMatchesExpectedFormat() {
+    String expected = URL_PATH + "\n" + APP_ID + "\n" + TIMESTAMP + "\n" + POST_DATA;
+    String actual =
+        BaseWxMaServiceImpl.buildSignaturePayload(URL_PATH, APP_ID, TIMESTAMP, POST_DATA);
 
-    Signature signer = Signature.getInstance("RSASSA-PSS");
-    PSSParameterSpec pssSpec = new PSSParameterSpec("SHA-256", "MGF1", MGF1ParameterSpec.SHA256, 32, 1);
-    signer.setParameter(pssSpec);
-    signer.initSign(privateKey);
-    signer.update(incorrectData);
-    byte[] sigBytes = signer.sign();
-    String signatureStr = Base64.getEncoder().encodeToString(sigBytes);
-
-    // 用正确格式的 payload 去验证签名，应该失败
-    String correctPayload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + requestJson;
-    byte[] correctData = correctPayload.getBytes(StandardCharsets.UTF_8);
-
-    Signature verifier = Signature.getInstance("RSASSA-PSS");
-    verifier.setParameter(pssSpec);
-    verifier.initVerify(publicKey);
-    verifier.update(correctData);
-
-    boolean verified = verifier.verify(Base64.getDecoder().decode(signatureStr));
-    assertFalse(verified, "用错误 payload 生成的签名不应该通过正确 payload 的验证，"
-        + "说明 rsaKeySn 不应该包含在签名 payload 中");
+    assertEquals(actual, expected, "待签名串格式应为：urlpath\\nappid\\ntimestamp\\npostdata");
   }
 }
