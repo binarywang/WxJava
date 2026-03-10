@@ -35,7 +35,7 @@ public class WechatPayUploadHttpPost extends HttpPost {
       this.uri = uri;
     }
 
-    public Builder withImage(String fileName, String fileSha256, InputStream inputStream) {
+    private Builder withMedia(String fileName, String fileSha256, InputStream inputStream) {
       this.fileName = fileName;
       this.fileSha256 = fileSha256;
       this.fileInputStream = inputStream;
@@ -50,13 +50,21 @@ public class WechatPayUploadHttpPost extends HttpPost {
       return this;
     }
 
+    public Builder withImage(String fileName, String fileSha256, InputStream inputStream) {
+      return withMedia(fileName, fileSha256, inputStream);
+    }
+
+    public Builder withVideo(String fileName, String fileSha256, InputStream inputStream) {
+      return withMedia(fileName, fileSha256, inputStream);
+    }
+
     public WechatPayUploadHttpPost build() {
       if (fileName == null || fileSha256 == null || fileInputStream == null) {
-        throw new IllegalArgumentException("缺少待上传图片文件信息");
+        throw new IllegalArgumentException("缺少待上传文件信息");
       }
 
       if (uri == null) {
-        throw new IllegalArgumentException("缺少上传图片接口URL");
+        throw new IllegalArgumentException("缺少上传文件接口URL");
       }
 
       String meta = String.format("{\"filename\":\"%s\",\"sha256\":\"%s\"}", fileName, fileSha256);

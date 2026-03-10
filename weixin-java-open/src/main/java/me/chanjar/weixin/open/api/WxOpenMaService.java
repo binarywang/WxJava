@@ -33,6 +33,11 @@ public interface WxOpenMaService extends WxMaService {
   String API_MODIFY_DOMAIN = "https://api.weixin.qq.com/wxa/modify_domain";
 
   /**
+   * 快速配置小程序服务器域名
+   */
+  String API_MODIFY_DOMAIN_DIRECTLY = "https://api.weixin.qq.com/wxa/modify_domain_directly";
+
+  /**
    * 设置小程序业务域名（仅供第三方代小程序调用）
    * <pre>
    *     授权给第三方的小程序，其业务域名只可以为第三方的服务器，当小程序通过第三方发布代码上线后，小程序原先自己配置的业务域名将被删除，
@@ -43,6 +48,11 @@ public interface WxOpenMaService extends WxMaService {
    * </pre>
    */
   String API_SET_WEBVIEW_DOMAIN = "https://api.weixin.qq.com/wxa/setwebviewdomain";
+
+  /**
+   * 快速配置小程序业务域名
+   */
+  String API_SET_WEBVIEW_DOMAIN_DIRECTLY = "https://api.weixin.qq.com/wxa/setwebviewdomain_directly";
 
   /**
    * 获取业务域名校验文件（仅供第三方代小程序调用）
@@ -118,6 +128,11 @@ public interface WxOpenMaService extends WxMaService {
    * 3. 试用小程序快速认证
    */
   String API_VERIFY_BETA_WEAPP = "https://api.weixin.qq.com/wxa/verifybetaweapp";
+
+  /**
+   * 3.1 修改试用小程序名称
+   */
+  String API_SET_BETA_WEAPP_NICKNAME = "https://api.weixin.qq.com/wxa/setbetaweappnickname";
 
   /**
    * 4. 获取授权小程序帐号的可选类目
@@ -311,6 +326,24 @@ public interface WxOpenMaService extends WxMaService {
                                     List<String> udpDomains, List<String> tcpDomains) throws WxErrorException;
 
   /**
+   * 快速配置小程序服务器域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/modify_domain_directly.html">文档地址</a>
+   *
+   * @param action           add添加, delete删除, set覆盖, get获取
+   * @param requestDomains   request 合法域名；当 action 是 get 时不需要此字段
+   * @param wsRequestDomains socket 合法域名；当 action 是 get 时不需要此字段
+   * @param uploadDomains    uploadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param downloadDomains  downloadFile 合法域名；当 action 是 get 时不需要此字段
+   * @param tcpDomains       tcp 合法域名；当 action 是 get 时不需要此字段
+   * @param udpDomains       udp 合法域名；当 action 是 get 时不需要此字段
+   * @return the wx open ma domain result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaDomainResult modifyDomainDirectly(String action, List<String> requestDomains, List<String> wsRequestDomains,
+                                            List<String> uploadDomains, List<String> downloadDomains,
+                                            List<String> udpDomains, List<String> tcpDomains) throws WxErrorException;
+
+  /**
    * 获取小程序的业务域名
    *
    * @return 直接返回字符串 web view domain
@@ -345,6 +378,28 @@ public interface WxOpenMaService extends WxMaService {
    * @throws WxErrorException the wx error exception
    */
   WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 快速配置小程序业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/setwebviewdomain_directly.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return 直接返回字符串
+   * @throws WxErrorException the wx error exception
+   */
+  String setWebViewDomainDirectly(String action, List<String> domainList) throws WxErrorException;
+
+  /**
+   * 快速配置小程序业务域名
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/2.0/api/Mini_Program_Basic_Info/setwebviewdomain_directly.html">文档地址</a>
+   *
+   * @param action     add添加, delete删除, set覆盖, get获取
+   * @param domainList the domain list
+   * @return web view domain info
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenMaWebDomainResult setWebViewDomainDirectlyInfo(String action, List<String> domainList) throws WxErrorException;
 
   /**
    * 获取业务域名校验文件
@@ -469,6 +524,16 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenResult verifyBetaWeapp(WxOpenMaVerifyBetaWeappMessage verifyBetaWeappMessage) throws WxErrorException;
 
   /**
+   * 设置小程序昵称
+   *
+   * @param name 小程序名称，昵称半自动设定，强制后缀“的体验小程序”。且该参数会进行关键字检查，如果命中品牌关键字则会报错。
+   *             如遇到品牌大客户要用试用小程序，建议用户先换个名字，认证后再修改成品牌名
+   * @return the wx open result
+   * @throws WxErrorException the wx error exception
+   */
+  WxOpenResult setBetaWeappNickName(String name) throws WxErrorException;
+
+  /**
    * 获取授权小程序帐号的可选类目
    * <p>
    * 注意：该接口可获取已设置的二级类目及用于代码审核的可选三级类目。
@@ -489,10 +554,36 @@ public interface WxOpenMaService extends WxMaService {
 
   /**
    * 将第三方提交的代码包提交审核（仅供第三方开发者代小程序调用）
+   * <p>
+   * <b>重要提示：审核额度限制</b>
+   * </p>
+   * <ul>
+   *   <li>每个第三方平台账号每月有审核额度限制（默认20次，可通过 {@link #queryQuota()} 查询）</li>
+   *   <li>每次调用 submitAudit 提交一个小程序审核时，会消耗1个审核额度</li>
+   *   <li>建议在提交审核前，先调用 {@link #queryQuota()} 检查剩余额度</li>
+   *   <li>如需增加额度，请联系微信开放平台客服</li>
+   * </ul>
+   * <p>
+   * <b>最佳实践：</b>
+   * </p>
+   * <pre>{@code
+   * // 1. 先查询剩余额度
+   * WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
+   * if (quota.getRest() <= 0) {
+   *   throw new RuntimeException("审核额度不足，剩余：" + quota.getRest());
+   * }
+   *
+   * // 2. 提交审核
+   * WxOpenMaSubmitAuditMessage message = new WxOpenMaSubmitAuditMessage();
+   * message.setItemList(itemList);
+   * WxOpenMaSubmitAuditResult result = wxOpenMaService.submitAudit(message);
+   * }</pre>
    *
    * @param submitAuditMessage the submit audit message
    * @return the wx open ma submit audit result
    * @throws WxErrorException the wx error exception
+   * @see #queryQuota() 查询审核额度
+   * @see #speedAudit(Long) 加急审核
    */
   WxOpenMaSubmitAuditResult submitAudit(WxOpenMaSubmitAuditMessage submitAuditMessage) throws WxErrorException;
 
@@ -640,11 +731,43 @@ public interface WxOpenMaService extends WxMaService {
   WxOpenMaGetCodePrivacyInfoResult getCodePrivacyInfo() throws WxErrorException;
 
   /**
-   * 查询服务商的当月提审限额和加急次数（Quota）
-   * https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html
+   * 查询服务商的当月提交审核限额和加急次数（Quota）
+   * <p>
+   * 文档地址：
+   * <a href="https://developers.weixin.qq.com/doc/oplatform/Third-party_Platforms/Mini_Programs/code/query_quota.html">查询额度</a>
+   * </p>
+   * <p>
+   * <b>返回字段说明：</b>
+   * </p>
+   * <ul>
+   *   <li>rest: 当月剩余提交审核次数</li>
+   *   <li>limit: 当月提交审核额度上限（默认20次）</li>
+   *   <li>speedup_rest: 剩余加急次数</li>
+   *   <li>speedup_limit: 加急额度上限</li>
+   * </ul>
+   * <p>
+   * <b>重要说明：</b>
+   * </p>
+   * <ul>
+   *   <li>每个第三方平台账号每月初会重置审核额度</li>
+   *   <li>每次调用 {@link #submitAudit} 提交审核会消耗1个额度</li>
+   *   <li>审核撤回不会返还额度</li>
+   *   <li>建议在批量提交审核前，先调用此接口检查额度是否充足</li>
+   * </ul>
+   * <p>
+   * <b>使用示例：</b>
+   * </p>
+   * <pre>{@code
+   * WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
+   * System.out.println("剩余审核次数：" + quota.getRest());
+   * System.out.println("审核额度上限：" + quota.getLimit());
+   * System.out.println("剩余加急次数：" + quota.getSpeedupRest());
+   * }</pre>
    *
-   * @return the wx open ma query quota result
-   * @throws WxErrorException the wx error exception
+   * @return 审核额度信息
+   * @throws WxErrorException 调用微信接口失败时抛出
+   * @see #submitAudit(WxOpenMaSubmitAuditMessage) 提交审核
+   * @see #speedAudit(Long) 加急审核
    */
   WxOpenMaQueryQuotaResult queryQuota() throws WxErrorException;
 

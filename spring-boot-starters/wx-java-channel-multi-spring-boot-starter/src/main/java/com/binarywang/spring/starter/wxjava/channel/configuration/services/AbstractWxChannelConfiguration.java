@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelService;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpClientImpl;
+import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpComponentsImpl;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceImpl;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
 import me.chanjar.weixin.channel.config.impl.WxChannelDefaultConfigImpl;
@@ -84,6 +85,9 @@ public abstract class AbstractWxChannelConfiguration {
       case HTTP_CLIENT:
         wxChannelService = new WxChannelServiceHttpClientImpl();
         break;
+      case HTTP_COMPONENTS:
+        wxChannelService = new WxChannelServiceHttpComponentsImpl();
+        break;
       default:
         wxChannelService = new WxChannelServiceImpl();
         break;
@@ -119,6 +123,8 @@ public abstract class AbstractWxChannelConfiguration {
       config.setAesKey(aesKey);
     }
     config.setStableAccessToken(useStableAccessToken);
+    config.setApiHostUrl(StringUtils.trimToNull(wxChannelSingleProperties.getApiHostUrl()));
+    config.setAccessTokenUrl(StringUtils.trimToNull(wxChannelSingleProperties.getAccessTokenUrl()));
   }
 
   private void configHttp(WxChannelDefaultConfigImpl config, WxChannelMultiProperties.ConfigStorage storage) {

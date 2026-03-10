@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.bean.marketing;
 
+import com.github.binarywang.wxpay.bean.result.BaseWxPayV3Result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.io.Serializable;
  */
 @NoArgsConstructor
 @Data
-public class FavorStocksCreateResult implements Serializable {
+public class FavorStocksCreateResult extends BaseWxPayV3Result {
 
   private static final long serialVersionUID = 1L;
 

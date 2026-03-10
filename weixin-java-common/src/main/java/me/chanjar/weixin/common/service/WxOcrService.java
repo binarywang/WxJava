@@ -12,7 +12,9 @@ import java.io.File;
 
 /**
  * 基于小程序或 H5 的身份证、银行卡、行驶证 OCR 识别.
- * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX
+ * <p>
+ * 参考：{@code https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21516712284rHWMX}
+ * </p>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  * created on  2019-06-22

@@ -50,6 +50,7 @@ public class MemberCardUserForm implements Serializable {
   /**
    * 添加富文本类型字段
    *
+   * @param field 富文本字段
    */
   public void addRichField(MemberCardUserFormRichField field) {
     if (field == null) {
@@ -64,6 +65,7 @@ public class MemberCardUserForm implements Serializable {
   /**
    * 添加微信选项类型字段
    *
+   * @param fieldType 微信字段类型
    */
   public void addWechatField(CardWechatFieldType fieldType) {
     if (fieldType == null) {
@@ -78,6 +80,7 @@ public class MemberCardUserForm implements Serializable {
   /**
    * 添加文本类型字段
    *
+   * @param field 文本字段
    */
   public void addCustomField(String field) {
     if (StringUtils.isBlank(field)) {

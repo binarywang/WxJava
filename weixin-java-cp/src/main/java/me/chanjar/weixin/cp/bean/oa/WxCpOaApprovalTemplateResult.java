@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateDateRange;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTips;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTitle;
 import me.chanjar.weixin.cp.bean.oa.templatedata.control.*;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * 审批模板详情
  *
- * @author gyv12345 @163.com / Wang_Wong
+ * @author gyv12345@163.com / Wang_Wong
  */
 @Data
 @Builder
@@ -84,6 +85,9 @@ public class WxCpOaApprovalTemplateResult implements Serializable {
 
     private TemplateDate date;
 
+    @SerializedName("date_range")
+    private TemplateDateRange dateRange;
+
     private TemplateSelector selector;
 
     private TemplateContact contact;
@@ -121,7 +125,7 @@ public class WxCpOaApprovalTemplateResult implements Serializable {
 
     /**
      * 获取审批模板详情，value为list类型
-     * https://developer.work.weixin.qq.com/document/path/91982
+     * <a href="https://developer.work.weixin.qq.com/document/path/91982">文档链接</a>
      */
     @SerializedName("value")
     private List<TemplateTitle> value;

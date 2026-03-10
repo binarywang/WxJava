@@ -2,6 +2,7 @@ package com.binarywang.spring.starter.wxjava.miniapp.configuration;
 
 import com.binarywang.spring.starter.wxjava.miniapp.configuration.services.WxMaInJedisConfiguration;
 import com.binarywang.spring.starter.wxjava.miniapp.configuration.services.WxMaInMemoryConfiguration;
+import com.binarywang.spring.starter.wxjava.miniapp.configuration.services.WxMaInRedisTemplateConfiguration;
 import com.binarywang.spring.starter.wxjava.miniapp.configuration.services.WxMaInRedissonConfiguration;
 import com.binarywang.spring.starter.wxjava.miniapp.properties.WxMaMultiProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -17,9 +18,10 @@ import org.springframework.context.annotation.Import;
 @Configuration
 @EnableConfigurationProperties(WxMaMultiProperties.class)
 @Import({
-  WxMaInJedisConfiguration.class,
-  WxMaInMemoryConfiguration.class,
-  WxMaInRedissonConfiguration.class,
+        WxMaInJedisConfiguration.class,
+        WxMaInMemoryConfiguration.class,
+        WxMaInRedissonConfiguration.class,
+        WxMaInRedisTemplateConfiguration.class
 })
 public class WxMaMultiServiceConfiguration {
 }

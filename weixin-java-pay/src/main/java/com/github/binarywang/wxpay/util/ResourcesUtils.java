@@ -23,6 +23,10 @@ public class ResourcesUtils {
    * <li>{@link Class#getClassLoader() ClassLoaderUtil.class.getClassLoader()}</li>
    * <li>if <code>callingClass</code> is provided: {@link Class#getClassLoader() callingClass.getClassLoader()}</li>
    * </ul>
+   *
+   * @param resourceName 资源名称
+   * @param classLoader  类加载器
+   * @return 资源URL
    */
   public static URL getResourceUrl(String resourceName, final ClassLoader classLoader) {
 
@@ -64,6 +68,9 @@ public class ResourcesUtils {
   /**
    * Opens a resource of the specified name for reading.
    *
+   * @param resourceName 资源名称
+   * @return 输入流
+   * @throws IOException IO异常
    * @see #getResourceAsStream(String, ClassLoader)
    */
   public static InputStream getResourceAsStream(final String resourceName) throws IOException {
@@ -73,6 +80,10 @@ public class ResourcesUtils {
   /**
    * Opens a resource of the specified name for reading.
    *
+   * @param resourceName 资源名称
+   * @param callingClass 类加载器
+   * @return 输入流
+   * @throws IOException IO异常
    * @see #getResourceUrl(String, ClassLoader)
    */
   public static InputStream getResourceAsStream(final String resourceName, final ClassLoader callingClass) throws IOException {

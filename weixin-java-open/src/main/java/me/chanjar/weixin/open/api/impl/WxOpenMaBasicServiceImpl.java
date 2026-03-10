@@ -3,12 +3,16 @@ package me.chanjar.weixin.open.api.impl;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import lombok.SneakyThrows;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenMaBasicService;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +25,11 @@ import java.util.Map;
 public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
 
   private final WxMaService wxMaService;
+  private final WxOpenComponentService wxOpenComponentService;
 
-  public WxOpenMaBasicServiceImpl(WxMaService wxMaService) {
+  public WxOpenMaBasicServiceImpl(WxMaService wxMaService, WxOpenComponentService wxOpenComponentService) {
     this.wxMaService = wxMaService;
+    this.wxOpenComponentService = wxOpenComponentService;
   }
 
 
@@ -81,6 +87,15 @@ public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 
+  @SneakyThrows
+  @Override
+  public String getComponentRebindAdminUrl(String redirectUri, String appId) {
+    String componentAppId = wxOpenComponentService.getWxOpenConfigStorage().getComponentAppId();
+    String encoded = URLEncoder.encode(redirectUri, "UTF-8");
+    return String.format(URL_COMPONENT_REBIND_ADMIN, appId, componentAppId, encoded);
+  }
+
+
   @Override
   public WxOpenResult componentRebindAdmin(String taskid) throws WxErrorException {
     JsonObject params = new JsonObject();
@@ -129,6 +144,12 @@ public class WxOpenMaBasicServiceImpl implements WxOpenMaBasicService {
   public WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException {
     String response = wxMaService.post(OPEN_MODIFY_CATEGORY, category);
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException {
+    String response = wxMaService.get(OPEN_GET_ALL_CATEGORY_NAME, "");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaCategoryNameListResult.class);
   }
 
   /**

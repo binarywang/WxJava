@@ -4,6 +4,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
 import me.chanjar.weixin.open.bean.result.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -72,11 +73,17 @@ public interface WxOpenMaBasicService {
    * 8.6 修改类目
    */
   String OPEN_MODIFY_CATEGORY = "https://api.weixin.qq.com/cgi-bin/wxopen/modifycategory";
+  /**
+   * 8.7 获取类目名称信息
+   */
+  String OPEN_GET_ALL_CATEGORY_NAME = "https://api.weixin.qq.com/cgi-bin/wxopen/getallcategorynamelist";
 
   /**
    * 获取订单页path信息
    */
   String OPEN_GET_ORDER_PATH_INFO = "https://api.weixin.qq.com/wxa/security/getorderpathinfo";
+
+  String URL_COMPONENT_REBIND_ADMIN = "https://mp.weixin.qq.com/wxopen/componentrebindadmin?appid=%s&component_appid=%s&redirect_uri=%s";
 
 
   /**
@@ -149,6 +156,14 @@ public interface WxOpenMaBasicService {
   WxOpenResult modifySignature(String signature) throws WxErrorException;
 
   /**
+   * 7.1 获取换绑管理员URL
+   * @param redirectUri 跳转URL
+   * @param appId 公众号的 appid
+   * @return 换绑管理员URL
+   */
+  String getComponentRebindAdminUrl(String redirectUri, String appId) throws UnsupportedEncodingException;
+
+  /**
    * 7.3 管理员换绑
    *
    * @param taskId 换绑管理员任务序列号(公众平台最终点击提交回跳到第三方平台时携带)
@@ -210,6 +225,18 @@ public interface WxOpenMaBasicService {
    * @throws WxErrorException .
    */
   WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException;
+
+  /**
+   * 8.7 获取类目名称信息
+   * <pre>
+   *     获取所有类目名称信息，用于给用户展示选择
+   *     https://developers.weixin.qq.com/doc/oplatform/openApi/miniprogram-management/category-management/api_getallcategoryname.html
+   * </pre>
+   *
+   * @return 类目名称列表
+   * @throws WxErrorException .
+   */
+  WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException;
 
   /**
    * 获取订单页Path信息

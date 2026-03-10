@@ -6,11 +6,7 @@ import me.chanjar.weixin.channel.bean.audit.AuditApplyResponse;
 import me.chanjar.weixin.channel.bean.audit.AuditResponse;
 import me.chanjar.weixin.channel.bean.audit.CategoryAuditInfo;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
-import me.chanjar.weixin.channel.bean.category.CategoryDetailResult;
-import me.chanjar.weixin.channel.bean.category.CategoryQualificationResponse;
-import me.chanjar.weixin.channel.bean.category.PassCategoryResponse;
-import me.chanjar.weixin.channel.bean.category.ShopCategory;
-import me.chanjar.weixin.channel.bean.category.ShopCategoryResponse;
+import me.chanjar.weixin.channel.bean.category.*;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -121,4 +117,16 @@ public interface WxChannelCategoryService {
    * @throws WxErrorException 异常
    */
   PassCategoryResponse listPassCategory() throws WxErrorException;
+
+  /**
+   * 获取店铺的类目权限列表
+   *
+   * @param isFilterStatus 是否按状态筛选
+   * @param status 类目状态(当 isFilterStatus 为 true 时有效)
+   * @return 类目权限列表
+   *
+   * @throws WxErrorException 异常
+   */
+  RelationCategoryResponse listRelationCategory(Boolean isFilterStatus, Integer status) throws WxErrorException;
+
 }

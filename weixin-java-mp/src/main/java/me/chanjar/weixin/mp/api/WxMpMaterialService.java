@@ -17,7 +17,6 @@ import me.chanjar.weixin.mp.bean.material.WxMpMaterialVideoInfoResult;
 
 /**
  * <pre>
- * Created by Binary Wang on 2016/7/21.
  * 素材管理的相关接口，包括媒体管理的接口，
  * 即以https://api.weixin.qq.com/cgi-bin/material
  * 和 https://api.weixin.qq.com/cgi-bin/media开头的接口
@@ -36,7 +35,7 @@ public interface WxMpMaterialService {
      *  2、media_id是可复用的。
      *  3、素材的格式大小等要求与公众平台官网一致。具体是，图片大小不超过2M，支持png/jpeg/jpg/gif格式，语音大小不超过5M，长度不超过60秒，支持mp3/amr格式
      *  4、需使用https调用本接口。
-     *  本接口即为原“上传多媒体文件”接口。
+     *  本接口即为原"上传多媒体文件"接口。
      *  注意事项：
      *    上传的临时多媒体文件有格式和大小限制，如下：
      *    图片（image）: 2M，支持PNG\JPEG\JPG\GIF格式
@@ -49,17 +48,17 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param mediaType 媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
-     * @param file      文件对象
-     * @return the wx media upload result
-     * @throws WxErrorException the wx error exception
-     * @see #mediaUpload(String, String, InputStream) #mediaUpload(String, String, InputStream)#mediaUpload(String, String, InputStream)
+     * @param file      文件对象，需要上传的临时素材文件
+     * @return 上传结果，包含media_id等信息
+     * @throws WxErrorException 微信API调用异常
+     * @see #mediaUpload(String, String, InputStream) 使用输入流上传临时素材
      */
     WxMediaUploadResult mediaUpload(String mediaType, File file) throws WxErrorException;
 
     /**
      * <pre>
      * 新增临时素材
-     * 本接口即为原“上传多媒体文件”接口。
+     * 本接口即为原"上传多媒体文件"接口。
      *
      * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738726&token=&lang=zh_CN">新增临时素材</a>
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE
@@ -67,10 +66,10 @@ public interface WxMpMaterialService {
      *
      * @param mediaType   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
      * @param fileType    文件类型，请看{@link me.chanjar.weixin.common.api.WxConsts}
-     * @param inputStream 输入流
-     * @return the wx media upload result
-     * @throws WxErrorException the wx error exception
-     * @see #mediaUpload(java.lang.String, java.io.File) #mediaUpload(java.lang.String, java.io.File)#mediaUpload(java.lang.String, java.io.File)
+     * @param inputStream 输入流，包含要上传的临时素材内容
+     * @return 上传结果，包含media_id等信息
+     * @throws WxErrorException 微信API调用异常
+     * @see #mediaUpload(String, File) 使用文件对象上传临时素材
      */
     WxMediaUploadResult mediaUpload(String mediaType, String fileType, InputStream inputStream) throws WxErrorException;
 
@@ -78,15 +77,15 @@ public interface WxMpMaterialService {
      * <pre>
      * 获取临时素材
      * 公众号可以使用本接口获取临时素材（即下载临时的多媒体文件）。请注意，视频文件不支持https下载，调用该接口需http协议。
-     * 本接口即为原“下载多媒体文件”接口。
+     * 本接口即为原"下载多媒体文件"接口。
      * 根据微信文档，视频文件下载不了，会返回null
      * 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1444738727&token=&lang=zh_CN">获取临时素材</a>
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
      * </pre>
      *
-     * @param mediaId 媒体文件Id
-     * @return 保存到本地的临时文件 file
-     * @throws WxErrorException the wx error exception
+     * @param mediaId 媒体文件Id，通过上传临时素材接口获取
+     * @return 保存到本地的临时文件，如果下载失败则返回null
+     * @throws WxErrorException 微信API调用异常
      */
     File mediaDownload(String mediaId) throws WxErrorException;
 
@@ -100,9 +99,9 @@ public interface WxMpMaterialService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/get/jssdk?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
      * </pre>
      *
-     * @param mediaId 媒体文件Id
-     * @return 保存到本地的临时文件 file
-     * @throws WxErrorException the wx error exception
+     * @param mediaId 媒体文件Id，通过JSSDK上传语音素材获取
+     * @return 保存到本地的临时文件，高清语音素材
+     * @throws WxErrorException 微信API调用异常
      */
     File jssdkMediaDownload(String mediaId) throws WxErrorException;
 
@@ -114,9 +113,9 @@ public interface WxMpMaterialService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param file 上传的文件对象
-     * @return WxMediaImgUploadResult 返回图片url
-     * @throws WxErrorException the wx error exception
+     * @param file 上传的文件对象，图片素材，支持jpg/png格式，大小不超过1MB
+     * @return 图片上传结果，包含图片URL，可用于图文消息中
+     * @throws WxErrorException 微信API调用异常
      */
     WxMediaImgUploadResult mediaImgUpload(File file) throws WxErrorException;
 
@@ -141,8 +140,8 @@ public interface WxMpMaterialService {
      *
      * @param mediaType 媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
      * @param material  上传的素材, 请看{@link WxMpMaterial}
-     * @return the wx mp material upload result
-     * @throws WxErrorException the wx error exception
+     * @return 上传结果，包含media_id等信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialUploadResult materialFileUpload(String mediaType, WxMpMaterial material) throws WxErrorException;
 
@@ -155,8 +154,8 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param mediaId 永久素材的id
-     * @return the input stream
-     * @throws WxErrorException the wx error exception
+     * @return 素材内容的输入流，可用于读取图片或语音文件
+     * @throws WxErrorException 微信API调用异常
      */
     InputStream materialImageOrVoiceDownload(String mediaId) throws WxErrorException;
 
@@ -169,8 +168,8 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param mediaId 永久素材的id
-     * @return the wx mp material video info result
-     * @throws WxErrorException the wx error exception
+     * @return 视频素材信息，包含标题、描述和下载地址
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialVideoInfoResult materialVideoInfo(String mediaId) throws WxErrorException;
 
@@ -183,8 +182,8 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param mediaId 永久素材的id
-     * @return the wx mp material news
-     * @throws WxErrorException the wx error exception
+     * @return 图文素材信息，包含文章列表和标题等
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialNews materialNewsInfo(String mediaId) throws WxErrorException;
 
@@ -201,8 +200,8 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param mediaId 永久素材的id
-     * @return the boolean
-     * @throws WxErrorException the wx error exception
+     * @return 删除是否成功，true表示成功，false表示失败
+     * @throws WxErrorException 微信API调用异常
      */
     boolean materialDelete(String mediaId) throws WxErrorException;
 
@@ -219,8 +218,8 @@ public interface WxMpMaterialService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/get_materialcount?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @return the wx mp material count result
-     * @throws WxErrorException the wx error exception
+     * @return 素材统计结果，包含各类素材的数量
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialCountResult materialCount() throws WxErrorException;
 
@@ -232,10 +231,10 @@ public interface WxMpMaterialService {
      * 接口url格式：https://api.weixin.qq.com/cgi-bin/material/batchget_material?access_token=ACCESS_TOKEN
      * </pre>
      *
-     * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
+     * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材返回
      * @param count  返回素材的数量，取值在1到20之间
-     * @return the wx mp material news batch get result
-     * @throws WxErrorException the wx error exception
+     * @return 图文素材列表，包含文章列表和标题等信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialNewsBatchGetResult materialNewsBatchGet(int offset, int count) throws WxErrorException;
 
@@ -248,10 +247,10 @@ public interface WxMpMaterialService {
      * </pre>
      *
      * @param type   媒体类型, 请看{@link me.chanjar.weixin.common.api.WxConsts}
-     * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材 返回
+     * @param offset 从全部素材的该偏移位置开始返回，0表示从第一个素材返回
      * @param count  返回素材的数量，取值在1到20之间
-     * @return the wx mp material file batch get result
-     * @throws WxErrorException the wx error exception
+     * @return 其他媒体素材列表，包含图片、语音、视频等素材信息
+     * @throws WxErrorException 微信API调用异常
      */
     WxMpMaterialFileBatchGetResult materialFileBatchGet(String type, int offset, int count) throws WxErrorException;
 

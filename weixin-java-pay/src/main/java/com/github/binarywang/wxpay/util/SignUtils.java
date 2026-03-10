@@ -112,7 +112,16 @@ public class SignUtils {
   /**
    * 企业微信签名
    *
-   * @param signType md5 目前接口要求使用的加密类型
+   * @param actName     活动名称
+   * @param mchBillNo   商户订单号
+   * @param mchId       商户号
+   * @param nonceStr    随机字符串
+   * @param reOpenid    用户openid
+   * @param totalAmount 金额
+   * @param wxAppId     微信appid
+   * @param signKey     签名密钥
+   * @param signType    md5 目前接口要求使用的加密类型
+   * @return 签名字符串
    */
   public static String createEntSign(String actName, String mchBillNo, String mchId, String nonceStr,
                                      String reOpenid, Integer totalAmount, String wxAppId, String signKey,
@@ -131,7 +140,18 @@ public class SignUtils {
 
   /**
    * 企业微信签名
-   * @param signType md5 目前接口要求使用的加密类型
+   *
+   * @param totalAmount    金额
+   * @param appId          应用ID
+   * @param description    描述
+   * @param mchId          商户号
+   * @param nonceStr       随机字符串
+   * @param openid         用户openid
+   * @param partnerTradeNo 商户订单号
+   * @param wwMsgType      消息类型
+   * @param signKey        签名密钥
+   * @param signType       md5 目前接口要求使用的加密类型
+   * @return 签名字符串
    */
   public static String createEntSign(Integer totalAmount, String appId, String description, String mchId,
                                      String nonceStr, String openid, String partnerTradeNo, String wwMsgType,

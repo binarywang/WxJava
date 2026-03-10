@@ -52,7 +52,7 @@ public class WxCpMultiProperties implements Serializable {
     /**
      * http客户端类型.
      */
-    private HttpClientType httpClientType = HttpClientType.HTTP_CLIENT;
+    private HttpClientType httpClientType = HttpClientType.HTTP_COMPONENTS;
 
     /**
      * http代理主机

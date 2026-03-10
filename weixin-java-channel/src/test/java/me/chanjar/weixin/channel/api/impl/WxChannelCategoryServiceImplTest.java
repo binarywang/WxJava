@@ -158,4 +158,14 @@ public class WxChannelCategoryServiceImplTest {
     assertTrue(response.isSuccess());
     System.out.println(response);
   }
+
+  @Test
+  public void testListRelationCategory() throws WxErrorException {
+    WxChannelCategoryService categoryService = channelService.getCategoryService();
+    me.chanjar.weixin.channel.bean.category.RelationCategoryResponse response = 
+      categoryService.listRelationCategory(true, 1);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+    System.out.println(response);
+  }
 }

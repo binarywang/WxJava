@@ -28,6 +28,7 @@ public class WxOpenServiceAutoConfiguration {
   }
 
   @Bean
+  @ConditionalOnMissingBean
   public WxOpenMessageRouter wxOpenMessageRouter(WxOpenService wxOpenService) {
     return new WxOpenMessageRouter(wxOpenService);
   }

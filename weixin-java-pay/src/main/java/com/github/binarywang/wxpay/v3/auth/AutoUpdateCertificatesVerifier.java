@@ -109,18 +109,24 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
     this.minutesInterval = minutesInterval;
     this.payBaseUrl = payBaseUrl;
     this.wxPayHttpProxy = wxPayHttpProxy;
-    //构造时更新证书
+    //构造时尝试更新证书，但失败时不抛出异常，避免影响公钥模式的使用
     try {
       autoUpdateCert();
       instant = Instant.now();
     } catch (IOException | GeneralSecurityException e) {
-      throw new WxRuntimeException(e);
+      log.warn("Auto update cert failed during initialization, will retry later, exception = {}", e.getMessage());
+      // 设置 instant 为 null，后续每次使用时都会尝试下载证书直到成功
+      instant = null;
     }
   }
 
   @Override
   public boolean verify(String serialNumber, byte[] message, String signature) {
     checkAndAutoUpdateCert();
+    if (verifier == null) {
+      log.warn("No valid certificate available for verification");
+      return false;
+    }
     return verifier.verify(serialNumber, message, signature);
   }
 
@@ -220,6 +226,9 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   @Override
   public X509Certificate getValidCertificate() {
     checkAndAutoUpdateCert();
+    if (verifier == null) {
+      throw new WxRuntimeException("No valid certificate available, please check your configuration or use fullPublicKeyModel mode");
+    }
     return verifier.getValidCertificate();
   }
 

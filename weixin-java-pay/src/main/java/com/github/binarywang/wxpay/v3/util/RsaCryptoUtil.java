@@ -14,8 +14,11 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 微信支付敏感信息加密
@@ -36,10 +39,26 @@ public class RsaCryptoUtil {
     }
   }
 
+  /**
+   * 递归获取类的所有字段，包括父类中的字段
+   *
+   * @param clazz 要获取字段的类
+   * @return 所有字段的列表
+   */
+  private static List<Field> getAllFields(Class<?> clazz) {
+    List<Field> fields = new ArrayList<>();
+    while (clazz != null && clazz != Object.class) {
+      Field[] declaredFields = clazz.getDeclaredFields();
+      Collections.addAll(fields, declaredFields);
+      clazz = clazz.getSuperclass();
+    }
+    return fields;
+  }
+
   private static void encryptField(Object encryptObject, X509Certificate certificate) throws IllegalAccessException, IllegalBlockSizeException {
     Class<?> infoClass = encryptObject.getClass();
-    Field[] infoFieldArray = infoClass.getDeclaredFields();
-    for (Field field : infoFieldArray) {
+    List<Field> infoFieldList = getAllFields(infoClass);
+    for (Field field : infoFieldList) {
       if (field.isAnnotationPresent(SpecEncrypt.class)) {
         //字段使用了@SpecEncrypt进行标识
         if (field.getType().getTypeName().equals(JAVA_LANG_STRING)) {

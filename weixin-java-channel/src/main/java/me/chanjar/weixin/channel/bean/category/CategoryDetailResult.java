@@ -22,6 +22,9 @@ public class CategoryDetailResult extends WxChannelBaseResponse {
   @JsonProperty("attr")
   private Attr attr;
 
+  @JsonProperty("product_qua_list")
+  private List<QualificationInfo> productQuaList;
+
 
   @Data
   @NoArgsConstructor

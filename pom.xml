@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.7.7.B</version>
+  <version>4.8.1.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -136,6 +136,7 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
+    <httpclient5.version>5.5.2</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
   </properties>
   <dependencyManagement>
@@ -157,13 +158,14 @@
         <version>4.12.0</version>
         <scope>provided</scope>
       </dependency>
+      <!-- HttpClient 5.x - 默认依赖（推荐使用） -->
       <dependency>
         <groupId>org.apache.httpcomponents.client5</groupId>
         <artifactId>httpclient5</artifactId>
-        <version>5.5</version>
-        <scope>provided</scope>
+        <version>${httpclient5.version}</version>
       </dependency>
 
+      <!-- HttpClient 4.x - 默认依赖（为了保持向后兼容） -->
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>httpclient</artifactId>
@@ -255,8 +257,8 @@
       </dependency>
       <dependency>
         <groupId>org.mockito</groupId>
-        <artifactId>mockito-all</artifactId>
-        <version>1.10.19</version>
+        <artifactId>mockito-core</artifactId>
+        <version>5.14.2</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -464,6 +466,21 @@
             <phase>verify</phase>
             <goals>
               <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>3.3.0</version> <!-- 建议使用最新版本 -->
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <!-- 绑定到 verify 阶段，在 install 之前执行 -->
+            <phase>verify</phase>
+            <goals>
+              <goal>jar-no-fork</goal> <!-- 使用 jar-no-fork 效率更高 -->
             </goals>
           </execution>
         </executions>

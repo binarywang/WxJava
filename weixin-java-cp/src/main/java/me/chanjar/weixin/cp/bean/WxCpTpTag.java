@@ -10,7 +10,7 @@ import java.io.Serializable;
  * The type Wx cp tp tag.
  *
  * @author zhangq <zhangq002@gmail.com>
- * @since 2021 -02-14 16:15 16:15
+ * @since 2021-02-14 16:15
  */
 @Data
 public class WxCpTpTag implements Serializable {

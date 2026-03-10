@@ -2,6 +2,7 @@ package com.binarywang.solon.wxjava.miniapp.configuration.services;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceHttpClientImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceHttpComponentsImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceJoddHttpImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl;
@@ -88,6 +89,9 @@ public abstract class AbstractWxMaConfiguration {
         break;
       case HTTP_CLIENT:
         wxMaService = new WxMaServiceHttpClientImpl();
+        break;
+      case HTTP_COMPONENTS:
+        wxMaService = new WxMaServiceHttpComponentsImpl();
         break;
       default:
         wxMaService = new WxMaServiceImpl();

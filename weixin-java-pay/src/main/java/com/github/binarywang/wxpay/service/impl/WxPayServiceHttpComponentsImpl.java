@@ -92,6 +92,32 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
   }
 
   @Override
+  public String post(String url, String requestStr, boolean useKey, String mimeType) throws WxPayException {
+    try {
+      HttpClientBuilder httpClientBuilder = this.createHttpClientBuilder(useKey);
+      HttpPost httpPost = this.createHttpPost(url, requestStr, mimeType);
+      try (CloseableHttpClient httpClient = httpClientBuilder.build()) {
+        try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
+          String responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
+          this.logRequestAndResponse(url, requestStr, responseString);
+          if (this.getConfig().isIfSaveApiData()) {
+            wxApiData.set(new WxPayApiData(url, requestStr, responseString, null));
+          }
+          return responseString;
+        }
+      } finally {
+        httpPost.releaseConnection();
+      }
+    } catch (Exception e) {
+      this.logError(url, requestStr, e);
+      if (this.getConfig().isIfSaveApiData()) {
+        wxApiData.set(new WxPayApiData(url, requestStr, null, e.getMessage()));
+      }
+      throw new WxPayException(e.getMessage(), e);
+    }
+  }
+
+  @Override
   public String postV3(String url, String requestStr) throws WxPayException {
     HttpPost httpPost = this.createHttpPost(url, requestStr);
     this.configureRequest(httpPost);
@@ -283,6 +309,11 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
     //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
   }
 
+  private static StringEntity createEntry(String requestStr, String mimeType) {
+    return new StringEntity(requestStr, ContentType.create(mimeType, StandardCharsets.UTF_8));
+    //return new StringEntity(new String(requestStr.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+  }
+
   private HttpClientBuilder createHttpClientBuilder(boolean useKey) throws WxPayException {
     HttpClientBuilder httpClientBuilder = HttpClients.custom();
     if (useKey) {
@@ -325,6 +356,19 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
     return httpPost;
   }
 
+  private HttpPost createHttpPost(String url, String requestStr, String mimeType) throws WxPayException {
+    HttpPost httpPost = new HttpPost(url);
+    httpPost.setEntity(createEntry(requestStr, mimeType));
+
+    httpPost.setConfig(RequestConfig.custom()
+      .setConnectionRequestTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
+      .setSocketTimeout(this.getConfig().getHttpTimeout())
+      .build());
+
+    return httpPost;
+  }
+
   private void initSSLContext(HttpClientBuilder httpClientBuilder) throws WxPayException {
     SSLContext sslContext = this.getConfig().getSslContext();
     if (null == sslContext) {
@@ -354,7 +398,13 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
       return wxPayConfig.getPublicKeyId();
     }
 
-    return wxPayConfig.getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    try {
+      return wxPayConfig.getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    } catch (Exception e) {
+      log.warn("Failed to get certificate serial number: {}", e.getMessage());
+      // 返回空字符串而不是抛出异常，让请求继续进行，由微信服务器判断是否需要Wechatpay-Serial
+      return "";
+    }
   }
 
   private void logRequestAndResponse(String url, String requestStr, String responseStr) {

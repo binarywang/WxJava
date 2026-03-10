@@ -38,7 +38,7 @@ public interface WxCpUserService {
    * <pre>
    * 获取部门成员详情
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD}
    *
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/90201
    * </pre>
@@ -213,7 +213,7 @@ public interface WxCpUserService {
    * 获取加入企业二维码。
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/corp/get_join_qrcode?access_token=ACCESS_TOKEN&size_type=SIZE_TYPE
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/corp/get_join_qrcode?access_token=ACCESS_TOKEN&size_type=SIZE_TYPE}
    *
    * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/91714
    * </pre>

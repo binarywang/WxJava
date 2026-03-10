@@ -19,9 +19,10 @@ public interface WxCpSchoolUserService {
   /**
    * 获取访问用户身份
    * 该接口用于根据code获取成员信息
-   * <p>
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token=ACCESS_TOKEN&code=CODE}
+   * </pre>
    *
    * @param code the code
    * @return user info
@@ -32,9 +33,10 @@ public interface WxCpSchoolUserService {
   /**
    * 获取家校访问用户身份
    * 该接口用于根据code获取家长或者学生信息
-   * <p>
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/getuserinfo?access_token=ACCESS_TOKEN&code=CODE}
+   * </pre>
    *
    * @param code the code
    * @return school user info
@@ -90,8 +92,10 @@ public interface WxCpSchoolUserService {
 
   /**
    * 删除学生
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/delete_student?access_token=ACCESS_TOKEN&userid=USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/delete_student?access_token=ACCESS_TOKEN&userid=USERID}
+   * </pre>
    *
    * @param studentUserId the student user id
    * @return wx cp base resp
@@ -160,8 +164,10 @@ public interface WxCpSchoolUserService {
 
   /**
    * 读取学生或家长
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/get?access_token=ACCESS_TOKEN&userid=USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/get?access_token=ACCESS_TOKEN&userid=USERID}
+   * </pre>
    *
    * @param userId the user id
    * @return user
@@ -171,9 +177,10 @@ public interface WxCpSchoolUserService {
 
   /**
    * 获取部门成员详情
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID
-   * &fetch_child=FETCH_CHILD
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID&fetch_child=FETCH_CHILD}
+   * </pre>
    *
    * @param departmentId 获取的部门id
    * @param fetchChild   1/0：是否递归获取子部门下面的成员
@@ -184,9 +191,10 @@ public interface WxCpSchoolUserService {
 
   /**
    * 获取部门家长详情
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list_parent?access_token=ACCESS_TOKEN&department_id
-   * =DEPARTMENT_ID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/list_parent?access_token=ACCESS_TOKEN&department_id=DEPARTMENT_ID}
+   * </pre>
    *
    * @param departmentId 获取的部门id
    * @return user list parent
@@ -207,8 +215,10 @@ public interface WxCpSchoolUserService {
 
   /**
    * 删除家长
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/delete_parent?access_token=ACCESS_TOKEN&userid=USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/user/delete_parent?access_token=ACCESS_TOKEN&userid=USERID}
+   * </pre>
    *
    * @param userId the user id
    * @return wx cp base resp
@@ -256,7 +266,7 @@ public interface WxCpSchoolUserService {
   /**
    * 删除部门
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/delete?access_token=ACCESS_TOKEN&id=ID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/delete?access_token=ACCESS_TOKEN&id=ID}
    *
    * @param id the id
    * @return wx cp base resp
@@ -292,10 +302,9 @@ public interface WxCpSchoolUserService {
   /**
    * 获取外部联系人详情
    * 学校可通过此接口，根据外部联系人的userid（如何获取?），拉取外部联系人详情。
-   * <p>
+   *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid
-   * =EXTERNAL_USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid=EXTERNAL_USERID}
    *
    * @param externalUserId 外部联系人的userid，注意不是学校成员的帐号
    * @return external contact
@@ -306,9 +315,9 @@ public interface WxCpSchoolUserService {
   /**
    * 获取可使用的家长范围
    * 获取可在微信「学校通知-学校应用」使用该应用的家长范围，以学生或部门列表的形式返回。应用只能给该列表下的家长发送「学校通知」。注意该范围只能由学校的系统管理员在「管理端-家校沟通-配置」配置。
-   * <p>
+   *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/agent/get_allow_scope?access_token=ACCESS_TOKEN&agentid=AGENTID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/agent/get_allow_scope?access_token=ACCESS_TOKEN&agentid=AGENTID}
    *
    * @param agentId the agent id
    * @return allow scope
@@ -332,7 +341,7 @@ public interface WxCpSchoolUserService {
   /**
    * 获取部门列表
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/department/list?access_token=ACCESS_TOKEN&id=ID}
    *
    * @param id 部门id。获取指定部门及其下的子部门。 如果不填，默认获取全量组织架构
    * @return wx cp department list

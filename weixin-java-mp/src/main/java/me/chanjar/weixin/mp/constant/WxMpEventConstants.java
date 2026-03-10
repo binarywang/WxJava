@@ -20,7 +20,7 @@ public class WxMpEventConstants {
   public static final String SUBMIT_MEMBERCARD_USER_INFO = "submit_membercard_user_info";
 
   /**
-   * 微信摇一摇周边>>摇一摇事件通知.
+   * 微信摇一摇周边-摇一摇事件通知.
    */
   public static final String SHAKEAROUND_USER_SHAKE = "ShakearoundUserShake";
 

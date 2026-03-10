@@ -47,6 +47,58 @@ public class WxPayCodepayRequest implements Serializable {
   protected String mchid;
   /**
    * <pre>
+   * 字段名：服务商应用ID
+   * 变量名：sp_appid
+   * 是否必填：否
+   * 类型：string[1,32]
+   * 描述：
+   *  服务商模式下使用，由微信生成的应用ID，全局唯一。
+   *  示例值：wxd678efh567hg6787
+   * </pre>
+   */
+  @SerializedName(value = "sp_appid")
+  protected String spAppid;
+  /**
+   * <pre>
+   * 字段名：服务商商户号
+   * 变量名：sp_mchid
+   * 是否必填：否
+   * 类型：string[1,32]
+   * 描述：
+   *  服务商模式下使用，服务商商户号，由微信支付生成并下发。
+   *  示例值：1230000109
+   * </pre>
+   */
+  @SerializedName(value = "sp_mchid")
+  protected String spMchid;
+  /**
+   * <pre>
+   * 字段名：子商户应用ID
+   * 变量名：sub_appid
+   * 是否必填：否
+   * 类型：string[1,32]
+   * 描述：
+   *  服务商模式下使用，由微信生成的应用ID，全局唯一。
+   *  示例值：wxd678efh567hg6787
+   * </pre>
+   */
+  @SerializedName(value = "sub_appid")
+  protected String subAppid;
+  /**
+   * <pre>
+   * 字段名：子商户商户号
+   * 变量名：sub_mchid
+   * 是否必填：否
+   * 类型：string[1,32]
+   * 描述：
+   *  服务商模式下使用，子商户商户号，由微信支付生成并下发。
+   *  示例值：1230000109
+   * </pre>
+   */
+  @SerializedName(value = "sub_mchid")
+  protected String subMchid;
+  /**
+   * <pre>
    * 字段名：商品描述
    * 变量名：description
    * 是否必填：是

@@ -37,6 +37,9 @@ public abstract class AbstractWxCpConfigStorageConfiguration {
     if (StringUtils.isNotBlank(msgAuditLibPath)) {
       config.setMsgAuditLibPath(msgAuditLibPath);
     }
+    if (StringUtils.isNotBlank(properties.getBaseApiUrl())) {
+      config.setBaseApiUrl(properties.getBaseApiUrl());
+    }
 
     WxCpProperties.ConfigStorage storage = properties.getConfigStorage();
     String httpProxyHost = storage.getHttpProxyHost();

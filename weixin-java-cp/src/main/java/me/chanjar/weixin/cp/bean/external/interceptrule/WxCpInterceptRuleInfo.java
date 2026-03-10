@@ -10,9 +10,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Date: 2024-03-07 17:02
- * @Author： shenliuming
- * @return：
+ * 防骚扰规则详情
+ *
+ * @author shenliuming
+ * @since 2024-03-07 17:02
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

@@ -41,11 +41,11 @@ public class WxChannelServiceOkHttpImpl extends BaseWxChannelServiceImpl<OkHttpC
       this.httpProxy = OkHttpProxyInfo.httpProxy(this.config.getHttpProxyHost(), this.config.getHttpProxyPort(), this.config.getHttpProxyUsername(), this.config.getHttpProxyPassword());
       okhttp3.OkHttpClient.Builder clientBuilder = new okhttp3.OkHttpClient.Builder();
       clientBuilder.proxy(this.getRequestHttpProxy().getProxy());
-      clientBuilder.authenticator(new Authenticator() {
+      clientBuilder.proxyAuthenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(WxChannelServiceOkHttpImpl.this.httpProxy.getProxyUsername(), WxChannelServiceOkHttpImpl.this.httpProxy.getProxyPassword());
-          return response.request().newBuilder().header("Authorization", credential).build();
+          return response.request().newBuilder().header("Proxy-Authorization", credential).build();
         }
       });
       this.httpClient = clientBuilder.build();

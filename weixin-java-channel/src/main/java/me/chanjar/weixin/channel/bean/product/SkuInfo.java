@@ -56,6 +56,10 @@ public class SkuInfo implements Serializable {
   @JsonProperty("sku_id")
   private String skuId;
 
+  /** sku条形码 */
+  @JsonProperty("bar_code")
+  private String barCode;
+
   public SkuInfo() {
   }
 

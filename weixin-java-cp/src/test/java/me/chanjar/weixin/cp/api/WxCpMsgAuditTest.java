@@ -754,6 +754,84 @@ public class WxCpMsgAuditTest {
     Finance.DestroySdk(chatDatas.getSdk());
   }
 
+  /**
+   * 测试新的安全API方法（推荐使用）
+   * 这些方法不需要手动管理SDK生命周期，更加安全
+   */
+  @Test
+  public void testNewSafeApi() throws Exception {
+    WxCpMsgAuditService msgAuditService = cpService.getMsgAuditService();
+    
+    // 测试新的getChatRecords方法 - 不暴露SDK
+    List<WxCpChatDatas.WxCpChatData> chatRecords = msgAuditService.getChatRecords(0L, 10L, null, null, 1000L);
+    log.info("获取到 {} 条聊天记录", chatRecords.size());
+    
+    for (WxCpChatDatas.WxCpChatData chatData : chatRecords) {
+      // 测试新的getDecryptChatData方法 - 不需要传入SDK
+      WxCpChatModel decryptData = msgAuditService.getDecryptChatData(chatData, 2);
+      log.info("解密数据：{}", decryptData.toJson());
+      
+      // 测试新的getChatRecordPlainText方法 - 不需要传入SDK
+      String plainText = msgAuditService.getChatRecordPlainText(chatData, 2);
+      log.info("明文数据：{}", plainText);
+      
+      // 如果是媒体消息，测试新的downloadMediaFile方法
+      String msgType = decryptData.getMsgType();
+      if ("image".equals(msgType) || "voice".equals(msgType) || "video".equals(msgType) || "file".equals(msgType)) {
+        String suffix = "";
+        String md5Sum = "";
+        String sdkFileId = "";
+        
+        switch (msgType) {
+          case "image":
+            suffix = ".jpg";
+            md5Sum = decryptData.getImage().getMd5Sum();
+            sdkFileId = decryptData.getImage().getSdkFileId();
+            break;
+          case "voice":
+            suffix = ".amr";
+            md5Sum = decryptData.getVoice().getMd5Sum();
+            sdkFileId = decryptData.getVoice().getSdkFileId();
+            break;
+          case "video":
+            suffix = ".mp4";
+            md5Sum = decryptData.getVideo().getMd5Sum();
+            sdkFileId = decryptData.getVideo().getSdkFileId();
+            break;
+          case "file":
+            md5Sum = decryptData.getFile().getMd5Sum();
+            suffix = "." + decryptData.getFile().getFileExt();
+            sdkFileId = decryptData.getFile().getSdkFileId();
+            break;
+          default:
+            // 未知消息类型，跳过处理
+            continue;
+        }
+        
+        // 测试新的downloadMediaFile方法 - 不需要传入SDK
+        String path = Thread.currentThread().getContextClassLoader().getResource("").getPath();
+        String targetPath = path + "testfile-new/" + md5Sum + suffix;
+        File file = new File(targetPath);
+        
+        // 确保父目录存在
+        if (!file.getParentFile().exists()) {
+          file.getParentFile().mkdirs();
+        }
+        
+        // 删除已存在的文件
+        if (file.exists()) {
+          file.delete();
+        }
+        
+        // 使用新的API下载媒体文件
+        msgAuditService.downloadMediaFile(sdkFileId, null, null, 1000L, targetPath);
+        log.info("媒体文件下载成功：{}", targetPath);
+      }
+    }
+    
+    // 注意：使用新API无需手动调用 Finance.DestroySdk()，SDK由框架自动管理
+  }
+
   // 测试Uint64类型
   public static void main(String[] args){
     /*

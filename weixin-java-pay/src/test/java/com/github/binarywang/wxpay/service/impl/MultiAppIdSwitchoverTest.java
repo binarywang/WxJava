@@ -1,0 +1,546 @@
+package com.github.binarywang.wxpay.service.impl;
+
+import com.github.binarywang.wxpay.config.WxPayConfig;
+import com.github.binarywang.wxpay.service.WxPayService;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.testng.Assert.*;
+
+/**
+ * 测试一个商户号配置多个appId的场景
+ *
+ * @author Binary Wang
+ */
+public class MultiAppIdSwitchoverTest {
+
+  private WxPayService payService;
+  private final String testMchId = "1234567890";
+  private final String testAppId1 = "wx1111111111111111";
+  private final String testAppId2 = "wx2222222222222222";
+  private final String testAppId3 = "wx3333333333333333";
+
+  @BeforeMethod
+  public void setup() {
+    payService = new WxPayServiceImpl();
+
+    // 配置同一个商户号，三个不同的appId
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId(testMchId);
+    config1.setAppId(testAppId1);
+    config1.setMchKey("test_key_1");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId(testMchId);
+    config2.setAppId(testAppId2);
+    config2.setMchKey("test_key_2");
+
+    WxPayConfig config3 = new WxPayConfig();
+    config3.setMchId(testMchId);
+    config3.setAppId(testAppId3);
+    config3.setMchKey("test_key_3");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(testMchId + "_" + testAppId1, config1);
+    configMap.put(testMchId + "_" + testAppId2, config2);
+    configMap.put(testMchId + "_" + testAppId3, config3);
+
+    payService.setMultiConfig(configMap);
+  }
+
+  /**
+   * 测试直接通过 mchId 和 appId 获取配置（新功能）
+   */
+  @Test
+  public void testGetConfigWithMchIdAndAppId() {
+    // 测试获取第一个配置
+    WxPayConfig config1 = payService.getConfig(testMchId, testAppId1);
+    assertNotNull(config1, "应该能够获取到配置");
+    assertEquals(config1.getMchId(), testMchId);
+    assertEquals(config1.getAppId(), testAppId1);
+    assertEquals(config1.getMchKey(), "test_key_1");
+
+    // 测试获取第二个配置
+    WxPayConfig config2 = payService.getConfig(testMchId, testAppId2);
+    assertNotNull(config2);
+    assertEquals(config2.getAppId(), testAppId2);
+    assertEquals(config2.getMchKey(), "test_key_2");
+
+    // 测试获取第三个配置
+    WxPayConfig config3 = payService.getConfig(testMchId, testAppId3);
+    assertNotNull(config3);
+    assertEquals(config3.getAppId(), testAppId3);
+    assertEquals(config3.getMchKey(), "test_key_3");
+  }
+
+  /**
+   * 测试直接通过 mchId 获取配置（新功能）
+   */
+  @Test
+  public void testGetConfigWithMchIdOnly() {
+    WxPayConfig config = payService.getConfig(testMchId);
+    assertNotNull(config, "应该能够通过mchId获取配置");
+    assertEquals(config.getMchId(), testMchId);
+
+    // appId应该是三个中的一个
+    String currentAppId = config.getAppId();
+    assertTrue(
+      testAppId1.equals(currentAppId) || testAppId2.equals(currentAppId) || testAppId3.equals(currentAppId),
+      "获取的配置的appId应该是配置的appId之一"
+    );
+  }
+
+  /**
+   * 测试 getConfig 方法不依赖 ThreadLocal
+   * 在不切换配置的情况下也能直接获取
+   */
+  @Test
+  public void testGetConfigWithoutSwitchover() {
+    // 不进行任何switchover操作，直接通过参数获取配置
+    WxPayConfig config1 = payService.getConfig(testMchId, testAppId1);
+    WxPayConfig config2 = payService.getConfig(testMchId, testAppId2);
+    WxPayConfig config3 = payService.getConfig(testMchId, testAppId3);
+
+    // 验证可以同时获取到所有配置，不受 ThreadLocal 影响
+    assertNotNull(config1);
+    assertNotNull(config2);
+    assertNotNull(config3);
+
+    assertEquals(config1.getAppId(), testAppId1);
+    assertEquals(config2.getAppId(), testAppId2);
+    assertEquals(config3.getAppId(), testAppId3);
+  }
+
+  /**
+   * 测试 getConfig 方法处理不存在的配置
+   */
+  @Test
+  public void testGetConfigWithNonexistentConfig() {
+    // 测试不存在的商户号和appId组合
+    WxPayConfig config = payService.getConfig("nonexistent_mch_id", "nonexistent_app_id");
+    assertNull(config, "获取不存在的配置应该返回null");
+
+    // 测试存在商户号但不存在的appId
+    config = payService.getConfig(testMchId, "wx9999999999999999");
+    assertNull(config, "获取不存在的appId配置应该返回null");
+  }
+
+  /**
+   * 测试 getConfig 方法处理空参数或null参数
+   */
+  @Test
+  public void testGetConfigWithNullOrEmptyParameters() {
+    // 测试 null 商户号
+    WxPayConfig config = payService.getConfig(null, testAppId1);
+    assertNull(config, "商户号为null时应该返回null");
+
+    // 测试空商户号
+    config = payService.getConfig("", testAppId1);
+    assertNull(config, "商户号为空字符串时应该返回null");
+
+    // 测试 null appId
+    config = payService.getConfig(testMchId, null);
+    assertNull(config, "appId为null时应该返回null");
+
+    // 测试空 appId
+    config = payService.getConfig(testMchId, "");
+    assertNull(config, "appId为空字符串时应该返回null");
+
+    // 测试仅mchId方法的null参数
+    config = payService.getConfig((String) null);
+    assertNull(config, "商户号为null时应该返回null");
+
+    // 测试仅mchId方法的空字符串
+    config = payService.getConfig("");
+    assertNull(config, "商户号为空字符串时应该返回null");
+  }
+
+  /**
+   * 测试使用 mchId + appId 精确切换（原有功能，确保向后兼容）
+   */
+  @Test
+  public void testSwitchoverWithMchIdAndAppId() {
+    // 切换到第一个配置
+    boolean success = payService.switchover(testMchId, testAppId1);
+    assertTrue(success);
+    assertEquals(payService.getConfig().getAppId(), testAppId1);
+    assertEquals(payService.getConfig().getMchKey(), "test_key_1");
+
+    // 切换到第二个配置
+    success = payService.switchover(testMchId, testAppId2);
+    assertTrue(success);
+    assertEquals(payService.getConfig().getAppId(), testAppId2);
+    assertEquals(payService.getConfig().getMchKey(), "test_key_2");
+
+    // 切换到第三个配置
+    success = payService.switchover(testMchId, testAppId3);
+    assertTrue(success);
+    assertEquals(payService.getConfig().getAppId(), testAppId3);
+    assertEquals(payService.getConfig().getMchKey(), "test_key_3");
+  }
+
+  /**
+   * 测试仅使用 mchId 切换（新功能）
+   * 应该能够成功切换到该商户号的某个配置
+   */
+  @Test
+  public void testSwitchoverWithMchIdOnly() {
+    // 仅使用商户号切换，应该能够成功切换到该商户号的某个配置
+    boolean success = payService.switchover(testMchId);
+    assertTrue(success, "应该能够通过mchId切换配置");
+
+    // 验证配置确实是该商户号的配置之一
+    WxPayConfig currentConfig = payService.getConfig();
+    assertNotNull(currentConfig);
+    assertEquals(currentConfig.getMchId(), testMchId);
+
+    // appId应该是三个中的一个
+    String currentAppId = currentConfig.getAppId();
+    assertTrue(
+      testAppId1.equals(currentAppId) || testAppId2.equals(currentAppId) || testAppId3.equals(currentAppId),
+      "当前appId应该是配置的appId之一"
+    );
+  }
+
+  /**
+   * 测试 switchoverTo 方法（带链式调用，使用 mchId + appId）
+   */
+  @Test
+  public void testSwitchoverToWithMchIdAndAppId() {
+    WxPayService result = payService.switchoverTo(testMchId, testAppId2);
+    assertNotNull(result);
+    assertEquals(result, payService, "switchoverTo应该返回当前服务实例，支持链式调用");
+    assertEquals(payService.getConfig().getAppId(), testAppId2);
+  }
+
+  /**
+   * 测试 switchoverTo 方法（带链式调用，仅使用 mchId）
+   */
+  @Test
+  public void testSwitchoverToWithMchIdOnly() {
+    WxPayService result = payService.switchoverTo(testMchId);
+    assertNotNull(result);
+    assertEquals(result, payService, "switchoverTo应该返回当前服务实例，支持链式调用");
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试切换到不存在的商户号
+   */
+  @Test
+  public void testSwitchoverToNonexistentMchId() {
+    boolean success = payService.switchover("nonexistent_mch_id");
+    assertFalse(success, "切换到不存在的商户号应该失败");
+  }
+
+  /**
+   * 测试 switchoverTo 切换到不存在的商户号（应该抛出异常）
+   */
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToNonexistentMchIdThrowsException() {
+    payService.switchoverTo("nonexistent_mch_id");
+  }
+
+  /**
+   * 测试切换到不存在的 mchId + appId 组合
+   */
+  @Test
+  public void testSwitchoverToNonexistentAppId() {
+    boolean success = payService.switchover(testMchId, "wx9999999999999999");
+    assertFalse(success, "切换到不存在的appId应该失败");
+  }
+
+  /**
+   * 测试添加配置后能够正常切换
+   */
+  @Test
+  public void testAddConfigAndSwitchover() {
+    String newAppId = "wx4444444444444444";
+
+    // 动态添加一个新的配置
+    WxPayConfig newConfig = new WxPayConfig();
+    newConfig.setMchId(testMchId);
+    newConfig.setAppId(newAppId);
+    newConfig.setMchKey("test_key_4");
+
+    payService.addConfig(testMchId, newAppId, newConfig);
+
+    // 切换到新添加的配置
+    boolean success = payService.switchover(testMchId, newAppId);
+    assertTrue(success);
+    assertEquals(payService.getConfig().getAppId(), newAppId);
+    assertEquals(payService.getConfig().getMchKey(), "test_key_4");
+
+    // 使用仅mchId切换也应该能够找到配置
+    success = payService.switchover(testMchId);
+    assertTrue(success);
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试移除配置后切换
+   */
+  @Test
+  public void testRemoveConfigAndSwitchover() {
+    // 移除一个配置
+    payService.removeConfig(testMchId, testAppId1);
+
+    // 切换到已移除的配置应该失败
+    boolean success = payService.switchover(testMchId, testAppId1);
+    assertFalse(success);
+
+    // 但仍然能够切换到其他配置
+    success = payService.switchover(testMchId, testAppId2);
+    assertTrue(success);
+
+    // 使用仅mchId切换应该仍然有效（因为还有其他appId的配置）
+    success = payService.switchover(testMchId);
+    assertTrue(success);
+  }
+
+  /**
+   * 测试单个配置的场景（确保向后兼容）
+   */
+  @Test
+  public void testSingleConfig() {
+    WxPayService singlePayService = new WxPayServiceImpl();
+    WxPayConfig singleConfig = new WxPayConfig();
+    singleConfig.setMchId("single_mch_id");
+    singleConfig.setAppId("single_app_id");
+    singleConfig.setMchKey("single_key");
+
+    singlePayService.setConfig(singleConfig);
+
+    // 直接获取配置应该成功
+    assertEquals(singlePayService.getConfig().getMchId(), "single_mch_id");
+    assertEquals(singlePayService.getConfig().getAppId(), "single_app_id");
+
+    // 使用精确匹配切换
+    boolean success = singlePayService.switchover("single_mch_id", "single_app_id");
+    assertTrue(success);
+
+    // 使用仅mchId切换
+    success = singlePayService.switchover("single_mch_id");
+    assertTrue(success);
+  }
+
+  /**
+   * 测试空参数或null参数的处理
+   */
+  @Test
+  public void testSwitchoverWithNullOrEmptyMchId() {
+    // 测试 null 参数
+    boolean success = payService.switchover(null);
+    assertFalse(success, "使用null作为mchId应该返回false");
+
+    // 测试空字符串
+    success = payService.switchover("");
+    assertFalse(success, "使用空字符串作为mchId应该返回false");
+
+    // 测试空白字符串
+    success = payService.switchover("   ");
+    assertFalse(success, "使用空白字符串作为mchId应该返回false");
+  }
+
+  /**
+   * 测试 switchoverTo 方法对空参数或null参数的处理
+   */
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithNullMchId() {
+    payService.switchoverTo((String) null);
+  }
+
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithEmptyMchId() {
+    payService.switchoverTo("");
+  }
+
+  @Test(expectedExceptions = WxRuntimeException.class)
+  public void testSwitchoverToWithBlankMchId() {
+    payService.switchoverTo("   ");
+  }
+
+  /**
+   * 测试商户号存在包含关系的场景
+   * 例如同时配置 "123" 和 "1234"，验证前缀匹配不会错误匹配
+   */
+  @Test
+  public void testSwitchoverWithOverlappingMchIds() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    // 配置两个有包含关系的商户号
+    String mchId1 = "123";
+    String mchId2 = "1234";
+    String appId1 = "wx_app_123";
+    String appId2 = "wx_app_1234";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId(mchId1);
+    config1.setAppId(appId1);
+    config1.setMchKey("key_123");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId(mchId2);
+    config2.setAppId(appId2);
+    config2.setMchKey("key_1234");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(mchId1 + "_" + appId1, config1);
+    configMap.put(mchId2 + "_" + appId2, config2);
+    testService.setMultiConfig(configMap);
+
+    // 切换到 "123"，应该只匹配 "123_wx_app_123"
+    boolean success = testService.switchover(mchId1);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getMchId(), mchId1);
+    assertEquals(testService.getConfig().getAppId(), appId1);
+
+    // 切换到 "1234"，应该只匹配 "1234_wx_app_1234"
+    success = testService.switchover(mchId2);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getMchId(), mchId2);
+    assertEquals(testService.getConfig().getAppId(), appId2);
+
+    // 精确切换验证
+    success = testService.switchover(mchId1, appId1);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getAppId(), appId1);
+
+    success = testService.switchover(mchId2, appId2);
+    assertTrue(success);
+    assertEquals(testService.getConfig().getAppId(), appId2);
+  }
+
+  /**
+   * 测试使用自定义唯一键（非mchId格式）添加配置并切换.
+   * 验证向后兼容性：支持使用任意唯一标识符（如租户ID）管理配置
+   */
+  @Test
+  public void testAddConfigWithCustomKey() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String customKey1 = "tenant_001";
+    String customKey2 = "tenant_002";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId("mch001");
+    config1.setAppId("wxabc");
+    config1.setMchKey("key_tenant_001");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId("mch002");
+    config2.setAppId("wxdef");
+    config2.setMchKey("key_tenant_002");
+
+    // 使用自定义键添加配置
+    testService.addConfig(customKey1, config1);
+    testService.addConfig(customKey2, config2);
+
+    // 使用自定义键切换配置
+    boolean success = testService.switchover(customKey1);
+    assertTrue(success, "应该能够使用自定义键切换配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant_001");
+
+    success = testService.switchover(customKey2);
+    assertTrue(success, "应该能够切换到第二个自定义键配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant_002");
+  }
+
+  /**
+   * 测试使用自定义唯一键删除配置.
+   */
+  @Test
+  public void testRemoveConfigWithCustomKey() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String customKey1 = "tenant_A";
+    String customKey2 = "tenant_B";
+
+    WxPayConfig config1 = new WxPayConfig();
+    config1.setMchId("mchA");
+    config1.setAppId("wxA");
+    config1.setMchKey("key_A");
+
+    WxPayConfig config2 = new WxPayConfig();
+    config2.setMchId("mchB");
+    config2.setAppId("wxB");
+    config2.setMchKey("key_B");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(customKey1, config1);
+    configMap.put(customKey2, config2);
+    testService.setMultiConfig(configMap);
+
+    // 删除第一个自定义键配置
+    testService.removeConfig(customKey1);
+
+    // 尝试切换到已删除的配置应该失败
+    boolean success = testService.switchover(customKey1);
+    assertFalse(success, "切换到已删除的配置应该失败");
+
+    // 但仍然能够切换到第二个配置
+    success = testService.switchover(customKey2);
+    assertTrue(success, "切换到未删除的配置应该成功");
+    assertEquals(testService.getConfig().getMchKey(), "key_B");
+  }
+
+  /**
+   * 测试 switchover(mchId, appId) 当 appId 为 null 时降级为 switchover(mchId).
+   * 模拟通知回调中 appId 可能为空的场景
+   */
+  @Test
+  public void testSwitchoverWithNullAppIdFallsBackToMchId() {
+    // 切换到 appId 为 null 时，应该降级为只使用 mchId 匹配
+    boolean success = payService.switchover(testMchId, null);
+    assertTrue(success, "appId为null时应该降级为仅mchId匹配");
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+
+    // appId 为空字符串时同样应该降级
+    success = payService.switchover(testMchId, "");
+    assertTrue(success, "appId为空字符串时应该降级为仅mchId匹配");
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试 switchoverTo(mchId, appId) 当 appId 为 null 时降级为 switchoverTo(mchId).
+   */
+  @Test
+  public void testSwitchoverToWithNullAppIdFallsBackToMchId() {
+    WxPayService result = payService.switchoverTo(testMchId, null);
+    assertNotNull(result);
+    assertEquals(result, payService);
+    assertEquals(payService.getConfig().getMchId(), testMchId);
+  }
+
+  /**
+   * 测试使用自定义键通过 setMultiConfig 注册后可以直接 switchover.
+   */
+  @Test
+  public void testSwitchoverWithCustomKeyViaSetMultiConfig() {
+    WxPayService testService = new WxPayServiceImpl();
+
+    String tenantId = "my-unique-tenant-id";
+    WxPayConfig config = new WxPayConfig();
+    config.setMchId("mchTenant");
+    config.setAppId("wxTenant");
+    config.setMchKey("key_tenant");
+
+    Map<String, WxPayConfig> configMap = new HashMap<>();
+    configMap.put(tenantId, config);
+    testService.setMultiConfig(configMap);
+
+    // 使用自定义租户ID切换
+    boolean success = testService.switchover(tenantId);
+    assertTrue(success, "应该能够使用自定义租户ID切换配置");
+    assertEquals(testService.getConfig().getMchKey(), "key_tenant");
+
+    // switchoverTo 链式调用也应该支持
+    WxPayService result = testService.switchoverTo(tenantId);
+    assertNotNull(result);
+    assertEquals(result, testService);
+  }
+}

@@ -65,6 +65,16 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
    */
   private int maxRetryTimes = 5;
 
+  /**
+   * 自定义API主机地址，用于替换默认的 https://api.weixin.qq.com
+   */
+  private String apiHostUrl;
+
+  /**
+   * 自定义获取AccessToken地址，用于向自定义统一服务获取AccessToken
+   */
+  private String accessTokenUrl;
+
   private ApacheHttpClientBuilder apacheHttpClientBuilder;
 
   private Map<String, Token> authorizerRefreshTokens = new ConcurrentHashMap<>();
@@ -290,6 +300,13 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
       this.accessTokenLock = wxOpenConfigStorage.getLockByKey(appId + ":accessTokenLock");
       this.jsapiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":jsapiTicketLock");
       this.cardApiTicketLock = wxOpenConfigStorage.getLockByKey(appId + ":cardApiTicketLock");
+      
+      // 自动获取外层配置的URL设置
+      if (wxOpenConfigStorage instanceof WxOpenInMemoryConfigStorage) {
+        WxOpenInMemoryConfigStorage parentConfig = (WxOpenInMemoryConfigStorage) wxOpenConfigStorage;
+        this.apiHostUrl = parentConfig.getApiHostUrl();
+        this.accessTokenUrl = parentConfig.getAccessTokenUrl();
+      }
     }
 
     @Override
@@ -636,6 +653,26 @@ public class WxOpenInMemoryConfigStorage implements WxOpenConfigStorage {
     @Override
     public void setHostConfig(WxMpHostConfig hostConfig) {
       this.hostConfig = hostConfig;
+    }
+
+    @Override
+    public String getApiHostUrl() {
+      return this.apiHostUrl;
+    }
+
+    @Override
+    public void setApiHostUrl(String apiHostUrl) {
+      this.apiHostUrl = apiHostUrl;
+    }
+
+    @Override
+    public String getAccessTokenUrl() {
+      return this.accessTokenUrl;
+    }
+
+    @Override
+    public void setAccessTokenUrl(String accessTokenUrl) {
+      this.accessTokenUrl = accessTokenUrl;
     }
   }
 }

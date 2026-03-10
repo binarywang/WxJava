@@ -235,4 +235,30 @@ public class BatchDetailsResult implements Serializable {
    */
   @SerializedName(value = "update_time")
   private String updateTime;
+  /**
+   * <pre>
+   * 字段名：开户银行全称（含支行）
+   * 变量名：bank_name
+   * 是否必填：否
+   * 类型：string[1, 128]
+   * 描述：
+   * 转账到银行卡时返回，开户银行全称（含支行）
+   * 示例值：中国农业银行股份有限公司深圳分行
+   * </pre>
+   */
+  @SerializedName(value = "bank_name")
+  private String bankName;
+  /**
+   * <pre>
+   * 字段名：银行卡号后四位
+   * 变量名：bank_card_number_tail
+   * 是否必填：否
+   * 类型：string[4, 4]
+   * 描述：
+   * 转账到银行卡时返回，用于标识银行卡的后四位
+   * 示例值：1234
+   * </pre>
+   */
+  @SerializedName(value = "bank_card_number_tail")
+  private String bankCardNumberTail;
 }

@@ -249,7 +249,9 @@ public class EntPayRequest extends BaseWxPayRequest {
     map.put("desc", description);
     map.put("spbill_create_ip", spbillCreateIp);
     map.put("scene", scene);
-    map.put("brand_id", brandId.toString());
+    if (brandId != null) {
+      map.put("brand_id", brandId.toString());
+    }
     map.put("finder_template_id", finderTemplateId);
   }
 }

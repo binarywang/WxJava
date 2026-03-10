@@ -518,7 +518,7 @@ public class WxOpenSubmitAuthAndIcpParam implements Serializable {
      * 微信小程序基本信息
      */
     @SerializedName("base_info")
-    private AppletsBaseInfo AppleBaseInfo;
+    private AppletsBaseInfo baseInfo;
 
     /**
      * 小程序负责人信息

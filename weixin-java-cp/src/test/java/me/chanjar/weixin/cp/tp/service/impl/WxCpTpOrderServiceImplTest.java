@@ -18,8 +18,8 @@ import java.util.Objects;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_ORDER;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tp.GET_ORDER_LIST;
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.eq;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.testng.Assert.*;
 
@@ -40,7 +40,7 @@ public class WxCpTpOrderServiceImplTest {
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpOrderService = new WxCpTpOrderServiceImpl(wxCpTpService);

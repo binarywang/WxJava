@@ -87,6 +87,26 @@ public class TransferBillsRequest implements Serializable {
   @SerializedName("transfer_scene_report_infos")
   private List<TransferSceneReportInfo> transferSceneReportInfos;
 
+  /**
+   * 收款授权模式
+   * <pre>
+   * 字段名：收款授权模式
+   * 变量名：receipt_authorization_mode
+   * 是否必填：否
+   * 类型：string
+   * 描述：
+   *  控制收款方式的授权模式，可选值：
+   *  - CONFIRM_RECEIPT_AUTHORIZATION：需确认收款授权模式（默认值）
+   *  - NO_CONFIRM_RECEIPT_AUTHORIZATION：免确认收款授权模式（需要用户事先授权）
+   *  为空时，默认为需确认收款授权模式
+   * 示例值：NO_CONFIRM_RECEIPT_AUTHORIZATION
+   * </pre>
+   * 
+   * @see com.github.binarywang.wxpay.constant.WxPayConstants.ReceiptAuthorizationMode
+   */
+  @SerializedName("receipt_authorization_mode")
+  private String receiptAuthorizationMode;
+
 
   @Data
   @Builder(builderMethodName = "newBuilder")

@@ -10,7 +10,7 @@ import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
  * 获客链接的使用详情
  *
  * @author Hugo
- * @date 2023/12/11 10:31
+ * @since 2023/12/11 10:31
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

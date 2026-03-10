@@ -65,6 +65,51 @@ public class WxCpGroupRobotServiceImplTest {
   }
 
   /**
+   * Test send mark down v2.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testSendMarkDownV2() throws WxErrorException {
+    String content = "# 一、标题\n" +
+      "## 二级标题\n" +
+      "### 三级标题\n" +
+      "# 二、字体\n" +
+      "*斜体*\n" +
+      "\n" +
+      "**加粗**\n" +
+      "# 三、列表 \n" +
+      "- 无序列表 1 \n" +
+      "- 无序列表 2\n" +
+      "  - 无序列表 2.1\n" +
+      "  - 无序列表 2.2\n" +
+      "1. 有序列表 1\n" +
+      "2. 有序列表 2\n" +
+      "# 四、引用\n" +
+      "> 一级引用\n" +
+      ">>二级引用\n" +
+      ">>>三级引用\n" +
+      "# 五、链接\n" +
+      "[这是一个链接](https://work.weixin.qq.com/api/doc)\n" +
+      "![](https://res.mail.qq.com/node/ww/wwopenmng/images/independent/doc/test_pic_msg1.png)\n" +
+      "# 六、分割线\n" +
+      "\n" +
+      "---\n" +
+      "# 七、代码\n" +
+      "`这是行内代码`\n" +
+      "```\n" +
+      "这是独立代码块\n" +
+      "```\n" +
+      "\n" +
+      "# 八、表格\n" +
+      "| 姓名 | 文化衫尺寸 | 收货地址 |\n" +
+      "| :----- | :----: | -------: |\n" +
+      "| 张三 | S | 广州 |\n" +
+      "| 李四 | L | 深圳 |";
+    robotService.sendMarkdownV2(content);
+  }
+
+  /**
    * Test send image.
    *
    * @throws WxErrorException the wx error exception

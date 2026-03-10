@@ -101,9 +101,9 @@ public class WxCpTpServiceApacheHttpClientImpl extends BaseWxCpTpServiceImpl<Clo
     this.httpClient = apacheHttpClientBuilder.build();
   }
 
-  @Override
-  public WxCpTpConfigStorage getWxCpTpConfigStorage() {
-    return this.configStorage;
-  }
+//  @Override
+//  public WxCpTpConfigStorage getWxCpTpConfigStorage() {
+//    return this.configStorage;
+//  }
 
 }

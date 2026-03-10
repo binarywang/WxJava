@@ -793,4 +793,6 @@ public class WxCpTpXmlMessage implements Serializable {
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }
+
+
 }

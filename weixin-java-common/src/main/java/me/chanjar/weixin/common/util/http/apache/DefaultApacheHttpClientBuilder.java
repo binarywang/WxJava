@@ -94,6 +94,12 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
   private String userAgent;
 
   /**
+   * 支持的TLS协议版本，默认支持现代TLS版本
+   * Supported TLS protocol versions, defaults to modern TLS versions
+   */
+  private String[] supportedProtocols = {"TLSv1.2", "TLSv1.3", "TLSv1.1", "TLSv1"};
+
+  /**
    * 自定义请求拦截器
    */
   private List<HttpRequestInterceptor> requestInterceptors = new ArrayList<>();
@@ -179,6 +185,12 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     return this;
   }
 
+  @Override
+  public ApacheHttpClientBuilder supportedProtocols(String[] supportedProtocols) {
+    this.supportedProtocols = supportedProtocols;
+    return this;
+  }
+
   public IdleConnectionMonitorThread getIdleConnectionMonitorThread() {
     return this.idleConnectionMonitorThread;
   }
@@ -257,7 +269,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
       return new SSLConnectionSocketFactory(
         sslcontext,
-        new String[]{"TLSv1"},
+        this.supportedProtocols,
         null,
         SSLConnectionSocketFactory.getDefaultHostnameVerifier());
     } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {

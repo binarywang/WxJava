@@ -46,23 +46,23 @@ public enum WxMaErrorMsgEnum {
    */
   CODE_40003(40003, "openid 不正确"),
   /**
-   * <pre>
    * 无效媒体文件类型
-   * 对应操作：<code>uploadTempMedia</code>
+   * <p>
+   * 对应操作：{@code uploadTempMedia}
    * 对应地址：
-   * POST https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE
+   * {@code POST https://api.weixin.qq.com/cgi-bin/media/upload?access_token=ACCESS_TOKEN&type=TYPE}
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/customer-message/uploadTempMedia.html
-   * </pre>
+   * </p>
    */
   CODE_40004(40004, "无效媒体文件类型"),
   /**
-   * <pre>
    * 无效媒体文件 ID.
-   * 对应操作：<code>getTempMedia</code>
+   * <p>
+   * 对应操作：{@code getTempMedia}
    * 对应地址：
-   * GET https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID
+   * {@code GET https://api.weixin.qq.com/cgi-bin/media/get?access_token=ACCESS_TOKEN&media_id=MEDIA_ID}
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/customer-message/getTempMedia.html
-   * </pre>
+   * </p>
    */
   CODE_40007(40007, "无效媒体文件 ID"),
   /**
@@ -99,29 +99,29 @@ public enum WxMaErrorMsgEnum {
    */
   CODE_41028(41028, "form_id 不正确，或者过期"),
   /**
-   * <pre>
    * code 或 template_id 不正确.
-   * 对应操作：<code>code2Session</code>, <code>sendUniformMessage</code>, <code>sendTemplateMessage</code>
+   * <p>
+   * 对应操作：{@code code2Session}, {@code sendUniformMessage}, {@code sendTemplateMessage}
    * 对应地址：
-   * GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+   * {@code GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code}
    * POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=ACCESS_TOKEN
    * POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=ACCESS_TOKEN
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/code2Session.html
    * https://developers.weixin.qq.com/miniprogram/dev/api/open-api/uniform-message/sendUniformMessage.html
    * https://developers.weixin.qq.com/miniprogram/dev/api/open-api/template-message/sendTemplateMessage.html
-   * </pre>
+   * </p>
    */
   CODE_41029(41029, "请求的参数不正确"),
   /**
-   * <pre>
    * form_id 已被使用，或者所传page页面不存在，或者小程序没有发布
-   * 对应操作：<code>sendUniformMessage</coce>, <code>getWXACodeUnlimit</code>
+   * <p>
+   * 对应操作：{@code sendUniformMessage}, {@code getWXACodeUnlimit}
    * 对应地址：
    * POST https://api.weixin.qq.com/cgi-bin/message/wxopen/template/uniform_send?access_token=ACCESS_TOKEN
    * POST https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=ACCESS_TOKEN
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/uniform-message/sendUniformMessage.html
-   *  https://developers.weixin.qq.com/miniprogram/dev/api/open-api/qr-code/getWXACodeUnlimit.html
-   * </pre>
+   * https://developers.weixin.qq.com/miniprogram/dev/api/open-api/qr-code/getWXACodeUnlimit.html
+   * </p>
    */
   CODE_41030(41030, "请求的参数不正确"),
   /**
@@ -138,13 +138,13 @@ public enum WxMaErrorMsgEnum {
    */
   CODE_45009(45009, "调用分钟频率受限"),
   /**
-   * <pre>
    * 频率限制，每个用户每分钟100次.
-   * 对应操作：<code>code2Session</code>
+   * <p>
+   * 对应操作：{@code code2Session}
    * 对应地址：
-   * GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code
+   * {@code GET https://api.weixin.qq.com/sns/jscode2session?appid=APPID&secret=SECRET&js_code=JSCODE&grant_type=authorization_code}
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/login/code2Session.html
-   * </pre>
+   * </p>
    */
   CODE_45011(45011, "频率限制，每个用户每分钟100次"),
   /**
@@ -190,12 +190,13 @@ public enum WxMaErrorMsgEnum {
    */
   CODE_45072(45072, "command字段取值不对"),
   /**
-   * <pre>
    * 下发输入状态，需要之前30秒内跟用户有过消息交互.
-   * 对应操作：<code>customerTyping</code>
+   * <p>
+   * 对应操作：{@code customerTyping}
    * 对应地址：
    * POST https://api.weixin.qq.com/cgi-bin/message/custom/typing?access_token=ACCESS_TOKEN
    * 参考文档地址： https://developers.weixin.qq.com/miniprogram/dev/api/open-api/customer-message/customerTyping.html
+   * </p>
    */
   CODE_45080(45080, "下发输入状态，需要之前30秒内跟用户有过消息交互"),
   /**
@@ -686,7 +687,7 @@ public enum WxMaErrorMsgEnum {
 
   /**
    * 89252
-   * 法人&企业信息一致性校验中 front checking
+   * {@code 法人&企业信息一致性校验中 front checking}
    */
   CODE_89252(89252, "法人&企业信息一致性校验中"),
 

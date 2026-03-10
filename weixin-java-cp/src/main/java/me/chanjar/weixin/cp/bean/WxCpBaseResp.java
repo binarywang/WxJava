@@ -10,7 +10,8 @@ import java.io.Serializable;
 /**
  * 返回结果
  *
- * @author yqx & WangWong created on  2020/3/16
+ * @author yqx, WangWong
+ * @since 2020/3/16
  */
 @Getter
 @Setter

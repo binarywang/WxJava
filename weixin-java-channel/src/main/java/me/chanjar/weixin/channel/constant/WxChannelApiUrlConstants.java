@@ -53,6 +53,8 @@ public class WxChannelApiUrlConstants {
     String CANCEL_CATEGORY_AUDIT_URL = "https://api.weixin.qq.com/channels/ec/category/audit/cancel";
     /** 获取账号申请通过的类目和资质信息 */
     String LIST_PASS_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/list/get";
+    /** 获取店铺的类目权限列表 */
+    String LIST_RELATION_CATEGORY_URL = "https://api.weixin.qq.com/shop/ec/category/get_category_relation_list";
   }
 
   /** 主页管理相关接口 */
@@ -232,6 +234,12 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_REASON_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/reason/get";
     /** 获取拒绝售后原因*/
     String AFTER_SALE_REJECT_REASON_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectreason/get";
+    /** 换货发货*/
+    String AFTER_SALE_ACCEPT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/acceptexchangereship";
+    /** 换货拒绝发货*/
+    String AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectexchangereship";
+    /** 商家协商*/
+    String AFTER_SALE_MERCHANT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantupdateaftersale";
   }
 
   /** 纠纷相关接口 */

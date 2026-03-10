@@ -69,6 +69,10 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   private String apiHostUrl;
   private String accessTokenUrl;
 
+  /** 是否使用微信云托管模式（使用 HTTP 协议访问内网地址） */
+  @Getter(AccessLevel.NONE)
+  private boolean useWxCloudRun = false;
+
   /** 自定义配置token的消费者 */
   @Setter private Consumer<WxAccessTokenEntity> updateAccessTokenBefore;
 
@@ -386,6 +390,16 @@ public class WxMaDefaultConfigImpl implements WxMaConfig {
   @Override
   public void setAccessTokenUrl(String accessTokenUrl) {
     this.accessTokenUrl = accessTokenUrl;
+  }
+
+  @Override
+  public boolean isUseWxCloudRun() {
+    return this.useWxCloudRun;
+  }
+
+  @Override
+  public void setUseWxCloudRun(boolean useWxCloudRun) {
+    this.useWxCloudRun = useWxCloudRun;
   }
 
   @Override

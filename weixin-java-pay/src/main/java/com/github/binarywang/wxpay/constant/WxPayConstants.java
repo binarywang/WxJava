@@ -401,6 +401,71 @@ public class WxPayConstants {
 
   }
 
+
+  /**
+   * 用户授权状态
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">商户查询用户授权信息</a>
+   */
+  @UtilityClass
+  public static class AuthorizationState {
+    /**
+     * 未授权
+     */
+    public static final String UNAUTHORIZED = "UNAUTHORIZED";
+
+    /**
+     * 已授权
+     */
+    public static final String AUTHORIZED = "AUTHORIZED";
+  }
+
+  /**
+   * 预约转账批次状态
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">批量预约商家转账</a>
+   */
+  @UtilityClass
+  public static class ReservationBatchState {
+    /**
+     * 批次已受理
+     */
+    public static final String ACCEPTED = "ACCEPTED";
+
+    /**
+     * 批次处理中
+     */
+    public static final String PROCESSING = "PROCESSING";
+
+    /**
+     * 批次处理完成
+     */
+    public static final String FINISHED = "FINISHED";
+
+    /**
+     * 批次已关闭
+     */
+    public static final String CLOSED = "CLOSED";
+  }
+
+  /**
+   * 预约转账批次关闭原因
+   *
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">预约转账批次单号查询</a>
+   */
+  @UtilityClass
+  public static class ReservationBatchCloseReason {
+    /**
+     * 商户主动撤销
+     */
+    public static final String MERCHANT_REVOCATION = "MERCHANT_REVOCATION";
+
+    /**
+     * 系统超时关闭
+     */
+    public static final String OVERDUE_CLOSE = "OVERDUE_CLOSE";
+  }
+
   /**
    * 【转账场景ID】 该笔转账使用的转账场景，可前往“商户平台-产品中心-商家转账”中申请。
    */
@@ -410,6 +475,29 @@ public class WxPayConstants {
      * 现金营销
      */
     public static final String CASH_MARKETING = "1001";
+  }
+
+  /**
+   * 【运营工具转账场景ID】 运营工具专用转账场景，用于商户日常运营活动
+   * 
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4012711988">运营工具-商家转账API</a>
+   */
+  @UtilityClass
+  public static class OperationSceneId {
+    /**
+     * 运营工具现金营销
+     */
+    public static final String OPERATION_CASH_MARKETING = "2001";
+    
+    /**
+     * 运营工具佣金报酬
+     */
+    public static final String OPERATION_COMMISSION = "2002";
+    
+    /**
+     * 运营工具推广奖励
+     */
+    public static final String OPERATION_PROMOTION = "2003";
   }
 
   /**
@@ -436,4 +524,25 @@ public class WxPayConstants {
     }
 
   }
+
+  /**
+   * 收款授权模式
+   * 
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4014399293">官方文档</a>
+   */
+  @UtilityClass
+  public static class ReceiptAuthorizationMode {
+    /**
+     * 需确认收款授权模式（默认值）
+     * 用户需要手动确认才能收款
+     */
+    public static final String CONFIRM_RECEIPT_AUTHORIZATION = "CONFIRM_RECEIPT_AUTHORIZATION";
+
+    /**
+     * 免确认收款授权模式
+     * 用户授权后，收款不需要确认，转账直接到账
+     */
+    public static final String NO_CONFIRM_RECEIPT_AUTHORIZATION = "NO_CONFIRM_RECEIPT_AUTHORIZATION";
+  }
+
 }

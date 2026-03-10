@@ -38,7 +38,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * The type Wx cp external contact service.
  *
- * @author 曹祖鹏 & yuanqixun & Mr.Pan & Wang_Wong
+ * @author 曹祖鹏, yuanqixun, Mr.Pan, Wang_Wong
  */
 @RequiredArgsConstructor
 public class WxCpExternalContactServiceImpl implements WxCpExternalContactService {

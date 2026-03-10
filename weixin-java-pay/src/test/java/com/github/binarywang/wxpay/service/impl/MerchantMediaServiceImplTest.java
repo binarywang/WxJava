@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.media.ImageUploadResult;
+import com.github.binarywang.wxpay.bean.media.VideoUploadResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.MerchantMediaService;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -49,6 +50,47 @@ public class MerchantMediaServiceImplTest {
     String mediaId2 = imageUploadResult2.getMediaId();
 
     log.info("mediaId2：[{}]",mediaId2);
+
+  }
+
+  @Test
+  public void testVideoUploadV3() throws WxPayException, IOException {
+
+    MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(wxPayService);
+
+    String filePath = "你的视频文件的路径地址";
+//    String filePath = "WxJava/test-video.mp4";
+
+    File file = new File(filePath);
+
+    VideoUploadResult videoUploadResult = merchantMediaService.videoUploadV3(file);
+    String mediaId = videoUploadResult.getMediaId();
+
+    log.info("视频上传成功，mediaId：[{}]", mediaId);
+
+    VideoUploadResult videoUploadResult2 = merchantMediaService.videoUploadV3(file);
+    String mediaId2 = videoUploadResult2.getMediaId();
+
+    log.info("视频上传成功2，mediaId2：[{}]", mediaId2);
+
+  }
+
+  @Test
+  public void testVideoUploadV3WithInputStream() throws WxPayException, IOException {
+
+    MerchantMediaService merchantMediaService = new MerchantMediaServiceImpl(wxPayService);
+
+    String filePath = "你的视频文件的路径地址";
+//    String filePath = "WxJava/test-video.mp4";
+
+    File file = new File(filePath);
+
+    try (java.io.FileInputStream inputStream = new java.io.FileInputStream(file)) {
+      VideoUploadResult videoUploadResult = merchantMediaService.videoUploadV3(inputStream, file.getName());
+      String mediaId = videoUploadResult.getMediaId();
+
+      log.info("通过InputStream上传视频成功，mediaId：[{}]", mediaId);
+    }
 
   }
 }

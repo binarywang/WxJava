@@ -279,6 +279,20 @@ public interface WxMaService extends WxService {
   WxMaCodeService getCodeService();
 
   /**
+   * 获取小程序 - 微信客服。
+   *
+   * @return                 微信客服服务对象WxMaCustomserviceWorkService
+   */
+  WxMaCustomserviceWorkService getCustomserviceWorkService();
+
+  /**
+   * 获取小程序客服管理服务。
+   *
+   * @return                 客服管理服务对象WxMaKefuService
+   */
+  WxMaKefuService getKefuService();
+
+  /**
    * 获取jsapi操作相关服务对象。
    *
    * @return                 jsapi服务对象WxMaJsapiService
@@ -598,4 +612,32 @@ public interface WxMaService extends WxService {
    * @return                 同城配送服务对象WxMaIntracityService
    */
   WxMaIntracityService getIntracityService();
+
+  /**
+   * 获取交易投诉服务对象。
+   * <br>
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/guarantee/complaint.html
+   *
+   * @return                 交易投诉服务对象WxMaComplaintService
+   */
+  WxMaComplaintService getComplaintService();
+
+  /**
+   * 获取用工关系服务对象。
+   * <br>
+   * 服务端api文档：https://developers.weixin.qq.com/miniprogram/dev/server/API/laboruse/
+   * 整体流程文档: https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/laboruse/intro.html
+   *
+   * @return                 用工关系服务对象WxMaEmployeeRelationService
+   */
+  WxMaEmployeeRelationService getEmployeeRelationService();
+
+  /**
+   * 获取人脸核身服务对象。
+   * <br>
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/server/API/face/
+   *
+   * @return                 人脸核身服务对象WxMaFaceService
+   */
+  WxMaFaceService getFaceService();
 }

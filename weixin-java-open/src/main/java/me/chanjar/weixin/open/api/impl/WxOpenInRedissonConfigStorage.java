@@ -36,7 +36,7 @@ public class WxOpenInRedissonConfigStorage extends AbstractWxOpenInRedisConfigSt
 
   @Override
   public void setComponentVerifyTicket(String componentVerifyTicket) {
-    redisOps.setValue(this.componentVerifyTicketKey, componentVerifyTicket, Integer.MAX_VALUE, TimeUnit.SECONDS);
+    redisOps.setValue(this.componentVerifyTicketKey, componentVerifyTicket, 43200, TimeUnit.SECONDS);
   }
 
   @Override
