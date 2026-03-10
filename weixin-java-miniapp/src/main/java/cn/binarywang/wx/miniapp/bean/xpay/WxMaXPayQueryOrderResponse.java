@@ -70,9 +70,9 @@ public class WxMaXPayQueryOrderResponse extends WxMaBaseResponse implements Seri
     @SerializedName("sett_state")
     private Integer settState; //结算状态 0-未开始结算 1-结算中 2-结算成功 3-待结算（与0相同）
     @SerializedName("platform_fee_fen")
-    private Integer platformFeeFen; //虚拟支付技术服务费，单位为分；sett_state = 2时返回
+    private Long platformFeeFen; //虚拟支付技术服务费，单位为分；sett_state = 2时返回
     @SerializedName("cps_fee_fen")
-    private Integer cpsFeeFen; //公众号、视频号平台的cps服务费，单位为分；sett_state = 2时返回
+    private Long cpsFeeFen; //公众号、视频号平台的cps服务费，单位为分；sett_state = 2时返回
 
   }
 }
