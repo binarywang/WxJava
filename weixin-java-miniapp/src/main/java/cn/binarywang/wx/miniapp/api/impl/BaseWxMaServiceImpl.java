@@ -962,8 +962,8 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       reqData.addProperty("authtag", base64Encode(authTag));
       String requestJson = reqData.toString();
 
-      // 计算签名 RSA
-      String payload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + rsaKeySn + "\n" + requestJson;
+      // 计算签名 RSA，待签名串格式：urlpath\nappid\ntimestamp\npostdata
+      String payload = urlPath + "\n" + appId + "\n" + timestamp + "\n" + requestJson;
       byte[] dataBuffer = payload.getBytes(StandardCharsets.UTF_8);
       RSAPrivateKey priKey;
       try {
