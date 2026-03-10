@@ -7,6 +7,7 @@ import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpEditionService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -29,15 +30,28 @@ public class WxCpTpEditionServiceImplTest {
 
   private WxCpTpEditionService wxCpTpEditionService;
 
+  private AutoCloseable mockitoAnnotations;
+
   /**
    * Sets up.
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.openMocks(this);
+    mockitoAnnotations = MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpEditionService = new WxCpTpEditionServiceImpl(wxCpTpService);
+  }
+
+
+  /**
+   * Tear down.
+   *
+   * @throws Exception the exception
+   */
+  @AfterClass
+  public void tearDown() throws Exception {
+    mockitoAnnotations.close();
   }
 
 

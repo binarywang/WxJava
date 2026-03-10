@@ -9,6 +9,7 @@ import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpTagService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.testng.collections.CollectionUtils;
@@ -36,15 +37,27 @@ public class WxCpTpTagServiceImplTest {
 
   private WxCpTpTagService wxCpTpTagService;
 
+  private AutoCloseable mockitoAnnotations;
+
   /**
    * Sets up.
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.openMocks(this);
+    mockitoAnnotations = MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpTagService = new WxCpTpTagServiceImpl(wxCpTpService);
+  }
+
+  /**
+   * Tear down.
+   *
+   * @throws Exception the exception
+   */
+  @AfterClass
+  public void tearDown() throws Exception {
+    mockitoAnnotations.close();
   }
 
   /**

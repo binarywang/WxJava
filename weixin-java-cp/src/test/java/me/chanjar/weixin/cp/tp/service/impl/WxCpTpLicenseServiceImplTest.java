@@ -10,6 +10,7 @@ import me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImpl;
 import me.chanjar.weixin.cp.tp.service.WxCpTpLicenseService;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
@@ -36,15 +37,28 @@ public class WxCpTpLicenseServiceImplTest {
 
   private WxCpTpLicenseService wxCpTpLicenseService;
 
+  private AutoCloseable mockitoAnnotations;
+
   /**
    * Sets up.
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.openMocks(this);
+    mockitoAnnotations = MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpLicenseService = new WxCpTpLicenseServiceImpl(wxCpTpService);
+  }
+
+
+  /**
+   * Tear down.
+   *
+   * @throws Exception the exception
+   */
+  @AfterClass
+  public void tearDown() throws Exception {
+    mockitoAnnotations.close();
   }
 
 
