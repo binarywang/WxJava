@@ -404,6 +404,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Override
   public WxPayRefundV3Result partnerRefundV3(WxPayPartnerRefundV3Request request) throws WxPayException {
+    if (StringUtils.isBlank(request.getSpAppid())) {
+      request.setSpAppid(this.getConfig().getAppId());
+    }
+    if (StringUtils.isBlank(request.getSubAppid()) && StringUtils.isNotBlank(this.getConfig().getSubAppId())) {
+      request.setSubAppid(this.getConfig().getSubAppId());
+    }
     if (StringUtils.isBlank(request.getNotifyUrl())) {
       request.setNotifyUrl(this.getConfig().getRefundNotifyUrl());
     }

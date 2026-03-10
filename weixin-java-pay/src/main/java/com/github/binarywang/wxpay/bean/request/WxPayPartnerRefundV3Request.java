@@ -11,7 +11,6 @@ import java.io.Serializable;
  * 微信支付服务商退款请求
  * 文档见：https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml
  *
- * @author GitHub Copilot
  */
 @Data
 @NoArgsConstructor
