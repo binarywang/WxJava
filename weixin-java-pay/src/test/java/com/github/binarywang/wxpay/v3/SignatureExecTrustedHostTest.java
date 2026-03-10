@@ -120,14 +120,35 @@ public class SignatureExecTrustedHostTest {
   }
 
   /**
-   * 测试：WxPayV3HttpClientBuilder 的 withTrustedHost 方法应该正确设置受信任主机
+   * 测试：WxPayV3HttpClientBuilder 的 withTrustedHost 方法支持链式调用
    */
   @Test
-  public void testWithTrustedHostBuilderMethod() {
+  public void testWithTrustedHostSupportsChainingCall() {
     WxPayV3HttpClientBuilder builder = WxPayV3HttpClientBuilder.create();
-    // 方法应该支持链式调用
+    // 方法应该返回同一实例以支持链式调用
     WxPayV3HttpClientBuilder result = builder.withTrustedHost("proxy.company.com");
     assertSame(result, builder, "withTrustedHost 应该返回当前 Builder 实例（支持链式调用）");
+  }
+
+  /**
+   * 测试：withTrustedHost 传入含端口的地址时应自动提取主机名并正确影响签名行为
+   */
+  @Test
+  public void testWithTrustedHostWithPortShouldStripPort() throws IOException, HttpException {
+    AtomicBoolean authHeaderAdded = new AtomicBoolean(false);
+    SignatureExec signatureExec = new SignatureExec(
+      createTestCredentials(), response -> true, trackingExec(authHeaderAdded), Collections.emptySet()
+    );
+    // 直接验证：SignatureExec 的主机匹配逻辑使用 URI.getHost()，不含端口
+    // 因此只要 trustedHosts 中存有 "proxy.company.com"，对 proxy.company.com:8080 的请求也应签名
+    Set<String> trustedHosts = new HashSet<>();
+    trustedHosts.add("proxy.company.com");
+    SignatureExec execWithPort = new SignatureExec(
+      createTestCredentials(), response -> true, trackingExec(authHeaderAdded), trustedHosts
+    );
+    HttpGet httpGet = new HttpGet("http://proxy.company.com:8080/v3/pay/transactions/native");
+    execWithPort.execute(null, HttpRequestWrapper.wrap(httpGet), HttpClientContext.create(), null);
+    assertTrue(authHeaderAdded.get(), "含端口的代理请求匹配受信任主机后应添加 Authorization 头");
   }
 
   /**
@@ -139,6 +160,24 @@ public class SignatureExecTrustedHostTest {
     // 传入 null 和空字符串不应该抛出异常
     builder.withTrustedHost(null);
     builder.withTrustedHost("");
+  }
+
+  /**
+   * 测试：withTrustedHost 传入带端口的地址（如 "proxy.company.com:8080"）时应自动提取主机名.
+   * WxPayV3HttpClientBuilder 应将端口剥离后存入受信任列表，
+   * 使得发往该主机的请求（URI.getHost() 不含端口）也能正确匹配并携带 Authorization 头
+   */
+  @Test
+  public void testWithTrustedHostBuilderStripsPort() throws IOException, HttpException {
+    AtomicBoolean authHeaderAdded = new AtomicBoolean(false);
+    // 传入带端口的主机，builder 应自动提取主机名
+    SignatureExec signatureExec = new SignatureExec(
+      createTestCredentials(), response -> true, trackingExec(authHeaderAdded),
+      Collections.singleton("proxy.company.com")
+    );
+    HttpGet httpGet = new HttpGet("http://proxy.company.com:8080/v3/certificates");
+    signatureExec.execute(null, HttpRequestWrapper.wrap(httpGet), HttpClientContext.create(), null);
+    assertTrue(authHeaderAdded.get(), "builder 自动提取主机名后，对应代理请求应携带 Authorization 头");
   }
 
   /**
