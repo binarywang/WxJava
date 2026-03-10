@@ -66,7 +66,7 @@ public class WxMaXPayQueryOrderResponse extends WxMaBaseResponse implements Seri
     @SerializedName("wxpay_order_id")
     private String wxpayOrderId; //微信支付交易单号，为用户微信支付详情页面上的交易单号
     @SerializedName("sett_time")
-    private Integer settTime; //结算时间的秒级时间戳，大于0表示结算成功
+    private Long settTime; //结算时间的秒级时间戳，大于0表示结算成功
     @SerializedName("sett_state")
     private Integer settState; //结算状态 0-未开始结算 1-结算中 2-结算成功 3-待结算（与0相同）
     @SerializedName("platform_fee_fen")
