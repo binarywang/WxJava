@@ -39,7 +39,7 @@ public class WxCpTpCustomizedServiceImplTest {
    */
   @BeforeClass
   public void setUp() {
-    MockitoAnnotations.initMocks(this);
+    MockitoAnnotations.openMocks(this);
     configStorage = new WxCpTpDefaultConfigImpl();
     when(wxCpTpService.getWxCpTpConfigStorage()).thenReturn(configStorage);
     wxCpTpCustomizedService = new WxCpTpCustomizedServiceImpl(wxCpTpService);
