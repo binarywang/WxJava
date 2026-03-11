@@ -38,11 +38,27 @@ public interface WxCpHrService {
    * 需要配置人事助手的secret，调用接口前需给对应成员赋予人事小助手应用的权限。
    *
    * @param userid 员工userid
-   * @param fields 指定字段key列表，不填则返回全部字段
+   * @param fields 指定字段key列表
    * @return 员工档案数据响应 wx cp hr employee field data resp
    * @throws WxErrorException the wx error exception
    */
   WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, List<String> fields) throws WxErrorException;
+
+  /**
+   * 获取员工档案数据.
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/hr/get_staff_info?access_token=ACCESS_TOKEN
+   * 权限说明：
+   * 需要配置人事助手的secret，调用接口前需给对应成员赋予人事小助手应用的权限。
+   *
+   * @param userid 员工userid
+   * @param getAll 是否获取全部字段
+   * @param fields 指定字段key列表
+   * @return 员工档案数据响应 wx cp hr employee field data resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, boolean getAll, List<String> fields) throws WxErrorException;
 
   /**
    * 更新员工档案数据.
