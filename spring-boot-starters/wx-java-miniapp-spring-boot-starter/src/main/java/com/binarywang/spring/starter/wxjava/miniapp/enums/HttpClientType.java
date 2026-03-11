@@ -8,7 +8,7 @@ package com.binarywang.spring.starter.wxjava.miniapp.enums;
  */
 public enum HttpClientType {
   /**
-   * HttpClient.
+   * HttpClient (Apache HttpClient 4.x).
    */
   HttpClient,
   /**
@@ -19,4 +19,8 @@ public enum HttpClientType {
    * JoddHttp.
    */
   JoddHttp,
+  /**
+   * HttpComponents (Apache HttpClient 5.x).
+   */
+  HttpComponents,
 }

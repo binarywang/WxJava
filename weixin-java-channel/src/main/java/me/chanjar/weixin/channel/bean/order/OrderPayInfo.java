@@ -16,12 +16,8 @@ public class OrderPayInfo implements Serializable {
 
   private static final long serialVersionUID = -5085386252699113948L;
   /** 预支付id */
-  @JsonProperty("prepayId")
-  private String prepayId;
-
-  /** 预支付时间，秒级时间戳 */
-  @JsonProperty("prepay_time")
-  private Long prepayTime;
+  @JsonProperty("payment_method")
+  private Integer paymentMethod;
 
   /** 支付时间，秒级时间戳 */
   @JsonProperty("pay_time")

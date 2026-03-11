@@ -48,7 +48,9 @@ public class FundBillResult implements Serializable {
   private FundBill[] downloadBillList;
 
   @Data
-  public static class FundBill {
+  public static class FundBill implements Serializable {
+
+    private static final long serialVersionUID = 4008480977464421822L;
 
     /**
      * <pre>

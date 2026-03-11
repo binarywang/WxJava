@@ -13,7 +13,7 @@ import java.util.List;
  * </pre>
  *
  * @author zhangq <zhangq002@gmail.com>
- * @since 2021 -02-14 16:02
+ * @since 2021-02-14 16:02
  */
 public interface WxCpTpTagService {
   /**

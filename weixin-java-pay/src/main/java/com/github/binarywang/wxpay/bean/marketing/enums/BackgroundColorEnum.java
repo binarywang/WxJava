@@ -53,6 +53,16 @@ public enum BackgroundColorEnum {
   COLOR080("COLOR080", "#EE903C"),
 
   /**
+   * 颜色 #F08500
+   */
+  COLOR081("COLOR081", "#F08500"),
+
+  /**
+   * 颜色 #A9D92D
+   */
+  COLOR082("COLOR082", "#A9D92D"),
+
+  /**
    * 颜色 #DD6549
    */
   COLOR090("COLOR090", "#DD6549"),
@@ -61,8 +71,17 @@ public enum BackgroundColorEnum {
    * 颜色 #CC463D
    */
   COLOR100("COLOR100", "#CC463D"),
-  ;
 
+  /**
+   * 颜色 #CF3E36
+   */
+  COLOR101("COLOR101", "#CF3E36"),
+
+  /**
+   * 颜色 #5E6671
+   */
+  COLOR102("COLOR102", "#5E6671"),
+  ;
   /**
    * 色值
    */

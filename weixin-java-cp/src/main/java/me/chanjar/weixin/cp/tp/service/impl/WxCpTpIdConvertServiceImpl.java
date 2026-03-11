@@ -14,8 +14,6 @@ import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import me.chanjar.weixin.cp.tp.service.WxCpTpIdConvertService;
 import me.chanjar.weixin.cp.tp.service.WxCpTpService;
 
-import java.util.List;
-
 
 /**
  * @author cocoa

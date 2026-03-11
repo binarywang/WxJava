@@ -2,19 +2,17 @@ package me.chanjar.weixin.cp.bean.external.interceptrule;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.*;
-import me.chanjar.weixin.common.bean.ToJson;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.acquisition.WxCpCustomerAcquisitionInfo;
-import me.chanjar.weixin.cp.bean.external.acquisition.WxCpCustomerAcquisitionList;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Date: 2024-03-07 15:54
- * @Author： shenliuming
- * @return：
+ * 防骚扰规则列表
+ *
+ * @author shenliuming
+ * @since 2024-03-07 15:54
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

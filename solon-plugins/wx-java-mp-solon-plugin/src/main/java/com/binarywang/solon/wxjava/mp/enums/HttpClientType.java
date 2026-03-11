@@ -19,4 +19,8 @@ public enum HttpClientType {
    * JoddHttp.
    */
   JoddHttp,
+  /**
+   * HttpComponents.
+   */
+  HttpComponents,
 }

@@ -101,4 +101,16 @@ public interface PayrollService {
    */
   WxPayApplyBillV3Result merchantFundWithdrawBillType(String billType, String billDate, String tarType) throws WxPayException;
 
+  /**
+   * 微工卡批量转账API
+   * 适用对象：服务商
+   * 请求URL：https://api.mch.weixin.qq.com/v3/payroll-card/transfer-batches
+   * 请求方式：POST
+   *
+   * @param request 请求参数
+   * @return 返回数据
+   * @throws WxPayException the wx pay exception
+   */
+  PayrollTransferBatchesResult payrollCardTransferBatches(PayrollTransferBatchesRequest request) throws WxPayException;
+
 }

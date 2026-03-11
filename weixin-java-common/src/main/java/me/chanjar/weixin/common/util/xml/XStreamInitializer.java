@@ -22,6 +22,11 @@ public class XStreamInitializer {
 
   public static ClassLoader classLoader;
 
+  /**
+   * 设置类加载器
+   *
+   * @param classLoaderInfo 类加载器
+   */
   public static void setClassLoader(ClassLoader classLoaderInfo) {
     classLoader = classLoaderInfo;
   }

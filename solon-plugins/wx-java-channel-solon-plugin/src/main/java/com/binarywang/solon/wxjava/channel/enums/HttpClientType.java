@@ -7,7 +7,11 @@ package com.binarywang.solon.wxjava.channel.enums;
  */
 public enum HttpClientType {
   /**
-   * HttpClient
+   * HttpClient.
    */
-  HttpClient
+  HttpClient,
+  /**
+   * HttpComponents.
+   */
+  HttpComponents,
 }

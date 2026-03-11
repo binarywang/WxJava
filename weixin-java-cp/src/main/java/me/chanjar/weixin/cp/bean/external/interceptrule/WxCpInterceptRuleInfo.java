@@ -4,16 +4,16 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.external.acquisition.WxCpCustomerAcquisitionInfo;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Date: 2024-03-07 17:02
- * @Author： shenliuming
- * @return：
+ * 防骚扰规则详情
+ *
+ * @author shenliuming
+ * @since 2024-03-07 17:02
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

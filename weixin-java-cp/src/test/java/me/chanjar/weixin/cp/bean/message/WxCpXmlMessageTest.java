@@ -6,6 +6,7 @@ import me.chanjar.weixin.cp.util.xml.XStreamTransformer;
 import org.testng.annotations.Test;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.EventType.TASKCARD_CLICK;
+import static me.chanjar.weixin.cp.constant.WxCpConsts.EventType.UPLOAD_MEDIA_JOB_FINISH;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
@@ -71,7 +72,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getCreateTime(), Long.valueOf(1348831860));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
     assertEquals(wxMessage.getContent(), "this is a test");
-    assertEquals(wxMessage.getMsgId(), Long.valueOf(1234567890123456L));
+    assertEquals(wxMessage.getMsgId(), "1234567890123456");
     assertEquals(wxMessage.getPicUrl(), "this is a url");
     assertEquals(wxMessage.getMediaId(), "media_id");
     assertEquals(wxMessage.getFormat(), "Format");
@@ -420,5 +421,202 @@ public class WxCpXmlMessageTest {
     assertThat(wxCpXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems()).isNotEmpty();
     assertThat(wxCpXmlMessage.getApprovalInfo().getApprovalNodes().get(0).getItems().get(0).getItemName()).isNotEmpty();
     assertThat(wxCpXmlMessage.getApprovalInfo().getNotifyNodes().get(0).getItemName()).isNotEmpty();
+  }
+
+  /**
+   * Test open approval change.
+   */
+  public void testUploadMediaJobFinishEvent() {
+    String xml = "<xml>\n" +
+      "\t<ToUserName><![CDATA[wx28dbb14e3720FAKE]]></ToUserName>\n" +
+      "\t<FromUserName><![CDATA[sys]]></FromUserName>\n" +
+      "\t<CreateTime>1425284517</CreateTime>\n" +
+      "\t<MsgType><![CDATA[event]]></MsgType>\n" +
+      "\t<Event><![CDATA[upload_media_job_finish]]></Event>\n" +
+      "\t<JobId><![CDATA[jobid_S0MrnndvRG5fadSlLwiBqiDDbM143UqTmKP3152FZk4]]></JobId>\n" +
+      "</xml>";
+
+    WxCpXmlMessage wxCpXmlMessage = WxCpXmlMessage.fromXml(xml);
+    assertThat(wxCpXmlMessage).isNotNull();
+    assertThat(wxCpXmlMessage.getJobId()).isNotEmpty();
+    assertThat(wxCpXmlMessage.getJobId()).isEqualTo("jobid_S0MrnndvRG5fadSlLwiBqiDDbM143UqTmKP3152FZk4");
+    assertThat(wxCpXmlMessage.getEvent()).isEqualTo(UPLOAD_MEDIA_JOB_FINISH);
+  }
+
+  /**
+   * Test both numeric and string msgId formats to ensure backward compatibility
+   */
+  public void testMsgIdStringAndNumericFormats() {
+    // Test with numeric msgId (old format)
+    String xmlWithNumeric = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[fromUser]]></FromUserName>"
+      + "<CreateTime>1348831860</CreateTime>"
+      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<Content><![CDATA[this is a test]]></Content>"
+      + "<MsgId>1234567890123456</MsgId>"
+      + "</xml>";
+    WxCpXmlMessage wxMessageNumeric = WxCpXmlMessage.fromXml(xmlWithNumeric);
+    assertEquals(wxMessageNumeric.getMsgId(), "1234567890123456");
+
+    // Test with string msgId (new format - the actual issue case)
+    String xmlWithString = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[fromUser]]></FromUserName>"
+      + "<CreateTime>1348831860</CreateTime>"
+      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<Content><![CDATA[this is a test]]></Content>"
+      + "<MsgId>CAIQg/PKxgYY2sC9tpuAgAMg9/zKaw==</MsgId>"
+      + "</xml>";
+    WxCpXmlMessage wxMessageString = WxCpXmlMessage.fromXml(xmlWithString);
+    assertEquals(wxMessageString.getMsgId(), "CAIQg/PKxgYY2sC9tpuAgAMg9/zKaw==");
+  }
+
+  /**
+   * Test intelligent robot message parsing
+   * 测试智能机器人消息解析
+   */
+  public void testIntelligentRobotMessage() {
+    String xml = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[fromUser]]></FromUserName>"
+      + "<CreateTime>1348831860</CreateTime>"
+      + "<MsgType><![CDATA[text]]></MsgType>"
+      + "<Content><![CDATA[你好，智能机器人]]></Content>"
+      + "<MsgId>msg123456</MsgId>"
+      + "<RobotId><![CDATA[robot_id_123]]></RobotId>"
+      + "<SessionId><![CDATA[session_id_456]]></SessionId>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xml);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "fromUser");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(1348831860));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.TEXT);
+    assertEquals(wxMessage.getContent(), "你好，智能机器人");
+    assertEquals(wxMessage.getMsgId(), "msg123456");
+    assertEquals(wxMessage.getRobotId(), "robot_id_123");
+    assertEquals(wxMessage.getSessionId(), "session_id_456");
+  }
+
+  /**
+   * Test external chat change event
+   * 测试企业微信群聊变更事件解析 - 群成员变更场景
+   */
+  public void testExternalChatChangeEvent() {
+    // 测试群成员加入事件
+    String xmlAddMember = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>1403610513</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<ChatId><![CDATA[wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA]]></ChatId>"
+      + "<UpdateDetail><![CDATA[add_member]]></UpdateDetail>"
+      + "<JoinScene>1</JoinScene>"
+      + "<MemChangeCnt>2</MemChangeCnt>"
+      + "<MemChangeList><![CDATA[wmEJiCwAAA9KG2qlSq6rKwASSgAAAA,wmEJiCwAAA9KG2qlSq6rKwBBBBBBB]]></MemChangeList>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage = WxCpXmlMessage.fromXml(xmlAddMember);
+    assertEquals(wxMessage.getToUserName(), "toUser");
+    assertEquals(wxMessage.getFromUserName(), "sys");
+    assertEquals(wxMessage.getCreateTime(), Long.valueOf(1403610513L));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxMessage.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CHAT);
+    assertEquals(wxMessage.getChangeType(), "update");
+    assertEquals(wxMessage.getChatId(), "wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA");
+    assertEquals(wxMessage.getUpdateDetail(), "add_member");
+    assertEquals(wxMessage.getJoinScene(), "1");
+    assertEquals(wxMessage.getMemChangeCnt(), "2");
+    assertEquals(wxMessage.getMemChangeList(), "wmEJiCwAAA9KG2qlSq6rKwASSgAAAA,wmEJiCwAAA9KG2qlSq6rKwBBBBBBB");
+
+    // 测试群成员退出事件
+    String xmlDelMember = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>1403610513</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<ChatId><![CDATA[wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA]]></ChatId>"
+      + "<UpdateDetail><![CDATA[del_member]]></UpdateDetail>"
+      + "<QuitScene>1</QuitScene>"
+      + "<MemChangeCnt>1</MemChangeCnt>"
+      + "<MemChangeList><![CDATA[wmEJiCwAAA9KG2qlSq6rKwASSgAAAA]]></MemChangeList>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage2 = WxCpXmlMessage.fromXml(xmlDelMember);
+    assertEquals(wxMessage2.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CHAT);
+    assertEquals(wxMessage2.getChangeType(), "update");
+    assertEquals(wxMessage2.getChatId(), "wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA");
+    assertEquals(wxMessage2.getUpdateDetail(), "del_member");
+    assertEquals(wxMessage2.getQuitScene(), "1");
+    assertEquals(wxMessage2.getMemChangeCnt(), "1");
+    assertEquals(wxMessage2.getMemChangeList(), "wmEJiCwAAA9KG2qlSq6rKwASSgAAAA");
+
+    // 测试空MemChangeList场景（某些情况下可能没有成员变更列表）
+    String xmlNoMemChangeList = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>1403610513</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<ChatId><![CDATA[wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA]]></ChatId>"
+      + "<UpdateDetail><![CDATA[change_name]]></UpdateDetail>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage3 = WxCpXmlMessage.fromXml(xmlNoMemChangeList);
+    assertEquals(wxMessage3.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CHAT);
+    assertEquals(wxMessage3.getChangeType(), "update");
+    assertEquals(wxMessage3.getUpdateDetail(), "change_name");
+    // 当XML中没有MemChangeList元素时，字段应该为null而不是空字符串
+    assertThat(wxMessage3.getMemChangeList()).isNull();
+
+    // 测试企业微信4.8.0新格式：MemChangeList使用<Item>子元素（加群场景）
+    String xmlNewFormatAddMember = "<xml>"
+      + "<ToUserName><![CDATA[c2e112dad808119117371bbcd6]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>9811170016713</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChatId><![CDATA[wrxUBwDQAAa44T11Ziaed811rhUr8-3Igmug]]></ChatId>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<UpdateDetail><![CDATA[add_member]]></UpdateDetail>"
+      + "<JoinScene>3</JoinScene>"
+      + "<MemChangeCnt>1</MemChangeCnt>"
+      + "<MemChangeList><Item><![CDATA[wmxUBwDQAAO-Hn5_wFJz4wvo5TxLFibw]]></Item></MemChangeList>"
+      + "<LastMemVer><![CDATA[5807afd2ab75771d5e8ac623f534ac0b]]></LastMemVer>"
+      + "<CurMemVer><![CDATA[ea36e8b6062b803cda0ee45e9418d637]]></CurMemVer>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage4 = WxCpXmlMessage.fromXml(xmlNewFormatAddMember);
+    assertEquals(wxMessage4.getEvent(), WxCpConsts.EventType.CHANGE_EXTERNAL_CHAT);
+    assertEquals(wxMessage4.getChangeType(), "update");
+    assertEquals(wxMessage4.getUpdateDetail(), "add_member");
+    assertEquals(wxMessage4.getJoinScene(), "3");
+    assertEquals(wxMessage4.getMemChangeCnt(), "1");
+    // 新格式：<Item>子元素中的成员ID应被正确解析
+    assertEquals(wxMessage4.getMemChangeList(), "wmxUBwDQAAO-Hn5_wFJz4wvo5TxLFibw");
+
+    // 测试企业微信4.8.0新格式：多个<Item>子元素（多成员变更）
+    String xmlNewFormatMultiMember = "<xml>"
+      + "<ToUserName><![CDATA[toUser]]></ToUserName>"
+      + "<FromUserName><![CDATA[sys]]></FromUserName>"
+      + "<CreateTime>1403610513</CreateTime>"
+      + "<MsgType><![CDATA[event]]></MsgType>"
+      + "<Event><![CDATA[change_external_chat]]></Event>"
+      + "<ChangeType><![CDATA[update]]></ChangeType>"
+      + "<ChatId><![CDATA[wrOgQhDgAAMYQiS5ol9G7gK9JVAAAA]]></ChatId>"
+      + "<UpdateDetail><![CDATA[del_member]]></UpdateDetail>"
+      + "<QuitScene>1</QuitScene>"
+      + "<MemChangeCnt>2</MemChangeCnt>"
+      + "<MemChangeList>"
+      + "<Item><![CDATA[wmEJiCwAAA9KG2qlSq6rKwASSgAAAA]]></Item>"
+      + "<Item><![CDATA[wmEJiCwAAA9KG2qlSq6rKwBBBBBBB]]></Item>"
+      + "</MemChangeList>"
+      + "</xml>";
+    WxCpXmlMessage wxMessage5 = WxCpXmlMessage.fromXml(xmlNewFormatMultiMember);
+    assertEquals(wxMessage5.getUpdateDetail(), "del_member");
+    assertEquals(wxMessage5.getMemChangeCnt(), "2");
+    // 多个<Item>元素应被解析为逗号分隔字符串
+    assertEquals(wxMessage5.getMemChangeList(), "wmEJiCwAAA9KG2qlSq6rKwASSgAAAA,wmEJiCwAAA9KG2qlSq6rKwBBBBBBB");
   }
 }

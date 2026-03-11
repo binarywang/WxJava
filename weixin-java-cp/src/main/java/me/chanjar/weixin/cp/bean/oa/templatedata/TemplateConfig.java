@@ -10,6 +10,7 @@ import java.io.Serializable;
  * 模板控件配置，包含了部分控件类型的附加类型、属性，详见附录说明。
  * 目前有配置信息的控件类型有：
  * Date-日期/日期+时间；
+ * DateRange-时长；
  * Selector-单选/多选；
  * Contact-成员/部门；
  * Table-明细；
@@ -24,6 +25,9 @@ public class TemplateConfig implements Serializable {
 
   private TemplateDate date;
 
+  @SerializedName("date_range")
+  private TemplateDateRange dateRange;
+
   private TemplateSelector selector;
 
   private TemplateContact contact;
@@ -36,5 +40,7 @@ public class TemplateConfig implements Serializable {
 
   @SerializedName("vacation_list")
   private TemplateVacation vacationList;
+
+  private TemplateTips tips;
 
 }

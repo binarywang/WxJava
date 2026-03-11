@@ -10,8 +10,9 @@ import java.io.Serializable;
 
 /**
  * 输入流数据.
- * <p/>
+ * <p>
  * InputStreamData
+ * </p>
  *
  * @author zichuan.zhou91@gmail.com
  * created on  2022/2/15

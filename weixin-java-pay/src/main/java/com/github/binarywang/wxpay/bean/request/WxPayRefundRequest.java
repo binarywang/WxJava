@@ -230,7 +230,9 @@ public class WxPayRefundRequest extends BaseWxPayRequest {
     if (StringUtils.isBlank(this.getOpUserId())) {
       this.setOpUserId(config.getMchId());
     }
-
+    if (StringUtils.isBlank(this.getNotifyUrl())) {
+      this.setNotifyUrl(config.getRefundNotifyUrl());
+    }
     super.checkAndSign(config);
   }
 

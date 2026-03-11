@@ -33,6 +33,8 @@ public class WxChannelDefaultConfigImpl implements WxChannelConfig {
   private volatile int httpProxyPort;
   private volatile String httpProxyUsername;
   private volatile String httpProxyPassword;
+  /** 是否使用稳定版获取accessToken接口 */
+  private volatile boolean stableAccessToken;
 
   private volatile int retrySleepMillis = 1000;
   private volatile int maxRetryTimes = 5;
@@ -61,6 +63,15 @@ public class WxChannelDefaultConfigImpl implements WxChannelConfig {
 
   public void setAccessToken(String accessToken) {
     this.accessToken = accessToken;
+  }
+
+  @Override
+  public boolean isStableAccessToken() {
+    return stableAccessToken;
+  }
+
+  public void setStableAccessToken(boolean stableAccessToken) {
+    this.stableAccessToken = stableAccessToken;
   }
 
   @Override

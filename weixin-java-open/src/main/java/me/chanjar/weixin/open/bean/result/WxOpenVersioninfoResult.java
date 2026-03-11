@@ -5,9 +5,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
-import java.io.Serializable;
-import java.util.List;
-
 /**
  * 小程序版本信息
  *

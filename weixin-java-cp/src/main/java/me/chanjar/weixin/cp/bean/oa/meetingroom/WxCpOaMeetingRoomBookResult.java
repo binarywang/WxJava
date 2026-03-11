@@ -39,7 +39,7 @@ public class WxCpOaMeetingRoomBookResult extends WxCpBaseResp implements Seriali
   private String schedule_id;
   /**
    * 通过会议预定会议室 和 通过日程预定会议室 接口返回
-   * <br/>
+   * <br>
    * 会议室冲突日期列表，为当天0点的时间戳；使用重复会议预定会议室，部分日期与会议室预定情况冲突时返回
    */
   @SerializedName("conflict_date")

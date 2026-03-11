@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
+ * 区域库存
+ *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
@@ -21,4 +23,8 @@ public class WarehouseStockInfo implements Serializable {
   /** 区域库存数量 */
   @JsonProperty("num")
   private Integer num;
+
+  /** 区域库存的锁定库存（已下单未支付的库存）数量 */
+  @JsonProperty("lock_stock")
+  private Integer lockStock;
 }

@@ -9,7 +9,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
  */
 @JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum PromoteType {
-  PROMOTE_TYPE_SHOP(1, "小店内推广");
+  /** 1	小店内推广 */
+  PROMOTE_TYPE_SHOP(1, "小店内推广"),
+  /** 9	会员券 */
+  MEMBER(9, "会员券"),
+  /** 10	会员开卡礼券 */
+  MEMBER_CARD(10, "会员开卡礼券"),
+
+  ;
 
   private final int key;
   private final String val;

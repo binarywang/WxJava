@@ -8,7 +8,7 @@ import jodd.http.HttpRequest;
 import jodd.http.ProxyInfo;
 import jodd.http.net.SocketHttpConnectionProvider;
 import jodd.net.MimeTypes;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
@@ -43,16 +43,16 @@ public class WxMaServiceJoddHttpImpl extends BaseWxMaServiceImpl<HttpConnectionP
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.JODD_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.JODD_HTTP;
   }
 
   @Override
   protected String doGetAccessTokenRequest() throws IOException {
     String url = StringUtils.isNotEmpty(this.getWxMaConfig().getAccessTokenUrl()) ?
-      this.getWxMaConfig().getAccessTokenUrl() : StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
-      WxMaService.GET_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
-      WxMaService.GET_ACCESS_TOKEN_URL;
+      this.getWxMaConfig().getAccessTokenUrl() :
+      WxMaService.GET_ACCESS_TOKEN_URL.replace(
+        WxMaConfig.DEFAULT_API_HOST_URL, this.getWxMaConfig().getEffectiveApiHostUrl());
 
     url = String.format(url, this.getWxMaConfig().getAppid(), this.getWxMaConfig().getSecret());
     HttpRequest request = HttpRequest.get(url);
@@ -67,11 +67,10 @@ public class WxMaServiceJoddHttpImpl extends BaseWxMaServiceImpl<HttpConnectionP
 
   @Override
   protected String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException {
-
     String url = StringUtils.isNotEmpty(this.getWxMaConfig().getAccessTokenUrl()) ?
-      this.getWxMaConfig().getAccessTokenUrl() : StringUtils.isNotEmpty(this.getWxMaConfig().getApiHostUrl()) ?
-      GET_STABLE_ACCESS_TOKEN.replace("https://api.weixin.qq.com", this.getWxMaConfig().getApiHostUrl()) :
-      GET_STABLE_ACCESS_TOKEN;
+      this.getWxMaConfig().getAccessTokenUrl() :
+      GET_STABLE_ACCESS_TOKEN.replace(
+        WxMaConfig.DEFAULT_API_HOST_URL, this.getWxMaConfig().getEffectiveApiHostUrl());
 
     WxMaStableAccessTokenRequest wxMaAccessTokenRequest = new WxMaStableAccessTokenRequest();
     wxMaAccessTokenRequest.setAppid(this.getWxMaConfig().getAppid());

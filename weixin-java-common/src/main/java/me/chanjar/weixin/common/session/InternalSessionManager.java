@@ -7,13 +7,12 @@ public interface InternalSessionManager {
 
   /**
    * Return the active Session, associated with this Manager, with the
-   * specified session id (if any); otherwise return <code>null</code>.
+   * specified session id (if any); otherwise return {@code null}.
    *
    * @param id The session id for the session to be returned
+   * @return the session or null
    * @throws IllegalStateException if a new session cannot be
    *                               instantiated for any reason
-   * @throws java.io.IOException   if an input/output error occurs while
-   *                               processing this request
    */
   InternalSession findSession(String id);
 

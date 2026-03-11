@@ -1,5 +1,10 @@
 package me.chanjar.weixin.cp.api;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Date;
+import java.util.List;
 import me.chanjar.weixin.common.bean.result.WxMediaUploadResult;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
@@ -10,12 +15,6 @@ import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRule;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleAddRequest;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleInfo;
 import me.chanjar.weixin.cp.bean.external.interceptrule.WxCpInterceptRuleList;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import java.util.List;
 
 /**
  * <pre>
@@ -39,6 +38,7 @@ public interface WxCpExternalContactService {
    * 用户需要妥善存储返回的config_id，config_id丢失可能导致用户无法编辑或删除「联系我」。
    * 临时会话模式不占用「联系我」数量，但每日最多添加10万个，并且仅支持单人。
    * 临时会话模式的二维码，添加好友完成后该二维码即刻失效。
+   * <a href="https://developer.work.weixin.qq.com/document/path/92228">文档地址</a>
    * </pre>
    *
    * @param info 客户联系「联系我」方式
@@ -59,6 +59,25 @@ public interface WxCpExternalContactService {
    * @throws WxErrorException the wx error exception
    */
   WxCpContactWayInfo getContactWay(String configId) throws WxErrorException;
+
+  /**
+   * 获取企业已配置的「联系我」列表
+   *
+   * <pre>
+   * 获取企业配置的「联系我」二维码和「联系我」小程序插件列表。不包含临时会话。
+   * 注意，<b>该接口仅可获取2021年7月10日以后创建的「联系我」</b>
+   * </pre>
+   *
+   * 文档地址: <a href="https://developer.work.weixin.qq.com/document/path/92228#%E8%8E%B7%E5%8F%96%E4%BC%81%E4%B8%9A%E5%B7%B2%E9%85%8D%E7%BD%AE%E7%9A%84%E3%80%8C%E8%81%94%E7%B3%BB%E6%88%91%E3%80%8D%E5%88%97%E8%A1%A8">获取企业已配置的「联系我」列表</a>
+   *
+   * @param startTime 「联系我」创建起始时间戳, 默认为90天前
+   * @param endTime 「联系我」创建结束时间戳, 默认为当前时间
+   * @param cursor 分页查询使用的游标，为上次请求返回的 next_cursor
+   * @param limit 每次查询的分页大小，默认为100条，最多支持1000条
+   * @return contact way configId
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpContactWayList listContactWay(Long startTime, Long endTime, String cursor, Long limit) throws WxErrorException;
 
   /**
    * 更新企业已配置的「联系我」方式
@@ -127,7 +146,7 @@ public interface WxCpExternalContactService {
    * 企业可通过此接口，根据外部联系人的userid（如何获取?），拉取客户详情。
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid=EXTERNAL_USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get?access_token=ACCESS_TOKEN&external_userid=EXTERNAL_USERID}
    *
    * 权限说明：
    *
@@ -233,9 +252,9 @@ public interface WxCpExternalContactService {
    *
    * 权限说明：
    *
-   * 该企业授权了该服务商第三方应用,且授权的第三方应用具备“企业客户权限->客户基础信息”权限
+   * {@code 该企业授权了该服务商第三方应用,且授权的第三方应用具备“企业客户权限->客户基础信息”权限}
    * 该客户的跟进人必须在应用的可见范围之内
-   * 应用需具备“企业客户权限->客户基础信息”权限
+   * {@code 应用需具备“企业客户权限->客户基础信息”权限}
    * </pre>
    *
    * @param externalUserid 代开发自建应用获取到的外部联系人ID
@@ -257,8 +276,8 @@ public interface WxCpExternalContactService {
    *
    * @param externalUserid 服务商主体的external_userid，必须是source_agentid对应的应用所获取
    * @param sourceAgentId  企业授权的代开发自建应用或第三方应用的agentid
-   * @return
-   * @throws WxErrorException
+   * @return 企业的external_userid
+   * @throws WxErrorException 微信错误异常
    */
   String fromServiceExternalUserid(String externalUserid, String sourceAgentId) throws WxErrorException;
 
@@ -343,7 +362,7 @@ public interface WxCpExternalContactService {
    * 权限说明：
    *
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）
-   * 第三方应用需具有“企业客户权限->客户基础信息”权限
+   * {@code 第三方应用需具有“企业客户权限->客户基础信息”权限}
    * 对于第三方/自建应用，群主必须在应用的可见范围
    * 仅支持企业服务人员创建的客户群
    * 仅可转换出自己企业下的客户群chat_id
@@ -382,6 +401,25 @@ public interface WxCpExternalContactService {
     throws WxErrorException;
 
   /**
+   * 获取已服务的外部联系人
+   * <pre>
+   *  企业可通过此接口获取所有已服务的外部联系人，及其添加人和加入的群聊。
+   * 外部联系人分为客户和其他外部联系人，如果是客户，接口将返回外部联系人临时ID和externaluserid；如果是其他外部联系人，接口将只返回外部联系人临时ID。
+   * 请求方式：POST（HTTPS）
+   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/contact_list?access_token=ACCESS_TOKEN
+   * 文档地址: https://developer.work.weixin.qq.com/document/path/99434
+   * </pre>
+   *
+   * 注意：企业可通过外部联系人临时ID排除重复数据，外部联系人临时ID有效期为4小时。
+   *
+   * @param cursor     the cursor
+   * @param limit      the  limit
+   * @return 已服务的外部联系人列表
+   * @throws WxErrorException .
+   */
+  WxCpExternalContactListInfo getContactList(String cursor, Integer limit) throws WxErrorException;
+
+  /**
    * 修改客户备注信息.
    * <pre>
    * 企业可通过此接口修改指定用户添加的客户的备注信息。
@@ -401,7 +439,7 @@ public interface WxCpExternalContactService {
    *   企业可通过此接口获取指定成员添加的客户列表。客户是指配置了客户联系功能的成员所添加的外部联系人。没有配置客户联系功能的成员，所添加的外部联系人将不会作为客户返回。
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/list?access_token=ACCESS_TOKEN&userid=USERID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/list?access_token=ACCESS_TOKEN&userid=USERID}
    *
    * 权限说明：
    *
@@ -432,7 +470,8 @@ public interface WxCpExternalContactService {
   /**
    * 获取待分配的离职成员列表
    * 企业和第三方可通过此接口，获取所有离职成员的客户列表，并可进一步调用分配离职成员的客户接口将这些客户重新分配给其他企业成员。
-   * <p>
+
+   *
    * 请求方式：POST（HTTPS）
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/get_unassigned_list?access_token=ACCESS_TOKEN
    *
@@ -459,17 +498,17 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业可通过此接口，转接在职成员的客户给其他成员。
-   * <per>
+   * <pre>
    * external_userid必须是handover_userid的客户（即配置了客户联系功能的成员所添加的联系人）。
    * 在职成员的每位客户最多被分配2次。客户被转接成功后，将有90个自然日的服务关系保护期，保护期内的客户无法再次被分配。
-   * <p>
+   *
    * 权限说明：
-   * * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
+   * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
+   * {@code 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限}
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * 接替成员需要配置了客户联系功能。
    * 接替成员需要在企业微信激活且已经过实名认证。
-   * </per>
+   * </pre>
    *
    * @param req 转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
@@ -479,13 +518,13 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业和第三方可通过此接口查询在职成员的客户转接情况。
-   * <per>
+   * <pre>
    * 权限说明：
-   * <p>
+   *
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
+   * {@code 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限}
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
-   * </per>
+   * </pre>
    *
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
@@ -498,19 +537,21 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业可通过此接口，分配离职成员的客户给其他成员。
-   * <per>
+   * <pre>
    * handover_userid必须是已离职用户。
    * external_userid必须是handover_userid的客户（即配置了客户联系功能的成员所添加的联系人）。
    * 在职成员的每位客户最多被分配2次。客户被转接成功后，将有90个自然日的服务关系保护期，保护期内的客户无法再次被分配。
-   * <p>
+
+   *
    * 权限说明：
-   * <p>
+
+   *
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->离职分配”权限
+   * {@code 第三方应用需拥有“企业客户权限->客户联系->离职分配”权限}
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
    * 接替成员需要配置了客户联系功能。
    * 接替成员需要在企业微信激活且已经过实名认证。
-   * </per>
+   * </pre>
    *
    * @param req 转接在职成员的客户给其他成员请求实体
    * @return wx cp base resp
@@ -520,13 +561,14 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业和第三方可通过此接口查询离职成员的客户分配情况。
-   * <per>
+   * <pre>
    * 权限说明：
-   * <p>
+
+   *
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限
+   * {@code 第三方应用需拥有“企业客户权限->客户联系->在职继承”权限}
    * 接替成员必须在此第三方应用或自建应用的可见范围内。
-   * </per>
+   * </pre>
    *
    * @param handOverUserid 原添加成员的userid
    * @param takeOverUserid 接替成员的userid
@@ -593,21 +635,24 @@ public interface WxCpExternalContactService {
   /**
    * 企业可通过此接口，将已离职成员为群主的群，分配给另一个客服成员。
    *
-   * <per>
+   * <pre>
    * 注意：：
-   * <p>
+
+   *
    * 群主离职了的客户群，才可继承
    * 继承给的新群主，必须是配置了客户联系功能的成员
    * 继承给的新群主，必须有设置实名
    * 继承给的新群主，必须有激活企业微信
    * 同一个人的群，限制每天最多分配300个给新群主
-   * <p>
+
+   *
    * 权限说明:
-   * <p>
+
+   *
    * 企业需要使用“客户联系”secret或配置到“可调用应用”列表中的自建应用secret所获取的accesstoken来调用（accesstoken如何获取？）。
-   * 第三方应用需拥有“企业客户权限->客户联系->分配离职成员的客户群”权限
+   * {@code 第三方应用需拥有“企业客户权限->客户联系->分配离职成员的客户群”权限}
    * 对于第三方/自建应用，群主必须在应用的可见范围。
-   * </per>
+   * </pre>
    *
    * @param chatIds  需要转群主的客户群ID列表。取值范围： 1 ~ 100
    * @param newOwner 新群主ID
@@ -619,7 +664,7 @@ public interface WxCpExternalContactService {
 
   /**
    * 企业可通过此接口，将在职成员为群主的群，分配给另一个客服成员。
-   * <per>
+   * <pre>
    * 注意：
    * 继承给的新群主，必须是配置了客户联系功能的成员
    * 继承给的新群主，必须有设置实名
@@ -679,11 +724,14 @@ public interface WxCpExternalContactService {
    * 企业可通过此接口添加企业群发消息的任务并通知客服人员发送给相关客户或客户群。（注：企业微信终端需升级到2.7.5版本及以上）
    * 注意：调用该接口并不会直接发送消息给客户/客户群，需要相关的客服人员操作以后才会实际发送（客服人员的企业微信需要升级到2.7.5及以上版本）
    * 同一个企业每个自然月内仅可针对一个客户/客户群发送4条消息，超过限制的用户将会被忽略。
-   * <p>
+
+   *
    * 请求方式: POST(HTTP)
-   * <p>
+
+   *
    * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_msg_template?access_token=ACCESS_TOKEN
-   * <p>
+
+   *
    * <a href="https://work.weixin.qq.com/api/doc/90000/90135/92135">文档地址</a>
    *
    * @param wxCpMsgTemplate the wx cp msg template
@@ -696,15 +744,18 @@ public interface WxCpExternalContactService {
   /**
    * 提醒成员群发
    * 企业和第三方应用可调用此接口，重新触发群发通知，提醒成员完成群发任务，24小时内每个群发最多触发三次提醒。
-   * <p>
+
+   *
    * 请求方式: POST(HTTPS)
-   * <p>
+
+   *
    * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/remind_groupmsg_send?access_token=ACCESS_TOKEN
-   * <p>
+   *
    * <a href="https://developer.work.weixin.qq.com/document/path/97610">文档地址</a>
    *
    * @param msgId 群发消息的id，通过获取群发记录列表接口返回
    * @return the wx cp msg template add result
+   * @throws WxErrorException 微信错误异常
    */
   WxCpBaseResp remindGroupMsgSend(String msgId) throws WxErrorException;
 
@@ -716,11 +767,12 @@ public interface WxCpExternalContactService {
    * 请求方式: POST(HTTPS)
    * <p>
    * 请求地址:https://qyapi.weixin.qq.com/cgi-bin/externalcontact/cancel_groupmsg_send?access_token=ACCESS_TOKEN
-   * <p>
+   *
    * <a href="https://developer.work.weixin.qq.com/document/path/97611">文档地址</a>
    *
    * @param msgId 群发消息的id，通过获取群发记录列表接口返回
    * @return the wx cp msg template add result
+   * @throws WxErrorException 微信错误异常
    */
   WxCpBaseResp cancelGroupMsgSend(String msgId) throws WxErrorException;
 
@@ -965,7 +1017,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 企业和第三方应用可通过此接口获取企业与成员的群发记录。
-   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/93338#获取企业群发成员执行结果">获取企业群发成员执行结果</a>
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/93338
    * </pre>
    *
    * @param msgid  群发消息的id，通过获取群发记录列表接口返回
@@ -994,7 +1046,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 获取群发成员发送任务列表。
-   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/93338#获取群发成员发送任务列表">获取群发成员发送任务列表</a>
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/93338
    * </pre>
    *
    * @param msgid  群发消息的id，通过获取群发记录列表接口返回
@@ -1008,7 +1060,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 添加入群欢迎语素材。
-   * <a href="https://open.work.weixin.qq.com/api/doc/90000/90135/92366#添加入群欢迎语素材">添加入群欢迎语素材</a>
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/92366
    * </pre>
    *
    * @param template 素材内容
@@ -1020,7 +1072,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 编辑入群欢迎语素材。
-   * <a href="https://open.work.weixin.qq.com/api/doc/90000/90135/92366#编辑入群欢迎语素材">编辑入群欢迎语素材</a>
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/92366
    * </pre>
    *
    * @param template the template
@@ -1032,7 +1084,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 获取入群欢迎语素材。
-   * <a href="https://open.work.weixin.qq.com/api/doc/90000/90135/92366#获取入群欢迎语素材">获取入群欢迎语素材</a>
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/92366
    * </pre>
    *
    * @param templateId 群欢迎语的素材id
@@ -1045,7 +1097,7 @@ public interface WxCpExternalContactService {
    * <pre>
    * 删除入群欢迎语素材。
    * 企业可通过此API删除入群欢迎语素材，且仅能删除调用方自己创建的入群欢迎语素材。
-   * <a href="https://open.work.weixin.qq.com/api/doc/90000/90135/92366#删除入群欢迎语素材">删除入群欢迎语素材</a>
+   * 文档地址：https://open.work.weixin.qq.com/api/doc/90000/90135/92366
    * </pre>
    *
    * @param templateId 群欢迎语的素材id
@@ -1057,8 +1109,8 @@ public interface WxCpExternalContactService {
 
   /**
    * <pre>
-   * 获取商品图册
-   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册列表">获取商品图册列表</a>
+   * 获取商品图册列表
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/95096
    * </pre>
    *
    * @param limit  返回的最大记录数，整型，最大值100，默认值50，超过最大值时取默认值
@@ -1071,7 +1123,7 @@ public interface WxCpExternalContactService {
   /**
    * <pre>
    * 获取商品图册
-   * <a href="https://work.weixin.qq.com/api/doc/90000/90135/95096#获取商品图册">获取商品图册</a>
+   * 文档地址：https://work.weixin.qq.com/api/doc/90000/90135/95096
    * </pre>
    *
    * @param productId 商品id
@@ -1118,7 +1170,7 @@ public interface WxCpExternalContactService {
    * 企业和第三方应用可以通过此接口新建敏感词规则
    * 请求方式：POST(HTTPS)
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_intercept_rule?access_token=ACCESS_TOKEN
-   * <pre>
+   * </pre>
    * @param ruleAddRequest the rule add request
    * @return 规则id
    * @throws WxErrorException the wx error exception
@@ -1132,7 +1184,7 @@ public interface WxCpExternalContactService {
    * 企业和第三方应用可以通过此接口修改敏感词规则
    * 请求方式：POST(HTTPS)
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_intercept_rule?access_token=ACCESS_TOKEN
-   * <pre>
+   * </pre>
    * @param interceptRule the rule
    * @throws WxErrorException the wx error exception
    */
@@ -1144,7 +1196,7 @@ public interface WxCpExternalContactService {
    * 企业和第三方应用可以通过此接口修改敏感词规则
    * 请求方式：POST(HTTPS)
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/del_intercept_rule?access_token=ACCESS_TOKEN">请求地址</a>
-   * <pre>
+   * </pre>
    * @param ruleId 规则id
    * @throws WxErrorException the wx error exception
    */
@@ -1183,7 +1235,7 @@ public interface WxCpExternalContactService {
    * 请求地址：
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/add_product_album?access_token=ACCESS_TOKEN</a>
    * <a href="https://developer.work.weixin.qq.com/document/path/95096#%E5%88%9B%E5%BB%BA%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">文档地址</a>
-   * <pre>
+   * </pre>
    * @param wxCpProductAlbumInfo 商品图册信息
    * @return 商品id string
    * @throws WxErrorException the wx error exception
@@ -1198,7 +1250,7 @@ public interface WxCpExternalContactService {
    * 请求地址：
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/update_product_album?access_token=ACCESS_TOKEN</a>
    * <a href="https://developer.work.weixin.qq.com/document/path/95096#%E7%BC%96%E8%BE%91%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">文档地址</a>
-   * <pre>
+   * </pre>
    * @param wxCpProductAlbumInfo 商品图册信息
    * @throws WxErrorException the wx error exception
    */
@@ -1213,7 +1265,7 @@ public interface WxCpExternalContactService {
    * <a href="https://qyapi.weixin.qq.com/cgi-bin/externalcontact/delete_product_album?access_token=ACCESS_TOKEN">https://qyapi.weixin.qq.com/cgi-bin/externalcontact/delete_product_album?access_token=ACCESS_TOKEN</a>
    *
    * <a href="https://developer.work.weixin.qq.com/document/path/95096#%E5%88%A0%E9%99%A4%E5%95%86%E5%93%81%E5%9B%BE%E5%86%8C">文档地址</a>
-   * <pre>
+   * </pre>
    * @param productId 商品id
    * @throws WxErrorException the wx error exception
    */
@@ -1342,7 +1394,7 @@ public interface WxCpExternalContactService {
    * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/externalcontact/customer_acquisition/statistic?access_token=ACCESS_TOKEN
    *
    * @author Hugo
-   * @date 2023/12/5 14:34
+   * @since 2023/12/5 14:34
    * @param linkId 获客链接的id
    * @param startTime 统计起始时间
    * @param endTime 统计结束时间

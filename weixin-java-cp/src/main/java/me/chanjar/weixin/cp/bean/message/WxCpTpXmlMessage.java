@@ -403,7 +403,7 @@ public class WxCpTpXmlMessage implements Serializable {
    * The Agent id.
    */
   @XStreamAlias("AgentID")
-  protected String agentID;
+  protected Integer agentID;
 
   /**
    * The Pic url.
@@ -793,4 +793,6 @@ public class WxCpTpXmlMessage implements Serializable {
     log.debug("解密后的原始xml消息内容：{}", plainText);
     return fromXml(plainText);
   }
+
+
 }

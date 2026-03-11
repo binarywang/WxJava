@@ -56,4 +56,23 @@ public class OrderDetailInfo implements Serializable {
   @JsonProperty("sku_sharer_infos")
   private List<OrderSkuShareInfo> skuSharerInfos;
 
+  /** 授权账号信息 */
+  @JsonProperty("agent_info")
+  private OrderAgentInfo agentInfo;
+
+  /** 订单来源信息 */
+  @JsonProperty("source_infos")
+  private List<OrderSourceInfo> sourceInfos;
+
+  /** 订单退款信息 */
+  @JsonProperty("refund_info")
+  private OrderSourceInfo refundInfo;
+
+  /** 订单代写商品信息 */
+  @JsonProperty("greeting_card_info")
+  private OrderGreetingCardInfo greetingCardInfo;
+
+  /** 商品定制信息 */
+  @JsonProperty("custom_info")
+  private OrderCustomInfo customInfo;
 }

@@ -1,11 +1,16 @@
 package me.chanjar.weixin.common.util.http;
 
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.apache.ApacheSimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.hc.HttpComponentsSimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.jodd.JoddHttpSimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpSimpleGetRequestExecutor;
+import okhttp3.OkHttpClient;
 
 import java.io.IOException;
 
@@ -27,16 +32,21 @@ public abstract class SimpleGetRequestExecutor<H, P> implements RequestExecutor<
     handler.handle(this.execute(uri, data, wxType));
   }
 
+  @SuppressWarnings("unchecked")
   public static RequestExecutor<String, String> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheSimpleGetRequestExecutor(requestHttp);
+        return new ApacheSimpleGetRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new JoddHttpSimpleGetRequestExecutor(requestHttp);
+        return new JoddHttpSimpleGetRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new OkHttpSimpleGetRequestExecutor(requestHttp);
+        return new OkHttpSimpleGetRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsSimpleGetRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new IllegalArgumentException("非法请求参数");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 

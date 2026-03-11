@@ -1,6 +1,6 @@
 package me.chanjar.weixin.mp.api.impl;
 
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.okhttp.DefaultOkHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.mp.bean.WxMpStableAccessTokenRequest;
@@ -33,8 +33,8 @@ public class WxMpServiceOkHttpImpl extends BaseWxMpServiceImpl<OkHttpClient, OkH
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.OK_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.OK_HTTP;
   }
 
   @Override
@@ -50,12 +50,12 @@ public class WxMpServiceOkHttpImpl extends BaseWxMpServiceImpl<OkHttpClient, OkH
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
 
       //设置授权
-      clientBuilder.authenticator(new Authenticator() {
+      clientBuilder.proxyAuthenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
           return response.request().newBuilder()
-            .header("Authorization", credential)
+            .header("Proxy-Authorization", credential)
             .build();
         }
       });

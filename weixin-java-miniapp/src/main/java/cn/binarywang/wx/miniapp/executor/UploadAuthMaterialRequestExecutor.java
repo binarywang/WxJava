@@ -1,11 +1,15 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.WxMaUploadAuthMaterialResult;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,27 +23,32 @@ import java.io.IOException;
  * @since 2024/01/07
  */
 public abstract class UploadAuthMaterialRequestExecutor<H, P> implements RequestExecutor<WxMaUploadAuthMaterialResult, File> {
-    protected RequestHttp<H, P> requestHttp;
+  protected RequestHttp<H, P> requestHttp;
 
-    public UploadAuthMaterialRequestExecutor(RequestHttp requestHttp) {
-        this.requestHttp = requestHttp;
-    }
+  public UploadAuthMaterialRequestExecutor(RequestHttp<H, P> requestHttp) {
+    this.requestHttp = requestHttp;
+  }
 
-    @Override
-    public void execute(String uri, File data, ResponseHandler<WxMaUploadAuthMaterialResult> handler, WxType wxType) throws WxErrorException, IOException {
-        handler.handle(this.execute(uri, data, wxType));
-    }
+  @Override
+  public void execute(String uri, File data, ResponseHandler<WxMaUploadAuthMaterialResult> handler, WxType wxType) throws WxErrorException, IOException {
+    handler.handle(this.execute(uri, data, wxType));
+  }
 
-    public static RequestExecutor<WxMaUploadAuthMaterialResult, File> create(RequestHttp requestHttp) {
-        switch (requestHttp.getRequestType()) {
-            case APACHE_HTTP:
-                return new ApacheUploadAuthMaterialRequestExecutor(requestHttp);
-            case JODD_HTTP:
-                return new JoddHttpUploadAuthMaterialRequestExecutor(requestHttp);
-            case OK_HTTP:
-                return new OkHttpUploadAuthMaterialRequestExecutor(requestHttp);
-            default:
-                return null;
-        }
+  @SuppressWarnings("unchecked")
+  public static RequestExecutor<WxMaUploadAuthMaterialResult, File> create(RequestHttp<?, ?> requestHttp) {
+    switch (requestHttp.getRequestType()) {
+      case APACHE_HTTP:
+        return new ApacheUploadAuthMaterialRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
+      case JODD_HTTP:
+        return new JoddHttpUploadAuthMaterialRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
+      case OK_HTTP:
+        return new OkHttpUploadAuthMaterialRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsUploadAuthMaterialRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
+      default:
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
+  }
 }

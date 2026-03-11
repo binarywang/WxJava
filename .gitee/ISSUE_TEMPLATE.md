@@ -1,4 +1,4 @@
-强烈建议大家到 `github` 相关页面提交问题，方便统一查询管理，具体页面地址：https://github.com/Wechat-Group/WxJava/issues
+强烈建议大家到 `github` 相关页面提交问题，方便统一查询管理，具体页面地址：https://github.com/binarywang/WxJava/issues
 
 当然如果必须在这里提问，请务必按以下格式填写，谢谢配合~
 

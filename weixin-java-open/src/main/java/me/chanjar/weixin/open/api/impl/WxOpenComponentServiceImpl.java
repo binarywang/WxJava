@@ -150,7 +150,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       return SHA1.gen(getWxOpenConfigStorage().getComponentToken(), timestamp, nonce)
         .equals(signature);
     } catch (Exception e) {
-      log.error("Checking signature failed, and the reason is :" + e.getMessage());
+      log.error("Checking signature failed, and the reason is :{}", e.getMessage());
       return false;
     }
   }
@@ -705,7 +705,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("wx_name", wxName);
     String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getComponentAccessToken(false);
     String response = post(url, jsonObject.toString());
-    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: {}", response);
     return response;
   }
 
@@ -715,7 +715,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("wx_name", wxName);
     String url = CHECK_SHOP_AUDITSTATUS_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
     String response = post(url, jsonObject.toString());
-    log.info("CHECK_SHOP_AUDITSTATUS_URL: " + response);
+    log.info("CHECK_SHOP_AUDITSTATUS_URL: {}", response);
     return response;
   }
 
@@ -757,7 +757,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   @Override
   public WxMinishopImageUploadResult uploadMinishopImagePicFile(String appId, Integer height, Integer width, File file) throws WxErrorException {
     String url = WxOpenMinishopService.UPLOAD_IMG_MINISHOP_FILE_URL + "?access_token=" + getAuthorizerAccessToken(appId, false) + "&height=" + height + "&width=" + width;
-    log.info("upload url: " + url);
+    log.info("upload url: {}", url);
 //    String response = (url, file);
     WxMinishopImageUploadResult result = getWxOpenService().uploadMinishopMediaFile(url, file);
 
@@ -770,13 +770,13 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("f_cat_id", fCatId);
     String url = MINISHOP_CATEGORY_GET_URL + "?access_token=" + getAuthorizerAccessToken(appId, false);
     String response = getWxOpenService().post(url, jsonObject.toString());
-    log.info("response: " + response);
+    log.info("response: {}", response);
     JsonObject respJson = GsonParser.parse(response);
     MinishopCategories categories = new MinishopCategories();
     categories.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (categories.getErrcode() == 0) {
       JsonArray catListJson = respJson.getAsJsonArray("cat_list");
-      if (catListJson != null || catListJson.size() > 0) {
+      if (catListJson != null || !catListJson.isEmpty()) {
         List<MinishopCategory> categoryList = new ArrayList<>();
         for (int i = 0; i < catListJson.size(); i++) {
           JsonObject catJson = catListJson.get(i).getAsJsonObject();
@@ -806,7 +806,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     brandList.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (brandList.getErrcode() == 0) {
       JsonArray brandArrayJson = respJson.get("brands").getAsJsonArray();
-      if (brandArrayJson.size() > 0) {
+      if (!brandArrayJson.isEmpty()) {
         List<MinishopBrand> brands = new ArrayList<>();
         for (int i = 0; i < brandArrayJson.size(); i++) {
           JsonObject brandJson = brandArrayJson.get(i).getAsJsonObject();
@@ -843,7 +843,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     templateResult.setErrCode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (templateResult.getErrCode() == 0) {
       JsonArray templateArrayJson = respJson.get("template_list").getAsJsonArray();
-      if (templateArrayJson.size() > 0) {
+      if (!templateArrayJson.isEmpty()) {
         List<MinishopDeliveryTemplate> templateList = new ArrayList<>();
         for (int i = 0; i < templateArrayJson.size(); i++) {
           JsonObject templateJson = templateArrayJson.get(i).getAsJsonObject();
@@ -876,7 +876,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     shopCatList.setErrcode(respJson.get(WxConsts.ERR_CODE).getAsInt());
     if (shopCatList.getErrcode() == 0) {
       JsonArray shopcatArrayJson = respJson.get("shopcat_list").getAsJsonArray();
-      if (shopcatArrayJson.size() > 0) {
+      if (!shopcatArrayJson.isEmpty()) {
         List<MinishopShopCat> shopCats = new ArrayList<>();
         for (int i = 0; i < shopcatArrayJson.size(); i++) {
           JsonObject shopCatJson = shopcatArrayJson.get(i).getAsJsonObject();
@@ -906,7 +906,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
 
     JsonObject respObj = GsonParser.parse(response);
-    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    WxMinishopAddGoodsSpuResult<List<WxMinishopDeliveryCompany>> result = new WxMinishopAddGoodsSpuResult<>();
     result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonArray companyArray = respObj.get("company_list").getAsJsonArray();
@@ -931,7 +931,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject jsonObject = couponInfo.toJsonObject();
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
-    Integer couponId = -1;
+    int couponId = -1;
     if (respJson.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       JsonObject dataJson = respJson.get("data").getAsJsonObject();
       couponId = dataJson.get("coupon_id").getAsInt();
@@ -965,7 +965,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject jsonObject = couponInfo.toJsonObject();
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respJson = GsonParser.parse(response);
-    Integer couponId = -1;
+    int couponId = -1;
     if (respJson.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       JsonObject dataJson = respJson.get("data").getAsJsonObject();
       couponId = dataJson.get("coupon_id").getAsInt();
@@ -994,7 +994,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
 
     JsonObject respObj = GsonParser.parse(response);
-    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> result = new WxMinishopAddGoodsSpuResult<>();
     result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
 
     if (result.getErrcode() == 0) {
@@ -1032,7 +1032,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
 
     JsonObject respObj = GsonParser.parse(response);
-    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSpuData> result = new WxMinishopAddGoodsSpuResult<>();
     result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonObject dataObj = respObj.get("data").getAsJsonObject();
@@ -1082,7 +1082,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     String response = getWxOpenService().post(url, jsonObject.toString());
 
     JsonObject respObj = GsonParser.parse(response);
-    WxMinishopAddGoodsSpuResult result = new WxMinishopAddGoodsSpuResult();
+    WxMinishopAddGoodsSpuResult<WxMinishopAddGoodsSkuData> result = new WxMinishopAddGoodsSpuResult<>();
     result.setErrcode(respObj.get(WxConsts.ERR_CODE).getAsInt());
     if (result.getErrcode() == 0) {
       JsonObject dataObj = respObj.get("data").getAsJsonObject();
@@ -1187,7 +1187,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject jsonObject = limitDiscountGoods.toJsonObject();
     String response = getWxOpenService().post(url, jsonObject.toString());
     JsonObject respObj = GsonParser.parse(response);
-    Integer taskId = 0;
+    int taskId = 0;
     if (respObj.get(WxConsts.ERR_CODE).getAsInt() == 0) {
       taskId = respObj.get("task_id").getAsInt();
     }
@@ -1208,7 +1208,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
       //成功获取到秒杀活动列表
 
       JsonArray jsonArray = respObj.get("limited_discount_list").getAsJsonArray();
-      if (jsonArray != null && jsonArray.size() > 0) {
+      if (jsonArray != null && !jsonArray.isEmpty()) {
         for (int i = 0; i < jsonArray.size(); i++) {
           JsonObject goodsObj = jsonArray.get(i).getAsJsonObject();
           LimitDiscountGoods discountGoods = new LimitDiscountGoods();
@@ -1219,12 +1219,12 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
           List<LimitDiscountSku> skuList = new ArrayList<>();
           JsonArray skuArray = goodsObj.get("limited_discount_sku_list").getAsJsonArray();
-          if (skuArray != null && skuArray.size() > 0) {
+          if (skuArray != null && !skuArray.isEmpty()) {
             for (int j = 0; j < skuArray.size(); j++) {
               JsonObject skuObj = skuArray.get(i).getAsJsonObject();
               LimitDiscountSku sku = new LimitDiscountSku();
               sku.setSkuId(skuObj.get("sku_id").getAsLong());
-              sku.setSalePrice(new BigDecimal(skuObj.get("sale_price").getAsDouble() / 100));
+              sku.setSalePrice(BigDecimal.valueOf(skuObj.get("sale_price").getAsDouble() / 100));
               sku.setSaleStock(skuObj.get("sale_stock").getAsInt());
               skuList.add(sku);
             }
@@ -1306,5 +1306,56 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     Gson gson = new Gson();
     String response = post(OPEN_APPLY_SET_ORDER_PATH_INFO, gson.toJson(info));
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaDomainResult modifyWxaServerDomain(String action, List<String> requestDomains, List<String> wsRequestDomains,
+                                                    List<String> uploadDomains, List<String> downloadDomains,
+                                                    List<String> udpDomains, List<String> tcpDomains) throws WxErrorException {
+    JsonObject requestJson = new JsonObject();
+    requestJson.addProperty("action", action);
+    if (!"get".equals(action)) {
+      requestJson.add("requestdomain", toJsonArray(requestDomains));
+      requestJson.add("wsrequestdomain", toJsonArray(wsRequestDomains));
+      requestJson.add("uploaddomain", toJsonArray(uploadDomains));
+      requestJson.add("downloaddomain", toJsonArray(downloadDomains));
+      requestJson.add("udpdomain", toJsonArray(udpDomains));
+      requestJson.add("tcpdomain", toJsonArray(tcpDomains));
+    }
+
+    String response = post(API_MODIFY_WXA_SERVER_DOMAIN, requestJson.toString());
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaDomainResult.class);
+  }
+
+  @Override
+  public WxOpenMaDomainConfirmFileResult getDomainConfirmFile() throws WxErrorException {
+    String responseContent = post(API_GET_DOMAIN_CONFIRM_FILE, "{}");
+    return WxOpenMaDomainConfirmFileResult.fromJson(responseContent);
+  }
+
+  @Override
+  public String modifyWxaJumpDomain(String action, List<String> domainList) throws WxErrorException {
+    JsonObject requestJson = new JsonObject();
+    requestJson.addProperty("action", action);
+    if (!"get".equals(action)) {
+      requestJson.add("webviewdomain", toJsonArray(domainList));
+    }
+    return post(API_MODIFY_WXA_JUMP_DOMAIN, requestJson.toString());
+  }
+
+  @Override
+  public WxOpenMaWebDomainResult modifyWxaJumpDomainInfo(String action, List<String> domainList) throws WxErrorException {
+    String response = this.modifyWxaJumpDomain(action, domainList);
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
+  }
+
+  private JsonArray toJsonArray(List<String> list) {
+    JsonArray jsonArray = new JsonArray();
+    if (list != null) {
+      for (String item : list) {
+        jsonArray.add(item);
+      }
+    }
+    return jsonArray;
   }
 }

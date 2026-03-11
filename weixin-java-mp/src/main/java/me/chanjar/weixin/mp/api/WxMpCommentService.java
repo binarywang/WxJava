@@ -37,8 +37,8 @@ public interface WxMpCommentService {
      * @param msgDataId 群发返回的msg_data_id
      * @param index     多图文时，用来指定第几篇图文，从0开始，不带默认操作该msg_data_id的第一篇图文
      * @param begin     起始位置
-     * @param count     获取数目（>=50会被拒绝）
-     * @param type      type=0 普通评论&精选评论 type=1 普通评论 type=2 精选评论
+     * @param count     获取数目（大于等于50会被拒绝）
+     * @param type      type=0 普通评论和精选评论 type=1 普通评论 type=2 精选评论
      * @return 评论列表数据 wx mp comment list vo
      * @throws WxErrorException 异常
      */

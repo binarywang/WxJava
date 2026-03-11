@@ -4,6 +4,7 @@ import com.binarywang.solon.wxjava.qidian.enums.HttpClientType;
 import com.binarywang.solon.wxjava.qidian.properties.WxQidianProperties;
 import me.chanjar.weixin.qidian.api.WxQidianService;
 import me.chanjar.weixin.qidian.api.impl.WxQidianServiceHttpClientImpl;
+import me.chanjar.weixin.qidian.api.impl.WxQidianServiceHttpComponentsImpl;
 import me.chanjar.weixin.qidian.api.impl.WxQidianServiceImpl;
 import me.chanjar.weixin.qidian.api.impl.WxQidianServiceJoddHttpImpl;
 import me.chanjar.weixin.qidian.api.impl.WxQidianServiceOkHttpImpl;
@@ -35,6 +36,9 @@ public class WxQidianServiceAutoConfiguration {
       case HttpClient:
         wxQidianService = newWxQidianServiceHttpClientImpl();
         break;
+      case HttpComponents:
+        wxQidianService = newWxQidianServiceHttpComponentsImpl();
+        break;
       default:
         wxQidianService = newWxQidianServiceImpl();
         break;
@@ -58,6 +62,10 @@ public class WxQidianServiceAutoConfiguration {
 
   private WxQidianService newWxQidianServiceJoddHttpImpl() {
     return new WxQidianServiceJoddHttpImpl();
+  }
+
+  private WxQidianService newWxQidianServiceHttpComponentsImpl() {
+    return new WxQidianServiceHttpComponentsImpl();
   }
 
 }

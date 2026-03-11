@@ -18,7 +18,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BusiFavorCouponCodeResult implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>* 字段名：批次号
@@ -130,8 +130,8 @@ public class BusiFavorCouponCodeResult implements Serializable {
 
   @Data
   @NoArgsConstructor
-  public static class FailCode {
-    public static final float serialVersionUID = 1L;
+  public static class FailCode implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * <pre>* 字段名：上传失败的券code

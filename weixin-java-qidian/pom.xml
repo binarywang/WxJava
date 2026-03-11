@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.6.7.B</version>
+    <version>4.8.1.B</version>
   </parent>
 
   <artifactId>weixin-java-qidian</artifactId>
@@ -31,17 +31,23 @@
       <artifactId>okhttp</artifactId>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <scope>provided</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-all</artifactId>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>com.google.inject</groupId>
       <artifactId>guice</artifactId>

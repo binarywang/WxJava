@@ -201,7 +201,7 @@ public class WxMaMessageRouterRule {
   /**
    * 处理微信推送过来的消息.
    */
-  protected WxMaXmlOutMessage service(WxMaMessage wxMessage,
+  protected WxMaOutMessage service(WxMaMessage wxMessage,
                          Map<String, Object> context,
                          WxMaService wxMaService,
                          WxSessionManager sessionManager,
@@ -210,7 +210,7 @@ public class WxMaMessageRouterRule {
       context = new HashMap<>(16);
     }
 
-    WxMaXmlOutMessage outMessage = null;
+    WxMaOutMessage outMessage = null;
     try {
       // 如果拦截器不通过
       for (WxMaMessageInterceptor interceptor : this.interceptors) {

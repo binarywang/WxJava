@@ -186,6 +186,22 @@ public class WxMpXmlMessage implements Serializable {
   @JacksonXmlCData
   private String unionId;
 
+  @XStreamAlias("ret")
+  @JacksonXmlProperty(localName = "ret")
+  private Integer ret;
+  
+  @XStreamAlias("nickname")
+  @JacksonXmlProperty(localName = "nickname")
+  private String nickname;
+
+  @XStreamAlias("first")
+  @JacksonXmlProperty(localName = "first")
+  private String first;
+  
+  @XStreamAlias("second")
+  @JacksonXmlProperty(localName = "second")
+  private String second;
+
   ///////////////////////////////////////
   // 群发消息返回的结果
   ///////////////////////////////////////
@@ -911,6 +927,7 @@ public class WxMpXmlMessage implements Serializable {
    * @param timestamp         时间戳
    * @param nonce             随机串
    * @param msgSignature      签名串
+   * @return 解密后的消息对象
    */
   public static WxMpXmlMessage fromEncryptedXml(String encryptedXml, WxMpConfigStorage wxMpConfigStorage,
                                                 String timestamp, String nonce, String msgSignature) {
@@ -940,14 +957,16 @@ public class WxMpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当接受用户消息时，可能会获得以下值：
-   * {@link WxConsts.XmlMsgType#TEXT}
-   * {@link WxConsts.XmlMsgType#IMAGE}
-   * {@link WxConsts.XmlMsgType#VOICE}
-   * {@link WxConsts.XmlMsgType#VIDEO}
-   * {@link WxConsts.XmlMsgType#LOCATION}
-   * {@link WxConsts.XmlMsgType#LINK}
-   * {@link WxConsts.XmlMsgType#EVENT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#LOCATION}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#LINK}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#EVENT}
    * </pre>
+   *
+   * @return 消息类型
    */
   public String getMsgType() {
     return this.msgType;
@@ -956,13 +975,15 @@ public class WxMpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当发送消息的时候使用：
-   * {@link WxConsts.XmlMsgType#TEXT}
-   * {@link WxConsts.XmlMsgType#IMAGE}
-   * {@link WxConsts.XmlMsgType#VOICE}
-   * {@link WxConsts.XmlMsgType#VIDEO}
-   * {@link WxConsts.XmlMsgType#NEWS}
-   * {@link WxConsts.XmlMsgType#MUSIC}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#NEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#MUSIC}
    * </pre>
+   *
+   * @param msgType 消息类型
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;

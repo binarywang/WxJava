@@ -38,4 +38,10 @@ public class WxCpAgentWorkBenchServiceImpl implements WxCpAgentWorkBenchService 
     final String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WORKBENCH_DATA_SET));
     this.mainService.post(url, wxCpAgentWorkBench.toUserDataString());
   }
+
+  @Override
+  public void batchSetWorkBenchData(WxCpAgentWorkBench wxCpAgentWorkBench) throws WxErrorException {
+    final String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(WORKBENCH_BATCH_DATA_SET));
+    this.mainService.post(url, wxCpAgentWorkBench.toBatchUserDataString());
+  }
 }

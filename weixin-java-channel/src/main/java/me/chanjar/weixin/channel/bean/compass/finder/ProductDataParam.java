@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import me.chanjar.weixin.channel.bean.compass.CompassFinderBaseParam;
 
 /**
  * 获取带货商品数据请求参数

@@ -17,7 +17,6 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpGetTokenReq;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpMaTransferSession;
 import me.chanjar.weixin.cp.config.WxCpCorpGroupConfigStorage;
-import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.corpgroup.service.WxCpCgService;
 import me.chanjar.weixin.cp.corpgroup.service.WxCpLinkedCorpService;
 
@@ -113,6 +112,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param url                    the url
    * @param postData               the post data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the string
    * @throws WxErrorException the wx error exception
    */
@@ -137,6 +137,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param uri                    the uri
    * @param data                   the data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */
@@ -182,6 +183,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param executor the executor
    * @param uri      the uri
    * @param data     the data
+   * @param req      获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */
@@ -198,6 +200,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param uri                    the uri
    * @param data                   the data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */

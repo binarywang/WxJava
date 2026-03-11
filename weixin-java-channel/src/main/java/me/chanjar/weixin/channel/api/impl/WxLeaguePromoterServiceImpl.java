@@ -24,9 +24,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxLeaguePromoterServiceImpl implements WxLeaguePromoterService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxLeaguePromoterServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxLeaguePromoterServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
@@ -54,6 +54,34 @@ public class WxLeaguePromoterServiceImpl implements WxLeaguePromoterService {
   @Override
   public PromoterInfoResponse getPromoterInfo(String finderId) throws WxErrorException {
     String reqJson = "{\"finder_id\":\"" + finderId + "\"}";
+    String resJson = shopService.post(GET_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, PromoterInfoResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse addPromoterV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
+    String resJson = shopService.post(ADD_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse updatePromoterV2(String promoterId, int type) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\",\"type\":" + type + "}";
+    String resJson = shopService.post(EDIT_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse deletePromoterV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
+    String resJson = shopService.post(DELETE_PROMOTER_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public PromoterInfoResponse getPromoterInfoV2(String promoterId) throws WxErrorException {
+    String reqJson = "{\"promoter_id\":\"" + promoterId + "\"}";
     String resJson = shopService.post(GET_PROMOTER_URL, reqJson);
     return ResponseUtils.decode(resJson, PromoterInfoResponse.class);
   }

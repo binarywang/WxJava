@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.*;
-import static me.chanjar.weixin.cp.constant.WxCpConsts.GroupRobotMsgType.TEMPLATE_CARD;
 
 /**
  * 微信群机器人消息
@@ -251,6 +250,12 @@ public class WxCpGroupRobotMessage implements Serializable {
         JsonObject text = new JsonObject();
         text.addProperty("content", this.getContent());
         messageJson.add("markdown", text);
+        break;
+      }
+      case MARKDOWN_V2: {
+        JsonObject text = new JsonObject();
+        text.addProperty("content", this.getContent());
+        messageJson.add("markdown_v2", text);
         break;
       }
       case IMAGE: {

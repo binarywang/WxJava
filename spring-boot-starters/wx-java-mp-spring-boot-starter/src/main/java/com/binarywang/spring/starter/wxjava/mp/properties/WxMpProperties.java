@@ -80,7 +80,7 @@ public class WxMpProperties {
     /**
      * http客户端类型.
      */
-    private HttpClientType httpClientType = HttpClientType.HttpClient;
+    private HttpClientType httpClientType = HttpClientType.HttpComponents;
 
     /**
      * http代理主机.
@@ -101,6 +101,21 @@ public class WxMpProperties {
      * http代理密码.
      */
     private String httpProxyPassword;
+
+    /**
+     * 连接超时时间，单位毫秒
+     */
+    private int connectionTimeout = 5000;
+
+    /**
+     * 读数据超时时间，即socketTimeout，单位毫秒
+     */
+    private int soTimeout = 5000;
+
+    /**
+     * 从连接池获取链接的超时时间，单位毫秒
+     */
+    private int connectionRequestTimeout = 5000;
 
   }
 

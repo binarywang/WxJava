@@ -10,8 +10,6 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +36,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
    * @param sessionKey    session_key
    * @param encryptedData 消息密文
    * @param ivStr         iv字符串
+   * @return 解密后的字符串
    */
   public static String decrypt(String sessionKey, String encryptedData, String ivStr) {
     try {
@@ -60,6 +59,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
    * @param sessionKey    session_key
    * @param encryptedData 消息密文
    * @param ivStr         iv字符串
+   * @return 解密后的字符串
    */
   public static String decryptAnotherWay(String sessionKey, String encryptedData, String ivStr) {
     byte[] keyBytes = Base64.decodeBase64(sessionKey.getBytes(UTF_8));

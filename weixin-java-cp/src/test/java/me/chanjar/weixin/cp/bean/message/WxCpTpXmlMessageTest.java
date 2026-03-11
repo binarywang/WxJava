@@ -152,7 +152,7 @@ public class WxCpTpXmlMessageTest {
     assertEquals(wxXmlMessage.getCreateTime(), Long.valueOf(1408091189));
     assertEquals(wxXmlMessage.getEvent(), "enter_agent");
     assertEquals(wxXmlMessage.getEventKey(), "");
-    assertEquals(wxXmlMessage.getAgentID(), Integer.valueOf(1));
+    assertEquals(wxXmlMessage.getAgentID(), 1);
   }
 
   /**

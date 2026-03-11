@@ -5,13 +5,14 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.HttpType;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.okhttp.DefaultOkHttpClientBuilder;
 import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import okhttp3.*;
 
 import java.io.IOException;
+import java.util.concurrent.locks.Lock;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.GET_TOKEN;
 
@@ -36,8 +37,8 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
   }
 
   @Override
-  public HttpType getRequestType() {
-    return HttpType.OK_HTTP;
+  public HttpClientType getRequestType() {
+    return HttpClientType.OK_HTTP;
   }
 
   @Override
@@ -75,6 +76,52 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
   }
 
   @Override
+  public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+      return this.configStorage.getMsgAuditAccessToken();
+    }
+
+    Lock lock = this.configStorage.getMsgAuditAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
+        return this.configStorage.getMsgAuditAccessToken();
+      }
+      // 使用会话存档secret获取access_token
+      String msgAuditSecret = this.configStorage.getMsgAuditSecret();
+      if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
+        throw new WxErrorException("会话存档secret未配置");
+      }
+      //得到httpClient
+      OkHttpClient client = getRequestHttpClient();
+      //请求的request
+      Request request = new Request.Builder()
+        .url(String.format(this.configStorage.getApiUrl(GET_TOKEN), this.configStorage.getCorpId(),
+          msgAuditSecret))
+        .get()
+        .build();
+      String resultContent = null;
+      try (Response response = client.newCall(request).execute()) {
+        resultContent = response.body().string();
+      } catch (IOException e) {
+        log.error(e.getMessage(), e);
+      }
+
+      WxError error = WxError.fromJson(resultContent, WxType.CP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      this.configStorage.updateMsgAuditAccessToken(accessToken.getAccessToken(),
+        accessToken.getExpiresIn());
+    } finally {
+      lock.unlock();
+    }
+    return this.configStorage.getMsgAuditAccessToken();
+  }
+
+  @Override
   public void initHttp() {
     log.debug("WxCpServiceOkHttpImpl initHttp");
     //设置代理
@@ -86,12 +133,12 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
       OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
       clientBuilder.proxy(getRequestHttpProxy().getProxy());
       //设置授权
-      clientBuilder.authenticator(new Authenticator() {
+      clientBuilder.proxyAuthenticator(new Authenticator() {
         @Override
         public Request authenticate(Route route, Response response) throws IOException {
           String credential = Credentials.basic(httpProxy.getProxyUsername(), httpProxy.getProxyPassword());
           return response.request().newBuilder()
-            .header("Authorization", credential)
+            .header("Proxy-Authorization", credential)
             .build();
         }
       });

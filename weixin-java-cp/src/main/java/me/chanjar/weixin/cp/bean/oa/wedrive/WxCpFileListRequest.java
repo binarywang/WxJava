@@ -21,9 +21,6 @@ import java.io.Serializable;
 public class WxCpFileListRequest implements Serializable {
   private static final long serialVersionUID = -4960239393895754138L;
 
-  @SerializedName("userid")
-  private String userId;
-
   @SerializedName("spaceid")
   private String spaceId;
 

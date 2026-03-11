@@ -4,7 +4,6 @@ import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
 import jodd.http.ProxyInfo;
-import jodd.util.StringPool;
 
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
@@ -22,7 +21,7 @@ import java.nio.charset.StandardCharsets;
  * @author ecoolper
  */
 public class MediaImgUploadHttpRequestExecutor extends MediaImgUploadRequestExecutor<HttpConnectionProvider, ProxyInfo> {
-  public MediaImgUploadHttpRequestExecutor(RequestHttp requestHttp) {
+  public MediaImgUploadHttpRequestExecutor(RequestHttp<HttpConnectionProvider, ProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

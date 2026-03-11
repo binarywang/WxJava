@@ -28,6 +28,14 @@ public class AfterSaleListParam implements Serializable {
   @JsonProperty("end_create_time")
   private Long endCreateTime;
 
+  /** 售后单更新起始时间 */
+  @JsonProperty("begin_update_time")
+  private Long beginUpdateTime;
+
+  /** 售后单更新结束时间，end_update_time减去begin_update_time不得大于24小时 */
+  @JsonProperty("end_update_time")
+  private Long endUpdateTime;
+
   /** 翻页参数，从第二页开始传，来源于上一页的返回值 */
   @JsonProperty("next_key")
   private String nextKey;

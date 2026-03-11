@@ -34,6 +34,9 @@ public class ContentValue implements Serializable {
 
   private List<ContentValue.Department> departments;
 
+  @SerializedName("new_tips")
+  private NewTips newTips;
+
   private List<ContentValue.File> files;
 
   private List<ContentValue.Child> children;
@@ -55,6 +58,9 @@ public class ContentValue implements Serializable {
 
   private Formula formula;
 
+  @SerializedName("bank_account")
+  private BankAccount bankAccount;
+
   /**
    * The type Date.
    */
@@ -65,6 +71,23 @@ public class ContentValue implements Serializable {
 
     @SerializedName("s_timestamp")
     private String timestamp;
+
+    @SerializedName("timezone_info")
+    private TimezoneInfo timezoneInfo;
+
+    /**
+     * The type TimezoneInfo.
+     */
+    @Data
+    public static class TimezoneInfo implements Serializable {
+      private static final long serialVersionUID = 164839205748392017L;
+
+      @SerializedName("zone_offset")
+      private String zoneOffset;
+
+      @SerializedName("zone_desc")
+      private String zoneDesc;
+    }
   }
 
   /**
@@ -112,6 +135,68 @@ public class ContentValue implements Serializable {
     @SerializedName("openapi_id")
     private String openApiId;
     private String name;
+  }
+
+  /**
+   * The type Tips.
+   */
+  @Data
+  public static class NewTips implements Serializable {
+    private static final long serialVersionUID = 1094978100200056100L;
+    @SerializedName("tips_content")
+    private List<TipsContent> tipsContent;
+
+    /**
+     * The type tips_content.
+     */
+    @Data
+    public static class TipsContent implements Serializable {
+      private static final long serialVersionUID = 559432801311084797L;
+      @SerializedName("text")
+      private Text text;
+      private String lang;
+
+      /**
+       * The type sub_text.
+       */
+      @Data
+      public static class Text implements Serializable {
+        private static final long serialVersionUID = -70174360931158924L;
+        @SerializedName("sub_text")
+        private List<SubText> subText;
+      }
+
+      /**
+       * The type sub_text.
+       */
+      @Data
+      public static class SubText implements Serializable {
+        private static final long serialVersionUID = -8226911175438019317L;
+        private Integer type;
+        private Content content;
+
+        @Data
+        public static class Content implements Serializable {
+          private static final long serialVersionUID = -6813250009451940525L;
+          @SerializedName("plain_text")
+          private PlainText plainText;
+          private Link link;
+
+          @Data
+          public static class PlainText implements Serializable {
+            private static final long serialVersionUID = -599377674188314118L;
+            private String content;
+          }
+
+          @Data
+          public static class Link implements Serializable {
+            private static final long serialVersionUID = 2784173996170990308L;
+            private String title;
+            private String url;
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -163,6 +248,8 @@ public class ContentValue implements Serializable {
       private Long end;
       @SerializedName("new_duration")
       private Long duration;
+      @SerializedName("timezone_info")
+      private Date.TimezoneInfo timezoneInfo;
     }
 
     /**
@@ -274,6 +361,57 @@ public class ContentValue implements Serializable {
   public static class Formula implements Serializable {
     private static final long serialVersionUID = 816968197271971247L;
     private String value;
+  }
+
+  /**
+   * The type BankAccount
+   */
+  @Data
+  public static class BankAccount implements Serializable {
+    private static final long serialVersionUID = 938475610283746192L;
+
+    @SerializedName("account_type")
+    private Long accountType;
+
+    @SerializedName("account_name")
+    private String accountName;
+
+    @SerializedName("account_number")
+    private String accountNumber;
+
+    private String remark;
+
+    private Bank bank;
+
+    /**
+     * The type Bank
+     */
+    @Data
+    public static class Bank implements Serializable {
+      private static final long serialVersionUID = 527384916203847561L;
+
+      @SerializedName("bank_alias")
+      private String bankAlias;
+
+      @SerializedName("bank_alias_code")
+      private String bankAliasCode;
+
+      private String province;
+
+      @SerializedName("province_code")
+      private Long provinceCode;
+
+      private String city;
+
+      @SerializedName("city_code")
+      private Long cityCode;
+
+      @SerializedName("bank_branch_name")
+      private String bankBranchName;
+
+      @SerializedName("bank_branch_id")
+      private String bankBranchId;
+    }
   }
 
 }

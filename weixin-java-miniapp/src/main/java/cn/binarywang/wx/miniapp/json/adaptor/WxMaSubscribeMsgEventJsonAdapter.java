@@ -24,7 +24,7 @@ public class WxMaSubscribeMsgEventJsonAdapter implements JsonDeserializer<WxMaSu
     WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson result = new WxMaSubscribeMsgEvent.WxMaSubscribeMsgEventJson();
     if (json.isJsonArray()) {
       JsonArray array = json.getAsJsonArray();
-      if (array.size() > 0) {
+      if (!array.isEmpty()) {
         JsonObject obj = array.get(0).getAsJsonObject();
         MsgEventTypeEnum eventType = detectMsgEventType(obj);
         for (int i = 0; i < array.size(); ++i) {

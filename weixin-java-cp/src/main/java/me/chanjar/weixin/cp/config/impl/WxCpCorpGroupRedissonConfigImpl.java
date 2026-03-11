@@ -23,6 +23,8 @@ import java.util.concurrent.locks.Lock;
  */
 @Builder
 public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStorage, Serializable {
+  private static final long serialVersionUID = 1269450173683931930L;
+
   private final transient Map<String, Lock> corpAccessTokenLocker = new ConcurrentHashMap<>();
 
   /**

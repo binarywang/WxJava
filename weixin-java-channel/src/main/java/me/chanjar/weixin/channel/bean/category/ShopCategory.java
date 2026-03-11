@@ -29,4 +29,8 @@ public class ShopCategory implements Serializable {
   /** 层级 */
   @JsonProperty("level")
   private Integer level;
+
+  /** 是否为叶子类目（品类） */
+  @JsonProperty("leaf")
+  private Boolean leaf;
 }

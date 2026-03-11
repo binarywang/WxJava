@@ -5,12 +5,7 @@ package me.chanjar.weixin.mp.util;
  * created on  2019-03-20 22:06
  */
 public class WxMpConfigStorageHolder {
-  private static final ThreadLocal<String> THREAD_LOCAL = new ThreadLocal<String>() {
-    @Override
-    protected String initialValue() {
-      return "default";
-    }
-  };
+  private static final ThreadLocal<String> THREAD_LOCAL = ThreadLocal.withInitial(() -> "default");
 
   public static String get() {
     return THREAD_LOCAL.get();

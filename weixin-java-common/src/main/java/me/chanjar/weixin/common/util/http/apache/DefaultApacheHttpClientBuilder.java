@@ -25,17 +25,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
-import org.apache.http.protocol.HttpContext;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.annotation.concurrent.NotThreadSafe;
 import javax.net.ssl.SSLContext;
-import java.io.IOException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -59,7 +55,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    * 设置为负数是使用系统默认设置(非3000ms的默认值,而是httpClient的默认设置).
    * </p>
    */
-  private int connectionRequestTimeout = -1;
+  private int connectionRequestTimeout = 3000;
 
   /**
    * 建立链接的超时时间,默认为5000ms.由于是在链接池获取链接,此设置应该并不起什么作用
@@ -96,6 +92,12 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
    * 自定义httpclient的User Agent
    */
   private String userAgent;
+
+  /**
+   * 支持的TLS协议版本，默认支持现代TLS版本
+   * Supported TLS protocol versions, defaults to modern TLS versions
+   */
+  private String[] supportedProtocols = {"TLSv1.2", "TLSv1.3", "TLSv1.1", "TLSv1"};
 
   /**
    * 自定义请求拦截器
@@ -183,6 +185,12 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     return this;
   }
 
+  @Override
+  public ApacheHttpClientBuilder supportedProtocols(String[] supportedProtocols) {
+    this.supportedProtocols = supportedProtocols;
+    return this;
+  }
+
   public IdleConnectionMonitorThread getIdleConnectionMonitorThread() {
     return this.idleConnectionMonitorThread;
   }
@@ -261,7 +269,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
       return new SSLConnectionSocketFactory(
         sslcontext,
-        new String[]{"TLSv1"},
+        this.supportedProtocols,
         null,
         SSLConnectionSocketFactory.getDefaultHostnameVerifier());
     } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {

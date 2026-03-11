@@ -4,7 +4,8 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.util.HttpProxyUtils;
 import com.github.binarywang.wxpay.util.ResourcesUtils;
 import com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder;
-import com.github.binarywang.wxpay.v3.auth.*;
+import com.github.binarywang.wxpay.v3.auth.Verifier;
+import com.github.binarywang.wxpay.v3.auth.WxPayValidator;
 import com.github.binarywang.wxpay.v3.util.PemUtils;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +14,20 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
+import org.apache.http.config.Registry;
+import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.socket.ConnectionSocketFactory;
+import org.apache.http.conn.socket.PlainConnectionSocketFactory;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
+import org.apache.http.conn.ssl.DefaultHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
@@ -22,6 +36,7 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
@@ -40,11 +55,12 @@ public class WxPayConfig {
   private static final String DEFAULT_PAY_BASE_URL = "https://api.mch.weixin.qq.com";
   private static final String PROBLEM_MSG = "证书文件【%s】有问题，请核实！";
   private static final String NOT_FOUND_MSG = "证书文件【%s】不存在，请核实！";
+  private static final String CERT_NAME_P12 = "p12证书";
 
   /**
    * 微信支付接口请求地址域名部分.
    */
-  private String payBaseUrl = DEFAULT_PAY_BASE_URL;
+  private String apiHostUrl = DEFAULT_PAY_BASE_URL;
 
   /**
    * http请求连接超时时间.
@@ -81,9 +97,13 @@ public class WxPayConfig {
    */
   private String subMchId;
   /**
-   * 微信支付异步回掉地址，通知url必须为直接可访问的url，不能携带参数.
+   * 微信支付异步回调地址，通知url必须为直接可访问的url，不能携带参数.
    */
   private String notifyUrl;
+  /**
+   * 退款结果异步回调地址，通知url必须为直接可访问的url，不能携带参数.
+   */
+  private String refundNotifyUrl;
   /**
    * 交易类型.
    * <pre>
@@ -139,6 +159,25 @@ public class WxPayConfig {
   private byte[] privateCertContent;
 
   /**
+   * 公钥ID
+   */
+  private String publicKeyId;
+
+  /**
+   * pub_key.pem证书base64编码
+   */
+  private String publicKeyString;
+
+  /**
+   * pub_key.pem证书文件的绝对路径或者以classpath:开头的类路径.
+   */
+  private String publicKeyPath;
+
+  /**
+   * pub_key.pem证书文件内容的字节数组.
+   */
+  private byte[] publicKeyContent;
+  /**
    * apiV3 秘钥值.
    */
   private String apiV3Key;
@@ -165,11 +204,32 @@ public class WxPayConfig {
 
 
   private CloseableHttpClient apiV3HttpClient;
+
+  /**
+   * 用于普通支付接口的可复用HttpClient，使用连接池
+   */
+  private CloseableHttpClient httpClient;
+
+  /**
+   * 用于需要SSL证书的支付接口的可复用HttpClient，使用连接池
+   */
+  private CloseableHttpClient sslHttpClient;
+
   /**
    * 支持扩展httpClientBuilder
    */
   private HttpClientBuilderCustomizer httpClientBuilderCustomizer;
   private HttpClientBuilderCustomizer apiV3HttpClientBuilderCustomizer;
+
+  /**
+   * HTTP连接池最大连接数，默认20
+   */
+  private int maxConnTotal = 20;
+
+  /**
+   * HTTP连接池每个路由的最大连接数，默认10
+   */
+  private int maxConnPerRoute = 10;
   /**
    * 私钥信息
    */
@@ -208,16 +268,26 @@ public class WxPayConfig {
   private Verifier verifier;
 
   /**
+   * 是否将全部v3接口的请求都添加Wechatpay-Serial请求头，默认不添加
+   */
+  private boolean strictlyNeedWechatPaySerial = false;
+
+  /**
+   * 是否完全使用公钥模式(用以微信从平台证书到公钥的灰度切换)，默认不使用
+   */
+  private boolean fullPublicKeyModel = false;
+
+  /**
    * 返回所设置的微信支付接口请求地址域名.
    *
    * @return 微信支付接口请求地址域名
    */
-  public String getPayBaseUrl() {
-    if (StringUtils.isEmpty(this.payBaseUrl)) {
+  public String getApiHostUrl() {
+    if (StringUtils.isEmpty(this.apiHostUrl)) {
       return DEFAULT_PAY_BASE_URL;
     }
 
-    return this.payBaseUrl;
+    return this.apiHostUrl;
   }
 
   @SneakyThrows
@@ -241,7 +311,7 @@ public class WxPayConfig {
     }
 
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
+      this.keyContent, CERT_NAME_P12)) {
       KeyStore keystore = KeyStore.getInstance("PKCS12");
       char[] partnerId2charArray = this.getMchId().toCharArray();
       keystore.load(inputStream, partnerId2charArray);
@@ -259,34 +329,26 @@ public class WxPayConfig {
    *
    * @return org.apache.http.impl.client.CloseableHttpClient
    * @author doger.wang
-   **/
+   * @throws WxPayException 微信支付异常
+   */
   public CloseableHttpClient initApiV3HttpClient() throws WxPayException {
     if (StringUtils.isBlank(this.getApiV3Key())) {
       throw new WxPayException("请确保apiV3Key值已设置");
     }
-
-    // 尝试从p12证书中加载私钥和证书
-    PrivateKey merchantPrivateKey = null;
-    X509Certificate certificate = null;
-    Object[] objects = this.p12ToPem();
-    if (objects != null) {
-      merchantPrivateKey = (PrivateKey) objects[0];
-      certificate = (X509Certificate) objects[1];
-      this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
-    }
     try {
-      if (merchantPrivateKey == null) {
-        if (StringUtils.isNotBlank(this.getPrivateKeyString())) {
-          this.setPrivateKeyString(Base64.getEncoder().encodeToString(this.getPrivateKeyString().getBytes()));
-        }
+      PrivateKey merchantPrivateKey = null;
+      PublicKey publicKey = null;
 
-        try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
-          this.privateKeyContent, "privateKeyPath")) {
-          merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
-        }
-
+      // 不使用完全公钥模式时，同时兼容平台证书和公钥
+      X509Certificate certificate = null;
+      // 尝试从p12证书中加载私钥和证书
+      Object[] objects = this.p12ToPem();
+      if (objects != null) {
+        merchantPrivateKey = (PrivateKey) objects[0];
+        certificate = (X509Certificate) objects[1];
+        this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
-      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo())) {
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && (StringUtils.isNotBlank(this.getPrivateCertPath()) || StringUtils.isNotBlank(this.getPrivateCertString()) || this.getPrivateCertContent() != null)) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath")) {
           certificate = PemUtils.loadCertificate(certInputStream);
@@ -294,12 +356,41 @@ public class WxPayConfig {
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
 
+      if (StringUtils.isNotBlank(this.getPublicKeyString()) || StringUtils.isNotBlank(this.getPublicKeyPath()) || this.publicKeyContent != null) {
+        if (StringUtils.isBlank(this.getPublicKeyId())) {
+          throw new WxPayException("请确保和publicKeyId配套使用");
+        }
+        try (InputStream pubInputStream =
+               this.loadConfigInputStream(this.getPublicKeyString(), this.getPublicKeyPath(),
+                 this.publicKeyContent, "publicKeyPath")) {
+          publicKey = PemUtils.loadPublicKey(pubInputStream);
+        }
+      }
+
+      // 加载api私钥
+      if (merchantPrivateKey == null && (StringUtils.isNotBlank(this.getPrivateKeyPath()) || StringUtils.isNotBlank(this.getPrivateKeyString()) || null != this.privateKeyContent)) {
+        try (InputStream keyInputStream = this.loadConfigInputStream(this.getPrivateKeyString(), this.getPrivateKeyPath(),
+          this.privateKeyContent, "privateKeyPath")) {
+          merchantPrivateKey = PemUtils.loadPrivateKey(keyInputStream);
+        }
+      }
+
       //构造Http Proxy正向代理
       WxPayHttpProxy wxPayHttpProxy = getWxPayHttpProxy();
 
-      AutoUpdateCertificatesVerifier certificatesVerifier = new AutoUpdateCertificatesVerifier(
-        new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
-        this.getApiV3Key().getBytes(StandardCharsets.UTF_8), this.getCertAutoUpdateTime(), this.getPayBaseUrl(), wxPayHttpProxy);
+      // 构造证书验签器
+      Verifier certificatesVerifier;
+      if (this.fullPublicKeyModel) {
+        // 使用完全公钥模式时，只加载公钥相关配置，避免下载平台证书使灰度切换无法达到100%覆盖
+        if (publicKey == null) {
+          throw new WxPayException("完全公钥模式下，请确保公钥配置（publicKeyPath/publicKeyString/publicKeyContent）及publicKeyId已设置");
+        }
+        certificatesVerifier = VerifierBuilder.buildPublicCertVerifier(this.publicKeyId, publicKey);
+      } else {
+        certificatesVerifier = VerifierBuilder.build(
+          this.getCertSerialNo(), this.getMchId(), this.getApiV3Key(), merchantPrivateKey, wxPayHttpProxy,
+          this.getCertAutoUpdateTime(), this.getApiHostUrl(), this.getPublicKeyId(), publicKey);
+      }
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
@@ -337,21 +428,71 @@ public class WxPayConfig {
     return null;
   }
 
+  /**
+   * 从指定参数加载输入流
+   *
+   * @param configString  证书内容进行Base64加密后的字符串
+   * @param configPath    证书路径
+   * @param configContent 证书内容的字节数组
+   * @param certName      证书的标识
+   * @return 输入流
+   * @throws WxPayException 异常
+   */
   private InputStream loadConfigInputStream(String configString, String configPath, byte[] configContent,
-                                            String fileName) throws WxPayException {
-    InputStream inputStream;
+                                            String certName) throws WxPayException {
     if (configContent != null) {
-      inputStream = new ByteArrayInputStream(configContent);
-    } else if (StringUtils.isNotEmpty(configString)) {
-      configContent = configString.getBytes(StandardCharsets.UTF_8);
-      inputStream = new ByteArrayInputStream(configContent);
-    } else {
-      if (StringUtils.isBlank(configPath)) {
-        throw new WxPayException("请确保证书文件地址【" + fileName + "】或者内容已配置");
-      }
-      inputStream = this.loadConfigInputStream(configPath);
+      return new ByteArrayInputStream(configContent);
     }
-    return inputStream;
+
+    if (StringUtils.isNotEmpty(configString)) {
+      // 判断是否为PEM格式的字符串（包含-----BEGIN和-----END标记）
+      if (isPemFormat(configString)) {
+        // PEM格式直接转为字节流，让PemUtils处理
+        configContent = configString.getBytes(StandardCharsets.UTF_8);
+      } else {
+        // 尝试Base64解码
+        try {
+          byte[] decoded = Base64.getDecoder().decode(configString);
+          // 检查解码后的内容是否为PEM格式（即用户传入的是base64编码的完整PEM文件）
+          String decodedString = new String(decoded, StandardCharsets.UTF_8);
+          if (isPemFormat(decodedString)) {
+            // 解码后是PEM格式，使用解码后的内容
+            configContent = decoded;
+          } else {
+            // 解码后不是PEM格式，可能是：
+            // 1. p12证书的二进制内容 - 应该返回解码后的二进制数据
+            // 2. 私钥/公钥的纯base64内容（不含PEM头尾） - 应该返回原始字符串，让PemUtils处理
+            // 通过certName区分：p12证书使用解码后的数据，其他情况返回原始字符串
+            if (CERT_NAME_P12.equals(certName)) {
+              configContent = decoded;
+            } else {
+              // 对于私钥/公钥/证书，返回原始字符串字节，让PemUtils处理base64解码
+              configContent = configString.getBytes(StandardCharsets.UTF_8);
+            }
+          }
+        } catch (IllegalArgumentException e) {
+          // Base64解码失败，可能是格式不正确，抛出异常
+          throw new WxPayException(String.format("【%s】的Base64格式不正确", certName), e);
+        }
+      }
+      return new ByteArrayInputStream(configContent);
+    }
+
+    if (StringUtils.isBlank(configPath)) {
+      throw new WxPayException(String.format("请确保【%s】的文件地址【%s】存在", certName, configPath));
+    }
+
+    return this.loadConfigInputStream(configPath);
+  }
+
+  /**
+   * 判断字符串是否为PEM格式（包含-----BEGIN和-----END标记）
+   *
+   * @param content 要检查的字符串
+   * @return 是否为PEM格式
+   */
+  private boolean isPemFormat(String content) {
+    return content != null && content.contains("-----BEGIN") && content.contains("-----END");
   }
 
 
@@ -416,13 +557,14 @@ public class WxPayConfig {
    */
   private Object[] p12ToPem() {
     String key = getMchId();
-    if (StringUtils.isBlank(key)) {
+    if (StringUtils.isBlank(key) ||
+      (StringUtils.isBlank(this.getKeyPath()) && this.keyContent == null && StringUtils.isBlank(this.keyString))) {
       return null;
     }
 
     // 分解p12证书文件
     try (InputStream inputStream = this.loadConfigInputStream(this.keyString, this.getKeyPath(),
-      this.keyContent, "p12证书");) {
+      this.keyContent, CERT_NAME_P12)) {
       KeyStore keyStore = KeyStore.getInstance("PKCS12");
       keyStore.load(inputStream, key.toCharArray());
 
@@ -433,10 +575,132 @@ public class WxPayConfig {
       X509Certificate x509Certificate = (X509Certificate) certificate;
       return new Object[]{privateKey, x509Certificate};
     } catch (Exception e) {
-      log.error("加载证书时发生异常", e);
+      log.error("加载p12证书时发生异常", e);
     }
 
     return null;
 
+  }
+
+  /**
+   * 初始化使用连接池的HttpClient
+   *
+   * @return CloseableHttpClient
+   * @throws WxPayException 初始化异常
+   */
+  public CloseableHttpClient initHttpClient() throws WxPayException {
+    if (this.httpClient != null) {
+      return this.httpClient;
+    }
+
+    // 创建连接池管理器
+    PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(this.maxConnTotal);
+    connectionManager.setDefaultMaxPerRoute(this.maxConnPerRoute);
+
+    // 创建HttpClient构建器
+    org.apache.http.impl.client.HttpClientBuilder httpClientBuilder = HttpClients.custom()
+        .setConnectionManager(connectionManager);
+
+    // 配置代理
+    configureProxy(httpClientBuilder);
+
+    // 提供自定义httpClientBuilder的能力
+    Optional.ofNullable(httpClientBuilderCustomizer).ifPresent(e -> {
+      e.customize(httpClientBuilder);
+    });
+
+    this.httpClient = httpClientBuilder.build();
+    return this.httpClient;
+  }
+
+  /**
+   * 初始化使用连接池且支持SSL的HttpClient
+   *
+   * @return CloseableHttpClient
+   * @throws WxPayException 初始化异常
+   */
+  public CloseableHttpClient initSslHttpClient() throws WxPayException {
+    if (this.sslHttpClient != null) {
+      return this.sslHttpClient;
+    }
+
+    // 初始化SSL上下文
+    SSLContext sslContext = this.getSslContext();
+    if (null == sslContext) {
+      sslContext = this.initSSLContext();
+    }
+
+    // 创建支持SSL的连接池管理器
+    SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(
+      sslContext,
+      new DefaultHostnameVerifier()
+    );
+
+    Registry<ConnectionSocketFactory> socketFactoryRegistry = RegistryBuilder
+      .<ConnectionSocketFactory>create()
+      .register("https", sslsf)
+      .register("http", PlainConnectionSocketFactory.getSocketFactory())
+      .build();
+    PoolingHttpClientConnectionManager connectionManager =
+      new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+
+    // PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+    connectionManager.setMaxTotal(this.maxConnTotal);
+    connectionManager.setDefaultMaxPerRoute(this.maxConnPerRoute);
+
+    // 创建HttpClient构建器，配置SSL
+    org.apache.http.impl.client.HttpClientBuilder httpClientBuilder = HttpClients.custom()
+        .setConnectionManager(connectionManager)
+        .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext, new DefaultHostnameVerifier()));
+
+    // 配置代理
+    configureProxy(httpClientBuilder);
+
+    // 提供自定义httpClientBuilder的能力
+    Optional.ofNullable(httpClientBuilderCustomizer).ifPresent(e -> {
+      e.customize(httpClientBuilder);
+    });
+
+    this.sslHttpClient = httpClientBuilder.build();
+    return this.sslHttpClient;
+  }
+
+  /**
+   * 配置HTTP代理
+   *
+   * @param httpClientBuilder HttpClient构建器
+   */
+  private void configureProxy(org.apache.http.impl.client.HttpClientBuilder httpClientBuilder) {
+    if (StringUtils.isNotBlank(this.getHttpProxyHost()) && this.getHttpProxyPort() > 0) {
+      if (StringUtils.isEmpty(this.getHttpProxyUsername())) {
+        this.setHttpProxyUsername("whatever");
+      }
+
+      // 使用代理服务器 需要用户认证的代理服务器
+      CredentialsProvider provider = new BasicCredentialsProvider();
+      provider.setCredentials(new AuthScope(this.getHttpProxyHost(), this.getHttpProxyPort()),
+        new UsernamePasswordCredentials(this.getHttpProxyUsername(), this.getHttpProxyPassword()));
+      httpClientBuilder.setDefaultCredentialsProvider(provider)
+        .setProxy(new HttpHost(this.getHttpProxyHost(), this.getHttpProxyPort()));
+    }
+  }
+
+  /**
+   * 获取用于普通支付接口的HttpClient
+   *
+   * @return CloseableHttpClient
+   */
+  public CloseableHttpClient getHttpClient() {
+    return httpClient;
+  }
+
+  /**
+   * 获取用于SSL支付接口的HttpClient
+   *
+   * @return CloseableHttpClient
+   */
+  public CloseableHttpClient getSslHttpClient() {
+    return sslHttpClient;
   }
 }

@@ -22,17 +22,25 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Compla
 @Slf4j
 public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService {
 
-  /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  /**
+   * 微信商店服务
+   */
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelAfterSaleServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
   @Override
   public AfterSaleListResponse listIds(Long beginCreateTime, Long endCreateTime, String nextKey)
     throws WxErrorException {
-    AfterSaleListParam param = new AfterSaleListParam(beginCreateTime, endCreateTime, nextKey);
+    AfterSaleListParam param = new AfterSaleListParam(beginCreateTime, endCreateTime, null, null, nextKey);
+    String resJson = shopService.post(AFTER_SALE_LIST_URL, param);
+    return ResponseUtils.decode(resJson, AfterSaleListResponse.class);
+  }
+
+  @Override
+  public AfterSaleListResponse listIds(AfterSaleListParam param) throws WxErrorException {
     String resJson = shopService.post(AFTER_SALE_LIST_URL, param);
     return ResponseUtils.decode(resJson, AfterSaleListResponse.class);
   }
@@ -101,4 +109,25 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
     String resJson = shopService.post(AFTER_SALE_REJECT_REASON_GET_URL, "{}");
     return ResponseUtils.decode(resJson, AfterSaleRejectReasonResponse.class);
   }
+
+  @Override
+  public WxChannelBaseResponse acceptExchangeReship(String afterSaleOrderId, String waybillId, String deliveryId) throws WxErrorException {
+    AfterSaleAcceptExchangeReshipParam param = new AfterSaleAcceptExchangeReshipParam(afterSaleOrderId, waybillId, deliveryId);
+    String resJson = shopService.post(AFTER_SALE_ACCEPT_EXCHANGE_RESHIP_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse rejectExchangeReship(String afterSaleOrderId, String rejectReason, Integer rejectReasonType, List<String> rejectCertificates) throws WxErrorException {
+    AfterSaleRejectExchangeReshipParam param = new AfterSaleRejectExchangeReshipParam(afterSaleOrderId, rejectReason, rejectReasonType, rejectCertificates);
+    String resJson = shopService.post(AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse merchantUpdateAfterSale(AfterSaleMerchantUpdateParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_MERCHANT_UPDATE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
 }

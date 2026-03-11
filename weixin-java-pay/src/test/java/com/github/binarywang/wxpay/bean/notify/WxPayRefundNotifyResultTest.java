@@ -119,7 +119,7 @@ public class WxPayRefundNotifyResultTest {
       refundNotifyResult.loadReqInfo(xmlDecryptedReqInfo);
       assertEquals(refundNotifyResult.getReqInfo().getRefundFee().intValue(), 15);
       assertEquals(refundNotifyResult.getReqInfo().getRefundStatus(), "SUCCESS");
-      assertEquals(refundNotifyResult.getReqInfo().getRefundRecvAccout(), "用户零钱");
+      assertEquals(refundNotifyResult.getReqInfo().getRefundRecvAccount(), "用户零钱");
       System.out.println(refundNotifyResult);
     } finally {
       XmlConfig.fastMode = false;

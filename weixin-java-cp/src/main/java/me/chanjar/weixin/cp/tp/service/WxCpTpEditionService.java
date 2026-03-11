@@ -15,7 +15,7 @@ public interface WxCpTpEditionService {
    * 延长试用期
    * <p>
    * <a href='https://developer.work.weixin.qq.com/document/path/91913'>文档地址</a>
-   * <p/>
+   * </p>
    * 注意:
    * <ul>
    *     <li>一个应用可以多次延长试用，但是试用总天数不能超过60天</li>

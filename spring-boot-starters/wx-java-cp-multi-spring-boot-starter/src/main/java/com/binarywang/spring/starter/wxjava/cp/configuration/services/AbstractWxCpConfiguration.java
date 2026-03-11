@@ -139,6 +139,9 @@ public abstract class AbstractWxCpConfiguration {
     if (StringUtils.isNotBlank(msgAuditLibPath)) {
       config.setMsgAuditLibPath(msgAuditLibPath);
     }
+    if (StringUtils.isNotBlank(wxCpSingleProperties.getBaseApiUrl())) {
+      config.setBaseApiUrl(wxCpSingleProperties.getBaseApiUrl());
+    }
   }
 
   private void configHttp(WxCpDefaultConfigImpl config, WxCpMultiProperties.ConfigStorage storage) {

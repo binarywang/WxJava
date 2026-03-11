@@ -1,23 +1,28 @@
 package cn.binarywang.wx.miniapp.executor;
 
 import cn.binarywang.wx.miniapp.bean.WxMaApiResponse;
-import java.io.IOException;
-import java.rmi.RemoteException;
-import java.util.Map;
+import jodd.http.HttpConnectionProvider;
+import jodd.http.ProxyInfo;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
+import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
+import okhttp3.OkHttpClient;
 import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+import java.rmi.RemoteException;
+import java.util.Map;
 
 public abstract class ApiSignaturePostRequestExecutor<H, P>
     implements RequestExecutor<WxMaApiResponse, WxMaApiResponse> {
 
   protected RequestHttp<H, P> requestHttp;
 
-  public ApiSignaturePostRequestExecutor(RequestHttp requestHttp) {
+  public ApiSignaturePostRequestExecutor(RequestHttp<H, P> requestHttp) {
     this.requestHttp = requestHttp;
   }
 
@@ -54,16 +59,21 @@ public abstract class ApiSignaturePostRequestExecutor<H, P>
     return response;
   }
 
-  public static ApiSignaturePostRequestExecutor create(RequestHttp requestHttp) {
+  @SuppressWarnings("unchecked")
+  public static ApiSignaturePostRequestExecutor<?, ?> create(RequestHttp<?, ?> requestHttp) {
     switch (requestHttp.getRequestType()) {
       case APACHE_HTTP:
-        return new ApacheApiSignaturePostRequestExecutor(requestHttp);
+        return new ApacheApiSignaturePostRequestExecutor(
+          (RequestHttp<org.apache.http.impl.client.CloseableHttpClient, org.apache.http.HttpHost>) requestHttp);
       case JODD_HTTP:
-        return new JoddApiSignaturePostRequestExecutor(requestHttp);
+        return new JoddApiSignaturePostRequestExecutor((RequestHttp<HttpConnectionProvider, ProxyInfo>) requestHttp);
       case OK_HTTP:
-        return new OkHttpApiSignaturePostRequestExecutor(requestHttp);
+        return new OkHttpApiSignaturePostRequestExecutor((RequestHttp<OkHttpClient, OkHttpProxyInfo>) requestHttp);
+      case HTTP_COMPONENTS:
+        return new HttpComponentsApiSignaturePostRequestExecutor(
+          (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
       default:
-        throw new IllegalArgumentException("非法请求参数");
+        throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
   }
 }

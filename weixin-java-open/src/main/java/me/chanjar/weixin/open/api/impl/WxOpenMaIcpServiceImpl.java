@@ -49,12 +49,15 @@ public class WxOpenMaIcpServiceImpl implements WxOpenMaIcpService {
   /**
    * 发起小程序管理员人脸核身
    *
+   * @param alongWithAuth 小程序认证及备案二合一场景，填 true，否则为小程序备案场景。默认值为 false。
    * @return 人脸核验任务结果
    * @throws WxErrorException e
    */
   @Override
-  public WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask() throws WxErrorException {
-    String response = wxMaService.post(CREATE_ICP_VERIFY_TASK, "");
+  public WxOpenIcpCreateIcpVerifyTaskResult createIcpVerifyTask(boolean alongWithAuth) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("along_with_auth", alongWithAuth);
+    String response = wxMaService.post(CREATE_ICP_VERIFY_TASK, params);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenIcpCreateIcpVerifyTaskResult.class);
   }
 
@@ -212,4 +215,5 @@ public class WxOpenMaIcpServiceImpl implements WxOpenMaIcpService {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
     }
   }
+
 }

@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class BusiFavorQueryOneUserCouponsRequest implements Serializable {
-  public static final float serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
   /**
    * <pre>* 字段名：用户标识

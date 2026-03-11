@@ -9,13 +9,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import me.chanjar.weixin.common.bean.CommonUploadData;
-import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import org.apache.http.Consts;
+import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.content.StringBody;
 import org.springframework.util.CollectionUtils;
@@ -47,7 +46,7 @@ public class CommonUploadMultiRequestExecutorJoddHttpImpl extends CommonUploadMu
     List<CommonUploadMultiParam.NormalParam> normalParams = param.getNormalParams();
     if (!CollectionUtils.isEmpty(normalParams)) {
       for (CommonUploadMultiParam.NormalParam normalParam : normalParams) {
-        request.form(normalParam.getName(), new StringBody(normalParam.getValue(), ContentType.create("multipart/form-data", Consts.UTF_8)));
+        request.form(normalParam.getName(), new StringBody(normalParam.getValue(), ContentType.MULTIPART_FORM_DATA.withCharset(StandardCharsets.UTF_8)));
       }
     }
 

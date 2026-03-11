@@ -6,6 +6,8 @@ import com.github.binarywang.wxpay.bean.notify.*;
 import com.github.binarywang.wxpay.bean.request.*;
 import com.github.binarywang.wxpay.bean.result.*;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.GlobalTradeTypeEnum;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -36,18 +38,38 @@ public interface WxPayService {
 
   /**
    * Map里 加入新的 {@link WxPayConfig}，适用于动态添加新的微信商户配置.
+   * 配置键将使用 mchId + "_" + appId 的格式.
    *
    * @param mchId       商户id
+   * @param appId       微信应用id
    * @param wxPayConfig 新的微信配置
    */
-  void addConfig(String mchId, WxPayConfig wxPayConfig);
+  void addConfig(String mchId, String appId, WxPayConfig wxPayConfig);
 
   /**
-   * 从 Map中 移除 {@link String mchId} 所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
+   * Map里 加入新的 {@link WxPayConfig}，使用自定义配置键，适用于动态添加新的微信商户配置.
+   * 此方法允许使用任意唯一标识符（如租户ID）作为配置键，兼容单参数 switchover 使用方式.
+   *
+   * @param configKey   自定义的配置键（全局唯一标识符，如租户ID）
+   * @param wxPayConfig 新的微信配置
+   */
+  void addConfig(String configKey, WxPayConfig wxPayConfig);
+
+  /**
+   * 从 Map中 移除 {@link String mchId} 和 {@link String appId} 所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
    *
    * @param mchId 对应商户的标识
+   * @param appId 微信应用id
    */
-  void removeConfig(String mchId);
+  void removeConfig(String mchId, String appId);
+
+  /**
+   * 从 Map中 移除指定配置键所对应的 {@link WxPayConfig}，适用于动态移除微信商户配置.
+   * 此方法允许使用任意唯一标识符（如租户ID）删除配置，兼容单参数 switchover 使用方式.
+   *
+   * @param configKey 自定义的配置键（全局唯一标识符，如租户ID）
+   */
+  void removeConfig(String configKey);
 
   /**
    * 注入多个 {@link WxPayConfig} 的实现. 并为每个 {@link WxPayConfig} 赋予不同的 {@link String mchId} 值
@@ -69,17 +91,50 @@ public interface WxPayService {
    * 进行相应的商户切换.
    *
    * @param mchId 商户标识
+   * @param appId 微信应用id
    * @return 切换是否成功 boolean
    */
-  boolean switchover(String mchId);
+  boolean switchover(String mchId, String appId);
+
+  /**
+   * 根据商户号或自定义配置键进行切换.
+   * <ul>
+   *   <li>当传入商户号（mchId）时，会先尝试精确匹配，若未找到则前缀匹配（mchId_*）。</li>
+   *   <li>也可传入通过 {@link #addConfig(String, WxPayConfig)} 或 {@link #setMultiConfig(Map)} 注册的任意自定义配置键，此时直接精确匹配。</li>
+   * </ul>
+   * 注意：当存在多个前缀匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   *
+   * @param mchIdOrConfigKey 商户标识或自定义配置键
+   * @return 切换是否成功，如果找不到匹配的配置则返回false
+   */
+  default boolean switchover(String mchIdOrConfigKey) {
+    return false;
+  }
 
   /**
    * 进行相应的商户切换.
    *
    * @param mchId 商户标识
+   * @param appId 微信应用id
    * @return 切换成功 ，则返回当前对象，方便链式调用，否则抛出异常
    */
-  WxPayService switchoverTo(String mchId);
+  WxPayService switchoverTo(String mchId, String appId);
+
+  /**
+   * 根据商户号或自定义配置键进行切换，支持链式调用.
+   * <ul>
+   *   <li>当传入商户号（mchId）时，会先尝试精确匹配，若未找到则前缀匹配（mchId_*）。</li>
+   *   <li>也可传入通过 {@link #addConfig(String, WxPayConfig)} 或 {@link #setMultiConfig(Map)} 注册的任意自定义配置键，此时直接精确匹配。</li>
+   * </ul>
+   * 注意：当存在多个前缀匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   *
+   * @param mchIdOrConfigKey 商户标识或自定义配置键
+   * @return 切换成功，则返回当前对象，方便链式调用
+   * @throws me.chanjar.weixin.common.error.WxRuntimeException 如果找不到匹配的配置
+   */
+  default WxPayService switchoverTo(String mchIdOrConfigKey) {
+    throw new me.chanjar.weixin.common.error.WxRuntimeException("子类需要实现此方法");
+  }
 
   /**
    * 发送post请求，得到响应字节数组.
@@ -102,6 +157,19 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   String post(String url, String requestStr, boolean useKey) throws WxPayException;
+
+
+  /**
+   * 发送post请求，得到响应字符串.
+   *
+   * @param url        请求地址
+   * @param requestStr 请求信息
+   * @param useKey     是否使用证书
+   * @param mimeType   Content-Type请求头
+   * @return 返回请求结果字符串 string
+   * @throws WxPayException the wx pay exception
+   */
+  String post(String url, String requestStr, boolean useKey, String mimeType) throws WxPayException;
 
   /**
    * 发送post请求，得到响应字符串.
@@ -211,6 +279,13 @@ public interface WxPayService {
   WxEntrustPapService getWxEntrustPapService();
 
   /**
+   * 获取微信押金支付服务类
+   *
+   * @return deposit service
+   */
+  WxDepositService getWxDepositService();
+
+  /**
    * 获取批量转账到零钱服务类.
    *
    * @return the Batch transfer to change service
@@ -310,6 +385,13 @@ public interface WxPayService {
    * @return the brand merchant transfer service
    */
   BrandMerchantTransferService getBrandMerchantTransferService();
+
+  /**
+   * 获取微信支付预约扣费服务类 (连续包月功能)
+   *
+   * @return the subscription billing service
+   */
+  SubscriptionBillingService getSubscriptionBillingService();
 
   /**
    * 设置企业付款服务类，允许开发者自定义实现类.
@@ -616,10 +698,10 @@ public interface WxPayService {
   /**
    * 调用统一下单接口，并组装生成支付所需参数对象.
    *
-   * @param <T>       请使用{@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @param tradeType the trade type
    * @param request   统一下单请求参数
-   * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
   <T> T createOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
@@ -627,13 +709,24 @@ public interface WxPayService {
   /**
    * 服务商模式调用统一下单接口，并组装生成支付所需参数对象.
    *
-   * @param <T>       请使用{@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @param tradeType the trade type
    * @param request   统一下单请求参数
-   * @return 返回 {@link com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
    * @throws WxPayException the wx pay exception
    */
   <T> T createPartnerOrderV3(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * 境外微信支付调用统一下单接口，并组装生成支付所需参数对象.
+   *
+   * @param <T>       请使用{@link WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @param tradeType the global trade type
+   * @param request   境外统一下单请求参数
+   * @return 返回 {@link WxPayUnifiedOrderV3Result}里的内部类或字段
+   * @throws WxPayException the wx pay exception
+   */
+  <T> T createOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException;
 
   /**
    * 在发起微信支付前，需要调用统一下单接口，获取"预支付交易会话标识"
@@ -654,6 +747,16 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayUnifiedOrderV3Result unifiedOrderV3(TradeTypeEnum tradeType, WxPayUnifiedOrderV3Request request) throws WxPayException;
+
+  /**
+   * 境外微信支付在发起支付前，需要调用统一下单接口，获取"预支付交易会话标识"
+   *
+   * @param tradeType the global trade type
+   * @param request   境外请求对象，注意一些参数如appid、mchid等不用设置，方法内会自动从配置对象中获取到（前提是对应配置中已经设置）
+   * @return the wx pay unified order result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayUnifiedOrderV3Result unifiedOrderV3Global(GlobalTradeTypeEnum tradeType, WxPayUnifiedOrderV3GlobalRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -706,10 +809,32 @@ public interface WxPayService {
 
   /**
    * 获取配置.
+   * 在多商户配置场景下，会根据 WxPayConfigHolder 中的值获取对应的配置.
    *
    * @return the config
    */
   WxPayConfig getConfig();
+
+  /**
+   * 根据商户号和 appId 直接获取配置.
+   * 此方法不依赖 ThreadLocal，可以在任何上下文中使用，适用于多商户管理场景.
+   *
+   * @param mchId 商户号
+   * @param appId 微信应用 id
+   * @return 对应的配置对象，如果不存在则返回 null
+   */
+  WxPayConfig getConfig(String mchId, String appId);
+
+  /**
+   * 根据商户号直接获取配置.
+   * 此方法不依赖 ThreadLocal，可以在任何上下文中使用.
+   * 适用于一个商户号对应多个 appId 的场景，会返回该商户号的任意一个配置.
+   * 注意：当存在多个匹配项时返回的配置是不可预测的，建议使用精确匹配方式.
+   *
+   * @param mchId 商户号
+   * @return 对应的配置对象，如果不存在则返回 null
+   */
+  WxPayConfig getConfig(String mchId);
 
   /**
    * 设置配置对象.
@@ -784,6 +909,32 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayRefundV3Result refundV3(WxPayRefundV3Request request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 微信支付-服务商申请退款.
+   * 应用场景
+   * 当交易发生之后一年内，由于买家或者卖家的原因需要退款时，卖家可以通过退款接口将支付金额退还给买家，微信支付将在收到退款请求并且验证成功之后，将支付款按原路退还至买家账号上。
+   *
+   * 注意：
+   * 1、交易时间超过一年的订单无法提交退款
+   * 2、微信支付退款支持单笔交易分多次退款（不超50次），多次退款需要提交原支付订单的商户订单号和设置不同的退款单号。申请退款总金额不能超过订单金额。 一笔退款失败后重新提交，请不要更换退款单号，请使用原商户退款单号
+   * 3、错误或无效请求频率限制：6qps，即每秒钟异常或错误的退款申请请求不超过6次
+   * 4、每个支付订单的部分退款次数不能超过50次
+   * 5、如果同一个用户有多笔退款，建议分不同批次进行退款，避免并发退款导致退款失败
+   * 6、申请退款接口的返回仅代表业务的受理情况，具体退款是否成功，需要通过退款查询接口获取结果
+   * 7、一个月之前的订单申请退款频率限制为：5000/min
+   *
+   * 详见 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml">https://pay.weixin.qq.com/wiki/doc/apiv3_partner/apis/chapter4_1_9.shtml</a>
+   * 接口地址
+   * https://api.mch.weixin.qq.com/v3/refund/domestic/refunds
+   * </pre>
+   *
+   * @param request 请求对象
+   * @return 退款操作结果 wx pay refund result
+   * @throws WxPayException the wx pay exception
+   */
+  WxPayRefundV3Result partnerRefundV3(WxPayPartnerRefundV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -990,6 +1141,17 @@ public interface WxPayService {
    * @throws WxPayException
    */
   WxPayTransferBatchesNotifyV3Result parseTransferBatchesNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 解析商家转账批次回调通知
+   * https://pay.weixin.qq.com/doc/v3/merchant/4012712115
+   *
+   * @param notifyData
+   * @param header
+   * @return
+   * @throws WxPayException
+   */
+  TransferBillsNotifyResult parseTransferBillsNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析服务商模式退款结果通知
@@ -1419,6 +1581,7 @@ public interface WxPayService {
    * 是否需要证书： 否
    * 请求方式： POST
    * 文档地址：https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=23_1
+   * 注意: 微信暂不支持api v3
    * </pre>
    *
    * @return the sandbox sign key
@@ -1595,6 +1758,13 @@ public interface WxPayService {
   TransferService getTransferService();
 
   /**
+   * 获取运营工具-商家转账服务类
+   *
+   * @return the business operation transfer service
+   */
+  BusinessOperationTransferService getBusinessOperationTransferService();
+
+  /**
    * 获取服务商支付分服务类
    *
    * @return the partner pay score service
@@ -1603,7 +1773,23 @@ public interface WxPayService {
 
   /**
    * 获取服务商直股份签约计划服务类
-   * @return  the partner pay score sign plan service
+   *
+   * @return the partner pay score sign plan service
    */
   PartnerPayScoreSignPlanService getPartnerPayScoreSignPlanService();
+
+  /**
+   * 获取实名验证服务类
+   *
+   * @return the real name service
+   */
+  RealNameService getRealNameService();
+  
+  /**
+   * 获取医保支付服务类
+   *
+   * @return the merchant transfer service
+   */
+  MiPayService getMiPayService();
+
 }

@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 public class WxPayApplyment4SubCreateRequest implements Serializable {
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 4104022969945059126L;
 
   /**
    * 业务申请编号
@@ -78,7 +78,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class ContactInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -9087348002744428474L;
 
     /**
      * 超级管理员类型
@@ -211,7 +211,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SubjectInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -6651911735969445765L;
 
     /**
      * 主体类型
@@ -241,6 +241,13 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
      */
     @SerializedName("certificate_letter_copy")
     private String certificateLetterCopy;
+
+    /**
+     * 小微辅助证明材料
+     * 主体类型为小微商户时，小微辅助证明材料必填
+     */
+    @SerializedName("micro_biz_info")
+    private MicroBizInfo microBizInfo;
 
     /**
      * 金融机构许可证信息
@@ -391,6 +398,212 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
        */
       @SerializedName("finance_license_pics")
       private List<String> financeLicensePics;
+    }
+
+    /**
+     * 小微辅助证明材料
+     */
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Accessors(chain = true)
+    public static class MicroBizInfo implements Serializable {
+
+      private static final long serialVersionUID = 2327302539406612422L;
+
+      /**
+       * 小微经营类型
+       * 枚举值：
+       * MICRO_TYPE_STORE：门店场所
+       * MICRO_TYPE_MOBILE：流动经营/便民服务
+       * MICRO_TYPE_ONLINE：线上商品/服务交易
+       * 示例值：MICRO_TYPE_STORE
+       */
+      @SerializedName("micro_biz_type")
+      private MicroBizTypeEnum microBizType;
+
+      /**
+       * 【门店场所】 经营类型为“门店场所”时填写
+       */
+      @SerializedName("micro_store_info")
+      private MicroStoreInfo microStoreInfo;
+
+      /**
+       * 【流动经营/便民服务】 经营类型为“流动经营/便民服务”时填写
+       */
+      @SerializedName("micro_mobile_info")
+      private MicroMobileInfo microMobileInfo;
+
+      /**
+       * 【线上商品/服务交易】 经营场景为“线上商品/服务交易”时填写
+       */
+      @SerializedName("micro_online_info")
+      private MicroOnlineInfo microOnlineInfo;
+
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroOnlineInfo implements Serializable {
+
+        private static final long serialVersionUID = -4672635122639034459L;
+
+        /**
+         * 【线上店铺名称】 填写商家的线上店铺名称
+         * 1、长度为1-50个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
+         */
+        @SerializedName("micro_online_store")
+        private String microOnlineStore;
+
+        /**
+         * 【电商平台名称】 填写电商平台名称
+         * 1、长度为1-50个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
+         */
+        @SerializedName("micro_ec_name")
+        private String microEcName;
+
+        /**
+         * 【店铺二维码】
+         * 1、店铺二维码或店铺链接二选一必填；
+         * 2、若为电商小程序，可上传店铺页面的小程序二维码；
+         * 3、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+         */
+        @SerializedName("micro_qrcode")
+        private String microQrcode;
+
+        /**
+         * 【店铺链接】
+         * 1、店铺二维码或店铺链接二选一必填；
+         * 2、请填写店铺主页链接，需符合网站规范。
+         */
+        @SerializedName("micro_link")
+        private String microLink;
+
+      }
+
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroMobileInfo implements Serializable {
+
+        private static final long serialVersionUID = -4672635122639034460L;
+
+        /**
+         * 【经营/服务名称】 请填写经营/服务名称
+         * 1、长度为1-50个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
+         */
+        @SerializedName("micro_mobile_name")
+        private String microMobileName;
+
+        /**
+         * 【经营/服务所在地省市】 请填写经营/服务所在地省市编码
+         */
+        @SerializedName("micro_mobile_city")
+        private String microMobileCity;
+
+        /**
+         * 【经营/服务所在地（不含省市）】 填写“无"
+         */
+        @SerializedName("micro_mobile_address")
+        private String microMobileAddress;
+
+        /**
+         * 【经营/服务现场照片】
+         * 1、提交流动经营现场照片，如摊位场景应提交摊位全景照片+商品照片。
+         * 2、可上传多张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+         */
+        @SerializedName("micro_mobile_pics")
+        private List<String> microMobilePics;
+
+      }
+
+      @Data
+      @Builder
+      @NoArgsConstructor
+      @AllArgsConstructor
+      @Accessors(chain = true)
+      public static class MicroStoreInfo implements Serializable {
+
+        private static final long serialVersionUID = -4672635122639034461L;
+
+        /**
+         * 【门店名称】
+         * 请填写门店名称
+         * 1、长度为1-50个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
+         */
+        @SerializedName("micro_name")
+        private String microName;
+
+        /**
+         * 【门店省市编码】
+         * 填写门店省市编码，只能由数字组成，详细参见微信支付提供的省市对照表
+         */
+        @SerializedName("micro_address_code")
+        private String microAddressCode;
+
+        /**
+         * 【门店地址】
+         * 请填写详细的经营场所信息，如有多个场所，选择一个主要场所填写即可。
+         * 1、长度为4-512个字符；
+         * 2、前后不能有空格、制表符、换行符；
+         * 3、不能仅含数字、特殊字符；
+         * 4、仅能填写数字、英文字母、汉字及特殊字符；
+         * 5、仅支持utf-8格式。
+         */
+        @SerializedName("micro_address")
+        private String microAddress;
+
+        /**
+         * 【门店门头照片】
+         * 1、请上传门头正面照片（要求门店招牌、门框完整、清晰、可辨识）；若为停车场等无固定门头照片的经营场所，可上传岗亭/出入闸口。
+         * 2、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+         */
+        @SerializedName("store_entrance_pic")
+        private String storeEntrancePic;
+
+        /**
+         * 【店内环境照片】
+         * 1、请上传门店内部环境照片（可辨识经营内容）。若为停车场等无固定门头的经营场所，可上传停车场内部照片。
+         * 2、可上传1张图片，请填写通过图片上传API预先上传图片生成好的MediaID。
+         */
+        @SerializedName("micro_indoor_copy")
+        private String microIndoorCopy;
+
+        /**
+         * 【门店经度】 数字或小数，商户自定义字段
+         */
+        @SerializedName("store_longitude")
+        private String storeLongitude;
+
+        /**
+         * 【门店纬度】 纬度，商户自定义字段
+         */
+        @SerializedName("store_latitude")
+        private String storeLatitude;
+
+      }
+
+
     }
 
     @Data
@@ -603,7 +816,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BusinessInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -8605049544105644011L;
 
     /**
      * 商户简称
@@ -876,7 +1089,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class SettlementInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5025743467243760522L;
 
     /**
      * 入驻结算规则ID
@@ -937,7 +1150,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class BankAccountInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -5853122395888860086L;
 
     /**
      * 账户类型
@@ -995,7 +1208,7 @@ public class WxPayApplyment4SubCreateRequest implements Serializable {
   @AllArgsConstructor
   @Accessors(chain = true)
   public static class AdditionInfo implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = -7526912529114022379L;
 
     /**
      * 法人开户承诺函

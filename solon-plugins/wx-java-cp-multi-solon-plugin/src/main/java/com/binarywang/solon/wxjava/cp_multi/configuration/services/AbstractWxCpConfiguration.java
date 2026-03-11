@@ -7,10 +7,7 @@ import com.binarywang.solon.wxjava.cp_multi.service.WxCpMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.cp.api.WxCpService;
-import me.chanjar.weixin.cp.api.impl.WxCpServiceApacheHttpClientImpl;
-import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
-import me.chanjar.weixin.cp.api.impl.WxCpServiceJoddHttpImpl;
-import me.chanjar.weixin.cp.api.impl.WxCpServiceOkHttpImpl;
+import me.chanjar.weixin.cp.api.impl.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.config.impl.WxCpDefaultConfigImpl;
 import org.apache.commons.lang3.StringUtils;
@@ -95,6 +92,9 @@ public abstract class AbstractWxCpConfiguration {
         break;
       case HTTP_CLIENT:
         wxCpService = new WxCpServiceApacheHttpClientImpl();
+        break;
+      case HTTP_COMPONENTS:
+        wxCpService = new WxCpServiceHttpComponentsImpl();
         break;
       default:
         wxCpService = new WxCpServiceImpl();

@@ -1,6 +1,5 @@
 package cn.binarywang.wx.miniapp.bean.shop.request;
 
-import cn.binarywang.wx.miniapp.bean.shop.request.WxMaShopAfterSaleAddRequest.UploadMediaList;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

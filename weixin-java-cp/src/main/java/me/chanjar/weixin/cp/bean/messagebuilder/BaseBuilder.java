@@ -6,10 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * The type Base builder.
- *
- * @param <T> the type parameter
  */
-public class BaseBuilder<T> {
+public abstract class BaseBuilder<T> {
   /**
    * The Msg type.
    */

@@ -11,8 +11,6 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.RequestHttp;
-import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
-import okhttp3.*;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.ByteArrayInputStream;

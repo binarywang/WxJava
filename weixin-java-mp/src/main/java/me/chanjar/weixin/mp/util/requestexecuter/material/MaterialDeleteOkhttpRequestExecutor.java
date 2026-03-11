@@ -23,7 +23,7 @@ import java.io.IOException;
 public class MaterialDeleteOkhttpRequestExecutor extends MaterialDeleteRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public MaterialDeleteOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialDeleteOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

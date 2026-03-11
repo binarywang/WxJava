@@ -124,7 +124,7 @@ public class WxCpConsts {
     public static final String REOPEN_INACTIVE_AGENT = "reopen_inactive_agent";
 
     /**
-     * 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件
+     * {@code 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件}
      */
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 
@@ -218,6 +218,11 @@ public class WxCpConsts {
      * 获客助手事件通知
      */
     public static final String CUSTOMER_ACQUISITION = "customer_acquisition";
+
+    /**
+     * <a href="https://developer.work.weixin.qq.com/document/path/96488#%E5%9B%9E%E8%B0%83%E5%BC%82%E6%AD%A5%E4%BB%BB%E5%8A%A1%E7%BB%93%E6%9E%9C">异步上传临时素材结果回调通知</a>
+     */
+    public static final String UPLOAD_MEDIA_JOB_FINISH = "upload_media_job_finish";
 
   }
 
@@ -624,6 +629,11 @@ public class WxCpConsts {
      * markdown消息.
      */
     public static final String MARKDOWN = "markdown";
+
+    /**
+     * markdown_v2消息.
+     */
+    public static final String MARKDOWN_V2 = "markdown_v2";
 
     /**
      * 图文消息（点击跳转到外链）.

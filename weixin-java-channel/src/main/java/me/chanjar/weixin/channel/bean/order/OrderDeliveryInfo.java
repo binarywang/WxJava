@@ -44,4 +44,16 @@ public class OrderDeliveryInfo implements Serializable {
   @JsonProperty("ewaybill_order_code")
   private String ewaybillOrderCode;
 
+  /** 订单质检类型 2生鲜类质检 1珠宝玉石类质检 0不需要；不传递本字段表示不需要 */
+  @JsonProperty("quality_inspect_type")
+  private String qualityInspectType;
+
+  /** 质检信息 */
+  @JsonProperty("quality_inspect_info")
+  private QualityInsepctInfo qualityInspectInfo;
+
+  /** 虚拟商品充值账户信息 */
+  @JsonProperty("recharge_info")
+  private RechargeInfo rechargeInfo;
+
 }

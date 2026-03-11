@@ -33,6 +33,7 @@ import org.testng.annotations.Test;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Calendar;
@@ -627,6 +628,42 @@ public class BaseWxPayServiceImplTest {
   }
 
   /**
+   * Test parse order notify result with JSON format should give helpful error.
+   * 测试当传入V3版本的JSON格式通知数据时，应该抛出清晰的错误提示
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testParseOrderNotifyResultWithJsonShouldGiveHelpfulError() throws Exception {
+    String jsonString = "{\n" +
+      "    \"id\": \"EV-2018022511223320873\",\n" +
+      "    \"create_time\": \"2015-05-20T13:29:35+08:00\",\n" +
+      "    \"resource_type\": \"encrypt-resource\",\n" +
+      "    \"event_type\": \"TRANSACTION.SUCCESS\",\n" +
+      "    \"summary\": \"支付成功\",\n" +
+      "    \"resource\": {\n" +
+      "        \"algorithm\": \"AEAD_AES_256_GCM\",\n" +
+      "        \"ciphertext\": \"test\",\n" +
+      "        \"associated_data\": \"transaction\",\n" +
+      "        \"nonce\": \"test\"\n" +
+      "    }\n" +
+      "}";
+
+    try {
+      this.payService.parseOrderNotifyResult(jsonString);
+      fail("Expected WxPayException for JSON input");
+    } catch (WxPayException e) {
+      // 验证错误消息包含V3版本和parseOrderNotifyV3Result方法的指导信息
+      String message = e.getMessage();
+      assertTrue(message.contains("V3版本"), "错误消息应包含'V3版本'");
+      assertTrue(message.contains("JSON格式"), "错误消息应包含'JSON格式'");
+      assertTrue(message.contains("parseOrderNotifyV3Result"), "错误消息应包含'parseOrderNotifyV3Result'方法名");
+      assertTrue(message.contains("SignatureHeader"), "错误消息应包含'SignatureHeader'");
+      log.info("JSON格式检测正常，错误提示: {}", message);
+    }
+  }
+
+  /**
    * Test get wx api data.
    *
    * @throws Exception the exception
@@ -936,7 +973,7 @@ public class BaseWxPayServiceImplTest {
       WxPayOrderQueryV3Request request = new WxPayOrderQueryV3Request();
       request.setOutTradeNo("n1ZvYqjAg3D3LUBa");
       WxPayConfig config = this.payService.getConfig();
-      config.setPayBaseUrl("http://api.mch.weixin.qq.com");
+      config.setApiHostUrl("http://api.mch.weixin.qq.com");
       config.setHttpProxyHost("12.11.1.113");
       config.setHttpProxyPort(8015);
       WxPayOrderQueryV3Result result = this.payService.queryOrderV3(request);
@@ -976,4 +1013,44 @@ public class BaseWxPayServiceImplTest {
     WxPayUnifiedOrderV3Result.JsapiResult result = payService.createPartnerOrderV3(TradeTypeEnum.JSAPI, request);
     System.out.println(result);
   }
+
+  @Test
+  public void test_certSerialNoExtractedFromPrivateCertContentOrPrivateCertString() throws Exception {
+    WxPayConfig wxPayConfig = new WxPayConfig();
+    //服务商的参数
+    wxPayConfig.setMchId("xxx");
+    wxPayConfig.setAppId("xxx");
+    wxPayConfig.setApiV3Key("xxx");
+    wxPayConfig.setPrivateKeyContent("xxx".getBytes(StandardCharsets.UTF_8));
+    wxPayConfig.setPrivateCertContent("xxx".getBytes(StandardCharsets.UTF_8)
+    );
+    wxPayConfig.setPublicKeyId("xxx");
+    wxPayConfig.setPublicKeyContent("xxx".getBytes(StandardCharsets.UTF_8));
+    //创建支付服务
+    WxPayService wxPayService = new WxPayServiceImpl();
+    wxPayService.setConfig(wxPayConfig);
+
+    String outTradeNo = RandomUtils.getRandomStr();
+    String notifyUrl = "https://api.qq.com/";
+    System.out.println("outTradeNo = " + outTradeNo);
+    WxPayUnifiedOrderV3Request request = new WxPayUnifiedOrderV3Request();
+    request.setOutTradeNo(outTradeNo);
+    request.setNotifyUrl(notifyUrl);
+    request.setDescription("test");
+
+    WxPayUnifiedOrderV3Request.Payer payer = new WxPayUnifiedOrderV3Request.Payer();
+    payer.setOpenid("xxx");
+    request.setPayer(payer);
+
+    //构建金额信息
+    WxPayUnifiedOrderV3Request.Amount amount = new WxPayUnifiedOrderV3Request.Amount();
+    //设置币种信息
+    amount.setCurrency(WxPayConstants.CurrencyType.CNY);
+    //设置金额
+    amount.setTotal(BaseWxPayRequest.yuan2Fen(BigDecimal.ONE));
+    request.setAmount(amount);
+
+    wxPayService.createOrderV3(TradeTypeEnum.JSAPI, request);
+  }
+
 }

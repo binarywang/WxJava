@@ -17,7 +17,7 @@ import java.io.IOException;
  */
 public class OkHttpUploadAuthMaterialRequestExecutor extends UploadAuthMaterialRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
 
-    public OkHttpUploadAuthMaterialRequestExecutor(RequestHttp requestHttp) {
+    public OkHttpUploadAuthMaterialRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
         super(requestHttp);
     }
 

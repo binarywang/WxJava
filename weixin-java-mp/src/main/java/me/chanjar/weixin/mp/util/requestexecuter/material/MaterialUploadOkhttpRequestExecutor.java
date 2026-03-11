@@ -23,7 +23,7 @@ import java.util.Map;
 public class MaterialUploadOkhttpRequestExecutor extends MaterialUploadRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-  public MaterialUploadOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialUploadOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

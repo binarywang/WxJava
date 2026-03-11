@@ -17,8 +17,6 @@
  */
 package me.chanjar.weixin.mp.util.crypto;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.io.BaseEncoding;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,7 +27,7 @@ public class WxMpCryptUtil extends me.chanjar.weixin.common.util.crypto.WxCryptU
   /**
    * 构造函数
    *
-   * @param wxMpConfigStorage
+   * @param wxMpConfigStorage 公众号配置存储
    */
   public WxMpCryptUtil(WxMpConfigStorage wxMpConfigStorage) {
     /*

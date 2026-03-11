@@ -194,7 +194,7 @@ public abstract class BaseWxPayResult {
 
   protected static Integer readXmlInteger(Node d, String tagName) {
     String content = readXmlString(d, tagName);
-    if (content == null || content.trim().length() == 0) {
+    if (content == null || content.trim().isEmpty()) {
       return null;
     }
     return Integer.parseInt(content);
@@ -232,7 +232,7 @@ public abstract class BaseWxPayResult {
 
   protected static Integer readXmlInteger(Document d, String tagName) {
     String content = readXmlString(d, tagName);
-    if (content == null || content.trim().length() == 0) {
+    if (content == null || content.trim().isEmpty()) {
       return null;
     }
 
@@ -241,7 +241,7 @@ public abstract class BaseWxPayResult {
 
   protected static Long readXmlLong(Document d, String tagName) {
     String content = readXmlString(d, tagName);
-    if (content == null || content.trim().length() == 0) {
+    if (content == null || content.trim().isEmpty()) {
       return null;
     }
 

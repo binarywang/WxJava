@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class MaterialNewsInfoOkhttpRequestExecutor extends MaterialNewsInfoRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public MaterialNewsInfoOkhttpRequestExecutor(RequestHttp requestHttp) {
+  public MaterialNewsInfoOkhttpRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

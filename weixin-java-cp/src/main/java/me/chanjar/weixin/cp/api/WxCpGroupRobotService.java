@@ -71,6 +71,23 @@ public interface WxCpGroupRobotService {
   void sendMarkdown(String webhookUrl, String content) throws WxErrorException;
 
   /**
+   * 发送markdown_v2类型的消息
+   *
+   * @param content markdown内容，最长不超过4096个字节，必须是utf8编码
+   * @throws WxErrorException 异常
+   */
+  void sendMarkdownV2(String content) throws WxErrorException;
+
+  /**
+   * 发送markdown_v2类型的消息
+   *
+   * @param webhookUrl webhook地址
+   * @param content    markdown内容，最长不超过4096个字节，必须是utf8编码
+   * @throws WxErrorException 异常
+   */
+  void sendMarkdownV2(String webhookUrl, String content) throws WxErrorException;
+
+  /**
    * 发送image类型的消息
    *
    * @param webhookUrl webhook地址
@@ -109,9 +126,10 @@ public interface WxCpGroupRobotService {
 
   /**
    * 发送模板卡片消息
-   * @param webhookUrl
-   * @param wxCpGroupRobotMessage
-   * @throws WxErrorException
+   *
+   * @param webhookUrl            webhook地址
+   * @param wxCpGroupRobotMessage 群机器人消息
+   * @throws WxErrorException 异常
    */
   void sendTemplateCardMessage(String webhookUrl, WxCpGroupRobotMessage wxCpGroupRobotMessage) throws WxErrorException;
 

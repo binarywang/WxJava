@@ -144,7 +144,10 @@ public class BankBranchesResult implements Serializable {
 
   @Getter
   @Setter
-  public static class BankBranch {
+  public static class BankBranch implements Serializable {
+
+    private static final long serialVersionUID = -3500020131951579476L;
+
     /**
      * <pre>
      * 字段名：开户银行支行名称

@@ -290,6 +290,25 @@ public class EcommerceServiceImpl implements EcommerceService {
     return GSON.fromJson(response, RefundQueryResult.class);
   }
 
+
+  @Override
+  public ReturnAdvanceResult refundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance", this.payService.getPayBaseUrl(), refundId);
+    Map<String, String> request = new HashMap<>();
+    request.put("sub_mchid",subMchid);
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
+  @Override
+  public ReturnAdvanceResult queryRefundsReturnAdvance(String subMchid, String refundId) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/refunds/%s/return-advance?sub_mchid=%s", this.payService.getPayBaseUrl(), refundId,subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, ReturnAdvanceResult.class);
+  }
+
+
   @Override
   public RefundQueryResult queryRefundByOutRefundNo(String subMchid, String outRefundNo) throws WxPayException {
     String url = String.format("%s/v3/ecommerce/refunds/out-refund-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRefundNo, subMchid);
@@ -311,6 +330,27 @@ public class EcommerceServiceImpl implements EcommerceService {
     try {
       String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
       RefundNotifyResult notifyResult = GSON.fromJson(result, RefundNotifyResult.class);
+      notifyResult.setRawData(response);
+      return notifyResult;
+    } catch (GeneralSecurityException | IOException e) {
+      throw new WxPayException("解析报文异常！", e);
+    }
+  }
+
+  @Override
+  public WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
+    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+      throw new WxPayException("非法请求，头部信息验证失败");
+    }
+    NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
+    NotifyResponse.Resource resource = response.getResource();
+    String cipherText = resource.getCiphertext();
+    String associatedData = resource.getAssociatedData();
+    String nonce = resource.getNonce();
+    String apiV3Key = this.payService.getConfig().getApiV3Key();
+    try {
+      String result = AesUtils.decryptToString(associatedData, nonce, cipherText, apiV3Key);
+      WithdrawNotifyResult notifyResult = GSON.fromJson(result, WithdrawNotifyResult.class);
       notifyResult.setRawData(response);
       return notifyResult;
     } catch (GeneralSecurityException | IOException e) {
@@ -344,6 +384,27 @@ public class EcommerceServiceImpl implements EcommerceService {
     String url = String.format("%s/v3/merchant/fund/withdraw/out-request-no/%s", this.payService.getPayBaseUrl(), outRequestNo);
     String response = this.payService.getV3(url);
     return GSON.fromJson(response, SpWithdrawStatusResult.class);
+  }
+
+  @Override
+  public SpWithdrawStatusResult querySpWithdrawByWithdrawId(String withdrawId) throws WxPayException {
+    String url = String.format("%s/v3/merchant/fund/withdraw/withdraw-id/%s", this.payService.getPayBaseUrl(), withdrawId);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, SpWithdrawStatusResult.class);
+  }
+
+  @Override
+  public SubDayEndBalanceWithdrawResult subDayEndBalanceWithdraw(SubDayEndBalanceWithdrawRequest request) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance-withdraw", this.payService.getPayBaseUrl());
+    String response = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(response, SubDayEndBalanceWithdrawResult.class);
+  }
+
+  @Override
+  public SubDayEndBalanceWithdrawStatusResult querySubDayEndBalanceWithdraw(String subMchid, String outRequestNo) throws WxPayException {
+    String url = String.format("%s/v3/ecommerce/fund/balance-withdraw/out-request-no/%s?sub_mchid=%s", this.payService.getPayBaseUrl(), outRequestNo, subMchid);
+    String response = this.payService.getV3(url);
+    return GSON.fromJson(response, SubDayEndBalanceWithdrawStatusResult.class);
   }
 
   @Override
@@ -470,7 +531,7 @@ public class EcommerceServiceImpl implements EcommerceService {
   public static Map<Object, Object> getObjectToMap(Object obj) {
     try {
       Map<Object, Object> result = new LinkedHashMap<>();
-      final Class<? extends Object> beanClass = obj.getClass();
+      final Class<?> beanClass = obj.getClass();
       final BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
       final PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
       if (propertyDescriptors != null) {

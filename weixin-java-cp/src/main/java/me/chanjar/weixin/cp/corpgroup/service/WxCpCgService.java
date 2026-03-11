@@ -33,28 +33,31 @@ public interface WxCpCgService {
   /**
    * 授权企业的access token相关
    *
-   * @param corpId       the corp id
-   * @param agentId
-   * @param businessType
+   * @param corpId       企业ID
+   * @param agentId      应用ID
+   * @param businessType 业务类型
    * @return the access token
+   * @throws WxErrorException 微信错误异常
    */
   WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId, Integer businessType) throws WxErrorException;
 
   /**
    * Gets access token entity.
    *
-   * @param corpId       the  corp id
-   * @param agentId
-   * @param businessType
+   * @param corpId       企业ID
+   * @param agentId      应用ID
+   * @param businessType 业务类型
+   * @param forceRefresh 是否强制刷新
    * @return the access token entity
+   * @throws WxErrorException 微信错误异常
    */
   WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId, Integer businessType, boolean forceRefresh) throws WxErrorException;
 
   /**
    * Is access token expired boolean.
    *
-   * @param corpId  the  corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    * @return the boolean
    */
   boolean isCorpAccessTokenExpired(String corpId, Integer agentId);
@@ -62,8 +65,8 @@ public interface WxCpCgService {
   /**
    * Expire access token.
    *
-   * @param corpId  the  corp id
-   * @param agentId
+   * @param corpId  企业ID
+   * @param agentId 应用ID
    */
   void expireCorpAccessToken(String corpId, Integer agentId);
 
@@ -72,6 +75,7 @@ public interface WxCpCgService {
    *
    * @param url        接口地址
    * @param queryParam 请求参数
+   * @param req        获取token请求参数
    * @return the string
    * @throws WxErrorException the wx error exception
    */
@@ -83,6 +87,7 @@ public interface WxCpCgService {
    * @param url                    接口地址
    * @param queryParam             请求参数
    * @param withoutCorpAccessToken 请求是否忽略CorpAccessToken 默认不忽略-false
+   * @param req                    获取token请求参数
    * @return the string
    * @throws WxErrorException the wx error exception
    */
@@ -93,6 +98,7 @@ public interface WxCpCgService {
    *
    * @param url      接口地址
    * @param postData 请求body字符串
+   * @param req      获取token请求参数
    * @return the string
    * @throws WxErrorException the wx error exception
    */
@@ -110,6 +116,7 @@ public interface WxCpCgService {
    * @param executor 执行器
    * @param uri      请求地址
    * @param data     参数
+   * @param req      获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */
@@ -156,7 +163,7 @@ public interface WxCpCgService {
   /**
    * 互联企业的服务类对象
    *
-   * @return
+   * @return 互联企业服务对象
    */
   WxCpLinkedCorpService getLinkedCorpService();
 
@@ -164,10 +171,11 @@ public interface WxCpCgService {
    * 获取下级/下游企业小程序session
    * https://developer.work.weixin.qq.com/document/path/93355
    *
-   * @param userId
-   * @param sessionKey
-   * @return
-   * @throws WxErrorException
+   * @param userId     用户ID
+   * @param sessionKey 会话密钥
+   * @param req        请求参数
+   * @return 小程序session结果
+   * @throws WxErrorException 微信错误异常
    */
   WxCpMaTransferSession getCorpTransferSession(String userId, String sessionKey, WxCpCorpGroupCorpGetTokenReq req) throws WxErrorException;
 }

@@ -5,13 +5,11 @@ import me.chanjar.weixin.common.bean.result.WxMinishopImageUploadResult;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.MinishopUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -25,7 +23,7 @@ import java.io.IOException;
  */
 @Slf4j
 public class ApacheMinishopMediaUploadRequestExecutor extends MinishopUploadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheMinishopMediaUploadRequestExecutor(RequestHttp requestHttp) {
+  public ApacheMinishopMediaUploadRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 
@@ -44,16 +42,12 @@ public class ApacheMinishopMediaUploadRequestExecutor extends MinishopUploadRequ
         .build();
       httpPost.setEntity(entity);
     }
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent, wxType);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      }
-      log.info("responseContent: " + responseContent);
-      return WxMinishopImageUploadResult.fromJson(responseContent);
-    } finally {
-      httpPost.releaseConnection();
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    WxError error = WxError.fromJson(responseContent, wxType);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
     }
+    log.info("responseContent: {}", responseContent);
+    return WxMinishopImageUploadResult.fromJson(responseContent);
   }
 }

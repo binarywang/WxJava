@@ -8,10 +8,13 @@ import com.github.binarywang.wxpay.service.WxEntrustPapService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.util.SignUtils;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
 
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author chenliang
@@ -25,26 +28,40 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
 
 
   @Override
+  @SneakyThrows
   public String mpSign(WxMpEntrustRequest wxMpEntrustRequest) throws WxPayException {
+    wxMpEntrustRequest.checkAndSign(payService.getConfig());
     StringBuilder signStrTemp = new StringBuilder(payService.getPayBaseUrl() + "/papay/entrustweb");
     signStrTemp.append("?appid=").append(wxMpEntrustRequest.getAppid());
     signStrTemp.append("&contract_code=").append(wxMpEntrustRequest.getContractCode());
-    signStrTemp.append("&contract_display_account=").append(URLEncoder.encode(wxMpEntrustRequest.getContractDisplayAccount()));
-    signStrTemp.append("&mch_id=").append(wxMpEntrustRequest.getMchId()).append("&notify_url=").append(URLEncoder.encode(wxMpEntrustRequest.getNotifyUrl()));
-    signStrTemp.append("&plan_id=").append(wxMpEntrustRequest.getPlanId()).append("&outerid=").append(URLEncoder.encode(wxMpEntrustRequest.getOuterId()));
-    signStrTemp.append("&request_serial=").append(wxMpEntrustRequest.getRequestSerial()).append("&timestamp=").append(wxMpEntrustRequest.getTimestamp());
-    signStrTemp.append("&version=").append(wxMpEntrustRequest.getVersion()).append("&return_web=").append(wxMpEntrustRequest.getReturnWeb()).append("&sign=").append(wxMpEntrustRequest.getSign());
-
+    signStrTemp.append("&contract_display_account=")
+      .append(URLEncoder.encode(wxMpEntrustRequest.getContractDisplayAccount(), StandardCharsets.UTF_8.name()));
+    signStrTemp.append("&mch_id=").append(wxMpEntrustRequest.getMchId()).append("&notify_url=")
+      .append(URLEncoder.encode(wxMpEntrustRequest.getNotifyUrl(), StandardCharsets.UTF_8.name()));
+    signStrTemp.append("&plan_id=").append(wxMpEntrustRequest.getPlanId());
+    signStrTemp.append("&request_serial=").append(wxMpEntrustRequest.getRequestSerial()).append("&timestamp=")
+      .append(wxMpEntrustRequest.getTimestamp());
+    // 根据微信支付文档，returnWeb字段只在值为1时需要添加到URL参数中，表示返回签约页面的referrer url
+    if (wxMpEntrustRequest.getReturnWeb() != null && wxMpEntrustRequest.getReturnWeb() == 1) {
+      signStrTemp.append("&return_web=").append(wxMpEntrustRequest.getReturnWeb());
+    }
+    if (StringUtils.isNotEmpty(wxMpEntrustRequest.getOuterId())) {
+      signStrTemp.append("&outerid=").append(URLEncoder.encode(wxMpEntrustRequest.getOuterId(), StandardCharsets.UTF_8.name()));
+    }
+    signStrTemp.append("&version=").append(wxMpEntrustRequest.getVersion()).append("&sign=")
+      .append(wxMpEntrustRequest.getSign());
     return signStrTemp.toString();
   }
 
   @Override
+  @SneakyThrows
   public String maSign(WxMaEntrustRequest wxMaEntrustRequest) throws WxPayException {
     wxMaEntrustRequest.checkAndSign(payService.getConfig());
-    wxMaEntrustRequest.setNotifyUrl(URLEncoder.encode(wxMaEntrustRequest.getNotifyUrl()));
+    wxMaEntrustRequest.setNotifyUrl(URLEncoder.encode(wxMaEntrustRequest.getNotifyUrl(), StandardCharsets.UTF_8.name()));
     return wxMaEntrustRequest.toString();
   }
 
+  @SneakyThrows
   @Override
   public WxH5EntrustResult h5Sign(WxH5EntrustRequest wxH5EntrustRequest) throws WxPayException {
     wxH5EntrustRequest.checkAndSign(payService.getConfig());
@@ -63,10 +80,15 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
     StringBuilder strBuilder = new StringBuilder(url);
     strBuilder.append("?appid=").append(wxH5EntrustRequest.getAppid());
     strBuilder.append("&contract_code=").append(wxH5EntrustRequest.getContractCode());
-    strBuilder.append("&contract_display_account=").append(URLEncoder.encode(wxH5EntrustRequest.getContractDisplayAccount()));
-    strBuilder.append("&mch_id=").append(wxH5EntrustRequest.getMchId()).append("&notify_url=").append(URLEncoder.encode(wxH5EntrustRequest.getNotifyUrl()));
-    strBuilder.append("&plan_id=").append(wxH5EntrustRequest.getPlanId()).append("&outerid=").append(URLEncoder.encode(wxH5EntrustRequest.getOuterId()));
-    strBuilder.append("&return_appid=").append(wxH5EntrustRequest.getReturnAppid());
+    strBuilder.append("&contract_display_account=").append(URLEncoder.encode(wxH5EntrustRequest.getContractDisplayAccount(), StandardCharsets.UTF_8.name()));
+    strBuilder.append("&mch_id=").append(wxH5EntrustRequest.getMchId()).append("&notify_url=").append(URLEncoder.encode(wxH5EntrustRequest.getNotifyUrl(), StandardCharsets.UTF_8.name()));
+    strBuilder.append("&plan_id=").append(wxH5EntrustRequest.getPlanId());
+    if (StringUtils.isNotEmpty(wxH5EntrustRequest.getOuterId())) {
+      strBuilder.append("&outerid=").append(URLEncoder.encode(wxH5EntrustRequest.getOuterId(), StandardCharsets.UTF_8.name()));
+    }
+    if (StringUtils.isNotEmpty(wxH5EntrustRequest.getReturnAppid())) {
+      strBuilder.append("&return_appid=").append(wxH5EntrustRequest.getReturnAppid());
+    }
     strBuilder.append("&clientip=").append(wxH5EntrustRequest.getClientIp());
     strBuilder.append("&request_serial=").append(wxH5EntrustRequest.getRequestSerial()).append("&timestamp=").append(wxH5EntrustRequest.getTimestamp());
     strBuilder.append("&version=").append(wxH5EntrustRequest.getVersion()).append("&sign=").append(sign);
@@ -147,5 +169,12 @@ public class WxEntrustPapServiceImpl implements WxEntrustPapService {
     WxWithholdOrderQueryResult wxWithholdOrderQueryResult = BaseWxPayResult.fromXML(responseContent, WxWithholdOrderQueryResult.class);
     wxWithholdOrderQueryResult.checkResult(payService, wxWithholdOrderQueryRequest.getSignType(), true);
     return wxWithholdOrderQueryResult;
+  }
+
+  @Override
+  public WxSignQueryResult parseSignNotifyResult(String xmlData) throws WxPayException {
+    WxSignQueryResult result = BaseWxPayResult.fromXML(xmlData, WxSignQueryResult.class);
+    result.checkResult(payService, WxPayConstants.SignType.MD5, true);
+    return result;
   }
 }

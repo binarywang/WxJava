@@ -170,7 +170,7 @@ public class WxMaIntracityServiceImpl implements WxMaIntracityService {
   @Override
   public WxMaStoreBalance balanceQuery(String wxStoreId, String serviceTransId, PayMode payMode)
       throws WxErrorException {
-    if (wxStoreId == null && (payMode != null && payMode != PayMode.STORE)) {
+    if (wxStoreId == null && (payMode == null || payMode == PayMode.STORE)) {
       throw new IllegalArgumentException("payMode是PAY_MODE_STORE或null时，必须传递wxStoreId");
     }
     Map<String, Object> request = new HashMap<>();
@@ -205,9 +205,10 @@ public class WxMaIntracityServiceImpl implements WxMaIntracityService {
   }
 
   @Override
-  public WxMaAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request) throws WxErrorException {
+  public WxMaPreAddOrderResponse preAddOrder(WxMaPreAddOrderRequest request)
+      throws WxErrorException {
     String response = this.wxMaService.postWithSignature(Intracity.PRE_ADD_ORDER, request);
-    return gson.fromJson(response, WxMaAddOrderResponse.class);
+    return gson.fromJson(response, WxMaPreAddOrderResponse.class);
   }
 
   @Override

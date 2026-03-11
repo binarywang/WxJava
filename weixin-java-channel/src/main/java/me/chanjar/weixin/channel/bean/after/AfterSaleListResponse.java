@@ -14,7 +14,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  */
 @Data
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 public class AfterSaleListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 5033313416948732123L;
@@ -23,6 +23,7 @@ public class AfterSaleListResponse extends WxChannelBaseResponse {
   private List<String> ids;
 
   /** 翻页参数 */
+  @JsonProperty("next_key")
   private String nextKey;
 
   /** 是否还有数据 */

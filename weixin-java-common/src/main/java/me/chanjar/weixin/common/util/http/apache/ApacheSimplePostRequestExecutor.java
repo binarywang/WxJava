@@ -4,15 +4,15 @@ import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
-import org.apache.http.Consts;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * .
@@ -21,7 +21,7 @@ import java.io.IOException;
  * created on  2017/5/4
  */
 public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<CloseableHttpClient, HttpHost> {
-  public ApacheSimplePostRequestExecutor(RequestHttp requestHttp) {
+  public ApacheSimplePostRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 
@@ -34,17 +34,12 @@ public class ApacheSimplePostRequestExecutor extends SimplePostRequestExecutor<C
     }
 
     if (postEntity != null) {
-      StringEntity entity = new StringEntity(postEntity, Consts.UTF_8);
-      entity.setContentType("application/json; charset=utf-8");
+      StringEntity entity = new StringEntity(postEntity, ContentType.APPLICATION_JSON.withCharset(StandardCharsets.UTF_8));
       httpPost.setEntity(entity);
     }
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      return this.handleResponse(wxType, responseContent);
-    } finally {
-      httpPost.releaseConnection();
-    }
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    return this.handleResponse(wxType, responseContent);
   }
 
 }

@@ -47,7 +47,10 @@ public class CitiesResult implements Serializable {
 
   @Getter
   @Setter
-  public static class CityInfo {
+  public static class CityInfo implements Serializable {
+
+    private static final long serialVersionUID = -6089905695087974693L;
+
     /**
      * <pre>
      * 字段名：城市名称

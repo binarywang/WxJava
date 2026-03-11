@@ -45,6 +45,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得文本消息builder.
+   *
+   * @return 文本消息builder
    */
   public static TextBuilder TEXT() {
     return new TextBuilder();
@@ -52,6 +54,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得图片消息builder.
+   *
+   * @return 图片消息builder
    */
   public static ImageBuilder IMAGE() {
     return new ImageBuilder();
@@ -59,6 +63,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得语音消息builder.
+   *
+   * @return 语音消息builder
    */
   public static VoiceBuilder VOICE() {
     return new VoiceBuilder();
@@ -66,6 +72,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得视频消息builder.
+   *
+   * @return 视频消息builder
    */
   public static VideoBuilder VIDEO() {
     return new VideoBuilder();
@@ -73,6 +81,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得音乐消息builder.
+   *
+   * @return 音乐消息builder
    */
   public static MusicBuilder MUSIC() {
     return new MusicBuilder();
@@ -80,6 +90,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得图文消息（点击跳转到外链）builder.
+   *
+   * @return 图文消息builder
    */
   public static NewsBuilder NEWS() {
     return new NewsBuilder();
@@ -87,6 +99,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得图文消息（点击跳转到图文消息页面）builder.
+   *
+   * @return 图文消息builder
    */
   public static MpNewsBuilder MPNEWS() {
     return new MpNewsBuilder();
@@ -94,6 +108,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得卡券消息builder.
+   *
+   * @return 卡券消息builder
    */
   public static WxCardBuilder WXCARD() {
     return new WxCardBuilder();
@@ -101,6 +117,8 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 获得菜单消息builder.
+   *
+   * @return 菜单消息builder
    */
   public static WxMsgMenuBuilder MSGMENU() {
     return new WxMsgMenuBuilder();
@@ -108,20 +126,25 @@ public class WxMpKefuMessage implements Serializable {
 
   /**
    * 小程序卡片.
+   *
+   * @return 小程序卡片builder
    */
   public static MiniProgramPageBuilder MINIPROGRAMPAGE() {
     return new MiniProgramPageBuilder();
   }
 
   /**
-   * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id(草稿箱功能上线后不再支持客服接口中带 media_id 的 mpnews 类型的图文消息)
+   * 发送图文消息（点击跳转到图文消息页面）使用通过 “发布” 系列接口得到的 article_id
+   *
+   * @return 图文消息builder
    */
   public static MpNewsArticleBuilder MPNEWSARTICLE() {
     return new MpNewsArticleBuilder();
   }
 
   /**
-   * <pre>
+   * 设置消息类型
+   * <p>
    * 请使用
    * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TEXT}
    * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#IMAGE}
@@ -135,7 +158,9 @@ public class WxMpKefuMessage implements Serializable {
    * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#TASKCARD}
    * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MSGMENU}
    * {@link me.chanjar.weixin.common.api.WxConsts.KefuMsgType#MP_NEWS_ARTICLE}
-   * </pre>
+   * </p>
+   *
+   * @param msgType 消息类型
    */
   public void setMsgType(String msgType) {
     this.msgType = msgType;

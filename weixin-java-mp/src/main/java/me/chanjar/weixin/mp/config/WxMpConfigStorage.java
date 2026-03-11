@@ -22,13 +22,15 @@ public interface WxMpConfigStorage {
 
   /**
    * Is use stable access token api
-   * @Link https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html
+   *
    * @return the boolean
+   * @see <a href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/getStableAccessToken.html">文档</a>
    */
   boolean isStableAccessToken();
 
   /**
    * Set use stable access token api
+   *
    * @param useStableAccessToken true is use, false is not
    */
   void useStableAccessToken(boolean useStableAccessToken);
@@ -154,8 +156,27 @@ public interface WxMpConfigStorage {
    * Gets oauth 2 redirect uri.
    *
    * @return the oauth 2 redirect uri
+   * @deprecated This method is deprecated due to incorrect naming convention.
+   * Use {@link #getOauth2RedirectUrl()} instead.
    */
+  @Deprecated
   String getOauth2redirectUri();
+
+  /**
+   * Gets OAuth 2.0 redirect Url
+   *
+   * @return the OAuth 2.0 redirect Url
+   * @author <a href="https://gitee.com/pengles">Peng Les</a>
+   */
+  String getOauth2RedirectUrl();
+
+  /**
+   * Gets QR connect redirect Url
+   *
+   * @return the QR connect redirect Url
+   * @author <a href="https://gitee.com/pengles">Peng Les</a>
+   */
+  String getQrConnectRedirectUrl();
 
   /**
    * Gets http proxy host.
@@ -190,6 +211,8 @@ public interface WxMpConfigStorage {
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setRetrySleepMillis(int)}
    * </pre>
+   *
+   * @return 重试间隔毫秒数
    */
   int getRetrySleepMillis();
 
@@ -198,6 +221,8 @@ public interface WxMpConfigStorage {
    * <pre>
    *   {@link me.chanjar.weixin.mp.api.impl.BaseWxMpServiceImpl#setMaxRetryTimes(int)}
    * </pre>
+   *
+   * @return 最大重试次数
    */
   int getMaxRetryTimes();
 

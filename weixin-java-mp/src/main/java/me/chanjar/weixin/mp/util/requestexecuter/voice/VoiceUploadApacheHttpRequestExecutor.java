@@ -8,9 +8,7 @@ import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -26,7 +24,7 @@ import java.io.IOException;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class VoiceUploadApacheHttpRequestExecutor extends VoiceUploadRequestExecutor<CloseableHttpClient, HttpHost> {
-  public VoiceUploadApacheHttpRequestExecutor(RequestHttp requestHttp) {
+  public VoiceUploadApacheHttpRequestExecutor(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
   }
 
@@ -49,16 +47,11 @@ public class VoiceUploadApacheHttpRequestExecutor extends VoiceUploadRequestExec
       .build();
     httpPost.setEntity(entity);
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      WxError error = WxError.fromJson(responseContent, WxType.MP);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      }
-
-      return true;
-    } finally {
-      httpPost.releaseConnection();
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    WxError error = WxError.fromJson(responseContent, WxType.MP);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
     }
+    return true;
   }
 }

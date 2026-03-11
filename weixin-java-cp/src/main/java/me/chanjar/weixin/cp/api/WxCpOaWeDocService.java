@@ -78,4 +78,53 @@ public interface WxCpOaWeDocService {
    * @throws WxErrorException the wx error exception
    */
   WxCpDocShare docShare(@NonNull String docId) throws WxErrorException;
+
+  /**
+   * 编辑表格内容
+   * 该接口可以对一个在线表格批量执行多个更新操作
+   * <p>
+   * 注意：
+   * 1.批量更新请求中的各个操作会逐个按顺序执行，直到全部执行完成则请求返回，或者其中一个操作报错则不再继续执行后续的操作
+   * 2.每一个更新操作在执行之前都会做请求校验（包括权限校验、参数校验等等），如果校验未通过则该更新操作会报错并返回，不再执行后续操作
+   * 3.单次批量更新请求的操作数量 <= 5
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/spreadsheet/batch_update?access_token=ACCESS_TOKEN
+   *
+   * @param request 编辑表格内容请求参数
+   * @return 编辑表格内容批量更新的响应结果
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSheetBatchUpdateResponse docBatchUpdate(@NonNull WxCpDocSheetBatchUpdateRequest request) throws WxErrorException;
+
+  /**
+   * 获取表格行列信息
+   * 该接口用于获取在线表格的工作表、行数、列数等。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/spreadsheet/get_sheet_properties?access_token=ACCESS_TOKEN
+   *
+   * @param docId 	在线表格的docid
+   * @return 返回表格行列信息
+   * @throws WxErrorException
+   */
+  WxCpDocSheetProperties getSheetProperties(@NonNull String docId) throws WxErrorException;
+
+
+  /**
+   * 本接口用于获取指定范围内的在线表格信息，单次查询的范围大小需满足以下限制：
+   * <p>
+   * 查询范围行数 <=1000
+   * 查询范围列数 <=200
+   * 范围内的总单元格数量 <=10000
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/spreadsheet/get_sheet_range_data?access_token=ACCESS_TOKEN
+   *
+   * @param request 获取指定范围内的在线表格信息请求参数
+   * @return 返回指定范围内的在线表格信息
+   * @throws WxErrorException
+   */
+  WxCpDocSheetData getSheetRangeData(@NonNull WxCpDocSheetGetDataRequest request) throws WxErrorException;
+
 }

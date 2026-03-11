@@ -8,6 +8,7 @@ import com.binarywang.solon.wxjava.channel.service.WxChannelMultiServicesImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelService;
+import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpComponentsImpl;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceHttpClientImpl;
 import me.chanjar.weixin.channel.api.impl.WxChannelServiceImpl;
 import me.chanjar.weixin.channel.config.WxChannelConfig;
@@ -59,7 +60,7 @@ public abstract class AbstractWxChannelConfiguration {
       WxChannelDefaultConfigImpl storage = this.wxChannelConfigStorage(wxChannelMultiProperties);
       this.configApp(storage, wxChannelSingleProperties);
       this.configHttp(storage, wxChannelMultiProperties.getConfigStorage());
-      WxChannelService wxChannelService = this.wxChannelService(storage, wxChannelMultiProperties, wxChannelSingleProperties.isUseStableAccessToken());
+      WxChannelService wxChannelService = this.wxChannelService(storage, wxChannelMultiProperties);
       services.addWxChannelService(tenantId, wxChannelService);
     }
     return services;
@@ -73,7 +74,7 @@ public abstract class AbstractWxChannelConfiguration {
    */
   protected abstract WxChannelDefaultConfigImpl wxChannelConfigStorage(WxChannelMultiProperties wxChannelMultiProperties);
 
-  public WxChannelService wxChannelService(WxChannelConfig wxChannelConfig, WxChannelMultiProperties wxChannelMultiProperties, boolean useStableAccessToken) {
+  public WxChannelService wxChannelService(WxChannelConfig wxChannelConfig, WxChannelMultiProperties wxChannelMultiProperties) {
     WxChannelMultiProperties.ConfigStorage storage = wxChannelMultiProperties.getConfigStorage();
     HttpClientType httpClientType = storage.getHttpClientType();
     WxChannelService wxChannelService;
@@ -82,7 +83,10 @@ public abstract class AbstractWxChannelConfiguration {
 //        wxChannelService = new WxChannelServiceOkHttpImpl(false, false);
 //        break;
       case HTTP_CLIENT:
-        wxChannelService = new WxChannelServiceHttpClientImpl(useStableAccessToken, false);
+        wxChannelService = new WxChannelServiceHttpClientImpl();
+        break;
+      case HTTP_COMPONENTS:
+        wxChannelService = new WxChannelServiceHttpComponentsImpl();
         break;
       default:
         wxChannelService = new WxChannelServiceImpl();
@@ -108,6 +112,7 @@ public abstract class AbstractWxChannelConfiguration {
     String appSecret = wxChannelSingleProperties.getSecret();
     String token = wxChannelSingleProperties.getToken();
     String aesKey = wxChannelSingleProperties.getAesKey();
+    boolean useStableAccessToken = wxChannelSingleProperties.isUseStableAccessToken();
 
     config.setAppid(appId);
     config.setSecret(appSecret);
@@ -117,6 +122,7 @@ public abstract class AbstractWxChannelConfiguration {
     if (StringUtils.isNotBlank(aesKey)) {
       config.setAesKey(aesKey);
     }
+    config.setStableAccessToken(useStableAccessToken);
   }
 
   private void configHttp(WxChannelDefaultConfigImpl config, WxChannelMultiProperties.ConfigStorage storage) {

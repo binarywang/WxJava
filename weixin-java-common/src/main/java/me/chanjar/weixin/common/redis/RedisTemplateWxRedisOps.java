@@ -29,7 +29,7 @@ public class RedisTemplateWxRedisOps implements WxRedisOps {
 
   @Override
   public Long getExpire(String key) {
-    return redisTemplate.getExpire(key);
+    return redisTemplate.getExpire(key, TimeUnit.SECONDS);
   }
 
   @Override

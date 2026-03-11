@@ -63,4 +63,27 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
     String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
     return WxCpDocShare.fromJson(responseContent);
   }
+
+  @Override
+  public WxCpDocSheetBatchUpdateResponse docBatchUpdate(@NonNull WxCpDocSheetBatchUpdateRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_BATCH_UPDATE);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSheetBatchUpdateResponse.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSheetProperties getSheetProperties(@NonNull String docId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("docid", docId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpDocSheetProperties.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSheetData getSheetRangeData(@NonNull WxCpDocSheetGetDataRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSheetData.fromJson(responseContent);
+  }
 }

@@ -41,6 +41,18 @@ public class WxOpenProperties {
   private String aesKey;
 
   /**
+   * 自定义API主机地址，用于替换默认的 https://api.weixin.qq.com
+   * 例如：http://proxy.company.com:8080
+   */
+  private String apiHostUrl;
+
+  /**
+   * 自定义获取AccessToken地址，用于向自定义统一服务获取AccessToken
+   * 例如：http://proxy.company.com:8080/oauth/token
+   */
+  private String accessTokenUrl;
+
+  /**
    * 存储策略.
    */
   private ConfigStorage configStorage = new ConfigStorage();
@@ -107,6 +119,21 @@ public class WxOpenProperties {
      * </pre>
      */
     private int maxRetryTimes = 5;
+
+    /**
+     * 连接超时时间，单位毫秒
+     */
+    private int connectionTimeout = 5000;
+
+    /**
+     * 读数据超时时间，即socketTimeout，单位毫秒
+     */
+    private int soTimeout = 5000;
+
+    /**
+     * 从连接池获取链接的超时时间，单位毫秒
+     */
+    private int connectionRequestTimeout = 5000;
 
   }
 

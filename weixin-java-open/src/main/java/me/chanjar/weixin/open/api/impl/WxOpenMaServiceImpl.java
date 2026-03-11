@@ -54,16 +54,22 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   private final WxOpenMaPrivacyService privacyService;
   @Getter
   private final WxOpenMaShoppingOrdersService shoppingOrdersService;
+  @Getter
+  private final WxOpenMaEmbeddedService embeddedService;
+  @Getter
+  private final WxOpenMaAuthAndIcpService authAndIcpService;
 
   public WxOpenMaServiceImpl(WxOpenComponentService wxOpenComponentService, String appId, WxMaConfig wxMaConfig) {
     this.wxOpenComponentService = wxOpenComponentService;
     this.appId = appId;
     this.wxMaConfig = wxMaConfig;
-    this.basicService = new WxOpenMaBasicServiceImpl(this);
+    this.basicService = new WxOpenMaBasicServiceImpl(this, wxOpenComponentService);
     this.authService = new WxOpenMaAuthServiceImpl(this);
     this.icpService = new WxOpenMaIcpServiceImpl(this);
     this.privacyService = new WxOpenMaPrivacyServiceImpl(this);
     this.shoppingOrdersService = new WxOpenMaShoppingOrdersServiceImpl(this);
+    this.embeddedService = new WxOpenMaEmbeddedServiceImpl(this);
+    this.authAndIcpService = new WxOpenMaAuthAndIcpServiceImpl(this);
     initHttp();
   }
 
@@ -108,6 +114,25 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   }
 
   @Override
+  public WxOpenMaDomainResult modifyDomainDirectly(String action, List<String> requestDomains, List<String> wsRequestDomains,
+                                                   List<String> uploadDomains, List<String> downloadDomains,
+                                                   List<String> udpDomains, List<String> tcpDomains) throws WxErrorException {
+    JsonObject requestJson = new JsonObject();
+    requestJson.addProperty(ACTION, action);
+    if (!ACTION_GET.equals(action)) {
+      requestJson.add("requestdomain", toJsonArray(requestDomains));
+      requestJson.add("wsrequestdomain", toJsonArray(wsRequestDomains));
+      requestJson.add("uploaddomain", toJsonArray(uploadDomains));
+      requestJson.add("downloaddomain", toJsonArray(downloadDomains));
+      requestJson.add("udpdomain", toJsonArray(udpDomains));
+      requestJson.add("tcpdomain", toJsonArray(tcpDomains));
+    }
+
+    String response = post(API_MODIFY_DOMAIN_DIRECTLY, GSON.toJson(requestJson));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaDomainResult.class);
+  }
+
+  @Override
   public String getWebViewDomain() throws WxErrorException {
     return setWebViewDomain(ACTION_GET, null);
   }
@@ -131,6 +156,22 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   @Override
   public WxOpenMaWebDomainResult setWebViewDomainInfo(String action, List<String> domainList) throws WxErrorException {
     String response = this.setWebViewDomain(action, domainList);
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
+  }
+
+  @Override
+  public String setWebViewDomainDirectly(String action, List<String> domainList) throws WxErrorException {
+    JsonObject requestJson = new JsonObject();
+    requestJson.addProperty(ACTION, action);
+    if (!ACTION_GET.equals(action)) {
+      requestJson.add("webviewdomain", toJsonArray(domainList));
+    }
+    return post(API_SET_WEBVIEW_DOMAIN_DIRECTLY, GSON.toJson(requestJson));
+  }
+
+  @Override
+  public WxOpenMaWebDomainResult setWebViewDomainDirectlyInfo(String action, List<String> domainList) throws WxErrorException {
+    String response = this.setWebViewDomainDirectly(action, domainList);
     return WxMaGsonBuilder.create().fromJson(response, WxOpenMaWebDomainResult.class);
   }
 
@@ -230,6 +271,14 @@ public class WxOpenMaServiceImpl extends WxMaServiceImpl implements WxOpenMaServ
   @Override
   public WxOpenResult verifyBetaWeapp(WxOpenMaVerifyBetaWeappMessage verifyBetaWeappMessage) throws WxErrorException {
     String response = post(API_VERIFY_BETA_WEAPP, GSON.toJson(verifyBetaWeappMessage));
+    return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenResult setBetaWeappNickName(String name) throws WxErrorException {
+    JsonObject params = new JsonObject();
+    params.addProperty("name", name);
+    String response = post(API_SET_BETA_WEAPP_NICKNAME, GSON.toJson(params));
     return WxMaGsonBuilder.create().fromJson(response, WxOpenResult.class);
   }
 

@@ -84,15 +84,6 @@ public class WxMpMaterialServiceImpl implements WxMpMaterialService {
   }
 
   @Override
-  public WxMpMaterialUploadResult materialNewsUpload(WxMpMaterialNews news) throws WxErrorException {
-    if (news == null || news.isEmpty()) {
-      throw new IllegalArgumentException("news is empty!");
-    }
-    String responseContent = this.wxMpService.post(NEWS_ADD_URL, news.toJson());
-    return WxMpMaterialUploadResult.fromJson(responseContent);
-  }
-
-  @Override
   public InputStream materialImageOrVoiceDownload(String mediaId) throws WxErrorException {
     return this.wxMpService.execute(MaterialVoiceAndImageDownloadRequestExecutor
       .create(this.wxMpService.getRequestHttp(), this.wxMpService.getWxMpConfigStorage().getTmpDirFile()),
@@ -109,17 +100,6 @@ public class WxMpMaterialServiceImpl implements WxMpMaterialService {
   public WxMpMaterialNews materialNewsInfo(String mediaId) throws WxErrorException {
     return this.wxMpService.execute(MaterialNewsInfoRequestExecutor.create(this.wxMpService.getRequestHttp()),
       MATERIAL_GET_URL, mediaId);
-  }
-
-  @Override
-  public boolean materialNewsUpdate(WxMpMaterialArticleUpdate wxMpMaterialArticleUpdate) throws WxErrorException {
-    String responseText = this.wxMpService.post(NEWS_UPDATE_URL, wxMpMaterialArticleUpdate.toJson());
-    WxError wxError = WxError.fromJson(responseText, WxType.MP);
-    if (wxError.getErrorCode() == 0) {
-      return true;
-    } else {
-      throw new WxErrorException(wxError);
-    }
   }
 
   @Override

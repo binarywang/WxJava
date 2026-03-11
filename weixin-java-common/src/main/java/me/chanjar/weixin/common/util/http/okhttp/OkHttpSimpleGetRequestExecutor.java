@@ -17,7 +17,7 @@ import java.io.IOException;
  * created on  2017/5/4
  */
 public class OkHttpSimpleGetRequestExecutor extends SimpleGetRequestExecutor<OkHttpClient, OkHttpProxyInfo> {
-  public OkHttpSimpleGetRequestExecutor(RequestHttp requestHttp) {
+  public OkHttpSimpleGetRequestExecutor(RequestHttp<OkHttpClient, OkHttpProxyInfo> requestHttp) {
     super(requestHttp);
   }
 

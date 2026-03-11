@@ -8,7 +8,6 @@ import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
 import me.chanjar.weixin.common.bean.subscribemsg.TemplateInfo;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateTitleListResult;
-import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.common.base.Joiner;
 import com.google.common.collect.ImmutableMap;

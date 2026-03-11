@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.bean.marketing;
 
 import com.github.binarywang.wxpay.bean.marketing.enums.BackgroundColorEnum;
+import com.github.binarywang.wxpay.bean.marketing.enums.JumpTargetEnum;
 import com.github.binarywang.wxpay.bean.marketing.enums.StockTypeEnum;
 import com.github.binarywang.wxpay.bean.marketing.enums.TradeTypeEnum;
 import com.google.gson.annotations.SerializedName;
@@ -392,6 +393,24 @@ public class FavorStocksCreateRequest implements Serializable {
      */
     @SerializedName(value = "coupon_image")
     private String couponImage;
+
+    /**
+     * 卡包跳转目标
+     */
+    @SerializedName("jump_target")
+    private JumpTargetEnum jumpTarget;
+
+    /**
+     * 小程序appid
+     */
+    @SerializedName("mini_program_appid")
+    private String miniProgramAppid;
+
+    /**
+     * 小程序path
+     */
+    @SerializedName("mini_program_path")
+    private String miniProgramPath;
   }
 
   @Data

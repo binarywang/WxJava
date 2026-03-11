@@ -1,20 +1,16 @@
 package me.chanjar.weixin.mp.bean.template;
 
+import lombok.*;
+import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import me.chanjar.weixin.mp.util.json.WxMpGsonBuilder;
-
 /**
  * 模板消息.
- * 参考 http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN 发送模板消息接口部分
+ * 参考 <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433751277&token=&lang=zh_CN">发送模板消息接口部分</a>
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
@@ -67,8 +63,33 @@ public class WxMpTemplateMessage implements Serializable {
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
-    this.data.add(datum);
+    this.data.add(resetValue(datum));
     return this;
+  }
+
+  /**
+   * 处理微信模版消息字符串长度问题
+   *
+   * @link <a href=https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Template_Message_Interface.html#%E7%B1%BB%E7%9B%AE%E6%A8%A1%E6%9D%BF%E6%B6%88%E6%81%AF">模板消息</a>
+   */
+  private WxMpTemplateData resetValue(WxMpTemplateData datum) {
+    String name = datum.getName();
+    String value = datum.getValue();
+
+    if (StringUtils.startsWith(name, "thing") && value.length() > 20) {
+      value = StringUtils.substring(value, 0, 17) + "...";
+    } else if (StringUtils.startsWith(name, "character_string") && value.length() > 32) {
+      value = StringUtils.substring(value, 0, 29) + "...";
+    } else if (StringUtils.startsWith(name, "phone_number") && value.length() > 17) {
+      value = StringUtils.substring(value, 0, 14) + "...";
+    } else if (StringUtils.startsWith(name, "car_number") && value.length() > 8) {
+      value = StringUtils.substring(value, 0, 5) + "...";
+    } else if (StringUtils.startsWith(name, "const") && value.length() > 20) {
+      value = StringUtils.substring(value, 0, 17) + "...";
+    }
+
+    datum.setValue(value);
+    return datum;
   }
 
   public String toJson() {

@@ -1,8 +1,20 @@
 package me.chanjar.weixin.channel.api.impl;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.DELIVERY_SEND_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.GET_DELIVERY_COMPANY_NEW_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.GET_DELIVERY_COMPANY_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.*;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ACCEPT_ADDRESS_MODIFY_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.DECODE_SENSITIVE_INFO_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_LIST_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_SEARCH_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.REJECT_ADDRESS_MODIFY_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_ADDRESS_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_EXPRESS_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_PRICE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_REMARK_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPLOAD_FRESH_INSPECT_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.VIRTUAL_TEL_NUMBER_URL;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -12,16 +24,21 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryCompanyResponse;
 import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.delivery.DeliverySendParam;
+import me.chanjar.weixin.channel.bean.delivery.FreshInspectParam;
+import me.chanjar.weixin.channel.bean.delivery.PackageAuditInfo;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
+import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressParam;
 import me.chanjar.weixin.channel.bean.order.OrderIdParam;
+import me.chanjar.weixin.channel.bean.order.OrderInfoParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderPriceParam;
 import me.chanjar.weixin.channel.bean.order.OrderRemarkParam;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -35,15 +52,22 @@ import me.chanjar.weixin.common.error.WxErrorException;
 public class WxChannelOrderServiceImpl implements WxChannelOrderService {
 
   /** 微信商店服务 */
-  private final BaseWxChannelServiceImpl shopService;
+  private final BaseWxChannelServiceImpl<?, ?> shopService;
 
-  public WxChannelOrderServiceImpl(BaseWxChannelServiceImpl shopService) {
+  public WxChannelOrderServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
     this.shopService = shopService;
   }
 
   @Override
   public OrderInfoResponse getOrder(String orderId) throws WxErrorException {
-    OrderIdParam param = new OrderIdParam(orderId);
+    OrderInfoParam param = new OrderInfoParam(orderId, null);
+    String resJson = shopService.post(ORDER_GET_URL, param);
+    return ResponseUtils.decode(resJson, OrderInfoResponse.class);
+  }
+
+  @Override
+  public OrderInfoResponse getOrder(String orderId, Boolean encodeSensitiveInfo) throws WxErrorException {
+    OrderInfoParam param = new OrderInfoParam(orderId, encodeSensitiveInfo);
     String resJson = shopService.post(ORDER_GET_URL, param);
     return ResponseUtils.decode(resJson, OrderInfoResponse.class);
   }
@@ -116,10 +140,42 @@ public class WxChannelOrderServiceImpl implements WxChannelOrderService {
   }
 
   @Override
+  public DeliveryCompanyResponse listDeliveryCompany(Boolean ewaybillOnly) throws WxErrorException {
+    String reqJson = "{}";
+    if (ewaybillOnly != null) {
+      reqJson = "{\"ewaybill_only\":" + ewaybillOnly + "}";
+    }
+    String resJson = shopService.post(GET_DELIVERY_COMPANY_NEW_URL, reqJson);
+    return ResponseUtils.decode(resJson, DeliveryCompanyResponse.class);
+  }
+
+  @Override
   public WxChannelBaseResponse deliveryOrder(String orderId, List<DeliveryInfo> deliveryList)
     throws WxErrorException {
     DeliverySendParam param = new DeliverySendParam(orderId, deliveryList);
     String resJson = shopService.post(DELIVERY_SEND_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse uploadFreshInspect(String orderId, List<PackageAuditInfo> items)
+    throws WxErrorException {
+    FreshInspectParam param = new FreshInspectParam(orderId, items);
+    String resJson = shopService.post(UPLOAD_FRESH_INSPECT_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public VirtualTelNumberResponse getVirtualTelNumber(String orderId) throws WxErrorException {
+    String reqJson = "{\"order_id\":\"" + orderId + "\"}";
+    String resJson = shopService.post(VIRTUAL_TEL_NUMBER_URL, reqJson);
+    return ResponseUtils.decode(resJson, VirtualTelNumberResponse.class);
+  }
+
+  @Override
+  public DecodeSensitiveInfoResponse decodeSensitiveInfo(String orderId) throws WxErrorException {
+    String reqJson = "{\"order_id\":\"" + orderId + "\"}";
+    String resJson = shopService.post(DECODE_SENSITIVE_INFO_URL, reqJson);
+    return ResponseUtils.decode(resJson, DecodeSensitiveInfoResponse.class);
   }
 }

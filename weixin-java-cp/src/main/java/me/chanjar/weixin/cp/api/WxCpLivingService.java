@@ -27,7 +27,7 @@ public interface WxCpLivingService {
   /**
    * 获取直播详情
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/living/get_living_info?access_token=ACCESS_TOKEN&livingid=LIVINGID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/living/get_living_info?access_token=ACCESS_TOKEN&livingid=LIVINGID}
    *
    * @param livingId 直播id
    * @return 获取的直播详情 living info

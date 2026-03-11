@@ -8,10 +8,10 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import me.chanjar.weixin.open.api.WxOpenFastMaService;
 import me.chanjar.weixin.open.bean.ma.WxFastMaCategory;
-import me.chanjar.weixin.open.bean.ma.WxOpenMaApplyOrderPathInfo;
 import me.chanjar.weixin.open.bean.result.*;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -101,6 +101,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   }
 
   @Override
+  public String getComponentRebindAdminUrl(String redirectUri, String appId) {
+    return "";
+  }
+
+  @Override
   public WxOpenResult componentRebindAdmin(String taskid) throws WxErrorException {
     JsonObject params = new JsonObject();
     params.addProperty("taskid", taskid);
@@ -111,6 +116,11 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   @Override
   public String getAllCategories() throws WxErrorException {
     return get(OPEN_GET_ALL_CATEGORIES, "");
+  }
+
+  @Override
+  public WxOpenGetAllCategoriesByTypeResult getAllCategoriesByType(String verifyType)  {
+    return null;
   }
 
   @Override
@@ -140,6 +150,12 @@ public class WxOpenFastMaServiceImpl extends WxMaServiceImpl implements WxOpenFa
   public WxOpenResult modifyCategory(WxFastMaCategory category) throws WxErrorException {
     String response = post(OPEN_MODIFY_CATEGORY, GSON.toJson(category));
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenResult.class);
+  }
+
+  @Override
+  public WxOpenMaCategoryNameListResult getAllCategoryName() throws WxErrorException {
+    String response = get(OPEN_GET_ALL_CATEGORY_NAME, "");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenMaCategoryNameListResult.class);
   }
 
   /**

@@ -5,7 +5,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.6.7.B</version>
+    <version>4.8.1.B</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -33,6 +33,19 @@
       <groupId>org.jodd</groupId>
       <artifactId>jodd-util</artifactId>
       <version>6.1.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

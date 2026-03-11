@@ -21,7 +21,7 @@ public class WxMinishopImageUploadResult  implements Serializable {
 
 
   public static WxMinishopImageUploadResult fromJson(String json) {
-    JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+    JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
     WxMinishopImageUploadResult result = new WxMinishopImageUploadResult();
     result.setErrcode(jsonObject.get(WxConsts.ERR_CODE).getAsNumber().toString());
     if (result.getErrcode().equals("0")) {

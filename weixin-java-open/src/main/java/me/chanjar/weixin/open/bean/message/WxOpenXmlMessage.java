@@ -140,6 +140,11 @@ public class WxOpenXmlMessage implements Serializable {
    */
   @XStreamAlias("result")
   private Integer result;
+  /**
+   * 发起时 along_with_auth 填 true 时有效：9. 认证短信核验通过。
+   */
+  @XStreamAlias("along_with_auth_result")
+  private Integer alongWithAuthResult;
   //endregion
 
   //region 当备案审核被驳回或通过时会推送该事件 推送的消息 infoType=notify_apply_icpfiling_result
@@ -153,6 +158,45 @@ public class WxOpenXmlMessage implements Serializable {
    */
   @XStreamAlias("beian_status")
   private Integer beianStatus;
+  //endregion
+
+  //region 认证及备案流程的主要节点均有事件推送到第三方平台的授权事件接收接口，包括支付完成、派单给审核机构、审核打回、审核通过、审核失败等。消息类型，固定为 notify_3rd_wxa_auth_and_icp
+
+  /**
+   * 小程序认证及备案任务流程id
+   */
+  @XStreamAlias("procedure_id")
+  private String procedureId;
+
+  /**
+   * 任务流程状态
+   * 9	手机验证成功
+   * 15	等待支付认证审核费用
+   * 16	认证审核费用支付成功
+   * 17	认证审核中
+   * 18	认证审核驳回
+   * 19	认证审核通过
+   * 20	认证审核最终失败（不能再修改）
+   * 21	创建备案审核单失败
+   * 22	备案平台审核中
+   * 23	备案平台审核驳回
+   * 24	备案管局审核中
+   * 25	管局审核驳回
+   * 26	认证及备案完成
+   * 27	流程已过期
+   * 28	流程已终止
+   * 29	备案已撤回
+   */
+  @XStreamAlias("procedure_status")
+  private Integer procedureStatus;
+
+  //endregion
+
+  /**
+   * 原始通知内容
+   */
+  private String context;
+
   //endregion
 
   /**
@@ -255,7 +299,9 @@ public class WxOpenXmlMessage implements Serializable {
 
   public static WxOpenXmlMessage fromXml(String xml) {
     //修改微信变态的消息内容格式，方便解析
-    xml = xml.replace("</PicList><PicList>", "");
+    if (xml != null) {
+      xml = xml.replace("</PicList><PicList>", "");
+    }
     return XStreamTransformer.fromXml(WxOpenXmlMessage.class, xml);
   }
 
@@ -277,7 +323,14 @@ public class WxOpenXmlMessage implements Serializable {
     WxOpenCryptUtil cryptUtil = new WxOpenCryptUtil(wxOpenConfigStorage);
     String plainText = cryptUtil.decryptXml(msgSignature, timestamp, nonce, encryptedXml);
     log.debug("解密后的原始xml消息内容：{}", plainText);
-    return fromXml(plainText);
+    
+    if (plainText == null || plainText.trim().isEmpty()) {
+      throw new WxRuntimeException("解密后的xml消息内容为空，请检查加密参数是否正确");
+    }
+    
+    WxOpenXmlMessage wxOpenXmlMessage = fromXml(plainText);
+    wxOpenXmlMessage.setContext(plainText);
+    return wxOpenXmlMessage;
   }
 
   public static WxMpXmlMessage fromEncryptedMpXml(String encryptedXml, WxOpenConfigStorage wxOpenConfigStorage,

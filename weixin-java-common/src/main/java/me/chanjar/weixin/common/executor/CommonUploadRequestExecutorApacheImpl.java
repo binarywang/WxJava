@@ -8,10 +8,10 @@ import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.HttpMultipartMode;
@@ -28,8 +28,7 @@ import java.io.InputStream;
  * @author <a href="https://www.sacoc.cn">广州跨界</a>
  * created on  2024/01/11
  */
-public class CommonUploadRequestExecutorApacheImpl
-  extends CommonUploadRequestExecutor<CloseableHttpClient, HttpHost> {
+public class CommonUploadRequestExecutorApacheImpl extends CommonUploadRequestExecutor<CloseableHttpClient, HttpHost> {
 
   public CommonUploadRequestExecutorApacheImpl(RequestHttp<CloseableHttpClient, HttpHost> requestHttp) {
     super(requestHttp);
@@ -45,26 +44,30 @@ public class CommonUploadRequestExecutorApacheImpl
     if (param != null) {
       CommonUploadData data = param.getData();
       InnerStreamBody part = new InnerStreamBody(data.getInputStream(), ContentType.DEFAULT_BINARY, data.getFileName(), data.getLength());
-      HttpEntity entity = MultipartEntityBuilder
+      MultipartEntityBuilder entityBuilder = MultipartEntityBuilder
         .create()
         .addPart(param.getName(), part)
-        .setMode(HttpMultipartMode.RFC6532)
-        .build();
+        .setMode(HttpMultipartMode.RFC6532);
+
+      // 添加额外的表单字段
+      if (param.getFormFields() != null && !param.getFormFields().isEmpty()) {
+        for (java.util.Map.Entry<String, String> entry : param.getFormFields().entrySet()) {
+          entityBuilder.addTextBody(entry.getKey(), entry.getValue(), ContentType.TEXT_PLAIN.withCharset("UTF-8"));
+        }
+      }
+
+      HttpEntity entity = entityBuilder.build();
       httpPost.setEntity(entity);
     }
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpPost)) {
-      String responseContent = Utf8ResponseHandler.INSTANCE.handleResponse(response);
-      if (responseContent == null || responseContent.isEmpty()) {
-        throw new WxErrorException(String.format("上传失败，服务器响应空 url:%s param:%s", uri, param));
-      }
-      WxError error = WxError.fromJson(responseContent, wxType);
-      if (error.getErrorCode() != 0) {
-        throw new WxErrorException(error);
-      }
-      return responseContent;
-    } finally {
-      httpPost.releaseConnection();
+    String responseContent = requestHttp.getRequestHttpClient().execute(httpPost, Utf8ResponseHandler.INSTANCE);
+    if (StringUtils.isEmpty(responseContent)) {
+      throw new WxErrorException(String.format("上传失败，服务器响应空 url:%s param:%s", uri, param));
     }
+    WxError error = WxError.fromJson(responseContent, wxType);
+    if (error.getErrorCode() != 0) {
+      throw new WxErrorException(error);
+    }
+    return responseContent;
   }
 
   /**

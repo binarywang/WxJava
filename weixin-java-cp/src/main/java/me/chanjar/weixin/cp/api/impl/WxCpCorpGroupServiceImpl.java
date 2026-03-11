@@ -8,7 +8,6 @@ import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.cp.api.WxCpCorpGroupService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorp;
-import me.chanjar.weixin.cp.bean.corpgroup.WxCpCorpGroupCorpListAppShareInfoResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.util.List;
@@ -19,7 +18,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.CorpGroup.LIST_SHA
  * 企业互联相关接口实现类
  *
  * @author libo <422423229@qq.com>
- * Created on 27/2/2023 9:57 PM
+ * @since 2023-02-27 9:57 PM
  */
 @RequiredArgsConstructor
 public class WxCpCorpGroupServiceImpl implements WxCpCorpGroupService {

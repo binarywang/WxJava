@@ -7,6 +7,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.ApiTestModule;
 import me.chanjar.weixin.cp.api.TestConstants;
 import me.chanjar.weixin.cp.api.WxCpService;
+import me.chanjar.weixin.cp.bean.media.MediaUploadByUrlReq;
+import me.chanjar.weixin.cp.bean.media.MediaUploadByUrlResult;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
@@ -126,5 +128,39 @@ public class WxCpMediaServiceImplTest {
     File file = this.wxService.getMediaService().getJssdkFile("....");
     assertThat(file).isNotNull();
     System.out.println(file);
+  }
+
+  /**
+   * Test upload media by url.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testUploadMediaByUrl() throws WxErrorException {
+    MediaUploadByUrlReq req = new MediaUploadByUrlReq();
+    req.setScene(1);
+    req.setType("video");
+    req.setFilename("mov_bbb");
+    req.setUrl("https://www.w3school.com.cn/example/html5/mov_bbb.mp4");
+    req.setMd5("198918f40ecc7cab0fc4231adaf67c96");
+    String jobId = this.wxService.getMediaService().uploadByUrl(req);
+    System.out.println(jobId);
+  }
+
+  /**
+   * Test upload media by url.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testUploadMediaByUrlResult() throws WxErrorException, InterruptedException {
+    String jobId = "job1745801375_5GIKWuFF3M7hcIkeSNMqs_W26xy5VeSWjLaLFTEdSfQ";
+    MediaUploadByUrlResult result = this.wxService.getMediaService().uploadByUrl(jobId);
+    System.out.println(result);
+  }
+
+  @Test
+  public void testUploadMediaJobFinishEvent() throws WxErrorException {
+    File file = this.wxService.getMediaService().getJssdkFile("....");
   }
 }

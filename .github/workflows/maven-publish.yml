@@ -1,0 +1,109 @@
+name: Publish to Maven Central
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+concurrency:
+  group: maven-publish-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect and tag release version from commit message
+        id: version_detect
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          VERSION=""
+          TAG=""
+          IS_RELEASE="false"
+          if [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\.B\ 测试版本 ]]; then
+            BASE_VER="${BASH_REMATCH[1]}"
+            VERSION="${BASE_VER}.B"
+            TAG="v${BASE_VER}"
+            IS_RELEASE="true"
+            echo "Matched test release commit: VERSION=$VERSION, TAG=$TAG"
+            # 检查并打tag
+            if git tag | grep -q "^$TAG$"; then
+              echo "Tag $TAG already exists."
+            else
+              git config user.name "Binary Wang"
+              git config user.email "a@binarywang.com"
+              git tag -a "$TAG" -m "Release $TAG"
+              git push origin "$TAG"
+              echo "Tag $TAG created and pushed."
+            fi
+          elif [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\ 正式版本 ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+            TAG="v${VERSION}"
+            IS_RELEASE="true"
+            echo "Matched formal release commit:  VERSION=$VERSION, TAG=$TAG"
+            # 检查并打tag
+            if git tag | grep -q "^$TAG$"; then
+              echo "Tag $TAG already exists."
+            else
+              git config user.name "Binary Wang"
+              git config user.email "a@binarywang.com"
+              git tag -a "$TAG" -m "Release $TAG"
+              git push origin "$TAG"
+              echo "Tag $TAG created and pushed."
+            fi
+          fi
+          echo "is_release=$IS_RELEASE" >> $GITHUB_OUTPUT
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '8'
+          distribution: 'temurin'
+          server-id: central
+          server-username: MAVEN_USERNAME
+          server-password: MAVEN_PASSWORD
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: MAVEN_GPG_PASSPHRASE
+          cache: maven
+
+      - name: Verify GPG keys
+        run: |
+          echo "Available GPG Keys:"
+          gpg --list-secret-keys --keyid-format LONG
+
+      - name: Generate and set version
+        id: set_version
+        run: |
+          if [[ "${{ steps.version_detect.outputs.is_release }}" == "true" ]]; then
+            VERSION="${{ steps.version_detect.outputs.version }}"
+          else
+            git describe --tags 2>/dev/null || echo "no tag"
+            TIMESTAMP=$(date +'%Y%m%d.%H%M%S')
+            GIT_DESCRIBE=$(git describe --tags --abbrev=0 2>/dev/null | sed 's/^v//' || echo "0.0.1")
+            VERSION="${GIT_DESCRIBE}-${TIMESTAMP}"
+          fi
+          echo "Final version: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          mvn versions:set -DnewVersion=$VERSION --no-transfer-progress
+        env:
+          TZ: Asia/Shanghai
+
+      - name: Publish to Maven Central
+        run: |
+          mvn clean deploy -P release \
+            -Dmaven.test.skip=true \
+            -Dgpg.args="--batch --yes --pinentry-mode loopback" \
+            --no-transfer-progress
+        env:
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}

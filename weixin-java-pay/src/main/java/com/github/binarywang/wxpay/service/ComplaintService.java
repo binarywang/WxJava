@@ -137,8 +137,22 @@ public interface ComplaintService {
 
   /**
    * <pre>
+   * 更新退款审批结果API
+   * 针对“申请退款单”，需要商户明确返回是否可退款的审批结果。
+   * 若根据用户描述，核实可以退款，审批动作传入“APPROVE”，同意退款，并给出一个预计退款时间。传入“同意退款”后，需要额外调退款接口发起原路退款。退款到账后，投诉单的状态将自动扭转为“处理完成”。
+   * 若根据用户描述，核实不能退款，审批动作传入“REJECT”，拒绝退款，并说明拒绝退款原因。驳回退款后，投诉单的状态将自动扭转为“处理完成”。
+   * 文档详见: <a href="https://pay.wechatpay.cn/docs/merchant/apis/consumer-complaint/complaints/update-refund-progress.html">...</a>
+   * </pre>
+   *
+   * @param request {@link UpdateRefundProgressRequest} 请求数据
+   * @throws WxPayException the wx pay exception
+   */
+  void updateRefundProgress(UpdateRefundProgressRequest request) throws WxPayException;
+
+  /**
+   * <pre>
    * 商户上传反馈图片API
-   * 文档详见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_10.shtml">...</a>
+   * 文档详见: <a href="https://pay.weixin.qq.com/docs/merchant/apis/consumer-complaint/images/create-images.html">...</a>
    * 接口链接：https://api.mch.weixin.qq.com/v3/merchant-service/images/upload
    * </pre>
    *
@@ -151,7 +165,7 @@ public interface ComplaintService {
   /**
    * <pre>
    * 商户上传反馈图片API
-   * 文档详见: <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter10_2_10.shtml">...</a>
+   * 文档详见: <a href="https://pay.weixin.qq.com/docs/merchant/apis/consumer-complaint/images/create-images.html">...</a>
    * 接口链接：https://api.mch.weixin.qq.com/v3/merchant-service/images/upload
    * </pre>
    *

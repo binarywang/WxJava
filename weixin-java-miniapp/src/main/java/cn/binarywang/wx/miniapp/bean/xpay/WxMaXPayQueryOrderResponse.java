@@ -61,5 +61,24 @@ public class WxMaXPayQueryOrderResponse extends WxMaBaseResponse implements Seri
     @SerializedName("wxOrderId")
     private String wxOrderId;
 
+    /** 渠道单号，为用户微信支付详情页面上的商户单号 */
+    @SerializedName("channel_order_id")
+    private String channelOrderId;
+    /** 微信支付交易单号，为用户微信支付详情页面上的交易单号 */
+    @SerializedName("wxpay_order_id")
+    private String wxpayOrderId;
+    /** 结算时间的秒级时间戳，大于0表示结算成功 */
+    @SerializedName("sett_time")
+    private Long settTime;
+    /** 结算状态：0-未开始结算 1-结算中 2-结算成功 3-待结算（与0相同） */
+    @SerializedName("sett_state")
+    private Integer settState;
+    /** 虚拟支付技术服务费，单位为分；sett_state = 2时返回 */
+    @SerializedName("platform_fee_fen")
+    private Long platformFeeFen;
+    /** 公众号、视频号平台的cps服务费，单位为分；sett_state = 2时返回 */
+    @SerializedName("cps_fee_fen")
+    private Long cpsFeeFen;
+
   }
 }

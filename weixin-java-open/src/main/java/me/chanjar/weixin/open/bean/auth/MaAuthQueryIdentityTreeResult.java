@@ -24,6 +24,6 @@ public class MaAuthQueryIdentityTreeResult extends WxOpenResult {
    * 子节点信息 非叶子节点必有
    */
   @Nullable
-  @SerializedName("node_list")
+  @SerializedName("identity_tree_list")
   private List<MaAuthQueryIdentityTreeResultIdentityNode> nodeList;
 }

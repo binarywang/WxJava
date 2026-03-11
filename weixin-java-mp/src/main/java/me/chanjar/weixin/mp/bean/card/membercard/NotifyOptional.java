@@ -6,12 +6,13 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * <pre>
  * 控制原生消息结构体，包含各字段的消息控制字段。
- *
+ * <p>
  * 用于 `7 更新会员信息` 的接口参数调用
- * https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283
- * </pre>
+ * </p>
+ * <p>
+ * {@code 参考：<a href="https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1451025283">会员卡接口</a>}
+ * </p>
  *
  * @author YuJian(mgcnrx11@gmail.com)
  * @version 2017/7/15

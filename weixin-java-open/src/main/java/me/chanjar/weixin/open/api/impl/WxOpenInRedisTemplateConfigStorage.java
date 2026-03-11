@@ -3,11 +3,9 @@ package me.chanjar.weixin.open.api.impl;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import lombok.NonNull;
-import me.chanjar.weixin.common.redis.JedisWxRedisOps;
 import me.chanjar.weixin.common.redis.RedisTemplateWxRedisOps;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 
@@ -39,7 +37,7 @@ public class WxOpenInRedisTemplateConfigStorage extends AbstractWxOpenInRedisCon
 
   @Override
   public void setComponentVerifyTicket(String componentVerifyTicket) {
-    redisOps.setValue(this.componentVerifyTicketKey, componentVerifyTicket, Integer.MAX_VALUE, TimeUnit.SECONDS);
+    redisOps.setValue(this.componentVerifyTicketKey, componentVerifyTicket, 43200, TimeUnit.SECONDS);
   }
 
   @Override
