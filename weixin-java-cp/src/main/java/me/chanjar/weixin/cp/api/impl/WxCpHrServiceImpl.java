@@ -53,9 +53,6 @@ public class WxCpHrServiceImpl implements WxCpHrService {
     jsonObject.addProperty("get_all", getAll);
     if (fields != null && !fields.isEmpty()) {
       jsonObject.add("fields", WxCpGsonBuilder.create().toJsonTree(fields));
-    }else{
-      if(!getAll)
-        throw new IllegalArgumentException("fields 不能为空");
     }
     String response = this.cpService.post(
       this.cpService.getWxCpConfigStorage().getApiUrl(GET_EMPLOYEE_FIELD_INFO),
