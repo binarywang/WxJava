@@ -593,11 +593,11 @@ public interface WxCpApiPathConsts {
     /**
      * The constant WEDOC_CREATE_FORM.
      */
-    String WEDOC_CREATE_FORM = "/cgi-bin/wedoc/create_form";
+    String WEDOC_CREATE_FORM = "/cgi-bin/wedoc/create_collect";
     /**
      * The constant WEDOC_MODIFY_FORM.
      */
-    String WEDOC_MODIFY_FORM = "/cgi-bin/wedoc/modify_form";
+    String WEDOC_MODIFY_FORM = "/cgi-bin/wedoc/modify_collect";
     /**
      * The constant WEDOC_GET_FORM_INFO.
      */

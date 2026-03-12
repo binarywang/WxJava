@@ -12,6 +12,7 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.doc.*;
 
 import java.io.File;
+import java.util.List;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
@@ -60,10 +61,13 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
 
   @Override
   public WxCpDocShare docShare(@NonNull String docId) throws WxErrorException {
+    return docShare(WxCpDocShareRequest.builder().docId(docId).build());
+  }
+
+  @Override
+  public WxCpDocShare docShare(@NonNull WxCpDocShareRequest request) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_DOC_SHARE);
-    JsonObject jsonObject = new JsonObject();
-    jsonObject.addProperty("docid", docId);
-    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
     return WxCpDocShare.fromJson(responseContent);
   }
 
@@ -314,10 +318,10 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
   }
 
   @Override
-  public WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException {
+  public List<WxCpFormStatistic> formStatistic(@NonNull List<WxCpFormStatisticRequest> requests) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_FORM_STATISTIC);
-    String responseContent = this.cpService.post(apiUrl, request.toJson());
-    return WxCpFormStatistic.fromJson(responseContent);
+    String responseContent = this.cpService.post(apiUrl, WxCpFormStatisticRequest.toJson(requests));
+    return WxCpFormStatistic.listFromJson(responseContent);
   }
 
   @Override

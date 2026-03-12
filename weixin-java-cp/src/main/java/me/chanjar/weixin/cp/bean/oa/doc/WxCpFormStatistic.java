@@ -8,6 +8,7 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,6 +20,12 @@ public class WxCpFormStatistic extends WxCpBaseResp implements Serializable {
 
   @SerializedName("fill_cnt")
   private Long fillCnt;
+
+  @SerializedName("repeated_id")
+  private String repeatedId;
+
+  @SerializedName("repeated_name")
+  private String repeatedName;
 
   @SerializedName("fill_user_cnt")
   private Long fillUserCnt;
@@ -40,6 +47,11 @@ public class WxCpFormStatistic extends WxCpBaseResp implements Serializable {
 
   public static WxCpFormStatistic fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpFormStatistic.class);
+  }
+
+  public static List<WxCpFormStatistic> listFromJson(String json) {
+    WxCpFormStatistic[] results = WxCpGsonBuilder.create().fromJson(json, WxCpFormStatistic[].class);
+    return results == null ? null : Arrays.asList(results);
   }
 
   public String toJson() {

@@ -9,6 +9,7 @@ import lombok.experimental.Accessors;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 收集表统计请求.
@@ -45,5 +46,9 @@ public class WxCpFormStatisticRequest implements Serializable {
 
   public String toJson() {
     return WxCpGsonBuilder.create().toJson(this);
+  }
+
+  public static String toJson(List<WxCpFormStatisticRequest> requests) {
+    return WxCpGsonBuilder.create().toJson(requests);
   }
 }

@@ -6,6 +6,8 @@ import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.doc.*;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 企业微信文档相关接口.
@@ -80,6 +82,19 @@ public interface WxCpOaWeDocService {
    * @throws WxErrorException the wx error exception
    */
   WxCpDocShare docShare(@NonNull String docId) throws WxErrorException;
+
+  /**
+   * 分享文档/收集表
+   * 该接口用于获取文档或收集表的分享链接。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/doc_share?access_token=ACCESS_TOKEN
+   *
+   * @param request 分享请求，docid/formid 二选一
+   * @return url 文档分享链接
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocShare docShare(@NonNull WxCpDocShareRequest request) throws WxErrorException;
 
   /**
    * 获取文档权限信息
@@ -434,7 +449,7 @@ public interface WxCpOaWeDocService {
    * 该接口用于创建收集表。
    * <p>
    * 请求方式：POST（HTTPS）
-   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/create_form?access_token=ACCESS_TOKEN
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/create_collect?access_token=ACCESS_TOKEN
    *
    * @param request 创建收集表请求
    * @return 创建收集表结果
@@ -447,7 +462,7 @@ public interface WxCpOaWeDocService {
    * 该接口用于编辑收集表。
    * <p>
    * 请求方式：POST（HTTPS）
-   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/modify_form?access_token=ACCESS_TOKEN
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/modify_collect?access_token=ACCESS_TOKEN
    *
    * @param request 编辑收集表请求
    * @return wx cp base resp
@@ -475,11 +490,23 @@ public interface WxCpOaWeDocService {
    * 请求方式：POST（HTTPS）
    * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_form_statistic?access_token=ACCESS_TOKEN
    *
+   * @param requests 收集表统计请求数组
+   * @return 收集表统计信息数组
+   * @throws WxErrorException the wx error exception
+   */
+  List<WxCpFormStatistic> formStatistic(@NonNull List<WxCpFormStatisticRequest> requests) throws WxErrorException;
+
+  /**
+   * 单个收集表统计查询的兼容封装，底层仍按官方数组请求发送。
+   *
    * @param request 收集表统计请求
    * @return 收集表统计信息
    * @throws WxErrorException the wx error exception
    */
-  WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException;
+  default WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException {
+    List<WxCpFormStatistic> results = formStatistic(Collections.singletonList(request));
+    return results == null || results.isEmpty() ? null : results.get(0);
+  }
 
   /**
    * 获取收集表答案

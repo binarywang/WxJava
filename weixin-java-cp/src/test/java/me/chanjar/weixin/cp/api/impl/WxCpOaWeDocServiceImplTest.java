@@ -44,8 +44,8 @@ public class WxCpOaWeDocServiceImplTest {
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_BATCH_UPDATE)).thenReturn("https://api.test/spreadsheet/batch_update");
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES)).thenReturn("https://api.test/spreadsheet/get_sheet_properties");
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA)).thenReturn("https://api.test/spreadsheet/get_sheet_range_data");
-    when(configStorage.getApiUrl(WEDOC_CREATE_FORM)).thenReturn("https://api.test/create_form");
-    when(configStorage.getApiUrl(WEDOC_MODIFY_FORM)).thenReturn("https://api.test/modify_form");
+    when(configStorage.getApiUrl(WEDOC_CREATE_FORM)).thenReturn("https://api.test/create_collect");
+    when(configStorage.getApiUrl(WEDOC_MODIFY_FORM)).thenReturn("https://api.test/modify_collect");
     when(configStorage.getApiUrl(WEDOC_GET_FORM_INFO)).thenReturn("https://api.test/get_form_info");
     when(configStorage.getApiUrl(WEDOC_GET_FORM_STATISTIC)).thenReturn("https://api.test/get_form_statistic");
     when(configStorage.getApiUrl(WEDOC_GET_FORM_ANSWER)).thenReturn("https://api.test/get_form_answer");
@@ -74,14 +74,14 @@ public class WxCpOaWeDocServiceImplTest {
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"properties\":[{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}]}");
     when(cpService.post(eq("https://api.test/spreadsheet/get_sheet_range_data"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"grid_data\":{\"start_row\":0,\"start_column\":0,\"rows\":[{\"values\":[{\"cell_value\":{\"text\":\"hello\"}}]}]}}");
-    when(cpService.post(eq("https://api.test/create_form"), anyString()))
-      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"formid\":\"FORMID1\",\"url\":\"https://wedoc.test/form/1\"}");
-    when(cpService.post(eq("https://api.test/modify_form"), anyString()))
+    when(cpService.post(eq("https://api.test/create_collect"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"formid\":\"FORMID1\"}");
+    when(cpService.post(eq("https://api.test/modify_collect"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
     when(cpService.post(eq("https://api.test/get_form_info"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"form_info\":{\"formid\":\"FORMID1\",\"form_title\":\"日报\"}}");
     when(cpService.post(eq("https://api.test/get_form_statistic"), anyString()))
-      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"fill_cnt\":3,\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":1}]}");
+      .thenReturn("[{\"repeated_id\":\"repeat-1\",\"fill_cnt\":3,\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":1}]}]");
     when(cpService.post(eq("https://api.test/get_form_answer"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"answer\":{\"answer_list\":[{\"answer_id\":1,\"userid\":\"zhangsan\",\"reply\":{\"items\":[{\"question_id\":1,\"text_reply\":\"ok\"}]}}]}}");
 
@@ -119,9 +119,11 @@ public class WxCpOaWeDocServiceImplTest {
     assertThat(docInfo.getDocBaseInfo().getDocName()).isEqualTo("日报");
     verify(cpService).post(eq("https://api.test/get_doc_base_info"), anyString());
 
-    WxCpDocShare docShare = service.docShare("doc1");
+    WxCpDocShare docShare = service.docShare(WxCpDocShareRequest.builder().formId("FORMID1").build());
     assertThat(docShare.getShareUrl()).isEqualTo("https://wedoc.test/share/1");
-    verify(cpService).post(eq("https://api.test/doc_share"), anyString());
+    ArgumentCaptor<String> docShareBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/doc_share"), docShareBodyCaptor.capture());
+    assertThat(docShareBodyCaptor.getValue()).contains("\"formid\":\"FORMID1\"");
 
     WxCpDocAuthInfo docAuthInfo = service.docGetAuth("doc1");
     assertThat(docAuthInfo.getAccessRule().getEnableCorpInternal()).isTrue();
@@ -195,7 +197,7 @@ public class WxCpOaWeDocServiceImplTest {
       .formInfo(formInfo)
       .build());
     assertThat(formCreateResult.getFormId()).isEqualTo("FORMID1");
-    verify(cpService).post(eq("https://api.test/create_form"), anyString());
+    verify(cpService).post(eq("https://api.test/create_collect"), anyString());
 
     WxCpBaseResp formModifyResp = service.formModify(WxCpFormModifyRequest.builder()
       .oper(1)
@@ -203,7 +205,7 @@ public class WxCpOaWeDocServiceImplTest {
       .formInfo(formInfo)
       .build());
     assertThat(formModifyResp.getErrcode()).isZero();
-    verify(cpService).post(eq("https://api.test/modify_form"), anyString());
+    verify(cpService).post(eq("https://api.test/modify_collect"), anyString());
 
     WxCpFormInfoResult formInfoResult = service.formInfo("FORMID1");
     assertThat(formInfoResult.getFormInfo().getFormId()).isEqualTo("FORMID1");
@@ -215,7 +217,10 @@ public class WxCpOaWeDocServiceImplTest {
       .repeatedId("repeat-1")
       .build());
     assertThat(formStatistic.getFillCnt()).isEqualTo(3);
-    verify(cpService).post(eq("https://api.test/get_form_statistic"), anyString());
+    ArgumentCaptor<String> formStatisticBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/get_form_statistic"), formStatisticBodyCaptor.capture());
+    assertThat(formStatisticBodyCaptor.getValue()).startsWith("[");
+    assertThat(formStatisticBodyCaptor.getValue()).contains("\"repeated_id\":\"repeat-1\"");
 
     WxCpFormAnswer formAnswer = service.formAnswer(WxCpFormAnswerRequest.builder()
       .repeatedId("repeat-1")

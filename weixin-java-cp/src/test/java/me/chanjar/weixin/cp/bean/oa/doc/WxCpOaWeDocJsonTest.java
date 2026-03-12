@@ -77,12 +77,10 @@ public class WxCpOaWeDocJsonTest {
     String createJson = "{"
       + "\"errcode\":0,"
       + "\"errmsg\":\"ok\","
-      + "\"url\":\"https://wedoc.test/doc/1\","
       + "\"docid\":\"doc123\""
       + "}";
     WxCpDocCreateData createData = WxCpDocCreateData.fromJson(createJson);
     assertThat(createData.getDocId()).isEqualTo("doc123");
-    assertThat(createData.getUrl()).isEqualTo("https://wedoc.test/doc/1");
 
     WxCpDocRenameRequest renameRequest = WxCpDocRenameRequest.builder()
       .docId("doc123")
@@ -105,6 +103,11 @@ public class WxCpOaWeDocJsonTest {
     WxCpDocInfo docInfo = WxCpDocInfo.fromJson(infoJson);
     assertThat(docInfo.getDocBaseInfo().getDocId()).isEqualTo("doc123");
     assertThat(docInfo.getDocBaseInfo().getDocName()).isEqualTo("日报");
+
+    WxCpDocShareRequest shareRequest = WxCpDocShareRequest.builder()
+      .formId("FORMID1")
+      .build();
+    assertThat(shareRequest.toJson()).contains("\"formid\":\"FORMID1\"");
 
     String shareJson = "{"
       + "\"errcode\":0,"
@@ -157,7 +160,7 @@ public class WxCpOaWeDocJsonTest {
       + "\"formid\":\"FORMID1\","
       + "\"form_title\":\"api创建的收集表\","
       + "\"form_question\":{\"items\":[{\"question_id\":1,\"title\":\"问题1\",\"pos\":1,\"status\":1,\"reply_type\":1,\"must_reply\":true}]},"
-      + "\"form_setting\":{\"fill_out_auth\":1},"
+      + "\"form_setting\":{\"fill_out_auth\":1,\"max_fill_cnt\":2},"
       + "\"repeated_id\":[\"REPEAT_ID1\"]"
       + "}"
       + "}";
@@ -165,22 +168,29 @@ public class WxCpOaWeDocJsonTest {
     WxCpFormInfoResult result = WxCpFormInfoResult.fromJson(json);
     assertThat(result.getFormInfo().getFormId()).isEqualTo("FORMID1");
     assertThat(result.getFormInfo().getFormQuestion().getItems().get(0).getTitle()).isEqualTo("问题1");
+    assertThat(result.getFormInfo().getFormSetting().getMaxFillCnt()).isEqualTo(2);
     assertThat(result.getFormInfo().getRepeatedId()).containsExactly("REPEAT_ID1");
   }
 
   @Test
   public void testFormStatisticAndAnswerFromJson() {
-    String statisticJson = "{"
-      + "\"errcode\":0,"
-      + "\"errmsg\":\"ok\","
+    String statisticRequestJson = WxCpFormStatisticRequest.toJson(Collections.singletonList(
+      WxCpFormStatisticRequest.builder().repeatedId("REPEAT_ID1").reqType(1).limit(100L).cursor(0L).build()
+    ));
+    assertThat(statisticRequestJson).startsWith("[");
+    assertThat(statisticRequestJson).contains("\"repeated_id\":\"REPEAT_ID1\"");
+
+    String statisticJson = "[{"
+      + "\"repeated_id\":\"REPEAT_ID1\","
+      + "\"repeated_name\":\"第1次收集\","
       + "\"fill_cnt\":1,"
       + "\"fill_user_cnt\":1,"
       + "\"unfill_user_cnt\":2,"
       + "\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":3,\"submit_time\":1668418200,\"user_name\":\"张三\"}],"
       + "\"has_more\":false,"
       + "\"cursor\":1"
-      + "}";
-    WxCpFormStatistic statistic = WxCpFormStatistic.fromJson(statisticJson);
+      + "}]";
+    WxCpFormStatistic statistic = WxCpFormStatistic.listFromJson(statisticJson).get(0);
     assertThat(statistic.getSubmitUsers()).hasSize(1);
     assertThat(statistic.getSubmitUsers().get(0).getAnswerId()).isEqualTo(3L);
 

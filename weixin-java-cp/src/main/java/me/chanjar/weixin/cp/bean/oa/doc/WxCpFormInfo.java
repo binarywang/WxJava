@@ -117,6 +117,9 @@ public class WxCpFormInfo implements Serializable {
     @SerializedName("allow_multi_fill")
     private Boolean allowMultiFill;
 
+    @SerializedName("max_fill_cnt")
+    private Integer maxFillCnt;
+
     @SerializedName("timed_finish")
     private Long timedFinish;
 
