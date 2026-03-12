@@ -1,0 +1,40 @@
+package me.chanjar.weixin.cp.bean.oa.doc;
+
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
+
+import java.io.Serializable;
+
+/**
+ * 修改文档安全设置请求.
+ */
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Accessors(chain = true)
+public class WxCpDocModifySaftySettingRequest implements Serializable {
+  private static final long serialVersionUID = 8040559480117443345L;
+
+  @SerializedName("docid")
+  private String docId;
+
+  @SerializedName("enable_readonly_copy")
+  private Boolean enableReadonlyCopy;
+
+  @SerializedName("watermark")
+  private WxCpDocAuthInfo.Watermark watermark;
+
+  public static WxCpDocModifySaftySettingRequest fromJson(String json) {
+    return WxCpGsonBuilder.create().fromJson(json, WxCpDocModifySaftySettingRequest.class);
+  }
+
+  public String toJson() {
+    return WxCpGsonBuilder.create().toJson(this);
+  }
+}

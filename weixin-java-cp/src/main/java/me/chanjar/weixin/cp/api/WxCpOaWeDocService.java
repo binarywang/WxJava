@@ -80,6 +80,58 @@ public interface WxCpOaWeDocService {
   WxCpDocShare docShare(@NonNull String docId) throws WxErrorException;
 
   /**
+   * 获取文档权限信息
+   * 该接口用于获取文档、表格、智能表格的查看规则、文档通知范围及权限、安全设置信息。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/doc_get_auth?access_token=ACCESS_TOKEN
+   *
+   * @param docId 文档docid
+   * @return 文档权限信息
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocAuthInfo docGetAuth(@NonNull String docId) throws WxErrorException;
+
+  /**
+   * 修改文档查看规则
+   * 该接口用于修改文档、表格、智能表格查看规则。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/mod_doc_join_rule?access_token=ACCESS_TOKEN
+   *
+   * @param request 修改文档查看规则请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docModifyJoinRule(@NonNull WxCpDocModifyJoinRuleRequest request) throws WxErrorException;
+
+  /**
+   * 修改文档通知范围及权限
+   * 该接口用于修改文档、表格、智能表格通知范围列表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/mod_doc_member?access_token=ACCESS_TOKEN
+   *
+   * @param request 修改文档通知范围及权限请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docModifyMember(@NonNull WxCpDocModifyMemberRequest request) throws WxErrorException;
+
+  /**
+   * 修改文档安全设置
+   * 该接口用于修改文档、表格、智能表格的安全设置。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/mod_doc_safty_setting?access_token=ACCESS_TOKEN
+   *
+   * @param request 修改文档安全设置请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docModifySaftySetting(@NonNull WxCpDocModifySaftySettingRequest request) throws WxErrorException;
+
+  /**
    * 编辑表格内容
    * 该接口可以对一个在线表格批量执行多个更新操作
    * <p>
@@ -126,5 +178,70 @@ public interface WxCpOaWeDocService {
    * @throws WxErrorException
    */
   WxCpDocSheetData getSheetRangeData(@NonNull WxCpDocSheetGetDataRequest request) throws WxErrorException;
+
+  /**
+   * 创建收集表
+   * 该接口用于创建收集表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/create_form?access_token=ACCESS_TOKEN
+   *
+   * @param request 创建收集表请求
+   * @return 创建收集表结果
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpFormCreateResult formCreate(@NonNull WxCpFormCreateRequest request) throws WxErrorException;
+
+  /**
+   * 编辑收集表
+   * 该接口用于编辑收集表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/modify_form?access_token=ACCESS_TOKEN
+   *
+   * @param request 编辑收集表请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp formModify(@NonNull WxCpFormModifyRequest request) throws WxErrorException;
+
+  /**
+   * 获取收集表信息
+   * 该接口用于读取收集表的信息。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_form_info?access_token=ACCESS_TOKEN
+   *
+   * @param formId 收集表id
+   * @return 收集表信息
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpFormInfoResult formInfo(@NonNull String formId) throws WxErrorException;
+
+  /**
+   * 获取收集表统计信息
+   * 该接口用于获取收集表的统计信息、已回答成员列表和未回答成员列表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_form_statistic?access_token=ACCESS_TOKEN
+   *
+   * @param request 收集表统计请求
+   * @return 收集表统计信息
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException;
+
+  /**
+   * 获取收集表答案
+   * 该接口用于读取收集表的答案。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_form_answer?access_token=ACCESS_TOKEN
+   *
+   * @param request 收集表答案请求
+   * @return 收集表答案
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpFormAnswer formAnswer(@NonNull WxCpFormAnswerRequest request) throws WxErrorException;
 
 }

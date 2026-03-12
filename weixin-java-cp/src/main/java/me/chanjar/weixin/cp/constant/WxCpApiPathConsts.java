@@ -574,6 +574,42 @@ public interface WxCpApiPathConsts {
      * The constant WEDOC_DOC_SHARE.
      */
     String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
+    /**
+     * The constant WEDOC_DOC_GET_AUTH.
+     */
+    String WEDOC_DOC_GET_AUTH = "/cgi-bin/wedoc/doc_get_auth";
+    /**
+     * The constant WEDOC_MOD_DOC_JOIN_RULE.
+     */
+    String WEDOC_MOD_DOC_JOIN_RULE = "/cgi-bin/wedoc/mod_doc_join_rule";
+    /**
+     * The constant WEDOC_MOD_DOC_MEMBER.
+     */
+    String WEDOC_MOD_DOC_MEMBER = "/cgi-bin/wedoc/mod_doc_member";
+    /**
+     * The constant WEDOC_MOD_DOC_SAFTY_SETTING.
+     */
+    String WEDOC_MOD_DOC_SAFTY_SETTING = "/cgi-bin/wedoc/mod_doc_safty_setting";
+    /**
+     * The constant WEDOC_CREATE_FORM.
+     */
+    String WEDOC_CREATE_FORM = "/cgi-bin/wedoc/create_form";
+    /**
+     * The constant WEDOC_MODIFY_FORM.
+     */
+    String WEDOC_MODIFY_FORM = "/cgi-bin/wedoc/modify_form";
+    /**
+     * The constant WEDOC_GET_FORM_INFO.
+     */
+    String WEDOC_GET_FORM_INFO = "/cgi-bin/wedoc/get_form_info";
+    /**
+     * The constant WEDOC_GET_FORM_STATISTIC.
+     */
+    String WEDOC_GET_FORM_STATISTIC = "/cgi-bin/wedoc/get_form_statistic";
+    /**
+     * The constant WEDOC_GET_FORM_ANSWER.
+     */
+    String WEDOC_GET_FORM_ANSWER = "/cgi-bin/wedoc/get_form_answer";
 
     /**
      * The constant WEDOC_SPREADSHEET_BATCH_UPDATE.

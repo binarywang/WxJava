@@ -13,9 +13,9 @@ import me.chanjar.weixin.cp.bean.oa.doc.*;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
 /**
- * 企业微信微盘接口实现类.
+ * 企业微信文档接口实现类.
  *
- * @author Wang_Wong  created on  2022-04-22
+ * @author Wang_Wong created on 2022-04-22
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -65,6 +65,36 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
   }
 
   @Override
+  public WxCpDocAuthInfo docGetAuth(@NonNull String docId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_DOC_GET_AUTH);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("docid", docId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpDocAuthInfo.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp docModifyJoinRule(@NonNull WxCpDocModifyJoinRuleRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_MOD_DOC_JOIN_RULE);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp docModifyMember(@NonNull WxCpDocModifyMemberRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_MOD_DOC_MEMBER);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp docModifySaftySetting(@NonNull WxCpDocModifySaftySettingRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_MOD_DOC_SAFTY_SETTING);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpDocSheetBatchUpdateResponse docBatchUpdate(@NonNull WxCpDocSheetBatchUpdateRequest request) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_BATCH_UPDATE);
     String responseContent = this.cpService.post(apiUrl, request.toJson());
@@ -85,5 +115,42 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA);
     String responseContent = this.cpService.post(apiUrl, request.toJson());
     return WxCpDocSheetData.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFormCreateResult formCreate(@NonNull WxCpFormCreateRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_CREATE_FORM);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpFormCreateResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp formModify(@NonNull WxCpFormModifyRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_MODIFY_FORM);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFormInfoResult formInfo(@NonNull String formId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_FORM_INFO);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("formid", formId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpFormInfoResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_FORM_STATISTIC);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpFormStatistic.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpFormAnswer formAnswer(@NonNull WxCpFormAnswerRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_FORM_ANSWER);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpFormAnswer.fromJson(responseContent);
   }
 }
