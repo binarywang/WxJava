@@ -247,6 +247,150 @@ public interface WxCpOaWeDocService {
   WxCpBaseResp smartSheetModifyAuth(@NonNull WxCpDocSmartSheetModifyAuthRequest request) throws WxErrorException;
 
   /**
+   * 获取智能表格工作表信息.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格工作表信息
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetGetSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 新增智能表格工作表.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格工作表信息
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetAddSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 删除智能表格工作表.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetDeleteSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 更新智能表格工作表.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetUpdateSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 获取智能表格视图.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格视图
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetGetViews(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 新增智能表格视图.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格视图
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetAddView(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 删除智能表格视图.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetDeleteViews(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 更新智能表格视图.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetUpdateView(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 获取智能表格字段.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格字段
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetGetFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 新增智能表格字段.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格字段
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetAddFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 删除智能表格字段.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetDeleteFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 更新智能表格字段.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetUpdateFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 获取智能表格记录.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格记录
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetGetRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 新增智能表格记录.
+   *
+   * @param request 智能表格请求
+   * @return 智能表格记录
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetResult smartSheetAddRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 删除智能表格记录.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetDeleteRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
+   * 更新智能表格记录.
+   *
+   * @param request 智能表格请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetUpdateRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException;
+
+  /**
    * 创建收集表
    * 该接口用于创建收集表。
    * <p>

@@ -248,4 +248,51 @@ public class WxCpOaWeDocJsonTest {
     assertThat(smartSheetAuth.getFieldAuth().getAsJsonObject().getAsJsonArray("columns")).hasSize(1);
     assertThat(smartSheetAuth.getEffectiveAuthInfo().getAsJsonObject().get("mode").getAsString()).isEqualTo("custom");
   }
+
+  @Test
+  public void testSmartSheetCrudJson() {
+    JsonObject properties = new JsonObject();
+    properties.addProperty("title", "Sheet A");
+    JsonObject field = new JsonObject();
+    field.addProperty("title", "Priority");
+    JsonObject record = new JsonObject();
+    record.addProperty("record_id", "rec-1");
+
+    WxCpDocSmartSheetRequest request = WxCpDocSmartSheetRequest.builder()
+      .docId("doc456")
+      .sheetId("sheet789")
+      .viewId("view1")
+      .build();
+    request.addExtra("properties", properties)
+      .addExtraArrayItem("fields", field)
+      .addExtraArrayItem("records", record)
+      .addExtra("offset", 20);
+    assertThat(request.toJson()).contains("\"docid\":\"doc456\"");
+    assertThat(request.toJson()).contains("\"sheet_id\":\"sheet789\"");
+    assertThat(request.toJson()).contains("\"view_id\":\"view1\"");
+    assertThat(request.toJson()).contains("\"title\":\"Sheet A\"");
+    assertThat(request.toJson()).contains("\"record_id\":\"rec-1\"");
+    assertThat(request.toJson()).contains("\"offset\":20");
+
+    String resultJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"docid\":\"doc456\","
+      + "\"sheet_id\":\"sheet789\","
+      + "\"sheet_list\":[{\"sheet_id\":\"sheet1\"}],"
+      + "\"view_list\":[{\"view_id\":\"view1\"}],"
+      + "\"field_list\":[{\"field_id\":\"field1\"}],"
+      + "\"record_list\":[{\"record_id\":\"record1\"}],"
+      + "\"has_more\":true,"
+      + "\"next_cursor\":101"
+      + "}";
+    WxCpDocSmartSheetResult result = WxCpDocSmartSheetResult.fromJson(resultJson);
+    assertThat(result.getDocId()).isEqualTo("doc456");
+    assertThat(result.getEffectiveSheets().getAsJsonArray()).hasSize(1);
+    assertThat(result.getEffectiveViews().getAsJsonArray()).hasSize(1);
+    assertThat(result.getEffectiveFields().getAsJsonArray()).hasSize(1);
+    assertThat(result.getEffectiveRecords().getAsJsonArray()).hasSize(1);
+    assertThat(result.getHasMore()).isTrue();
+    assertThat(result.getNextCursor().getAsInt()).isEqualTo(101);
+  }
 }

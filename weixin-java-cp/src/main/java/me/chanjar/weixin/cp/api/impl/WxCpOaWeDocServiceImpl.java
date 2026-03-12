@@ -156,6 +156,118 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
   }
 
   @Override
+  public WxCpDocSmartSheetResult smartSheetGetSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_SHEET);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetAddSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_ADD_SHEET);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetDeleteSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_DELETE_SHEET);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetUpdateSheet(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_UPDATE_SHEET);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetGetViews(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_VIEWS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetAddView(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_ADD_VIEW);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetDeleteViews(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_DELETE_VIEWS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetUpdateView(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_UPDATE_VIEW);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetGetFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_FIELDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetAddFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_ADD_FIELDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetDeleteFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_DELETE_FIELDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetUpdateFields(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_UPDATE_FIELDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetGetRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_RECORDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetResult smartSheetAddRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_ADD_RECORDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetDeleteRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_DELETE_RECORDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetUpdateRecords(@NonNull WxCpDocSmartSheetRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_UPDATE_RECORDS);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpFormCreateResult formCreate(@NonNull WxCpFormCreateRequest request) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_CREATE_FORM);
     String responseContent = this.cpService.post(apiUrl, request.toJson());

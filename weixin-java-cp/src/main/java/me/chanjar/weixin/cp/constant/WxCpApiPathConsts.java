@@ -652,6 +652,86 @@ public interface WxCpApiPathConsts {
     String WEDOC_SMARTSHEET_MOD_SHEET_AUTH = "/cgi-bin/wedoc/smartsheet/mod_sheet_auth";
 
     /**
+     * The constant WEDOC_SMARTSHEET_GET_SHEET.
+     */
+    String WEDOC_SMARTSHEET_GET_SHEET = "/cgi-bin/wedoc/smartsheet/get_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_SHEET.
+     */
+    String WEDOC_SMARTSHEET_ADD_SHEET = "/cgi-bin/wedoc/smartsheet/add_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_SHEET.
+     */
+    String WEDOC_SMARTSHEET_DELETE_SHEET = "/cgi-bin/wedoc/smartsheet/delete_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_SHEET.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_SHEET = "/cgi-bin/wedoc/smartsheet/update_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_VIEWS.
+     */
+    String WEDOC_SMARTSHEET_GET_VIEWS = "/cgi-bin/wedoc/smartsheet/get_views";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_VIEW.
+     */
+    String WEDOC_SMARTSHEET_ADD_VIEW = "/cgi-bin/wedoc/smartsheet/add_view";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_VIEWS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_VIEWS = "/cgi-bin/wedoc/smartsheet/delete_views";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_VIEW.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_VIEW = "/cgi-bin/wedoc/smartsheet/update_view";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_GET_FIELDS = "/cgi-bin/wedoc/smartsheet/get_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_ADD_FIELDS = "/cgi-bin/wedoc/smartsheet/add_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_FIELDS = "/cgi-bin/wedoc/smartsheet/delete_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_FIELDS = "/cgi-bin/wedoc/smartsheet/update_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_GET_RECORDS = "/cgi-bin/wedoc/smartsheet/get_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_ADD_RECORDS = "/cgi-bin/wedoc/smartsheet/add_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_RECORDS = "/cgi-bin/wedoc/smartsheet/delete_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_RECORDS = "/cgi-bin/wedoc/smartsheet/update_records";
+
+    /**
      * 邮件
      * https://developer.work.weixin.qq.com/document/path/95486
      */
