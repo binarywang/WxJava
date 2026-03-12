@@ -250,6 +250,36 @@ public class WxCpOaWeDocJsonTest {
   }
 
   @Test
+  public void testDocAdminJson() {
+    WxCpDocAdminRequest request = WxCpDocAdminRequest.builder()
+      .docId("doc456")
+      .userId("zhangsan")
+      .type(1)
+      .build();
+    assertThat(request.toJson()).contains("\"docid\":\"doc456\"");
+    assertThat(request.toJson()).contains("\"userid\":\"zhangsan\"");
+    assertThat(request.toJson()).contains("\"type\":1");
+
+    WxCpDocAdminRequest openUserRequest = WxCpDocAdminRequest.builder()
+      .docId("doc456")
+      .openUserId("ou_xxx")
+      .build();
+    assertThat(openUserRequest.toJson()).contains("\"open_userid\":\"ou_xxx\"");
+
+    String json = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"docid\":\"doc456\","
+      + "\"admin_list\":[{\"userid\":\"zhangsan\",\"type\":1},{\"open_userid\":\"ou_xxx\",\"type\":2}]"
+      + "}";
+    WxCpDocAdminListResult result = WxCpDocAdminListResult.fromJson(json);
+    assertThat(result.getDocId()).isEqualTo("doc456");
+    assertThat(result.getAdminList()).hasSize(2);
+    assertThat(result.getAdminList().get(0).getUserId()).isEqualTo("zhangsan");
+    assertThat(result.getAdminList().get(1).getOpenUserId()).isEqualTo("ou_xxx");
+  }
+
+  @Test
   public void testSmartSheetCrudJson() {
     JsonObject properties = new JsonObject();
     properties.addProperty("title", "Sheet A");

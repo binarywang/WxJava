@@ -642,6 +642,21 @@ public interface WxCpApiPathConsts {
     String WEDOC_UPLOAD_DOC_IMAGE = "/cgi-bin/wedoc/upload_doc_image";
 
     /**
+     * The constant WEDOC_ADD_ADMIN.
+     */
+    String WEDOC_ADD_ADMIN = "/cgi-bin/wedoc/add_admin";
+
+    /**
+     * The constant WEDOC_DEL_ADMIN.
+     */
+    String WEDOC_DEL_ADMIN = "/cgi-bin/wedoc/del_admin";
+
+    /**
+     * The constant WEDOC_GET_ADMIN_LIST.
+     */
+    String WEDOC_GET_ADMIN_LIST = "/cgi-bin/wedoc/get_admin_list";
+
+    /**
      * The constant WEDOC_SMARTSHEET_GET_SHEET_AUTH.
      */
     String WEDOC_SMARTSHEET_GET_SHEET_AUTH = "/cgi-bin/wedoc/smartsheet/get_sheet_auth";

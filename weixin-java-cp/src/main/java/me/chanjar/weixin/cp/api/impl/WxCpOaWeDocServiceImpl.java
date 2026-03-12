@@ -142,6 +142,29 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
   }
 
   @Override
+  public WxCpBaseResp docAddAdmin(@NonNull WxCpDocAdminRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_ADD_ADMIN);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp docDeleteAdmin(@NonNull WxCpDocAdminRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_DEL_ADMIN);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocAdminListResult docGetAdminList(@NonNull String docId) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_ADMIN_LIST);
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("docid", docId);
+    String responseContent = this.cpService.post(apiUrl, jsonObject.toString());
+    return WxCpDocAdminListResult.fromJson(responseContent);
+  }
+
+  @Override
   public WxCpDocSmartSheetAuth smartSheetGetAuth(@NonNull WxCpDocSmartSheetAuthRequest request) throws WxErrorException {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_SHEET_AUTH);
     String responseContent = this.cpService.post(apiUrl, request.toJson());

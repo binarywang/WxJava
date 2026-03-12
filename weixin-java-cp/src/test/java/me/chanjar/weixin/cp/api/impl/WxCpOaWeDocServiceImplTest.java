@@ -7,6 +7,8 @@ import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocData;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocGetDataRequest;
+import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocAdminListResult;
+import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocAdminRequest;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocImageUploadResult;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocModifyRequest;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetAuth;
@@ -15,6 +17,7 @@ import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetModifyAuthRequest;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetRequest;
 import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetResult;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
+import org.mockito.ArgumentCaptor;
 import org.testng.annotations.Test;
 
 import java.io.File;
@@ -41,6 +44,9 @@ public class WxCpOaWeDocServiceImplTest {
     when(configStorage.getApiUrl(WEDOC_GET_DOC_DATA)).thenReturn("https://api.test/get_doc_data");
     when(configStorage.getApiUrl(WEDOC_MOD_DOC)).thenReturn("https://api.test/mod_doc");
     when(configStorage.getApiUrl(WEDOC_UPLOAD_DOC_IMAGE)).thenReturn("https://api.test/upload_doc_image");
+    when(configStorage.getApiUrl(WEDOC_ADD_ADMIN)).thenReturn("https://api.test/add_admin");
+    when(configStorage.getApiUrl(WEDOC_DEL_ADMIN)).thenReturn("https://api.test/del_admin");
+    when(configStorage.getApiUrl(WEDOC_GET_ADMIN_LIST)).thenReturn("https://api.test/get_admin_list");
     when(configStorage.getApiUrl(WEDOC_SMARTSHEET_GET_SHEET_AUTH)).thenReturn("https://api.test/smartsheet/get_sheet_auth");
     when(configStorage.getApiUrl(WEDOC_SMARTSHEET_MOD_SHEET_AUTH)).thenReturn("https://api.test/smartsheet/mod_sheet_auth");
     when(configStorage.getApiUrl(WEDOC_SMARTSHEET_GET_SHEET)).thenReturn("https://api.test/smartsheet/get_sheet");
@@ -66,6 +72,12 @@ public class WxCpOaWeDocServiceImplTest {
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
     when(cpService.upload(eq("https://api.test/upload_doc_image"), any()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"image_url\":\"https://img.test/a.png\",\"media_id\":\"media-1\"}");
+    when(cpService.post(eq("https://api.test/add_admin"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/del_admin"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/get_admin_list"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"docid\":\"doc1\",\"admin_list\":[{\"userid\":\"zhangsan\",\"type\":1}]}");
     when(cpService.post(eq("https://api.test/smartsheet/get_sheet_auth"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"docid\":\"doc1\",\"sheet_id\":\"sheet1\"}");
     when(cpService.post(eq("https://api.test/smartsheet/mod_sheet_auth"), anyString()))
@@ -131,6 +143,38 @@ public class WxCpOaWeDocServiceImplTest {
     assertThat(uploadResult.getEffectiveUrl()).isEqualTo("https://img.test/a.png");
     assertThat(uploadResult.getMediaId()).isEqualTo("media-1");
     verify(cpService).upload(eq("https://api.test/upload_doc_image"), any());
+
+    WxCpDocAdminRequest adminRequest = WxCpDocAdminRequest.builder()
+      .docId("doc1")
+      .userId("zhangsan")
+      .type(1)
+      .build();
+    WxCpBaseResp addAdminResp = service.docAddAdmin(adminRequest);
+    assertThat(addAdminResp.getErrcode()).isZero();
+    ArgumentCaptor<String> addAdminBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/add_admin"), addAdminBodyCaptor.capture());
+    assertThat(addAdminBodyCaptor.getValue()).contains("\"docid\":\"doc1\"");
+    assertThat(addAdminBodyCaptor.getValue()).contains("\"userid\":\"zhangsan\"");
+    assertThat(addAdminBodyCaptor.getValue()).contains("\"type\":1");
+
+    WxCpDocAdminRequest deleteAdminRequest = WxCpDocAdminRequest.builder()
+      .docId("doc1")
+      .openUserId("ou_zhangsan")
+      .build();
+    WxCpBaseResp deleteAdminResp = service.docDeleteAdmin(deleteAdminRequest);
+    assertThat(deleteAdminResp.getErrcode()).isZero();
+    ArgumentCaptor<String> deleteAdminBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/del_admin"), deleteAdminBodyCaptor.capture());
+    assertThat(deleteAdminBodyCaptor.getValue()).contains("\"docid\":\"doc1\"");
+    assertThat(deleteAdminBodyCaptor.getValue()).contains("\"open_userid\":\"ou_zhangsan\"");
+
+    WxCpDocAdminListResult adminListResult = service.docGetAdminList("doc1");
+    assertThat(adminListResult.getDocId()).isEqualTo("doc1");
+    assertThat(adminListResult.getAdminList()).hasSize(1);
+    assertThat(adminListResult.getAdminList().get(0).getUserId()).isEqualTo("zhangsan");
+    ArgumentCaptor<String> getAdminListBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/get_admin_list"), getAdminListBodyCaptor.capture());
+    assertThat(getAdminListBodyCaptor.getValue()).isEqualTo("{\"docid\":\"doc1\"}");
 
     WxCpDocSmartSheetAuthRequest authRequest = WxCpDocSmartSheetAuthRequest.builder()
       .docId("doc1")

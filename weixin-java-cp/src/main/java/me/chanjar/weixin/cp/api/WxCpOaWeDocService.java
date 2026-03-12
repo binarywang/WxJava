@@ -221,6 +221,45 @@ public interface WxCpOaWeDocService {
   WxCpDocImageUploadResult docUploadImage(@NonNull File file) throws WxErrorException;
 
   /**
+   * 添加文档高级功能账号
+   * 该接口用于为在线文档添加高级功能账号。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/add_admin?access_token=ACCESS_TOKEN
+   *
+   * @param request 文档高级功能账号请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docAddAdmin(@NonNull WxCpDocAdminRequest request) throws WxErrorException;
+
+  /**
+   * 删除文档高级功能账号
+   * 该接口用于删除在线文档的高级功能账号。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/del_admin?access_token=ACCESS_TOKEN
+   *
+   * @param request 文档高级功能账号请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docDeleteAdmin(@NonNull WxCpDocAdminRequest request) throws WxErrorException;
+
+  /**
+   * 获取文档高级功能账号列表
+   * 该接口用于获取在线文档的高级功能账号列表。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_admin_list?access_token=ACCESS_TOKEN
+   *
+   * @param docId 文档 docid
+   * @return 文档高级功能账号列表
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocAdminListResult docGetAdminList(@NonNull String docId) throws WxErrorException;
+
+  /**
    * 获取智能表格内容权限
    * 该接口用于获取智能表格字段/记录等内容权限信息。
    * <p>
