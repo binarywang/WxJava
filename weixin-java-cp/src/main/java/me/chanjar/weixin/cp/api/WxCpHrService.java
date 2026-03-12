@@ -58,7 +58,12 @@ public interface WxCpHrService {
    * @return 员工档案数据响应 wx cp hr employee field data resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, boolean getAll, List<String> fields) throws WxErrorException;
+  default WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, boolean getAll,
+                                                          List<String> fields) throws WxErrorException {
+   // 为了保持接口的向后兼容性，默认实现忽略 getAll 参数，仅透传 fields。
+   // 需要根据 getAll 返回全部字段的实现类可以自行覆盖该方法。
+   return this.getEmployeeFieldInfo(userid, fields);
+  }
 
   /**
    * 更新员工档案数据.
