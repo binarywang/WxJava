@@ -97,6 +97,32 @@ public class WxCpTpUserServiceImpl implements WxCpTpUserService {
   }
 
   @Override
+  public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status, String corpId)
+    throws WxErrorException {
+    String params = "";
+    if (fetchChild != null) {
+      params += "&fetch_child=" + (fetchChild ? "1" : "0");
+    }
+    if (status != null) {
+      params += "&status=" + status;
+    } else {
+      params += "&status=0";
+    }
+    params += "&access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+
+    String url = mainService.getWxCpTpConfigStorage().getApiUrl(USER_SIMPLE_LIST + departId);
+    String responseContent = this.mainService.get(url, params, true);
+    JsonObject tmpJsonElement = GsonParser.parse(responseContent);
+    return WxCpGsonBuilder.create()
+      .fromJson(
+        tmpJsonElement.getAsJsonObject().get("userlist"),
+        new TypeToken<List<WxCpUser>>() {
+        }.getType()
+      );
+  }
+
+  @Override
+  @Deprecated
   public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status)
     throws WxErrorException {
     String params = "";
