@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.oa.doc;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
@@ -57,5 +58,41 @@ public class WxCpDocModifyRequest implements Serializable {
       }
     }
     return WxCpGsonBuilder.create().toJson(jsonObject);
+  }
+
+  public WxCpDocModifyRequest addRequest(JsonObject request) {
+    JsonArray requestArray = this.requests != null && this.requests.isJsonArray()
+      ? this.requests.getAsJsonArray()
+      : new JsonArray();
+    requestArray.add(request);
+    this.requests = requestArray;
+    return this;
+  }
+
+  public WxCpDocModifyRequest addExtra(String key, String value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocModifyRequest addExtra(String key, Number value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocModifyRequest addExtra(String key, Boolean value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocModifyRequest addExtra(String key, JsonElement value) {
+    ensureExtra().add(key, value);
+    return this;
+  }
+
+  private JsonObject ensureExtra() {
+    if (this.extra == null) {
+      this.extra = new JsonObject();
+    }
+    return this.extra;
   }
 }

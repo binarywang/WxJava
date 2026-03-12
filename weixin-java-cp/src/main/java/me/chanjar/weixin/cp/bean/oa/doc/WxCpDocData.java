@@ -36,6 +36,10 @@ public class WxCpDocData extends WxCpBaseResp implements Serializable {
   @SerializedName("next_cursor")
   private String nextCursor;
 
+  public JsonElement getEffectiveContent() {
+    return this.content != null ? this.content : this.docContent;
+  }
+
   public static WxCpDocData fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpDocData.class);
   }

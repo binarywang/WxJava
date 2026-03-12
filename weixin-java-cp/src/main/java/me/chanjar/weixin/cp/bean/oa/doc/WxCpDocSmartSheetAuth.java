@@ -33,6 +33,16 @@ public class WxCpDocSmartSheetAuth extends WxCpBaseResp implements Serializable 
   @SerializedName("record_auth")
   private JsonElement recordAuth;
 
+  public JsonElement getEffectiveAuthInfo() {
+    if (this.authInfo != null) {
+      return this.authInfo;
+    }
+    if (this.fieldAuth != null) {
+      return this.fieldAuth;
+    }
+    return this.recordAuth;
+  }
+
   public static WxCpDocSmartSheetAuth fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpDocSmartSheetAuth.class);
   }

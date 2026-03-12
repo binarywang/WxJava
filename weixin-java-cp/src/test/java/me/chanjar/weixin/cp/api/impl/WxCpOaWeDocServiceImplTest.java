@@ -51,7 +51,7 @@ public class WxCpOaWeDocServiceImplTest {
     when(cpService.post(eq("https://api.test/mod_doc"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
     when(cpService.upload(eq("https://api.test/upload_doc_image"), any()))
-      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"url\":\"https://img.test/a.png\"}");
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"image_url\":\"https://img.test/a.png\",\"media_id\":\"media-1\"}");
     when(cpService.post(eq("https://api.test/smartsheet/get_sheet_auth"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"docid\":\"doc1\",\"sheet_id\":\"sheet1\"}");
     when(cpService.post(eq("https://api.test/smartsheet/mod_sheet_auth"), anyString()))
@@ -82,7 +82,8 @@ public class WxCpOaWeDocServiceImplTest {
     verify(cpService).post(eq("https://api.test/mod_doc"), anyString());
 
     WxCpDocImageUploadResult uploadResult = service.docUploadImage(new File("demo.png"));
-    assertThat(uploadResult.getUrl()).isEqualTo("https://img.test/a.png");
+    assertThat(uploadResult.getEffectiveUrl()).isEqualTo("https://img.test/a.png");
+    assertThat(uploadResult.getMediaId()).isEqualTo("media-1");
     verify(cpService).upload(eq("https://api.test/upload_doc_image"), any());
 
     WxCpDocSmartSheetAuthRequest authRequest = WxCpDocSmartSheetAuthRequest.builder()

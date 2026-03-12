@@ -1,6 +1,5 @@
 package me.chanjar.weixin.cp.bean.oa.doc;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
@@ -157,29 +156,23 @@ public class WxCpOaWeDocJsonTest {
 
   @Test
   public void testDocGetDataAndModifyJson() {
-    JsonObject extra = new JsonObject();
-    extra.addProperty("start", 0);
-    extra.addProperty("limit", 20);
-
     WxCpDocGetDataRequest getDataRequest = WxCpDocGetDataRequest.builder()
       .docId("doc123")
-      .extra(extra)
       .build();
+    getDataRequest.addExtra("start", 0).addExtra("limit", 20);
     assertThat(getDataRequest.toJson()).contains("\"docid\":\"doc123\"");
     assertThat(getDataRequest.toJson()).contains("\"limit\":20");
 
-    JsonArray requests = new JsonArray();
     JsonObject insertRequest = new JsonObject();
     insertRequest.addProperty("op", "insert_text");
     insertRequest.addProperty("text", "hello");
-    requests.add(insertRequest);
-
     WxCpDocModifyRequest modifyRequest = WxCpDocModifyRequest.builder()
       .docId("doc123")
-      .requests(requests)
       .build();
+    modifyRequest.addRequest(insertRequest).addExtra("client_token", "token-1");
     assertThat(modifyRequest.toJson()).contains("\"requests\"");
     assertThat(modifyRequest.toJson()).contains("\"insert_text\"");
+    assertThat(modifyRequest.toJson()).contains("\"client_token\":\"token-1\"");
 
     String json = "{"
       + "\"errcode\":0,"
@@ -192,8 +185,18 @@ public class WxCpOaWeDocJsonTest {
     WxCpDocData result = WxCpDocData.fromJson(json);
     assertThat(result.getDocId()).isEqualTo("doc123");
     assertThat(result.getContent().getAsJsonObject().getAsJsonArray("blocks")).hasSize(1);
+    assertThat(result.getEffectiveContent().getAsJsonObject().getAsJsonArray("blocks")).hasSize(1);
     assertThat(result.getHasMore()).isTrue();
     assertThat(result.getNextCursor()).isEqualTo("cursor-1");
+
+    String docContentJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"docid\":\"doc123\","
+      + "\"doc_content\":{\"blocks\":[{\"block_id\":\"blk2\"}]}"
+      + "}";
+    WxCpDocData docContentResult = WxCpDocData.fromJson(docContentJson);
+    assertThat(docContentResult.getEffectiveContent().getAsJsonObject().getAsJsonArray("blocks")).hasSize(1);
   }
 
   @Test
@@ -201,13 +204,15 @@ public class WxCpOaWeDocJsonTest {
     String uploadJson = "{"
       + "\"errcode\":0,"
       + "\"errmsg\":\"ok\","
-      + "\"url\":\"https://wedoc.test/image.png\","
+      + "\"image_url\":\"https://wedoc.test/image.png\","
       + "\"imageid\":\"img123\","
+      + "\"media_id\":\"media123\","
       + "\"md5\":\"abc\""
       + "}";
     WxCpDocImageUploadResult uploadResult = WxCpDocImageUploadResult.fromJson(uploadJson);
-    assertThat(uploadResult.getUrl()).isEqualTo("https://wedoc.test/image.png");
+    assertThat(uploadResult.getEffectiveUrl()).isEqualTo("https://wedoc.test/image.png");
     assertThat(uploadResult.getImageId()).isEqualTo("img123");
+    assertThat(uploadResult.getMediaId()).isEqualTo("media123");
 
     JsonObject smartExtra = new JsonObject();
     smartExtra.addProperty("view_type", "field");
@@ -241,5 +246,6 @@ public class WxCpOaWeDocJsonTest {
     assertThat(smartSheetAuth.getDocId()).isEqualTo("doc456");
     assertThat(smartSheetAuth.getAuthInfo().getAsJsonObject().get("mode").getAsString()).isEqualTo("custom");
     assertThat(smartSheetAuth.getFieldAuth().getAsJsonObject().getAsJsonArray("columns")).hasSize(1);
+    assertThat(smartSheetAuth.getEffectiveAuthInfo().getAsJsonObject().get("mode").getAsString()).isEqualTo("custom");
   }
 }

@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.oa.doc;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
@@ -42,10 +43,37 @@ public class WxCpDocGetDataRequest implements Serializable {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("docid", this.docId);
     if (this.extra != null) {
-      for (Map.Entry<String, com.google.gson.JsonElement> entry : this.extra.entrySet()) {
+      for (Map.Entry<String, JsonElement> entry : this.extra.entrySet()) {
         jsonObject.add(entry.getKey(), entry.getValue());
       }
     }
     return WxCpGsonBuilder.create().toJson(jsonObject);
+  }
+
+  public WxCpDocGetDataRequest addExtra(String key, String value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocGetDataRequest addExtra(String key, Number value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocGetDataRequest addExtra(String key, Boolean value) {
+    ensureExtra().addProperty(key, value);
+    return this;
+  }
+
+  public WxCpDocGetDataRequest addExtra(String key, JsonElement value) {
+    ensureExtra().add(key, value);
+    return this;
+  }
+
+  private JsonObject ensureExtra() {
+    if (this.extra == null) {
+      this.extra = new JsonObject();
+    }
+    return this.extra;
   }
 }

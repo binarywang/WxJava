@@ -26,8 +26,15 @@ public class WxCpDocImageUploadResult extends WxCpBaseResp implements Serializab
   @SerializedName("imageid")
   private String imageId;
 
+  @SerializedName("media_id")
+  private String mediaId;
+
   @SerializedName("md5")
   private String md5;
+
+  public String getEffectiveUrl() {
+    return this.imageUrl != null ? this.imageUrl : this.url;
+  }
 
   public static WxCpDocImageUploadResult fromJson(String json) {
     return WxCpGsonBuilder.create().fromJson(json, WxCpDocImageUploadResult.class);
