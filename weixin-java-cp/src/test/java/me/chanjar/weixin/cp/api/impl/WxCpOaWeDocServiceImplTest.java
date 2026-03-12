@@ -5,23 +5,14 @@ import com.google.gson.JsonObject;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocData;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocGetDataRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocAdminListResult;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocAdminRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocImageUploadResult;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocModifyRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetAuth;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetAuthRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetModifyAuthRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetRequest;
-import me.chanjar.weixin.cp.bean.oa.doc.WxCpDocSmartSheetResult;
+import me.chanjar.weixin.cp.bean.oa.doc.*;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import org.mockito.ArgumentCaptor;
 import org.testng.annotations.Test;
 
 import java.io.File;
 
+import static java.util.Collections.singletonList;
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
@@ -37,7 +28,205 @@ import static org.mockito.Mockito.when;
 public class WxCpOaWeDocServiceImplTest {
 
   @Test
-  public void testNewApisUseExpectedPaths() throws WxErrorException {
+  public void testLegacyApisUseExpectedPaths() throws WxErrorException {
+    WxCpService cpService = mock(WxCpService.class);
+    WxCpConfigStorage configStorage = mock(WxCpConfigStorage.class);
+    when(cpService.getWxCpConfigStorage()).thenReturn(configStorage);
+    when(configStorage.getApiUrl(WEDOC_CREATE_DOC)).thenReturn("https://api.test/create_doc");
+    when(configStorage.getApiUrl(WEDOC_RENAME_DOC)).thenReturn("https://api.test/rename_doc");
+    when(configStorage.getApiUrl(WEDOC_DEL_DOC)).thenReturn("https://api.test/del_doc");
+    when(configStorage.getApiUrl(WEDOC_GET_DOC_BASE_INFO)).thenReturn("https://api.test/get_doc_base_info");
+    when(configStorage.getApiUrl(WEDOC_DOC_SHARE)).thenReturn("https://api.test/doc_share");
+    when(configStorage.getApiUrl(WEDOC_DOC_GET_AUTH)).thenReturn("https://api.test/doc_get_auth");
+    when(configStorage.getApiUrl(WEDOC_MOD_DOC_JOIN_RULE)).thenReturn("https://api.test/mod_doc_join_rule");
+    when(configStorage.getApiUrl(WEDOC_MOD_DOC_MEMBER)).thenReturn("https://api.test/mod_doc_member");
+    when(configStorage.getApiUrl(WEDOC_MOD_DOC_SAFTY_SETTING)).thenReturn("https://api.test/mod_doc_safty_setting");
+    when(configStorage.getApiUrl(WEDOC_SPREADSHEET_BATCH_UPDATE)).thenReturn("https://api.test/spreadsheet/batch_update");
+    when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES)).thenReturn("https://api.test/spreadsheet/get_sheet_properties");
+    when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA)).thenReturn("https://api.test/spreadsheet/get_sheet_range_data");
+    when(configStorage.getApiUrl(WEDOC_CREATE_FORM)).thenReturn("https://api.test/create_form");
+    when(configStorage.getApiUrl(WEDOC_MODIFY_FORM)).thenReturn("https://api.test/modify_form");
+    when(configStorage.getApiUrl(WEDOC_GET_FORM_INFO)).thenReturn("https://api.test/get_form_info");
+    when(configStorage.getApiUrl(WEDOC_GET_FORM_STATISTIC)).thenReturn("https://api.test/get_form_statistic");
+    when(configStorage.getApiUrl(WEDOC_GET_FORM_ANSWER)).thenReturn("https://api.test/get_form_answer");
+
+    when(cpService.post(eq("https://api.test/create_doc"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"url\":\"https://wedoc.test/doc/1\",\"docid\":\"doc1\"}");
+    when(cpService.post(eq("https://api.test/rename_doc"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/del_doc"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/get_doc_base_info"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"doc_base_info\":{\"docid\":\"doc1\",\"doc_name\":\"日报\",\"doc_type\":3}}");
+    when(cpService.post(eq("https://api.test/doc_share"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"share_url\":\"https://wedoc.test/share/1\"}");
+    when(cpService.post(eq("https://api.test/doc_get_auth"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"access_rule\":{\"enable_corp_internal\":true,\"corp_internal_auth\":1}}");
+    when(cpService.post(eq("https://api.test/mod_doc_join_rule"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/mod_doc_member"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/mod_doc_safty_setting"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/spreadsheet/batch_update"), anyString()))
+      .thenReturn("{\"add_sheet_response\":{\"properties\":{\"sheet_id\":\"sheet2\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}},\"update_range_response\":{\"updated_cells\":2}}");
+    when(cpService.post(eq("https://api.test/spreadsheet/get_sheet_properties"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"properties\":[{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}]}");
+    when(cpService.post(eq("https://api.test/spreadsheet/get_sheet_range_data"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"grid_data\":{\"start_row\":0,\"start_column\":0,\"rows\":[{\"values\":[{\"cell_value\":{\"text\":\"hello\"}}]}]}}");
+    when(cpService.post(eq("https://api.test/create_form"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"formid\":\"FORMID1\",\"url\":\"https://wedoc.test/form/1\"}");
+    when(cpService.post(eq("https://api.test/modify_form"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+    when(cpService.post(eq("https://api.test/get_form_info"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"form_info\":{\"formid\":\"FORMID1\",\"form_title\":\"日报\"}}");
+    when(cpService.post(eq("https://api.test/get_form_statistic"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"fill_cnt\":3,\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":1}]}");
+    when(cpService.post(eq("https://api.test/get_form_answer"), anyString()))
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"answer\":{\"answer_list\":[{\"answer_id\":1,\"userid\":\"zhangsan\",\"reply\":{\"items\":[{\"question_id\":1,\"text_reply\":\"ok\"}]}}]}}");
+
+    WxCpOaWeDocServiceImpl service = new WxCpOaWeDocServiceImpl(cpService);
+
+    WxCpDocCreateRequest createRequest = WxCpDocCreateRequest.builder()
+      .spaceId("space1")
+      .fatherId("father1")
+      .docType(3)
+      .docName("日报")
+      .build();
+    WxCpDocCreateData createData = service.docCreate(createRequest);
+    assertThat(createData.getDocId()).isEqualTo("doc1");
+    ArgumentCaptor<String> createBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/create_doc"), createBodyCaptor.capture());
+    assertThat(createBodyCaptor.getValue()).contains("\"spaceid\":\"space1\"");
+    assertThat(createBodyCaptor.getValue()).contains("\"doc_type\":3");
+
+    WxCpBaseResp renameResp = service.docRename(WxCpDocRenameRequest.builder()
+      .docId("doc1")
+      .newName("周报")
+      .build());
+    assertThat(renameResp.getErrcode()).isZero();
+    ArgumentCaptor<String> renameBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/rename_doc"), renameBodyCaptor.capture());
+    assertThat(renameBodyCaptor.getValue()).contains("\"new_name\":\"周报\"");
+
+    WxCpBaseResp deleteResp = service.docDelete("doc1", null);
+    assertThat(deleteResp.getErrcode()).isZero();
+    ArgumentCaptor<String> deleteBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/del_doc"), deleteBodyCaptor.capture());
+    assertThat(deleteBodyCaptor.getValue()).contains("\"docid\":\"doc1\"");
+
+    WxCpDocInfo docInfo = service.docInfo("doc1");
+    assertThat(docInfo.getDocBaseInfo().getDocName()).isEqualTo("日报");
+    verify(cpService).post(eq("https://api.test/get_doc_base_info"), anyString());
+
+    WxCpDocShare docShare = service.docShare("doc1");
+    assertThat(docShare.getShareUrl()).isEqualTo("https://wedoc.test/share/1");
+    verify(cpService).post(eq("https://api.test/doc_share"), anyString());
+
+    WxCpDocAuthInfo docAuthInfo = service.docGetAuth("doc1");
+    assertThat(docAuthInfo.getAccessRule().getEnableCorpInternal()).isTrue();
+    verify(cpService).post(eq("https://api.test/doc_get_auth"), anyString());
+
+    WxCpBaseResp joinRuleResp = service.docModifyJoinRule(WxCpDocModifyJoinRuleRequest.builder()
+      .docId("doc1")
+      .enableCorpInternal(true)
+      .corpInternalAuth(1)
+      .build());
+    assertThat(joinRuleResp.getErrcode()).isZero();
+    verify(cpService).post(eq("https://api.test/mod_doc_join_rule"), anyString());
+
+    WxCpDocAuthInfo.DocMember docMember = new WxCpDocAuthInfo.DocMember();
+    docMember.setType(1);
+    docMember.setUserId("zhangsan");
+    docMember.setAuth(7);
+    WxCpBaseResp modifyMemberResp = service.docModifyMember(WxCpDocModifyMemberRequest.builder()
+      .docId("doc1")
+      .updateFileMemberList(singletonList(docMember))
+      .build());
+    assertThat(modifyMemberResp.getErrcode()).isZero();
+    verify(cpService).post(eq("https://api.test/mod_doc_member"), anyString());
+
+    WxCpDocAuthInfo.Watermark watermark = new WxCpDocAuthInfo.Watermark();
+    watermark.setMarginType(2);
+    watermark.setShowText(true);
+    watermark.setText("wm");
+    WxCpBaseResp safetyResp = service.docModifySaftySetting(WxCpDocModifySaftySettingRequest.builder()
+      .docId("doc1")
+      .enableReadonlyCopy(true)
+      .watermark(watermark)
+      .build());
+    assertThat(safetyResp.getErrcode()).isZero();
+    verify(cpService).post(eq("https://api.test/mod_doc_safty_setting"), anyString());
+
+    WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest addSheetRequest =
+      new WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest();
+    addSheetRequest.setTitle("Sheet A");
+    addSheetRequest.setRowCount(20);
+    addSheetRequest.setColumnCount(5);
+    WxCpDocSheetBatchUpdateRequest.Request batchRequest = new WxCpDocSheetBatchUpdateRequest.Request();
+    batchRequest.setAddSheetRequest(addSheetRequest);
+    WxCpDocSheetBatchUpdateResponse batchUpdateResponse = service.docBatchUpdate(WxCpDocSheetBatchUpdateRequest.builder()
+      .docId("doc1")
+      .requests(singletonList(batchRequest))
+      .build());
+    assertThat(batchUpdateResponse.getAddSheetResponse().getProperties().getSheetId()).isEqualTo("sheet2");
+    verify(cpService).post(eq("https://api.test/spreadsheet/batch_update"), anyString());
+
+    WxCpDocSheetProperties sheetProperties = service.getSheetProperties("doc1");
+    assertThat(sheetProperties.getProperties()).hasSize(1);
+    assertThat(sheetProperties.getProperties().get(0).getSheetId()).isEqualTo("sheet1");
+    ArgumentCaptor<String> sheetPropertiesBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/spreadsheet/get_sheet_properties"), sheetPropertiesBodyCaptor.capture());
+    assertThat(sheetPropertiesBodyCaptor.getValue()).isEqualTo("{\"docid\":\"doc1\"}");
+
+    WxCpDocSheetData sheetData = service.getSheetRangeData(WxCpDocSheetGetDataRequest.builder()
+      .docId("doc1")
+      .sheetId("sheet1")
+      .range("A1:B2")
+      .build());
+    assertThat(sheetData.getGridData().getRows()).hasSize(1);
+    verify(cpService).post(eq("https://api.test/spreadsheet/get_sheet_range_data"), anyString());
+
+    WxCpFormInfo formInfo = new WxCpFormInfo();
+    formInfo.setFormTitle("日报");
+    WxCpFormCreateResult formCreateResult = service.formCreate(WxCpFormCreateRequest.builder()
+      .spaceId("space1")
+      .fatherId("father1")
+      .formInfo(formInfo)
+      .build());
+    assertThat(formCreateResult.getFormId()).isEqualTo("FORMID1");
+    verify(cpService).post(eq("https://api.test/create_form"), anyString());
+
+    WxCpBaseResp formModifyResp = service.formModify(WxCpFormModifyRequest.builder()
+      .oper(1)
+      .formId("FORMID1")
+      .formInfo(formInfo)
+      .build());
+    assertThat(formModifyResp.getErrcode()).isZero();
+    verify(cpService).post(eq("https://api.test/modify_form"), anyString());
+
+    WxCpFormInfoResult formInfoResult = service.formInfo("FORMID1");
+    assertThat(formInfoResult.getFormInfo().getFormId()).isEqualTo("FORMID1");
+    ArgumentCaptor<String> formInfoBodyCaptor = ArgumentCaptor.forClass(String.class);
+    verify(cpService).post(eq("https://api.test/get_form_info"), formInfoBodyCaptor.capture());
+    assertThat(formInfoBodyCaptor.getValue()).isEqualTo("{\"formid\":\"FORMID1\"}");
+
+    WxCpFormStatistic formStatistic = service.formStatistic(WxCpFormStatisticRequest.builder()
+      .repeatedId("repeat-1")
+      .build());
+    assertThat(formStatistic.getFillCnt()).isEqualTo(3);
+    verify(cpService).post(eq("https://api.test/get_form_statistic"), anyString());
+
+    WxCpFormAnswer formAnswer = service.formAnswer(WxCpFormAnswerRequest.builder()
+      .repeatedId("repeat-1")
+      .answerIds(singletonList(1L))
+      .build());
+    assertThat(formAnswer.getAnswer().getAnswerList()).hasSize(1);
+    verify(cpService).post(eq("https://api.test/get_form_answer"), anyString());
+  }
+
+  @Test
+  public void testNewApisUseExpectedPaths() throws Exception {
     WxCpService cpService = mock(WxCpService.class);
     WxCpConfigStorage configStorage = mock(WxCpConfigStorage.class);
     when(cpService.getWxCpConfigStorage()).thenReturn(configStorage);
@@ -139,7 +328,9 @@ public class WxCpOaWeDocServiceImplTest {
     assertThat(modifyResp.getErrcode()).isZero();
     verify(cpService).post(eq("https://api.test/mod_doc"), anyString());
 
-    WxCpDocImageUploadResult uploadResult = service.docUploadImage(new File("demo.png"));
+    File uploadFile = File.createTempFile("wedoc-upload-", ".png");
+    uploadFile.deleteOnExit();
+    WxCpDocImageUploadResult uploadResult = service.docUploadImage(uploadFile);
     assertThat(uploadResult.getEffectiveUrl()).isEqualTo("https://img.test/a.png");
     assertThat(uploadResult.getMediaId()).isEqualTo("media-1");
     verify(cpService).upload(eq("https://api.test/upload_doc_image"), any());

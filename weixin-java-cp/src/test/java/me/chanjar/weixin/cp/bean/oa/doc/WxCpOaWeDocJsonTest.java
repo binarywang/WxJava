@@ -62,6 +62,60 @@ public class WxCpOaWeDocJsonTest {
   }
 
   @Test
+  public void testDocCreateRenameInfoAndShareJson() {
+    WxCpDocCreateRequest createRequest = WxCpDocCreateRequest.builder()
+      .spaceId("space1")
+      .fatherId("father1")
+      .docType(3)
+      .docName("日报")
+      .adminUsers(Arrays.asList("zhangsan", "lisi"))
+      .build();
+    assertThat(createRequest.toJson()).contains("\"spaceid\":\"space1\"");
+    assertThat(createRequest.toJson()).contains("\"doc_type\":3");
+    assertThat(createRequest.toJson()).contains("\"admin_users\":[\"zhangsan\",\"lisi\"]");
+
+    String createJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"url\":\"https://wedoc.test/doc/1\","
+      + "\"docid\":\"doc123\""
+      + "}";
+    WxCpDocCreateData createData = WxCpDocCreateData.fromJson(createJson);
+    assertThat(createData.getDocId()).isEqualTo("doc123");
+    assertThat(createData.getUrl()).isEqualTo("https://wedoc.test/doc/1");
+
+    WxCpDocRenameRequest renameRequest = WxCpDocRenameRequest.builder()
+      .docId("doc123")
+      .newName("周报")
+      .build();
+    assertThat(renameRequest.toJson()).contains("\"docid\":\"doc123\"");
+    assertThat(renameRequest.toJson()).contains("\"new_name\":\"周报\"");
+
+    String infoJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"doc_base_info\":{"
+      + "\"docid\":\"doc123\","
+      + "\"doc_name\":\"日报\","
+      + "\"create_time\":1710000000,"
+      + "\"modify_time\":1710000300,"
+      + "\"doc_type\":3"
+      + "}"
+      + "}";
+    WxCpDocInfo docInfo = WxCpDocInfo.fromJson(infoJson);
+    assertThat(docInfo.getDocBaseInfo().getDocId()).isEqualTo("doc123");
+    assertThat(docInfo.getDocBaseInfo().getDocName()).isEqualTo("日报");
+
+    String shareJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"share_url\":\"https://wedoc.test/share/1\""
+      + "}";
+    WxCpDocShare docShare = WxCpDocShare.fromJson(shareJson);
+    assertThat(docShare.getShareUrl()).isEqualTo("https://wedoc.test/share/1");
+  }
+
+  @Test
   public void testFormCreateRequestToJson() {
     JsonObject extendSetting = new JsonObject();
     extendSetting.addProperty("camera_only", true);
@@ -200,6 +254,40 @@ public class WxCpOaWeDocJsonTest {
   }
 
   @Test
+  public void testDocModifyMemberAndSafetyJson() {
+    WxCpDocAuthInfo.DocMember updateMember = new WxCpDocAuthInfo.DocMember();
+    updateMember.setType(1);
+    updateMember.setUserId("zhangsan");
+    updateMember.setAuth(7);
+
+    WxCpDocAuthInfo.DocMember deleteMember = new WxCpDocAuthInfo.DocMember();
+    deleteMember.setType(1);
+    deleteMember.setUserId("lisi");
+
+    WxCpDocModifyMemberRequest memberRequest = WxCpDocModifyMemberRequest.builder()
+      .docId("doc123")
+      .updateFileMemberList(Collections.singletonList(updateMember))
+      .delFileMemberList(Collections.singletonList(deleteMember))
+      .build();
+    assertThat(memberRequest.toJson()).contains("\"docid\":\"doc123\"");
+    assertThat(memberRequest.toJson()).contains("\"update_file_member_list\"");
+    assertThat(memberRequest.toJson()).contains("\"userid\":\"zhangsan\"");
+    assertThat(memberRequest.toJson()).contains("\"del_file_member_list\"");
+
+    WxCpDocAuthInfo.Watermark watermark = new WxCpDocAuthInfo.Watermark();
+    watermark.setMarginType(2);
+    watermark.setShowText(true);
+    watermark.setText("watermark");
+    WxCpDocModifySaftySettingRequest safetyRequest = WxCpDocModifySaftySettingRequest.builder()
+      .docId("doc123")
+      .enableReadonlyCopy(true)
+      .watermark(watermark)
+      .build();
+    assertThat(safetyRequest.toJson()).contains("\"enable_readonly_copy\":true");
+    assertThat(safetyRequest.toJson()).contains("\"text\":\"watermark\"");
+  }
+
+  @Test
   public void testDocUploadImageAndSmartSheetAuthJson() {
     String uploadJson = "{"
       + "\"errcode\":0,"
@@ -324,5 +412,69 @@ public class WxCpOaWeDocJsonTest {
     assertThat(result.getEffectiveRecords().getAsJsonArray()).hasSize(1);
     assertThat(result.getHasMore()).isTrue();
     assertThat(result.getNextCursor().getAsInt()).isEqualTo(101);
+  }
+
+  @Test
+  public void testSpreadsheetAndFormModifyJson() {
+    WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest addSheetRequest =
+      new WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest();
+    addSheetRequest.setTitle("Sheet A");
+    addSheetRequest.setRowCount(20);
+    addSheetRequest.setColumnCount(5);
+    WxCpDocSheetBatchUpdateRequest.Request request = new WxCpDocSheetBatchUpdateRequest.Request();
+    request.setAddSheetRequest(addSheetRequest);
+
+    WxCpDocSheetBatchUpdateRequest batchUpdateRequest = WxCpDocSheetBatchUpdateRequest.builder()
+      .docId("doc123")
+      .requests(Collections.singletonList(request))
+      .build();
+    assertThat(batchUpdateRequest.toJson()).contains("\"docid\":\"doc123\"");
+    assertThat(batchUpdateRequest.toJson()).contains("\"add_sheet_request\"");
+    assertThat(batchUpdateRequest.toJson()).contains("\"row_count\":20");
+
+    String batchUpdateJson = "{"
+      + "\"add_sheet_response\":{\"properties\":{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}},"
+      + "\"update_range_response\":{\"updated_cells\":2}"
+      + "}";
+    WxCpDocSheetBatchUpdateResponse batchUpdateResponse = WxCpDocSheetBatchUpdateResponse.fromJson(batchUpdateJson);
+    assertThat(batchUpdateResponse.getAddSheetResponse().getProperties().getSheetId()).isEqualTo("sheet1");
+    assertThat(batchUpdateResponse.getUpdateRangeResponse().getUpdatedCells()).isEqualTo(2);
+
+    String propertiesJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"properties\":[{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}]"
+      + "}";
+    WxCpDocSheetProperties properties = WxCpDocSheetProperties.fromJson(propertiesJson);
+    assertThat(properties.getProperties()).hasSize(1);
+    assertThat(properties.getProperties().get(0).getTitle()).isEqualTo("Sheet A");
+
+    WxCpDocSheetGetDataRequest getDataRequest = WxCpDocSheetGetDataRequest.builder()
+      .docId("doc123")
+      .sheetId("sheet1")
+      .range("A1:B2")
+      .build();
+    assertThat(getDataRequest.toJson()).contains("\"sheet_id\":\"sheet1\"");
+    assertThat(getDataRequest.toJson()).contains("\"range\":\"A1:B2\"");
+
+    String sheetDataJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"grid_data\":{\"start_row\":0,\"start_column\":0,\"rows\":[{\"values\":[{\"cell_value\":{\"text\":\"hello\"}}]}]}"
+      + "}";
+    WxCpDocSheetData sheetData = WxCpDocSheetData.fromJson(sheetDataJson);
+    assertThat(sheetData.getGridData().getRows()).hasSize(1);
+    assertThat(sheetData.getGridData().getRows().get(0).getValues().get(0).getCellValue().getText()).isEqualTo("hello");
+
+    WxCpFormInfo formInfo = new WxCpFormInfo();
+    formInfo.setFormTitle("日报");
+    WxCpFormModifyRequest formModifyRequest = WxCpFormModifyRequest.builder()
+      .oper(1)
+      .formId("FORMID1")
+      .formInfo(formInfo)
+      .build();
+    assertThat(formModifyRequest.toJson()).contains("\"oper\":1");
+    assertThat(formModifyRequest.toJson()).contains("\"formid\":\"FORMID1\"");
+    assertThat(formModifyRequest.toJson()).contains("\"form_title\":\"日报\"");
   }
 }
