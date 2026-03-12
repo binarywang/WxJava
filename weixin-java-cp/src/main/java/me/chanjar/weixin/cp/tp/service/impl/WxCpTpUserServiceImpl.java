@@ -99,19 +99,29 @@ public class WxCpTpUserServiceImpl implements WxCpTpUserService {
   @Override
   public List<WxCpUser> listSimpleByDepartment(Long departId, Boolean fetchChild, Integer status, String corpId)
     throws WxErrorException {
-    String params = "";
+    StringBuilder params = new StringBuilder();
     if (fetchChild != null) {
-      params += "&fetch_child=" + (fetchChild ? "1" : "0");
+      params.append("fetch_child=").append(fetchChild ? "1" : "0");
     }
     if (status != null) {
-      params += "&status=" + status;
+      if (params.length() > 0) {
+        params.append('&');
+      }
+      params.append("status=").append(status);
     } else {
-      params += "&status=0";
+      if (params.length() > 0) {
+        params.append('&');
+      }
+      params.append("status=0");
     }
-    params += "&access_token=" + mainService.getWxCpTpConfigStorage().getAccessToken(corpId);
+    if (params.length() > 0) {
+      params.append('&');
+    }
+    params.append("access_token=")
+      .append(mainService.getWxCpTpConfigStorage().getAccessToken(corpId));
 
     String url = mainService.getWxCpTpConfigStorage().getApiUrl(USER_SIMPLE_LIST + departId);
-    String responseContent = this.mainService.get(url, params, true);
+    String responseContent = this.mainService.get(url, params.toString(), true);
     JsonObject tmpJsonElement = GsonParser.parse(responseContent);
     return WxCpGsonBuilder.create()
       .fromJson(
