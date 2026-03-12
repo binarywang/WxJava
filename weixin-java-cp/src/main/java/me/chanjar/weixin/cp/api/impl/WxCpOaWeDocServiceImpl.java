@@ -4,11 +4,14 @@ import com.google.gson.JsonObject;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpOaWeDocService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.doc.*;
+
+import java.io.File;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Oa.*;
 
@@ -115,6 +118,41 @@ public class WxCpOaWeDocServiceImpl implements WxCpOaWeDocService {
     String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA);
     String responseContent = this.cpService.post(apiUrl, request.toJson());
     return WxCpDocSheetData.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocData docGetData(@NonNull WxCpDocGetDataRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_GET_DOC_DATA);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocData.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp docModify(@NonNull WxCpDocModifyRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_MOD_DOC);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocImageUploadResult docUploadImage(@NonNull File file) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_UPLOAD_DOC_IMAGE);
+    String responseContent = this.cpService.upload(apiUrl, CommonUploadParam.fromFile("media", file));
+    return WxCpDocImageUploadResult.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpDocSmartSheetAuth smartSheetGetAuth(@NonNull WxCpDocSmartSheetAuthRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_GET_SHEET_AUTH);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpDocSmartSheetAuth.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp smartSheetModifyAuth(@NonNull WxCpDocSmartSheetModifyAuthRequest request) throws WxErrorException {
+    String apiUrl = this.cpService.getWxCpConfigStorage().getApiUrl(WEDOC_SMARTSHEET_MOD_SHEET_AUTH);
+    String responseContent = this.cpService.post(apiUrl, request.toJson());
+    return WxCpBaseResp.fromJson(responseContent);
   }
 
   @Override

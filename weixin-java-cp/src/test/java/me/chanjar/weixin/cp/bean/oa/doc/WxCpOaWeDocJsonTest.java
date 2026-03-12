@@ -1,5 +1,6 @@
 package me.chanjar.weixin.cp.bean.oa.doc;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
@@ -152,5 +153,93 @@ public class WxCpOaWeDocJsonTest {
     assertThat(answer.getAnswer().getAnswerList().get(0).getReply().getItems()).hasSize(3);
     assertThat(answer.getAnswer().getAnswerList().get(0).getReply().getItems().get(1).getOptionReply())
       .isEqualTo(Arrays.asList(1, 2));
+  }
+
+  @Test
+  public void testDocGetDataAndModifyJson() {
+    JsonObject extra = new JsonObject();
+    extra.addProperty("start", 0);
+    extra.addProperty("limit", 20);
+
+    WxCpDocGetDataRequest getDataRequest = WxCpDocGetDataRequest.builder()
+      .docId("doc123")
+      .extra(extra)
+      .build();
+    assertThat(getDataRequest.toJson()).contains("\"docid\":\"doc123\"");
+    assertThat(getDataRequest.toJson()).contains("\"limit\":20");
+
+    JsonArray requests = new JsonArray();
+    JsonObject insertRequest = new JsonObject();
+    insertRequest.addProperty("op", "insert_text");
+    insertRequest.addProperty("text", "hello");
+    requests.add(insertRequest);
+
+    WxCpDocModifyRequest modifyRequest = WxCpDocModifyRequest.builder()
+      .docId("doc123")
+      .requests(requests)
+      .build();
+    assertThat(modifyRequest.toJson()).contains("\"requests\"");
+    assertThat(modifyRequest.toJson()).contains("\"insert_text\"");
+
+    String json = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"docid\":\"doc123\","
+      + "\"content\":{\"blocks\":[{\"block_id\":\"blk1\"}]},"
+      + "\"has_more\":true,"
+      + "\"next_cursor\":\"cursor-1\""
+      + "}";
+    WxCpDocData result = WxCpDocData.fromJson(json);
+    assertThat(result.getDocId()).isEqualTo("doc123");
+    assertThat(result.getContent().getAsJsonObject().getAsJsonArray("blocks")).hasSize(1);
+    assertThat(result.getHasMore()).isTrue();
+    assertThat(result.getNextCursor()).isEqualTo("cursor-1");
+  }
+
+  @Test
+  public void testDocUploadImageAndSmartSheetAuthJson() {
+    String uploadJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"url\":\"https://wedoc.test/image.png\","
+      + "\"imageid\":\"img123\","
+      + "\"md5\":\"abc\""
+      + "}";
+    WxCpDocImageUploadResult uploadResult = WxCpDocImageUploadResult.fromJson(uploadJson);
+    assertThat(uploadResult.getUrl()).isEqualTo("https://wedoc.test/image.png");
+    assertThat(uploadResult.getImageId()).isEqualTo("img123");
+
+    JsonObject smartExtra = new JsonObject();
+    smartExtra.addProperty("view_type", "field");
+    WxCpDocSmartSheetAuthRequest smartRequest = WxCpDocSmartSheetAuthRequest.builder()
+      .docId("doc456")
+      .sheetId("sheet789")
+      .extra(smartExtra)
+      .build();
+    assertThat(smartRequest.toJson()).contains("\"sheet_id\":\"sheet789\"");
+    assertThat(smartRequest.toJson()).contains("\"view_type\":\"field\"");
+
+    JsonObject authInfo = new JsonObject();
+    authInfo.addProperty("mode", "custom");
+    WxCpDocSmartSheetModifyAuthRequest modifyAuthRequest = WxCpDocSmartSheetModifyAuthRequest.builder()
+      .docId("doc456")
+      .sheetId("sheet789")
+      .authInfo(authInfo)
+      .build();
+    assertThat(modifyAuthRequest.toJson()).contains("\"auth_info\"");
+    assertThat(modifyAuthRequest.toJson()).contains("\"mode\":\"custom\"");
+
+    String authJson = "{"
+      + "\"errcode\":0,"
+      + "\"errmsg\":\"ok\","
+      + "\"docid\":\"doc456\","
+      + "\"sheet_id\":\"sheet789\","
+      + "\"auth_info\":{\"mode\":\"custom\"},"
+      + "\"field_auth\":{\"columns\":[{\"field_id\":\"f1\"}]}"
+      + "}";
+    WxCpDocSmartSheetAuth smartSheetAuth = WxCpDocSmartSheetAuth.fromJson(authJson);
+    assertThat(smartSheetAuth.getDocId()).isEqualTo("doc456");
+    assertThat(smartSheetAuth.getAuthInfo().getAsJsonObject().get("mode").getAsString()).isEqualTo("custom");
+    assertThat(smartSheetAuth.getFieldAuth().getAsJsonObject().getAsJsonArray("columns")).hasSize(1);
   }
 }

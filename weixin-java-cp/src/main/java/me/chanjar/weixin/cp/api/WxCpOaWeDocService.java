@@ -5,6 +5,8 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.bean.oa.doc.*;
 
+import java.io.File;
+
 /**
  * 企业微信文档相关接口.
  * <a href="https://developer.work.weixin.qq.com/document/path/97392">文档</a>
@@ -178,6 +180,71 @@ public interface WxCpOaWeDocService {
    * @throws WxErrorException
    */
   WxCpDocSheetData getSheetRangeData(@NonNull WxCpDocSheetGetDataRequest request) throws WxErrorException;
+
+  /**
+   * 获取文档数据
+   * 该接口用于获取在线文档内容数据。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_doc_data?access_token=ACCESS_TOKEN
+   *
+   * @param request 获取文档数据请求参数
+   * @return 文档内容数据
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocData docGetData(@NonNull WxCpDocGetDataRequest request) throws WxErrorException;
+
+  /**
+   * 编辑文档内容
+   * 该接口用于编辑在线文档内容。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/mod_doc?access_token=ACCESS_TOKEN
+   *
+   * @param request 编辑文档内容请求参数
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp docModify(@NonNull WxCpDocModifyRequest request) throws WxErrorException;
+
+  /**
+   * 上传文档图片
+   * 该接口用于上传在线文档编辑时使用的图片资源。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/upload_doc_image?access_token=ACCESS_TOKEN
+   *
+   * @param file 图片文件
+   * @return 上传结果
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocImageUploadResult docUploadImage(@NonNull File file) throws WxErrorException;
+
+  /**
+   * 获取智能表格内容权限
+   * 该接口用于获取智能表格字段/记录等内容权限信息。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/smartsheet/get_sheet_auth?access_token=ACCESS_TOKEN
+   *
+   * @param request 智能表格内容权限请求
+   * @return 智能表格内容权限
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpDocSmartSheetAuth smartSheetGetAuth(@NonNull WxCpDocSmartSheetAuthRequest request) throws WxErrorException;
+
+  /**
+   * 修改智能表格内容权限
+   * 该接口用于修改智能表格字段/记录等内容权限信息。
+   * <p>
+   * 请求方式：POST（HTTPS）
+   * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/smartsheet/mod_sheet_auth?access_token=ACCESS_TOKEN
+   *
+   * @param request 修改智能表格内容权限请求
+   * @return wx cp base resp
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpBaseResp smartSheetModifyAuth(@NonNull WxCpDocSmartSheetModifyAuthRequest request) throws WxErrorException;
 
   /**
    * 创建收集表
