@@ -4,7 +4,6 @@ import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import me.chanjar.weixin.cp.bean.WxCpBaseResp;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import java.io.Serializable;
@@ -12,10 +11,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * 收集表统计结果.
+ * 收集表统计结果（单条统计项）.
  */
 @Data
-public class WxCpFormStatistic extends WxCpBaseResp implements Serializable {
+public class WxCpFormStatistic implements Serializable {
   private static final long serialVersionUID = -7531427161782533396L;
 
   @SerializedName("fill_cnt")

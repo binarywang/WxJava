@@ -146,7 +146,25 @@ public interface WxCpOaWeDocService {
    * @return wx cp base resp
    * @throws WxErrorException the wx error exception
    */
-  WxCpBaseResp docModifySaftySetting(@NonNull WxCpDocModifySaftySettingRequest request) throws WxErrorException;
+  WxCpBaseResp docModifySafetySetting(
+    @NonNull WxCpDocModifySafetySettingRequest request
+  ) throws WxErrorException;
+
+  /**
+   * @deprecated Use {@link #docModifySafetySetting(WxCpDocModifySafetySettingRequest)} instead.
+   */
+  @Deprecated
+  default WxCpBaseResp docModifySaftySetting(
+    @NonNull WxCpDocModifySaftySettingRequest request
+  ) throws WxErrorException {
+    WxCpDocModifySafetySettingRequest newReq =
+      WxCpDocModifySafetySettingRequest.builder()
+        .docId(request.getDocId())
+        .enableReadonlyCopy(request.getEnableReadonlyCopy())
+        .watermark(request.getWatermark())
+        .build();
+    return docModifySafetySetting(newReq);
+  }
 
   /**
    * 编辑表格内容
@@ -491,10 +509,10 @@ public interface WxCpOaWeDocService {
    * 请求地址: https://qyapi.weixin.qq.com/cgi-bin/wedoc/get_form_statistic?access_token=ACCESS_TOKEN
    *
    * @param requests 收集表统计请求数组
-   * @return 收集表统计信息数组
+   * @return 收集表统计结果（包含 statistic_list）
    * @throws WxErrorException the wx error exception
    */
-  List<WxCpFormStatistic> formStatistic(@NonNull List<WxCpFormStatisticRequest> requests) throws WxErrorException;
+  WxCpFormStatisticResult formStatistic(@NonNull List<WxCpFormStatisticRequest> requests) throws WxErrorException;
 
   /**
    * 单个收集表统计查询的兼容封装，底层仍按官方数组请求发送。
@@ -504,8 +522,9 @@ public interface WxCpOaWeDocService {
    * @throws WxErrorException the wx error exception
    */
   default WxCpFormStatistic formStatistic(@NonNull WxCpFormStatisticRequest request) throws WxErrorException {
-    List<WxCpFormStatistic> results = formStatistic(Collections.singletonList(request));
-    return results == null || results.isEmpty() ? null : results.get(0);
+    WxCpFormStatisticResult result = formStatistic(Collections.singletonList(request));
+    List<WxCpFormStatistic> list = result == null ? null : result.getStatisticList();
+    return list == null || list.isEmpty() ? null : list.get(0);
   }
 
   /**

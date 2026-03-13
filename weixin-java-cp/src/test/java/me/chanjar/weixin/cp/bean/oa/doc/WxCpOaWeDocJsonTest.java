@@ -48,7 +48,9 @@ public class WxCpOaWeDocJsonTest {
       + "\"errcode\":0,"
       + "\"errmsg\":\"ok\","
       + "\"access_rule\":{\"enable_corp_internal\":true,\"corp_internal_auth\":1},"
-      + "\"secure_setting\":{\"enable_readonly_copy\":false,\"watermark\":{\"margin_type\":2,\"show_text\":true,\"text\":\"mark\"}},"
+      + "\"secure_setting\":{\"enable_readonly_copy\":false,"
+      + "\"watermark\":{\"margin_type\":2,"
+      + "\"show_text\":true,\"text\":\"mark\"}},"
       + "\"doc_member_list\":[{\"type\":1,\"userid\":\"zhangsan\",\"auth\":7}],"
       + "\"co_auth_list\":[{\"type\":2,\"departmentid\":42,\"auth\":1}]"
       + "}";
@@ -159,7 +161,9 @@ public class WxCpOaWeDocJsonTest {
       + "\"form_info\":{"
       + "\"formid\":\"FORMID1\","
       + "\"form_title\":\"api创建的收集表\","
-      + "\"form_question\":{\"items\":[{\"question_id\":1,\"title\":\"问题1\",\"pos\":1,\"status\":1,\"reply_type\":1,\"must_reply\":true}]},"
+      + "\"form_question\":{\"items\":[{\"question_id\":1,"
+      + "\"title\":\"问题1\",\"pos\":1,\"status\":1,"
+      + "\"reply_type\":1,\"must_reply\":true}]},"
       + "\"form_setting\":{\"fill_out_auth\":1,\"max_fill_cnt\":2},"
       + "\"repeated_id\":[\"REPEAT_ID1\"]"
       + "}"
@@ -180,19 +184,27 @@ public class WxCpOaWeDocJsonTest {
     assertThat(statisticRequestJson).startsWith("[");
     assertThat(statisticRequestJson).contains("\"repeated_id\":\"REPEAT_ID1\"");
 
-    String statisticJson = "[{"
+    String statisticJson = "{\"errcode\":0,\"errmsg\":\"ok\","
+      + "\"statistic_list\":[{"
       + "\"repeated_id\":\"REPEAT_ID1\","
       + "\"repeated_name\":\"第1次收集\","
       + "\"fill_cnt\":1,"
       + "\"fill_user_cnt\":1,"
       + "\"unfill_user_cnt\":2,"
-      + "\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":3,\"submit_time\":1668418200,\"user_name\":\"张三\"}],"
+      + "\"submit_users\":[{\"userid\":\"zhangsan\","
+      + "\"answer_id\":3,\"submit_time\":1668418200,"
+      + "\"user_name\":\"张三\"}],"
       + "\"has_more\":false,"
       + "\"cursor\":1"
-      + "}]";
-    WxCpFormStatistic statistic = WxCpFormStatistic.listFromJson(statisticJson).get(0);
+      + "}]}";
+    WxCpFormStatisticResult statisticResult =
+      WxCpFormStatisticResult.fromJson(statisticJson);
+    assertThat(statisticResult.getErrcode()).isZero();
+    WxCpFormStatistic statistic =
+      statisticResult.getStatisticList().get(0);
     assertThat(statistic.getSubmitUsers()).hasSize(1);
-    assertThat(statistic.getSubmitUsers().get(0).getAnswerId()).isEqualTo(3L);
+    assertThat(statistic.getSubmitUsers().get(0).getAnswerId())
+      .isEqualTo(3L);
 
     String answerJson = "{"
       + "\"errcode\":0,"
@@ -288,13 +300,16 @@ public class WxCpOaWeDocJsonTest {
     watermark.setMarginType(2);
     watermark.setShowText(true);
     watermark.setText("watermark");
-    WxCpDocModifySaftySettingRequest safetyRequest = WxCpDocModifySaftySettingRequest.builder()
-      .docId("doc123")
-      .enableReadonlyCopy(true)
-      .watermark(watermark)
-      .build();
-    assertThat(safetyRequest.toJson()).contains("\"enable_readonly_copy\":true");
-    assertThat(safetyRequest.toJson()).contains("\"text\":\"watermark\"");
+    WxCpDocModifySafetySettingRequest safetyRequest =
+      WxCpDocModifySafetySettingRequest.builder()
+        .docId("doc123")
+        .enableReadonlyCopy(true)
+        .watermark(watermark)
+        .build();
+    assertThat(safetyRequest.toJson())
+      .contains("\"enable_readonly_copy\":true");
+    assertThat(safetyRequest.toJson())
+      .contains("\"text\":\"watermark\"");
   }
 
   @Test
@@ -443,7 +458,9 @@ public class WxCpOaWeDocJsonTest {
     assertThat(batchUpdateRequest.toJson()).contains("\"row_count\":20");
 
     String batchUpdateJson = "{"
-      + "\"add_sheet_response\":{\"properties\":{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\",\"row_count\":20,\"column_count\":5}},"
+      + "\"add_sheet_response\":{\"properties\":"
+      + "{\"sheet_id\":\"sheet1\",\"title\":\"Sheet A\","
+      + "\"row_count\":20,\"column_count\":5}},"
       + "\"update_range_response\":{\"updated_cells\":2}"
       + "}";
     WxCpDocSheetBatchUpdateResponse batchUpdateResponse = WxCpDocSheetBatchUpdateResponse.fromJson(batchUpdateJson);
@@ -470,7 +487,9 @@ public class WxCpOaWeDocJsonTest {
     String sheetDataJson = "{"
       + "\"errcode\":0,"
       + "\"errmsg\":\"ok\","
-      + "\"grid_data\":{\"start_row\":0,\"start_column\":0,\"rows\":[{\"values\":[{\"cell_value\":{\"text\":\"hello\"}}]}]}"
+      + "\"grid_data\":{\"start_row\":0,\"start_column\":0,"
+      + "\"rows\":[{\"values\":[{\"cell_value\":"
+      + "{\"text\":\"hello\"}}]}]}"
       + "}";
     WxCpDocSheetData sheetData = WxCpDocSheetData.fromJson(sheetDataJson);
     assertThat(sheetData.getGridData().getRows()).hasSize(1);

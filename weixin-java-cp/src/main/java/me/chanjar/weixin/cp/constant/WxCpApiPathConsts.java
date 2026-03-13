@@ -587,9 +587,15 @@ public interface WxCpApiPathConsts {
      */
     String WEDOC_MOD_DOC_MEMBER = "/cgi-bin/wedoc/mod_doc_member";
     /**
-     * The constant WEDOC_MOD_DOC_SAFTY_SETTING.
+     * The constant WEDOC_MOD_DOC_SAFETY_SETTING.
      */
-    String WEDOC_MOD_DOC_SAFTY_SETTING = "/cgi-bin/wedoc/mod_doc_safty_setting";
+    String WEDOC_MOD_DOC_SAFETY_SETTING = "/cgi-bin/wedoc/mod_doc_safty_setting";
+
+    /**
+     * @deprecated Use {@link #WEDOC_MOD_DOC_SAFETY_SETTING} instead.
+     */
+    @Deprecated
+    String WEDOC_MOD_DOC_SAFTY_SETTING = WEDOC_MOD_DOC_SAFETY_SETTING;
     /**
      * The constant WEDOC_CREATE_FORM.
      */

@@ -40,7 +40,8 @@ public class WxCpOaWeDocServiceImplTest {
     when(configStorage.getApiUrl(WEDOC_DOC_GET_AUTH)).thenReturn("https://api.test/doc_get_auth");
     when(configStorage.getApiUrl(WEDOC_MOD_DOC_JOIN_RULE)).thenReturn("https://api.test/mod_doc_join_rule");
     when(configStorage.getApiUrl(WEDOC_MOD_DOC_MEMBER)).thenReturn("https://api.test/mod_doc_member");
-    when(configStorage.getApiUrl(WEDOC_MOD_DOC_SAFTY_SETTING)).thenReturn("https://api.test/mod_doc_safty_setting");
+    when(configStorage.getApiUrl(WEDOC_MOD_DOC_SAFETY_SETTING))
+      .thenReturn("https://api.test/mod_doc_safty_setting");
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_BATCH_UPDATE)).thenReturn("https://api.test/spreadsheet/batch_update");
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_PROPERTIES)).thenReturn("https://api.test/spreadsheet/get_sheet_properties");
     when(configStorage.getApiUrl(WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA)).thenReturn("https://api.test/spreadsheet/get_sheet_range_data");
@@ -81,7 +82,10 @@ public class WxCpOaWeDocServiceImplTest {
     when(cpService.post(eq("https://api.test/get_form_info"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"form_info\":{\"formid\":\"FORMID1\",\"form_title\":\"日报\"}}");
     when(cpService.post(eq("https://api.test/get_form_statistic"), anyString()))
-      .thenReturn("[{\"repeated_id\":\"repeat-1\",\"fill_cnt\":3,\"submit_users\":[{\"userid\":\"zhangsan\",\"answer_id\":1}]}]");
+      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\","
+        + "\"statistic_list\":[{\"repeated_id\":\"repeat-1\","
+        + "\"fill_cnt\":3,\"submit_users\":"
+        + "[{\"userid\":\"zhangsan\",\"answer_id\":1}]}]}");
     when(cpService.post(eq("https://api.test/get_form_answer"), anyString()))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\",\"answer\":{\"answer_list\":[{\"answer_id\":1,\"userid\":\"zhangsan\",\"reply\":{\"items\":[{\"question_id\":1,\"text_reply\":\"ok\"}]}}]}}");
 
@@ -152,13 +156,15 @@ public class WxCpOaWeDocServiceImplTest {
     watermark.setMarginType(2);
     watermark.setShowText(true);
     watermark.setText("wm");
-    WxCpBaseResp safetyResp = service.docModifySaftySetting(WxCpDocModifySaftySettingRequest.builder()
-      .docId("doc1")
-      .enableReadonlyCopy(true)
-      .watermark(watermark)
-      .build());
+    WxCpBaseResp safetyResp = service.docModifySafetySetting(
+      WxCpDocModifySafetySettingRequest.builder()
+        .docId("doc1")
+        .enableReadonlyCopy(true)
+        .watermark(watermark)
+        .build());
     assertThat(safetyResp.getErrcode()).isZero();
-    verify(cpService).post(eq("https://api.test/mod_doc_safty_setting"), anyString());
+    verify(cpService).post(
+      eq("https://api.test/mod_doc_safty_setting"), anyString());
 
     WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest addSheetRequest =
       new WxCpDocSheetBatchUpdateRequest.Request.AddSheetRequest();
