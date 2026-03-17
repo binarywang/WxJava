@@ -535,14 +535,18 @@ public interface WxCpTpService {
    *
    * @return WxCpTpMessageService wx cp tp message service
    */
-  WxCpTpMessageService getWxCpTpMessageService();
+  default WxCpTpMessageService getWxCpTpMessageService() {
+    throw new UnsupportedOperationException("WxCpTpMessageService is not supported");
+  }
 
   /**
    * set message service
    *
    * @param wxCpTpMessageService the message service
    */
-  void setWxCpTpMessageService(WxCpTpMessageService wxCpTpMessageService);
+  default void setWxCpTpMessageService(WxCpTpMessageService wxCpTpMessageService) {
+    throw new UnsupportedOperationException("WxCpTpMessageService is not supported");
+  }
 
   WxCpTpXmlMessage fromEncryptedXml(String encryptedXml,
                                     String timestamp, String nonce, String msgSignature);
