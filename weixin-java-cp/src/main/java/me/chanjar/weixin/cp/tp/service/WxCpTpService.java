@@ -530,6 +530,20 @@ public interface WxCpTpService {
    */
   WxCpTpLicenseService getWxCpTpLicenseService();
 
+  /**
+   * get message service
+   *
+   * @return WxCpTpMessageService wx cp tp message service
+   */
+  WxCpTpMessageService getWxCpTpMessageService();
+
+  /**
+   * set message service
+   *
+   * @param wxCpTpMessageService the message service
+   */
+  void setWxCpTpMessageService(WxCpTpMessageService wxCpTpMessageService);
+
   WxCpTpXmlMessage fromEncryptedXml(String encryptedXml,
                                     String timestamp, String nonce, String msgSignature);
 
