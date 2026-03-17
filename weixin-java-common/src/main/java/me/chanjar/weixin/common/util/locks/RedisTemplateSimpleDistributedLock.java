@@ -46,7 +46,7 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
-        // Ignore
+        Thread.currentThread().interrupt();
       }
     }
   }

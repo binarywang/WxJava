@@ -1,0 +1,132 @@
+package me.chanjar.weixin.cp.config.impl;
+
+import me.chanjar.weixin.common.redis.WxRedisOps;
+import org.mockito.Mockito;
+import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * 测试 AbstractWxCpInRedisConfigImpl 对 Redis 异常的容错处理
+ *
+ * @author GitHub Copilot
+ */
+public class AbstractWxCpInRedisConfigImplTest {
+
+  private WxRedisOps mockRedisOps;
+  private AbstractWxCpInRedisConfigImpl config;
+
+  @BeforeMethod
+  public void setUp() {
+    mockRedisOps = Mockito.mock(WxRedisOps.class);
+    Mockito.when(mockRedisOps.getLock(Mockito.anyString()))
+      .thenReturn(new ReentrantLock());
+
+    config = new AbstractWxCpInRedisConfigImpl(mockRedisOps, "test") {
+      // 使用匿名类提供具体实现用于测试
+    };
+    config.setCorpId("testCorpId");
+    config.setAgentId(1);
+  }
+
+  /**
+   * 测试当 Redis getExpire 抛出异常时，isAccessTokenExpired() 应返回 true（视为已过期）
+   */
+  @Test
+  public void testIsAccessTokenExpiredWhenRedisThrowsException() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
+      .thenThrow(new RuntimeException("Redis command interrupted"));
+
+    boolean expired = config.isAccessTokenExpired();
+
+    Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+  }
+
+  /**
+   * 测试当线程中断状态已设置时，Redis 调用抛出异常，isAccessTokenExpired() 应处理并清除中断标志
+   */
+  @Test
+  public void testIsAccessTokenExpiredClearsInterruptedFlag() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
+      .thenThrow(new RuntimeException("Redis command interrupted"));
+
+    // 设置线程中断标志
+    Thread.currentThread().interrupt();
+
+    boolean expired = config.isAccessTokenExpired();
+
+    Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
+    // 中断标志应该被清除，允许后续操作正常进行
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+  }
+
+  /**
+   * 测试正常情况下 isAccessTokenExpired() 的行为
+   */
+  @Test
+  public void testIsAccessTokenExpiredWhenTokenValid() {
+    // 返回60秒后过期（未过期）
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString())).thenReturn(60L);
+
+    boolean expired = config.isAccessTokenExpired();
+
+    Assert.assertFalse(expired, "token未过期时应返回false");
+  }
+
+  /**
+   * 测试 isAccessTokenExpired() 当 expire 为 null 时视为已过期
+   */
+  @Test
+  public void testIsAccessTokenExpiredWhenExpireIsNull() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString())).thenReturn(null);
+
+    boolean expired = config.isAccessTokenExpired();
+
+    Assert.assertTrue(expired, "expire为null时应视为已过期");
+  }
+
+  /**
+   * 测试当 Redis getExpire 抛出异常时，isJsapiTicketExpired() 应返回 true（视为已过期）
+   */
+  @Test
+  public void testIsJsapiTicketExpiredWhenRedisThrowsException() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
+      .thenThrow(new RuntimeException("Redis command interrupted"));
+
+    boolean expired = config.isJsapiTicketExpired();
+
+    Assert.assertTrue(expired, "Redis异常时应将jsapi_ticket视为已过期");
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+  }
+
+  /**
+   * 测试当 Redis getExpire 抛出异常时，isAgentJsapiTicketExpired() 应返回 true（视为已过期）
+   */
+  @Test
+  public void testIsAgentJsapiTicketExpiredWhenRedisThrowsException() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
+      .thenThrow(new RuntimeException("Redis command interrupted"));
+
+    boolean expired = config.isAgentJsapiTicketExpired();
+
+    Assert.assertTrue(expired, "Redis异常时应将agent_jsapi_ticket视为已过期");
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+  }
+
+  /**
+   * 测试提供自定义 Lock 实现时 getAccessTokenLock() 返回正确的锁
+   */
+  @Test
+  public void testGetAccessTokenLockReturnsMockedLock() {
+    Lock mockLock = Mockito.mock(Lock.class);
+    Mockito.when(mockRedisOps.getLock(Mockito.anyString())).thenReturn(mockLock);
+
+    Lock lock = config.getAccessTokenLock();
+
+    Assert.assertNotNull(lock, "获取到的锁不应为null");
+  }
+}
