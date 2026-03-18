@@ -61,12 +61,21 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   protected transient Lock msgAuditAccessTokenLock = new ReentrantLock();
   /**
    * 会话存档SDK及其过期时间
+   *
+   * @deprecated SDK 生命周期已改由 {@link me.chanjar.weixin.cp.api.impl.WxCpMsgAuditServiceImpl} 内部的
+   *             ThreadLocal 模式管理，此字段保留仅为向后兼容。
    */
+  @Deprecated
   private volatile long msgAuditSdk;
+  /** @deprecated 同 msgAuditSdk */
+  @Deprecated
   private volatile long msgAuditSdkExpiresTime;
   /**
-   * 会话存档SDK引用计数，用于多线程安全的生命周期管理
+   * 会话存档SDK引用计数
+   *
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   private volatile int msgAuditSdkRefCount;
   private volatile String oauth2redirectUri;
   private volatile String httpProxyHost;
@@ -500,16 +509,19 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public long getMsgAuditSdk() {
     return this.msgAuditSdk;
   }
 
   @Override
+  @Deprecated
   public boolean isMsgAuditSdkExpired() {
     return System.currentTimeMillis() > this.msgAuditSdkExpiresTime;
   }
 
   @Override
+  @Deprecated
   public synchronized void updateMsgAuditSdk(long sdk, int expiresInSeconds) {
     // 如果有旧的SDK且不同于新的SDK，需要销毁旧的SDK
     if (this.msgAuditSdk > 0 && this.msgAuditSdk != sdk) {
@@ -525,11 +537,13 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public void expireMsgAuditSdk() {
     this.msgAuditSdkExpiresTime = 0;
   }
 
   @Override
+  @Deprecated
   public synchronized int incrementMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && sdk > 0) {
       return ++this.msgAuditSdkRefCount;
@@ -538,6 +552,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public synchronized int decrementMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
@@ -554,6 +569,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public synchronized int getMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && sdk > 0) {
       return this.msgAuditSdkRefCount;
@@ -562,6 +578,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public synchronized long acquireMsgAuditSdk() {
     // 检查SDK是否有效（已初始化且未过期）
     if (this.msgAuditSdk > 0 && !isMsgAuditSdkExpired()) {
@@ -572,6 +589,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  @Deprecated
   public synchronized void releaseMsgAuditSdk(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
