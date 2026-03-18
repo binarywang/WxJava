@@ -23,8 +23,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.MsgAudit.*;
@@ -41,9 +39,6 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
   /** 每个线程持有独立 SDK 实例，懒初始化，线程内跨调用复用 */
   private final ThreadLocal<Long> threadLocalSdk = new ThreadLocal<>();
-
-  /** 跟踪所有已创建的 SDK，用于 closeAllSdks() 统一清理 */
-  private final Set<Long> managedSdks = ConcurrentHashMap.newKeySet();
 
   @Override
   public WxCpChatDatas getChatDatas(long seq, @NonNull long limit, String proxy, String passwd,
@@ -84,7 +79,6 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     }
     long newSdk = createSdk();
     threadLocalSdk.set(newSdk);
-    managedSdks.add(newSdk);
     log.info("线程 [{}] 初始化会话存档SDK成功，sdk={}", Thread.currentThread().getName(), newSdk);
     return newSdk;
   }
@@ -149,7 +143,6 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     Long sdk = threadLocalSdk.get();
     if (sdk != null && sdk > 0) {
       Finance.DestroySdk(sdk);
-      managedSdks.remove(sdk);
       threadLocalSdk.remove();
       log.info("线程 [{}] 关闭会话存档SDK，sdk={}", Thread.currentThread().getName(), sdk);
     }
@@ -157,12 +150,8 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
 
   @Override
   public void closeAllSdks() {
-    managedSdks.forEach(sdk -> {
-      Finance.DestroySdk(sdk);
-      log.info("关闭会话存档SDK，sdk={}", sdk);
-    });
-    managedSdks.clear();
-    threadLocalSdk.remove();
+    // 无法感知其他线程的SDK，只清理当前线程
+    closeThreadLocalSdk();
   }
 
   @Override

@@ -52,11 +52,8 @@ Thread C: init SDK_C → ...
 
 **新增字段：**
 ```java
-/** 每个线程持有独立SDK实例 */
+/** 每个线程持有独立 SDK 实例，懒初始化，线程内跨调用复用 */
 private final ThreadLocal<Long> threadLocalSdk = new ThreadLocal<>();
-
-/** 跟踪所有已创建SDK，用于统一清理 */
-private final Set<Long> managedSdks = ConcurrentHashMap.newKeySet();
 ```
 
 **废弃字段/方法：**
@@ -77,7 +74,6 @@ private long getOrInitThreadLocalSdk() throws WxErrorException {
     }
     long newSdk = createSdk();
     threadLocalSdk.set(newSdk);
-    managedSdks.add(newSdk);
     log.info("线程 [{}] 初始化会话存档SDK成功，sdk={}", Thread.currentThread().getName(), newSdk);
     return newSdk;
 }
@@ -99,22 +95,17 @@ public void closeThreadLocalSdk() {
     Long sdk = threadLocalSdk.get();
     if (sdk != null && sdk > 0) {
         Finance.DestroySdk(sdk);
-        managedSdks.remove(sdk);
         threadLocalSdk.remove();
         log.info("线程 [{}] 关闭会话存档SDK，sdk={}", Thread.currentThread().getName(), sdk);
     }
 }
 
 /**
- * 关闭所有线程持有的SDK。应用关闭时调用（如Spring @PreDestroy / Shutdown Hook）。
+ * 等同于 closeThreadLocalSdk()，无法感知其他线程的SDK。
+ * 不再遍历集合销毁所有SDK（已去掉 managedSdks 追踪）。
  */
 public void closeAllSdks() {
-    managedSdks.forEach(sdk -> {
-        Finance.DestroySdk(sdk);
-        log.info("关闭会话存档SDK，sdk={}", sdk);
-    });
-    managedSdks.clear();
-    threadLocalSdk.remove();
+    closeThreadLocalSdk();
 }
 ```
 
@@ -123,10 +114,10 @@ public void closeAllSdks() {
 - 移除 try-finally 中的 `releaseSdk(sdk)` 调用（SDK不再每次释放）
 - 方法变得更简洁：直接使用sdk，无需包装计数
 
-**保留旧API方法不变（getChatDatas / getDecryptData / getChatPlainText / getMediaFile）：**
+**保留旧API方法（getChatDatas / getDecryptData / getChatPlainText / getMediaFile）：**
 - 保持 @Deprecated 标注
-- 内部调用改为 `getOrInitThreadLocalSdk()` 以保持一致性（旧方法也受益于ThreadLocal）
-- 移除对 `initSdk()` 的依赖
+- `getChatDatas` 仅将 `initSdk()` 替换为 `getOrInitThreadLocalSdk()`（因 initSdk 已移除，必须改），其余逻辑、注释、代码风格完全不动
+- `getDecryptData` / `getChatPlainText` / `getMediaFile` 两个重载：**完全不改动**（保留原注释、`e.printStackTrace()` 等）
 
 ### 2. WxCpMsgAuditService（接口新增）
 
@@ -138,8 +129,8 @@ public void closeAllSdks() {
 void closeThreadLocalSdk();
 
 /**
- * 关闭所有会话存档SDK实例。
- * 适用于应用关闭时（如Spring Bean销毁阶段）统一释放资源。
+ * 等同于 closeThreadLocalSdk()，无法感知其他线程的SDK。
+ * 适用于应用关闭时（如Spring Bean销毁阶段）清理当前线程资源。
  */
 void closeAllSdks();
 ```
@@ -191,6 +182,8 @@ try {
 2. **独立线程无需显式关闭**：线程销毁时JVM会回收，但 `Finance.DestroySdk()` 不会自动调用。若关注资源，建议加 finally 清理。
 3. **多企业（多CorpId）场景**：`threadLocalSdk` 是实例字段（非static），不同 `WxCpMsgAuditServiceImpl` 实例（不同企业）的ThreadLocal独立，互不影响。
 4. **库加载幂等性**：`Finance.loadingLibraries()` 底层调用 `System.load()`，JVM保证同一库不重复加载，多线程并发调用安全。
+5. **不要手动调用 `Finance.DestroySdk()`**：旧测试代码中的 `Finance.DestroySdk(chatDatas.getSdk())` 会直接销毁 ThreadLocal 管理的 SDK，必须删除。
+6. **`closeAllSdks()` 的局限性**：不追踪所有SDK，只清理当前线程，语义为"尽力清理"。非线程池场景若不调用 `closeThreadLocalSdk()`，原生SDK内存会泄漏到JVM退出，但进程退出后OS会回收。
 
 ---
 
