@@ -49,7 +49,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   public WxCpChatDatas getChatDatas(long seq, @NonNull long limit, String proxy, String passwd,
                                     @NonNull long timeout) throws Exception {
     // 获取或初始化SDK
-    long sdk = this.getOrInitThreadLocalSdk();
+    long sdk = this.createSdk();
 
     long slice = Finance.NewSlice();
     long ret = Finance.GetChatData(sdk, seq, limit, proxy, passwd, timeout, slice);
