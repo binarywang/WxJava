@@ -40,7 +40,7 @@ public class WxCpHrServiceImpl implements WxCpHrService {
 
   @Override
   public WxCpHrEmployeeFieldDataResp getEmployeeFieldInfo(String userid, List<String> fields) throws WxErrorException {
-    return getEmployeeFieldInfo(userid,false,fields);
+    return getEmployeeFieldInfo(userid, false, fields);
   }
 
   @Override

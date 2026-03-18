@@ -574,6 +574,48 @@ public interface WxCpApiPathConsts {
      * The constant WEDOC_DOC_SHARE.
      */
     String WEDOC_DOC_SHARE = "/cgi-bin/wedoc/doc_share";
+    /**
+     * The constant WEDOC_DOC_GET_AUTH.
+     */
+    String WEDOC_DOC_GET_AUTH = "/cgi-bin/wedoc/doc_get_auth";
+    /**
+     * The constant WEDOC_MOD_DOC_JOIN_RULE.
+     */
+    String WEDOC_MOD_DOC_JOIN_RULE = "/cgi-bin/wedoc/mod_doc_join_rule";
+    /**
+     * The constant WEDOC_MOD_DOC_MEMBER.
+     */
+    String WEDOC_MOD_DOC_MEMBER = "/cgi-bin/wedoc/mod_doc_member";
+    /**
+     * The constant WEDOC_MOD_DOC_SAFETY_SETTING.
+     */
+    String WEDOC_MOD_DOC_SAFETY_SETTING = "/cgi-bin/wedoc/mod_doc_safty_setting";
+
+    /**
+     * @deprecated Use {@link #WEDOC_MOD_DOC_SAFETY_SETTING} instead.
+     */
+    @Deprecated
+    String WEDOC_MOD_DOC_SAFTY_SETTING = WEDOC_MOD_DOC_SAFETY_SETTING;
+    /**
+     * The constant WEDOC_CREATE_FORM.
+     */
+    String WEDOC_CREATE_FORM = "/cgi-bin/wedoc/create_collect";
+    /**
+     * The constant WEDOC_MODIFY_FORM.
+     */
+    String WEDOC_MODIFY_FORM = "/cgi-bin/wedoc/modify_collect";
+    /**
+     * The constant WEDOC_GET_FORM_INFO.
+     */
+    String WEDOC_GET_FORM_INFO = "/cgi-bin/wedoc/get_form_info";
+    /**
+     * The constant WEDOC_GET_FORM_STATISTIC.
+     */
+    String WEDOC_GET_FORM_STATISTIC = "/cgi-bin/wedoc/get_form_statistic";
+    /**
+     * The constant WEDOC_GET_FORM_ANSWER.
+     */
+    String WEDOC_GET_FORM_ANSWER = "/cgi-bin/wedoc/get_form_answer";
 
     /**
      * The constant WEDOC_SPREADSHEET_BATCH_UPDATE.
@@ -589,6 +631,126 @@ public interface WxCpApiPathConsts {
      * The constant WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA.
      */
     String WEDOC_SPREADSHEET_GET_SHEET_RANGE_DATA = "/cgi-bin/wedoc/spreadsheet/get_sheet_range_data";
+
+    /**
+     * The constant WEDOC_GET_DOC_DATA.
+     */
+    String WEDOC_GET_DOC_DATA = "/cgi-bin/wedoc/get_doc_data";
+
+    /**
+     * The constant WEDOC_MOD_DOC.
+     */
+    String WEDOC_MOD_DOC = "/cgi-bin/wedoc/mod_doc";
+
+    /**
+     * The constant WEDOC_UPLOAD_DOC_IMAGE.
+     */
+    String WEDOC_UPLOAD_DOC_IMAGE = "/cgi-bin/wedoc/upload_doc_image";
+
+    /**
+     * The constant WEDOC_ADD_ADMIN.
+     */
+    String WEDOC_ADD_ADMIN = "/cgi-bin/wedoc/add_admin";
+
+    /**
+     * The constant WEDOC_DEL_ADMIN.
+     */
+    String WEDOC_DEL_ADMIN = "/cgi-bin/wedoc/del_admin";
+
+    /**
+     * The constant WEDOC_GET_ADMIN_LIST.
+     */
+    String WEDOC_GET_ADMIN_LIST = "/cgi-bin/wedoc/get_admin_list";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_SHEET_AUTH.
+     */
+    String WEDOC_SMARTSHEET_GET_SHEET_AUTH = "/cgi-bin/wedoc/smartsheet/get_sheet_auth";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_MOD_SHEET_AUTH.
+     */
+    String WEDOC_SMARTSHEET_MOD_SHEET_AUTH = "/cgi-bin/wedoc/smartsheet/mod_sheet_auth";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_SHEET.
+     */
+    String WEDOC_SMARTSHEET_GET_SHEET = "/cgi-bin/wedoc/smartsheet/get_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_SHEET.
+     */
+    String WEDOC_SMARTSHEET_ADD_SHEET = "/cgi-bin/wedoc/smartsheet/add_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_SHEET.
+     */
+    String WEDOC_SMARTSHEET_DELETE_SHEET = "/cgi-bin/wedoc/smartsheet/delete_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_SHEET.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_SHEET = "/cgi-bin/wedoc/smartsheet/update_sheet";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_VIEWS.
+     */
+    String WEDOC_SMARTSHEET_GET_VIEWS = "/cgi-bin/wedoc/smartsheet/get_views";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_VIEW.
+     */
+    String WEDOC_SMARTSHEET_ADD_VIEW = "/cgi-bin/wedoc/smartsheet/add_view";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_VIEWS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_VIEWS = "/cgi-bin/wedoc/smartsheet/delete_views";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_VIEW.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_VIEW = "/cgi-bin/wedoc/smartsheet/update_view";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_GET_FIELDS = "/cgi-bin/wedoc/smartsheet/get_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_ADD_FIELDS = "/cgi-bin/wedoc/smartsheet/add_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_FIELDS = "/cgi-bin/wedoc/smartsheet/delete_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_FIELDS.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_FIELDS = "/cgi-bin/wedoc/smartsheet/update_fields";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_GET_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_GET_RECORDS = "/cgi-bin/wedoc/smartsheet/get_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_ADD_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_ADD_RECORDS = "/cgi-bin/wedoc/smartsheet/add_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_DELETE_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_DELETE_RECORDS = "/cgi-bin/wedoc/smartsheet/delete_records";
+
+    /**
+     * The constant WEDOC_SMARTSHEET_UPDATE_RECORDS.
+     */
+    String WEDOC_SMARTSHEET_UPDATE_RECORDS = "/cgi-bin/wedoc/smartsheet/update_records";
 
     /**
      * 邮件

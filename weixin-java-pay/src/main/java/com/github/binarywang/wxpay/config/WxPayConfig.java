@@ -32,6 +32,8 @@ import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
@@ -395,6 +397,19 @@ public class WxPayConfig {
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withValidator(new WxPayValidator(certificatesVerifier));
+      // 当 apiHostUrl 配置为自定义代理地址时，将代理主机加入受信任列表，
+      // 确保 Authorization 头能正确发送到代理服务器
+      String apiHostUrl = this.getApiHostUrl();
+      if (StringUtils.isNotBlank(apiHostUrl)) {
+        try {
+          String host = new URI(apiHostUrl).getHost();
+          if (host != null && !host.endsWith(".mch.weixin.qq.com")) {
+            wxPayV3HttpClientBuilder.withTrustedHost(host);
+          }
+        } catch (URISyntaxException e) {
+          log.warn("解析 apiHostUrl [{}] 中的主机名失败: {}", apiHostUrl, e.getMessage());
+        }
+      }
       //初始化V3接口正向代理设置
       HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder, wxPayHttpProxy);
 

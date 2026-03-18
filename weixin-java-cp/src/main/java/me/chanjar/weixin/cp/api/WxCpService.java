@@ -482,6 +482,13 @@ public interface WxCpService extends WxService {
   WxCpOaWeDriveService getOaWeDriveService();
 
   /**
+   * 获取OA效率工具 文档的服务类对象
+   *
+   * @return oa we doc service
+   */
+  WxCpOaWeDocService getOaWeDocService();
+
+  /**
    * 获取会话存档相关接口的服务类对象
    *
    * @return msg audit service

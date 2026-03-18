@@ -915,11 +915,17 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
    * {@code urlpath\nappid\ntimestamp\npostdata}<br>
    * 字段之间使用换行符 {@code \n} 分隔，共 4 个字段，末尾无额外回车符。
    *
-   * @param urlPath     当前请求 API 的 URL，不含 Query 参数
-   * @param appId       小程序 AppId
-   * @param timestamp   签名时的时间戳
-   * @param postData    加密后的请求 POST 数据（JSON 字符串）
+   * <p><b>注意：</b>RSA 私钥序列号（rsaKeySn）<b>不应</b>包含在待签名串中，它应通过请求头
+   * {@code Wechatmp-Serial} 传递。4.8.0 曾错误地将 rsaKeySn 插入签名串（产生 5 个字段），
+   * 导致所有走 API 签名路径的接口（包括 {@code getPhoneNumber}、同城配送等）返回 40234
+   * {@code invalid signature}。此方法明确使用 4 字段格式以确保签名正确。
+   *
+   * @param urlPath   当前请求 API 的 URL，不含 Query 参数
+   * @param appId     小程序 AppId
+   * @param timestamp 签名时的时间戳
+   * @param postData  加密后的请求 POST 数据（JSON 字符串）
    * @return 拼接好的待签名串
+   * @see <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html">微信服务端API签名指南</a>
    */
   static String buildSignaturePayload(String urlPath, String appId, long timestamp, String postData) {
     return urlPath + "\n" + appId + "\n" + timestamp + "\n" + postData;
