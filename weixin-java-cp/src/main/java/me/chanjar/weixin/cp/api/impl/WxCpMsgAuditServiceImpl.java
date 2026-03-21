@@ -45,12 +45,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   /** 跟踪所有已创建的 SDK，用于 closeAllSdks() 统一清理 */
   private final Set<Long> managedSdks = ConcurrentHashMap.newKeySet();
 
-  /**
-   * @deprecated 此方法将 sdk 暴露给调用方，调用方必须在使用完毕后调用 {@code Finance.DestroySdk(chatDatas.getSdk())} 释放 native 资源。
-   *             推荐改用 {@link #getChatRecords} 由框架统一管理 SDK 生命周期。
-   */
   @Override
-  @Deprecated
   public WxCpChatDatas getChatDatas(long seq, @NonNull long limit, String proxy, String passwd,
                                     @NonNull long timeout) throws Exception {
     // 旧版 API：每次调用创建新 SDK，由调用方负责通过 Finance.DestroySdk(chatDatas.getSdk()) 释放
