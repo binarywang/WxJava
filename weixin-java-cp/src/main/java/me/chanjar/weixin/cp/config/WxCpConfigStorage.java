@@ -300,12 +300,13 @@ public interface WxCpConfigStorage {
   void updateMsgAuditAccessToken(String accessToken, int expiresInSeconds);
 
   /**
-   * 获取会话存档SDK
-   * 会话存档SDK初始化后有效期为7200秒，无需每次重新初始化
+   * 获取会话存档SDK（历史接口）。
+   * <p>历史实现中，会话存档 SDK 初始化后有效期为 7200 秒，由 ConfigStorage 负责维护；
+   * 该语义现已废弃，不再保证。</p>
    *
-   * @return sdk id，如果未初始化或已过期返回0
+   * @return sdk id；历史实现中如果未初始化或已过期返�� 0，当前实现仅为兼容旧代码保留此方法
    * @deprecated SDK 生命周期已改由 {@link me.chanjar.weixin.cp.api.WxCpMsgAuditService} 内部的 ThreadLocal
-   *             模式管理，不再依赖 ConfigStorage 缓存。此方法保留仅为向后兼容。
+   *             模式管理，不再依赖 ConfigStorage 缓存。请迁移至新接口。
    */
   @Deprecated
   long getMsgAuditSdk();

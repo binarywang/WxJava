@@ -45,10 +45,15 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   /** 跟踪所有已创建的 SDK，用于 closeAllSdks() 统一清理 */
   private final Set<Long> managedSdks = ConcurrentHashMap.newKeySet();
 
+  /**
+   * @deprecated 此方法将 sdk 暴露给调用方，调用方必须在使用完毕后调用 {@code Finance.DestroySdk(chatDatas.getSdk())} 释放 native 资源。
+   *             推荐改用 {@link #getChatRecords} 由框架统一管理 SDK 生命周期。
+   */
   @Override
+  @Deprecated
   public WxCpChatDatas getChatDatas(long seq, @NonNull long limit, String proxy, String passwd,
                                     @NonNull long timeout) throws Exception {
-    // 获取或初始化SDK
+    // 旧版 API：每次调用创建新 SDK，由调用方负责通过 Finance.DestroySdk(chatDatas.getSdk()) 释放
     long sdk = this.createSdk();
 
     long slice = Finance.NewSlice();
@@ -80,7 +85,12 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   private long getOrInitThreadLocalSdk() throws WxErrorException {
     Long sdk = threadLocalSdk.get();
     if (sdk != null && sdk > 0) {
-      return sdk;
+      // 校验句柄是否仍受管理：closeAllSdks() 后其他线程 ThreadLocal 可能保留已销毁的 id
+      if (managedSdks.contains(sdk)) {
+        return sdk;
+      }
+      log.warn("线程 [{}] 发现已失效的会话存档SDK句柄 sdk={}，重新初始化", Thread.currentThread().getName(), sdk);
+      threadLocalSdk.remove();
     }
     long newSdk = createSdk();
     threadLocalSdk.set(newSdk);
@@ -90,8 +100,10 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   }
 
   /**
-   * 创建并初始化一个新 SDK 实例（私有，只在当前线程无 SDK 时调用）。
-   * Finance.loadingLibraries() 底层依赖 System.load()，JVM 保证同一库不重复加载，多线程并发调用安全。
+   * 创建并初始化一个新的会话存档 SDK 实例。
+   * <p>通常通过 {@link #getOrInitThreadLocalSdk()} 间接调用以复用 ThreadLocal 中的实例；
+   * 旧版直接暴露 sdk 的 API（如 {@link #getChatDatas}）也会直接调用本方法，此时 SDK 由调用方自行管理。</p>
+   * <p>Finance.loadingLibraries() 底层依赖 System.load()，JVM 保证同一库不重复加载，多线程并发调用安全。</p>
    */
   private long createSdk() throws WxErrorException {
     WxCpConfigStorage configStorage = cpService.getWxCpConfigStorage();
@@ -147,21 +159,24 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
   @Override
   public void closeThreadLocalSdk() {
     Long sdk = threadLocalSdk.get();
-    if (sdk != null && sdk > 0) {
+    // 先从 managedSdks 摘除，摘除成功才调 DestroySdk，防止与 closeAllSdks() 并发时 double-free
+    if (sdk != null && managedSdks.remove(sdk)) {
       Finance.DestroySdk(sdk);
-      managedSdks.remove(sdk);
-      threadLocalSdk.remove();
       log.info("线程 [{}] 关闭会话存档SDK，sdk={}", Thread.currentThread().getName(), sdk);
     }
+    threadLocalSdk.remove();
   }
 
   @Override
   public void closeAllSdks() {
-    managedSdks.forEach(sdk -> {
-      Finance.DestroySdk(sdk);
-      log.info("关闭会话存档SDK，sdk={}", sdk);
-    });
-    managedSdks.clear();
+    // 逐一 remove 后再 Destroy，防止与 closeThreadLocalSdk() 并发时 double-free
+    Long[] sdks = managedSdks.toArray(new Long[0]);
+    for (Long sdk : sdks) {
+      if (managedSdks.remove(sdk)) {
+        Finance.DestroySdk(sdk);
+        log.info("关闭会话存档SDK，sdk={}", sdk);
+      }
+    }
     threadLocalSdk.remove();
   }
 
@@ -224,17 +239,18 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
      * 为空字符串，拉取后续分片时直接填入上次返回的indexbuf即可。
      */
     File targetFile = new File(targetFilePath);
-    if (!targetFile.getParentFile().exists()) {
-      targetFile.getParentFile().mkdirs();
+    File parentDir = targetFile.getParentFile();
+    if (parentDir != null && !parentDir.exists()) {
+      parentDir.mkdirs();
     }
     this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
       try {
         // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
-        FileOutputStream outputStream = new FileOutputStream(targetFile, true);
-        outputStream.write(i);
-        outputStream.close();
+        try (FileOutputStream outputStream = new FileOutputStream(targetFile, true)) {
+          outputStream.write(i);
+        }
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error("写入媒体文件分片失败，targetFilePath={}", targetFilePath, e);
       }
     });
   }
@@ -264,7 +280,7 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
         // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
         action.accept(Finance.GetData(mediaData));
       } catch (Exception e) {
-        e.printStackTrace();
+        log.error("处理媒体文件分片失败，sdkfileid={}", sdkfileid, e);
       }
 
       if (Finance.IsMediaDataFinish(mediaData) == 1) {
@@ -361,8 +377,9 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
     final java.util.concurrent.atomic.AtomicReference<Exception> exceptionHolder = new java.util.concurrent.atomic.AtomicReference<>();
 
     File targetFile = new File(targetFilePath);
-    if (!targetFile.getParentFile().exists()) {
-      targetFile.getParentFile().mkdirs();
+    File parentDir = targetFile.getParentFile();
+    if (parentDir != null && !parentDir.exists()) {
+      parentDir.mkdirs();
     }
     this.getMediaFile(sdk, sdkfileid, proxy, passwd, timeout, i -> {
       // 如果之前已经发生异常，不再继续处理
@@ -371,9 +388,9 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       }
       try {
         // 大于512k的文件会分片拉取，此处需要使用追加写，避免后面的分片覆盖之前的数据。
-        FileOutputStream outputStream = new FileOutputStream(targetFile, true);
-        outputStream.write(i);
-        outputStream.close();
+        try (FileOutputStream outputStream = new FileOutputStream(targetFile, true)) {
+          outputStream.write(i);
+        }
       } catch (Exception e) {
         exceptionHolder.set(e);
       }
