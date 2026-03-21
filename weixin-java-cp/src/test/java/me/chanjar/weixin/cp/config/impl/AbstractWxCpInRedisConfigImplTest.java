@@ -56,12 +56,16 @@ public class AbstractWxCpInRedisConfigImplTest {
 
     // 设置线程中断标志
     Thread.currentThread().interrupt();
+    try {
+      boolean expired = config.isAccessTokenExpired();
 
-    boolean expired = config.isAccessTokenExpired();
-
-    Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
-    // 中断标志应该被清除，允许后续操作正常进行
-    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+      Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
+      // 中断标志应该被清除，允许后续操作正常进行
+      Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+    } finally {
+      // 兜底清除当前线程的中断标志，避免影响后续测试用例
+      Thread.interrupted();
+    }
   }
 
   /**
