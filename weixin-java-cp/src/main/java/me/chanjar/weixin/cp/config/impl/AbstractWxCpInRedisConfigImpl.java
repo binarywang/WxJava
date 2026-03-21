@@ -160,7 +160,6 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
       return expire == null || expire < 2;
     } catch (Exception e) {
       log.warn("获取jsapi_ticket过期时间时发生异常，将视为已过期，异常信息: {}", e.getMessage());
-      Thread.interrupted();
       return true;
     }
   }
@@ -197,7 +196,6 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
       return expire == null || expire < 2;
     } catch (Exception e) {
       log.warn("获取agent_jsapi_ticket过期时间时发生异常，将视为已过期，异常信息: {}", e.getMessage());
-      Thread.interrupted();
       return true;
     }
   }
