@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -127,10 +128,29 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
       return expire == null || expire < 2;
     } catch (Exception e) {
       log.warn("获取access_token过期时间时发生异常，将视为已过期以触发刷新，异常信息: {}", e.getMessage());
-      // 清除中断标志，确保后续的锁获取和token刷新操作能够正常执行
-      Thread.interrupted();
+      // 仅在当前线程已中断且异常为中断相关时，才清除中断标志，避免吞掉上层的中断语义
+      if (Thread.currentThread().isInterrupted() && isInterruptionRelated(e)) {
+        Thread.interrupted();
+      }
       return true;
     }
+  }
+
+  /**
+   * 判断异常及其原因链是否为中断相关异常。
+   *
+   * @param throwable 异常
+   * @return 如果异常链中包含 {@link InterruptedException} 或 {@link CancellationException}，返回 true；否则返回 false
+   */
+  private boolean isInterruptionRelated(Throwable throwable) {
+    Throwable current = throwable;
+    while (current != null) {
+      if (current instanceof InterruptedException || current instanceof CancellationException) {
+        return true;
+      }
+      current = current.getCause();
+    }
+    return false;
   }
 
   @Override
