@@ -1,5 +1,7 @@
 # 企业微信会话存档SDK安全使用指南
 
+## 说明
+该方案已废弃，请使用新版本：[CP_MSG_AUDIT_THREADLOCAL_LIFECYCLE_REFACTOR.md](CP_MSG_AUDIT_THREADLOCAL_LIFECYCLE_REFACTOR.md)
 ## 问题背景
 
 在使用企业微信会话存档功能时，部分开发者遇到了JVM崩溃的问题。典型错误信息如下：
