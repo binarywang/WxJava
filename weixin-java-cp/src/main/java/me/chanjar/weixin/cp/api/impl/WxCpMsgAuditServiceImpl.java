@@ -83,11 +83,10 @@ public class WxCpMsgAuditServiceImpl implements WxCpMsgAuditService {
       // 校验句柄是否仍受管理：closeAllSdks() 后其他线程 ThreadLocal 可能保留已销毁的 id
       if (managedSdks.contains(sdk)) {
         return sdk;
-      } else {
-        log.warn("线程 [{}] 发现已失效的会话存档SDK句柄 sdk={}，请检查调用逻辑", Thread.currentThread().getName(), sdk);
-        threadLocalSdk.remove();
-        throw new WxErrorException("线程 [" + Thread.currentThread().getName() + "] 获取会话存档SDK失败，请检查是否已调用 closeAllSdks()");
       }
+      log.warn("线程 [{}] 发现已失效的会话存档SDK句柄 sdk={}，请检查调用逻辑", Thread.currentThread().getName(), sdk);
+      threadLocalSdk.remove();
+      throw new WxErrorException("线程 [" + Thread.currentThread().getName() + "] 获取会话存档SDK失败，请检查是否已调用 closeAllSdks()");
     }
     long newSdk = createSdk();
     threadLocalSdk.set(newSdk);
