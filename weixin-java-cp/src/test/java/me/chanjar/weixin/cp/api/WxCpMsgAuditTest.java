@@ -757,7 +757,8 @@ public class WxCpMsgAuditTest {
   /**
    * 测试新的安全API方法（推荐使用）
    * 这些方法不需要手动管理SDK生命周期，SDK由框架 ThreadLocal 模式统一管理。
-   * 线程池场景下，在 finally 块中调用 closeThreadLocalSdk() 防止SDK随线程复用泄漏。
+   * Finance.DestroySdk() 不会随线程结束自动执行，无论线程池还是独立线程，
+   * 均应在 finally 块中调用 closeThreadLocalSdk() 以释放 native 资源。
    */
   @Test
   public void testNewSafeApi() throws Exception {
@@ -825,7 +826,7 @@ public class WxCpMsgAuditTest {
         }
       }
     } finally {
-      // 线程池场景：任务结束后关闭当前线程SDK，防止SDK随线程复用泄漏
+      // 必须显式调用：Finance.DestroySdk() 不会自动执行，不调用将导致 native 资源泄漏
       msgAuditService.closeThreadLocalSdk();
     }
   }

@@ -132,8 +132,9 @@ public void closeAllSdks() {
 
 ```java
 /**
- * 关闭当前线程持有的SDK，释放本地资源。
- * 适用于使用线程池时，在任务结束的finally块中调用，防止SDK实例在线程复用时泄漏。
+ * 关闭当前线程持有的SDK，释放native资源。
+ * Finance.DestroySdk() 不会随线程结束自动执行，无论线程池还是独立线程，
+ * 均应在任务结束的finally块中调用本方法，防止native内存、连接等资源泄漏。
  */
 void closeThreadLocalSdk();
 
@@ -174,8 +175,9 @@ try {
         }
     }
 } finally {
-    // 线程池场景：任务结束后关闭当前线程SDK，防止复用线程持有旧SDK
-    // 非线程池（如独立线程/定时任务）也可不调用，SDK随线程自然结束
+    // 无论线程池还是独立线程，均建议在 finally 中显式调用。
+    // Finance.DestroySdk() 不会随线程结束自动执行，依赖 closeAllSdks() 兜底会造成
+    // native 内存/连接资源的延迟泄漏，对定时任务等长期运行场景尤其有害。
     msgAuditService.closeThreadLocalSdk();
 }
 
@@ -188,7 +190,7 @@ try {
 ## 注意事项
 
 1. **线程池场景下必须调用 `closeThreadLocalSdk()`**：线程池中线程会被复用，如不主动清理，下次任务仍会使用旧线程的SDK。对于计划任务/批处理，建议在 finally 块中调用。
-2. **独立线程无需显式关闭**：线程销毁时JVM会回收，但 `Finance.DestroySdk()` 不会自动调用。若关注资源，建议加 finally 清理。
+2. **独立线程同样建议显式关闭**：`Finance.DestroySdk()` 是 native 调用，不会随线程结束自动执行，JVM GC 也不会触发它。依赖 `closeAllSdks()` 兜底意味着 native 内存、网络连接等资源在整个应用运行期间一直持有，对定时任务等高频场景会持续积累，建议统一在 finally 块中调用 `closeThreadLocalSdk()`。
 3. **多企业（多CorpId）场景**：`threadLocalSdk` 是实例字段（非static），不同 `WxCpMsgAuditServiceImpl` 实例（不同企业）的ThreadLocal独立，互不影响。
 4. **库加载幂等性**：`Finance.loadingLibraries()` 底层调用 `System.load()`，JVM保证同一库不重复加载，多线程并发调用安全。
 
