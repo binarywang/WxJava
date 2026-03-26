@@ -102,6 +102,20 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
   @XStreamAlias("openid")
   private String openId;
 
+  /**
+   * 变更类型， ADD：签约，DELETE：解约
+   * 签约/解约回调通知时返回
+   */
+  @XStreamAlias("change_type")
+  private String changeType;
+
+  /**
+   * 操作时间
+   * 签约/解约回调通知时返回
+   */
+  @XStreamAlias("operate_time")
+  private String operateTime;
+
 
   @Override
   protected void loadXml(Document d) {
@@ -117,6 +131,8 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
     contractTerminatedMode = readXmlInteger(d, "contract_termination_mode");
     contractTerminationRemark = readXmlString(d, "contract_termination_remark");
     openId = readXmlString(d, "openid");
+    changeType = readXmlString(d, "change_type");
+    operateTime = readXmlString(d, "operate_time");
   }
 
   @Override
