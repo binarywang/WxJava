@@ -17,6 +17,7 @@
 | **转账方式** | 批量转账 | 单笔转账 |
 | **场景支持** | 基础场景 | 丰富场景（如佣金报酬等） |
 | **撤销功能** | ❌ 不支持 | ✅ 支持 |
+| **授权模式** | 仅需确认模式 | ✅ 支持免确认授权模式 |
 | **适用范围** | 所有商户 | **新开通商户必须使用** |
 
 ### 2. 新版API功能列表
@@ -27,6 +28,30 @@
 ✅ **回调通知** - `parseTransferBillsNotifyResult()`
 ✅ **RSA加密** - 自动处理用户姓名加密
 ✅ **场景支持** - 支持多种转账场景ID
+✅ **授权模式** - 支持免确认收款授权模式
+
+### 3. 收款授权模式支持
+
+**新增功能：免确认收款授权模式**
+
+- **需确认收款授权模式**（默认）：用户需要手动确认才能收款
+- **免确认收款授权模式**：用户授权后，收款无需确认，转账直接到账
+
+#### 使用方法
+
+```java
+// 免确认授权模式 - 提升用户体验
+TransferBillsRequest request = TransferBillsRequest.newBuilder()
+    .receiptAuthorizationMode(WxPayConstants.ReceiptAuthorizationMode.NO_CONFIRM_RECEIPT_AUTHORIZATION)
+    // 其他参数...
+    .build();
+
+// 需确认授权模式（默认）
+TransferBillsRequest request2 = TransferBillsRequest.newBuilder()
+    .receiptAuthorizationMode(WxPayConstants.ReceiptAuthorizationMode.CONFIRM_RECEIPT_AUTHORIZATION)
+    // 其他参数...
+    .build();
+```
 
 ## 快速开始
 

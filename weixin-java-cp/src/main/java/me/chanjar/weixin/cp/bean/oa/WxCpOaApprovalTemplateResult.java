@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateDateRange;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTips;
 import me.chanjar.weixin.cp.bean.oa.templatedata.TemplateTitle;
 import me.chanjar.weixin.cp.bean.oa.templatedata.control.*;
@@ -83,6 +84,9 @@ public class WxCpOaApprovalTemplateResult implements Serializable {
     private static final long serialVersionUID = 6993937809371277669L;
 
     private TemplateDate date;
+
+    @SerializedName("date_range")
+    private TemplateDateRange dateRange;
 
     private TemplateSelector selector;
 

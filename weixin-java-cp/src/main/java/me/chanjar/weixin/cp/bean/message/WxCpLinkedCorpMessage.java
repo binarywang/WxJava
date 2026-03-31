@@ -85,13 +85,13 @@ public class WxCpLinkedCorpMessage implements Serializable {
   /**
    * <pre>
    * 请使用.
-   * {@link LinkedCorpMsgType#TEXT}
-   * {@link LinkedCorpMsgType#IMAGE}
-   * {@link LinkedCorpMsgType#VIDEO}
-   * {@link LinkedCorpMsgType#NEWS}
-   * {@link LinkedCorpMsgType#MPNEWS}
-   * {@link LinkedCorpMsgType#MARKDOWN}
-   * {@link LinkedCorpMsgType#MINIPROGRAM_NOTICE}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#TEXT}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#IMAGE}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#VIDEO}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#NEWS}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#MPNEWS}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#MARKDOWN}
+   * {@link me.chanjar.weixin.cp.constant.WxCpConsts.LinkedCorpMsgType#MINIPROGRAM_NOTICE}
    * </pre>
    *
    * @param msgType 消息类型

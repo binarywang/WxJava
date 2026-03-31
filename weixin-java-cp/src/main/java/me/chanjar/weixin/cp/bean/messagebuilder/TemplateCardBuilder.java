@@ -12,7 +12,8 @@ import java.util.List;
  * 用法: WxCustomMessage m = WxCustomMessage.TEMPLATECARD().title(...)....toUser(...).build();
  * </pre>
  *
- * @author yzts</ a>  created on  2019-05-16
+ * @author yzts
+ * @since 2019-05-16
  */
 public class TemplateCardBuilder extends BaseBuilder<TemplateCardBuilder> {
   /**

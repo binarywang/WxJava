@@ -10,8 +10,8 @@ import java.util.List;
  * 打卡规则基础信息
  *
  * @author zhongjun96
- * @date 2023/7/7
- **/
+ * @since 2023/7/7
+ */
 @Data
 public class WxCpCheckinGroupBase implements Serializable {
 

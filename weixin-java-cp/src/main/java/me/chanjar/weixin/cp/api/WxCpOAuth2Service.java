@@ -90,9 +90,10 @@ public interface WxCpOAuth2Service {
   /**
    * 获取家校访问用户身份
    * 该接口用于根据code获取家长或者学生信息
-   * <p>
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/getuserinfo?access_token=ACCESS_TOKEN&code=CODE}
+   * </pre>
    *
    * @param code the code
    * @return school user info
@@ -123,7 +124,7 @@ public interface WxCpOAuth2Service {
   /**
    * <pre>
    * 获取用户登录身份
-   * https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo?access_token=ACCESS_TOKEN&code=CODE
+   * {@code https://qyapi.weixin.qq.com/cgi-bin/auth/getuserinfo?access_token=ACCESS_TOKEN&code=CODE}
    * 该接口可使用用户登录成功颁发的code来获取成员信息，适用于自建应用与代开发应用
    *
    * 注意: 旧的/user/getuserinfo 接口的url已变更为auth/getuserinfo，不过旧接口依旧可以使用，建议是关注新接口即可
@@ -140,13 +141,15 @@ public interface WxCpOAuth2Service {
 
   /**
    * 获取用户二次验证信息
-   * <p>
+   * <pre>
    * api: https://qyapi.weixin.qq.com/cgi-bin/auth/get_tfa_info?access_token=ACCESS_TOKEN
    * 权限说明：仅『通讯录同步』或者自建应用可调用，如用自建应用调用，用户需要在二次验证范围和应用可见范围内。
    * 并发限制：20
+   * </pre>
    *
    * @param code 用户进入二次验证页面时，企业微信颁发的code,每次成员授权带上的code将不一样，code只能使用一次，5分钟未被使用自动过期
-   * @return me.chanjar.weixin.cp.bean.workbench.WxCpSecondVerificationInfo 二次验证授权码，开发者可以调用通过二次验证接口，解锁企业微信终端.tfa_code有效期五分钟，且只能使用一次。
+   * @return 二次验证授权码，开发者可以调用通过二次验证接口，解锁企业微信终端.tfa_code有效期五分钟，且只能使用一次。
+   * @throws WxErrorException 微信错误异常
    */
   WxCpSecondVerificationInfo getTfaInfo(String code) throws WxErrorException;
 }

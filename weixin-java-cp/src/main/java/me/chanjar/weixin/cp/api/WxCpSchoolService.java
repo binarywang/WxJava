@@ -80,9 +80,10 @@ public interface WxCpSchoolService {
 
   /**
    * 获取直播详情
+   * <pre>
    * 请求方式：GET（HTTPS）
-   * 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/living/get_living_info?access_token=ACCESS_TOKEN&livingid
-   * =LIVINGID
+   * {@code 请求地址：https://qyapi.weixin.qq.com/cgi-bin/school/living/get_living_info?access_token=ACCESS_TOKEN&livingid=LIVINGID}
+   * </pre>
    *
    * @param livingId the living id
    * @return living info

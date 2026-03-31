@@ -84,6 +84,7 @@ public interface WxCpOaMeetingRoomService {
    * </pre>
    *
    * @param wxCpOaMeetingRoomBookingInfoRequest 会议室预定信息查询对象
+   * @return 会议室预定信息
    * @throws WxErrorException .
    */
   WxCpOaMeetingRoomBookingInfoResult getMeetingRoomBookingInfo(WxCpOaMeetingRoomBookingInfoRequest wxCpOaMeetingRoomBookingInfoRequest) throws WxErrorException;
@@ -99,6 +100,7 @@ public interface WxCpOaMeetingRoomService {
    * </pre>
    *
    * @param wxCpOaMeetingRoomBookRequest 会议室预定对象
+   * @return 预定结果
    * @throws WxErrorException .
    */
   WxCpOaMeetingRoomBookResult bookingMeetingRoom(WxCpOaMeetingRoomBookRequest wxCpOaMeetingRoomBookRequest) throws WxErrorException;
@@ -114,6 +116,7 @@ public interface WxCpOaMeetingRoomService {
    * </pre>
    *
    * @param wxCpOaMeetingRoomBookByScheduleRequest 会议室预定对象
+   * @return 预定结果
    * @throws WxErrorException .
    */
   WxCpOaMeetingRoomBookResult bookingMeetingRoomBySchedule(WxCpOaMeetingRoomBookByScheduleRequest wxCpOaMeetingRoomBookByScheduleRequest) throws WxErrorException;
@@ -129,6 +132,7 @@ public interface WxCpOaMeetingRoomService {
    * </pre>
    *
    * @param wxCpOaMeetingRoomBookByMeetingRequest 会议室预定对象
+   * @return 预定结果
    * @throws WxErrorException .
    */
   WxCpOaMeetingRoomBookResult bookingMeetingRoomByMeeting(WxCpOaMeetingRoomBookByMeetingRequest wxCpOaMeetingRoomBookByMeetingRequest) throws WxErrorException;
@@ -147,10 +151,10 @@ public interface WxCpOaMeetingRoomService {
    * @param wxCpOaMeetingRoomCancelBookRequest 取消预定会议室对象
    * @throws WxErrorException .
    */
-   void cancelBookMeetingRoom(WxCpOaMeetingRoomCancelBookRequest wxCpOaMeetingRoomCancelBookRequest) throws WxErrorException;
+  void cancelBookMeetingRoom(WxCpOaMeetingRoomCancelBookRequest wxCpOaMeetingRoomCancelBookRequest) throws WxErrorException;
 
 
-   /**
+  /**
    * 根据会议室预定ID查询预定详情.
    * <pre>
    * 企业可通过此接口根据预定id查询相关会议室的预定情况
@@ -161,8 +165,9 @@ public interface WxCpOaMeetingRoomService {
    * </pre>
    *
    * @param wxCpOaMeetingRoomBookingInfoByBookingIdRequest 根据会议室预定ID查询预定详情对象
+   * @return 预定详情
    * @throws WxErrorException .
    */
-   WxCpOaMeetingRoomBookingInfoByBookingIdResult getBookingInfoByBookingId(WxCpOaMeetingRoomBookingInfoByBookingIdRequest wxCpOaMeetingRoomBookingInfoByBookingIdRequest) throws WxErrorException;
+  WxCpOaMeetingRoomBookingInfoByBookingIdResult getBookingInfoByBookingId(WxCpOaMeetingRoomBookingInfoByBookingIdRequest wxCpOaMeetingRoomBookingInfoByBookingIdRequest) throws WxErrorException;
 
 }

@@ -58,6 +58,9 @@ public class ContentValue implements Serializable {
 
   private Formula formula;
 
+  @SerializedName("bank_account")
+  private BankAccount bankAccount;
+
   /**
    * The type Date.
    */
@@ -68,6 +71,23 @@ public class ContentValue implements Serializable {
 
     @SerializedName("s_timestamp")
     private String timestamp;
+
+    @SerializedName("timezone_info")
+    private TimezoneInfo timezoneInfo;
+
+    /**
+     * The type TimezoneInfo.
+     */
+    @Data
+    public static class TimezoneInfo implements Serializable {
+      private static final long serialVersionUID = 164839205748392017L;
+
+      @SerializedName("zone_offset")
+      private String zoneOffset;
+
+      @SerializedName("zone_desc")
+      private String zoneDesc;
+    }
   }
 
   /**
@@ -228,6 +248,8 @@ public class ContentValue implements Serializable {
       private Long end;
       @SerializedName("new_duration")
       private Long duration;
+      @SerializedName("timezone_info")
+      private Date.TimezoneInfo timezoneInfo;
     }
 
     /**
@@ -339,6 +361,57 @@ public class ContentValue implements Serializable {
   public static class Formula implements Serializable {
     private static final long serialVersionUID = 816968197271971247L;
     private String value;
+  }
+
+  /**
+   * The type BankAccount
+   */
+  @Data
+  public static class BankAccount implements Serializable {
+    private static final long serialVersionUID = 938475610283746192L;
+
+    @SerializedName("account_type")
+    private Long accountType;
+
+    @SerializedName("account_name")
+    private String accountName;
+
+    @SerializedName("account_number")
+    private String accountNumber;
+
+    private String remark;
+
+    private Bank bank;
+
+    /**
+     * The type Bank
+     */
+    @Data
+    public static class Bank implements Serializable {
+      private static final long serialVersionUID = 527384916203847561L;
+
+      @SerializedName("bank_alias")
+      private String bankAlias;
+
+      @SerializedName("bank_alias_code")
+      private String bankAliasCode;
+
+      private String province;
+
+      @SerializedName("province_code")
+      private Long provinceCode;
+
+      private String city;
+
+      @SerializedName("city_code")
+      private Long cityCode;
+
+      @SerializedName("bank_branch_name")
+      private String bankBranchName;
+
+      @SerializedName("bank_branch_id")
+      private String bankBranchId;
+    }
   }
 
 }

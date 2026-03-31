@@ -63,9 +63,8 @@ public class WxMpUserQuery implements Serializable {
   /**
    * 添加一个OpenId到列表中，并返回本对象
    * <p>
-   * <pre>
    * 该方法默认lang = zh_CN
-   * </pre>
+   * </p>
    *
    * @param openid openid
    * @return {@link WxMpUserQuery}
@@ -100,6 +99,8 @@ public class WxMpUserQuery implements Serializable {
 
   /**
    * 获取查询参数列表
+   *
+   * @return 查询参数列表
    */
   public List<WxMpUserQueryParam> getQueryParamList() {
     return this.queryParamList;

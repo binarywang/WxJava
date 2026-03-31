@@ -10,8 +10,9 @@ import java.io.Serializable;
 
 /**
  * 异步上传企微素材
+ *
  * @author <a href="https://github.com/imyzt">imyzt</a>
- * @date 2025/4/27
+ * @since 2025/4/27
  */
 @EqualsAndHashCode(callSuper = true)
 @Data

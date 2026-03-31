@@ -126,9 +126,10 @@ public interface WxCpGroupRobotService {
 
   /**
    * 发送模板卡片消息
-   * @param webhookUrl
-   * @param wxCpGroupRobotMessage
-   * @throws WxErrorException
+   *
+   * @param webhookUrl            webhook地址
+   * @param wxCpGroupRobotMessage 群机器人消息
+   * @throws WxErrorException 异常
    */
   void sendTemplateCardMessage(String webhookUrl, WxCpGroupRobotMessage wxCpGroupRobotMessage) throws WxErrorException;
 

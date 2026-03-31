@@ -60,6 +60,12 @@ public interface WxMaUserService {
   /**
    * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
+   * <p>若已配置 {@code apiSignatureAesKey} 及 {@code apiSignatureRsaPrivateKey} 开启服务端 API 签名，
+   * 该接口请求将自动走加密 + RSA 签名路径（见
+   * <a href="https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/getting_started/api_signature.html">API签名文档</a>）。
+   * 签名串格式为 {@code urlpath\nappid\ntimestamp\npostdata}（4 个字段），
+   * RSA 私钥序列号通过请求头 {@code Wechatmp-Serial} 传递，不包含在签名串中。
+   *
    * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
    * @return 用户手机号信息
    * @throws WxErrorException .

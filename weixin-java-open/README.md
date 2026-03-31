@@ -31,6 +31,36 @@
 
 ---
 
+## 重要提示：小程序审核额度限制
+
+**在使用第三方平台代小程序提交审核时，请注意以下限制：**
+
+### 审核额度说明
+
+- **默认额度**: 每个第三方平台账号每月默认有 **20 个** 审核额度
+- **消耗规则**: 每次调用 `submitAudit()` 提交一个小程序审核，会消耗 **1 个** 审核额度
+- **重置周期**: 额度每月初自动重置
+- **额度查询**: 使用 `queryQuota()` 方法查询剩余额度
+
+### 最佳实践
+
+```java
+// 1. 先查询剩余额度
+WxOpenMaQueryQuotaResult quota = wxOpenMaService.queryQuota();
+if (quota.getRest() <= 0) {
+  throw new RuntimeException("审核额度不足，剩余：" + quota.getRest());
+}
+
+// 2. 提交审核
+WxOpenMaSubmitAuditMessage message = new WxOpenMaSubmitAuditMessage();
+message.setItemList(itemList);
+WxOpenMaSubmitAuditResult result = wxOpenMaService.submitAudit(message);
+```
+
+**详细说明**: 请参考 [AUDIT_QUOTA_MANAGEMENT_GUIDE.md](AUDIT_QUOTA_MANAGEMENT_GUIDE.md)
+
+---
+
 ## 代码示例
 
 消息机制未实现，下面为通知回调中设置的代码部分

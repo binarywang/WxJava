@@ -241,4 +241,16 @@ public class OrderProductInfo implements Serializable {
   @JsonProperty("national_subsidy_merchant_discounted_price")
   private Integer nationalSubsidyMerchantDiscountedPrice;
 
+  /**
+   * 订单内商品维度活动商家补贴，即参与平台补贴活动时商家通过活动报名价优惠的部分，单位为分
+   */
+  @JsonProperty("platform_activity_merchant_discounted_price")
+  private Integer platformActivityMerchantDiscountedPrice;
+
+  /**
+   * 订单内商品维度平台券优惠金额，单位为分
+   */
+  @JsonProperty("cash_coupon_discounted_price")
+  private Integer cashCouponDiscountedPrice;
+
 }

@@ -51,7 +51,8 @@ public class WxMpServiceHttpComponentsImpl extends BaseWxMpServiceImpl<Closeable
     apacheHttpClientBuilder.httpProxyHost(configStorage.getHttpProxyHost())
       .httpProxyPort(configStorage.getHttpProxyPort())
       .httpProxyUsername(configStorage.getHttpProxyUsername())
-      .httpProxyPassword(configStorage.getHttpProxyPassword().toCharArray());
+      .httpProxyPassword(configStorage.getHttpProxyPassword() == null ? null :
+        configStorage.getHttpProxyPassword().toCharArray());
 
     if (configStorage.getHttpProxyHost() != null && configStorage.getHttpProxyPort() > 0) {
       this.httpProxy = new HttpHost(configStorage.getHttpProxyHost(), configStorage.getHttpProxyPort());

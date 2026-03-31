@@ -43,6 +43,11 @@ public class WxGsonBuilder {
     });
   }
 
+  /**
+   * 创建Gson实例
+   *
+   * @return Gson实例
+   */
   public static Gson create() {
     if (Objects.isNull(GSON_INSTANCE)) {
       synchronized (INSTANCE) {

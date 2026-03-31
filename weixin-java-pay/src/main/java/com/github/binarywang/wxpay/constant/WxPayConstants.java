@@ -524,4 +524,25 @@ public class WxPayConstants {
     }
 
   }
+
+  /**
+   * 收款授权模式
+   * 
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/merchant/4014399293">官方文档</a>
+   */
+  @UtilityClass
+  public static class ReceiptAuthorizationMode {
+    /**
+     * 需确认收款授权模式（默认值）
+     * 用户需要手动确认才能收款
+     */
+    public static final String CONFIRM_RECEIPT_AUTHORIZATION = "CONFIRM_RECEIPT_AUTHORIZATION";
+
+    /**
+     * 免确认收款授权模式
+     * 用户授权后，收款不需要确认，转账直接到账
+     */
+    public static final String NO_CONFIRM_RECEIPT_AUTHORIZATION = "NO_CONFIRM_RECEIPT_AUTHORIZATION";
+  }
+
 }

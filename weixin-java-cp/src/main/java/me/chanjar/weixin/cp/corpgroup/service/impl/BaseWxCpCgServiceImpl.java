@@ -112,6 +112,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param url                    the url
    * @param postData               the post data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the string
    * @throws WxErrorException the wx error exception
    */
@@ -136,6 +137,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param uri                    the uri
    * @param data                   the data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */
@@ -181,6 +183,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param executor the executor
    * @param uri      the uri
    * @param data     the data
+   * @param req      获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */
@@ -197,6 +200,7 @@ public abstract class BaseWxCpCgServiceImpl<H, P> implements WxCpCgService, Requ
    * @param uri                    the uri
    * @param data                   the data
    * @param withoutCorpAccessToken the without Corp access token
+   * @param req                    获取token请求参数
    * @return the t
    * @throws WxErrorException the wx error exception
    */

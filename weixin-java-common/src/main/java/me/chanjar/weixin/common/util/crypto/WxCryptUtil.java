@@ -197,6 +197,7 @@ public class WxCryptUtil {
   /**
    * 对明文进行加密.
    *
+   * @param randomStr 随机字符串
    * @param plainText 需要加密的明文
    * @return 加密后base64编码的字符串
    */

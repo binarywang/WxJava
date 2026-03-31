@@ -35,6 +35,14 @@ public class SkuFastInfo implements Serializable {
   @JsonProperty("is_delete")
   private Boolean delete;
 
+  /** 商品sku编码 */
+  @JsonProperty("sku_code")
+  private String skuCode;
+
+  /** 更新sku状态 0-默认值；5-上架；11-下架 */
+  @JsonProperty("status")
+  private Integer status;
+
 
   @Data
   @NoArgsConstructor

@@ -22,6 +22,8 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateExpiredException;
@@ -109,18 +111,24 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
     this.minutesInterval = minutesInterval;
     this.payBaseUrl = payBaseUrl;
     this.wxPayHttpProxy = wxPayHttpProxy;
-    //构造时更新证书
+    //构造时尝试更新证书，但失败时不抛出异常，避免影响公钥模式的使用
     try {
       autoUpdateCert();
       instant = Instant.now();
     } catch (IOException | GeneralSecurityException e) {
-      throw new WxRuntimeException(e);
+      log.warn("Auto update cert failed during initialization, will retry later, exception = {}", e.getMessage());
+      // 设置 instant 为 null，后续每次使用时都会尝试下载证书直到成功
+      instant = null;
     }
   }
 
   @Override
   public boolean verify(String serialNumber, byte[] message, String signature) {
     checkAndAutoUpdateCert();
+    if (verifier == null) {
+      log.warn("No valid certificate available for verification");
+      return false;
+    }
     return verifier.verify(serialNumber, message, signature);
   }
 
@@ -148,8 +156,21 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
       .withCredentials(credentials)
       .withValidator(verifier == null ? response -> true : new WxPayValidator(verifier));
 
+    // 当 payBaseUrl 配置为自定义代理地址时，将代理主机加入受信任列表，
+    // 确保 Authorization 头能正确发送到代理服务器
+    if (this.payBaseUrl != null && !this.payBaseUrl.isEmpty()) {
+      try {
+        String host = new URI(this.payBaseUrl).getHost();
+        if (host != null && !host.endsWith(".mch.weixin.qq.com")) {
+          wxPayV3HttpClientBuilder.withTrustedHost(host);
+        }
+      } catch (URISyntaxException e) {
+        log.warn("解析 payBaseUrl [{}] 中的主机名失败: {}", this.payBaseUrl, e.getMessage());
+      }
+    }
+
     //调用自定义扩展设置设置HTTP PROXY对象
-    HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder,this.wxPayHttpProxy);
+    HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder, this.wxPayHttpProxy);
 
     //增加自定义扩展点,子类可以设置其他构造参数
     this.customHttpClientBuilder(wxPayV3HttpClientBuilder);
@@ -220,6 +241,9 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
   @Override
   public X509Certificate getValidCertificate() {
     checkAndAutoUpdateCert();
+    if (verifier == null) {
+      throw new WxRuntimeException("No valid certificate available, please check your configuration or use fullPublicKeyModel mode");
+    }
     return verifier.getValidCertificate();
   }
 

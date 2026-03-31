@@ -54,10 +54,10 @@ public interface WxMpService extends WxService {
   WxMpShortKeyResult fetchShorten(String shortKey) throws WxErrorException;
 
   /**
-   * <pre>
    * 验证消息的确来自微信服务器.
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN
-   * </pre>
+   * <p>
+   * {@code 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421135319&token=&lang=zh_CN">接入指南</a>}
+   * </p>
    *
    * @param timestamp 时间戳，字符串格式
    * @param nonce     随机串，字符串格式
@@ -76,16 +76,19 @@ public interface WxMpService extends WxService {
   String getAccessToken() throws WxErrorException;
 
   /**
-   * <pre>
    * 获取access_token，本方法线程安全.
+   * <p>
    * 且在多线程同时刷新时只刷新一次，避免超出2000次/日的调用次数上限
-   *
+   * </p>
+   * <p>
    * 另：本service的所有方法都会在access_token过期时调用此方法
-   *
+   * </p>
+   * <p>
    * 程序员在非必要情况下尽量不要主动调用此方法
-   *
-   * 详情请见: http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140183&token=&lang=zh_CN
-   * </pre>
+   * </p>
+   * <p>
+   * {@code 详情请见: <a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421140183&token=&lang=zh_CN">获取access_token</a>}
+   * </p>
    *
    * @param forceRefresh 是否强制刷新，true表示强制刷新，false表示使用缓存
    * @return token access token，字符串格式
@@ -126,12 +129,13 @@ public interface WxMpService extends WxService {
   String getJsapiTicket() throws WxErrorException;
 
   /**
-   * <pre>
    * 获得jsapi_ticket.
+   * <p>
    * 获得时会检查jsapiToken是否过期，如果过期了，那么就刷新一下，否则就什么都不干
-   *
-   * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN
-   * </pre>
+   * </p>
+   * <p>
+   * {@code 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN">JS-SDK使用权限签名算法</a>}
+   * </p>
    *
    * @param forceRefresh 强制刷新，true表示强制刷新，false表示使用缓存
    * @return jsapi ticket，字符串格式
@@ -140,11 +144,10 @@ public interface WxMpService extends WxService {
   String getJsapiTicket(boolean forceRefresh) throws WxErrorException;
 
   /**
-   * <pre>
    * 创建调用jsapi时所需要的签名.
-   *
-   * 详情请见：http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN
-   * </pre>
+   * <p>
+   * {@code 详情请见：<a href="http://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1421141115&token=&lang=zh_CN">JS-SDK使用权限签名算法</a>}
+   * </p>
    *
    * @param url 当前网页的URL，不包括#及其后面部分
    * @return 生成的签名对象，包含签名、时间戳、随机串等信息
@@ -153,10 +156,10 @@ public interface WxMpService extends WxService {
   WxJsapiSignature createJsapiSignature(String url) throws WxErrorException;
 
   /**
-   * <pre>
    * 长链接转短链接接口.
-   * 详情请见: http://mp.weixin.qq.com/wiki/index.php?title=长链接转短链接接口
-   * </pre>
+   * <p>
+   * 详情请见: 长链接转短链接接口
+   * </p>
    *
    * @param longUrl 长url，需要转换的原始URL
    * @return 生成的短地址，字符串格式
@@ -167,10 +170,10 @@ public interface WxMpService extends WxService {
   String shortUrl(String longUrl) throws WxErrorException;
 
   /**
-   * <pre>
    * 语义查询接口.
-   * 详情请见：http://mp.weixin.qq.com/wiki/index.php?title=语义理解
-   * </pre>
+   * <p>
+   * 详情请见：语义理解
+   * </p>
    *
    * @param semanticQuery 查询条件，包含查询内容、类型等信息
    * @return 查询结果，包含语义理解的结果和建议回复
@@ -179,11 +182,13 @@ public interface WxMpService extends WxService {
   WxMpSemanticQueryResult semanticQuery(WxMpSemanticQuery semanticQuery) throws WxErrorException;
 
   /**
-   * <pre>
    * 构造第三方使用网站应用授权登录的url.
-   * 详情请见: <a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN">网站应用微信登录开发指南</a>
-   * URL格式为：https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
-   * </pre>
+   * <p>
+   * {@code 详情请见: <a href="https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN">网站应用微信登录开发指南</a>}
+   * </p>
+   * <p>
+   * {@code URL格式为：https://open.weixin.qq.com/connect/qrconnect?appid=APPID&redirect_uri=REDIRECT_URI&response_type=code&scope=SCOPE&state=STATE#wechat_redirect}
+   * </p>
    *
    * @param redirectUri 用户授权完成后的重定向链接，无需urlencode, 方法内会进行encode
    * @param scope       应用授权作用域，拥有多个作用域用逗号（,）分隔，网页应用目前仅填写snsapi_login即可
@@ -193,10 +198,7 @@ public interface WxMpService extends WxService {
   String buildQrConnectUrl(String redirectUri, String scope, String state);
 
   /**
-   * <pre>
    * 获取微信服务器IP地址
-   * http://mp.weixin.qq.com/wiki/0/2ad4b6bfd29f30f71d39616c2a0fcedc.html
-   * </pre>
    *
    * @return 微信服务器ip地址数组，包含所有微信服务器IP地址
    * @throws WxErrorException 微信API调用异常
@@ -204,11 +206,10 @@ public interface WxMpService extends WxService {
   String[] getCallbackIP() throws WxErrorException;
 
   /**
-   * <pre>
-   *  网络检测
-   *  https://mp.weixin.qq.com/wiki?t=resource/res_main&id=21541575776DtsuT
-   *  为了帮助开发者排查回调连接失败的问题，提供这个网络检测的API。它可以对开发者URL做域名解析，然后对所有IP进行一次ping操作，得到丢包率和耗时。
-   * </pre>
+   * 网络检测
+   * <p>
+   * 为了帮助开发者排查回调连接失败的问题，提供这个网络检测的API。它可以对开发者URL做域名解析，然后对所有IP进行一次ping操作，得到丢包率和耗时。
+   * </p>
    *
    * @param action   执行的检测动作，可选值：all（全部检测）、dns（仅域名解析）、ping（仅网络连通性检测）
    * @param operator 指定平台从某个运营商进行检测，可选值：CHINANET（中国电信）、UNICOM（中国联通）、CAP（中国联通）、CUCC（中国联通）
@@ -239,12 +240,13 @@ public interface WxMpService extends WxService {
   WxMpCurrentAutoReplyInfo getCurrentAutoReplyInfo() throws WxErrorException;
 
   /**
-   * <pre>
-   *  公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零：
-   *  HTTP调用：https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=ACCESS_TOKEN
-   *  接口文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433744592
-   *
-   * </pre>
+   * 公众号调用或第三方平台帮公众号调用对公众号的所有api调用（包括第三方帮其调用）次数进行清零.
+   * <p>
+   * HTTP调用：https://api.weixin.qq.com/cgi-bin/clear_quota?access_token=ACCESS_TOKEN
+   * </p>
+   * <p>
+   * {@code 接口文档地址：https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1433744592}
+   * </p>
    *
    * @param appid 公众号的APPID，需要清零调用的公众号的appid
    * @throws WxErrorException 微信API调用异常
@@ -252,11 +254,9 @@ public interface WxMpService extends WxService {
   void clearQuota(String appid) throws WxErrorException;
 
   /**
-   * <pre>
    * Service没有实现某个API的时候，可以用这个，
    * 比{@link #get}和{@link #post}方法更灵活，可以自己构造RequestExecutor用来处理不同的参数和不同的返回类型。
    * 可以参考，{@link MediaUploadRequestExecutor}的实现方法
-   * </pre>
    *
    * @param <T>      返回值类型
    * @param <E>      参数类型

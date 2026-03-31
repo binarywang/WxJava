@@ -28,8 +28,8 @@ public class WxPayNotifyV3Response {
   /**
    * 返回成功
    *
-   * @param msg
-   * @return
+   * @param msg 返回消息
+   * @return 成功响应的JSON字符串
    */
   public static String success(String msg) {
     WxPayNotifyV3Response response = new WxPayNotifyV3Response(SUCCESS, msg);
@@ -40,7 +40,7 @@ public class WxPayNotifyV3Response {
    * 返回失败
    *
    * @param msg 返回信息，如非空，为错误原因
-   * @return
+   * @return 失败响应的JSON字符串
    */
   public static String fail(String msg) {
     WxPayNotifyV3Response response = new WxPayNotifyV3Response(FAIL, msg);

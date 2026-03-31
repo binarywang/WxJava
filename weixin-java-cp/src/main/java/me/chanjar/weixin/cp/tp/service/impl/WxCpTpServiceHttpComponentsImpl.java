@@ -10,7 +10,6 @@ import me.chanjar.weixin.common.util.http.hc.BasicResponseHandler;
 import me.chanjar.weixin.common.util.http.hc.DefaultHttpComponentsClientBuilder;
 import me.chanjar.weixin.common.util.http.hc.HttpComponentsClientBuilder;
 import me.chanjar.weixin.common.util.json.GsonParser;
-import me.chanjar.weixin.cp.config.WxCpTpConfigStorage;
 import me.chanjar.weixin.cp.constant.WxCpApiPathConsts;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.config.RequestConfig;
@@ -87,9 +86,10 @@ public class WxCpTpServiceHttpComponentsImpl extends BaseWxCpTpServiceImpl<Close
     HttpComponentsClientBuilder apacheHttpClientBuilder = DefaultHttpComponentsClientBuilder.get();
 
     apacheHttpClientBuilder.httpProxyHost(this.configStorage.getHttpProxyHost())
-      .httpProxyPort(this.configStorage.getHttpProxyPort())
-      .httpProxyUsername(this.configStorage.getHttpProxyUsername())
-      .httpProxyPassword(this.configStorage.getHttpProxyPassword().toCharArray());
+            .httpProxyPort(this.configStorage.getHttpProxyPort())
+            .httpProxyUsername(this.configStorage.getHttpProxyUsername())
+            .httpProxyPassword(this.configStorage.getHttpProxyPassword() == null ? null :
+                    this.configStorage.getHttpProxyPassword().toCharArray());
 
     if (this.configStorage.getHttpProxyHost() != null && this.configStorage.getHttpProxyPort() > 0) {
       this.httpProxy = new HttpHost(this.configStorage.getHttpProxyHost(), this.configStorage.getHttpProxyPort());

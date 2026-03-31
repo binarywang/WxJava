@@ -85,7 +85,7 @@ public interface WxCpExportService {
    * 获取导出结果
    *
    * 请求方式：GET（HTTPS）
-   * 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/export/get_result?access_token=ACCESS_TOKEN&jobid=jobid_xxxxxxxxxxxxxxx">https://qyapi.weixin.qq.com/cgi-bin/export/get_result?access_token=ACCESS_TOKEN&jobid=jobid_xxxxxxxxxxxxxxx</a>
+   * {@code 请求地址：<a href="https://qyapi.weixin.qq.com/cgi-bin/export/get_result?access_token=ACCESS_TOKEN&jobid=jobid_xxxxxxxxxxxxxxx">https://qyapi.weixin.qq.com/cgi-bin/export/get_result?access_token=ACCESS_TOKEN&jobid=jobid_xxxxxxxxxxxxxxx</a>}
    *
    * 文档地址：<a href="https://developer.work.weixin.qq.com/document/path/94854">https://developer.work.weixin.qq.com/document/path/94854</a>
    * 返回的url文件下载解密可参考 <a href="https://blog.csdn.net/a201692/article/details/123530529">CSDN</a>

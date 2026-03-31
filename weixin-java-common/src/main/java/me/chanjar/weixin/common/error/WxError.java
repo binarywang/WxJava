@@ -12,11 +12,13 @@ import java.io.Serializable;
 
 /**
  * 微信错误码.
+ * <p>
  * 请阅读：
  * 公众平台：<a href="https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Global_Return_Code.html">全局返回码说明</a>
  * 企业微信：<a href="https://work.weixin.qq.com/api/doc#10649">全局错误码</a>
+ * </p>
  *
- * @author Daniel Qian & Binary Wang
+ * @author Daniel Qian, Binary Wang
  */
 @Data
 @NoArgsConstructor

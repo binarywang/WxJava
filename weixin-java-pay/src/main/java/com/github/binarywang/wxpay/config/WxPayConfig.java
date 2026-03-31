@@ -32,6 +32,8 @@ import org.apache.http.ssl.SSLContexts;
 
 import javax.net.ssl.SSLContext;
 import java.io.*;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyStore;
@@ -97,9 +99,13 @@ public class WxPayConfig {
    */
   private String subMchId;
   /**
-   * 微信支付异步回掉地址，通知url必须为直接可访问的url，不能携带参数.
+   * 微信支付异步回调地址，通知url必须为直接可访问的url，不能携带参数.
    */
   private String notifyUrl;
+  /**
+   * 退款结果异步回调地址，通知url必须为直接可访问的url，不能携带参数.
+   */
+  private String refundNotifyUrl;
   /**
    * 交易类型.
    * <pre>
@@ -325,7 +331,8 @@ public class WxPayConfig {
    *
    * @return org.apache.http.impl.client.CloseableHttpClient
    * @author doger.wang
-   **/
+   * @throws WxPayException 微信支付异常
+   */
   public CloseableHttpClient initApiV3HttpClient() throws WxPayException {
     if (StringUtils.isBlank(this.getApiV3Key())) {
       throw new WxPayException("请确保apiV3Key值已设置");
@@ -343,7 +350,7 @@ public class WxPayConfig {
         certificate = (X509Certificate) objects[1];
         this.certSerialNo = certificate.getSerialNumber().toString(16).toUpperCase();
       }
-      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && (StringUtils.isNotBlank(this.getPrivateCertPath()) || StringUtils.isNotBlank(this.getPrivateCertString())) || this.getPrivateCertContent() != null) {
+      if (certificate == null && StringUtils.isBlank(this.getCertSerialNo()) && (StringUtils.isNotBlank(this.getPrivateCertPath()) || StringUtils.isNotBlank(this.getPrivateCertString()) || this.getPrivateCertContent() != null)) {
         try (InputStream certInputStream = this.loadConfigInputStream(this.getPrivateCertString(), this.getPrivateCertPath(),
           this.privateCertContent, "privateCertPath")) {
           certificate = PemUtils.loadCertificate(certInputStream);
@@ -390,6 +397,19 @@ public class WxPayConfig {
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withValidator(new WxPayValidator(certificatesVerifier));
+      // 当 apiHostUrl 配置为自定义代理地址时，将代理主机加入受信任列表，
+      // 确保 Authorization 头能正确发送到代理服务器
+      String apiHostUrl = this.getApiHostUrl();
+      if (StringUtils.isNotBlank(apiHostUrl)) {
+        try {
+          String host = new URI(apiHostUrl).getHost();
+          if (host != null && !host.endsWith(".mch.weixin.qq.com")) {
+            wxPayV3HttpClientBuilder.withTrustedHost(host);
+          }
+        } catch (URISyntaxException e) {
+          log.warn("解析 apiHostUrl [{}] 中的主机名失败: {}", apiHostUrl, e.getMessage());
+        }
+      }
       //初始化V3接口正向代理设置
       HttpProxyUtils.initHttpProxy(wxPayV3HttpClientBuilder, wxPayHttpProxy);
 
@@ -663,6 +683,8 @@ public class WxPayConfig {
 
   /**
    * 配置HTTP代理
+   *
+   * @param httpClientBuilder HttpClient构建器
    */
   private void configureProxy(org.apache.http.impl.client.HttpClientBuilder httpClientBuilder) {
     if (StringUtils.isNotBlank(this.getHttpProxyHost()) && this.getHttpProxyPort() > 0) {

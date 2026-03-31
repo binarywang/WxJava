@@ -25,7 +25,7 @@ import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.Tag.*;
  * </pre>
  *
  * @author zhangq <zhangq002@gmail.com>
- * @since 2021 -02-14 16:02
+ * @since 2021-02-14 16:02
  */
 @RequiredArgsConstructor
 public class WxCpTpTagServiceImpl implements WxCpTpTagService {

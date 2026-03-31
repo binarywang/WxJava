@@ -36,6 +36,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
    * @param sessionKey    session_key
    * @param encryptedData 消息密文
    * @param ivStr         iv字符串
+   * @return 解密后的字符串
    */
   public static String decrypt(String sessionKey, String encryptedData, String ivStr) {
     try {
@@ -58,6 +59,7 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
    * @param sessionKey    session_key
    * @param encryptedData 消息密文
    * @param ivStr         iv字符串
+   * @return 解密后的字符串
    */
   public static String decryptAnotherWay(String sessionKey, String encryptedData, String ivStr) {
     byte[] keyBytes = Base64.decodeBase64(sessionKey.getBytes(UTF_8));

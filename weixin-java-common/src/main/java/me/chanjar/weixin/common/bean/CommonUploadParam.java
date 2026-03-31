@@ -10,6 +10,8 @@ import org.springframework.lang.Nullable;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 通用文件上传参数
@@ -35,6 +37,27 @@ public class CommonUploadParam implements Serializable {
   private CommonUploadData data;
 
   /**
+   * 额外的表单字段，用于在上传文件的同时提交其他表单数据
+   * 例如：上传视频素材时需要提交description字段（JSON格式的视频描述信息）
+   */
+  @Nullable
+  private Map<String, String> formFields;
+
+  /**
+   * 为保持向后兼容保留的 2 参数构造函数。
+   * <p>
+   * 仅设置文件参数名和上传数据，额外表单字段将为 {@code null}。
+   *
+   * @param name 参数名，如：media
+   * @param data 上传数据
+   * @deprecated 请使用包含 formFields 参数的构造函数或静态工厂方法 {@link #fromFile(String, File)}、{@link #fromBytes(String, String, byte[])}
+   */
+  @Deprecated
+  public CommonUploadParam(@NotNull String name, @NotNull CommonUploadData data) {
+    this(name, data, null);
+  }
+
+  /**
    * 从文件构造
    *
    * @param name 参数名，如：media
@@ -43,7 +66,7 @@ public class CommonUploadParam implements Serializable {
    */
   @SneakyThrows
   public static CommonUploadParam fromFile(String name, File file) {
-    return new CommonUploadParam(name, CommonUploadData.fromFile(file));
+    return new CommonUploadParam(name, CommonUploadData.fromFile(file), null);
   }
 
   /**
@@ -55,11 +78,32 @@ public class CommonUploadParam implements Serializable {
    */
   @SneakyThrows
   public static CommonUploadParam fromBytes(String name, @Nullable String fileName, byte[] bytes) {
-    return new CommonUploadParam(name, new CommonUploadData(fileName, new ByteArrayInputStream(bytes), bytes.length));
+    return new CommonUploadParam(name, new CommonUploadData(fileName, new ByteArrayInputStream(bytes), bytes.length), null);
+  }
+
+  /**
+   * 添加额外的表单字段
+   *
+   * @param fieldName  表单字段名
+   * @param fieldValue 表单字段值
+   * @return 当前对象，支持链式调用
+   */
+  public CommonUploadParam addFormField(String fieldName, String fieldValue) {
+    if (fieldName == null || fieldName.trim().isEmpty()) {
+      throw new IllegalArgumentException("表单字段名不能为空");
+    }
+    if (fieldValue == null) {
+      throw new IllegalArgumentException("表单字段值不能为null");
+    }
+    if (this.formFields == null) {
+      this.formFields = new HashMap<>();
+    }
+    this.formFields.put(fieldName, fieldValue);
+    return this;
   }
 
   @Override
   public String toString() {
-    return String.format("{name:%s, data:%s}", name, data);
+    return String.format("{name:%s, data:%s, formFields:%s}", name, data, formFields);
   }
 }

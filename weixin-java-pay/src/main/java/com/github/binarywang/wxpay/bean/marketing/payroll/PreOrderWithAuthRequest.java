@@ -166,4 +166,22 @@ public class PreOrderWithAuthRequest implements Serializable {
    */
   @SerializedName(value = "employment_type")
   private String employmentType;
+
+  /**
+   * <pre>
+   * 字段名：核身类型
+   * 变量名：authenticate_type
+   * 是否必填：否
+   * 类型：string[1,32]
+   * 描述：
+   *  核身类型，用于标识本次核身的业务类型；枚举值：
+   * NORMAL_AUTHENTICATE：普通核身
+   * LOGIN_AUTHENTICATE：登录核身
+   * INSURANCE_AUTHENTICATE：保险核身
+   * CONTRACT_AUTHENTICATE：合同核身
+   * 示例值：NORMAL_AUTHENTICATE
+   * </pre>
+   */
+  @SerializedName(value = "authenticate_type")
+  private String authenticateType;
 }

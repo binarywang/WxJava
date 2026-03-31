@@ -133,7 +133,7 @@ public interface WxCpTpConfigStorage {
   String getEncodingAESKey();
 
   /**
-   * 企微服务商企业ID & 企业secret
+   * {@code 企微服务商企业ID & 企业secret}
    *
    * @return the corp id
    */

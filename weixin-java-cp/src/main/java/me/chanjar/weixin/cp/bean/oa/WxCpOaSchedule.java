@@ -157,7 +157,7 @@ public class WxCpOaSchedule implements Serializable, ToJson {
     /**
      * 提醒时间与日程开始时间（start_time）的差值，当is_remind为1时有效。例如：-300表示日程开始前5分钟提醒。
      * 特殊情况：企业微信终端设置的“全天”类型的日程，由于start_time是0点时间戳，提醒如果设置了当天9点，则会出现正数32400。
-     * <br/>
+     * <br>
      * 取值范围：-604800 ~ 86399
      */
     @SerializedName("remind_time_diffs")

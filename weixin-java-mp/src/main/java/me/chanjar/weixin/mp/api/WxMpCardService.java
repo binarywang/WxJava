@@ -255,11 +255,9 @@ public interface WxMpCardService {
     String addTestWhiteList(String openid) throws WxErrorException;
 
     /**
-     * <pre>
      * 创建卡券
-     * </pre>
      *
-     * @param cardCreateRequest 卡券创建请求对象
+     * @param cardCreateMessage 卡券创建请求对象
      * @return 卡券创建结果对象
      * @throws WxErrorException 微信API调用异常，可能包括：
      *                          <ul>

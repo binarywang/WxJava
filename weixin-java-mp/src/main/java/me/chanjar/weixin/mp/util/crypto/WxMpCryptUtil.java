@@ -27,7 +27,7 @@ public class WxMpCryptUtil extends me.chanjar.weixin.common.util.crypto.WxCryptU
   /**
    * 构造函数
    *
-   * @param wxMpConfigStorage
+   * @param wxMpConfigStorage 公众号配置存储
    */
   public WxMpCryptUtil(WxMpConfigStorage wxMpConfigStorage) {
     /*

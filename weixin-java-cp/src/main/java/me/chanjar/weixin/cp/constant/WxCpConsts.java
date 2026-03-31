@@ -124,7 +124,7 @@ public class WxCpConsts {
     public static final String REOPEN_INACTIVE_AGENT = "reopen_inactive_agent";
 
     /**
-     * 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件
+     * {@code 企业成员添加外部联系人事件推送 & 会话存档客户同意进行聊天内容存档事件回调事件}
      */
     public static final String CHANGE_EXTERNAL_CONTACT = "change_external_contact";
 

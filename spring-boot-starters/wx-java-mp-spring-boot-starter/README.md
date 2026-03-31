@@ -27,7 +27,7 @@
 	#wx.mp.config-storage.redis.sentinel-ips=127.0.0.1:16379,127.0.0.1:26379
 	#wx.mp.config-storage.redis.sentinel-name=mymaster
     # http客户端配置
-    wx.mp.config-storage.http-client-type=httpclient      # http客户端类型: HttpClient(默认), OkHttp, JoddHttp
+    wx.mp.config-storage.http-client-type=HttpComponents  # http客户端类型: HttpComponents(Apache HttpClient 5.x，推荐), HttpClient(Apache HttpClient 4.x), OkHttp, JoddHttp
     wx.mp.config-storage.http-proxy-host=
     wx.mp.config-storage.http-proxy-port=
     wx.mp.config-storage.http-proxy-username=

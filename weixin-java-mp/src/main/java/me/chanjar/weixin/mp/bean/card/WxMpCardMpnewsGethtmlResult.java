@@ -8,7 +8,9 @@ import java.io.Serializable;
 
 
 /**
- * @author S <sshzh90@gmail.com>
+ * 卡券图文消息HTML结果
+ *
+ * @author S (sshzh90@gmail.com)
  */
 @Data
 public class WxMpCardMpnewsGethtmlResult implements Serializable {

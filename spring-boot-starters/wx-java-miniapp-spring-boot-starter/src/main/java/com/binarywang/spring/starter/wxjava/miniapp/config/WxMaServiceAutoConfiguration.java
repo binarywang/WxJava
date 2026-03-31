@@ -2,6 +2,7 @@ package com.binarywang.spring.starter.wxjava.miniapp.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceHttpClientImpl;
+import cn.binarywang.wx.miniapp.api.impl.WxMaServiceHttpComponentsImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceJoddHttpImpl;
 import cn.binarywang.wx.miniapp.api.impl.WxMaServiceOkHttpImpl;
@@ -45,6 +46,9 @@ public class WxMaServiceAutoConfiguration {
         break;
       case HttpClient:
         wxMaService = new WxMaServiceHttpClientImpl();
+        break;
+      case HttpComponents:
+        wxMaService = new WxMaServiceHttpComponentsImpl();
         break;
       default:
         wxMaService = new WxMaServiceImpl();

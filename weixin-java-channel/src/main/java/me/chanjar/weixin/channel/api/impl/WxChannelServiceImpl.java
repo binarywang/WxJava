@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Slf4j
-public class WxChannelServiceImpl extends WxChannelServiceHttpClientImpl {
+public class WxChannelServiceImpl extends WxChannelServiceHttpComponentsImpl {
 
   public WxChannelServiceImpl() {
   }

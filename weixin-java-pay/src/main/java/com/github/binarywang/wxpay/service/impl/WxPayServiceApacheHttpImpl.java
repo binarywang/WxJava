@@ -420,7 +420,13 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       return wxPayConfig.getPublicKeyId();
     }
 
-    return wxPayConfig.getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    try {
+      return wxPayConfig.getVerifier().getValidCertificate().getSerialNumber().toString(16).toUpperCase();
+    } catch (Exception e) {
+      log.warn("Failed to get certificate serial number: {}", e.getMessage());
+      // 返回空字符串而不是抛出异常，让请求继续进行，由微信服务器判断是否需要Wechatpay-Serial
+      return "";
+    }
   }
 
   private void logRequestAndResponse(String url, String requestStr, String responseStr) {

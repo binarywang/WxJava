@@ -13,6 +13,11 @@ import me.chanjar.weixin.common.util.http.apache.ApacheHttpClientBuilder;
  */
 public interface WxMaConfig {
 
+  /**
+   * 设置更新access_token之前的回调
+   *
+   * @param updateAccessTokenBefore 回调函数
+   */
   default void setUpdateAccessTokenBefore(Consumer<WxAccessTokenEntity> updateAccessTokenBefore) {}
 
   /**
@@ -23,8 +28,18 @@ public interface WxMaConfig {
   String getAccessToken();
 
   // region 稳定版access token
+  /**
+   * 是否使用稳定版access_token
+   *
+   * @return 是否使用稳定版access_token
+   */
   boolean isStableAccessToken();
 
+  /**
+   * 设置是否使用稳定版access_token
+   *
+   * @param useStableAccessToken 是否使用稳定版access_token
+   */
   void useStableAccessToken(boolean useStableAccessToken);
 
   // endregion
@@ -65,6 +80,12 @@ public interface WxMaConfig {
    */
   void updateAccessToken(String accessToken, int expiresInSeconds);
 
+  /**
+   * 更新access_token处理器
+   *
+   * @param accessToken      新的 access_token 值
+   * @param expiresInSeconds 过期时间，单位：秒
+   */
   default void updateAccessTokenProcessor(String accessToken, int expiresInSeconds) {
     WxAccessTokenEntity wxAccessTokenEntity = new WxAccessTokenEntity();
     wxAccessTokenEntity.setAppid(getAppid());
@@ -74,6 +95,11 @@ public interface WxMaConfig {
     updateAccessToken(accessToken, expiresInSeconds);
   }
 
+  /**
+   * 更新access_token之前的回调
+   *
+   * @param wxAccessTokenEntity access_token实体
+   */
   default void updateAccessTokenBefore(WxAccessTokenEntity wxAccessTokenEntity) {}
 
   /**

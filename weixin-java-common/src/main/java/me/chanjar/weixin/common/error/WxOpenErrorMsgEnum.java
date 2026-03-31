@@ -527,7 +527,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_40099(40099, "invalid code, this code has consumed."),
 
   /**
-   * invalid DateInfo, Make Sure  OldDateInfoType==NewDateInfoType && NewBeginTime<=OldBeginTime  && OldEndTime<= NewEndTime
+   * {@code invalid DateInfo, Make Sure  OldDateInfoType==NewDateInfoType && NewBeginTime<=OldBeginTime  && OldEndTime<= NewEndTime}
    */
   CODE_40100(40100, "invalid DateInfo, Make Sure  OldDateInfoType==NewDateInfoType && NewBeginTime<=OldBeginTime  && OldEndTime<= NewEndTime"),
 
@@ -572,7 +572,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_40108(40108, "invalid client version"),
 
   /**
-   * too many code size, must <= 100
+   * {@code too many code size, must <= 100}
    */
   CODE_40109(40109, "too many code size, must <= 100"),
 
@@ -702,7 +702,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_40135(40135, "invalid not supply bonus, can not  change card_id which supply bonus to be not supply"),
 
   /**
-   * invalid use DepositCodeMode, make  sure sku.quantity>DepositCode.quantity
+   * {@code invalid use DepositCodeMode, make  sure sku.quantity>DepositCode.quantity}
    */
   CODE_40136(40136, "invalid use DepositCodeMode, make  sure sku.quantity>DepositCode.quantity"),
 
@@ -1082,7 +1082,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_40211(40211, "invalid scope_data"),
 
   /**
-   * paegs 当中存在不合法的query，query格式遵循URL标准，即k1=v1&k2=v2  invalid query
+   * {@code paegs 当中存在不合法的query，query格式遵循URL标准，即k1=v1&k2=v2  invalid query}
    */
   CODE_40212(40212, "paegs 当中存在不合法的query，query格式遵循URL标准，即k1=v1&k2=v2"),
 
@@ -4242,7 +4242,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_71005(71005, "limit exe count"),
 
   /**
-   * limit coin count, 1 <= coin_count <= 100000
+   * {@code limit coin count, 1 <= coin_count <= 100000}
    */
   CODE_71006(71006, "limit coin count, 1 <= coin_count <= 100000"),
 
@@ -4347,7 +4347,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_72018(72018, "duplicate order id, invoice had inserted to user"),
 
   /**
-   * limit msg operation card list size, must <= 5
+   * {@code limit msg operation card list size, must <= 5}
    */
   CODE_72019(72019, "limit msg operation card list size, must <= 5"),
 
@@ -6432,7 +6432,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_88009(88009, "reply is not exists"),
 
   /**
-   * count range error. cout <= 0 or count > 50
+   * {@code count range error. cout <= 0 or count > 50}
    */
   CODE_88010(88010, "count range error. cout <= 0 or count > 50"),
 
@@ -6682,7 +6682,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_89251(89251, "模板消息已下发，待法人人脸核身校验"),
 
   /**
-   * 法人&企业信息一致性校验中  front checking
+   * {@code 法人&企业信息一致性校验中  front checking}
    */
   CODE_89253(89253, "法人&企业信息一致性校验中"),
 
@@ -7257,7 +7257,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_200021(200021, "场景描述  sceneDesc 参数错误"),
 
   /**
-   * 禁止创建/更新商品（如商品创建功能被封禁） 或 禁止编辑&更新房间
+   * {@code 禁止创建/更新商品（如商品创建功能被封禁） 或 禁止编辑&更新房间}
    */
   CODE_300001(300001, "禁止创建/更新商品（如商品创建功能被封禁） 或 禁止编辑&更新房间"),
 
@@ -8382,7 +8382,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_9300003(9300003, "begin_time must less than end_time"),
 
   /**
-   * end_time - begin_time > 1year
+   * {@code end_time - begin_time > 1year}
    */
   CODE_9300004(9300004, "end_time - begin_time > 1year"),
 
@@ -8397,7 +8397,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_9300006(9300006, "invalid activity status"),
 
   /**
-   * gift_num must >0 and <=15
+   * {@code gift_num must >0 and <=15}
    */
   CODE_9300007(9300007, "gift_num must >0 and <=15"),
 
@@ -8412,7 +8412,7 @@ public enum WxOpenErrorMsgEnum {
   CODE_9300009(9300009, "activity can not finish"),
 
   /**
-   * card_info_list must >= 2
+   * {@code card_info_list must >= 2}
    */
   CODE_9300010(9300010, "card_info_list must >= 2"),
 

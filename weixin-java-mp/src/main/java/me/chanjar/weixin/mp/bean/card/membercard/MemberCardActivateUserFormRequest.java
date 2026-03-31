@@ -39,8 +39,8 @@ public class MemberCardActivateUserFormRequest implements Serializable {
   /**
    * 绑定老会员卡信息
    *
-   * @param name
-   * @param url
+   * @param name 名称
+   * @param url  链接地址
    */
   public void setBindOldCard(String name, String url) {
     if (StringUtils.isAnyEmpty(name, url)) {
@@ -56,8 +56,8 @@ public class MemberCardActivateUserFormRequest implements Serializable {
   /**
    * 设置服务声明，用于放置商户会员卡守则
    *
-   * @param name
-   * @param url
+   * @param name 名称
+   * @param url  链接地址
    */
   public void setServiceStatement(String name, String url) {
     if (StringUtils.isAnyEmpty(name, url)) {

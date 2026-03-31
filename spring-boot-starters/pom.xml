@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.9.B</version>
+    <version>4.8.2.B</version>
   </parent>
   <packaging>pom</packaging>
   <artifactId>wx-java-spring-boot-starters</artifactId>
@@ -23,6 +23,8 @@
     <module>wx-java-mp-multi-spring-boot-starter</module>
     <module>wx-java-mp-spring-boot-starter</module>
     <module>wx-java-pay-spring-boot-starter</module>
+    <module>wx-java-pay-multi-spring-boot-starter</module>
+    <module>wx-java-open-multi-spring-boot-starter</module>
     <module>wx-java-open-spring-boot-starter</module>
     <module>wx-java-qidian-spring-boot-starter</module>
     <module>wx-java-cp-multi-spring-boot-starter</module>

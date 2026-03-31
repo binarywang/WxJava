@@ -109,6 +109,22 @@ public class WxMaXPayServiceImpl implements WxMaXPayService {
   }
 
   @Override
+  public WxMaXPayPresentGoodsResponse presentGoods(WxMaXPayPresentGoodsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
+    final String postBody = request.toJson();
+    final String uri = sigParams.signUriWithPay(PRESENT_GOODS_URL, postBody);
+    String responseContent = this.service.post(uri, postBody);
+    WxMaXPayPresentGoodsResponse getDetailResponse = WxMaGsonBuilder.create()
+      .fromJson(responseContent, WxMaXPayPresentGoodsResponse.class);
+
+    if (getDetailResponse.getErrcode() != 0) {
+      throw new WxErrorException(
+        new WxError(getDetailResponse.getErrcode(), getDetailResponse.getErrmsg()));
+    }
+
+    return getDetailResponse;
+  }
+
+  @Override
   public WxMaXPayDownloadBillResponse downloadBill(WxMaXPayDownloadBillRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
     final String postBody = request.toJson();
     final String uri = sigParams.signUriWithPay(DOWNLOAD_BILL_URL, postBody);

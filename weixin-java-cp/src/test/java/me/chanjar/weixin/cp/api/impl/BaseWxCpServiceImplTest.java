@@ -102,6 +102,11 @@ public class BaseWxCpServiceImplTest {
       }
 
       @Override
+      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "mock_msg_audit_access_token";
+      }
+
+      @Override
       public void initHttp() {
 
       }

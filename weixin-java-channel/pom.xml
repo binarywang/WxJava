@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.7.9.B</version>
+    <version>4.8.2.B</version>
   </parent>
 
   <artifactId>weixin-java-channel</artifactId>
@@ -14,7 +14,7 @@
   <description>微信视频号/微信小店 Java SDK</description>
 
   <properties>
-    <jackson.version>2.18.4</jackson.version>
+    <jackson.version>2.18.6</jackson.version>
   </properties>
 
   <dependencies>
@@ -27,6 +27,16 @@
     <dependency>
       <groupId>org.jodd</groupId>
       <artifactId>jodd-http</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpclient</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents</groupId>
+      <artifactId>httpmime</artifactId>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -111,12 +121,7 @@
       <artifactId>jedis-lock</artifactId>
       <optional>true</optional>
     </dependency>
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <version>3.3.3</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
 
   <build>

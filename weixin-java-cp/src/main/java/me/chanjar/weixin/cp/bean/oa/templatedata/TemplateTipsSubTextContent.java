@@ -6,7 +6,7 @@ import lombok.Data;
 /**
  * @author mrsiu@msn.com
  * @version 1.0
- * @date 2025/1/16 09:46
+ * @since 2025/1/16 09:46
  */
 @Data
 public class TemplateTipsSubTextContent {

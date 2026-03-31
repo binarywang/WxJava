@@ -2,6 +2,7 @@ package me.chanjar.weixin.cp.api;
 
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.bean.WxCpAgent;
+import me.chanjar.weixin.cp.bean.WxCpTpAdmin;
 
 import java.util.List;
 
@@ -51,5 +52,19 @@ public interface WxCpAgentService {
    * @throws WxErrorException the wx error exception
    */
   List<WxCpAgent> list() throws WxErrorException;
+
+  /**
+   * <pre>
+   * 获取应用管理员列表
+   * 第三方服务商可以用此接口获取授权企业中某个第三方应用或者代开发应用的管理员列表(不包括外部管理员)，
+   * 以便服务商在用户进入应用主页之后根据是否管理员身份做权限的区分。
+   * 详情请见: <a href="https://developer.work.weixin.qq.com/document/path/90506">文档</a>
+   * </pre>
+   *
+   * @param agentId 应用id
+   * @return admin list
+   * @throws WxErrorException the wx error exception
+   */
+  WxCpTpAdmin getAdminList(Integer agentId) throws WxErrorException;
 
 }

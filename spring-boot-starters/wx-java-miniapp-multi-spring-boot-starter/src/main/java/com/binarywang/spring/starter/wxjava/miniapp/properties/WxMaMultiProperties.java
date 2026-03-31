@@ -116,6 +116,15 @@ public class WxMaMultiProperties implements Serializable {
      * </pre>
      */
     private int retrySleepMillis = 1000;
+
+    /**
+     * 多租户实现模式.
+     * <ul>
+     * <li>ISOLATED: 为每个租户创建独立的 WxMaService 实例（默认）</li>
+     * <li>SHARED: 使用单个 WxMaService 实例管理所有租户配置，共享 HTTP 客户端</li>
+     * </ul>
+     */
+    private MultiTenantMode multiTenantMode = MultiTenantMode.ISOLATED;
   }
 
   public enum StorageType {
@@ -150,5 +159,20 @@ public class WxMaMultiProperties implements Serializable {
      * JoddHttp
      */
     JODD_HTTP
+  }
+
+  public enum MultiTenantMode {
+    /**
+     * 隔离模式：为每个租户创建独立的 WxMaService 实例.
+     * 优点：线程安全，不依赖 ThreadLocal
+     * 缺点：每个租户创建独立的 HTTP 客户端，资源占用较多
+     */
+    ISOLATED,
+    /**
+     * 共享模式：使用单个 WxMaService 实例管理所有租户配置.
+     * 优点：共享 HTTP 客户端，节省资源
+     * 缺点：依赖 ThreadLocal 切换配置，异步场景需注意
+     */
+    SHARED
   }
 }

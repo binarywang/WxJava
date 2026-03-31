@@ -8,6 +8,8 @@ import com.github.binarywang.wxpay.service.BusinessOperationTransferService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 
+import java.util.Arrays;
+
 /**
  * 运营工具-商家转账API使用示例
  * 
@@ -41,10 +43,15 @@ public class BusinessOperationTransferExample {
   public void createOperationTransferExample() {
     try {
       // 构建转账请求
+      BusinessOperationTransferRequest.TransferSceneReportInfo reportInfo = new BusinessOperationTransferRequest.TransferSceneReportInfo();
+      reportInfo.setInfoType("活动名称");
+      reportInfo.setInfoContent("新会员有礼");
+
       BusinessOperationTransferRequest request = BusinessOperationTransferRequest.newBuilder()
         .appid("your_app_id")                                    // 应用ID
         .outBillNo("OT" + System.currentTimeMillis())           // 商户转账单号
-        .operationSceneId(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING) // 运营工具转账场景ID
+        .transferSceneId(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING) // 运营工具转账场景ID
+        .transferSceneReportInfos(Arrays.asList(reportInfo)) // 转账场景报备信息
         .openid("user_openid")                                   // 用户openid
         .userName("张三")                                          // 用户姓名（可选）
         .transferAmount(100)                                     // 转账金额，单位分
@@ -59,7 +66,8 @@ public class BusinessOperationTransferExample {
       System.out.println("转账成功！");
       System.out.println("商户单号: " + result.getOutBillNo());
       System.out.println("微信转账单号: " + result.getTransferBillNo());
-      System.out.println("转账状态: " + result.getTransferState());
+      System.out.println("单据状态: " + result.getState());
+      System.out.println("跳转领取页面的package信息: " + result.getPackageInfo());
       System.out.println("创建时间: " + result.getCreateTime());
       
     } catch (WxPayException e) {

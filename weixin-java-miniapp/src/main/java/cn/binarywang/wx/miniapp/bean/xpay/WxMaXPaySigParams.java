@@ -55,7 +55,7 @@ public class WxMaXPaySigParams implements Serializable {
 
   public String calcSig(String postBody) {
     String sk = StringUtils.trimToEmpty(this.sessionKey);
-    return calcSignature(postBody, sk);
+    return calcSignature(postBody, sk).toLowerCase();
   }
 
   /**

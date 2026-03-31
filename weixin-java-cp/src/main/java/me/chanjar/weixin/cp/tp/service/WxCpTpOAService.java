@@ -51,8 +51,7 @@ public interface WxCpTpOAService {
   String copyTemplate(@NonNull String openTemplateId, String corpId) throws WxErrorException;
 
   /**
-   * <pre>
-   *   获取审批申请详情
+   * 获取审批申请详情
    *
    * @param spNo 审批单编号。
    * @param corpId the corp id

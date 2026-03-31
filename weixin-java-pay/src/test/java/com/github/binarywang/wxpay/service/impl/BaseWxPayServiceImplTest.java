@@ -628,6 +628,42 @@ public class BaseWxPayServiceImplTest {
   }
 
   /**
+   * Test parse order notify result with JSON format should give helpful error.
+   * 测试当传入V3版本的JSON格式通知数据时，应该抛出清晰的错误提示
+   *
+   * @throws Exception the exception
+   */
+  @Test
+  public void testParseOrderNotifyResultWithJsonShouldGiveHelpfulError() throws Exception {
+    String jsonString = "{\n" +
+      "    \"id\": \"EV-2018022511223320873\",\n" +
+      "    \"create_time\": \"2015-05-20T13:29:35+08:00\",\n" +
+      "    \"resource_type\": \"encrypt-resource\",\n" +
+      "    \"event_type\": \"TRANSACTION.SUCCESS\",\n" +
+      "    \"summary\": \"支付成功\",\n" +
+      "    \"resource\": {\n" +
+      "        \"algorithm\": \"AEAD_AES_256_GCM\",\n" +
+      "        \"ciphertext\": \"test\",\n" +
+      "        \"associated_data\": \"transaction\",\n" +
+      "        \"nonce\": \"test\"\n" +
+      "    }\n" +
+      "}";
+
+    try {
+      this.payService.parseOrderNotifyResult(jsonString);
+      fail("Expected WxPayException for JSON input");
+    } catch (WxPayException e) {
+      // 验证错误消息包含V3版本和parseOrderNotifyV3Result方法的指导信息
+      String message = e.getMessage();
+      assertTrue(message.contains("V3版本"), "错误消息应包含'V3版本'");
+      assertTrue(message.contains("JSON格式"), "错误消息应包含'JSON格式'");
+      assertTrue(message.contains("parseOrderNotifyV3Result"), "错误消息应包含'parseOrderNotifyV3Result'方法名");
+      assertTrue(message.contains("SignatureHeader"), "错误消息应包含'SignatureHeader'");
+      log.info("JSON格式检测正常，错误提示: {}", message);
+    }
+  }
+
+  /**
    * Test get wx api data.
    *
    * @throws Exception the exception

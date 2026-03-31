@@ -7,6 +7,8 @@ import com.github.binarywang.wxpay.service.impl.WxPayServiceImpl;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
@@ -36,10 +38,17 @@ public class BusinessOperationTransferServiceTest {
 
   @Test
   public void testRequestBuilder() {
+
+    // 构建转账请求
+    BusinessOperationTransferRequest.TransferSceneReportInfo reportInfo = new BusinessOperationTransferRequest.TransferSceneReportInfo();
+    reportInfo.setInfoType("test_info_type");
+    reportInfo.setInfoContent("test_info_content");
+
     BusinessOperationTransferRequest request = BusinessOperationTransferRequest.newBuilder()
       .appid("test_app_id")
       .outBillNo("OT" + System.currentTimeMillis())
-      .operationSceneId(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING)
+      .transferSceneId(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING)
+      .transferSceneReportInfos(Arrays.asList(reportInfo))
       .openid("test_openid")
       .transferAmount(100)
       .transferRemark("测试转账")
@@ -47,7 +56,7 @@ public class BusinessOperationTransferServiceTest {
       .build();
 
     assertThat(request.getAppid()).isEqualTo("test_app_id");
-    assertThat(request.getOperationSceneId()).isEqualTo(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING);
+    assertThat(request.getTransferSceneId()).isEqualTo(WxPayConstants.OperationSceneId.OPERATION_CASH_MARKETING);
     assertThat(request.getTransferAmount()).isEqualTo(100);
     assertThat(request.getTransferRemark()).isEqualTo("测试转账");
   }
@@ -77,11 +86,13 @@ public class BusinessOperationTransferServiceTest {
     BusinessOperationTransferResult result = new BusinessOperationTransferResult();
     result.setOutBillNo("test_out_bill_no");
     result.setTransferBillNo("test_transfer_bill_no");
-    result.setTransferState("SUCCESS");
+    result.setState("SUCCESS");
+    result.setPackageInfo("test_package_info");
 
     assertThat(result.getOutBillNo()).isEqualTo("test_out_bill_no");
     assertThat(result.getTransferBillNo()).isEqualTo("test_transfer_bill_no");
-    assertThat(result.getTransferState()).isEqualTo("SUCCESS");
+    assertThat(result.getState()).isEqualTo("SUCCESS");
+    assertThat(result.getPackageInfo()).isEqualTo("test_package_info");
 
     BusinessOperationTransferQueryResult queryResult = new BusinessOperationTransferQueryResult();
     queryResult.setOperationSceneId("2001");

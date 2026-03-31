@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.util.XmlUtils;
 import me.chanjar.weixin.common.util.xml.IntegerArrayConverter;
 import me.chanjar.weixin.common.util.xml.LongArrayConverter;
 import me.chanjar.weixin.common.util.xml.XStreamCDataConverter;
+import me.chanjar.weixin.common.util.xml.XStreamCDataListConverter;
 import me.chanjar.weixin.cp.config.WxCpConfigStorage;
 import me.chanjar.weixin.cp.util.crypto.WxCpCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
@@ -68,19 +69,19 @@ public class WxCpXmlMessage implements Serializable {
   /**
    * <pre>
    * 当接受用户消息时，可能会获得以下值：
-   * {@link WxConsts.XmlMsgType#TEXT}
-   * {@link WxConsts.XmlMsgType#IMAGE}
-   * {@link WxConsts.XmlMsgType#VOICE}
-   * {@link WxConsts.XmlMsgType#VIDEO}
-   * {@link WxConsts.XmlMsgType#LOCATION}
-   * {@link WxConsts.XmlMsgType#LINK}
-   * {@link WxConsts.XmlMsgType#EVENT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#LOCATION}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#LINK}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#EVENT}
    * 当发送消息的时候使用：
-   * {@link WxConsts.XmlMsgType#TEXT}
-   * {@link WxConsts.XmlMsgType#IMAGE}
-   * {@link WxConsts.XmlMsgType#VOICE}
-   * {@link WxConsts.XmlMsgType#VIDEO}
-   * {@link WxConsts.XmlMsgType#NEWS}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#TEXT}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#IMAGE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VOICE}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#VIDEO}
+   * {@link me.chanjar.weixin.common.api.WxConsts.XmlMsgType#NEWS}
    * </pre>
    */
   @XStreamAlias("MsgType")
@@ -156,8 +157,8 @@ public class WxCpXmlMessage implements Serializable {
   private String memChangeCnt;
 
   @XStreamAlias("MemChangeList")
-  @XStreamConverter(value = XStreamCDataConverter.class)
-  private String MemChangeList;
+  @XStreamConverter(value = XStreamCDataListConverter.class)
+  private String memChangeList;
 
   @XStreamAlias("LastMemVer")
   @XStreamConverter(value = XStreamCDataConverter.class)
@@ -252,6 +253,24 @@ public class WxCpXmlMessage implements Serializable {
   @XStreamAlias("LinkId")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String linkId;
+
+  /**
+   * 智能机器人ID
+   * 接收智能机器人消息时使用
+   * https://developer.work.weixin.qq.com/document/path/100719
+   */
+  @XStreamAlias("RobotId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String robotId;
+
+  /**
+   * 智能机器人会话ID
+   * 接收智能机器人消息时使用，用于保持会话连续性
+   * https://developer.work.weixin.qq.com/document/path/100719
+   */
+  @XStreamAlias("SessionId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String sessionId;
 
   /**
    * 通讯录变更事件.

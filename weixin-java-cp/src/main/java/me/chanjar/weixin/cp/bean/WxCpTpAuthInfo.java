@@ -216,7 +216,7 @@ public class WxCpTpAuthInfo extends WxCpBaseResp {
 
     /**
      * 付费状态
-     * <br/>
+     * <br>
      * <ul>
      *   <li>0-没有付费;</li>
      *   <li>1-限时试用;</li>
