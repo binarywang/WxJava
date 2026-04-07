@@ -1,6 +1,10 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaGetUserNotifyRequest;
+import cn.binarywang.wx.miniapp.bean.WxMaGetUserNotifyResult;
+import cn.binarywang.wx.miniapp.bean.WxMaServiceNotifyExtRequest;
+import cn.binarywang.wx.miniapp.bean.WxMaServiceNotifyRequest;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
@@ -70,5 +74,42 @@ public class WxMaSubscribeServiceImplTest {
   public void testSendSubscribeMsg() throws WxErrorException {
     // TODO 待完善补充
     this.wxService.getSubscribeService().sendSubscribeMsg(WxMaSubscribeMessage.builder().build());
+  }
+
+  @Test
+  public void testSetUserNotify() throws WxErrorException {
+    // TODO 待完善补充，需要真实的 openid、notify_type、notify_code、content_json 参数
+    WxMaServiceNotifyRequest request = WxMaServiceNotifyRequest.builder()
+      .openid("test_openid")
+      .notifyType(1)
+      .notifyCode("test_notify_code")
+      .contentJson("{}")
+      .build();
+    this.wxService.getSubscribeService().setUserNotify(request);
+  }
+
+  @Test
+  public void testSetUserNotifyExt() throws WxErrorException {
+    // TODO 待完善补充，需要真实的 openid、notify_type、notify_code、ext_json 参数
+    WxMaServiceNotifyExtRequest request = WxMaServiceNotifyExtRequest.builder()
+      .openid("test_openid")
+      .notifyType(1)
+      .notifyCode("test_notify_code")
+      .extJson("{}")
+      .build();
+    this.wxService.getSubscribeService().setUserNotifyExt(request);
+  }
+
+  @Test
+  public void testGetUserNotify() throws WxErrorException {
+    // TODO 待完善补充，需要真实的 openid、notify_type、notify_code 参数
+    WxMaGetUserNotifyRequest request = WxMaGetUserNotifyRequest.builder()
+      .openid("test_openid")
+      .notifyCode("test_notify_code")
+      .notifyType(1)
+      .build();
+    WxMaGetUserNotifyResult result = this.wxService.getSubscribeService().getUserNotify(request);
+    assertThat(result).isNotNull();
+    System.out.println(result);
   }
 }

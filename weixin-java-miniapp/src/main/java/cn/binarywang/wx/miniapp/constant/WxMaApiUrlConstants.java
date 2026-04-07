@@ -358,6 +358,15 @@ public class WxMaApiUrlConstants {
 
     /** 发送订阅消息 */
     String SUBSCRIBE_MSG_SEND_URL = "https://api.weixin.qq.com/cgi-bin/message/subscribe/send";
+
+    /** 激活与更新服务卡片 */
+    String SERVICE_NOTIFY_SET_URL = "https://api.weixin.qq.com/wxa/setusernotify";
+
+    /** 更新服务卡片扩展信息 */
+    String SERVICE_NOTIFY_SET_EXT_URL = "https://api.weixin.qq.com/wxa/setusernotifyext";
+
+    /** 查询服务卡片状态 */
+    String SERVICE_NOTIFY_GET_URL = "https://api.weixin.qq.com/wxa/getusernotify";
   }
 
   public interface User {
