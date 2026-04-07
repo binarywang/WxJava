@@ -43,9 +43,9 @@ public class WxMaErrorMsgEnumTest {
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490014), "退款操作进行中，稍后可以使用相同参数重试");
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490015), "频率限制");
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490016), "退款的left_fee字段与实际不符，请通过query_order接口查询确认");
-    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490018), "广告金充值帐户行业id不匹配");
-    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490019), "广告金充值帐户id已绑定其他appid");
-    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490020), "广告金充值帐户主体名称错误");
+    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490018), "广告金充值账户行业id不匹配");
+    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490019), "广告金充值账户id已绑定其他appid");
+    assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490020), "广告金充值账户主体名称错误");
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490021), "账户未完成进件");
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490022), "广告金充值账户无效");
     assertEquals(WxMaErrorMsgEnum.findMsgByCode(268490023), "广告金余额不足");
