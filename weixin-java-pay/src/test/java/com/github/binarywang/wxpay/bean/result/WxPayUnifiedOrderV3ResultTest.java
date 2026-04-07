@@ -248,6 +248,13 @@ public class WxPayUnifiedOrderV3ResultTest {
     Assert.assertTrue(jsonObject.has("package"), "JSON中应该包含package字段");
     Assert.assertFalse(jsonObject.has("packageValue"), "JSON中不应该包含packageValue字段");
     Assert.assertEquals(jsonObject.get("package").getAsString(), "Sign=WXPay");
+    // 验证JSON序列化后partnerid和prepayid字段名为全小写（微信官方要求）
+    Assert.assertTrue(jsonObject.has("partnerid"), "JSON中应该包含partnerid字段");
+    Assert.assertFalse(jsonObject.has("partnerId"), "JSON中不应该包含驼峰的partnerId字段");
+    Assert.assertEquals(jsonObject.get("partnerid").getAsString(), testMchId);
+    Assert.assertTrue(jsonObject.has("prepayid"), "JSON中应该包含prepayid字段");
+    Assert.assertFalse(jsonObject.has("prepayId"), "JSON中不应该包含驼峰的prepayId字段");
+    Assert.assertEquals(jsonObject.get("prepayid").getAsString(), testPrepayId);
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class,
