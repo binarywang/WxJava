@@ -250,8 +250,7 @@ public class WxPayUnifiedOrderV3ResultTest {
     Assert.assertEquals(jsonObject.get("package").getAsString(), "Sign=WXPay");
   }
 
-
-  @Test(expectedExceptions = IllegalArgumentException.class, 
+  @Test(expectedExceptions = IllegalArgumentException.class,
         expectedExceptionsMessageRegExp = "prepayId, appId 和 privateKey 不能为空")
   public void testGetJsapiPayInfoWithNullPrepayId() {
     WxPayUnifiedOrderV3Result.getJsapiPayInfo(null, "appId", null);
