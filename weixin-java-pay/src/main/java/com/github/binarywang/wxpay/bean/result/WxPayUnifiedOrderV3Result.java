@@ -78,6 +78,10 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
     private String appId;
     private String timeStamp;
     private String nonceStr;
+    /**
+     * 由于package为java保留关键字，因此改为packageValue，序列化时会自动转换为package字段名
+     */
+    @SerializedName("package")
     private String packageValue;
     private String signType;
     private String paySign;
@@ -108,6 +112,10 @@ public class WxPayUnifiedOrderV3Result implements Serializable {
     private String appid;
     private String partnerId;
     private String prepayId;
+    /**
+     * 由于package为java保留关键字，因此改为packageValue，序列化时会自动转换为package字段名
+     */
+    @SerializedName("package")
     private String packageValue;
     private String noncestr;
     private String timestamp;

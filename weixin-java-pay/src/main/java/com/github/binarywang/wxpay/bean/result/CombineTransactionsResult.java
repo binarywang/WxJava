@@ -73,6 +73,10 @@ public class CombineTransactionsResult implements Serializable {
     private String appId;
     private String timeStamp;
     private String nonceStr;
+    /**
+     * 由于package为java保留关键字，因此改为packageValue，序列化时会自动转换为package字段名
+     */
+    @SerializedName("package")
     private String packageValue;
     private String signType;
     private String paySign;
@@ -89,6 +93,10 @@ public class CombineTransactionsResult implements Serializable {
     private String appid;
     private String partnerid;
     private String prepayid;
+    /**
+     * 由于package为java保留关键字，因此改为packageValue，序列化时会自动转换为package字段名
+     */
+    @SerializedName("package")
     private String packageValue;
     private String noncestr;
     private String timestamp;
