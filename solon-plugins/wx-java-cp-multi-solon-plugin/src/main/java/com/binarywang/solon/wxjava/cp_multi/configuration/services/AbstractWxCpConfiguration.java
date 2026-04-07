@@ -37,6 +37,14 @@ public abstract class AbstractWxCpConfiguration {
     /**
      * 校验同一个企业下，agentId 是否唯一，避免使用 redis 缓存 token、ticket 时错乱。
      *
+     * <p>同一企业（corpId 相同）下可配置多个条目以使用不同的权限 Secret，例如：
+     * <ul>
+     *   <li>自建应用条目：填写应用对应的 corpSecret 和 agentId</li>
+     *   <li>通讯录同步条目：填写通讯录同步 Secret，agentId 可不填（null）</li>
+     * </ul>
+     * 但同一 corpId 下不允许出现重复的 agentId（包括多个 null）。
+     * </p>
+     *
      * 查看 {@link me.chanjar.weixin.cp.config.impl.AbstractWxCpInRedisConfigImpl#setAgentId(Integer)}
      */
     Collection<WxCpSingleProperties> corpList = corps.values();
