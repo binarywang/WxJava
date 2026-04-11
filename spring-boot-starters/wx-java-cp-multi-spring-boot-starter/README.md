@@ -22,6 +22,13 @@
 
 如需同时使用多种权限范围，可在 `wx.cp.corps` 下配置多个条目，每个条目使用对应权限的 Secret，通过不同的 `tenantId` 区分后使用。
 
+> **配置限制说明**：
+> - 当前 starter 实现会校验：同一 `corp-id` 下，`agent-id` **必须唯一**
+> - 同一 `corp-id` 下，**只能有一个条目不填 `agent-id`**
+> - 否则会因为 token/ticket 缓存 key 冲突而在启动时直接抛异常
+>
+> 因此，像"通讯录同步 Secret""客户联系 Secret"这类通常不填写 `agent-id` 的配置，**不能**在同一个 `corp-id` 下同时配置多个 `agent-id` 均为空的条目；如确有多个条目，请确保其中最多只有一个未填写 `agent-id`。
+
 ## 快速开始
 
 1. 引入依赖
@@ -74,6 +81,7 @@ import com.binarywang.spring.starter.wxjava.cp.service.WxCpMultiServices;
 import me.chanjar.weixin.cp.api.WxCpDepartmentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
+import me.chanjar.weixin.cp.bean.WxCpDepart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -93,7 +101,11 @@ public class DemoService {
     // 通讯录同步 Secret 具有部门/成员增删改查等权限
     WxCpService contactService = wxCpMultiServices.getWxCpService("contact");
     WxCpDepartmentService departmentService = contactService.getDepartmentService();
-    departmentService.update(department);
+    // 更新部门示例（WxCpDepart 包含 id、name、parentId 等字段）
+    WxCpDepart depart = new WxCpDepart();
+    depart.setId(100L);
+    depart.setName("新部门名称");
+    departmentService.update(depart);
     // todo ...
   }
 }

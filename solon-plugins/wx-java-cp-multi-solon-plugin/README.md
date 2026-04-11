@@ -23,7 +23,7 @@
 如需同时使用多种权限范围，可在 `wx.cp.corps` 下配置多个条目，每个条目使用对应权限的 Secret，通过不同的 `tenantId` 区分后使用。
 
 > **注意**：
-> 当前 starter/插件实现会校验同一 `corp-id` 下的 `agent-id` **必须唯一**，并且 **只能有一个条目不填写 `agent-id`**。
+> 当前插件实现会校验同一 `corp-id` 下的 `agent-id` **必须唯一**，并且 **只能有一个条目不填写 `agent-id`**。
 > 如果在同一 `corp-id` 下同时配置多个未填写 `agent-id` 的条目，会因 token/ticket 缓存 key 冲突而在启动时直接抛异常。
 ## 快速开始
 
@@ -77,6 +77,7 @@ import com.binarywang.solon.wxjava.cp_multi.service.WxCpMultiServices;
 import me.chanjar.weixin.cp.api.WxCpDepartmentService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.api.WxCpUserService;
+import me.chanjar.weixin.cp.bean.WxCpDepart;
 import org.noear.solon.annotation.Component;
 import org.noear.solon.annotation.Inject;
 
@@ -96,7 +97,11 @@ public class DemoService {
     // 通讯录同步 Secret 具有部门/成员增删改查等权限
     WxCpService contactService = wxCpMultiServices.getWxCpService("contact");
     WxCpDepartmentService departmentService = contactService.getDepartmentService();
-    departmentService.update(department);
+    // 更新部门示例（WxCpDepart 包含 id、name、parentId 等字段）
+    WxCpDepart depart = new WxCpDepart();
+    depart.setId(100L);
+    depart.setName("新部门名称");
+    departmentService.update(depart);
     // todo ...
   }
 }

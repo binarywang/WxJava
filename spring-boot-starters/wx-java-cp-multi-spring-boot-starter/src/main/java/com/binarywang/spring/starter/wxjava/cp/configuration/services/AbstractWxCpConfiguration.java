@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -59,8 +60,8 @@ public abstract class AbstractWxCpConfiguration {
         String corpId = entry.getKey();
         // 校验每个企业下，agentId 是否唯一
         boolean multi = entry.getValue().stream()
-          // 通讯录没有 agentId，如果不判断是否为空，这里会报 NPE 异常
-          .collect(Collectors.groupingBy(c -> c.getAgentId() == null ? 0 : c.getAgentId(), Collectors.counting()))
+          // 通讯录没有 agentId，使用字符串转换避免 null 与 agentId=0 冲突
+          .collect(Collectors.groupingBy(c -> Objects.toString(c.getAgentId(), "null"), Collectors.counting()))
           .entrySet().stream().anyMatch(e -> e.getValue() > 1);
         if (multi) {
           throw new RuntimeException("请确保企业微信配置唯一性[" + corpId + "]");
