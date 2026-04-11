@@ -7,7 +7,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
 /**
- * 验证 {@link WxMaXPayQueryOrderResponse} GSON 反序列化正确性的单元测试。
+ * 验证 {@link WxMaXPayQueryOrderResponse} Gson 反序列化正确性的单元测试。
  *
  * <p>修复说明：{@link WxMaXPayQueryOrderResponse.OrderInfo} 中 {@code leftFee} 和 {@code wxOrderId}
  * 字段的 {@code @SerializedName} 使用了驼峰命名（{@code "leftFee"}、{@code "wxOrderId"}），
