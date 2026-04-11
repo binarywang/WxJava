@@ -117,8 +117,73 @@ public class WxSignQueryResultTest {
       Assert.assertNull(result.getContractTerminatedTime());
       Assert.assertNull(result.getContractTerminatedMode());
       Assert.assertNull(result.getContractTerminationRemark());
+      Assert.assertNull(result.getChangeType());
+      Assert.assertNull(result.getOperateTime());
     } finally {
       // 恢复默认值
+      XmlConfig.fastMode = false;
+    }
+  }
+
+  /**
+   * 测试签约回调通知 XML 解析 - change_type = ADD
+   */
+  @Test
+  public void testFromXML_SignCallback_Add() {
+    String xmlString = "<xml>\n" +
+      "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+      "  <appid><![CDATA[wx426b3015555b46be]]></appid>\n" +
+      "  <mch_id><![CDATA[10000098]]></mch_id>\n" +
+      "  <contract_id><![CDATA[Wx15463511252015071056489715]]></contract_id>\n" +
+      "  <plan_id>123</plan_id>\n" +
+      "  <openid><![CDATA[ozoKAt9TIPHfwVMkcniiNKZ1vbyw]]></openid>\n" +
+      "  <request_serial>1695</request_serial>\n" +
+      "  <contract_code><![CDATA[100001256]]></contract_code>\n" +
+      "  <change_type><![CDATA[ADD]]></change_type>\n" +
+      "  <operate_time>2015-07-01 10:00:00</operate_time>\n" +
+      "  <contract_expired_time>2016-07-01 10:00:00</contract_expired_time>\n" +
+      "  <sign><![CDATA[C380BEC2BFD727A4B6845133519F3AD6]]></sign>\n" +
+      "</xml>";
+
+    XmlConfig.fastMode = true;
+    try {
+      WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
+
+      Assert.assertEquals(result.getChangeType(), "ADD");
+      Assert.assertEquals(result.getOperateTime(), "2015-07-01 10:00:00");
+    } finally {
+      XmlConfig.fastMode = false;
+    }
+  }
+
+  /**
+   * 测试解约回调通知 XML 解析 - change_type = DELETE
+   */
+  @Test
+  public void testFromXML_SignCallback_Delete() {
+    String xmlString = "<xml>\n" +
+      "  <return_code><![CDATA[SUCCESS]]></return_code>\n" +
+      "  <appid><![CDATA[wx426b3015555b46be]]></appid>\n" +
+      "  <mch_id><![CDATA[10000098]]></mch_id>\n" +
+      "  <contract_id><![CDATA[Wx15463511252015071056489715]]></contract_id>\n" +
+      "  <plan_id>123</plan_id>\n" +
+      "  <openid><![CDATA[ozoKAt9TIPHfwVMkcniiNKZ1vbyw]]></openid>\n" +
+      "  <request_serial>1695</request_serial>\n" +
+      "  <contract_code><![CDATA[100001256]]></contract_code>\n" +
+      "  <change_type><![CDATA[DELETE]]></change_type>\n" +
+      "  <operate_time>2015-07-01 11:00:00</operate_time>\n" +
+      "  <contract_termination_mode>2</contract_termination_mode>\n" +
+      "  <sign><![CDATA[C380BEC2BFD727A4B6845133519F3AD6]]></sign>\n" +
+      "</xml>";
+
+    XmlConfig.fastMode = true;
+    try {
+      WxSignQueryResult result = WxSignQueryResult.fromXML(xmlString, WxSignQueryResult.class);
+
+      Assert.assertEquals(result.getChangeType(), "DELETE");
+      Assert.assertEquals(result.getOperateTime(), "2015-07-01 11:00:00");
+      Assert.assertEquals(result.getContractTerminatedMode().intValue(), 2);
+    } finally {
       XmlConfig.fastMode = false;
     }
   }

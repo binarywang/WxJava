@@ -116,6 +116,22 @@ public class WxSignQueryResult extends BaseWxPayResult implements Serializable {
   @XStreamAlias("operate_time")
   private String operateTime;
 
+  /**
+   * 为保持向后兼容保留的构造函数（不含 changeType、operateTime 字段）。
+   *
+   * @deprecated 请使用包含所有字段的全参构造函数。
+   */
+  @Deprecated
+  public WxSignQueryResult(String contractId, String planId, Long requestSerial,
+                           String contractCode, String contractDisplayAccount,
+                           Integer contractState, String contractSignedTime,
+                           String contractExpiredTime, String contractTerminatedTime,
+                           Integer contractTerminatedMode, String contractTerminationRemark,
+                           String openId) {
+    this(contractId, planId, requestSerial, contractCode, contractDisplayAccount,
+      contractState, contractSignedTime, contractExpiredTime, contractTerminatedTime,
+      contractTerminatedMode, contractTerminationRemark, openId, null, null);
+  }
 
   @Override
   protected void loadXml(Document d) {
