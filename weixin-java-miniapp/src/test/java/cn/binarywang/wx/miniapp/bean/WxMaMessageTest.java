@@ -388,4 +388,73 @@ public class WxMaMessageTest {
     assertEquals(teamInfo.getTeamType(), new Integer(1));
     assertEquals(teamInfo.getTeamAction(), new Integer(0));
   }
+
+  /**
+   * 虚拟支付投诉推送事件 xpay_complaint_notify 测试用例（XML格式）
+   */
+  @Test
+  public void testXPayComplaintNotifyFromXml() {
+    String xml = "<xml>\n" +
+      "  <ToUserName><![CDATA[gh_abcdefg]]></ToUserName>\n" +
+      "  <FromUserName><![CDATA[official_openid]]></FromUserName>\n" +
+      "  <CreateTime>1700000100</CreateTime>\n" +
+      "  <MsgType><![CDATA[event]]></MsgType>\n" +
+      "  <Event><![CDATA[xpay_complaint_notify]]></Event>\n" +
+      "  <OpenId><![CDATA[user_openid_abc]]></OpenId>\n" +
+      "  <WxOrderId><![CDATA[wx_order_cmp_001]]></WxOrderId>\n" +
+      "  <MchOrderId><![CDATA[mch_order_cmp_002]]></MchOrderId>\n" +
+      "  <TransactionId><![CDATA[transaction_cmp_003]]></TransactionId>\n" +
+      "  <ComplaintId><![CDATA[complaint_004]]></ComplaintId>\n" +
+      "  <ComplaintDetail><![CDATA[商品未收到]]></ComplaintDetail>\n" +
+      "  <ComplaintTime>1700000050</ComplaintTime>\n" +
+      "  <RetryTimes>0</RetryTimes>\n" +
+      "  <RequestId><![CDATA[req_005]]></RequestId>\n" +
+      "</xml>";
+
+    WxMaMessage msg = WxMaMessage.fromXml(xml);
+    checkXPayComplaintNotifyMessage(msg);
+  }
+
+  /**
+   * 虚拟支付投诉推送事件 xpay_complaint_notify 测试用例（JSON格式）
+   */
+  @Test
+  public void testXPayComplaintNotifyFromJson() {
+    String json = "{\n" +
+      "  \"ToUserName\": \"gh_abcdefg\",\n" +
+      "  \"FromUserName\": \"official_openid\",\n" +
+      "  \"CreateTime\": 1700000100,\n" +
+      "  \"MsgType\": \"event\",\n" +
+      "  \"Event\": \"xpay_complaint_notify\",\n" +
+      "  \"OpenId\": \"user_openid_abc\",\n" +
+      "  \"WxOrderId\": \"wx_order_cmp_001\",\n" +
+      "  \"MchOrderId\": \"mch_order_cmp_002\",\n" +
+      "  \"TransactionId\": \"transaction_cmp_003\",\n" +
+      "  \"ComplaintId\": \"complaint_004\",\n" +
+      "  \"ComplaintDetail\": \"商品未收到\",\n" +
+      "  \"ComplaintTime\": 1700000050,\n" +
+      "  \"RetryTimes\": 0,\n" +
+      "  \"RequestId\": \"req_005\"\n" +
+      "}";
+
+    WxMaMessage msg = WxMaMessage.fromJson(json);
+    checkXPayComplaintNotifyMessage(msg);
+  }
+
+  private void checkXPayComplaintNotifyMessage(WxMaMessage msg) {
+    assertEquals(msg.getToUser(), "gh_abcdefg");
+    assertEquals(msg.getFromUser(), "official_openid");
+    assertEquals(msg.getCreateTime(), new Integer(1700000100));
+    assertEquals(msg.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(msg.getEvent(), "xpay_complaint_notify");
+    assertEquals(msg.getOpenId(), "user_openid_abc");
+    assertEquals(msg.getWxOrderId(), "wx_order_cmp_001");
+    assertEquals(msg.getMchOrderId(), "mch_order_cmp_002");
+    assertEquals(msg.getComplaintTransactionId(), "transaction_cmp_003");
+    assertEquals(msg.getComplaintId(), "complaint_004");
+    assertEquals(msg.getComplaintDetail(), "商品未收到");
+    assertEquals(msg.getComplaintTime(), new Long(1700000050L));
+    assertEquals(msg.getRetryTimes(), new Integer(0));
+    assertEquals(msg.getRequestId(), "req_005");
+  }
 }

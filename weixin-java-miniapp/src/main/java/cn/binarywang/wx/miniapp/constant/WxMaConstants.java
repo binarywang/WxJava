@@ -264,6 +264,7 @@ public class WxMaConstants {
     public static String COIN_PAY = "xpay_coin_pay_notify";
     public static String GOODS_DELIVER = "xpay_goods_deliver_notify";
     public static String REFUND = "xpay_refund_notify";
+    public static String COMPLAINT = "xpay_complaint_notify";
 
   }
   @UtilityClass

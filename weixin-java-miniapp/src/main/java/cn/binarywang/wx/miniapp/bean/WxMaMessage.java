@@ -189,7 +189,7 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String revokeInfo;
 
-  @SerializedName("OpenID")
+  @SerializedName(value = "OpenID", alternate = {"OpenId"})
   @XStreamAlias("OpenID")
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String openId;
@@ -417,6 +417,52 @@ public class WxMaMessage implements Serializable {
   @SerializedName("TeamInfo")
   @XStreamAlias("TeamInfo")
   private WxMaXPayTeamInfo teamInfo;
+
+  // xpay_complaint_notify 用户投诉推送字段
+
+  /**
+   * 微信支付交易单号.
+   * xpay_complaint_notify
+   */
+  @SerializedName("TransactionId")
+  @XStreamAlias("TransactionId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String complaintTransactionId;
+
+  /**
+   * 投诉单号.
+   * xpay_complaint_notify
+   */
+  @SerializedName("ComplaintId")
+  @XStreamAlias("ComplaintId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String complaintId;
+
+  /**
+   * 投诉详情.
+   * xpay_complaint_notify
+   */
+  @SerializedName("ComplaintDetail")
+  @XStreamAlias("ComplaintDetail")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String complaintDetail;
+
+  /**
+   * 投诉时间，秒级时间戳.
+   * xpay_complaint_notify
+   */
+  @SerializedName("ComplaintTime")
+  @XStreamAlias("ComplaintTime")
+  private Long complaintTime;
+
+  /**
+   * 请求编号.
+   * xpay_complaint_notify
+   */
+  @SerializedName("RequestId")
+  @XStreamAlias("RequestId")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String requestId;
 
   /**
    * 不要直接使用这个字段，
