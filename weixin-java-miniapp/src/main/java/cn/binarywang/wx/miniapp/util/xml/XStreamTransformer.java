@@ -101,6 +101,8 @@ public class XStreamTransformer {
     if (clz.equals(WxMaMessage.class)) {
       // 操蛋的微信，模板消息推送成功的消息是MsgID，其他消息推送过来是MsgId
       xstream.aliasField("MsgID", WxMaMessage.class, "msgId");
+      // xpay 事件推送使用 OpenId（小写 d），但通用字段注解为 OpenID（大写 D）
+      xstream.aliasField("OpenId", WxMaMessage.class, "openId");
     }
 
     register(clz, xstream);

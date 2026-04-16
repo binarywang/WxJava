@@ -261,9 +261,10 @@ public class WxMaConstants {
   }
   @UtilityClass
   public static final class XPayNotifyEvent {
-    public static String COIN_PAY = "xpay_coin_pay_notify";
-    public static String GOODS_DELIVER = "xpay_goods_deliver_notify";
-    public static String REFUND = "xpay_refund_notify";
+    public static final String COIN_PAY = "xpay_coin_pay_notify";
+    public static final String GOODS_DELIVER = "xpay_goods_deliver_notify";
+    public static final String REFUND = "xpay_refund_notify";
+    public static final String COMPLAINT = "xpay_complaint_notify";
 
   }
   @UtilityClass
