@@ -138,6 +138,7 @@
     <httpclient.version>4.5.13</httpclient.version>
     <httpclient5.version>5.5.2</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
+    <bouncycastle.version>1.84</bouncycastle.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -335,7 +336,12 @@
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcpkix-jdk18on</artifactId>
-        <version>1.80</version>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
