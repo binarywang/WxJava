@@ -84,4 +84,76 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
     }
   }
 
+  /**
+   * 使用用户加密 key 对数据进行 AES-128-CBC 解密（用于小程序加密网络通道）.
+   *
+   * <pre>
+   * 参考文档：https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/user-encryptkey.html
+   * encryptKey 来自 getUserEncryptKey 接口返回的 encrypt_key 字段（Base64 编码）
+   * iv 来自 getUserEncryptKey 接口返回的 iv 字段（Hex 编码）
+   * </pre>
+   *
+   * @param encryptKey    用户加密 key（Base64 编码）
+   * @param hexIv         加密 iv（Hex 编码）
+   * @param encryptedData 加密数据（Base64 编码）
+   * @return 解密后的字符串
+   */
+  public static String decryptWithEncryptKey(String encryptKey, String hexIv, String encryptedData) {
+    try {
+      byte[] keyBytes = Base64.decodeBase64(encryptKey);
+      byte[] ivBytes = hexToBytes(hexIv);
+      byte[] dataBytes = Base64.decodeBase64(encryptedData);
+
+      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      cipher.init(Cipher.DECRYPT_MODE,
+        new SecretKeySpec(keyBytes, "AES"),
+        new IvParameterSpec(ivBytes));
+      return new String(cipher.doFinal(dataBytes), UTF_8);
+    } catch (Exception e) {
+      throw new WxRuntimeException("AES解密失败！", e);
+    }
+  }
+
+  /**
+   * 使用用户加密 key 对数据进行 AES-128-CBC 加密（用于小程序加密网络通道）.
+   *
+   * <pre>
+   * 参考文档：https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/user-encryptkey.html
+   * encryptKey 来自 getUserEncryptKey 接口返回的 encrypt_key 字段（Base64 编码）
+   * iv 来自 getUserEncryptKey 接口返回的 iv 字段（Hex 编码）
+   * </pre>
+   *
+   * @param encryptKey 用户加密 key（Base64 编码）
+   * @param hexIv      加密 iv（Hex 编码）
+   * @param data       待加密的明文字符串
+   * @return 加密后的数据（Base64 编码）
+   */
+  public static String encryptWithEncryptKey(String encryptKey, String hexIv, String data) {
+    try {
+      byte[] keyBytes = Base64.decodeBase64(encryptKey);
+      byte[] ivBytes = hexToBytes(hexIv);
+
+      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      cipher.init(Cipher.ENCRYPT_MODE,
+        new SecretKeySpec(keyBytes, "AES"),
+        new IvParameterSpec(ivBytes));
+      return Base64.encodeBase64String(cipher.doFinal(data.getBytes(UTF_8)));
+    } catch (Exception e) {
+      throw new WxRuntimeException("AES加密失败！", e);
+    }
+  }
+
+  /**
+   * 将 Hex 字符串转换为字节数组.
+   */
+  private static byte[] hexToBytes(String hex) {
+    int len = hex.length();
+    byte[] data = new byte[len / 2];
+    for (int i = 0; i < len; i += 2) {
+      data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+        + Character.digit(hex.charAt(i + 1), 16));
+    }
+    return data;
+  }
+
 }

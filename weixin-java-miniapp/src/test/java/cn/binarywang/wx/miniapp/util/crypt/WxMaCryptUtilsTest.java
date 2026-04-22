@@ -32,4 +32,37 @@ public class WxMaCryptUtilsTest {
     assertThat(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr))
       .isEqualTo(WxMaCryptUtils.decryptAnotherWay(sessionKey, encryptedData, ivStr));
   }
+
+  /**
+   * 测试使用用户加密 key（来自小程序加密网络通道）进行加密和解密的对称性.
+   * encrypt_key 为 Base64 编码的 16 字节 AES-128 密钥，iv 为 Hex 编码的 16 字节初始向量。
+   */
+  @Test
+  public void testEncryptAndDecryptWithEncryptKey() {
+    // 模拟来自 getUserEncryptKey 接口的 encrypt_key（Base64）和 iv（Hex）
+    String encryptKey = "VI6BpyrK9XH4i4AIGe86tg==";
+    String hexIv = "6003f73ec441c3866003f73ec441c386";
+    String plainText = "{\"userId\":\"12345\",\"amount\":100}";
+
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(encryptKey, hexIv, plainText);
+    assertThat(encrypted).isNotNull().isNotEmpty();
+
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(encryptKey, hexIv, encrypted);
+    assertThat(decrypted).isEqualTo(plainText);
+  }
+
+  /**
+   * 测试使用已知密文验证解密结果（加密网络通道）.
+   */
+  @Test
+  public void testDecryptWithEncryptKey() {
+    String encryptKey = "VI6BpyrK9XH4i4AIGe86tg==";
+    String hexIv = "6003f73ec441c3866003f73ec441c386";
+    String plainText = "hello miniprogram";
+
+    // 先加密再解密，验证对称性
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(encryptKey, hexIv, plainText);
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(encryptKey, hexIv, encrypted);
+    assertThat(decrypted).isEqualTo(plainText);
+  }
 }
