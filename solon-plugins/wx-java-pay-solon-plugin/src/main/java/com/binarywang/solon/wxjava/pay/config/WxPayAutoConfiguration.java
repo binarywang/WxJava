@@ -59,6 +59,7 @@ public class WxPayAutoConfiguration {
     payConfig.setPublicKeyId(StringUtils.trimToNull(this.properties.getPublicKeyId()));
     payConfig.setPublicKeyPath(StringUtils.trimToNull(this.properties.getPublicKeyPath()));
     payConfig.setApiHostUrl(StringUtils.trimToNull(this.properties.getApiHostUrl()));
+    payConfig.setApiHostUrlPath(StringUtils.trimToNull(this.properties.getApiHostUrlPath()));
     payConfig.setStrictlyNeedWechatPaySerial(this.properties.isStrictlyNeedWechatPaySerial());
     payConfig.setFullPublicKeyModel(this.properties.isFullPublicKeyModel());
 

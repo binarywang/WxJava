@@ -113,6 +113,12 @@ public class WxPaySingleProperties implements Serializable {
   private String apiHostUrl;
 
   /**
+   * 自定义API主机路径前缀（用于代理入口前缀）.
+   * 例如：/api-weixin
+   */
+  private String apiHostUrlPath;
+
+  /**
    * 是否将全部v3接口的请求都添加Wechatpay-Serial请求头，默认不添加.
    */
   private boolean strictlyNeedWechatPaySerial = false;

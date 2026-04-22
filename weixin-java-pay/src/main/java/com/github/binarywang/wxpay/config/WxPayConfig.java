@@ -65,6 +65,12 @@ public class WxPayConfig {
   private String apiHostUrl = DEFAULT_PAY_BASE_URL;
 
   /**
+   * 微信支付接口请求地址路径前缀（用于网关代理前缀）.
+   * 例如：/api-weixin
+   */
+  private String apiHostUrlPath;
+
+  /**
    * http请求连接超时时间.
    */
   private int httpConnectionTimeout = 5000;
@@ -285,11 +291,42 @@ public class WxPayConfig {
    * @return 微信支付接口请求地址域名
    */
   public String getApiHostUrl() {
-    if (StringUtils.isEmpty(this.apiHostUrl)) {
+    String hostUrl = StringUtils.trimToNull(this.apiHostUrl);
+    if (hostUrl == null) {
       return DEFAULT_PAY_BASE_URL;
     }
+    if (hostUrl.endsWith("/")) {
+      hostUrl = hostUrl.substring(0, hostUrl.length() - 1);
+    }
+    return hostUrl;
+  }
 
-    return this.apiHostUrl;
+  /**
+   * 返回所设置的微信支付接口路径前缀.
+   *
+   * @return 路径前缀，不配置时为空字符串
+   */
+  public String getApiHostUrlPath() {
+    String pathPrefix = StringUtils.trimToNull(this.apiHostUrlPath);
+    if (pathPrefix == null || "/".equals(pathPrefix)) {
+      return "";
+    }
+    if (!pathPrefix.startsWith("/")) {
+      pathPrefix = "/" + pathPrefix;
+    }
+    if (pathPrefix.endsWith("/")) {
+      pathPrefix = pathPrefix.substring(0, pathPrefix.length() - 1);
+    }
+    return pathPrefix;
+  }
+
+  /**
+   * 返回用于请求层拼接的基础地址：host + pathPrefix.
+   *
+   * @return 拼接后的基础地址
+   */
+  public String getApiHostWithPathPrefix() {
+    return this.getApiHostUrl() + this.getApiHostUrlPath();
   }
 
   @SneakyThrows
@@ -391,10 +428,11 @@ public class WxPayConfig {
       } else {
         certificatesVerifier = VerifierBuilder.build(
           this.getCertSerialNo(), this.getMchId(), this.getApiV3Key(), merchantPrivateKey, wxPayHttpProxy,
-          this.getCertAutoUpdateTime(), this.getApiHostUrl(), this.getPublicKeyId(), publicKey);
+          this.getCertAutoUpdateTime(), this.getApiHostWithPathPrefix(), this.getPublicKeyId(), publicKey);
       }
 
       WxPayV3HttpClientBuilder wxPayV3HttpClientBuilder = WxPayV3HttpClientBuilder.create()
+        .withSignUriStripPrefix(this.getApiHostUrlPath())
         .withMerchant(mchId, certSerialNo, merchantPrivateKey)
         .withValidator(new WxPayValidator(certificatesVerifier));
       // 当 apiHostUrl 配置为自定义代理地址时，将代理主机加入受信任列表，

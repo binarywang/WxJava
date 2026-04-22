@@ -83,6 +83,7 @@ public class WxPayMultiServicesImpl implements WxPayMultiServices {
     payConfig.setPublicKeyId(StringUtils.trimToNull(properties.getPublicKeyId()));
     payConfig.setPublicKeyPath(StringUtils.trimToNull(properties.getPublicKeyPath()));
     payConfig.setApiHostUrl(StringUtils.trimToNull(properties.getApiHostUrl()));
+    payConfig.setApiHostUrlPath(StringUtils.trimToNull(properties.getApiHostUrlPath()));
     payConfig.setStrictlyNeedWechatPaySerial(properties.isStrictlyNeedWechatPaySerial());
     payConfig.setFullPublicKeyModel(properties.isFullPublicKeyModel());
 

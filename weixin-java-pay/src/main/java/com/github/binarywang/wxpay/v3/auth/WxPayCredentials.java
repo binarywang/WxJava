@@ -20,14 +20,40 @@ public class WxPayCredentials implements Credentials {
   private static final SecureRandom RANDOM = new SecureRandom();
   protected String merchantId;
   protected Signer signer;
+  /**
+   * 签名前从 URI Path 中移除的前缀（用于带路径前缀的反向代理场景）
+   * 例如配置为 "/api-weixin" 时，"/api-weixin/v3/pay/..." 将参与签名为 "/v3/pay/..."
+   */
+  protected String signUriStripPrefix;
 
   public WxPayCredentials(String merchantId, Signer signer) {
     this.merchantId = merchantId;
     this.signer = signer;
   }
 
+  public WxPayCredentials(String merchantId, Signer signer, String signUriStripPrefix) {
+    this.merchantId = merchantId;
+    this.signer = signer;
+    this.setSignUriStripPrefix(signUriStripPrefix);
+  }
+
   public String getMerchantId() {
     return merchantId;
+  }
+
+  public void setSignUriStripPrefix(String signUriStripPrefix) {
+    if (signUriStripPrefix == null || signUriStripPrefix.trim().isEmpty()) {
+      this.signUriStripPrefix = null;
+      return;
+    }
+    String normalized = signUriStripPrefix.trim();
+    if (!normalized.startsWith("/")) {
+      normalized = "/" + normalized;
+    }
+    if (normalized.length() > 1 && normalized.endsWith("/")) {
+      normalized = normalized.substring(0, normalized.length() - 1);
+    }
+    this.signUriStripPrefix = normalized;
   }
 
   protected long generateTimestamp() {
@@ -70,7 +96,7 @@ public class WxPayCredentials implements Credentials {
   protected final String buildMessage(String nonce, long timestamp, HttpRequestWrapper request)
       throws IOException {
     URI uri = request.getURI();
-    String canonicalUrl = uri.getRawPath();
+    String canonicalUrl = stripPathPrefix(uri.getRawPath());
     if (uri.getQuery() != null) {
       canonicalUrl += "?" + uri.getRawQuery();
     }
@@ -88,6 +114,20 @@ public class WxPayCredentials implements Credentials {
         + timestamp + "\n"
         + nonce + "\n"
         + body + "\n";
+  }
+
+  private String stripPathPrefix(String rawPath) {
+    if (rawPath == null || rawPath.isEmpty() || signUriStripPrefix == null) {
+      return rawPath;
+    }
+    if (!rawPath.startsWith(signUriStripPrefix)) {
+      return rawPath;
+    }
+    String stripped = rawPath.substring(signUriStripPrefix.length());
+    if (stripped.isEmpty()) {
+      return "/";
+    }
+    return stripped.startsWith("/") ? stripped : "/" + stripped;
   }
 
 }
