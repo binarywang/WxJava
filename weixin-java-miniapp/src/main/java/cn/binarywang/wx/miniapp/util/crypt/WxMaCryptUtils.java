@@ -145,13 +145,24 @@ public class WxMaCryptUtils extends me.chanjar.weixin.common.util.crypto.WxCrypt
 
   /**
    * 将 Hex 字符串转换为字节数组.
+   *
+   * @param hex Hex 字符串（长度必须为偶数，只包含 0-9 和 a-f/A-F 字符）
+   * @return 字节数组
+   * @throws IllegalArgumentException 如果输入不是合法的 Hex 字符串
    */
   private static byte[] hexToBytes(String hex) {
+    if (hex == null || hex.length() % 2 != 0) {
+      throw new IllegalArgumentException("无效的十六进制字符串格式：长度必须为偶数");
+    }
     int len = hex.length();
     byte[] data = new byte[len / 2];
     for (int i = 0; i < len; i += 2) {
-      data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
-        + Character.digit(hex.charAt(i + 1), 16));
+      int high = Character.digit(hex.charAt(i), 16);
+      int low = Character.digit(hex.charAt(i + 1), 16);
+      if (high == -1 || low == -1) {
+        throw new IllegalArgumentException("无效的十六进制字符串格式：包含非法字符 '" + hex.charAt(high == -1 ? i : i + 1) + "'");
+      }
+      data[i / 2] = (byte) ((high << 4) + low);
     }
     return data;
   }

@@ -14,6 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMaCryptUtilsTest {
+  // 模拟来自 getUserEncryptKey 接口返回的 encrypt_key（Base64）和 iv（Hex，32位即16字节）
+  private static final String ENCRYPT_KEY = "VI6BpyrK9XH4i4AIGe86tg==";
+  private static final String HEX_IV = "6003f73ec441c3866003f73ec441c386";
+
   @Test
   public void testDecrypt() {
     String sessionKey = "7MG7jbTToVVRWRXVA885rg==";
@@ -39,30 +43,24 @@ public class WxMaCryptUtilsTest {
    */
   @Test
   public void testEncryptAndDecryptWithEncryptKey() {
-    // 模拟来自 getUserEncryptKey 接口的 encrypt_key（Base64）和 iv（Hex）
-    String encryptKey = "VI6BpyrK9XH4i4AIGe86tg==";
-    String hexIv = "6003f73ec441c3866003f73ec441c386";
     String plainText = "{\"userId\":\"12345\",\"amount\":100}";
 
-    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(encryptKey, hexIv, plainText);
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, plainText);
     assertThat(encrypted).isNotNull().isNotEmpty();
 
-    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(encryptKey, hexIv, encrypted);
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, encrypted);
     assertThat(decrypted).isEqualTo(plainText);
   }
 
   /**
-   * 测试使用已知密文验证解密结果（加密网络通道）.
+   * 测试加密网络通道的加解密对称性（不同明文）.
    */
   @Test
-  public void testDecryptWithEncryptKey() {
-    String encryptKey = "VI6BpyrK9XH4i4AIGe86tg==";
-    String hexIv = "6003f73ec441c3866003f73ec441c386";
+  public void testEncryptDecryptSymmetryWithEncryptKey() {
     String plainText = "hello miniprogram";
 
-    // 先加密再解密，验证对称性
-    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(encryptKey, hexIv, plainText);
-    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(encryptKey, hexIv, encrypted);
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, plainText);
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, encrypted);
     assertThat(decrypted).isEqualTo(plainText);
   }
 }
