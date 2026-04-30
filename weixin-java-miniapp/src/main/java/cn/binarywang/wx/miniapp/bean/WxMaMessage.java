@@ -464,6 +464,80 @@ public class WxMaMessage implements Serializable {
   @XStreamConverter(value = XStreamCDataConverter.class)
   private String requestId;
 
+  // xpay_subscribe_ios_refund_query_notify iOS退款查询通知字段
+
+  /**
+   * 问询时间，Unix时间戳.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("refund_time")
+  @XStreamAlias("refund_time")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String refundTime;
+
+  /**
+   * 该笔退款的订单时间（退款订单对应的交易时间），Unix时间戳.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("order_time")
+  @XStreamAlias("order_time")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String orderTime;
+
+  /**
+   * Apple 支付票据号.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("channel_bill")
+  @XStreamAlias("channel_bill")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String channelBill;
+
+  /**
+   * 应用的 Apple bundleid.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("bundleid")
+  @XStreamAlias("bundleid")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String bundleid;
+
+  /**
+   * 道具 id.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("product_id")
+  @XStreamAlias("product_id")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String xpayProductId;
+
+  /**
+   * 道具/代币数量.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("p_count")
+  @XStreamAlias("p_count")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String pCount;
+
+  /**
+   * 用户请求退款的原因.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("refund_request_reason")
+  @XStreamAlias("refund_request_reason")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String refundRequestReason;
+
+  /**
+   * 发货状态，0：未发货 1：已发货 2：发货中.
+   * xpay_subscribe_ios_refund_query_notify
+   */
+  @SerializedName("provide_status")
+  @XStreamAlias("provide_status")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String provideStatus;
+
   /**
    * 不要直接使用这个字段，
    * 这个字段只是为了适配 SubscribeMsgPopupEvent SubscribeMsgChangeEvent SubscribeMsgSentEvent

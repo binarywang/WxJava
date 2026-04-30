@@ -457,4 +457,70 @@ public class WxMaMessageTest {
     assertEquals(msg.getRetryTimes(), new Integer(0));
     assertEquals(msg.getRequestId(), "req_005");
   }
+
+  /**
+   * 虚拟支付 iOS 退款查询通知事件 xpay_subscribe_ios_refund_query_notify 测试用例（XML格式）
+   */
+  @Test
+  public void testXPaySubscribeIosRefundQueryNotifyFromXml() {
+    String xml = "<xml>\n" +
+      "  <ToUserName><![CDATA[gh_abcdefg]]></ToUserName>\n" +
+      "  <FromUserName><![CDATA[oABCDEFG]]></FromUserName>\n" +
+      "  <CreateTime>1700001000</CreateTime>\n" +
+      "  <MsgType><![CDATA[event]]></MsgType>\n" +
+      "  <Event><![CDATA[xpay_subscribe_ios_refund_query_notify]]></Event>\n" +
+      "  <refund_time><![CDATA[1700000900]]></refund_time>\n" +
+      "  <order_time><![CDATA[1699990000]]></order_time>\n" +
+      "  <channel_bill><![CDATA[apple_bill_001]]></channel_bill>\n" +
+      "  <bundleid><![CDATA[com.example.app]]></bundleid>\n" +
+      "  <product_id><![CDATA[product_xyz]]></product_id>\n" +
+      "  <p_count><![CDATA[1]]></p_count>\n" +
+      "  <refund_request_reason><![CDATA[不喜欢]]></refund_request_reason>\n" +
+      "  <provide_status><![CDATA[1]]></provide_status>\n" +
+      "</xml>";
+
+    WxMaMessage msg = WxMaMessage.fromXml(xml);
+    checkXPaySubscribeIosRefundQueryNotifyMessage(msg);
+  }
+
+  /**
+   * 虚拟支付 iOS 退款查询通知事件 xpay_subscribe_ios_refund_query_notify 测试用例（JSON格式）
+   */
+  @Test
+  public void testXPaySubscribeIosRefundQueryNotifyFromJson() {
+    String json = "{\n" +
+      "  \"ToUserName\": \"gh_abcdefg\",\n" +
+      "  \"FromUserName\": \"oABCDEFG\",\n" +
+      "  \"CreateTime\": 1700001000,\n" +
+      "  \"MsgType\": \"event\",\n" +
+      "  \"Event\": \"xpay_subscribe_ios_refund_query_notify\",\n" +
+      "  \"refund_time\": \"1700000900\",\n" +
+      "  \"order_time\": \"1699990000\",\n" +
+      "  \"channel_bill\": \"apple_bill_001\",\n" +
+      "  \"bundleid\": \"com.example.app\",\n" +
+      "  \"product_id\": \"product_xyz\",\n" +
+      "  \"p_count\": \"1\",\n" +
+      "  \"refund_request_reason\": \"不喜欢\",\n" +
+      "  \"provide_status\": \"1\"\n" +
+      "}";
+
+    WxMaMessage msg = WxMaMessage.fromJson(json);
+    checkXPaySubscribeIosRefundQueryNotifyMessage(msg);
+  }
+
+  private void checkXPaySubscribeIosRefundQueryNotifyMessage(WxMaMessage msg) {
+    assertEquals(msg.getToUser(), "gh_abcdefg");
+    assertEquals(msg.getFromUser(), "oABCDEFG");
+    assertEquals(msg.getCreateTime(), new Integer(1700001000));
+    assertEquals(msg.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(msg.getEvent(), WxConsts.EventType.XPAY_SUBSCRIBE_IOS_REFUND_QUERY_NOTIFY);
+    assertEquals(msg.getRefundTime(), "1700000900");
+    assertEquals(msg.getOrderTime(), "1699990000");
+    assertEquals(msg.getChannelBill(), "apple_bill_001");
+    assertEquals(msg.getBundleid(), "com.example.app");
+    assertEquals(msg.getXpayProductId(), "product_xyz");
+    assertEquals(msg.getPCount(), "1");
+    assertEquals(msg.getRefundRequestReason(), "不喜欢");
+    assertEquals(msg.getProvideStatus(), "1");
+  }
 }

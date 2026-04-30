@@ -499,6 +499,11 @@ public class WxConsts {
      * 订单完成发货时、订单结算时
      */
     public static final String TRADE_MANAGE_ORDER_SETTLEMENT = "trade_manage_order_settlement";
+    /**
+     * 虚拟支付 iOS 退款查询通知
+     * 文档：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/virtual-payment/ios.html
+     */
+    public static final String XPAY_SUBSCRIBE_IOS_REFUND_QUERY_NOTIFY = "xpay_subscribe_ios_refund_query_notify";
   }
 
   /**
