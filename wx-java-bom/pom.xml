@@ -19,6 +19,11 @@
       <!-- WxJava 核心模块 -->
       <dependency>
         <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-graal</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-common</artifactId>
         <version>${project.version}</version>
       </dependency>
