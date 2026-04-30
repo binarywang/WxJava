@@ -127,6 +127,7 @@
     <module>weixin-java-channel</module>
     <module>spring-boot-starters</module>
     <module>solon-plugins</module>
+    <module>wx-java-bom</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 
