@@ -63,6 +63,14 @@
         <version>${project.version}</version>
       </dependency>
 
+      <!-- WxJava Spring Boot Starters 聚合 POM -->
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-spring-boot-starters</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+      </dependency>
+
       <!-- WxJava Spring Boot Starters -->
       <dependency>
         <groupId>com.github.binarywang</groupId>
@@ -133,6 +141,14 @@
         <groupId>com.github.binarywang</groupId>
         <artifactId>wx-java-qidian-spring-boot-starter</artifactId>
         <version>${project.version}</version>
+      </dependency>
+
+      <!-- WxJava Solon Plugins 聚合 POM -->
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-solon-plugins</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
       </dependency>
 
       <!-- WxJava Solon Plugins -->
