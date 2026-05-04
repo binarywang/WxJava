@@ -57,7 +57,7 @@ public class WxPayProperties {
   /**
    * apiV3秘钥
    */
-  private String apiv3Key;
+  private String apiV3Key;
 
   /**
    * 微信支付异步回调地址，通知url必须为直接可访问的url，不能携带参数
@@ -112,13 +112,13 @@ public class WxPayProperties {
   private String apiHostUrl;
 
   /**
-   * 是否将全部v3接口的请求都添加Wechatpay-Serial请求头，默认不添加
+   * 是否将全部v3接口的请求都添加Wechatpay-Serial请求头，默认添加
    */
-  private boolean strictlyNeedWechatPaySerial = false;
+  private boolean strictlyNeedWechatPaySerial = true;
 
   /**
-   * 是否完全使用公钥模式(用以微信从平台证书到公钥的灰度切换)，默认不使用
+   * 是否完全使用公钥模式(用以微信从平台证书到公钥的灰度切换)，默认使用
    */
-  private boolean fullPublicKeyModel = false;
+  private boolean fullPublicKeyModel = true;
 
 }

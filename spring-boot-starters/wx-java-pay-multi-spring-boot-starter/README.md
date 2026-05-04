@@ -104,7 +104,7 @@ wx:
 # 公众号1配置
 wx.pay.configs.wx1234567890abcdef.app-id=wx1234567890abcdef
 wx.pay.configs.wx1234567890abcdef.mch-id=1234567890
-wx.pay.configs.wx1234567890abcdef.apiv3-key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+wx.pay.configs.wx1234567890abcdef.api-v3-key=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 wx.pay.configs.wx1234567890abcdef.cert-serial-no=62C6CEAA360BCxxxxxxxxxxxxxxx
 wx.pay.configs.wx1234567890abcdef.private-key-path=classpath:cert/app1/apiclient_key.pem
 wx.pay.configs.wx1234567890abcdef.private-cert-path=classpath:cert/app1/apiclient_cert.pem
@@ -113,7 +113,7 @@ wx.pay.configs.wx1234567890abcdef.notify-url=https://example.com/pay/notify
 # 公众号2配置
 wx.pay.configs.wx9876543210fedcba.app-id=wx9876543210fedcba
 wx.pay.configs.wx9876543210fedcba.mch-id=9876543210
-wx.pay.configs.wx9876543210fedcba.apiv3-key=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+wx.pay.configs.wx9876543210fedcba.api-v3-key=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 wx.pay.configs.wx9876543210fedcba.cert-serial-no=73D7DFBB471CDxxxxxxxxxxxxxxx
 wx.pay.configs.wx9876543210fedcba.private-key-path=classpath:cert/app2/apiclient_key.pem
 wx.pay.configs.wx9876543210fedcba.private-cert-path=classpath:cert/app2/apiclient_cert.pem
@@ -312,5 +312,5 @@ wx:
 ## 更多信息
 
 - [WxJava 项目首页](https://github.com/Wechat-Group/WxJava)
-- [微信支付官方文档](https://pay.weixin.qq.com/wiki/doc/api/)
-- [微信支付V3接口文档](https://pay.weixin.qq.com/wiki/doc/apiv3/index.shtml)
+- [微信支付V2文档](https://pay.weixin.qq.com/doc/v2)
+- [微信支付V3接口文档](https://pay.weixin.qq.com/doc/v3/merchant/4012062524)

@@ -57,7 +57,7 @@ public class WxPayMultiServicesTest {
     assertNotNull(app2Config, "app2 configuration should exist");
     assertEquals("wx2222222222222222", app2Config.getAppId());
     assertEquals("2222222222", app2Config.getMchId());
-    assertEquals("22222222222222222222222222222222", app2Config.getApiv3Key());
+    assertEquals("22222222222222222222222222222222", app2Config.getApiV3Key());
   }
 
   @Test
