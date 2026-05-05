@@ -255,8 +255,8 @@ public class PayService {
 | payScorePermissionNotifyUrl | 支付分授权回调地址 | 无 |
 | useSandboxEnv | 是否使用沙箱环境 | false |
 | apiHostUrl | 自定义API主机地址 | https://api.mch.weixin.qq.com |
-| strictlyNeedWechatPaySerial | 是否所有V3请求都添加序列号头 | false |
-| fullPublicKeyModel | 是否完全使用公钥模式 | false |
+| strictlyNeedWechatPaySerial | 是否所有V3请求都添加序列号头 | true |
+| fullPublicKeyModel | 是否完全使用公钥模式 | true |
 | publicKeyId | 公钥ID | 无 |
 | publicKeyPath | 公钥文件路径 | 无 |
 
