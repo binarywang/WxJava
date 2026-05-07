@@ -9,6 +9,7 @@
       <class name="me.chanjar.weixin.cp.tp.service.impl.WxCpTpServiceApacheHttpClientImplTest"/>
       <class name="me.chanjar.weixin.cp.config.impl.WxCpTpDefaultConfigImplTest"/>
       <class name="me.chanjar.weixin.cp.tp.service.impl.WxCpTpTagServiceImplTest"/>
+      <class name="me.chanjar.weixin.cp.api.impl.WxCpHrServiceImplTest"/>
     </classes>
   </test>
 
