@@ -61,6 +61,20 @@ public class ContentValue implements Serializable {
   @SerializedName("bank_account")
   private BankAccount bankAccount;
 
+  @SerializedName("phonenumber")
+  private PhoneNumber phonenumber;
+
+  /**
+   * Phone number control value: {@code value.phonenumber = { area, number }}.
+   * e.g. area="+62", number="87827717730"
+   */
+  @Data
+  public static class PhoneNumber implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String area;
+    private String number;
+  }
+
   /**
    * The type Date.
    */

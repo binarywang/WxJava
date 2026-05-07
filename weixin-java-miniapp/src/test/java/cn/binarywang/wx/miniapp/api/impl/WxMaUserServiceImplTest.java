@@ -81,4 +81,10 @@ public class WxMaUserServiceImplTest {
   public void testGetAccessToken() throws Exception{
     assertNotNull(wxService.getAccessToken(true));
   }
+
+  @Test(expectedExceptions = WxErrorException.class)
+  public void testCheckSessionKey() throws WxErrorException {
+    // 使用无效的 openid 和 sessionKey，预期微信服务端返回错误并抛出 WxErrorException
+    this.wxService.getUserService().checkSessionKey("invalid_openid", "invalid_session_key");
+  }
 }

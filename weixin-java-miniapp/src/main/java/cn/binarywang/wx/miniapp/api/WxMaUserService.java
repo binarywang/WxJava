@@ -108,4 +108,20 @@ public interface WxMaUserService {
    * @throws WxErrorException 调用微信接口失败时抛出
    */
   WxMaCode2VerifyInfoResult getCode2VerifyInfo(String code, String checkcode) throws WxErrorException;
+
+  /**
+   * 检查登录态（checkSessionKey）.
+   * <p>
+   * 检验登录态是否有效，用于虚拟支付等场景构建用户签名前的登录态验证。
+   * 登录态有效时返回 {@code true}；登录态已失效时，微信服务端将返回错误码（如 87009），
+   * 并以 {@link me.chanjar.weixin.common.error.WxErrorException} 的形式抛出。
+   * </p>
+   * 文档地址：<a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/user-login/api_checksessionkey.html">检查登录态</a>
+   *
+   * @param openid     用户唯一标识符
+   * @param sessionKey 用户的 session_key，通过 {@link #getSessionInfo(String)} 获取
+   * @return 登录态有效时返回 {@code true}
+   * @throws WxErrorException 登录态已失效或调用微信接口失败时抛出（失效时 errcode 为 87009）
+   */
+  boolean checkSessionKey(String openid, String sessionKey) throws WxErrorException;
 }

@@ -224,7 +224,7 @@ public abstract class AbstractWxCpTpInRedisConfigImpl extends WxCpTpDefaultConfi
 
     WxAccessToken accessTokenEntity = new WxAccessToken();
     accessTokenEntity.setAccessToken(accessToken);
-    accessTokenEntity.setExpiresIn((int) ((expire - System.currentTimeMillis()) / 1000 + 200));
+    accessTokenEntity.setExpiresIn(Math.max(Math.toIntExact(expire), 0));
     return accessTokenEntity;
   }
 
