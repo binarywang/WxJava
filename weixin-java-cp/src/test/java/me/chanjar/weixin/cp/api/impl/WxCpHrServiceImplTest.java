@@ -167,7 +167,11 @@ public class WxCpHrServiceImplTest {
         System.out.println("分组: " + group.getGroupName() + " (ID: " + group.getGroupId() + ")");
         if (group.getFieldList() != null) {
           for (me.chanjar.weixin.cp.bean.hr.WxCpHrEmployeeFieldInfo field : group.getFieldList()) {
-            System.out.println("  - 字段: " + field.getFieldName() + " (ID: " + field.getFieldId() + ", 类型: " + field.getFieldType() + ")");
+            System.out.println(
+              "  - 字段: " + field.getFieldName()
+                + " (ID: " + field.getFieldId()
+                + ", 类型: " + field.getFieldType() + ")"
+            );
             // 记录第一个字段ID用于测试
             if (firstFieldId == null && field.getFieldId() != null) {
               firstFieldId = field.getFieldId();
