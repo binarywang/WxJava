@@ -118,11 +118,11 @@ public interface PartnerTransferService {
    * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no/{out_bill_no}
    * 请求方式：GET
    *
-   * @param outBatchNo 商家批次单号
+   * @param outBillNo 商户转账单号
    * @return 返回数据 fund balance result
    * @throws WxPayException the wx pay exception
    */
-  BillReceiptResult queryBillReceipt(String outBatchNo) throws WxPayException;
+  BillReceiptResult queryBillReceipt(String outBillNo) throws WxPayException;
 
   /**
    * 转账明细电子回单受理API

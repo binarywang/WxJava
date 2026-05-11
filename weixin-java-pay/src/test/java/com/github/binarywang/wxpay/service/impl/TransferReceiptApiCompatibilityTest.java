@@ -19,6 +19,9 @@ public class TransferReceiptApiCompatibilityTest {
 
   private static final String BASE_URL = "https://api.mch.weixin.qq.com";
 
+  /**
+   * 验证直连商户电子回单接口已切换到新版fund-app路径。
+   */
   public void shouldUseNewMerchantTransferElecsignApiPath() throws WxPayException {
     RequestCaptureHandler handler = new RequestCaptureHandler();
     WxPayService wxPayService = handler.createWxPayService();
@@ -33,6 +36,9 @@ public class TransferReceiptApiCompatibilityTest {
     Assert.assertEquals(handler.lastGetUrl, BASE_URL + "/v3/fund-app/mch-transfer/elecsign/out-bill-no/plfk2020042013");
   }
 
+  /**
+   * 验证服务商电子回单接口已切换到新版fund-app路径。
+   */
   public void shouldUseNewPartnerTransferElecsignApiPath() throws WxPayException {
     RequestCaptureHandler handler = new RequestCaptureHandler();
     WxPayService wxPayService = handler.createWxPayService();
@@ -49,6 +55,9 @@ public class TransferReceiptApiCompatibilityTest {
     Assert.assertEquals(handler.lastGetUrl, BASE_URL + "/v3/fund-app/mch-transfer/elecsign/out-bill-no/plfk2020042013");
   }
 
+  /**
+   * 验证新版字段名能够正确反序列化到现有结果对象。
+   */
   public void shouldDeserializeNewResponseFieldNames() {
     Gson gson = new Gson();
     BillReceiptResult billReceiptResult =
@@ -62,6 +71,9 @@ public class TransferReceiptApiCompatibilityTest {
     Assert.assertEquals(electronicBillResult.getSignatureStatus(), "FINISHED");
   }
 
+  /**
+   * 通过动态代理拦截WxPayService请求并记录URL/请求体，便于断言接口路径和参数。
+   */
   private static class RequestCaptureHandler implements InvocationHandler {
     private String lastPostUrl;
     private String lastPostBody;

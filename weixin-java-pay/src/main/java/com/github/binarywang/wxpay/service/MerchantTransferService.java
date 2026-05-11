@@ -110,11 +110,11 @@ public interface MerchantTransferService {
    * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no/{out_bill_no}
    * 请求方式：GET
    *
-   * @param outBatchNo the out batch no
+   * @param outBillNo 商户转账单号
    * @return electronic bill result
    * @throws WxPayException the wx pay exception
    */
-  ElectronicBillResult queryElectronicBill(String outBatchNo) throws WxPayException;
+  ElectronicBillResult queryElectronicBill(String outBillNo) throws WxPayException;
 
   /**
    * 转账明细电子回单受理API
