@@ -632,6 +632,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   @Override
+  public PartnerSubscribeNotifyResult parsePartnerSubscribeNotify(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.baseParseOrderNotifyV3Result(notifyData, header, PartnerSubscribeNotifyResult.class, PartnerSubscribeNotifyResult.DecryptNotifyResult.class);
+  }
+
+  @Override
   public WxScanPayNotifyResult parseScanPayNotifyResult(String xmlData, @Deprecated String signType) throws WxPayException {
     try {
       log.debug("扫码支付回调通知请求参数：{}", xmlData);

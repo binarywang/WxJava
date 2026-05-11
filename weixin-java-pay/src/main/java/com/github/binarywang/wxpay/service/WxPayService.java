@@ -1165,6 +1165,16 @@ public interface WxPayService {
   WxPayPartnerRefundNotifyV3Result parsePartnerRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
+   * 解析合作伙伴订阅通知
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据
+   * @return 合作伙伴订阅通知
+   * @throws WxPayException the wx pay exception
+   */
+  PartnerSubscribeNotifyResult parsePartnerSubscribeNotify(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
    * 解析扫码支付回调通知
    * 详见https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=6_4
    *
