@@ -143,6 +143,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final MiPayService miPayService = new MiPayServiceImpl(this);
 
+  @Getter
+  private final MerchantLimitationService merchantLimitationService = new MerchantLimitationServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
   @Override
@@ -629,6 +632,11 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public WxPayPartnerRefundNotifyV3Result parsePartnerRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException {
     return this.baseParseOrderNotifyV3Result(notifyData, header, WxPayPartnerRefundNotifyV3Result.class, WxPayPartnerRefundNotifyV3Result.DecryptNotifyResult.class);
+  }
+
+  @Override
+  public PartnerSubscribeNotifyResult parsePartnerSubscribeNotify(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.baseParseOrderNotifyV3Result(notifyData, header, PartnerSubscribeNotifyResult.class, PartnerSubscribeNotifyResult.DecryptNotifyResult.class);
   }
 
   @Override

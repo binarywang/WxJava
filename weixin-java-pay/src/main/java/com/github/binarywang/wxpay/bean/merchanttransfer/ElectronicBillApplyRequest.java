@@ -24,15 +24,15 @@ public class ElectronicBillApplyRequest implements Serializable {
   private static final long serialVersionUID = -2121536206019844928L;
   /**
    * <pre>
-   * 字段名：商家批次单号
-   * 变量名：out_batch_no
+   * 字段名：商户转账单号
+   * 变量名：out_bill_no
    * 是否必填：是
    * 类型：string[5,32]
    * 描述：
-   *  body商户系统内部的商家批次单号，在商户系统内部唯一。需要电子回单的批次单号
+   *  body商户系统内部的商户转账单号，在商户系统内部唯一。兼容旧字段out_batch_no
    * 示例值：plfk2020042013
    * </pre>
    */
-  @SerializedName("out_batch_no")
+  @SerializedName(value = "out_bill_no", alternate = {"out_batch_no"})
   private String outBatchNo;
 }

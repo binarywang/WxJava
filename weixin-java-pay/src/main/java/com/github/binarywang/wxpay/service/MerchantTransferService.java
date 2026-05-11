@@ -91,8 +91,8 @@ public interface MerchantTransferService {
    * 转账电子回单申请受理API
    * <p>
    * 适用对象：直连商户
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_7.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012716452
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no
    * 请求方式：POST
    * 接口限频： 单个商户 20QPS，如果超过频率限制，会报错FREQUENCY_LIMITED，请降低频率请求。
    *
@@ -106,15 +106,15 @@ public interface MerchantTransferService {
    * 查询转账电子回单API
    * <p>
    * 适用对象：直连商户
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/apis/chapter4_3_8.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt/{out_batch_no}
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012716436
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no/{out_bill_no}
    * 请求方式：GET
    *
-   * @param outBatchNo the out batch no
+   * @param outBillNo 商户转账单号
    * @return electronic bill result
    * @throws WxPayException the wx pay exception
    */
-  ElectronicBillResult queryElectronicBill(String outBatchNo) throws WxPayException;
+  ElectronicBillResult queryElectronicBill(String outBillNo) throws WxPayException;
 
   /**
    * 转账明细电子回单受理API

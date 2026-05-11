@@ -79,7 +79,7 @@ public class WxPayMultiServicesImpl implements WxPayMultiServices {
     payConfig.setPrivateKeyPath(StringUtils.trimToNull(properties.getPrivateKeyPath()));
     payConfig.setPrivateCertPath(StringUtils.trimToNull(properties.getPrivateCertPath()));
     payConfig.setCertSerialNo(StringUtils.trimToNull(properties.getCertSerialNo()));
-    payConfig.setApiV3Key(StringUtils.trimToNull(properties.getApiv3Key()));
+    payConfig.setApiV3Key(StringUtils.trimToNull(properties.getApiV3Key()));
     payConfig.setPublicKeyId(StringUtils.trimToNull(properties.getPublicKeyId()));
     payConfig.setPublicKeyPath(StringUtils.trimToNull(properties.getPublicKeyPath()));
     payConfig.setApiHostUrl(StringUtils.trimToNull(properties.getApiHostUrl()));
