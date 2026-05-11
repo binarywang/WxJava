@@ -103,7 +103,7 @@ public interface PartnerTransferService {
    * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no
    * 请求方式：POST
    *
-   * @param request 商家批次单号
+   * @param request 商户转账单号
    * @return 返回数据 fund balance result
    * @throws WxPayException the wx pay exception
    */
