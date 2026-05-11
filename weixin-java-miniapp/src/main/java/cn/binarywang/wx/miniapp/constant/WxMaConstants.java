@@ -265,6 +265,11 @@ public class WxMaConstants {
     public static final String GOODS_DELIVER = "xpay_goods_deliver_notify";
     public static final String REFUND = "xpay_refund_notify";
     public static final String COMPLAINT = "xpay_complaint_notify";
+    /**
+     * 虚拟支付 iOS 退款查询通知.
+     * 文档：https://developers.weixin.qq.com/miniprogram/dev/platform-capabilities/business-capabilities/virtual-payment/ios.html
+     */
+    public static final String IOS_REFUND_QUERY = "xpay_subscribe_ios_refund_query_notify";
 
   }
   @UtilityClass

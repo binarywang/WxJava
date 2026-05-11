@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayTeamInfo;
+import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import me.chanjar.weixin.common.api.WxConsts;
 import org.testng.annotations.Test;
 
@@ -513,7 +514,7 @@ public class WxMaMessageTest {
     assertEquals(msg.getFromUser(), "oABCDEFG");
     assertEquals(msg.getCreateTime(), new Integer(1700001000));
     assertEquals(msg.getMsgType(), WxConsts.XmlMsgType.EVENT);
-    assertEquals(msg.getEvent(), WxConsts.EventType.XPAY_SUBSCRIBE_IOS_REFUND_QUERY_NOTIFY);
+    assertEquals(msg.getEvent(), WxMaConstants.XPayNotifyEvent.IOS_REFUND_QUERY);
     assertEquals(msg.getRefundTime(), "1700000900");
     assertEquals(msg.getOrderTime(), "1699990000");
     assertEquals(msg.getChannelBill(), "apple_bill_001");
