@@ -38,7 +38,7 @@ public class BillReceiptResult implements Serializable {
    *  示例值：plfk2020042013
    * </pre>
    */
-  @SerializedName(value = "out_batch_no")
+  @SerializedName(value = "out_bill_no", alternate = {"out_batch_no"})
   private String outBatchNo;
 
   /**
@@ -68,7 +68,7 @@ public class BillReceiptResult implements Serializable {
    *     示例值：ACCEPTED
    * </pre>
    */
-  @SerializedName(value = "signature_status")
+  @SerializedName(value = "state", alternate = {"signature_status"})
   private String signatureStatus;
 
   /**

@@ -33,6 +33,6 @@ public class ElectronicBillApplyRequest implements Serializable {
    * 示例值：plfk2020042013
    * </pre>
    */
-  @SerializedName("out_batch_no")
+  @SerializedName(value = "out_bill_no", alternate = {"out_batch_no"})
   private String outBatchNo;
 }

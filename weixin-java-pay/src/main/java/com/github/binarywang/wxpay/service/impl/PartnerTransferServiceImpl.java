@@ -196,7 +196,7 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public BillReceiptResult receiptBill(ReceiptBillRequest request) throws WxPayException {
-    String url = String.format("%s/v3/transfer/bill-receipt", this.payService.getPayBaseUrl());
+    String url = String.format("%s/v3/fund-app/mch-transfer/elecsign/out-bill-no", this.payService.getPayBaseUrl());
     String response = this.payService.postV3(url, GSON.toJson(request));
     return GSON.fromJson(response, BillReceiptResult.class);
   }
@@ -216,7 +216,7 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    */
   @Override
   public BillReceiptResult queryBillReceipt(String outBatchNo) throws WxPayException {
-    String url = String.format("%s/v3/transfer/bill-receipt/%s", this.payService.getPayBaseUrl(), outBatchNo);
+    String url = String.format("%s/v3/fund-app/mch-transfer/elecsign/out-bill-no/%s", this.payService.getPayBaseUrl(), outBatchNo);
     String response = this.payService.getV3(url);
     return GSON.fromJson(response, BillReceiptResult.class);
   }

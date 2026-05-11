@@ -99,8 +99,8 @@ public interface PartnerTransferService {
    * 转账电子回单申请受理API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_1.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012716452
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no
    * 请求方式：POST
    *
    * @param request 商家批次单号
@@ -114,8 +114,8 @@ public interface PartnerTransferService {
    * 查询转账电子回单API
    * 接口说明
    * 适用对象：直连商户 服务商
-   * 文档详见: https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_2.shtml
-   * 请求URL：https://api.mch.weixin.qq.com/v3/transfer/bill-receipt/{out_batch_no}
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4012716436
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/elecsign/out-bill-no/{out_bill_no}
    * 请求方式：GET
    *
    * @param outBatchNo 商家批次单号
