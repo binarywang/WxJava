@@ -143,6 +143,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final MiPayService miPayService = new MiPayServiceImpl(this);
 
+  @Getter
+  private final MerchantLimitationService merchantLimitationService = new MerchantLimitationServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
   @Override

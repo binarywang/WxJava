@@ -401,6 +401,13 @@ public interface WxPayService {
   void setEntPayService(EntPayService entPayService);
 
   /**
+   * 获取商户被管控能力及原因查询接口
+   *
+   * @return MerchantLimitationService
+   */
+  MerchantLimitationService getMerchantLimitationService();
+
+  /**
    * <pre>
    * 查询订单.
    * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
