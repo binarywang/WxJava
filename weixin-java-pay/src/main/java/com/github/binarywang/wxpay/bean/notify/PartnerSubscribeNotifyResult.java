@@ -32,35 +32,56 @@ public class PartnerSubscribeNotifyResult implements Serializable,
   @NoArgsConstructor
   public static class DecryptNotifyResult implements Serializable {
     private static final long serialVersionUID = 1L;
-    /**
-     * 商户号
-     */
-    @SerializedName("merchant_code")
-    private String merchantCode;
-    /**
-     * 商户全称
-     */
-    @SerializedName("merchant_company_name")
-    private String merchantCompanyName;
-    /**
-     * 业务发生时间
-     */
-    @SerializedName("business_time")
-    private String businessTime;
-    /**
-     * 业务单据
-     */
-    @SerializedName("business_code")
-    private String businessCode;
-    /**
-     * 业务状态
-     */
-    @SerializedName("business_state")
-    private String businessState;
-    /**
-     * 备注
-     */
-    @SerializedName("remark")
-    private String remark;
+
+    @SerializedName("message_content")
+    private MessageContent messageContent;
+    @SerializedName("topic_name")
+    private TopicName topicName;
+
+    @Data
+    @NoArgsConstructor
+    public static class MessageContent implements Serializable {
+      private static final long serialVersionUID = 1L;
+      /**
+       * 商户号
+       */
+      @SerializedName("merchant_code")
+      private String merchantCode;
+      /**
+       * 商户全称
+       */
+      @SerializedName("merchant_company_name")
+      private String merchantCompanyName;
+      /**
+       * 业务发生时间
+       */
+      @SerializedName("business_time")
+      private String businessTime;
+      /**
+       * 业务单据
+       */
+      @SerializedName("business_code")
+      private String businessCode;
+      /**
+       * 业务状态
+       */
+      @SerializedName("business_state")
+      private String businessState;
+      /**
+       * 备注
+       */
+      @SerializedName("remark")
+      private String remark;
+    }
+
+    @Data
+    @NoArgsConstructor
+    public static class TopicName implements Serializable {
+      private static final long serialVersionUID = 1L;
+      @SerializedName("topic_english_name")
+      private String topicEnglishName;
+      @SerializedName("topic_chinese_name")
+      private String topicChineseName;
+    }
   }
 }
