@@ -2,6 +2,8 @@ package com.github.binarywang.wxpay.config;
 
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
+
 /**
  * <pre>
  *  Created by BinaryWang on 2017/6/18.
@@ -36,6 +38,15 @@ public class WxPayConfigTest {
   @SuppressWarnings("ResultOfMethodCallIgnored")
   public void testHashCode() {
     payConfig.hashCode();
+  }
+
+  @Test
+  public void testApiHostUrlPath() {
+    payConfig.setApiHostUrl("http://10.0.0.1:3128/");
+    payConfig.setApiHostUrlPath("api-weixin/");
+    assertEquals(payConfig.getApiHostUrl(), "http://10.0.0.1:3128");
+    assertEquals(payConfig.getApiHostUrlPath(), "/api-weixin");
+    assertEquals(payConfig.getApiHostWithPathPrefix(), "http://10.0.0.1:3128/api-weixin");
   }
 
   @Test

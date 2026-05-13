@@ -401,6 +401,13 @@ public interface WxPayService {
   void setEntPayService(EntPayService entPayService);
 
   /**
+   * 获取商户被管控能力及原因查询接口
+   *
+   * @return MerchantLimitationService
+   */
+  MerchantLimitationService getMerchantLimitationService();
+
+  /**
    * <pre>
    * 查询订单.
    * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2
@@ -1163,6 +1170,16 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayPartnerRefundNotifyV3Result parsePartnerRefundNotifyV3Result(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 解析合作伙伴订阅通知
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据
+   * @return 合作伙伴订阅通知
+   * @throws WxPayException the wx pay exception
+   */
+  PartnerSubscribeNotifyResult parsePartnerSubscribeNotify(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * 解析扫码支付回调通知

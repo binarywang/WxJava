@@ -300,18 +300,24 @@ public interface WxCpConfigStorage {
   void updateMsgAuditAccessToken(String accessToken, int expiresInSeconds);
 
   /**
-   * 获取会话存档SDK
-   * 会话存档SDK初始化后有效期为7200秒，无需每次重新初始化
+   * 获取会话存档SDK（历史接口）。
+   * <p>历史实现中，会话存档 SDK 初始化后有效期为 7200 秒，由 ConfigStorage 负责维护；
+   * 该语义现已废弃，不再保证。</p>
    *
-   * @return sdk id，如果未初始化或已过期返回0
+   * @return sdk id；历史实现中如果未初始化或已过期返�� 0，当前实现仅为兼容旧代码保留此方法
+   * @deprecated SDK 生命周期已改由 {@link me.chanjar.weixin.cp.api.WxCpMsgAuditService} 内部的 ThreadLocal
+   *             模式管理，不再依赖 ConfigStorage 缓存。请迁移至新接口。
    */
+  @Deprecated
   long getMsgAuditSdk();
 
   /**
    * 检查会话存档SDK是否已过期
    *
    * @return true: 已过期, false: 未过期
+   * @deprecated SDK 生命周期已改由 ThreadLocal 模式管理，过期检查不再必要。
    */
+  @Deprecated
   boolean isMsgAuditSdkExpired();
 
   /**
@@ -319,12 +325,17 @@ public interface WxCpConfigStorage {
    *
    * @param sdk             sdk id
    * @param expiresInSeconds 过期时间（秒）
+   * @deprecated SDK 生命周期已改由 ThreadLocal 模式管理，无需通过 ConfigStorage 更新。
    */
+  @Deprecated
   void updateMsgAuditSdk(long sdk, int expiresInSeconds);
 
   /**
    * 使会话存档SDK过期
+   *
+   * @deprecated SDK 生命周期已改由 ThreadLocal 模式管理，此方法已无实际作用。
    */
+  @Deprecated
   void expireMsgAuditSdk();
 
   /**
@@ -333,7 +344,9 @@ public interface WxCpConfigStorage {
    *
    * @param sdk sdk id
    * @return 增加后的引用计数，如果SDK不匹配返回-1
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   int incrementMsgAuditSdkRefCount(long sdk);
 
   /**
@@ -342,7 +355,9 @@ public interface WxCpConfigStorage {
    *
    * @param sdk sdk id
    * @return 减少后的引用计数，如果返回0表示SDK已被销毁，如果SDK不匹配返回-1
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   int decrementMsgAuditSdkRefCount(long sdk);
 
   /**
@@ -350,7 +365,9 @@ public interface WxCpConfigStorage {
    *
    * @param sdk sdk id
    * @return 当前引用计数，如果SDK不匹配返回-1
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   int getMsgAuditSdkRefCount(long sdk);
 
   /**
@@ -359,7 +376,9 @@ public interface WxCpConfigStorage {
    * 此方法用于在获取SDK后立即增加引用计数，避免并发问题
    *
    * @return 当前有效的SDK id并已增加引用计数，如果SDK无效返回0
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   long acquireMsgAuditSdk();
 
   /**
@@ -367,6 +386,8 @@ public interface WxCpConfigStorage {
    * 此方法确保引用计数递减和SDK检查在同一个同步块内完成
    *
    * @param sdk sdk id
+   * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
+  @Deprecated
   void releaseMsgAuditSdk(long sdk);
 }

@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 转账电子回单申请受理API
  * <pre>
- * 文档地址:https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pay/transfer/chapter4_1.shtml
+ * 文档地址:https://pay.weixin.qq.com/doc/v3/merchant/4012716452
  * </pre>
  *
  * @author xiaoqiang
@@ -21,15 +21,15 @@ public class ReceiptBillRequest implements Serializable {
   private static final long serialVersionUID = 1L;
   /**
    * <pre>
-   * 字段名：商家批次单号
-   * 变量名：out_batch_no
+   * 字段名：商户转账单号
+   * 变量名：out_bill_no
    * 是否必填：是
    * 类型：string[5, 32]
    * 描述：
-   *  body商户系统内部的商家批次单号，在商户系统内部唯一。需要电子回单的批次单号
+   *  body商户系统内部的商户转账单号，在商户系统内部唯一。兼容旧字段out_batch_no
    *  示例值：plfk2020042013
    * </pre>
    */
-  @SerializedName(value = "out_batch_no")
+  @SerializedName(value = "out_bill_no", alternate = {"out_batch_no"})
   private String outBatchNo;
 }

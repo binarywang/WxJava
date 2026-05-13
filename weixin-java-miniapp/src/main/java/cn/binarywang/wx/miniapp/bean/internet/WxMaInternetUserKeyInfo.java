@@ -44,7 +44,7 @@ public class WxMaInternetUserKeyInfo implements Serializable {
   private Long expireIn;
 
   /**
-   * 加密iv
+   * 加密iv（Hex 编码，通常为 32 位十六进制字符，解码后为 16 字节，用于 AES-128-CBC）
    */
   private String iv;
 

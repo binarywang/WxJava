@@ -18,6 +18,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,13 @@ public abstract class AbstractWxCpConfiguration {
     /**
      * 校验同一个企业下，agentId 是否唯一，避免使用 redis 缓存 token、ticket 时错乱。
      *
+     * <p>同一企业（corpId 相同）下可配置多个条目以使用不同的权限 Secret，例如：</p>
+     * <ul>
+     *   <li>自建应用条目：填写应用对应的 corpSecret 和 agentId</li>
+     *   <li>通讯录同步条目：填写通讯录同步 Secret，agentId 可不填（null）</li>
+     * </ul>
+     * <p>但同一 corpId 下不允许出现重复的 agentId（包括多个 null）。</p>
+     *
      * 查看 {@link me.chanjar.weixin.cp.config.impl.AbstractWxCpInRedisConfigImpl#setAgentId(Integer)}
      */
     Collection<WxCpSingleProperties> corpList = corps.values();
@@ -52,8 +60,8 @@ public abstract class AbstractWxCpConfiguration {
         String corpId = entry.getKey();
         // 校验每个企业下，agentId 是否唯一
         boolean multi = entry.getValue().stream()
-          // 通讯录没有 agentId，如果不判断是否为空，这里会报 NPE 异常
-          .collect(Collectors.groupingBy(c -> c.getAgentId() == null ? 0 : c.getAgentId(), Collectors.counting()))
+          // 通讯录没有 agentId，使用字符串转换避免 null 与 agentId=0 冲突
+          .collect(Collectors.groupingBy(c -> Objects.toString(c.getAgentId(), "null"), Collectors.counting()))
           .entrySet().stream().anyMatch(e -> e.getValue() > 1);
         if (multi) {
           throw new RuntimeException("请确保企业微信配置唯一性[" + corpId + "]");

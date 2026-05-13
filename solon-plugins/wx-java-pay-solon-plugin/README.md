@@ -23,6 +23,8 @@ wx:
   pay:
     appId: xxxxxxxxxxx
     mchId: 15xxxxxxxxx #商户id
+    apiHostUrl: http://10.0.0.1:3128 # 可选：代理主机
+    apiHostUrlPath: /api-weixin # 可选：代理入口前缀
     apiV3Key: Dc1DBwSc094jACxxxxxxxxxxxxxxx #V3密钥
     certSerialNo: 62C6CEAA360BCxxxxxxxxxxxxxxx
     privateKeyPath: classpath:cert/apiclient_key.pem #apiclient_key.pem证书文件的绝对路径或者以classpath:开头的类路径

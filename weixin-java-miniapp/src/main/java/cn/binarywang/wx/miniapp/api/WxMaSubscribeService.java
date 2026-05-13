@@ -1,5 +1,9 @@
 package cn.binarywang.wx.miniapp.api;
 
+import cn.binarywang.wx.miniapp.bean.WxMaGetUserNotifyRequest;
+import cn.binarywang.wx.miniapp.bean.WxMaGetUserNotifyResult;
+import cn.binarywang.wx.miniapp.bean.WxMaServiceNotifyExtRequest;
+import cn.binarywang.wx.miniapp.bean.WxMaServiceNotifyRequest;
 import cn.binarywang.wx.miniapp.bean.WxMaSubscribeMessage;
 import me.chanjar.weixin.common.bean.subscribemsg.CategoryData;
 import me.chanjar.weixin.common.bean.subscribemsg.PubTemplateKeyword;
@@ -112,5 +116,45 @@ public interface WxMaSubscribeService {
    * @throws WxErrorException .
    */
   void sendSubscribeMsg(WxMaSubscribeMessage subscribeMessage) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 激活与更新服务卡片
+   *
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/mp-message-management/subscribe-message/api_setusernotify.html">激活与更新服务卡片</a>
+   * 接口url格式: POST https://api.weixin.qq.com/wxa/setusernotify?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param request 请求参数
+   * @throws WxErrorException .
+   */
+  void setUserNotify(WxMaServiceNotifyRequest request) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 更新服务卡片扩展信息
+   *
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/mp-message-management/subscribe-message/api_setusernotifyext.html">更新服务卡片扩展信息</a>
+   * 接口url格式: POST https://api.weixin.qq.com/wxa/setusernotifyext?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param request 请求参数
+   * @throws WxErrorException .
+   */
+  void setUserNotifyExt(WxMaServiceNotifyExtRequest request) throws WxErrorException;
+
+  /**
+   * <pre>
+   * 查询服务卡片状态
+   *
+   * 详情请见: <a href="https://developers.weixin.qq.com/miniprogram/dev/server/API/mp-message-management/subscribe-message/api_getusernotify.html">查询服务卡片状态</a>
+   * 接口url格式: POST https://api.weixin.qq.com/wxa/getusernotify?access_token=ACCESS_TOKEN
+   * </pre>
+   *
+   * @param request 请求参数
+   * @return 服务卡片状态
+   * @throws WxErrorException .
+   */
+  WxMaGetUserNotifyResult getUserNotify(WxMaGetUserNotifyRequest request) throws WxErrorException;
 
 }

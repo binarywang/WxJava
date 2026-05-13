@@ -92,14 +92,15 @@ public class MerchantTransferServiceImpl implements MerchantTransferService {
 
   @Override
   public ElectronicBillResult applyElectronicBill(ElectronicBillApplyRequest request) throws WxPayException {
-    String url = String.format("%s/v3/transfer/bill-receipt", this.wxPayService.getPayBaseUrl());
+    String url = String.format("%s/v3/fund-app/mch-transfer/elecsign/out-bill-no", this.wxPayService.getPayBaseUrl());
     String response = wxPayService.postV3(url, GSON.toJson(request));
     return GSON.fromJson(response, ElectronicBillResult.class);
   }
 
   @Override
-  public ElectronicBillResult queryElectronicBill(String outBatchNo) throws WxPayException {
-    String url = String.format("%s/v3/transfer/bill-receipt/%s", this.wxPayService.getPayBaseUrl(), outBatchNo);
+  public ElectronicBillResult queryElectronicBill(String outBillNo) throws WxPayException {
+    String url = String.format("%s/v3/fund-app/mch-transfer/elecsign/out-bill-no/%s",
+      this.wxPayService.getPayBaseUrl(), outBillNo);
     String response = wxPayService.getV3(url);
     return GSON.fromJson(response, ElectronicBillResult.class);
   }

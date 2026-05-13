@@ -26,6 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
   "wx.pay.configs.app1.notify-url=https://example.com/pay/notify",
   "wx.pay.configs.app2.app-id=wx2222222222222222",
   "wx.pay.configs.app2.mch-id=2222222222",
+  "wx.pay.configs.app2.api-host-url=http://10.0.0.1:3128",
+  "wx.pay.configs.app2.api-host-url-path=/api-weixin",
   "wx.pay.configs.app2.apiv3-key=22222222222222222222222222222222",
   "wx.pay.configs.app2.cert-serial-no=2222222222222222",
   "wx.pay.configs.app2.private-key-path=classpath:cert/apiclient_key.pem",
@@ -57,7 +59,9 @@ public class WxPayMultiServicesTest {
     assertNotNull(app2Config, "app2 configuration should exist");
     assertEquals("wx2222222222222222", app2Config.getAppId());
     assertEquals("2222222222", app2Config.getMchId());
-    assertEquals("22222222222222222222222222222222", app2Config.getApiv3Key());
+    assertEquals("http://10.0.0.1:3128", app2Config.getApiHostUrl());
+    assertEquals("/api-weixin", app2Config.getApiHostUrlPath());
+    assertEquals("22222222222222222222222222222222", app2Config.getApiV3Key());
   }
 
   @Test
@@ -71,6 +75,7 @@ public class WxPayMultiServicesTest {
     assertNotNull(app2Service, "Should get WxPayService for app2");
     assertEquals("wx2222222222222222", app2Service.getConfig().getAppId());
     assertEquals("2222222222", app2Service.getConfig().getMchId());
+    assertEquals("/api-weixin", app2Service.getConfig().getApiHostUrlPath());
 
     // 测试相同key返回相同实例
     WxPayService app1ServiceAgain = wxPayMultiServices.getWxPayService("app1");

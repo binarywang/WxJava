@@ -18,29 +18,42 @@ public class WxCpHrEmployeeFieldInfo implements Serializable {
   private static final long serialVersionUID = 2593693598671765396L;
 
   /**
-   * 字段key.
+   * 字段ID.
    */
-  @SerializedName("field_key")
-  private String fieldKey;
+  @SerializedName("fieldid")
+  private Integer fieldId;
 
   /**
-   * 字段英文名称.
+   * 字段名称.
    */
-  @SerializedName("field_en_name")
-  private String fieldEnName;
-
-  /**
-   * 字段中文名称.
-   */
-  @SerializedName("field_zh_name")
-  private String fieldZhName;
+  @SerializedName("field_name")
+  private String fieldName;
 
   /**
    * 字段类型.
-   * 具体取值参见 {@link WxCpHrFieldType}
+   * 1: 文本
+   * 2: 单选/多选
+   * 3: 日期
    */
   @SerializedName("field_type")
   private Integer fieldType;
+
+  /**
+   * 是否必填.
+   */
+  @SerializedName("is_must")
+  private Boolean isMust;
+
+  /**
+   * 值类型.
+   * 1: 字符串
+   * 2: uint64
+   * 3: uint32
+   * 4: int64
+   * 5: mobile
+   */
+  @SerializedName("value_type")
+  private Integer valueType;
 
   /**
    * 获取字段类型枚举.
@@ -52,22 +65,79 @@ public class WxCpHrEmployeeFieldInfo implements Serializable {
   }
 
   /**
-   * 是否系统字段.
-   * 0: 否
-   * 1: 是
+   * 选项列表（单选/多选字段专用）.
    */
+  @SerializedName("option_list")
+  private List<Option> optionList;
+
+  /**
+   * 选项.
+   */
+  @Data
+  @NoArgsConstructor
+  public static class Option implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 选项ID.
+     */
+    @SerializedName("id")
+    private Integer id;
+
+    /**
+     * 选项值.
+     */
+    @SerializedName("value")
+    private String value;
+  }
+
+  // ===== 以下字段为兼容旧版本 =====
+
+  /**
+   * 字段key（兼容旧版本，实际API不返回此字段）.
+   * @deprecated 使用 fieldId 代替
+   */
+  @Deprecated
+  @SerializedName("field_key")
+  private String fieldKey;
+
+  /**
+   * 字段英文名称（兼容旧版本，实际API不返回此字段）.
+   * @deprecated 此字段在API响应中不存在
+   */
+  @Deprecated
+  @SerializedName("field_en_name")
+  private String fieldEnName;
+
+  /**
+   * 字段中文名称（兼容旧版本）.
+   * @deprecated 使用 fieldName 代替
+   */
+  @Deprecated
+  @SerializedName("field_zh_name")
+  private String fieldZhName;
+
+  /**
+   * 是否系统字段（兼容旧版本，实际API不返回此字段）.
+   * @deprecated 此字段在API响应中不存在
+   */
+  @Deprecated
   @SerializedName("is_sys")
   private Integer isSys;
 
   /**
-   * 字段详情.
+   * 字段详情（兼容旧版本）.
+   * @deprecated 使用 optionList 直接访问选项列表
    */
+  @Deprecated
   @SerializedName("field_detail")
   private FieldDetail fieldDetail;
 
   /**
-   * 字段详情.
+   * 字段详情（兼容旧版本）.
+   * @deprecated 使用 optionList 代替
    */
+  @Deprecated
   @Data
   @NoArgsConstructor
   public static class FieldDetail implements Serializable {
@@ -77,15 +147,17 @@ public class WxCpHrEmployeeFieldInfo implements Serializable {
      * 选项列表（单选/多选字段专用）.
      */
     @SerializedName("option_list")
-    private List<Option> optionList;
+    private List<OldOption> optionList;
   }
 
   /**
-   * 选项.
+   * 旧版选项（兼容旧版本）.
+   * @deprecated 使用 Option 代替
    */
+  @Deprecated
   @Data
   @NoArgsConstructor
-  public static class Option implements Serializable {
+  public static class OldOption implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**

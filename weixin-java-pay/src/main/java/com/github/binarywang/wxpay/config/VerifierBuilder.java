@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.PrivateKey;
 import java.security.PublicKey;
@@ -118,8 +120,19 @@ class VerifierBuilder {
     String certSerialNo, String mchId, String apiV3Key, PrivateKey merchantPrivateKey,
     WxPayHttpProxy wxPayHttpProxy, int certAutoUpdateTime, String payBaseUrl
   ) {
+    String signUriStripPrefix = null;
+    if (StringUtils.isNotBlank(payBaseUrl)) {
+      try {
+        String rawPath = new URI(payBaseUrl).getRawPath();
+        if (StringUtils.isNotBlank(rawPath) && !"/".equals(rawPath)) {
+          signUriStripPrefix = rawPath;
+        }
+      } catch (URISyntaxException ignored) {
+        // ignore
+      }
+    }
     return new AutoUpdateCertificatesVerifier(
-      new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey)),
+      new WxPayCredentials(mchId, new PrivateKeySigner(certSerialNo, merchantPrivateKey), signUriStripPrefix),
       apiV3Key.getBytes(StandardCharsets.UTF_8), certAutoUpdateTime,
       payBaseUrl, wxPayHttpProxy);
   }

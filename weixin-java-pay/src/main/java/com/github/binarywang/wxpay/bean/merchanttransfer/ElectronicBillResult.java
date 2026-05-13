@@ -24,16 +24,16 @@ public class ElectronicBillResult implements Serializable {
   private static final long serialVersionUID = 7528245102572829190L;
   /**
    * <pre>
-   * 字段名：商家批次单号
-   * 变量名：out_batch_no
+   * 字段名：商户转账单号
+   * 变量名：out_bill_no
    * 是否必填：是
    * 类型：string[5,32]
    * 描述：
-   *  body商户系统内部的商家批次单号，在商户系统内部唯一。需要电子回单的批次单号
+   *  body商户系统内部的商户转账单号，在商户系统内部唯一。兼容旧字段out_batch_no
    * 示例值：plfk2020042013
    * </pre>
    */
-  @SerializedName("out_batch_no")
+  @SerializedName(value = "out_bill_no", alternate = {"out_batch_no"})
   private String outBatchNo;
 
   /**
@@ -53,17 +53,18 @@ public class ElectronicBillResult implements Serializable {
   /**
    * <pre>
    * 字段名：电子回单状态
-   * 变量名：signature_status
+   * 变量名：state
    * 是否必填：否
    * 类型：string[1,10]
    * 描述：
    *  枚举值：
    * ACCEPTED:已受理，电子签章已受理成功
    * FINISHED:已完成。电子签章已处理完成
+   *  兼容旧字段signature_status
    * 示例值：ACCEPTED
    * </pre>
    */
-  @SerializedName("signature_status")
+  @SerializedName(value = "state", alternate = {"signature_status"})
   private String signatureStatus;
 
   /**

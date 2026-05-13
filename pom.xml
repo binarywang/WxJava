@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.8.2.B</version>
+  <version>4.8.3.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -127,6 +127,7 @@
     <module>weixin-java-channel</module>
     <module>spring-boot-starters</module>
     <module>solon-plugins</module>
+    <module>wx-java-bom</module>
     <!--module>weixin-java-osgi</module-->
   </modules>
 
@@ -138,6 +139,7 @@
     <httpclient.version>4.5.13</httpclient.version>
     <httpclient5.version>5.5.2</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
+    <bouncycastle.version>1.84</bouncycastle.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -335,7 +337,12 @@
       <dependency>
         <groupId>org.bouncycastle</groupId>
         <artifactId>bcpkix-jdk18on</artifactId>
-        <version>1.80</version>
+        <version>${bouncycastle.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk18on</artifactId>
+        <version>${bouncycastle.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
