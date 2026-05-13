@@ -33,7 +33,7 @@ public class AbstractWxCpInRedisConfigImplTest {
   }
 
   /**
-   * 测试当 Redis getExpire 抛出异常时，isAccessTokenExpired() 应返回 true（视为已过期）
+   * 测试当 Redis getExpire 抛出异常时，isAccessTokenExpired() 应返回 true（视为已过期），且不影响线程中断标志
    */
   @Test
   public void testIsAccessTokenExpiredWhenRedisThrowsException() {
@@ -43,25 +43,26 @@ public class AbstractWxCpInRedisConfigImplTest {
     boolean expired = config.isAccessTokenExpired();
 
     Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
-    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+    // 非中断相关异常不应影响线程中断标志
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "非中断异常时线程中断标志不应被改变");
   }
 
   /**
-   * 测试当线程中断状态已设置时，Redis 调用抛出异常，isAccessTokenExpired() 应处理并清除中断标志
+   * 测试当线程中断状态已设置时，Redis 调用抛出中断相关异常，isAccessTokenExpired() 应处理并清除中断标志
    */
   @Test
   public void testIsAccessTokenExpiredClearsInterruptedFlag() {
+    // 使用包含 InterruptedException cause 的异常，模拟 Lettuce 的 RedisCommandInterruptedException 行为
     Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
-      .thenThrow(new RuntimeException("Redis command interrupted"));
+      .thenThrow(new RuntimeException("wrapped", new InterruptedException("command interrupted")));
 
-    // 设置线程中断标志
     Thread.currentThread().interrupt();
     try {
       boolean expired = config.isAccessTokenExpired();
 
-      Assert.assertTrue(expired, "Redis异常时应将token视为已过期");
+      Assert.assertTrue(expired, "Redis中断异常时应将token视为已过期");
       // 中断标志应该被清除，允许后续操作正常进行
-      Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+      Assert.assertFalse(Thread.currentThread().isInterrupted(), "中断相关异常处理后线程中断标志应被清除");
     } finally {
       // 兜底清除当前线程的中断标志，避免影响后续测试用例
       Thread.interrupted();
@@ -94,7 +95,7 @@ public class AbstractWxCpInRedisConfigImplTest {
   }
 
   /**
-   * 测试当 Redis getExpire 抛出异常时，isJsapiTicketExpired() 应返回 true（视为已过期）
+   * 测试当 Redis getExpire 抛出异常时，isJsapiTicketExpired() 应返回 true（视为已过期），且不影响线程中断标志
    */
   @Test
   public void testIsJsapiTicketExpiredWhenRedisThrowsException() {
@@ -104,11 +105,11 @@ public class AbstractWxCpInRedisConfigImplTest {
     boolean expired = config.isJsapiTicketExpired();
 
     Assert.assertTrue(expired, "Redis异常时应将jsapi_ticket视为已过期");
-    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "非中断异常时线程中断标志不应被改变");
   }
 
   /**
-   * 测试当 Redis getExpire 抛出异常时，isAgentJsapiTicketExpired() 应返回 true（视为已过期）
+   * 测试当 Redis getExpire 抛出异常时，isAgentJsapiTicketExpired() 应返回 true（视为已过期），且不影响线程中断标志
    */
   @Test
   public void testIsAgentJsapiTicketExpiredWhenRedisThrowsException() {
@@ -118,7 +119,26 @@ public class AbstractWxCpInRedisConfigImplTest {
     boolean expired = config.isAgentJsapiTicketExpired();
 
     Assert.assertTrue(expired, "Redis异常时应将agent_jsapi_ticket视为已过期");
-    Assert.assertFalse(Thread.currentThread().isInterrupted(), "处理异常后线程中断标志应被清除");
+    Assert.assertFalse(Thread.currentThread().isInterrupted(), "非中断异常时线程中断标志不应被改变");
+  }
+
+  /**
+   * 测试当线程中断状态已设置时，Redis 调用抛出中断相关异常，isAgentJsapiTicketExpired() 应处理并清除中断标志
+   */
+  @Test
+  public void testIsAgentJsapiTicketExpiredClearsInterruptedFlag() {
+    Mockito.when(mockRedisOps.getExpire(Mockito.anyString()))
+      .thenThrow(new RuntimeException("wrapped", new InterruptedException("command interrupted")));
+
+    Thread.currentThread().interrupt();
+    try {
+      boolean expired = config.isAgentJsapiTicketExpired();
+
+      Assert.assertTrue(expired, "Redis中断异常时应将agent_jsapi_ticket视为已过期");
+      Assert.assertFalse(Thread.currentThread().isInterrupted(), "中断相关异常处理后线程中断标志应被清除");
+    } finally {
+      Thread.interrupted();
+    }
   }
 
   /**
