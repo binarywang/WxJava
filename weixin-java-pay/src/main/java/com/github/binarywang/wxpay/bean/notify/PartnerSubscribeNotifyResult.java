@@ -33,11 +33,20 @@ public class PartnerSubscribeNotifyResult implements Serializable,
   public static class DecryptNotifyResult implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 消息内容
+     */
     @SerializedName("message_content")
     private MessageContent messageContent;
+    /**
+     * 主题名称
+     */
     @SerializedName("topic_name")
     private TopicName topicName;
 
+    /**
+     * 消息内容
+     */
     @Data
     @NoArgsConstructor
     public static class MessageContent implements Serializable {
@@ -74,12 +83,21 @@ public class PartnerSubscribeNotifyResult implements Serializable,
       private String remark;
     }
 
+    /**
+     * 主题名称
+     */
     @Data
     @NoArgsConstructor
     public static class TopicName implements Serializable {
       private static final long serialVersionUID = 1L;
+      /**
+       * 主题英文名
+       */
       @SerializedName("topic_english_name")
       private String topicEnglishName;
+      /**
+       * 主题中文名
+       */
       @SerializedName("topic_chinese_name")
       private String topicChineseName;
     }
