@@ -56,9 +56,11 @@ public class WxMaXPayQueryOrderResponse extends WxMaBaseResponse implements Seri
     @SerializedName("token")
     private String token;
 
-    @SerializedName("leftFee")
-    private Long leftFee; //支付单类型时表示此单经过退款还剩余的金额，单位分
-    @SerializedName("wxOrderId")
+    /** 支付单类型时表示此单经过退款还剩余的金额，单位分 */
+    @SerializedName("left_fee")
+    private Long leftFee;
+    /** 微信内部单号 */
+    @SerializedName("wx_order_id")
     private String wxOrderId;
 
     /** 渠道单号，为用户微信支付详情页面上的商户单号 */
@@ -70,7 +72,14 @@ public class WxMaXPayQueryOrderResponse extends WxMaBaseResponse implements Seri
     /** 结算时间的秒级时间戳，大于0表示结算成功 */
     @SerializedName("sett_time")
     private Long settTime;
-    /** 结算状态：0-未开始结算 1-结算中 2-结算成功 3-待结算（与0相同） */
+    /**
+     * 结算状态：
+     * 0-未开始结算
+     * 1-结算中
+     * 2-结算成功
+     * 3-待结算（与0相同）
+     * 4-苹果iOS订单，Apple公司结算中
+     */
     @SerializedName("sett_state")
     private Integer settState;
     /** 虚拟支付技术服务费，单位为分；sett_state = 2时返回 */

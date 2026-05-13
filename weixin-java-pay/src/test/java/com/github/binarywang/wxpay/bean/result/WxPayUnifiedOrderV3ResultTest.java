@@ -2,6 +2,8 @@ package com.github.binarywang.wxpay.bean.result;
 
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.v3.util.SignUtils;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -200,9 +202,62 @@ public class WxPayUnifiedOrderV3ResultTest {
   }
 
   /**
-   * 测试getJsapiPayInfo方法的空值验证
+   * 测试JsapiResult序列化为JSON时，packageValue字段名应为package（兼容微信官方API要求）
    */
-  @Test(expectedExceptions = IllegalArgumentException.class, 
+  @Test
+  public void testJsapiResultJsonSerializationPackageFieldName() throws Exception {
+    String testPrepayId = "wx201410272009395522657a690389285100";
+    String testAppId = "wx8888888888888888";
+    KeyPair keyPair = generateKeyPair();
+    PrivateKey privateKey = keyPair.getPrivate();
+
+    WxPayUnifiedOrderV3Result.JsapiResult jsapiResult =
+      WxPayUnifiedOrderV3Result.getJsapiPayInfo(testPrepayId, testAppId, privateKey);
+
+    // 验证Java字段名仍为packageValue
+    Assert.assertEquals(jsapiResult.getPackageValue(), "prepay_id=" + testPrepayId);
+
+    // 验证JSON序列化后字段名为package（微信官方要求）
+    Gson gson = new Gson();
+    JsonObject jsonObject = gson.toJsonTree(jsapiResult).getAsJsonObject();
+    Assert.assertTrue(jsonObject.has("package"), "JSON中应该包含package字段");
+    Assert.assertFalse(jsonObject.has("packageValue"), "JSON中不应该包含packageValue字段");
+    Assert.assertEquals(jsonObject.get("package").getAsString(), "prepay_id=" + testPrepayId);
+  }
+
+  /**
+   * 测试AppResult序列化为JSON时，packageValue字段名应为package（兼容微信官方API要求）
+   */
+  @Test
+  public void testAppResultJsonSerializationPackageFieldName() throws Exception {
+    String testPrepayId = "wx201410272009395522657a690389285100";
+    String testAppId = "wx8888888888888888";
+    String testMchId = "1900000109";
+    KeyPair keyPair = generateKeyPair();
+    PrivateKey privateKey = keyPair.getPrivate();
+
+    WxPayUnifiedOrderV3Result.AppResult appResult =
+      WxPayUnifiedOrderV3Result.getAppPayInfo(testPrepayId, testAppId, testMchId, privateKey);
+
+    // 验证Java字段名仍为packageValue
+    Assert.assertEquals(appResult.getPackageValue(), "Sign=WXPay");
+
+    // 验证JSON序列化后字段名为package（微信官方要求）
+    Gson gson = new Gson();
+    JsonObject jsonObject = gson.toJsonTree(appResult).getAsJsonObject();
+    Assert.assertTrue(jsonObject.has("package"), "JSON中应该包含package字段");
+    Assert.assertFalse(jsonObject.has("packageValue"), "JSON中不应该包含packageValue字段");
+    Assert.assertEquals(jsonObject.get("package").getAsString(), "Sign=WXPay");
+    // 验证JSON序列化后partnerid和prepayid字段名为全小写（微信官方要求）
+    Assert.assertTrue(jsonObject.has("partnerid"), "JSON中应该包含partnerid字段");
+    Assert.assertFalse(jsonObject.has("partnerId"), "JSON中不应该包含驼峰的partnerId字段");
+    Assert.assertEquals(jsonObject.get("partnerid").getAsString(), testMchId);
+    Assert.assertTrue(jsonObject.has("prepayid"), "JSON中应该包含prepayid字段");
+    Assert.assertFalse(jsonObject.has("prepayId"), "JSON中不应该包含驼峰的prepayId字段");
+    Assert.assertEquals(jsonObject.get("prepayid").getAsString(), testPrepayId);
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class,
         expectedExceptionsMessageRegExp = "prepayId, appId 和 privateKey 不能为空")
   public void testGetJsapiPayInfoWithNullPrepayId() {
     WxPayUnifiedOrderV3Result.getJsapiPayInfo(null, "appId", null);

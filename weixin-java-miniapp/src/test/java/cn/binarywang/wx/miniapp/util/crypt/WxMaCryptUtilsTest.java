@@ -4,6 +4,7 @@ package cn.binarywang.wx.miniapp.util.crypt;
 import org.testng.annotations.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
  * <pre>
@@ -14,6 +15,11 @@ import static org.assertj.core.api.Assertions.assertThat;
  * @author <a href="https://github.com/binarywang">Binary Wang</a>
  */
 public class WxMaCryptUtilsTest {
+  // 模拟来自 getUserEncryptKey 接口返回的 encrypt_key（Base64，解码后 16 字节）
+  // 和 iv（Hex，32 位十六进制字符，解码后 16 字节，AES-128-CBC 要求）
+  private static final String ENCRYPT_KEY = "VI6BpyrK9XH4i4AIGe86tg==";
+  private static final String HEX_IV = "6003f73ec441c3866003f73ec441c386";
+
   @Test
   public void testDecrypt() {
     String sessionKey = "7MG7jbTToVVRWRXVA885rg==";
@@ -31,5 +37,99 @@ public class WxMaCryptUtilsTest {
 
     assertThat(WxMaCryptUtils.decrypt(sessionKey, encryptedData, ivStr))
       .isEqualTo(WxMaCryptUtils.decryptAnotherWay(sessionKey, encryptedData, ivStr));
+  }
+
+  /**
+   * 测试使用用户加密 key（来自小程序加密网络通道）进行加密和解密的对称性.
+   * encrypt_key 为 Base64 编码的 16 字节 AES-128 密钥，iv 为 Hex 编码的 16 字节初始向量。
+   */
+  @Test
+  public void testEncryptAndDecryptWithEncryptKey() {
+    String plainText = "{\"userId\":\"12345\",\"amount\":100}";
+
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, plainText);
+    assertThat(encrypted).isNotNull().isNotEmpty();
+
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, encrypted);
+    assertThat(decrypted).isEqualTo(plainText);
+  }
+
+  /**
+   * 测试加密网络通道的加解密对称性（不同明文）.
+   */
+  @Test
+  public void testEncryptDecryptSymmetryWithEncryptKey() {
+    String plainText = "hello miniprogram";
+
+    String encrypted = WxMaCryptUtils.encryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, plainText);
+    String decrypted = WxMaCryptUtils.decryptWithEncryptKey(ENCRYPT_KEY, HEX_IV, encrypted);
+    assertThat(decrypted).isEqualTo(plainText);
+  }
+
+  /**
+   * 测试 hexIv 为奇数长度时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testEncryptWithEncryptKeyInvalidHexIvOddLength() {
+    assertThatThrownBy(() -> WxMaCryptUtils.encryptWithEncryptKey(ENCRYPT_KEY, "abc", "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("长度必须为偶数");
+  }
+
+  /**
+   * 测试 hexIv 包含非十六进制字符时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testEncryptWithEncryptKeyInvalidHexIvNonHexChar() {
+    // 32 位但含非法字符 'z'
+    assertThatThrownBy(() -> WxMaCryptUtils.encryptWithEncryptKey(
+      ENCRYPT_KEY, "6003f73ec441c3866003f73ec441z386", "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("非法字符");
+  }
+
+  /**
+   * 测试 hexIv 解码后不足 16 字节（如仅 16 位 hex = 8 字节）时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testEncryptWithEncryptKeyShortHexIv() {
+    // 16 位 hex = 8 字节，不满足 AES-CBC 要求的 16 字节
+    assertThatThrownBy(() -> WxMaCryptUtils.encryptWithEncryptKey(
+      ENCRYPT_KEY, "6003f73ec441c386", "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("hexIv 解码后必须为 16 字节");
+  }
+
+  /**
+   * 测试 encryptKey 解码后不足 16 字节时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testEncryptWithEncryptKeyShortKey() {
+    // Base64 编码的 8 字节 key（不符合 AES-128 要求）
+    String shortKey = java.util.Base64.getEncoder().encodeToString(new byte[8]);
+    assertThatThrownBy(() -> WxMaCryptUtils.encryptWithEncryptKey(shortKey, HEX_IV, "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("encryptKey 解码后必须为 16 字节");
+  }
+
+  /**
+   * 测试 decryptWithEncryptKey 使用非法 hexIv 时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testDecryptWithEncryptKeyInvalidHexIv() {
+    assertThatThrownBy(() -> WxMaCryptUtils.decryptWithEncryptKey(ENCRYPT_KEY, "abc", "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("长度必须为偶数");
+  }
+
+  /**
+   * 测试 decryptWithEncryptKey encryptKey 长度不合法时，应抛出 IllegalArgumentException.
+   */
+  @Test
+  public void testDecryptWithEncryptKeyShortKey() {
+    String shortKey = java.util.Base64.getEncoder().encodeToString(new byte[8]);
+    assertThatThrownBy(() -> WxMaCryptUtils.decryptWithEncryptKey(shortKey, HEX_IV, "data"))
+      .isInstanceOf(IllegalArgumentException.class)
+      .hasMessageContaining("encryptKey 解码后必须为 16 字节");
   }
 }

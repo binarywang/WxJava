@@ -126,16 +126,16 @@ public class WxCpDefaultConfigImplMsgAuditSdkTest {
   }
 
   /**
-   * 验证：多线程场景下，多个并发调用的引用计数正确性
+   * 验证：多次 acquire/release 的引用计数正确性（串行验证）
    */
   @Test
-  public void testConcurrentRefCounting() throws Exception {
+  public void testMultipleAcquireAndReleaseSequential() throws Exception {
     long fakeSdk = 77777L;
     setField("msgAuditSdk", fakeSdk);
     setField("msgAuditSdkExpiresTime", System.currentTimeMillis() + VALID_EXPIRATION_TIME_OFFSET);
     setField("msgAuditSdkRefCount", 0);
 
-    // 模拟 3 个并发调用同时持有 SDK
+    // 三次 acquire，引用计数依次递增
     long sdk1 = config.acquireMsgAuditSdk();
     long sdk2 = config.acquireMsgAuditSdk();
     long sdk3 = config.acquireMsgAuditSdk();
@@ -145,7 +145,7 @@ public class WxCpDefaultConfigImplMsgAuditSdkTest {
     Assert.assertEquals(sdk3, fakeSdk);
     Assert.assertEquals((int) getField("msgAuditSdkRefCount"), 3, "应有 3 个引用");
 
-    // 逐一释放
+    // 逐一释放，SDK 未过期，不应被销毁
     config.releaseMsgAuditSdk(fakeSdk);
     Assert.assertEquals((int) getField("msgAuditSdkRefCount"), 2, "释放一个后应有 2 个引用");
     Assert.assertEquals((long) getField("msgAuditSdk"), fakeSdk, "SDK 仍有引用，不应被销毁");
@@ -200,5 +200,31 @@ public class WxCpDefaultConfigImplMsgAuditSdkTest {
 
     int wrongCount = config.getMsgAuditSdkRefCount(99L);
     Assert.assertEquals(wrongCount, -1, "SDK 不匹配时应返回 -1");
+  }
+
+  /**
+   * 验证：引用计数归零且 SDK 已过期时，releaseMsgAuditSdk 应尝试销毁 SDK
+   * 由于 Finance.DestroySdk 是原生方法，测试环境中不加载原生库时会抛出 UnsatisfiedLinkError，
+   * 但引用计数已在 Finance 调用前递减（可验证代码路径已进入销毁分支）。
+   * 当原生库可用时，应进一步断言 msgAuditSdk 和 msgAuditSdkExpiresTime 均被清零。
+   */
+  @Test
+  public void testReleaseMsgAuditSdkShouldDestroyWhenExpired() throws Exception {
+    long fakeSdk = 22222L;
+    // 设置已过期的 SDK，引用计数为 1
+    setField("msgAuditSdk", fakeSdk);
+    setField("msgAuditSdkExpiresTime", System.currentTimeMillis() - 1000L); // 已过期
+    setField("msgAuditSdkRefCount", 1);
+
+    try {
+      config.releaseMsgAuditSdk(fakeSdk);
+      // 原生库可用：断言字段已清零
+      Assert.assertEquals((long) getField("msgAuditSdk"), 0L, "过期且引用归零后 msgAuditSdk 应被清零");
+      Assert.assertEquals((long) getField("msgAuditSdkExpiresTime"), 0L, "过期时间应被清零");
+    } catch (UnsatisfiedLinkError e) {
+      // 测试环境未加载原生库：Finance.DestroySdk 被调用但抛出 UnsatisfiedLinkError
+      // 这证明代码路径正确进入了"过期时销毁 SDK"的分支，与"未过期时跳过销毁"的分支形成对比
+      Assert.assertEquals((int) getField("msgAuditSdkRefCount"), 0, "引用计数应已递减到 0（Finance 调用前完成）");
+    }
   }
 }

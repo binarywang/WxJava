@@ -120,6 +120,44 @@
 ### Maven 引用方式
 注意：最新版本（包括测试版）为 [![Maven Central](https://img.shields.io/maven-central/v/com.github.binarywang/wx-java.svg)](https://central.sonatype.com/artifact/com.github.binarywang/wx-java/versions)，以下为最新正式版。
 
+#### 方式一：使用 BOM 统一管理版本（推荐）
+
+如果同时使用多个 WxJava 模块，推荐通过 BOM 统一管理版本，无需为每个模块单独指定版本号。
+`wx-java-bom` 从 **4.8.3.B** 版本开始提供，请使用该版本或更高版本：
+
+```xml
+<properties>
+  <wx-java.version>4.8.3.B</wx-java.version>
+</properties>
+
+<dependencyManagement>
+  <dependencies>
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>wx-java-bom</artifactId>
+      <version>${wx-java.version}</version>
+      <type>pom</type>
+      <scope>import</scope>
+    </dependency>
+  </dependencies>
+</dependencyManagement>
+```
+
+之后直接引入所需模块，无需指定版本：
+
+```xml
+<dependency>
+  <groupId>com.github.binarywang</groupId>
+  <artifactId>weixin-java-mp</artifactId>
+</dependency>
+<dependency>
+  <groupId>com.github.binarywang</groupId>
+  <artifactId>weixin-java-pay</artifactId>
+</dependency>
+```
+
+#### 方式二：直接引用单个模块
+
 ```xml
 <dependency>
   <groupId>com.github.binarywang</groupId>

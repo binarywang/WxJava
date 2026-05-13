@@ -31,7 +31,7 @@ public class MainProductInfo implements Serializable {
    * 商品id
    */
   @JsonProperty("product_id")
-  private Integer productId;
+  private String productId;
 
   /**
    * 主品sku_id

@@ -21,10 +21,28 @@ public class WxCpHrEmployeeFieldDataResp extends WxCpBaseResp {
   private static final long serialVersionUID = 6593693598671765396L;
 
   /**
-   * 员工档案数据列表.
+   * 字段数据列表（API实际返回field_info）.
    */
-  @SerializedName("employee_field_list")
-  private List<WxCpHrEmployeeFieldData> employeeFieldList;
+  @SerializedName("field_info")
+  private List<WxCpHrEmployeeFieldData> fieldInfoList;
+
+  /**
+   * 员工档案数据列表（兼容旧版本方法名）.
+   * @deprecated 请使用 getFieldInfoList()
+   */
+  @Deprecated
+  public List<WxCpHrEmployeeFieldData> getEmployeeFieldList() {
+    return this.fieldInfoList;
+  }
+
+  /**
+   * 员工档案数据列表（兼容旧版本方法名）.
+   * @deprecated 请使用 setFieldInfoList()
+   */
+  @Deprecated
+  public void setEmployeeFieldList(List<WxCpHrEmployeeFieldData> employeeFieldList) {
+    this.fieldInfoList = employeeFieldList;
+  }
 
   /**
    * From json wx cp hr employee field data resp.

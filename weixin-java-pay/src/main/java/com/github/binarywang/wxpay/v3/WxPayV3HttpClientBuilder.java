@@ -16,6 +16,10 @@ public class WxPayV3HttpClientBuilder extends HttpClientBuilder {
   private Credentials credentials;
   private Validator validator;
   /**
+   * 签名前从请求 URI Path 中移除的前缀（用于带路径前缀的代理场景）
+   */
+  private String signUriStripPrefix;
+  /**
    * 额外受信任的主机列表，用于代理转发场景：对这些主机的请求也会携带微信支付 Authorization 头
    */
   private final Set<String> trustedHosts = new HashSet<>();
@@ -40,12 +44,30 @@ public class WxPayV3HttpClientBuilder extends HttpClientBuilder {
 
   public WxPayV3HttpClientBuilder withMerchant(String merchantId, String serialNo, PrivateKey privateKey) {
     this.credentials =
-        new WxPayCredentials(merchantId, new PrivateKeySigner(serialNo, privateKey));
+        new WxPayCredentials(merchantId, new PrivateKeySigner(serialNo, privateKey), this.signUriStripPrefix);
     return this;
   }
 
   public WxPayV3HttpClientBuilder withCredentials(Credentials credentials) {
     this.credentials = credentials;
+    if (this.credentials instanceof WxPayCredentials) {
+      ((WxPayCredentials) this.credentials).setSignUriStripPrefix(this.signUriStripPrefix);
+    }
+    return this;
+  }
+
+  /**
+   * 配置签名前需要移除的 URI Path 前缀.
+   * 例如设置为 "/api-weixin" 时，签名串中的 Path 会从 "/api-weixin/v3/..." 调整为 "/v3/..."。
+   *
+   * @param signUriStripPrefix 需要移除的前缀
+   * @return 当前 Builder 实例
+   */
+  public WxPayV3HttpClientBuilder withSignUriStripPrefix(String signUriStripPrefix) {
+    this.signUriStripPrefix = signUriStripPrefix;
+    if (this.credentials instanceof WxPayCredentials) {
+      ((WxPayCredentials) this.credentials).setSignUriStripPrefix(signUriStripPrefix);
+    }
     return this;
   }
 

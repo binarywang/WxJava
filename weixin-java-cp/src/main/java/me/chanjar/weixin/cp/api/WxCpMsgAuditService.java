@@ -215,4 +215,20 @@ public interface WxCpMsgAuditService {
    */
   WxCpAgreeInfo checkSingleAgree(@NonNull WxCpCheckAgreeRequest checkAgreeRequest) throws WxErrorException;
 
+  /**
+   * 关闭当前线程持有的SDK，释放本地资源。
+   * <p>
+   * 在线程池场景下，任务结束后必须在 finally 块中调用此方法，防止SDK实例随线程复用而泄漏。
+   * 独立线程或一次性任务也建议调用，以主动释放原生资源。
+   */
+  void closeThreadLocalSdk();
+
+  /**
+   * 关闭所有会话存档SDK实例，释放全部原生资源。
+   * <p>
+   * 适用于应用关闭阶段（如 Spring Bean 销毁阶段 {@code @PreDestroy} 或 Shutdown Hook）。
+   * 调用后，所有线程的SDK均不可再使用。
+   */
+  void closeAllSdks();
+
 }
