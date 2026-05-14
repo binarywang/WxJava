@@ -86,6 +86,24 @@ public class WxPayRefundV3Request implements Serializable {
   private String notifyUrl;
   /**
    * <pre>
+   * 字段名：退款资金来源
+   * 变量名：funds_account
+   * 是否必填：否
+   * 类型：string[1, 32]
+   * 描述：
+   *  若传递此参数则使用对应的资金账户退款，否则默认使用未结算资金退款（仅对老资金流商户适用）
+   *  示例值：
+   *    UNSETTLED : 未结算资金
+   *    AVAILABLE : 可用余额
+   *    UNAVAILABLE : 不可用余额
+   *    OPERATION : 运营户
+   *    BASIC : 基本账户（含可用余额和不可用余额）
+   * </pre>
+   */
+  @SerializedName(value = "funds_account")
+  private String fundsAccount;
+  /**
+   * <pre>
    * 字段名：订单金额
    * 变量名：amount
    * 是否必填：是
@@ -152,6 +170,53 @@ public class WxPayRefundV3Request implements Serializable {
      */
     @SerializedName(value = "currency")
     private String currency;
+    /**
+     * <pre>
+     * 字段名：退款出资账户及金额
+     * 变量名：from
+     * 是否必填：否
+     * 类型：array
+     * 描述：
+     *  退款出资的账户类型及金额信息
+     * </pre>
+     */
+    @SerializedName(value = "from")
+    private List<From> from;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class From implements Serializable {
+    private static final long serialVersionUID = 1L;
+    /**
+     * <pre>
+     * 字段名：出资账户类型
+     * 变量名：account
+     * 是否必填：是
+     * 类型：string[1, 32]
+     * 描述：
+     *  下面枚举值多选一。
+     *  枚举值：
+     *  AVAILABLE : 可用余额
+     *  UNAVAILABLE : 不可用余额
+     *  示例值：AVAILABLE
+     * </pre>
+     */
+    @SerializedName(value = "account")
+    private String account;
+    /**
+     * <pre>
+     * 字段名：出资金额
+     * 变量名：amount
+     * 是否必填：是
+     * 类型：int
+     * 描述：
+     *  对应账户出资金额
+     *  示例值：444
+     * </pre>
+     */
+    @SerializedName(value = "amount")
+    private Integer amount;
   }
 
   @Data
