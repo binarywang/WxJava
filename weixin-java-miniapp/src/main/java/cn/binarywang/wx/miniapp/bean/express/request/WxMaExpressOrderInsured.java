@@ -30,7 +30,8 @@ public class WxMaExpressOrderInsured implements Serializable {
    * </pre>
    */
   @SerializedName("use_insured")
-  private final Integer useInsured = WxMaConstants.OrderAddInsured.INSURED_PROGRAM;
+  @Builder.Default
+  private Integer useInsured = WxMaConstants.OrderAddInsured.INSURED_PROGRAM;
 
   /**
    * 保价金额
@@ -41,6 +42,6 @@ public class WxMaExpressOrderInsured implements Serializable {
    */
   @SerializedName("insured_value")
   @Builder.Default
-  private final Integer insuredValue = WxMaConstants.OrderAddInsured.DEFAULT_INSURED_VALUE;
+  private Integer insuredValue = WxMaConstants.OrderAddInsured.DEFAULT_INSURED_VALUE;
 
 }
