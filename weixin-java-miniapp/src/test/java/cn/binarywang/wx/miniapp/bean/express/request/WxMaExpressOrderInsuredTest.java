@@ -41,4 +41,16 @@ public class WxMaExpressOrderInsuredTest {
     assertTrue(json.contains("\"use_insured\":1"));
     assertTrue(json.contains("\"insured_value\":5000"));
   }
+
+  @Test
+  public void testBuilderDefaultsWhenNoFieldSet() {
+    WxMaExpressOrderInsured insured = WxMaExpressOrderInsured.builder().build();
+
+    assertEquals(insured.getUseInsured(), Integer.valueOf(WxMaConstants.OrderAddInsured.INSURED_PROGRAM));
+    assertEquals(insured.getInsuredValue(), Integer.valueOf(WxMaConstants.OrderAddInsured.DEFAULT_INSURED_VALUE));
+
+    String json = WxMaGsonBuilder.create().toJson(insured);
+    assertTrue(json.contains("\"use_insured\":0"));
+    assertTrue(json.contains("\"insured_value\":0"));
+  }
 }
