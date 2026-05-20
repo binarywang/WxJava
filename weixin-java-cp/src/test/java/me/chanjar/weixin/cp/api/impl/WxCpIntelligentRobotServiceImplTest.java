@@ -119,4 +119,15 @@ public class WxCpIntelligentRobotServiceImplTest {
     assert response.getSessionId().equals("session123");
     assert response.getErrcode() == 0;
   }
+
+  @Test
+  public void testParseCallbackMessage() {
+    String callbackJson = "{\"msgid\":\"msg_1\",\"aibotid\":\"bot_1\",\"chattype\":\"single\","
+      + "\"from\":{\"userid\":\"user_1\"},\"msgtype\":\"text\",\"text\":{\"content\":\"hello\"}}";
+    WxCpIntelligentRobotMessage message = this.wxCpService.getIntelligentRobotService().parseCallbackMessage(callbackJson);
+    assert message.getMsgId().equals("msg_1");
+    assert message.getAiBotId().equals("bot_1");
+    assert message.getFrom().getUserid().equals("user_1");
+    assert message.getText().getContent().equals("hello");
+  }
 }

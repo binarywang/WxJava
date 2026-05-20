@@ -74,4 +74,12 @@ public interface WxCpIntelligentRobotService {
    */
   WxCpIntelligentRobotSendMessageResponse sendMessage(WxCpIntelligentRobotSendMessageRequest request) throws WxErrorException;
 
+  /**
+   * 解析智能机器人 API 模式回调消息.
+   *
+   * @param callbackMessageJson 回调消息JSON
+   * @return 解析后的回调消息对象
+   */
+  WxCpIntelligentRobotMessage parseCallbackMessage(String callbackMessageJson);
+
 }

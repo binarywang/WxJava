@@ -112,7 +112,8 @@ String fromUser = message.getFromUserName();   // 发送用户
 对于智能机器人 API 模式的 JSON 回调消息，可使用 `WxCpIntelligentRobotMessage` 解析：
 
 ```java
-WxCpIntelligentRobotMessage callbackMessage = WxCpIntelligentRobotMessage.fromJson(jsonBody);
+WxCpIntelligentRobotMessage callbackMessage =
+    robotService.parseCallbackMessage(jsonBody);
 String botId = callbackMessage.getAiBotId();
 String userId = callbackMessage.getFrom().getUserid();
 String msgType = callbackMessage.getMsgType();

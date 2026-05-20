@@ -67,4 +67,9 @@ public class WxCpIntelligentRobotServiceImpl implements WxCpIntelligentRobotServ
     return WxCpIntelligentRobotSendMessageResponse.fromJson(responseText);
   }
 
+  @Override
+  public WxCpIntelligentRobotMessage parseCallbackMessage(String callbackMessageJson) {
+    return WxCpIntelligentRobotMessage.fromJson(callbackMessageJson);
+  }
+
 }
