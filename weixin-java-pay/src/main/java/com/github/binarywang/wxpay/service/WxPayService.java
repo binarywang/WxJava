@@ -11,6 +11,7 @@ import com.github.binarywang.wxpay.bean.transfer.TransferBillsNotifyResult;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.constant.WxPayConstants;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.exception.WxSignTestException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpRequestBase;
 
@@ -1068,6 +1069,16 @@ public interface WxPayService {
    * @throws WxPayException the wx pay exception
    */
   WxPayOrderNotifyResult parseOrderNotifyResult(String xmlData, String signType) throws WxPayException;
+
+  /**
+   * 校验通知签名
+   *
+   * @param header 通知头信息
+   * @param data   通知数据
+   * @return true:校验通过 false:校验不通过
+   * @throws WxSignTestException 微信支付签名探测流量异常
+   */
+  boolean verifyNotifySign(SignatureHeader header, String data) throws WxSignTestException;
 
   /**
    * 解析支付结果v3通知. 直连商户模式

@@ -4,7 +4,7 @@ import com.github.binarywang.wxpay.bean.businesscircle.BusinessCircleNotifyData;
 import com.github.binarywang.wxpay.bean.businesscircle.PaidResult;
 import com.github.binarywang.wxpay.bean.businesscircle.PointsNotifyRequest;
 import com.github.binarywang.wxpay.bean.businesscircle.RefundResult;
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -52,10 +52,10 @@ public class BusinessCircleServiceImplTest {
   @Test
   public void testDecryptPaidNotifyDataResource() throws WxPayException {
     SignatureHeader header = new SignatureHeader();
-    header.setSerialNo("Wechatpay-Serial");
+    header.setSerial("Wechatpay-Serial");
     header.setTimeStamp("Wechatpay-Timestamp");
     header.setNonce("Wechatpay-Nonce");
-    header.setSigned("Wechatpay-Signature");
+    header.setSignature("Wechatpay-Signature");
     String data = "body";
     BusinessCircleNotifyData notifyData = wxPayService.getBusinessCircleService().parseNotifyData(data, header);
     PaidResult result = wxPayService.getBusinessCircleService().decryptPaidNotifyDataResource(notifyData);
@@ -66,10 +66,10 @@ public class BusinessCircleServiceImplTest {
   @Test
   public void testDecryptRefundNotifyDataResource() throws WxPayException {
     SignatureHeader header = new SignatureHeader();
-    header.setSerialNo("Wechatpay-Serial");
+    header.setSerial("Wechatpay-Serial");
     header.setTimeStamp("Wechatpay-Timestamp");
     header.setNonce("Wechatpay-Nonce");
-    header.setSigned("Wechatpay-Signature");
+    header.setSignature("Wechatpay-Signature");
     String data = "body";
     BusinessCircleNotifyData notifyData = wxPayService.getBusinessCircleService().parseNotifyData(data, header);
     RefundResult result = wxPayService.getBusinessCircleService().decryptRefundNotifyDataResource(notifyData);

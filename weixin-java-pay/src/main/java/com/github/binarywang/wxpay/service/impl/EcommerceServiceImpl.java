@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.service.impl;
 import com.github.binarywang.wxpay.bean.ecommerce.*;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.FundBillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.EcommerceService;
@@ -28,7 +29,6 @@ import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.text.DateFormat;
 import java.util.*;
@@ -83,7 +83,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+    if (Objects.nonNull(header) && !payService.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -129,7 +129,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+    if (Objects.nonNull(header) && !payService.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -318,7 +318,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public RefundNotifyResult parseRefundNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+    if (Objects.nonNull(header) && !payService.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -339,7 +339,7 @@ public class EcommerceServiceImpl implements EcommerceService {
 
   @Override
   public WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, notifyData)) {
+    if (Objects.nonNull(header) && !payService.verifyNotifySign(header, notifyData)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     NotifyResponse response = GSON.fromJson(notifyData, NotifyResponse.class);
@@ -489,22 +489,6 @@ public class EcommerceServiceImpl implements EcommerceService {
         return GSON.fromJson(result, AccountCancelApplicationsMediaResult.class);
       }
     }
-  }
-
-  /**
-   * 校验通知签名
-   *
-   * @param header 通知头信息
-   * @param data   通知数据
-   * @return true:校验通过 false:校验不通过
-   */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
-    String beforeSign = String.format("%s\n%s\n%s\n",
-      header.getTimeStamp(),
-      header.getNonce(),
-      data);
-    return payService.getConfig().getVerifier().verify(header.getSerialNo(),
-      beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
   }
 
   /**

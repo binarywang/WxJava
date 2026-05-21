@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.marketing.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.MarketingFavorService;
@@ -175,22 +175,9 @@ public class MarketingFavorServiceImpl implements MarketingFavorService {
     return GSON.fromJson(result, FavorStocksRestartResult.class);
   }
 
-  /**
-   * 校验通知签名
-   *
-   * @param header 通知头信息
-   * @param data   通知数据
-   * @return true:校验通过 false:校验不通过
-   */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
-    String beforeSign = String.format("%s\n%s\n%s\n", header.getTimeStamp(), header.getNonce(), data);
-    return payService.getConfig().getVerifier().verify(header.getSerialNo(),
-      beforeSign.getBytes(StandardCharsets.UTF_8), header.getSigned());
-  }
-
   @Override
   public UseNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, data)) {
+    if (Objects.nonNull(header) && !payService.verifyNotifySign(header, data)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     return GSON.fromJson(data, UseNotifyData.class);

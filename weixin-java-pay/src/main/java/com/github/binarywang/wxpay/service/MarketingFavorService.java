@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.marketing.*;
 import com.github.binarywang.wxpay.exception.WxPayException;
 

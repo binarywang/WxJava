@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.service;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.payscore.PartnerUserSignPlanEntity;
 import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreSignPlanRequest;
 import com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreSignPlanResult;

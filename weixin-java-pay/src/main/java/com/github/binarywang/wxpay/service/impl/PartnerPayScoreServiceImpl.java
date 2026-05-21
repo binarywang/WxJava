@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.payscore.*;
 import com.github.binarywang.wxpay.config.WxPayConfig;
 import com.github.binarywang.wxpay.exception.WxPayException;
@@ -316,7 +316,7 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
 
   @Override
   public PayScoreNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException {
-    if (Objects.nonNull(header) && !this.verifyNotifySign(header, data)) {
+    if (Objects.nonNull(header) && !this.payService.verifyNotifySign(header, data)) {
       throw new WxPayException("非法请求，头部信息验证失败");
     }
     return GSON.fromJson(data, PayScoreNotifyData.class);
@@ -334,21 +334,5 @@ public class PartnerPayScoreServiceImpl implements PartnerPayScoreService {
     } catch (GeneralSecurityException | IOException e) {
       throw new WxPayException("解析报文异常！", e);
     }
-  }
-
-  /**
-   * 校验通知签名
-   *
-   * @param header 通知头信息
-   * @param data   通知数据
-   * @return true:校验通过 false:校验不通过
-   */
-  private boolean verifyNotifySign(SignatureHeader header, String data) {
-    String beforeSign = String.format("%s\n%s\n%s\n", header.getTimeStamp(), header.getNonce(), data);
-    return this.payService.getConfig().getVerifier().verify(
-      header.getSerialNo(),
-      beforeSign.getBytes(StandardCharsets.UTF_8),
-      header.getSigned()
-    );
   }
 }
