@@ -16,7 +16,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.util.Objects;
 
@@ -38,7 +37,7 @@ public class BusinessCircleServiceImpl implements BusinessCircleService {
     this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
   }
 
-@Override
+  @Override
   public BusinessCircleNotifyData parseNotifyData(String data, SignatureHeader header) throws WxPayException {
     if (Objects.nonNull(header) && !this.payService.verifyNotifySign(header, data)) {
       throw new WxPayException("非法请求，头部信息验证失败");

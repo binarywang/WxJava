@@ -77,7 +77,7 @@ public interface EcommerceService {
    *
    * @param tradeType 支付方式
    * @param request   请求对象
-   * @return 微信合单支付返回 transactions result
+   * @return 微信合单支付返回 CombineTransactionsResult
    * @throws WxPayException the wx pay exception
    */
   CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
@@ -105,7 +105,7 @@ public interface EcommerceService {
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
-   * @return 解密后通知数据 combine transactions notify result
+   * @return 解密后通知数据 CombineNotifyResult
    * @throws WxPayException the wx pay exception
    */
   CombineNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
@@ -143,7 +143,7 @@ public interface EcommerceService {
    *
    * @param tradeType 支付方式
    * @param request   请求对象
-   * @return 调起支付需要的参数 transactions result
+   * @return 调起支付需要的参数 WxPayUnifiedOrderV3Result
    * @throws WxPayException the wx pay exception
    */
   WxPayUnifiedOrderV3Result unifiedPartnerOrder(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
@@ -171,7 +171,7 @@ public interface EcommerceService {
    *
    * @param notifyData 通知数据
    * @param header     通知头部数据，不传则表示不校验头
-   * @return 解密后通知数据 partner transactions notify result
+   * @return 解密后通知数据 WxPayPartnerNotifyV3Result
    * @throws WxPayException the wx pay exception
    */
   WxPayPartnerNotifyV3Result parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
