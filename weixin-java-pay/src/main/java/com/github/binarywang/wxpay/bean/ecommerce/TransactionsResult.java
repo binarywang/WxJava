@@ -1,6 +1,6 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
-import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.v3.util.SignUtils;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
@@ -109,7 +109,7 @@ public class TransactionsResult implements Serializable {
           //签名类型，默认为RSA，仅支持RSA。
           .setSignType("RSA").setPaySign(SignUtils.sign(jsapiResult.getSignStr(), privateKey));
         return (T) jsapiResult;
-      case MWEB:
+      case H5:
         return (T) this.h5Url;
       case APP:
         AppResult appResult = new AppResult();

@@ -4,7 +4,7 @@ import com.github.binarywang.wxpay.bean.businesscircle.BusinessCircleNotifyData;
 import com.github.binarywang.wxpay.bean.businesscircle.PaidResult;
 import com.github.binarywang.wxpay.bean.businesscircle.PointsNotifyRequest;
 import com.github.binarywang.wxpay.bean.businesscircle.RefundResult;
-import com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**

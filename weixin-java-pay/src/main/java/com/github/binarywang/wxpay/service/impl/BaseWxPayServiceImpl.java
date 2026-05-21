@@ -959,7 +959,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setSubMchId(this.getConfig().getSubMchId());
     }
 
-    String url = this.getPayBaseUrl() + tradeType.getBasePartnerUrl();
+    String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
     String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }
@@ -976,7 +976,7 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       request.setNotifyUrl(this.getConfig().getNotifyUrl());
     }
 
-    String url = this.getPayBaseUrl() + tradeType.getPartnerUrl();
+    String url = this.getPayBaseUrl() + tradeType.getMerchantUrl();
     String response = this.postV3WithWechatpaySerial(url, GSON.toJson(request));
     return GSON.fromJson(response, WxPayUnifiedOrderV3Result.class);
   }

@@ -3,7 +3,7 @@ package com.github.binarywang.wxpay.service;
 import com.github.binarywang.wxpay.bean.ecommerce.*;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.FundBillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
-import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 import java.io.File;

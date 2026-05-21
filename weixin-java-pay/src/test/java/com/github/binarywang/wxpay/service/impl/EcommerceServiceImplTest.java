@@ -3,7 +3,7 @@ import com.google.common.collect.Lists;
 
 import com.github.binarywang.wxpay.bean.ecommerce.*;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
-import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;

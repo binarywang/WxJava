@@ -29,9 +29,9 @@ public enum TradeTypeEnum {
   H5("/v3/pay/transactions/h5", "/v3/combine-transactions/h5", "/v3/pay/partner/transactions/h5");
 
   /**
-   * 单独下单url
+   * 直连商户支付url
    */
-  private final String partnerUrl;
+  private final String merchantUrl;
 
   /**
    * 合并下单url
@@ -39,7 +39,7 @@ public enum TradeTypeEnum {
   private final String combineUrl;
 
   /**
-   * 服务商下单
+   * 服务商支付url
    */
-  private final String basePartnerUrl;
+  private final String partnerUrl;
 }
