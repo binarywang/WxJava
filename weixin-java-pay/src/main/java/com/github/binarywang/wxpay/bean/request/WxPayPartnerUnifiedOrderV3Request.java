@@ -606,5 +606,19 @@ public class WxPayPartnerUnifiedOrderV3Request implements Serializable {
      */
     @SerializedName(value = "profit_sharing")
     private Boolean profitSharing;
+    /**
+     * <pre>
+     * 字段名：补差金额
+     * 变量名：subsidy_amount
+     * 是否必填：否
+     * 类型：int64
+     * 描述：
+     *  SettleInfo.profit_sharing为true时，该金额才生效。
+     *  注意：单笔订单最高补差金额为5000元
+     *  示例值：10
+     * </pre>
+     */
+    @SerializedName(value = "subsidy_amount")
+    private Integer subsidyAmount;
   }
 }

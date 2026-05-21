@@ -3,7 +3,14 @@ package com.github.binarywang.wxpay.service;
 import com.github.binarywang.wxpay.bean.ecommerce.*;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.FundBillTypeEnum;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.SpAccountTypeEnum;
+import com.github.binarywang.wxpay.bean.notify.CombineNotifyResult;
 import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
+import com.github.binarywang.wxpay.bean.notify.WxPayPartnerNotifyV3Result;
+import com.github.binarywang.wxpay.bean.request.*;
+import com.github.binarywang.wxpay.bean.result.CombineQueryResult;
+import com.github.binarywang.wxpay.bean.result.CombineTransactionsResult;
+import com.github.binarywang.wxpay.bean.result.WxPayPartnerOrderQueryV3Result;
+import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
@@ -73,7 +80,7 @@ public interface EcommerceService {
    * @return 微信合单支付返回 transactions result
    * @throws WxPayException the wx pay exception
    */
-  TransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+  CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -101,7 +108,7 @@ public interface EcommerceService {
    * @return 解密后通知数据 combine transactions notify result
    * @throws WxPayException the wx pay exception
    */
-  CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+  CombineNotifyResult parseCombineNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>
@@ -109,11 +116,23 @@ public interface EcommerceService {
    * <a href="https://pay.weixin.qq.com/doc/v3/partner/4012761049">接口文档</a>
    * </pre>
    *
-   * @param outTradeNo 合单商户订单号
+   * @param combineOutTradeNo 合单商户订单号
    * @return 支付订单信息
    * @throws WxPayException the wx pay exception
    */
-  CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException;
+  CombineQueryResult queryCombine(String combineOutTradeNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 合单关闭订单API
+   * 请求URL: https://api.mch.weixin.qq.com/v3/combine-transactions/out-trade-no/{combine_out_trade_no}/close
+   * <a href="https://pay.weixin.qq.com/doc/v3/partner/4012761093">接口文档</a>
+   * </pre>
+   *
+   * @param request 请求对象
+   * @throws WxPayException the wx pay exception
+   */
+  void closeCombine(CombineCloseRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -127,7 +146,7 @@ public interface EcommerceService {
    * @return 调起支付需要的参数 transactions result
    * @throws WxPayException the wx pay exception
    */
-  TransactionsResult partner(TradeTypeEnum tradeType, PartnerTransactionsRequest request) throws WxPayException;
+  WxPayUnifiedOrderV3Result unifiedPartnerOrder(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -142,7 +161,7 @@ public interface EcommerceService {
    * @return 调起支付需要的参数 t
    * @throws WxPayException the wx pay exception
    */
-  <T> T partnerTransactions(TradeTypeEnum tradeType, PartnerTransactionsRequest request) throws WxPayException;
+  <T> T createPartnerOrder(TradeTypeEnum tradeType, WxPayPartnerUnifiedOrderV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -155,7 +174,7 @@ public interface EcommerceService {
    * @return 解密后通知数据 partner transactions notify result
    * @throws WxPayException the wx pay exception
    */
-  PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+  WxPayPartnerNotifyV3Result parsePartnerNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
    * <pre>
@@ -167,7 +186,7 @@ public interface EcommerceService {
    * @return 支付订单信息
    * @throws WxPayException the wx pay exception
    */
-  PartnerTransactionsResult queryPartnerTransactions(PartnerTransactionsQueryRequest request) throws WxPayException;
+  WxPayPartnerOrderQueryV3Result queryPartnerOrder(WxPayPartnerOrderQueryV3Request request) throws WxPayException;
 
   /**
    * <pre>
@@ -175,11 +194,10 @@ public interface EcommerceService {
    * <a href="https://pay.weixin.qq.com/doc/v3/partner/4012760574">接口文档</a>
    * </pre>
    *
-   * @param request 关闭普通订单请求
+   * @param request 请求对象
    * @throws WxPayException the wx pay exception
-   * @return
    */
-  String closePartnerTransactions(PartnerTransactionsCloseRequest request) throws WxPayException;
+  void closePartnerOrder(WxPayPartnerOrderCloseV3Request request) throws WxPayException;
 
   /**
    * <pre>
