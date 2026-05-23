@@ -221,6 +221,7 @@
         <scope>import</scope>
       </dependency>
 
+      <!-- 仅做版本管理，scope 由各子模块在自身 dependencies 中声明，以避免覆盖下游项目依赖范围 -->
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
