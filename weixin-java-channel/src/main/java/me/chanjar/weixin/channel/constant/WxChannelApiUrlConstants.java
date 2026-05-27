@@ -27,9 +27,9 @@ public class WxChannelApiUrlConstants {
     /** 获取店铺基本信息 */
     String GET_SHOP_INFO = "https://api.weixin.qq.com/channels/ec/basics/info/get";
     /** 上传图片 */
-    String IMG_UPLOAD_URL = "https://api.weixin.qq.com/channels/ec/basics/img/upload";
+    String IMG_UPLOAD_URL = "https://api.weixin.qq.com/shop/ec/basics/img/upload";
     /** 上传资质图片 */
-    String UPLOAD_QUALIFICATION_FILE = "https://api.weixin.qq.com/channels/ec/basics/qualification/upload";
+    String UPLOAD_QUALIFICATION_FILE = "https://api.weixin.qq.com/shop/ec/basics/qualification/upload";
     /** 下载图片 */
     String GET_IMG_URL = "https://api.weixin.qq.com/channels/ec/basics/media/get";
     /** 获取地址编码 */
@@ -40,9 +40,9 @@ public class WxChannelApiUrlConstants {
   public interface Category {
 
     /** 获取所有的类目 */
-    String LIST_ALL_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/all";
+    String LIST_ALL_CATEGORY_URL = "https://api.weixin.qq.com/shop/ec/category/all";
     /** 获取类目详情 */
-    String GET_CATEGORY_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/category/detail";
+    String GET_CATEGORY_DETAIL_URL = "https://api.weixin.qq.com/shop/ec/category/detail";
     /** 获取可用的子类目详情 */
     String AVAILABLE_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/availablesoncategories/get";
     /** 上传类目资质 */
@@ -50,7 +50,7 @@ public class WxChannelApiUrlConstants {
     /** 获取类目审核结果 */
     String GET_CATEGORY_AUDIT_URL = "https://api.weixin.qq.com/channels/ec/category/audit/get";
     /** 取消类目提审 */
-    String CANCEL_CATEGORY_AUDIT_URL = "https://api.weixin.qq.com/channels/ec/category/audit/cancel";
+    String CANCEL_CATEGORY_AUDIT_URL = "https://api.weixin.qq.com/shop/ec/category/audit/cancel";
     /** 获取账号申请通过的类目和资质信息 */
     String LIST_PASS_CATEGORY_URL = "https://api.weixin.qq.com/channels/ec/category/list/get";
     /** 获取店铺的类目权限列表 */
@@ -103,13 +103,13 @@ public class WxChannelApiUrlConstants {
   public interface Brand {
 
     /** 获取品牌库列表 */
-    String ALL_BRAND_URL = "https://api.weixin.qq.com/channels/ec/brand/all";
+    String ALL_BRAND_URL = "https://api.weixin.qq.com/shop/ec/brand/all";
     /** 新增品牌资质 */
-    String ADD_BRAND_URL = "https://api.weixin.qq.com/channels/ec/brand/add";
+    String ADD_BRAND_URL = "https://api.weixin.qq.com/shop/ec/brand/add";
     /** 更新品牌资质 */
     String UPDATE_BRAND_URL = "https://api.weixin.qq.com/channels/ec/brand/update";
     /** 撤回品牌资质审核 */
-    String CANCEL_BRAND_AUDIT_URL = "https://api.weixin.qq.com/channels/ec/brand/audit/cancel";
+    String CANCEL_BRAND_AUDIT_URL = "https://api.weixin.qq.com/shop/ec/brand/audit/cancel";
     /** 删除品牌资质 */
     String DELETE_BRAND_URL = "https://api.weixin.qq.com/channels/ec/brand/delete";
     /** 获取品牌资质申请详情 */
