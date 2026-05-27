@@ -1,6 +1,12 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.merchanttransfer.*;
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchGetResult;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchRequest;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchResult;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferNotifyResult;
+import com.github.binarywang.wxpay.bean.transfer.UserAuthorizationStatusResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.MerchantTransferService;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -123,6 +129,42 @@ public class MerchantTransferServiceImpl implements MerchantTransferService {
 
     String response = wxPayService.getV3(url);
     return GSON.fromJson(response, DetailElectronicBillResult.class);
+  }
+
+  @Override
+  public UserAuthorizationStatusResult getUserAuthorizationStatus(String openid, String transferSceneId) throws WxPayException {
+    return this.wxPayService.getTransferService().getUserAuthorizationStatus(openid, transferSceneId);
+  }
+
+  @Override
+  public ReservationTransferBatchResult reservationTransferBatch(ReservationTransferBatchRequest request) throws WxPayException {
+    return this.wxPayService.getTransferService().reservationTransferBatch(request);
+  }
+
+  @Override
+  public ReservationTransferBatchGetResult getReservationTransferBatchByOutBatchNo(String outBatchNo, Boolean needQueryDetail,
+                                                                                   Integer offset, Integer limit, String detailState) throws WxPayException {
+    return this.wxPayService.getTransferService()
+      .getReservationTransferBatchByOutBatchNo(outBatchNo, needQueryDetail, offset, limit, detailState);
+  }
+
+  @Override
+  public ReservationTransferBatchGetResult getReservationTransferBatchByReservationBatchNo(String reservationBatchNo,
+                                                                                           Boolean needQueryDetail,
+                                                                                           Integer offset, Integer limit,
+                                                                                           String detailState) throws WxPayException {
+    return this.wxPayService.getTransferService()
+      .getReservationTransferBatchByReservationBatchNo(reservationBatchNo, needQueryDetail, offset, limit, detailState);
+  }
+
+  @Override
+  public ReservationTransferNotifyResult parseReservationTransferNotifyResult(String notifyData, SignatureHeader header) throws WxPayException {
+    return this.wxPayService.getTransferService().parseReservationTransferNotifyResult(notifyData, header);
+  }
+
+  @Override
+  public void closeReservationTransferBatch(String outBatchNo) throws WxPayException {
+    this.wxPayService.getTransferService().closeReservationTransferBatch(outBatchNo);
   }
 
 }

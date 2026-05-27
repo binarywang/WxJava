@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.merchanttransfer.*;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.testbase.ApiTestModule;
@@ -105,6 +106,55 @@ public class MerchantTransferServiceImplTest {
     DetailElectronicBillRequest request = GSON.fromJson(requestParamStr, DetailElectronicBillRequest.class);
     DetailElectronicBillResult result = wxPayService.getMerchantTransferService().queryDetailElectronicBill(request);
     log.info(result.toString());
+  }
+
+  @Test
+  public void getUserAuthorizationStatus() throws WxPayException {
+    log.info("查询用户授权信息:{}",
+      wxPayService.getMerchantTransferService().getUserAuthorizationStatus("or1b65DLMUir7F-_vLwKlutmm3qw", "1005"));
+  }
+
+  @Test
+  public void reservationTransferBatch() throws WxPayException {
+    String requestParamStr = "{\n"
+      + "  \"appid\": \"wxf636efh5xxxxx\",\n"
+      + "  \"out_batch_no\": \"RESERVATION_1655447999520\",\n"
+      + "  \"batch_name\": \"预约测试批次\",\n"
+      + "  \"batch_remark\": \"预约测试批次备注\",\n"
+      + "  \"total_amount\": 100,\n"
+      + "  \"total_num\": 1,\n"
+      + "  \"transfer_scene_id\": \"1005\",\n"
+      + "  \"transfer_detail_list\": [\n"
+      + "    {\n"
+      + "      \"out_detail_no\": \"RESERVATION_DETAIL_1655447989156\",\n"
+      + "      \"transfer_amount\": 100,\n"
+      + "      \"transfer_remark\": \"预约测试转账\",\n"
+      + "      \"openid\": \"or1b65DLMUir7F-_vLwKlutmm3qw\"\n"
+      + "    }\n"
+      + "  ]\n"
+      + "}";
+    ReservationTransferBatchRequest request = GSON.fromJson(requestParamStr, ReservationTransferBatchRequest.class);
+    log.info("发起预约商家转账:{}",
+      wxPayService.getMerchantTransferService().reservationTransferBatch(request));
+  }
+
+  @Test
+  public void getReservationTransferBatchByOutBatchNo() throws WxPayException {
+    log.info("商户预约批次单号查询批次单:{}",
+      wxPayService.getMerchantTransferService().getReservationTransferBatchByOutBatchNo("RESERVATION_1655447999520",
+        true, 0, 20, "PROCESSING"));
+  }
+
+  @Test
+  public void getReservationTransferBatchByReservationBatchNo() throws WxPayException {
+    log.info("微信预约批次单号查询批次单:{}",
+      wxPayService.getMerchantTransferService().getReservationTransferBatchByReservationBatchNo("12345678901234567890123456789012",
+        true, 0, 20, "PROCESSING"));
+  }
+
+  @Test
+  public void closeReservationTransferBatch() throws WxPayException {
+    wxPayService.getMerchantTransferService().closeReservationTransferBatch("RESERVATION_1655447999520");
   }
 
 }

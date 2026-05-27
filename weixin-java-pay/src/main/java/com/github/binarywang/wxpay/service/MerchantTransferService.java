@@ -1,6 +1,12 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.notify.SignatureHeader;
 import com.github.binarywang.wxpay.bean.merchanttransfer.*;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchGetResult;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchRequest;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchResult;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferNotifyResult;
+import com.github.binarywang.wxpay.bean.transfer.UserAuthorizationStatusResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -147,4 +153,86 @@ public interface MerchantTransferService {
    * @throws WxPayException the wx pay exception
    */
   DetailElectronicBillResult queryDetailElectronicBill(DetailElectronicBillRequest request) throws WxPayException;
+
+  /**
+   * 商户查询用户授权信息接口.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/authorization/openid/{openid}
+   *
+   * @param openid          用户在直连商户应用下的用户标识
+   * @param transferSceneId 转账场景ID
+   * @return 用户授权信息
+   * @throws WxPayException the wx pay exception
+   */
+  UserAuthorizationStatusResult getUserAuthorizationStatus(String openid, String transferSceneId) throws WxPayException;
+
+  /**
+   * 批量预约商家转账接口.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches
+   *
+   * @param request 批量预约商家转账请求参数
+   * @return 批量预约商家转账结果
+   * @throws WxPayException the wx pay exception
+   */
+  ReservationTransferBatchResult reservationTransferBatch(ReservationTransferBatchRequest request) throws WxPayException;
+
+  /**
+   * 商户预约批次单号查询批次单接口.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/{out_batch_no}
+   *
+   * @param outBatchNo      商户预约批次单号
+   * @param needQueryDetail 是否需要查询明细
+   * @param offset          分页偏移量
+   * @param limit           分页大小
+   * @param detailState     明细状态（PROCESSING/SUCCESS/FAIL）
+   * @return 批量预约商家转账批次查询结果
+   * @throws WxPayException the wx pay exception
+   */
+  ReservationTransferBatchGetResult getReservationTransferBatchByOutBatchNo(String outBatchNo, Boolean needQueryDetail,
+                                                                             Integer offset, Integer limit, String detailState) throws WxPayException;
+
+  /**
+   * 微信预约批次单号查询批次单接口.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/reservation-batch-no/{reservation_batch_no}
+   *
+   * @param reservationBatchNo 微信预约批次单号
+   * @param needQueryDetail    是否需要查询明细
+   * @param offset             分页偏移量
+   * @param limit              分页大小
+   * @param detailState        明细状态（PROCESSING/SUCCESS/FAIL）
+   * @return 批量预约商家转账批次查询结果
+   * @throws WxPayException the wx pay exception
+   */
+  ReservationTransferBatchGetResult getReservationTransferBatchByReservationBatchNo(String reservationBatchNo, Boolean needQueryDetail,
+                                                                                     Integer offset, Integer limit, String detailState) throws WxPayException;
+
+  /**
+   * 解析预约商家转账通知回调结果.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return 预约商家转账通知结果
+   * @throws WxPayException the wx pay exception
+   */
+  ReservationTransferNotifyResult parseReservationTransferNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * 关闭预约商家转账批次接口.
+   *
+   * 文档详见: https://pay.weixin.qq.com/doc/v3/merchant/4014399293
+   * 请求URL：https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/{out_batch_no}/close
+   *
+   * @param outBatchNo 商户预约批次单号
+   * @throws WxPayException the wx pay exception
+   */
+  void closeReservationTransferBatch(String outBatchNo) throws WxPayException;
 }
