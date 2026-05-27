@@ -61,7 +61,13 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
 
   @Override
   public WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason, Integer rejectReasonType) throws WxErrorException {
-    AfterSaleRejectParam param = new AfterSaleRejectParam(afterSaleOrderId, rejectReason, rejectReasonType);
+    return reject(afterSaleOrderId, rejectReason, rejectReasonType, null);
+  }
+
+  @Override
+  public WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason, Integer rejectReasonType,
+    List<String> rejectCertificates) throws WxErrorException {
+    AfterSaleRejectParam param = new AfterSaleRejectParam(afterSaleOrderId, rejectReason, rejectReasonType, rejectCertificates);
     String resJson = shopService.post(AFTER_SALE_REJECT_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
