@@ -153,6 +153,24 @@ public class WxChannelApiUrlConstants {
     String SPU_GET_STOCK_BATCH_URL = "https://api.weixin.qq.com/channels/ec/product/stock/batchget";
     /** 更新商品库存 */
     String SPU_UPDATE_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/update";
+    /** 添加非卖商品 */
+    String GIFT_PRODUCT_ADD_URL = "https://api.weixin.qq.com/channels/ec/product/gift/add";
+    /** 更新非卖商品 */
+    String GIFT_PRODUCT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/product/gift/update";
+    /** 在售商品转赠品 */
+    String GIFT_PRODUCT_ON_SALE_SET_URL = "https://api.weixin.qq.com/channels/ec/product/gift/onsale/set";
+    /** 获取赠品 */
+    String GIFT_PRODUCT_GET_URL = "https://api.weixin.qq.com/channels/ec/product/gift/get";
+    /** 获取赠品列表 */
+    String GIFT_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/product/gift/list/get";
+    /** 更新赠品库存 */
+    String GIFT_PRODUCT_STOCK_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/product/gift/stock/update";
+    /** 创建赠品活动 */
+    String GIFT_ACTIVITY_ADD_URL = "https://api.weixin.qq.com/channels/ec/product/activity/add";
+    /** 删除赠品活动 */
+    String GIFT_ACTIVITY_DELETE_URL = "https://api.weixin.qq.com/channels/ec/product/activity/del";
+    /** 停止赠品活动 */
+    String GIFT_ACTIVITY_STOP_URL = "https://api.weixin.qq.com/channels/ec/product/activity/stop";
     /** 添加限时抢购任务 */
     String ADD_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/add";
     /** 拉取限时抢购任务列表 */

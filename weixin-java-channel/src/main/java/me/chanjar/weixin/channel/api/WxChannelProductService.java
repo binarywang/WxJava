@@ -10,6 +10,10 @@ import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
+import me.chanjar.weixin.channel.bean.product.GiftActivityInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
+import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
 import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
@@ -205,6 +209,84 @@ public interface WxChannelProductService {
    * @throws WxErrorException 异常
    */
   ProductTagLinkResponse getProductTagLink(String productId) throws WxErrorException;
+
+  /**
+   * 添加非卖商品
+   *
+   * @param info 赠品信息
+   * @return 赠品商品ID
+   * @throws WxErrorException 异常
+   */
+  String addGiftProduct(GiftProductInfo info) throws WxErrorException;
+
+  /**
+   * 更新非卖商品
+   *
+   * @param info 赠品信息
+   * @throws WxErrorException 异常
+   */
+  void updateGiftProduct(GiftProductInfo info) throws WxErrorException;
+
+  /**
+   * 在售商品转赠品
+   *
+   * @param productId 商品ID
+   * @throws WxErrorException 异常
+   */
+  void setProductAsGift(String productId) throws WxErrorException;
+
+  /**
+   * 获取赠品
+   *
+   * @param productId 赠品商品ID
+   * @return 赠品信息
+   * @throws WxErrorException 异常
+   */
+  GiftProductInfo getGiftProduct(String productId) throws WxErrorException;
+
+  /**
+   * 获取赠品列表
+   *
+   * @param param 查询参数
+   * @return 赠品列表
+   * @throws WxErrorException 异常
+   */
+  GiftProductListResponse listGiftProduct(GiftProductListParam param) throws WxErrorException;
+
+  /**
+   * 更新赠品库存
+   *
+   * @param productId 赠品商品ID
+   * @param skuId     赠品sku_id
+   * @param stock     库存值
+   * @throws WxErrorException 异常
+   */
+  void updateGiftStock(String productId, String skuId, Integer stock) throws WxErrorException;
+
+  /**
+   * 创建赠品活动
+   *
+   * @param info 活动信息
+   * @return 活动ID
+   * @throws WxErrorException 异常
+   */
+  String addGiftActivity(GiftActivityInfo info) throws WxErrorException;
+
+  /**
+   * 删除赠品活动
+   *
+   * @param activityId 活动ID
+   * @throws WxErrorException 异常
+   */
+  void deleteGiftActivity(String activityId) throws WxErrorException;
+
+  /**
+   * 停止赠品活动
+   *
+   * @param activityId 活动ID
+   * @throws WxErrorException 异常
+   */
+  void stopGiftActivity(String activityId) throws WxErrorException;
 
   /**
    * 添加限时抢购任务
