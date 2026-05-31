@@ -182,4 +182,11 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxChannelLiveDashboardService getLiveDashboardService();
 
+  /**
+   * 微信小店-带货助手服务
+   *
+   * @return 带货助手服务
+   */
+  WxTalentService getTalentService();
+
 }

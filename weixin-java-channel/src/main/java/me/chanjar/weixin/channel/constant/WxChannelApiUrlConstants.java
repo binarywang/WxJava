@@ -551,6 +551,32 @@ public class WxChannelApiUrlConstants {
   }
 
   /**
+   * 带货助手API
+   */
+  public interface Talent {
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/store/talent/openapi/order/api_get_order_list.html">获取佣金单列表</a>
+     */
+    String GET_ORDER_LIST_URL = "https://api.weixin.qq.com/channels/ec/talent/get_order_list";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/store/talent/openapi/order/api_get_order_detail.html">获取佣金单详情</a>
+     */
+    String GET_ORDER_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/talent/get_order_detail";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/store/talent/openapi/window/api_get_product_list.html">获取达人橱窗商品列表</a>
+     */
+    String GET_WINDOW_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/talent/window/product/list/get";
+
+    /**
+     * <a href="https://developers.weixin.qq.com/doc/store/talent/openapi/window/api_get_product_detail.html">获取达人橱窗商品详情</a>
+     */
+    String GET_WINDOW_PRODUCT_DETAIL_URL = "https://api.weixin.qq.com/channels/ec/talent/window/product/get";
+  }
+
+  /**
    * 罗盘商家版API
    */
   public interface CompassShop {
