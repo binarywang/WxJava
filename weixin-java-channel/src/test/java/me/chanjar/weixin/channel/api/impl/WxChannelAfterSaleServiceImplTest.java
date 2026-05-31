@@ -14,6 +14,11 @@ import me.chanjar.weixin.channel.bean.after.AfterSaleInfoResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleListResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleReasonResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
+import me.chanjar.weixin.channel.bean.after.GuaranteeModifyRequest;
+import me.chanjar.weixin.channel.bean.after.GuaranteeOrderInfo;
+import me.chanjar.weixin.channel.bean.after.GuaranteeOrderListParam;
+import me.chanjar.weixin.channel.bean.after.GuaranteeOrderListResponse;
+import me.chanjar.weixin.channel.bean.after.GuaranteeProofRequest;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.complaint.ComplaintOrderResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
@@ -127,5 +132,51 @@ public class WxChannelAfterSaleServiceImplTest {
     AfterSaleRejectReasonResponse rejectReason = afterSaleService.getRejectReason();
     assertNotNull(rejectReason);
     assertTrue(rejectReason.isSuccess());
+  }
+
+  @Test
+  public void testListGuaranteeOrder() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    Long beginCreateTime = LocalDateTime.now().minusDays(7).atZone(ZoneId.systemDefault()).toEpochSecond();
+    Long endCreateTime = LocalDateTime.now().atZone(ZoneId.systemDefault()).toEpochSecond();
+    GuaranteeOrderListParam param = new GuaranteeOrderListParam(beginCreateTime, endCreateTime, null, null, null);
+    GuaranteeOrderListResponse response = afterSaleService.listGuaranteeOrder(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetGuaranteeOrder() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    String guaranteeOrderId = "";
+    GuaranteeOrderInfo response = afterSaleService.getGuaranteeOrder(guaranteeOrderId);
+    assertNotNull(response);
+  }
+
+  @Test
+  public void testAcceptGuarantee() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    String guaranteeOrderId = "";
+    afterSaleService.acceptGuarantee(guaranteeOrderId);
+  }
+
+  @Test
+  public void testModifyGuarantee() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    GuaranteeModifyRequest req = new GuaranteeModifyRequest("", 1, "协商描述");
+    afterSaleService.modifyGuarantee(req);
+  }
+
+  @Test
+  public void testProofGuarantee() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    GuaranteeProofRequest req = new GuaranteeProofRequest("", new ArrayList<>(4), "举证描述");
+    afterSaleService.proofGuarantee(req);
+  }
+
+  @Test
+  public void testRefuseGuarantee() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    afterSaleService.refuseGuarantee("", "拒绝原因");
   }
 }

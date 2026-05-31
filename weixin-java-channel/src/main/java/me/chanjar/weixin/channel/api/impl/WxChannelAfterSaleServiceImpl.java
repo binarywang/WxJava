@@ -130,4 +130,40 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
+  @Override
+  public GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException {
+    String resJson = shopService.post(GUARANTEE_ORDER_LIST_URL, param);
+    return ResponseUtils.decode(resJson, GuaranteeOrderListResponse.class);
+  }
+
+  @Override
+  public GuaranteeOrderInfo getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    String resJson = shopService.post(GUARANTEE_ORDER_GET_URL, param);
+    GuaranteeOrderInfoResponse response = ResponseUtils.decode(resJson, GuaranteeOrderInfoResponse.class);
+    return response.getGuaranteeOrder();
+  }
+
+  @Override
+  public void acceptGuarantee(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    shopService.post(GUARANTEE_ORDER_ACCEPT_URL, param);
+  }
+
+  @Override
+  public void modifyGuarantee(GuaranteeModifyRequest req) throws WxErrorException {
+    shopService.post(GUARANTEE_ORDER_MODIFY_URL, req);
+  }
+
+  @Override
+  public void proofGuarantee(GuaranteeProofRequest req) throws WxErrorException {
+    shopService.post(GUARANTEE_ORDER_PROOF_URL, req);
+  }
+
+  @Override
+  public void refuseGuarantee(String guaranteeOrderId, String reason) throws WxErrorException {
+    GuaranteeRefuseRequest req = new GuaranteeRefuseRequest(guaranteeOrderId, reason);
+    shopService.post(GUARANTEE_ORDER_REFUSE_URL, req);
+  }
+
 }

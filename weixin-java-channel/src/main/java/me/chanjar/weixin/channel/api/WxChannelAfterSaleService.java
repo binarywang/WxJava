@@ -183,4 +183,67 @@ public interface WxChannelAfterSaleService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse merchantUpdateAfterSale(AfterSaleMerchantUpdateParam param) throws WxErrorException;
+
+  /**
+   * 商家获取保障单列表
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_searchguaranteeorder
+   *
+   * @param param 参数
+   * @return 保障单列表
+   *
+   * @throws WxErrorException 异常
+   */
+  GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException;
+
+  /**
+   * 获取保障单详情
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_getguaranteeorder
+   *
+   * @param guaranteeOrderId 保障单号
+   * @return 保障单详情
+   *
+   * @throws WxErrorException 异常
+   */
+  GuaranteeOrderInfo getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException;
+
+  /**
+   * 商家同意保障单申请
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantacceptguarantee
+   *
+   * @param guaranteeOrderId 保障单号
+   *
+   * @throws WxErrorException 异常
+   */
+  void acceptGuarantee(String guaranteeOrderId) throws WxErrorException;
+
+  /**
+   * 商家协商保障单
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantmodifyguarantee
+   *
+   * @param req 参数
+   *
+   * @throws WxErrorException 异常
+   */
+  void modifyGuarantee(GuaranteeModifyRequest req) throws WxErrorException;
+
+  /**
+   * 商家举证保障单
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantproofguarantee
+   *
+   * @param req 参数
+   *
+   * @throws WxErrorException 异常
+   */
+  void proofGuarantee(GuaranteeProofRequest req) throws WxErrorException;
+
+  /**
+   * 商家拒绝保障单申请
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantrefuseguarantee
+   *
+   * @param guaranteeOrderId 保障单号
+   * @param reason           拒绝原因
+   *
+   * @throws WxErrorException 异常
+   */
+  void refuseGuarantee(String guaranteeOrderId, String reason) throws WxErrorException;
 }
