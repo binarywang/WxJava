@@ -393,6 +393,8 @@ public class WxMaApiUrlConstants {
     String FILE_BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense";
     String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
+    String MENU = "https://api.weixin.qq.com/cv/ocr/menu?img_url=%s";
+    String FILE_MENU = "https://api.weixin.qq.com/cv/ocr/menu";
   }
 
   public interface Product {

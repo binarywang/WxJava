@@ -533,7 +533,17 @@ public interface WxMpApiUrl {
     /**
      * 通用印刷体OCR识别(文件)
      */
-    FILE_COMM(API_DEFAULT_HOST_URL, "/cv/ocr/comm");
+    FILE_COMM(API_DEFAULT_HOST_URL, "/cv/ocr/comm"),
+
+    /**
+     * 菜单OCR识别
+     */
+    MENU(API_DEFAULT_HOST_URL, "/cv/ocr/menu?img_url=%s"),
+
+    /**
+     * 菜单OCR识别(文件)
+     */
+    FILE_MENU(API_DEFAULT_HOST_URL, "/cv/ocr/menu");
 
     private final String prefix;
     private final String path;
