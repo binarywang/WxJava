@@ -50,6 +50,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxStoreHomePageService homePageService = null;
   private WxStoreCooperationService cooperationService = null;
   private WxChannelCompassShopService compassShopService = null;
+  private WxChannelSupplierService supplierService = null;
   private WxLeagueWindowService leagueWindowService = null;
   private WxLeagueSupplierService leagueSupplierService = null;
   private WxLeaguePromoterService leaguePromoterService = null;
@@ -390,6 +391,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       compassShopService = new WxChannelCompassShopServiceImpl(this);
     }
     return compassShopService;
+  }
+
+  @Override
+  public synchronized WxChannelSupplierService getSupplierService() {
+    if (supplierService == null) {
+      supplierService = new WxChannelSupplierServiceImpl(this);
+    }
+    return supplierService;
   }
 
   @Override

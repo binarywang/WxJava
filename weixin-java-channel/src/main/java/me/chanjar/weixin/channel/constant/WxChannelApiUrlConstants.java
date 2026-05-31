@@ -429,6 +429,34 @@ public class WxChannelApiUrlConstants {
     String GET_LEAGUE_ITEM_LIST_URL = "https://api.weixin.qq.com/channels/ec/league/item/list/get";
   }
 
+  /** 代发管理相关接口 */
+  public interface Supplier {
+    /** 获取供货商列表 */
+    String GET_SUPPLIER_LIST_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/get_supplier_list";
+    /** 获取分配方式 */
+    String GET_DISTRIBUTE_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/get_distribute";
+    /** 设置全店订单手动分配 */
+    String SET_MANUALLY_DISTRIBUTE_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/set_manually_distribute";
+    /** 设置全店订单自动分配 */
+    String SET_ALL_DISTRIBUTION_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/set_all_distribution";
+    /** 设置按商品自动分配 */
+    String SET_PRODUCT_DISTRIBUTE_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/set_product_distribute";
+    /** 获取商品对应的自动分配供货商 */
+    String GET_PRODUCT_DEFAULT_DISTRIBUTE_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/get_product_default_distribute";
+    /** 获取按商品自动分配的商品列表 */
+    String GET_PRODUCT_LIST_URL = "https://api.weixin.qq.com/channels/ec/supplier/relation/get_product_list";
+    /** 分配订单代发 */
+    String ASSIGN_DROPSHIP_URL = "https://api.weixin.qq.com/channels/ec/order/dropship/assign";
+    /** 取消分配代发单 */
+    String CANCEL_DROPSHIP_URL = "https://api.weixin.qq.com/channels/ec/order/dropship/cancel";
+    /** 查询代发单详情 */
+    String GET_DROPSHIP_URL = "https://api.weixin.qq.com/channels/ec/order/dropship/get";
+    /** 拉取代发单列表 */
+    String GET_DROPSHIP_LIST_URL = "https://api.weixin.qq.com/channels/ec/order/dropship/list";
+    /** 搜索代发单 */
+    String SEARCH_DROPSHIP_URL = "https://api.weixin.qq.com/channels/ec/order/dropship/search";
+  }
+
   /** 视频号助手开放接口 */
   public interface Assistant {
 

@@ -120,6 +120,13 @@ public interface WxChannelService extends BaseWxChannelService {
   WxLeagueWindowService getLeagueWindowService();
 
   /**
+   * 代发管理服务
+   *
+   * @return 代发管理服务
+   */
+  WxChannelSupplierService getSupplierService();
+
+  /**
    * 优选联盟-团长服务
    *
    * @return 团长服务
