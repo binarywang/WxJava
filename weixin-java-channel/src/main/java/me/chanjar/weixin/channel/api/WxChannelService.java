@@ -182,4 +182,11 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxChannelLiveDashboardService getLiveDashboardService();
 
+  /**
+   * 收藏管理服务
+   *
+   * @return 收藏管理服务
+   */
+  WxChannelFavoriteService getFavoriteService();
+
 }

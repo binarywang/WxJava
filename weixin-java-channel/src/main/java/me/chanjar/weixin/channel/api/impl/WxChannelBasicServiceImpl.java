@@ -2,7 +2,10 @@ package me.chanjar.weixin.channel.api.impl;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_ADDRESS_CODE;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_IMG_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_SHOP_H5URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_SHOP_INFO;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_SHOP_QRCODE;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.GET_SHOP_TAGLINK;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.IMG_UPLOAD_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics.UPLOAD_QUALIFICATION_FILE;
 
@@ -16,7 +19,10 @@ import me.chanjar.weixin.channel.bean.image.ChannelImageInfo;
 import me.chanjar.weixin.channel.bean.image.ChannelImageResponse;
 import me.chanjar.weixin.channel.bean.image.QualificationFileResponse;
 import me.chanjar.weixin.channel.bean.image.UploadImageResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopH5UrlResponse;
 import me.chanjar.weixin.channel.bean.shop.ShopInfoResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopQrCodeResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopTagLinkResponse;
 import me.chanjar.weixin.channel.executor.ChannelFileUploadRequestExecutor;
 import me.chanjar.weixin.channel.executor.ChannelMediaDownloadRequestExecutor;
 import me.chanjar.weixin.channel.util.ResponseUtils;
@@ -91,6 +97,25 @@ public class WxChannelBasicServiceImpl implements WxChannelBasicService {
     String reqJson = "{\"addr_code\": " + code + "}";
     String resJson = shopService.post(GET_ADDRESS_CODE, reqJson);
     return ResponseUtils.decode(resJson, AddressCodeResponse.class);
+  }
+
+  @Override
+  public ShopH5UrlResponse getShopH5Url() throws WxErrorException {
+    String resJson = shopService.post(GET_SHOP_H5URL, "{}");
+    return ResponseUtils.decode(resJson, ShopH5UrlResponse.class);
+  }
+
+  @Override
+  public ShopQrCodeResponse getShopQrCode(int qrcodeType) throws WxErrorException {
+    String reqJson = "{\"qrcode_type\":" + qrcodeType + "}";
+    String resJson = shopService.post(GET_SHOP_QRCODE, reqJson);
+    return ResponseUtils.decode(resJson, ShopQrCodeResponse.class);
+  }
+
+  @Override
+  public ShopTagLinkResponse getShopTagLink() throws WxErrorException {
+    String resJson = shopService.post(GET_SHOP_TAGLINK, "{}");
+    return ResponseUtils.decode(resJson, ShopTagLinkResponse.class);
   }
 
 }

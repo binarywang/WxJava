@@ -34,6 +34,19 @@ public class WxChannelApiUrlConstants {
     String GET_IMG_URL = "https://api.weixin.qq.com/channels/ec/basics/media/get";
     /** 获取地址编码 */
     String GET_ADDRESS_CODE = "https://api.weixin.qq.com/channels/ec/basics/addresscode/get";
+    /** 获取店铺H5链接 */
+    String GET_SHOP_H5URL = "https://api.weixin.qq.com/channels/ec/basics/shop/h5url/get";
+    /** 获取店铺二维码 */
+    String GET_SHOP_QRCODE = "https://api.weixin.qq.com/channels/ec/basics/shop/qrcode/get";
+    /** 获取店铺口令 */
+    String GET_SHOP_TAGLINK = "https://api.weixin.qq.com/channels/ec/basics/shop/taglink/get";
+  }
+
+  /** 收藏管理相关接口 */
+  public interface Favorite {
+
+    /** 获取店铺收藏的人数 */
+    String GET_FAVORITE_COUNT = "https://api.weixin.qq.com/channels/ec/favorites/count/get";
   }
 
   /** 商品类目相关接口 */
