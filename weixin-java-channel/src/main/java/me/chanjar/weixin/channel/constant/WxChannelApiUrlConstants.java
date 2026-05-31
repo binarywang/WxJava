@@ -510,6 +510,20 @@ public class WxChannelApiUrlConstants {
     String GRADE_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/grade/update";
   }
 
+  /** 质检管理相关接口 */
+  public interface Qic {
+    /** 查询质检仓配置 */
+    String GET_INSPECT_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/config/get";
+    /** 查询送检配置模板信息 */
+    String GET_SUBMIT_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/submitconfig/get";
+    /** 打印质检码 */
+    String PRINT_INSPECT_CODE_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/code/print";
+    /** 绑定送检信息 */
+    String SUBMIT_INSPECT_INFO_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/submit";
+    /** 自寄快递送检 */
+    String REGISTER_LOGISTICS_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/register_logistics";
+  }
+
   /**
    * 直播大屏数据
    */
