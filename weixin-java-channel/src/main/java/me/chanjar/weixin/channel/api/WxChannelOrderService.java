@@ -9,10 +9,15 @@ import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
 import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
 import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
+import me.chanjar.weixin.channel.bean.order.OrderCompensationDeliveryParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.PreShipmentChangeSkuResponse;
+import me.chanjar.weixin.channel.bean.order.PresentSubOrderResponse;
+import me.chanjar.weixin.channel.bean.order.PrivateNumberGetPhoneResponse;
+import me.chanjar.weixin.channel.bean.order.RealNumberViewAuditResponse;
 import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
@@ -200,4 +205,122 @@ public interface WxChannelOrderService {
    * @throws WxErrorException 异常
    */
   DecodeSensitiveInfoResponse decodeSensitiveInfo(String orderId) throws WxErrorException;
+
+  /**
+   * 礼物订单新增备注信息
+   *
+   * @param orderId 礼物订单ID
+   * @param note    备注内容
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse addPresentNote(String orderId, String note) throws WxErrorException;
+
+  /**
+   * 获取礼物单的子单列表
+   *
+   * @param orderId 礼物订单ID
+   * @return 子单列表
+   * @throws WxErrorException 异常
+   */
+  PresentSubOrderResponse getPresentSubOrders(String orderId) throws WxErrorException;
+
+  /**
+   * 获取待发货前更换SKU待处理请求
+   *
+   * @param orderId 订单ID
+   * @return 换SKU信息
+   * @throws WxErrorException 异常
+   */
+  PreShipmentChangeSkuResponse getPreShipmentChangeSku(String orderId) throws WxErrorException;
+
+  /**
+   * 同意待发货前更换SKU请求
+   *
+   * @param orderId 订单ID
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse approvePreShipmentChangeSku(String orderId) throws WxErrorException;
+
+  /**
+   * 拒绝待发货前更换SKU请求
+   *
+   * @param orderId      订单ID
+   * @param rejectReason 拒绝原因
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse rejectPreShipmentChangeSku(String orderId, String rejectReason) throws WxErrorException;
+
+  /**
+   * 申请查看订单真实号码
+   *
+   * @param orderId 订单ID
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse applyRealNumber(String orderId) throws WxErrorException;
+
+  /**
+   * 查看订单真实号审核状态
+   *
+   * @param orderId 订单ID
+   * @return 审核状态
+   * @throws WxErrorException 异常
+   */
+  RealNumberViewAuditResponse getRealNumberViewAudit(String orderId) throws WxErrorException;
+
+  /**
+   * 订单再次申请虚拟号
+   *
+   * @param orderId 订单ID
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse applyVirtualNumberAgain(String orderId) throws WxErrorException;
+
+  /**
+   * 订单虚拟号延期
+   *
+   * @param orderId 订单ID
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse delayVirtualNumber(String orderId) throws WxErrorException;
+
+  /**
+   * 添加待认证的手机号
+   *
+   * @param phone 手机号
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse addPrivatePhone(String phone) throws WxErrorException;
+
+  /**
+   * 获取短信验证码
+   *
+   * @param phone 手机号
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse sendPrivatePhoneVerifyCode(String phone) throws WxErrorException;
+
+  /**
+   * 获取小店手机号认证状态
+   *
+   * @return 手机号认证状态
+   * @throws WxErrorException 异常
+   */
+  PrivateNumberGetPhoneResponse getPrivatePhone() throws WxErrorException;
+
+  /**
+   * 订单补发货
+   *
+   * @param param 补发货参数
+   * @return BaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse compensationDelivery(OrderCompensationDeliveryParam param) throws WxErrorException;
 }
