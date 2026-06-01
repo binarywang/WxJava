@@ -1,6 +1,7 @@
 package cn.binarywang.wx.miniapp.api.impl;
 
 import cn.binarywang.wx.miniapp.api.WxMaQrcodeJumpService;
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.qrcode.WxMaQrcodeJumpRule;
 import cn.binarywang.wx.miniapp.bean.qrcode.WxMaQrcodeJumpRuleListResponse;
 import com.google.gson.JsonObject;
@@ -20,7 +21,7 @@ import static me.chanjar.weixin.common.util.json.WxGsonBuilder.create;
  */
 @RequiredArgsConstructor
 public class WxMaQrcodeJumpServiceImpl implements WxMaQrcodeJumpService {
-  private final BaseWxMaServiceImpl wxMaService;
+  private final WxMaService wxMaService;
 
   @Override
   public String addRule(WxMaQrcodeJumpRule rule) throws WxErrorException {
