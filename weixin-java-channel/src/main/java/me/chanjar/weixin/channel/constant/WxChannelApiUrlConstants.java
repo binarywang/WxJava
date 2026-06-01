@@ -240,6 +240,24 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectexchangereship";
     /** 商家协商*/
     String AFTER_SALE_MERCHANT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantupdateaftersale";
+    /** 代用户发起售后 */
+    String AFTER_SALE_GEN_AFTER_SALE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/genaftersaleorder";
+    /** 代用户发起退差价 */
+    String AFTER_SALE_REFUND_PRICE_DIFF_URL = "https://api.weixin.qq.com/channels/ec/aftersale/refundpricediff";
+    /** 售后单兑换虚拟号 */
+    String AFTER_SALE_APPLY_VIRTUAL_TEL_NUM_URL = "https://api.weixin.qq.com/channels/ec/aftersale/applyvirtualtelnum";
+    /** 商家处理极速换货用户退货 */
+    String AFTER_SALE_HANDLE_FAST_EXCHANGE_RECEIPT_URL = "https://api.weixin.qq.com/channels/ec/aftersale/handlefastexchangereceipt";
+    /** 获取保障单详情 */
+    String AFTER_SALE_GET_GUARANTEE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/getguaranteeorder";
+    /** 商家同意保障单申请 */
+    String AFTER_SALE_MERCHANT_ACCEPT_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantacceptguarantee";
+    /** 商家协商保障单 */
+    String AFTER_SALE_MERCHANT_MODIFY_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantmodifyguarantee";
+    /** 商家举证保障单 */
+    String AFTER_SALE_MERCHANT_PROOF_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantproofguarantee";
+    /** 同步工单 */
+    String AFTER_SALE_SYNC_WORK_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/syncworkorder";
   }
 
   /** 纠纷相关接口 */

@@ -183,4 +183,94 @@ public interface WxChannelAfterSaleService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse merchantUpdateAfterSale(AfterSaleMerchantUpdateParam param) throws WxErrorException;
+
+  /**
+   * 代用户发起售后
+   *
+   * @param param 参数
+   * @return 发起结果
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleCreateResponse genAfterSaleOrder(AfterSaleGenAfterSaleOrderParam param) throws WxErrorException;
+
+  /**
+   * 代用户发起退差价
+   *
+   * @param param 参数
+   * @return 发起结果
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleCreateResponse refundPriceDiff(AfterSaleRefundPriceDiffParam param) throws WxErrorException;
+
+  /**
+   * 售后单兑换虚拟号
+   *
+   * @param afterSaleOrderId 售后单号
+   * @return 虚拟号信息
+   *
+   * @throws WxErrorException 异常
+   */
+  AfterSaleVirtualTelNumResponse applyVirtualTelNum(String afterSaleOrderId) throws WxErrorException;
+
+  /**
+   * 商家处理极速换货用户退货（同意/拒绝）
+   *
+   * @param param 参数
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse handleFastExchangeReceipt(AfterSaleHandleFastExchangeReceiptParam param) throws WxErrorException;
+
+  /**
+   * 获取保障单详情
+   *
+   * @param guaranteeOrderId 保障单号
+   * @return 保障单详情
+   *
+   * @throws WxErrorException 异常
+   */
+  GuaranteeOrderResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException;
+
+  /**
+   * 商家同意保障单申请
+   *
+   * @param guaranteeOrderId 保障单号
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse merchantAcceptGuarantee(String guaranteeOrderId) throws WxErrorException;
+
+  /**
+   * 商家协商保障单
+   *
+   * @param param 参数
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse merchantModifyGuarantee(GuaranteeMerchantModifyParam param) throws WxErrorException;
+
+  /**
+   * 商家举证保障单
+   *
+   * @param param 参数
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse merchantProofGuarantee(GuaranteeMerchantProofParam param) throws WxErrorException;
+
+  /**
+   * 同步工单
+   *
+   * @param param 参数
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse syncWorkOrder(SyncWorkOrderParam param) throws WxErrorException;
 }

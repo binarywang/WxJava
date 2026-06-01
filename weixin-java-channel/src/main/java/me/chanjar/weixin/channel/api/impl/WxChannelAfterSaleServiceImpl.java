@@ -130,4 +130,61 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
+  @Override
+  public AfterSaleCreateResponse genAfterSaleOrder(AfterSaleGenAfterSaleOrderParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_GEN_AFTER_SALE_ORDER_URL, param);
+    return ResponseUtils.decode(resJson, AfterSaleCreateResponse.class);
+  }
+
+  @Override
+  public AfterSaleCreateResponse refundPriceDiff(AfterSaleRefundPriceDiffParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_REFUND_PRICE_DIFF_URL, param);
+    return ResponseUtils.decode(resJson, AfterSaleCreateResponse.class);
+  }
+
+  @Override
+  public AfterSaleVirtualTelNumResponse applyVirtualTelNum(String afterSaleOrderId) throws WxErrorException {
+    AfterSaleIdParam param = new AfterSaleIdParam(afterSaleOrderId);
+    String resJson = shopService.post(AFTER_SALE_APPLY_VIRTUAL_TEL_NUM_URL, param);
+    return ResponseUtils.decode(resJson, AfterSaleVirtualTelNumResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse handleFastExchangeReceipt(AfterSaleHandleFastExchangeReceiptParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_HANDLE_FAST_EXCHANGE_RECEIPT_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public GuaranteeOrderResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    String resJson = shopService.post(AFTER_SALE_GET_GUARANTEE_ORDER_URL, param);
+    return ResponseUtils.decode(resJson, GuaranteeOrderResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse merchantAcceptGuarantee(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    String resJson = shopService.post(AFTER_SALE_MERCHANT_ACCEPT_GUARANTEE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse merchantModifyGuarantee(GuaranteeMerchantModifyParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_MERCHANT_MODIFY_GUARANTEE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse merchantProofGuarantee(GuaranteeMerchantProofParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_MERCHANT_PROOF_GUARANTEE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse syncWorkOrder(SyncWorkOrderParam param) throws WxErrorException {
+    String resJson = shopService.post(AFTER_SALE_SYNC_WORK_ORDER_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
 }
