@@ -23,12 +23,12 @@ import static org.testng.Assert.assertTrue;
  */
 public class WxMaQrcodeJumpServiceImplTest {
 
-  private BaseWxMaServiceImpl wxMaService;
+  private cn.binarywang.wx.miniapp.api.WxMaService wxMaService;
   private WxMaQrcodeJumpService qrcodeJumpService;
 
   @BeforeMethod
   public void setUp() {
-    this.wxMaService = mock(BaseWxMaServiceImpl.class);
+    this.wxMaService = mock(cn.binarywang.wx.miniapp.api.WxMaService.class);
     this.qrcodeJumpService = new WxMaQrcodeJumpServiceImpl(this.wxMaService);
   }
 
