@@ -198,7 +198,8 @@ public class WxAispeechServiceImpl implements WxAispeechService {
 
     try (CloseableHttpResponse response = httpClient.execute(request)) {
       int statusCode = response.getCode();
-      String body = new String(response.getEntity().getContent().readAllBytes(), StandardCharsets.UTF_8);
+      HttpEntity entity = response.getEntity();
+      String body = entity == null ? "" : new String(entity.getContent().readAllBytes(), StandardCharsets.UTF_8);
       if (statusCode >= 200 && statusCode < 300) {
         return body;
       }
