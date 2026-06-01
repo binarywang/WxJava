@@ -182,4 +182,11 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxChannelLiveDashboardService getLiveDashboardService();
 
+  /**
+   * 电子面单服务
+   *
+   * @return 电子面单服务
+   */
+  WxChannelEwaybillService getEwaybillService();
+
 }
