@@ -102,9 +102,10 @@ public class WxAispeechKnowledgeServiceImpl implements WxAispeechKnowledgeServic
   }
 
   @Override
+  @Override
   public boolean deleteKnowledge(String knowledgeId) throws WxErrorException {
-    String response = service.executeKnowledgeDelete("/api/v1/knowledge/" + knowledgeId);
-    return StringUtils.isNotBlank(response);
+    service.executeKnowledgeDelete("/api/v1/knowledge/" + knowledgeId);
+    return true;
   }
 
   @Override
