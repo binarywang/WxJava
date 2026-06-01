@@ -5,17 +5,30 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.AD
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.CANCEL_AUDIT_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.DELETE_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.LIST_LIMIT_TASK_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_ADD_PRODUCT_THIRD_PARTY_SOURCE_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_ADD_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_AUDIT_FREE_UPDATE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_AUDIT_STRATEGY_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_AUDIT_STRATEGY_SET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_BEGIN_TIMING_SALE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_CANCEL_TIMING_SALE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_CATEGORY_CLASSIFY_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_CATEGORY_PRE_CHECK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_DELISTING_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_DEL_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_EXTERNAL_PRODUCT_MAPPING_NEW_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_EXTERNAL_PRODUCT_MAPPING_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_AUDIT_QUOTA_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_BATCH_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_FLOW_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_H5URL_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_LISTING_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_LIST_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_PRODUCT_BRAND_RECOMMEND_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_QRCODE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_SCHEME_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_TAGLINK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_URL;
@@ -29,6 +42,25 @@ import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListParam;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditQuotaResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategySetParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckResponse;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeParam;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeResponse;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowParam;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowResponse;
+import me.chanjar.weixin.channel.bean.product.ProductTimingSaleParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockParam;
@@ -209,6 +241,101 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
     String reqJson = "{\"product_id\":\"" + productId + "\"}";
     String resJson = shopService.post(SPU_TAGLINK_URL, reqJson);
     return ResponseUtils.decode(resJson, ProductTagLinkResponse.class);
+  }
+
+  @Override
+  public ProductSchemeResponse getProductScheme(ProductSchemeParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_SCHEME_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductSchemeResponse.class);
+  }
+
+  @Override
+  public ProductCategoryClassifyResponse classifyProductCategory(ProductCategoryClassifyParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_CATEGORY_CLASSIFY_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductCategoryClassifyResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse beginTimingSale(ProductTimingSaleParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_BEGIN_TIMING_SALE_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse cancelTimingSale(String productId) throws WxErrorException {
+    String reqJson = "{\"product_id\":\"" + productId + "\"}";
+    String resJson = shopService.post(SPU_CANCEL_TIMING_SALE_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public ExternalProductMappingResponse externalProductMapping(ExternalProductMappingParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_EXTERNAL_PRODUCT_MAPPING_URL, reqJson);
+    return ResponseUtils.decode(resJson, ExternalProductMappingResponse.class);
+  }
+
+  @Override
+  public ProductCategoryPreCheckResponse categoryPreCheck(ProductCategoryPreCheckParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_CATEGORY_PRE_CHECK_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductCategoryPreCheckResponse.class);
+  }
+
+  @Override
+  public ProductAuditStrategyResponse getProductAuditStrategy() throws WxErrorException {
+    String resJson = shopService.post(SPU_AUDIT_STRATEGY_GET_URL, "{}");
+    return ResponseUtils.decode(resJson, ProductAuditStrategyResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse setProductAuditStrategy(ProductAuditStrategySetParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_AUDIT_STRATEGY_SET_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public ProductAuditQuotaResponse getProductAuditQuota() throws WxErrorException {
+    String resJson = shopService.post(SPU_GET_AUDIT_QUOTA_URL, "{}");
+    return ResponseUtils.decode(resJson, ProductAuditQuotaResponse.class);
+  }
+
+  @Override
+  public ExternalProductMappingNewResponse externalProductMappingNew(ExternalProductMappingNewParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_EXTERNAL_PRODUCT_MAPPING_NEW_URL, reqJson);
+    return ResponseUtils.decode(resJson, ExternalProductMappingNewResponse.class);
+  }
+
+  @Override
+  public ProductBrandRecommendResponse productBrandRecommend(ProductBrandRecommendParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_PRODUCT_BRAND_RECOMMEND_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductBrandRecommendResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse addProductThirdPartySource(AddProductThirdPartySourceParam param)
+    throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_ADD_PRODUCT_THIRD_PARTY_SOURCE_URL, reqJson);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public ProductStockFlowResponse getStockFlow(ProductStockFlowParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_GET_STOCK_FLOW_URL, reqJson);
+    return ResponseUtils.decode(resJson, ProductStockFlowResponse.class);
   }
 
   @Override

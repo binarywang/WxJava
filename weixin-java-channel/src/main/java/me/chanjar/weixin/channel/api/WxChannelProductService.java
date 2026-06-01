@@ -8,6 +8,25 @@ import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
+import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditQuotaResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategySetParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckResponse;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeParam;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeResponse;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowParam;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowResponse;
+import me.chanjar.weixin.channel.bean.product.ProductTimingSaleParam;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
 import me.chanjar.weixin.channel.bean.product.SpuInfo;
@@ -205,6 +224,122 @@ public interface WxChannelProductService {
    * @throws WxErrorException 异常
    */
   ProductTagLinkResponse getProductTagLink(String productId) throws WxErrorException;
+
+  /**
+   * 获取商品的移动应用跳转scheme码
+   *
+   * @param param 请求参数
+   * @return 商品scheme码
+   * @throws WxErrorException 异常
+   */
+  ProductSchemeResponse getProductScheme(ProductSchemeParam param) throws WxErrorException;
+
+  /**
+   * 商品类目推荐
+   *
+   * @param param 请求参数
+   * @return 推荐类目
+   * @throws WxErrorException 异常
+   */
+  ProductCategoryClassifyResponse classifyProductCategory(ProductCategoryClassifyParam param) throws WxErrorException;
+
+  /**
+   * 商品立即开售
+   *
+   * @param param 请求参数
+   * @return 是否成功
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse beginTimingSale(ProductTimingSaleParam param) throws WxErrorException;
+
+  /**
+   * 取消商品开售
+   *
+   * @param productId 商品ID
+   * @return 是否成功
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse cancelTimingSale(String productId) throws WxErrorException;
+
+  /**
+   * 站内外商品属性映射
+   *
+   * @param param 请求参数
+   * @return 映射结果
+   * @throws WxErrorException 异常
+   */
+  ExternalProductMappingResponse externalProductMapping(ExternalProductMappingParam param) throws WxErrorException;
+
+  /**
+   * 发品前校验
+   *
+   * @param param 请求参数
+   * @return 校验结果
+   * @throws WxErrorException 异常
+   */
+  ProductCategoryPreCheckResponse categoryPreCheck(ProductCategoryPreCheckParam param) throws WxErrorException;
+
+  /**
+   * 获取商品上架策略
+   *
+   * @return 上架策略
+   * @throws WxErrorException 异常
+   */
+  ProductAuditStrategyResponse getProductAuditStrategy() throws WxErrorException;
+
+  /**
+   * 设置商品上架策略
+   *
+   * @param param 请求参数
+   * @return 是否成功
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse setProductAuditStrategy(ProductAuditStrategySetParam param) throws WxErrorException;
+
+  /**
+   * 获取商品提审限额
+   *
+   * @return 提审限额
+   * @throws WxErrorException 异常
+   */
+  ProductAuditQuotaResponse getProductAuditQuota() throws WxErrorException;
+
+  /**
+   * 商品属性映射及推荐
+   *
+   * @param param 请求参数
+   * @return 映射推荐结果
+   * @throws WxErrorException 异常
+   */
+  ExternalProductMappingNewResponse externalProductMappingNew(ExternalProductMappingNewParam param)
+    throws WxErrorException;
+
+  /**
+   * 商品品牌推荐
+   *
+   * @param param 请求参数
+   * @return 品牌推荐结果
+   * @throws WxErrorException 异常
+   */
+  ProductBrandRecommendResponse productBrandRecommend(ProductBrandRecommendParam param) throws WxErrorException;
+
+  /**
+   * 新增第三方货源信息
+   *
+   * @param param 请求参数
+   * @return 是否成功
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse addProductThirdPartySource(AddProductThirdPartySourceParam param) throws WxErrorException;
+
+  /**
+   * 获取库存流水
+   *
+   * @param param 请求参数
+   * @return 库存流水
+   * @throws WxErrorException 异常
+   */
+  ProductStockFlowResponse getStockFlow(ProductStockFlowParam param) throws WxErrorException;
 
   /**
    * 添加限时抢购任务
