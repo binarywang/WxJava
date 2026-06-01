@@ -88,6 +88,24 @@ public class TransferBillsRequest implements Serializable {
   private List<TransferSceneReportInfo> transferSceneReportInfos;
 
   /**
+   * 自动收款授权信息
+   */
+  @SerializedName("authorization_info")
+  private AuthorizationInfo authorizationInfo;
+
+  /**
+   * 微信免确认收款授权单号
+   */
+  @SerializedName("authorization_id")
+  private String authorizationId;
+
+  /**
+   * 商户侧授权单号
+   */
+  @SerializedName("out_authorization_no")
+  private String outAuthorizationNo;
+
+  /**
    * 收款授权模式
    * <pre>
    * 字段名：收款授权模式
@@ -124,5 +142,29 @@ public class TransferBillsRequest implements Serializable {
      */
     @SerializedName("info_content")
     private String infoContent;
+  }
+
+  @Data
+  @Builder(builderMethodName = "newBuilder")
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class AuthorizationInfo {
+    /**
+     * 用户展示名称
+     */
+    @SerializedName("user_display_name")
+    private String userDisplayName;
+
+    /**
+     * 商户侧授权单号
+     */
+    @SerializedName("out_authorization_no")
+    private String outAuthorizationNo;
+
+    /**
+     * 自动收款授权结果通知地址
+     */
+    @SerializedName("authorization_notify_url")
+    private String authorizationNotifyUrl;
   }
 }
