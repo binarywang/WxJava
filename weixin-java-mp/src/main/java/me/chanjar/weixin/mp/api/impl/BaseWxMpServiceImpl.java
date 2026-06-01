@@ -16,7 +16,6 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.executor.CommonUploadRequestExecutor;
 import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
@@ -141,7 +140,7 @@ public abstract class BaseWxMpServiceImpl<H, P> implements WxMpService, RequestH
 
   @Getter
   @Setter
-  private WxOAuth2Service oAuth2Service = new WxMpOAuth2ServiceImpl(this);
+  private WxMpOAuth2Service oAuth2Service = new WxMpOAuth2ServiceImpl(this);
 
   @Getter
   @Setter

@@ -6,7 +6,6 @@ import me.chanjar.weixin.common.bean.WxNetCheckResult;
 import me.chanjar.weixin.common.enums.TicketType;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxImgProcService;
-import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
@@ -758,16 +757,16 @@ public interface WxMpService extends WxService {
   /**
    * 获取OAuth2服务接口
    *
-   * @return WxOAuth2Service OAuth2服务接口
+   * @return WxMpOAuth2Service OAuth2服务接口
    */
-  WxOAuth2Service getOAuth2Service();
+  WxMpOAuth2Service getOAuth2Service();
 
   /**
    * 设置OAuth2服务接口
    *
    * @param oAuth2Service OAuth2服务接口
    */
-  void setOAuth2Service(WxOAuth2Service oAuth2Service);
+  void setOAuth2Service(WxMpOAuth2Service oAuth2Service);
 
   /**
    * 获取微信导购服务接口

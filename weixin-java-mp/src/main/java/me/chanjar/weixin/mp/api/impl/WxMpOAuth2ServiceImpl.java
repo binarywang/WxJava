@@ -10,8 +10,8 @@ import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
 import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.mp.api.WxMpOAuth2Service;
 import me.chanjar.weixin.mp.api.WxMpService;
-import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,7 +26,7 @@ import static me.chanjar.weixin.mp.enums.WxMpApiUrl.OAuth2.*;
  * created on  2020-08-08
  */
 @RequiredArgsConstructor
-public class WxMpOAuth2ServiceImpl implements WxOAuth2Service {
+public class WxMpOAuth2ServiceImpl implements WxMpOAuth2Service {
   private final WxMpService wxMpService;
 
   @Override

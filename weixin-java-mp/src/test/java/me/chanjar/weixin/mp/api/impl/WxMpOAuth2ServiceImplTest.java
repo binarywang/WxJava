@@ -3,6 +3,7 @@ package me.chanjar.weixin.mp.api.impl;
 import me.chanjar.weixin.common.bean.WxOAuth2UserInfo;
 import me.chanjar.weixin.common.bean.oauth2.WxOAuth2AccessToken;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.mp.api.WxMpOAuth2Service;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.api.test.ApiTestModule;
 import org.testng.annotations.Guice;
@@ -23,6 +24,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class WxMpOAuth2ServiceImplTest {
   @Inject
   private WxMpService mpService;
+
+  @Test
+  public void testGetOAuth2ServiceType() {
+    assertThat(this.mpService.getOAuth2Service()).isInstanceOf(WxMpOAuth2Service.class);
+  }
 
   @Test
   public void testBuildAuthorizationUrl() {

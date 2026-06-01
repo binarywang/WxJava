@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.service.WxOAuth2Service;
 import me.chanjar.weixin.common.service.WxOAuth2ServiceDecorator;
 import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.mp.api.WxMpOAuth2Service;
 import me.chanjar.weixin.mp.config.WxMpConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenComponentService;
 import org.apache.commons.lang3.StringUtils;
@@ -14,7 +15,7 @@ import org.apache.commons.lang3.StringUtils;
  *
  * @author <a href="https://www.sacoc.cn">广州跨界</a>
  */
-public class WxOpenMpOAuth2ServiceImpl extends WxOAuth2ServiceDecorator {
+public class WxOpenMpOAuth2ServiceImpl extends WxOAuth2ServiceDecorator implements WxMpOAuth2Service {
 
   private final WxOpenComponentService wxOpenComponentService;
   private final WxMpConfigStorage wxMpConfigStorage;
