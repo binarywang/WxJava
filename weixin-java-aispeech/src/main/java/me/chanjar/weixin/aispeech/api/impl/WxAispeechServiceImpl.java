@@ -1,6 +1,7 @@
 package me.chanjar.weixin.aispeech.api.impl;
 
 import com.google.gson.Gson;
+import java.io.File;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -26,9 +27,11 @@ import org.apache.hc.client5.http.entity.UrlEncodedFormEntity;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.core5.http.ContentType;
+import org.apache.hc.core5.http.HttpEntity;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.apache.hc.core5.net.URIBuilder;
+import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 
 public class WxAispeechServiceImpl implements WxAispeechService {
   private static final Gson GSON = new Gson();
@@ -134,6 +137,29 @@ public class WxAispeechServiceImpl implements WxAispeechService {
     return executeRequest(request);
   }
 
+  protected String executeKnowledgeMultipartPost(String path, File file, String title, String description, String metadata)
+    throws WxErrorException {
+    HttpPost request = new HttpPost(configStorage.getKnowledgeApiBaseUrl() + path);
+    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+    builder.addBinaryBody("file", file, ContentType.DEFAULT_BINARY, file.getName());
+    if (StringUtils.isNotBlank(title)) {
+      builder.addTextBody("title", title, ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8));
+    }
+    if (StringUtils.isNotBlank(description)) {
+      builder.addTextBody("description", description, ContentType.TEXT_PLAIN.withCharset(StandardCharsets.UTF_8));
+    }
+    if (StringUtils.isNotBlank(metadata)) {
+      builder.addTextBody("metadata", metadata, ContentType.APPLICATION_JSON);
+    }
+    HttpEntity entity = builder.build();
+    request.setEntity(entity);
+    if (entity.getContentType() != null) {
+      request.setHeader("Content-Type", entity.getContentType());
+    }
+    enrichKnowledgeHeaders(request, "");
+    return executeRequest(request);
+  }
+
   protected String executeKnowledgeDelete(String path) throws WxErrorException {
     HttpUriRequestBase request = new HttpUriRequestBase("DELETE", URI.create(configStorage.getKnowledgeApiBaseUrl() + path));
     enrichKnowledgeHeaders(request, "");
@@ -159,7 +185,9 @@ public class WxAispeechServiceImpl implements WxAispeechService {
     request.setHeader("X-Timestamp", String.valueOf(timestamp));
     request.setHeader("X-Nonce", nonce);
     request.setHeader("X-Signature", signature);
-    request.setHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
+    if (!request.containsHeader("Content-Type")) {
+      request.setHeader("Content-Type", ContentType.APPLICATION_JSON.getMimeType());
+    }
   }
 
   private String executeRequest(HttpUriRequestBase request) throws WxErrorException {
