@@ -217,6 +217,15 @@ public class WxChannelApiUrlConstants {
     String DECODE_SENSITIVE_INFO_URL = "https://api.weixin.qq.com/channels/ec/order/sensitiveinfo/decode";
   }
 
+  /** 商家客服相关接口 */
+  public interface Kf {
+
+    /** 上传多媒体资源 */
+    String COS_UPLOAD_URL = "https://api.weixin.qq.com/channels/ec/commkf/cosupload";
+    /** 发送消息 */
+    String SEND_MSG_URL = "https://api.weixin.qq.com/channels/ec/commkf/sendmsg";
+  }
+
   /** 售后相关接口 */
   public interface AfterSale {
 

@@ -1,0 +1,48 @@
+package me.chanjar.weixin.channel.api;
+
+import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgParam;
+import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgResponse;
+import me.chanjar.weixin.common.error.WxErrorException;
+
+/**
+ * 视频号小店 商家客服服务
+ *
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ */
+public interface WxChannelKfService {
+
+  /**
+   * 上传多媒体资源.
+   *
+   * @param openId  用户 open_id
+   * @param msgType 文件类型，仅支持：video/file/image
+   * @param file    文件字节内容
+   * @return cos_url
+   *
+   * @throws WxErrorException 异常
+   */
+  String uploadMedia(String openId, String msgType, byte[] file) throws WxErrorException;
+
+  /**
+   * 上传多媒体资源.
+   *
+   * @param openId   用户 open_id
+   * @param msgType  文件类型，仅支持：video/file/image
+   * @param fileName 文件名
+   * @param file     文件字节内容
+   * @return cos_url
+   *
+   * @throws WxErrorException 异常
+   */
+  String uploadMedia(String openId, String msgType, String fileName, byte[] file) throws WxErrorException;
+
+  /**
+   * 发送客服消息.
+   *
+   * @param param 请求参数
+   * @return 发送结果
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelKfSendMsgResponse sendMessage(WxChannelKfSendMsgParam param) throws WxErrorException;
+}
