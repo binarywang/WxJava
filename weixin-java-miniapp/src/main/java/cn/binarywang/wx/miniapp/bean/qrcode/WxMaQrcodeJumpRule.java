@@ -53,6 +53,6 @@ public class WxMaQrcodeJumpRule implements Serializable {
    * 二维码规则是否失效。
    */
   @SerializedName("is_expire")
-  private Boolean expire;
+  private Boolean isExpire;
 }
 
