@@ -301,6 +301,16 @@ public class WxMaApiUrlConstants {
     String QUERY_URLLINK_URL = "https://api.weixin.qq.com/wxa/query_urllink";
   }
 
+  /**
+   * URL Link 二维码快速跳转规则管理.
+   */
+  public interface QrcodeJump {
+    String QRCODE_JUMP_ADD = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/addcategoryrule";
+    String QRCODE_JUMP_GET = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/getcategory";
+    String QRCODE_JUMP_GET_LIST = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/getcategorybypage";
+    String QRCODE_JUMP_DELETE = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/deletecategoryrule";
+  }
+
   public interface ShortLink {
     String GENERATE_SHORT_LINK_URL = "https://api.weixin.qq.com/wxa/genwxashortlink";
   }

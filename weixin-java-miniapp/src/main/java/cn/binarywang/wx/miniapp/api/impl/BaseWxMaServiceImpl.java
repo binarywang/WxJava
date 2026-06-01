@@ -140,6 +140,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       new WxMaShopAfterSaleServiceImpl(this);
   private final WxMaShopDeliveryService shopDeliveryService = new WxMaShopDeliveryServiceImpl(this);
   private final WxMaLinkService linkService = new WxMaLinkServiceImpl(this);
+  private final WxMaQrcodeJumpService qrcodeJumpService = new WxMaQrcodeJumpServiceImpl(this);
   private final WxMaReimburseInvoiceService reimburseInvoiceService =
       new WxMaReimburseInvoiceServiceImpl(this);
   private final WxMaDeviceSubscribeService deviceSubscribeService =
@@ -786,6 +787,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   @Override
   public WxMaLinkService getLinkService() {
     return this.linkService;
+  }
+
+  @Override
+  public WxMaQrcodeJumpService getQrcodeJumpService() {
+    return this.qrcodeJumpService;
   }
 
   @Override
