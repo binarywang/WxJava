@@ -166,8 +166,6 @@ public class WxChannelApiUrlConstants {
     String SPU_GET_STOCK_BATCH_URL = "https://api.weixin.qq.com/channels/ec/product/stock/batchget";
     /** 更新商品库存 */
     String SPU_UPDATE_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/update";
-    /** 获取库存流水 */
-    String SPU_GET_STOCK_FLOW_URL = "https://api.weixin.qq.com/channels/ec/product/stock/getflow";
     /** 添加非卖商品 */
     String GIFT_PRODUCT_ADD_URL = "https://api.weixin.qq.com/channels/ec/product/gift/add";
     /** 更新非卖商品 */
@@ -194,21 +192,6 @@ public class WxChannelApiUrlConstants {
     String STOP_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/stop";
     /** 删除限时抢购任务 */
     String DELETE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/delete";
-    /** 更新限时抢购任务 */
-    String UPDATE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/update";
-    /** 发品前校验 */
-    String CATEGORY_PRE_CHECK_URL = "https://api.weixin.qq.com/channels/ec/product/categoryprecheck";
-    /** 商品品牌推荐 */
-    String PRODUCT_BRAND_RECOMMEND_URL = "https://api.weixin.qq.com/channels/ec/product/productbrandrecommend";
-    /** 站内外商品属性映射 */
-    String EXTERNAL_PRODUCT_MAPPING_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmapping";
-    /** 商品属性映射及推荐 */
-    String EXTERNAL_PRODUCT_MAPPING_NEW_URL =
-      "https://api.weixin.qq.com/channels/ec/product/externalproductmappingnew";
-    /** 商品立即开售 */
-    String BEGIN_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/begintimingsale";
-    /** 取消商品开售 */
-    String CANCEL_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/canceltimingsale";
   }
 
   /** 区域仓库 */
@@ -319,18 +302,24 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectexchangereship";
     /** 商家协商*/
     String AFTER_SALE_MERCHANT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantupdateaftersale";
-    /** 获取保障单列表 */
-    String GUARANTEE_ORDER_LIST_URL = "https://api.weixin.qq.com/channels/ec/aftersale/searchguaranteeorder";
+    /** 代用户发起售后 */
+    String AFTER_SALE_GEN_AFTER_SALE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/genaftersaleorder";
+    /** 代用户发起退差价 */
+    String AFTER_SALE_REFUND_PRICE_DIFF_URL = "https://api.weixin.qq.com/channels/ec/aftersale/refundpricediff";
+    /** 售后单兑换虚拟号 */
+    String AFTER_SALE_APPLY_VIRTUAL_TEL_NUM_URL = "https://api.weixin.qq.com/channels/ec/aftersale/applyvirtualtelnum";
+    /** 商家处理极速换货用户退货 */
+    String AFTER_SALE_HANDLE_FAST_EXCHANGE_RECEIPT_URL = "https://api.weixin.qq.com/channels/ec/aftersale/handlefastexchangereceipt";
     /** 获取保障单详情 */
-    String GUARANTEE_ORDER_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/getguaranteeorder";
-    /** 同意保障单申请 */
-    String GUARANTEE_ORDER_ACCEPT_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantacceptguarantee";
+    String AFTER_SALE_GET_GUARANTEE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/getguaranteeorder";
+    /** 商家同意保障单申请 */
+    String AFTER_SALE_MERCHANT_ACCEPT_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantacceptguarantee";
     /** 商家协商保障单 */
-    String GUARANTEE_ORDER_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantmodifyguarantee";
+    String AFTER_SALE_MERCHANT_MODIFY_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantmodifyguarantee";
     /** 商家举证保障单 */
-    String GUARANTEE_ORDER_PROOF_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantproofguarantee";
-    /** 拒绝保障单申请 */
-    String GUARANTEE_ORDER_REFUSE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantrefuseguarantee";
+    String AFTER_SALE_MERCHANT_PROOF_GUARANTEE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantproofguarantee";
+    /** 同步工单 */
+    String AFTER_SALE_SYNC_WORK_ORDER_URL = "https://api.weixin.qq.com/channels/ec/aftersale/syncworkorder";
   }
 
   /** 纠纷相关接口 */
@@ -352,42 +341,6 @@ public class WxChannelApiUrlConstants {
     String GET_DELIVERY_COMPANY_URL = "https://api.weixin.qq.com/channels/ec/order/deliverycompanylist/get";
     /** 订单发货 */
     String DELIVERY_SEND_URL = "https://api.weixin.qq.com/channels/ec/order/delivery/send";
-  }
-
-  /** 电子面单相关接口 */
-  public interface Ewaybill {
-    /** 获取面单标准模板 */
-    String GET_TEMPLATE_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/config";
-    /** 新增面单模板 */
-    String CREATE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/create";
-    /** 删除面单模板 */
-    String DELETE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/delete";
-    /** 更新面单模板 */
-    String UPDATE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/update";
-    /** 获取面单模板信息 */
-    String GET_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/get";
-    /** 根据模板ID获取面单模板信息 */
-    String GET_TEMPLATE_BY_ID_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/getbyid";
-    /** 查询开通的电子面单网点/账号信息 */
-    String GET_ACCOUNT_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/account/get";
-    /** 查询开通的快递公司列表 */
-    String GET_DELIVERY_LIST_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/delivery/get";
-    /** 电子面单预取号 */
-    String PRE_CREATE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/precreate";
-    /** 电子面单取号 */
-    String CREATE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/create";
-    /** 电子面单子件追加 */
-    String ADD_SUB_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/addsuborder";
-    /** 电子面单取消下单 */
-    String CANCEL_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/cancel";
-    /** 查询面单详情 */
-    String GET_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/get";
-    /** 获取打印报文 */
-    String GET_PRINT_CONTENT_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/print/get";
-    /** 打印成功通知 */
-    String PRINT_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/print";
-    /** 批量打印通知 */
-    String BATCH_PRINT_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/batchprint";
   }
 
   /** 运费模板相关接口 */
