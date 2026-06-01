@@ -155,12 +155,45 @@ public class WxChannelApiUrlConstants {
     String SPU_UPDATE_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/update";
     /** 添加限时抢购任务 */
     String ADD_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/add";
+    /** 更新限时抢购任务 */
+    String UPDATE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/update";
     /** 拉取限时抢购任务列表 */
     String LIST_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/list/get";
     /** 停止限时抢购任务 */
     String STOP_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/stop";
     /** 删除限时抢购任务 */
     String DELETE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/delete";
+    /** 获取库存流水 */
+    String SPU_GET_STOCK_FLOW_URL = "https://api.weixin.qq.com/channels/ec/product/stock/getflow";
+    /** 发品前校验 */
+    String CATEGORY_PRE_CHECK_URL = "https://api.weixin.qq.com/channels/ec/product/categoryprecheck";
+    /** 商品品牌推荐 */
+    String PRODUCT_BRAND_RECOMMEND_URL = "https://api.weixin.qq.com/channels/ec/product/productbrandrecommend";
+    /** 站内外商品属性映射 */
+    String EXTERNAL_PRODUCT_MAPPING_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmapping";
+    /** 站内外商品属性映射v2 */
+    String EXTERNAL_PRODUCT_MAPPING_NEW_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmappingnew";
+    /** 商品立即开售 */
+    String BEGIN_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/begintimingsale";
+    /** 取消商品开售 */
+    String CANCEL_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/canceltimingsale";
+  }
+
+  /** 赠品管理相关接口 */
+  public interface Gift {
+
+    /** 添加非卖商品（赠品） */
+    String ADD_GIFT_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/product/gift/add";
+    /** 更新非卖商品（赠品） */
+    String UPDATE_GIFT_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/product/gift/update";
+    /** 在售商品转赠品 */
+    String SET_PRODUCT_AS_GIFT_URL = "https://api.weixin.qq.com/channels/ec/product/gift/onsale/set";
+    /** 获取赠品 */
+    String GET_GIFT_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/product/gift/get";
+    /** 获取赠品列表 */
+    String LIST_GIFT_PRODUCT_URL = "https://api.weixin.qq.com/channels/ec/product/gift/list/get";
+    /** 更新赠品库存 */
+    String UPDATE_GIFT_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/gift/stock/update";
   }
 
   /** 区域仓库 */

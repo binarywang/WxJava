@@ -6,6 +6,15 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.CategoryPreCheckResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingResponse;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
@@ -14,6 +23,8 @@ import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.StockFlowParam;
+import me.chanjar.weixin.channel.bean.product.StockFlowResponse;
 import me.chanjar.weixin.channel.bean.product.link.ProductH5UrlResponse;
 import me.chanjar.weixin.channel.bean.product.link.ProductQrCodeResponse;
 import me.chanjar.weixin.channel.bean.product.link.ProductTagLinkResponse;
@@ -247,4 +258,80 @@ public interface WxChannelProductService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse deleteLimitTask(String taskId) throws WxErrorException;
+
+  /**
+   * 更新限时抢购任务
+   *
+   * @param param 更新参数
+   * @return LimitTaskUpdateResponse
+   * @throws WxErrorException 异常
+   */
+  LimitTaskUpdateResponse updateLimitTask(LimitTaskUpdateParam param) throws WxErrorException;
+
+  /**
+   * 获取库存流水
+   *
+   * @param param 查询参数
+   * @return StockFlowResponse
+   * @throws WxErrorException 异常
+   */
+  StockFlowResponse getStockFlow(StockFlowParam param) throws WxErrorException;
+
+  /**
+   * 发品前校验（校验当前商家是否具备在指定类目发品的资质）
+   *
+   * @param catId 叶子类目id
+   * @return CategoryPreCheckResponse
+   * @throws WxErrorException 异常
+   */
+  CategoryPreCheckResponse categoryPreCheck(Long catId) throws WxErrorException;
+
+  /**
+   * 商品品牌推荐（根据商品信息推荐品牌）
+   *
+   * @param param 请求参数
+   * @return ProductBrandRecommendResponse
+   * @throws WxErrorException 异常
+   */
+  ProductBrandRecommendResponse getProductBrandRecommend(ProductBrandRecommendParam param)
+    throws WxErrorException;
+
+  /**
+   * 站内外商品属性映射
+   *
+   * @param param 请求参数
+   * @return ExternalProductMappingResponse
+   * @throws WxErrorException 异常
+   */
+  ExternalProductMappingResponse externalProductMapping(ExternalProductMappingParam param)
+    throws WxErrorException;
+
+  /**
+   * 站内外商品属性映射（新版）
+   *
+   * @param param 请求参数
+   * @return ExternalProductMappingNewResponse
+   * @throws WxErrorException 异常
+   */
+  ExternalProductMappingNewResponse externalProductMappingNew(ExternalProductMappingNewParam param)
+    throws WxErrorException;
+
+  /**
+   * 商品立即开售（结束预售）
+   *
+   * @param productId 商品ID
+   * @param taskId    预售任务ID
+   * @return WxChannelBaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse beginTimingSale(String productId, String taskId) throws WxErrorException;
+
+  /**
+   * 取消商品开售（取消预售）
+   *
+   * @param productId 商品ID
+   * @return WxChannelBaseResponse
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse cancelTimingSale(String productId) throws WxErrorException;
 }
