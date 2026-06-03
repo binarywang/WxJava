@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 /**
- * 测试 getMsgAuditAccessToken 方法在各个实现类中的正确性
+ * 测试 getContactAccessToken 方法在各个实现类中的正确性
  *
  * @author Binary Wang
  */
 @Test
-public class WxCpServiceGetMsgAuditAccessTokenTest {
+public class WxCpServiceGetContactAccessTokenTest {
 
   private WxCpDefaultConfigImpl config;
 
@@ -27,38 +27,38 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
     config = new WxCpDefaultConfigImpl();
     config.setCorpId("testCorpId");
     config.setCorpSecret("testCorpSecret");
-    config.setMsgAuditSecret("testMsgAuditSecret");
+    config.setContactSecret("testContactSecret");
   }
 
   /**
-   * 测试会话存档access token的缓存机制
+   * 测试通讯录同步access token的缓存机制
    * 验证当token未过期时，直接从配置中返回缓存的token
    */
   @Test
-  public void testGetMsgAuditAccessToken_Cache() throws WxErrorException {
+  public void testGetContactAccessToken_Cache() throws WxErrorException {
     // 预先设置一个有效的token
-    config.updateMsgAuditAccessToken("cached_token", 7200);
-    
+    config.updateContactAccessToken("cached_token", 7200);
+
     BaseWxCpServiceImpl service = createTestService(config);
-    
+
     // 不强制刷新时应该返回缓存的token
-    String token = service.getMsgAuditAccessToken(false);
+    String token = service.getContactAccessToken(false);
     assertThat(token).isEqualTo("cached_token");
   }
 
   /**
-   * 测试强制刷新会话存档access token
+   * 测试强制刷新通讯录同步access token
    * 验证forceRefresh=true时会重新获取token
    */
   @Test
-  public void testGetMsgAuditAccessToken_ForceRefresh() throws WxErrorException {
+  public void testGetContactAccessToken_ForceRefresh() throws WxErrorException {
     // 预先设置一个有效的token
-    config.updateMsgAuditAccessToken("old_token", 7200);
-    
+    config.updateContactAccessToken("old_token", 7200);
+
     BaseWxCpServiceImpl service = createTestServiceWithMockToken(config, "new_token");
-    
+
     // 强制刷新应该获取新token
-    String token = service.getMsgAuditAccessToken(true);
+    String token = service.getContactAccessToken(true);
     assertThat(token).isEqualTo("new_token");
   }
 
@@ -67,14 +67,14 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
    * 验证当token已过期时，会自动重新获取
    */
   @Test
-  public void testGetMsgAuditAccessToken_Expired() throws WxErrorException {
+  public void testGetContactAccessToken_Expired() throws WxErrorException {
     // 设置一个已过期的token（过期时间为负数，确保立即过期）
-    config.updateMsgAuditAccessToken("expired_token", -1);
-    
+    config.updateContactAccessToken("expired_token", -1);
+
     BaseWxCpServiceImpl service = createTestServiceWithMockToken(config, "refreshed_token");
-    
+
     // 过期的token应该被自动刷新
-    String token = service.getMsgAuditAccessToken(false);
+    String token = service.getContactAccessToken(false);
     assertThat(token).isEqualTo("refreshed_token");
   }
 
@@ -83,16 +83,16 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
    * 验证配置中的锁可以正常获取和使用
    */
   @Test
-  public void testGetMsgAuditAccessToken_Lock() {
+  public void testGetContactAccessToken_Lock() {
     // 验证配置提供的锁不为null
-    assertThat(config.getMsgAuditAccessTokenLock()).isNotNull();
-    
+    assertThat(config.getContactAccessTokenLock()).isNotNull();
+
     // 验证锁可以正常使用
-    config.getMsgAuditAccessTokenLock().lock();
+    config.getContactAccessTokenLock().lock();
     try {
-      assertThat(config.getMsgAuditAccessToken()).isNull();
+      assertThat(config.getContactAccessToken()).isNull();
     } finally {
-      config.getMsgAuditAccessTokenLock().unlock();
+      config.getContactAccessTokenLock().unlock();
     }
   }
 
@@ -100,15 +100,15 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
    * 检查token是否需要刷新的公共逻辑
    */
   private boolean shouldRefreshToken(WxCpConfigStorage storage, boolean forceRefresh) {
-    return storage.isMsgAuditAccessTokenExpired() || forceRefresh;
+    return storage.isContactAccessTokenExpired() || forceRefresh;
   }
 
   /**
-   * 验证会话存档secret是否已配置的公共逻辑
+   * 验证通讯录同步secret是否已配置的公共逻辑
    */
-  private void validateMsgAuditSecret(String msgAuditSecret) throws WxErrorException {
-    if (msgAuditSecret == null || msgAuditSecret.trim().isEmpty()) {
-      throw new WxErrorException("会话存档secret未配置");
+  private void validateContactSecret(String contactSecret) throws WxErrorException {
+    if (contactSecret == null || contactSecret.trim().isEmpty()) {
+      throw new WxErrorException("通讯录同步secret未配置");
     }
   }
 
@@ -139,23 +139,23 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       }
 
       @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
         // 检查是否需要刷新
         if (!shouldRefreshToken(getWxCpConfigStorage(), forceRefresh)) {
-          return getWxCpConfigStorage().getMsgAuditAccessToken();
+          return getWxCpConfigStorage().getContactAccessToken();
         }
-        
-        // 使用会话存档secret获取access_token
-        String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
-        validateMsgAuditSecret(msgAuditSecret);
-        
+
+        // 使用通讯录同步secret获取access_token
+        String contactSecret = getWxCpConfigStorage().getContactSecret();
+        validateContactSecret(contactSecret);
+
         // 返回缓存的token（用于测试缓存机制）
-        return getWxCpConfigStorage().getMsgAuditAccessToken();
+        return getWxCpConfigStorage().getContactAccessToken();
       }
 
       @Override
-      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
-        return "mock_contact_access_token";
+      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "test_msg_audit_token";
       }
 
       @Override
@@ -196,22 +196,22 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       }
 
       @Override
-      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
         // 使用锁机制
-        Lock lock = getWxCpConfigStorage().getMsgAuditAccessTokenLock();
+        Lock lock = getWxCpConfigStorage().getContactAccessTokenLock();
         lock.lock();
         try {
           // 检查是否需要刷新
           if (!shouldRefreshToken(getWxCpConfigStorage(), forceRefresh)) {
-            return getWxCpConfigStorage().getMsgAuditAccessToken();
+            return getWxCpConfigStorage().getContactAccessToken();
           }
-          
-          // 使用会话存档secret获取access_token
-          String msgAuditSecret = getWxCpConfigStorage().getMsgAuditSecret();
-          validateMsgAuditSecret(msgAuditSecret);
-          
+
+          // 使用通讯录同步secret获取access_token
+          String contactSecret = getWxCpConfigStorage().getContactSecret();
+          validateContactSecret(contactSecret);
+
           // 模拟获取新token并更新配置
-          getWxCpConfigStorage().updateMsgAuditAccessToken(mockToken, 7200);
+          getWxCpConfigStorage().updateContactAccessToken(mockToken, 7200);
           return mockToken;
         } finally {
           lock.unlock();
@@ -219,8 +219,8 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       }
 
       @Override
-      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
-        return "mock_contact_access_token";
+      public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "test_msg_audit_token";
       }
 
       @Override
@@ -235,30 +235,30 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
   }
 
   /**
-   * 测试当 MsgAuditSecret 未配置时应该抛出异常
+   * 测试当 ContactSecret 未配置时应该抛出异常
    */
   @Test
-  public void testGetMsgAuditAccessToken_WithoutSecret() {
-    config.setMsgAuditSecret(null);
+  public void testGetContactAccessToken_WithoutSecret() {
+    config.setContactSecret(null);
     BaseWxCpServiceImpl service = createTestService(config);
 
     // 验证当 secret 为 null 时抛出异常
-    assertThatThrownBy(() -> service.getMsgAuditAccessToken(true))
+    assertThatThrownBy(() -> service.getContactAccessToken(true))
       .isInstanceOf(WxErrorException.class)
-      .hasMessageContaining("会话存档secret未配置");
+      .hasMessageContaining("通讯录同步secret未配置");
   }
 
   /**
-   * 测试当 MsgAuditSecret 为空字符串时应该抛出异常
+   * 测试当 ContactSecret 为空字符串时应该抛出异常
    */
   @Test
-  public void testGetMsgAuditAccessToken_WithEmptySecret() {
-    config.setMsgAuditSecret("  ");
+  public void testGetContactAccessToken_WithEmptySecret() {
+    config.setContactSecret("  ");
     BaseWxCpServiceImpl service = createTestService(config);
 
     // 验证当 secret 为空字符串时抛出异常
-    assertThatThrownBy(() -> service.getMsgAuditAccessToken(true))
+    assertThatThrownBy(() -> service.getContactAccessToken(true))
       .isInstanceOf(WxErrorException.class)
-      .hasMessageContaining("会话存档secret未配置");
+      .hasMessageContaining("通讯录同步secret未配置");
   }
 }

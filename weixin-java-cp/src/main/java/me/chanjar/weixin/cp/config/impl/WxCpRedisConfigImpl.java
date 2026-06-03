@@ -493,6 +493,36 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   }
 
   @Override
+  public String getContactSecret() {
+    return null;
+  }
+
+  @Override
+  public String getContactAccessToken() {
+    return null;
+  }
+
+  @Override
+  public Lock getContactAccessTokenLock() {
+    return new ReentrantLock();
+  }
+
+  @Override
+  public boolean isContactAccessTokenExpired() {
+    return true;
+  }
+
+  @Override
+  public void expireContactAccessToken() {
+    // 不支持
+  }
+
+  @Override
+  public void updateContactAccessToken(String accessToken, int expiresInSeconds) {
+    // 不支持
+  }
+
+  @Override
   public String getMsgAuditAccessToken() {
     return null;
   }

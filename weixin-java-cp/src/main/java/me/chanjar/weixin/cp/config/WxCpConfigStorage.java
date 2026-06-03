@@ -259,6 +259,47 @@ public interface WxCpConfigStorage {
   String getWebhookKey();
 
   /**
+   * 获取通讯录同步的secret
+   *
+   * @return contact secret
+   */
+  String getContactSecret();
+
+  /**
+   * 获取通讯录同步的access token
+   *
+   * @return contact access token
+   */
+  String getContactAccessToken();
+
+  /**
+   * 获取通讯录同步access token的锁
+   *
+   * @return contact access token lock
+   */
+  Lock getContactAccessTokenLock();
+
+  /**
+   * 检查通讯录同步access token是否已过期
+   *
+   * @return true: 已过期, false: 未过期
+   */
+  boolean isContactAccessTokenExpired();
+
+  /**
+   * 强制将通讯录同步access token过期掉
+   */
+  void expireContactAccessToken();
+
+  /**
+   * 更新通讯录同步access token
+   *
+   * @param accessToken      通讯录同步access token
+   * @param expiresInSeconds 过期时间（秒）
+   */
+  void updateContactAccessToken(String accessToken, int expiresInSeconds);
+
+  /**
    * 获取会话存档的secret
    *
    * @return msg audit secret

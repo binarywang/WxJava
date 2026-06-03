@@ -45,6 +45,16 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String aesKey;
   private volatile long expiresTime;
   /**
+   * 通讯录同步secret及其access token
+   */
+  private volatile String contactSecret;
+  private volatile String contactAccessToken;
+  private volatile long contactAccessTokenExpiresTime;
+  /**
+   * 通讯录同步access token锁
+   */
+  protected transient Lock contactAccessTokenLock = new ReentrantLock();
+  /**
    * 会话存档私钥以及sdk路径
    */
   private volatile String msgAuditSecret;
@@ -463,6 +473,49 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public WxCpDefaultConfigImpl setWebhookKey(String webhookKey) {
     this.webhookKey = webhookKey;
     return this;
+  }
+
+  @Override
+  public String getContactSecret() {
+    return this.contactSecret;
+  }
+
+  /**
+   * 设置通讯录同步secret.
+   *
+   * @param contactSecret 通讯录同步secret
+   * @return this
+   */
+  public WxCpDefaultConfigImpl setContactSecret(String contactSecret) {
+    this.contactSecret = contactSecret;
+    return this;
+  }
+
+  @Override
+  public String getContactAccessToken() {
+    return this.contactAccessToken;
+  }
+
+  @Override
+  public Lock getContactAccessTokenLock() {
+    return this.contactAccessTokenLock;
+  }
+
+  @Override
+  public boolean isContactAccessTokenExpired() {
+    return System.currentTimeMillis() > this.contactAccessTokenExpiresTime;
+  }
+
+  @Override
+  public void expireContactAccessToken() {
+    this.contactAccessTokenExpiresTime = 0;
+  }
+
+  @Override
+  public synchronized void updateContactAccessToken(String accessToken, int expiresInSeconds) {
+    this.contactAccessToken = accessToken;
+    // 预留200秒的时间
+    this.contactAccessTokenExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
   }
 
   @Override

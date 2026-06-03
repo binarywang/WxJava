@@ -76,6 +76,52 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
   }
 
   @Override
+  public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!this.configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+      return this.configStorage.getContactAccessToken();
+    }
+
+    Lock lock = this.configStorage.getContactAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!this.configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+        return this.configStorage.getContactAccessToken();
+      }
+      // 使用通讯录同步secret获取access_token
+      String contactSecret = this.configStorage.getContactSecret();
+      if (contactSecret == null || contactSecret.trim().isEmpty()) {
+        throw new WxErrorException("通讯录同步secret未配置");
+      }
+      //得到httpClient
+      OkHttpClient client = getRequestHttpClient();
+      //请求的request
+      Request request = new Request.Builder()
+        .url(String.format(this.configStorage.getApiUrl(GET_TOKEN), this.configStorage.getCorpId(),
+          contactSecret))
+        .get()
+        .build();
+      String resultContent = null;
+      try (Response response = client.newCall(request).execute()) {
+        resultContent = response.body().string();
+      } catch (IOException e) {
+        log.error(e.getMessage(), e);
+      }
+
+      WxError error = WxError.fromJson(resultContent, WxType.CP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      this.configStorage.updateContactAccessToken(accessToken.getAccessToken(),
+        accessToken.getExpiresIn());
+    } finally {
+      lock.unlock();
+    }
+    return this.configStorage.getContactAccessToken();
+  }
+
+  @Override
   public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
     if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
       return this.configStorage.getMsgAuditAccessToken();
