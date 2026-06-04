@@ -504,7 +504,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
 
   @Override
   public Lock getContactAccessTokenLock() {
-    return new ReentrantLock();
+    return this.msgAuditAccessTokenLock;
   }
 
   @Override
