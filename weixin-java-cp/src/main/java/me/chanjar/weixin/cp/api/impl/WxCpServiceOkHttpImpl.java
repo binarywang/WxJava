@@ -56,12 +56,15 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
           this.configStorage.getCorpSecret()))
         .get()
         .build();
-      String resultContent = null;
-      try {
-        Response response = client.newCall(request).execute();
+      String resultContent;
+      try (Response response = client.newCall(request).execute()) {
+        if (response.body() == null) {
+          throw new WxErrorException("请求access token失败：响应内容为空");
+        }
         resultContent = response.body().string();
       } catch (IOException e) {
         log.error(e.getMessage(), e);
+        throw new WxErrorException(e);
       }
 
       WxError error = WxError.fromJson(resultContent, WxType.CP);
@@ -101,8 +104,11 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
           contactSecret))
         .get()
         .build();
-      String resultContent = null;
+      String resultContent;
       try (Response response = client.newCall(request).execute()) {
+        if (response.body() == null) {
+          throw new WxErrorException("请求通讯录同步access token失败：响应内容为空");
+        }
         resultContent = response.body().string();
       } catch (IOException e) {
         log.error(e.getMessage(), e);
@@ -147,11 +153,15 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
           msgAuditSecret))
         .get()
         .build();
-      String resultContent = null;
+      String resultContent;
       try (Response response = client.newCall(request).execute()) {
+        if (response.body() == null) {
+          throw new WxErrorException("请求会话存档access token失败：响应内容为空");
+        }
         resultContent = response.body().string();
       } catch (IOException e) {
         log.error(e.getMessage(), e);
+        throw new WxErrorException(e);
       }
 
       WxError error = WxError.fromJson(resultContent, WxType.CP);
