@@ -106,8 +106,8 @@ public class WxCpServiceOkHttpImpl extends BaseWxCpServiceImpl<OkHttpClient, OkH
         resultContent = response.body().string();
       } catch (IOException e) {
         log.error(e.getMessage(), e);
+        throw new WxErrorException(e);
       }
-
       WxError error = WxError.fromJson(resultContent, WxType.CP);
       if (error.getErrorCode() != 0) {
         throw new WxErrorException(error);
