@@ -44,13 +44,13 @@ public class TalentWindowProductListResponse extends WxChannelBaseResponse {
     private String appid;
 
     /**
-     * 对于带货商品会返回，代表商品在货源小店中的商品id
+     * 商品来源：1=来源店铺的自营商品，2=来源选品中心的带货商品
      */
     @JsonProperty("product_source")
-    private Long productSource;
+    private Integer productSource;
 
     /**
-     * 商品来源：1=来源店铺的自营商品，2=来源选品中心的带货商品
+     * 对于带货商品会返回，代表商品在货源小店中的商品id
      */
     @JsonProperty("out_product_id")
     private String outProductId;
