@@ -37,7 +37,7 @@ public class TalentWindowProductListResponse extends WxChannelBaseResponse {
 
     /** 橱窗商品id */
     @JsonProperty("product_id")
-    private Long productId;
+    private String productId;
 
     /** 对于自营商品会返回，代表商品来源店铺的appid */
     @JsonProperty("appid")
