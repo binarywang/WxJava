@@ -34,7 +34,8 @@ public class WxMaSubscribeMessage implements Serializable {
   private static final Pattern LETTER_PATTERN = Pattern.compile("[^a-zA-Z]");
   private static final Pattern SYMBOL_PATTERN = Pattern.compile("[a-zA-Z0-9\\u4e00-\\u9fa5]");
   private static final Pattern PHONE_PATTERN = Pattern.compile("[^0-9+\\-]");
-  private static final Pattern NAME_PATTERN = Pattern.compile("[^\\u4e00-\\u9fa5a-zA-Z0-9 \\u00b7.\\u3001\\uff0c\\u3002\\-]");
+  private static final Pattern NAME_PATTERN = Pattern.compile("[^\\u4e00-\\u9fa5a-zA-Z \\u00b7.\\u3001\\uff0c\\u3002\\-]");
+  private static final Pattern CHARACTER_STRING_PATTERN = Pattern.compile("[\\u4e00-\\u9fa5]");
   private static final Pattern CHINESE_PATTERN = Pattern.compile("[\\u4e00-\\u9fa5]");
   private static final Pattern PHRASE_PATTERN = Pattern.compile("[^\\u4e00-\\u9fa5]");
 
@@ -89,6 +90,9 @@ public class WxMaSubscribeMessage implements Serializable {
   private String lang = WxMaConstants.MiniProgramLang.ZH_CN;
 
   public WxMaSubscribeMessage addData(MsgData datum) {
+    if (datum == null) {
+      return this;
+    }
     if (this.data == null) {
       this.data = new ArrayList<>();
     }
@@ -120,7 +124,7 @@ public class WxMaSubscribeMessage implements Serializable {
       // number.DATA: 32位以内数字，只能数字，可带小数
       value = NUMBER_PATTERN.matcher(value).replaceAll("");
       if (!NUMBER_VALID_PATTERN.matcher(value).matches()) {
-        value = "-";
+        value = "0";
       }
       if (value.length() > 32) {
         value = StringUtils.substring(value, 0, 32);
@@ -128,35 +132,57 @@ public class WxMaSubscribeMessage implements Serializable {
     } else if (StringUtils.startsWith(name, "letter")) {
       // letter.DATA: 32位以内字母，只能字母
       value = LETTER_PATTERN.matcher(value).replaceAll("");
+      if (value.isEmpty()) {
+        value = "A";
+      }
       if (value.length() > 32) {
         value = StringUtils.substring(value, 0, 32);
       }
     } else if (StringUtils.startsWith(name, "symbol")) {
       // symbol.DATA: 5位以内符号，只能符号（除中文、英文、数字外的常见符号）
       value = SYMBOL_PATTERN.matcher(value).replaceAll("");
+      if (value.isEmpty()) {
+        value = "-";
+      }
       if (value.length() > 5) {
         value = StringUtils.substring(value, 0, 5);
       }
-    } else if (StringUtils.startsWith(name, "character_string") && value.length() > 32) {
-      // character_string.DATA: 32位以内，可数字、字母或符号组合
-      value = StringUtils.substring(value, 0, 29) + "...";
+    } else if (StringUtils.startsWith(name, "character_string")) {
+      // character_string.DATA: 32位以内，可数字、字母或符号组合（不含中文）
+      value = CHARACTER_STRING_PATTERN.matcher(value).replaceAll("");
+      if (value.isEmpty()) {
+        value = "0";
+      }
+      if (value.length() > 32) {
+        value = StringUtils.substring(value, 0, 32);
+      }
     } else if (StringUtils.startsWith(name, "phone_number")) {
       // phone_number.DATA: 17位以内，数字、符号
       value = PHONE_PATTERN.matcher(value).replaceAll("");
-      // 只允许一个前导+号
-      int firstPlus = value.indexOf('+');
-      if (firstPlus >= 0) {
-        value = value.substring(0, firstPlus + 1) + value.substring(firstPlus + 1).replace("+", "");
+      // 只允许一个前导+号，且必须在开头
+      if (value.startsWith("+")) {
+        value = "+" + value.substring(1).replace("+", "");
+      } else {
+        value = value.replace("+", "");
+      }
+      if (value.isEmpty()) {
+        value = "0";
       }
       if (value.length() > 17) {
-        value = StringUtils.substring(value, 0, 14) + "...";
+        value = StringUtils.substring(value, 0, 17);
       }
-    } else if (StringUtils.startsWith(name, "car_number") && value.length() > 8) {
-      value = StringUtils.substring(value, 0, 5) + "...";
+    } else if (StringUtils.startsWith(name, "car_number")) {
+      // car_number.DATA: 8位以内，第一位与最后一位可为汉字，其余为字母或数字
+      if (value.length() > 8) {
+        value = StringUtils.substring(value, 0, 8);
+      }
     } else if (StringUtils.startsWith(name, "name")) {
       // name.DATA: 10个以内纯汉字或20个以内纯字母或符号，中文和字母混合按中文名算10个字内
-      // 用预编译正则过滤非法字符，\\s 替换为字面空格避免保留 \n \t \r
+      // 过滤非法字符，不保留数字（name 类型不允许数字）
       value = NAME_PATTERN.matcher(value).replaceAll("");
+      if (value.isEmpty()) {
+        value = "-";
+      }
       boolean containsChinese = CHINESE_PATTERN.matcher(value).find();
       if (containsChinese) {
         // 含中文，按中文名算，10个字内
@@ -172,14 +198,12 @@ public class WxMaSubscribeMessage implements Serializable {
     } else if (StringUtils.startsWith(name, "phrase")) {
       // phrase.DATA: 5个以内纯汉字
       value = PHRASE_PATTERN.matcher(value).replaceAll("");
+      if (value.isEmpty()) {
+        value = "好";
+      }
       if (value.length() > 5) {
         value = StringUtils.substring(value, 0, 5);
       }
-    }
-
-    // 过滤后兜底检查，防止正则过滤产生空字符串
-    if (StringUtils.isEmpty(value)) {
-      value = "-";
     }
 
     datum.setValue(value);
