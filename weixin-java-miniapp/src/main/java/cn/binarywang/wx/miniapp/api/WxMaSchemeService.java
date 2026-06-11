@@ -24,7 +24,7 @@ public interface WxMaSchemeService {
   String generate(WxMaGenerateSchemeRequest request) throws WxErrorException;
   /**
    * 获取NFC 的小程序 scheme
-   *文档地址：https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/url-scheme/generateNFCScheme.html
+   *文档地址：https://developers.weixin.qq.com/miniprogram/dev/server/API/qrcode-link/url-scheme/api_generatenfcscheme.html
    * @param request 请求参数
    * @throws WxErrorException 生成失败时抛出，具体错误码请看文档
    */
