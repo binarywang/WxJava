@@ -19,4 +19,13 @@ public class DataUtilsTest {
     final String s = DataUtils.handleDataWithSecret(data);
     assertTrue(s.contains("&secret=******&"));
   }
+
+  @Test
+  public void testHandleDataWithSecretAtEnd() {
+    // Secret is the last parameter in the query string, so there is no trailing &
+    String data = "appid=wx123&secret=abc123";
+    final String s = DataUtils.handleDataWithSecret(data);
+    assertFalse(s.contains("abc123"), "Secret at the end of the string should be masked");
+    assertTrue(s.contains("secret=******"), "Secret should be replaced with asterisks");
+  }
 }
