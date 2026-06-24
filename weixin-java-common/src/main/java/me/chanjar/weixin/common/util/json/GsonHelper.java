@@ -108,7 +108,7 @@ public class GsonHelper {
   }
 
   public static Integer[] getIntArray(JsonObject o, String string) {
-    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    JsonArray jsonArray = getAsJsonArray(o.get(string));
     if (jsonArray == null) {
       return null;
     }
@@ -122,7 +122,7 @@ public class GsonHelper {
   }
 
   public static String[] getStringArray(JsonObject o, String string) {
-    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    JsonArray jsonArray = getAsJsonArray(o.get(string));
     if (jsonArray == null) {
       return null;
     }
@@ -136,7 +136,7 @@ public class GsonHelper {
   }
 
   public static Long[] getLongArray(JsonObject o, String string) {
-    JsonArray jsonArray = getAsJsonArray(o.getAsJsonArray(string));
+    JsonArray jsonArray = getAsJsonArray(o.get(string));
     if (jsonArray == null) {
       return null;
     }
@@ -150,7 +150,7 @@ public class GsonHelper {
   }
 
   public static JsonArray getAsJsonArray(JsonElement element) {
-    return element == null ? null : element.getAsJsonArray();
+    return (element == null || !element.isJsonArray()) ? null : element.getAsJsonArray();
   }
 
   /**
