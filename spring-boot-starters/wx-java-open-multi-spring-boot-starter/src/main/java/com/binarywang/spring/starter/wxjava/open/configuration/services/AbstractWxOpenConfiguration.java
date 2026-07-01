@@ -11,7 +11,8 @@ import me.chanjar.weixin.common.util.http.apache.DefaultApacheHttpClientBuilder;
 import me.chanjar.weixin.open.api.WxOpenConfigStorage;
 import me.chanjar.weixin.open.api.WxOpenService;
 import me.chanjar.weixin.open.api.impl.WxOpenInMemoryConfigStorage;
-import me.chanjar.weixin.open.api.impl.WxOpenServiceImpl;
+import me.chanjar.weixin.open.api.impl.WxOpenServiceApacheHttpClientImpl;
+import me.chanjar.weixin.open.api.impl.WxOpenServiceHttpComponentsImpl;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Collection;
@@ -73,7 +74,13 @@ public abstract class AbstractWxOpenConfiguration {
   protected abstract WxOpenInMemoryConfigStorage wxOpenConfigStorage(WxOpenMultiProperties wxOpenMultiProperties);
 
   public WxOpenService wxOpenService(WxOpenConfigStorage configStorage, WxOpenMultiProperties wxOpenMultiProperties) {
-    WxOpenService wxOpenService = new WxOpenServiceImpl();
+    WxOpenMultiProperties.HttpClientType httpClientType = wxOpenMultiProperties.getConfigStorage().getHttpClientType();
+    WxOpenService wxOpenService;
+    if (httpClientType == WxOpenMultiProperties.HttpClientType.APACHE_HTTP) {
+      wxOpenService = new WxOpenServiceApacheHttpClientImpl();
+    } else {
+      wxOpenService = new WxOpenServiceHttpComponentsImpl();
+    }
     wxOpenService.setWxOpenConfigStorage(configStorage);
     return wxOpenService;
   }
@@ -137,17 +144,19 @@ public abstract class AbstractWxOpenConfiguration {
     config.setRetrySleepMillis(retrySleepMillis);
     config.setMaxRetryTimes(maxRetryTimes);
 
-    // 设置自定义的HttpClient超时配置
-    ApacheHttpClientBuilder clientBuilder = config.getApacheHttpClientBuilder();
-    if (clientBuilder == null) {
-      clientBuilder = DefaultApacheHttpClientBuilder.get();
-    }
-    if (clientBuilder instanceof DefaultApacheHttpClientBuilder) {
-      DefaultApacheHttpClientBuilder defaultBuilder = (DefaultApacheHttpClientBuilder) clientBuilder;
-      defaultBuilder.setConnectionTimeout(storage.getConnectionTimeout());
-      defaultBuilder.setSoTimeout(storage.getSoTimeout());
-      defaultBuilder.setConnectionRequestTimeout(storage.getConnectionRequestTimeout());
-      config.setApacheHttpClientBuilder(defaultBuilder);
+    // 仅在使用 Apache HttpClient 4.x 时配置 ApacheHttpClientBuilder 超时参数
+    if (storage.getHttpClientType() == WxOpenMultiProperties.HttpClientType.APACHE_HTTP) {
+      ApacheHttpClientBuilder clientBuilder = config.getApacheHttpClientBuilder();
+      if (clientBuilder == null) {
+        clientBuilder = DefaultApacheHttpClientBuilder.get();
+      }
+      if (clientBuilder instanceof DefaultApacheHttpClientBuilder) {
+        DefaultApacheHttpClientBuilder defaultBuilder = (DefaultApacheHttpClientBuilder) clientBuilder;
+        defaultBuilder.setConnectionTimeout(storage.getConnectionTimeout());
+        defaultBuilder.setSoTimeout(storage.getSoTimeout());
+        defaultBuilder.setConnectionRequestTimeout(storage.getConnectionRequestTimeout());
+        config.setApacheHttpClientBuilder(defaultBuilder);
+      }
     }
   }
 }
