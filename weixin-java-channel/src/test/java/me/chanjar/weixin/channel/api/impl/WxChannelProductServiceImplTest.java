@@ -12,7 +12,18 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateResponse;
+import me.chanjar.weixin.channel.bean.product.CategoryPreCheckResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingResponse;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
+import me.chanjar.weixin.channel.bean.product.StockFlowParam;
+import me.chanjar.weixin.channel.bean.product.StockFlowResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
@@ -209,6 +220,88 @@ public class WxChannelProductServiceImplTest {
     WxChannelProductService productService = channelService.getProductService();
     String taskId = "";
     WxChannelBaseResponse response = productService.deleteLimitTask(taskId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testUpdateLimitTask() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    LimitTaskUpdateParam param = new LimitTaskUpdateParam();
+    param.setTaskId("");
+    LimitTaskUpdateResponse response = productService.updateLimitTask(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetStockFlow() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    StockFlowParam param = new StockFlowParam();
+    param.setProductId(0L);
+    param.setSkuId(0L);
+    param.setPageSize(10);
+    StockFlowResponse response = productService.getStockFlow(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testCategoryPreCheck() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    Long catId = 0L;
+    CategoryPreCheckResponse response = productService.categoryPreCheck(catId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetProductBrandRecommend() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    ProductBrandRecommendParam param = new ProductBrandRecommendParam();
+    param.setCatId(0L);
+    param.setTitle("test");
+    ProductBrandRecommendResponse response = productService.getProductBrandRecommend(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testExternalProductMapping() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    ExternalProductMappingParam param = new ExternalProductMappingParam();
+    param.setCatId(0L);
+    param.setExternalAttributeName("test");
+    ExternalProductMappingResponse response = productService.externalProductMapping(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testExternalProductMappingNew() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    ExternalProductMappingNewParam param = new ExternalProductMappingNewParam();
+    param.setCatId(0L);
+    ExternalProductMappingNewResponse response = productService.externalProductMappingNew(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testBeginTimingSale() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    String productId = "";
+    String taskId = "";
+    WxChannelBaseResponse response = productService.beginTimingSale(productId, taskId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testCancelTimingSale() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    String productId = "";
+    WxChannelBaseResponse response = productService.cancelTimingSale(productId);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }
