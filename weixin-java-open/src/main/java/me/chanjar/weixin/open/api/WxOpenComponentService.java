@@ -652,7 +652,7 @@ public interface WxOpenComponentService {
    * @return . wx open result
    * @throws WxErrorException .
    */
-  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, Integer codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException;
+  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, String componentPhone) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/openApi/register-management/fast-registration-ent/api_fastregisterenterpriseweapp.html
