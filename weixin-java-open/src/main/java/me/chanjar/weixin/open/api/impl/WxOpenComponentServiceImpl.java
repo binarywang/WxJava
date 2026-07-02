@@ -650,7 +650,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     jsonObject.addProperty("code", code);
     jsonObject.addProperty("component_phone", componentPhone);
     jsonObject.addProperty("new_version", true);
-    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_URL, jsonObject.toString(), "component_access_token");
+    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_URL, jsonObject.toString(), "access_token");
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenRegisterPersonalWeappResult.class);
   }
 
@@ -659,7 +659,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("taskid", taskid);
     jsonObject.addProperty("new_version", true);
-    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_QUERY_URL, jsonObject.toString(), "component_access_token");
+    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_QUERY_URL, jsonObject.toString(), "access_token");
     return WxOpenGsonBuilder.create().fromJson(response, WxOpenRegisterPersonalWeappResult.class);
   }
 
