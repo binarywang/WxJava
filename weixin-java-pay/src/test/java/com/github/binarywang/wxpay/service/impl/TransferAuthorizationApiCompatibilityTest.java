@@ -1,8 +1,9 @@
 package com.github.binarywang.wxpay.service.impl;
 
-import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchRequest;
 import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchGetResult;
+import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchRequest;
 import com.github.binarywang.wxpay.bean.transfer.ReservationTransferBatchResult;
+import com.github.binarywang.wxpay.bean.transfer.TransferBillsRequest;
 import com.github.binarywang.wxpay.bean.transfer.UserAuthorizationStatusResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
@@ -218,6 +219,77 @@ public class TransferAuthorizationApiCompatibilityTest {
     Assert.assertEquals(handler.lastPostUrl,
       BASE_URL + "/v3/fund-app/mch-transfer/reservation/transfer-batches/out-batch-no/BATCH20240101001/close");
     Assert.assertEquals(handler.lastPostBody, "");
+  }
+
+  /**
+   * 验证 TransferBillsRequest 中授权相关字段可正确序列化为 JSON（含 @SerializedName 映射）。
+   */
+  public void shouldSerializeTransferBillsRequestAuthorizationFields() {
+    Gson gson = new Gson();
+    TransferBillsRequest request = TransferBillsRequest.newBuilder()
+      .appid("wxf636efh5xxxxx")
+      .outBillNo("OUT_BILL_001")
+      .transferSceneId("1005")
+      .openid("oX_7Jzr9gSZz4X_Xc9-_7HGf8XzI")
+      .transferAmount(100)
+      .transferRemark("测试转账")
+      .receiptAuthorizationMode("NO_CONFIRM_RECEIPT_AUTHORIZATION")
+      .authorizationInfo(TransferBillsRequest.AuthorizationInfo.newBuilder()
+        .userDisplayName("张三")
+        .outAuthorizationNo("OUT_AUTH_001")
+        .authorizationNotifyUrl("https://example.com/auth/notify")
+        .build())
+      .build();
+
+    String json = gson.toJson(request);
+
+    Assert.assertTrue(json.contains("\"receipt_authorization_mode\""),
+      "JSON 应包含 receipt_authorization_mode 字段");
+    Assert.assertTrue(json.contains("NO_CONFIRM_RECEIPT_AUTHORIZATION"),
+      "JSON 应包含 receipt_authorization_mode 的值");
+    Assert.assertTrue(json.contains("\"authorization_info\""),
+      "JSON 应包含 authorization_info 嵌套字段");
+    Assert.assertTrue(json.contains("\"user_display_name\""),
+      "JSON 应包含 user_display_name 字段");
+    Assert.assertTrue(json.contains("张三"),
+      "JSON 应包含 user_display_name 的值");
+    Assert.assertTrue(json.contains("\"out_authorization_no\""),
+      "JSON 应包含 out_authorization_no 字段");
+    Assert.assertTrue(json.contains("OUT_AUTH_001"),
+      "JSON 应包含 out_authorization_no 的值");
+    Assert.assertTrue(json.contains("\"authorization_notify_url\""),
+      "JSON 应包含 authorization_notify_url 字段");
+    Assert.assertTrue(json.contains("https://example.com/auth/notify"),
+      "JSON 应包含 authorization_notify_url 的值");
+  }
+
+  /**
+   * 验证通过 authorization_id 和 out_authorization_no 顶层字段发起免确认转账时序列化正确。
+   */
+  public void shouldSerializeTransferBillsRequestWithTopLevelAuthFields() {
+    Gson gson = new Gson();
+    TransferBillsRequest request = TransferBillsRequest.newBuilder()
+      .appid("wxf636efh5xxxxx")
+      .outBillNo("OUT_BILL_002")
+      .transferSceneId("1005")
+      .openid("oX_7Jzr9gSZz4X_Xc9-_7HGf8XzI")
+      .transferAmount(200)
+      .transferRemark("免确认转账")
+      .receiptAuthorizationMode("NO_CONFIRM_RECEIPT_AUTHORIZATION")
+      .authorizationId("AUTH_ID_001")
+      .outAuthorizationNo("OUT_AUTH_002")
+      .build();
+
+    String json = gson.toJson(request);
+
+    Assert.assertTrue(json.contains("\"authorization_id\""),
+      "JSON 应包含 authorization_id 字段");
+    Assert.assertTrue(json.contains("AUTH_ID_001"),
+      "JSON 应包含 authorization_id 的值");
+    Assert.assertTrue(json.contains("\"out_authorization_no\""),
+      "JSON 应包含 out_authorization_no 字段");
+    Assert.assertTrue(json.contains("OUT_AUTH_002"),
+      "JSON 应包含 out_authorization_no 的值");
   }
 
   /**

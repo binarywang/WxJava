@@ -140,9 +140,12 @@ public class TransferServiceImpl implements TransferService {
     String url = String.format("%s/v3/fund-app/mch-transfer/reservation/transfer-batches", this.payService.getPayBaseUrl());
     List<ReservationTransferBatchRequest.TransferDetail> transferDetailList = request.getTransferDetailList();
     if (transferDetailList != null && !transferDetailList.isEmpty()) {
-      X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+      X509Certificate validCertificate = null;
       for (ReservationTransferBatchRequest.TransferDetail detail : transferDetailList) {
         if (detail.getUserName() != null && !detail.getUserName().isEmpty()) {
+          if (validCertificate == null) {
+            validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+          }
           RsaCryptoUtil.encryptFields(detail, validCertificate);
         }
       }
