@@ -644,6 +644,29 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
+  public WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, String codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("name", name);
+    jsonObject.addProperty("code", code);
+    jsonObject.addProperty("code_type", codeType);
+    jsonObject.addProperty("legal_persona_openid", legalPersonaOpenid);
+    jsonObject.addProperty("legal_persona_name", legalPersonaName);
+    jsonObject.addProperty("component_phone", componentPhone);
+    jsonObject.addProperty("new_version", true);
+    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenRegisterPersonalWeappResult.class);
+  }
+
+  @Override
+  public WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeappQuery(String taskid) throws WxErrorException {
+    JsonObject jsonObject = new JsonObject();
+    jsonObject.addProperty("taskid", taskid);
+    jsonObject.addProperty("new_version", true);
+    String response = post(FAST_REGISTER_ENTERPRISE_WEAPP_QUERY_URL, jsonObject.toString(), "component_access_token");
+    return WxOpenGsonBuilder.create().fromJson(response, WxOpenRegisterPersonalWeappResult.class);
+  }
+
+  @Override
   public WxOpenResult fastRegisterWeappSearch(String name, String legalPersonaWechat, String legalPersonaName) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("name", name);

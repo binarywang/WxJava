@@ -124,6 +124,17 @@ public interface WxOpenComponentService {
    * 快速创建小程序接口.
    */
   String FAST_REGISTER_WEAPP_URL = "https://api.weixin.qq.com/cgi-bin/component/fastregisterweapp?action=create";
+
+  /**
+   * 快速创建企业小程序接口.
+   */
+  String FAST_REGISTER_ENTERPRISE_WEAPP_URL = "https://api.weixin.qq.com/wxa/component/fastregisterenterpriseweapp?action=create";
+
+  /**
+   * 快速创建企业小程序查询接口.
+   */
+  String FAST_REGISTER_ENTERPRISE_WEAPP_QUERY_URL = "https://api.weixin.qq.com/wxa/component/fastregisterenterpriseweapp?action=query";
+
   /**
    * The constant FAST_REGISTER_WEAPP_SEARCH_URL.
    */
@@ -611,7 +622,7 @@ public interface WxOpenComponentService {
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
-   * 第三方平台快速创建小程序.
+   * 第三方平台快速创建小程序. 2026-04-30 已下线
    * 注意：创建任务逻辑串行，单次任务结束后才可以使用相同信息下发第二次任务，请注意规避任务阻塞
    *
    * @param name               企业名（需与工商部门登记信息一致）
@@ -624,6 +635,32 @@ public interface WxOpenComponentService {
    * @throws WxErrorException .
    */
   WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/register-management/fast-registration-ent/api_fastregisterenterpriseweapp.html
+   * 第三方平台快速创建企业小程序.
+   * 注意：创建任务逻辑串行，单次任务结束后才可以使用相同信息下发第二次任务，请注意规避任务阻塞
+   *
+   * @param name               企业名（需与工商部门登记信息一致）
+   * @param code               企业代码
+   * @param codeType           企业代码类型 1：统一社会信用代码（18位） 2：组织机构代码（9位xxxxxxxx-x） 3：营业执照注册号(15位)
+   * @param legalPersonaOpenid 法人openid
+   * @param legalPersonaName   法人姓名（绑定银行卡）
+   * @param componentPhone     第三方联系电话（方便法人与第三方联系）
+   * @return . wx open result
+   * @throws WxErrorException .
+   */
+  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, String codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException;
+
+  /**
+   * https://developers.weixin.qq.com/doc/oplatform/openApi/register-management/fast-registration-ent/api_fastregisterenterpriseweapp.html
+   * 查询企业小程序注册任务状态
+   *
+   * @param taskid 任务ID
+   * @return the wx open result
+   * @throws WxErrorException
+   */
+  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeappQuery(String taskid) throws WxErrorException;
 
   /**
    * https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=21538208049W8uwq&token=&lang=zh_CN
