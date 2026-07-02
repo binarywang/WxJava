@@ -644,7 +644,7 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
   }
 
   @Override
-  public WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, String codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException {
+  public WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, Integer codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException {
     JsonObject jsonObject = new JsonObject();
     jsonObject.addProperty("name", name);
     jsonObject.addProperty("code", code);

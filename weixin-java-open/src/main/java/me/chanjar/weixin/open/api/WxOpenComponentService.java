@@ -633,7 +633,9 @@ public interface WxOpenComponentService {
    * @param componentPhone     第三方联系电话（方便法人与第三方联系）
    * @return . wx open result
    * @throws WxErrorException .
+   * @deprecated 2026-04-30 接口已经下线
    */
+  @Deprecated
   WxOpenResult fastRegisterWeapp(String name, String code, String codeType, String legalPersonaWechat, String legalPersonaName, String componentPhone) throws WxErrorException;
 
   /**
@@ -650,7 +652,7 @@ public interface WxOpenComponentService {
    * @return . wx open result
    * @throws WxErrorException .
    */
-  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, String codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException;
+  WxOpenRegisterPersonalWeappResult fastRegisterEnterpriseWeapp(String name, String code, Integer codeType, String legalPersonaOpenid, String legalPersonaName, String componentPhone) throws WxErrorException;
 
   /**
    * https://developers.weixin.qq.com/doc/oplatform/openApi/register-management/fast-registration-ent/api_fastregisterenterpriseweapp.html
