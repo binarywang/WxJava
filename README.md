@@ -21,8 +21,8 @@
 ### 微信 `Java` 开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
 
 ### 特别赞助
-- [![计全支付Jeepay,开源支付系统](https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png)](https://www.jeequan.com/product/jeepay.html)
-- [![CRMEB](https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png)](https://github.crmeb.net/u/wxjava)
+- <a href="https://www.jeequan.com/product/jeepay.html"><img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统"></a>
+- <a href="https://github.crmeb.net/u/wxjava"><img height="120" src="https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png" alt="CRMEB"></a>
 
 > 赞助商招募中，欢迎联系合作。
 
