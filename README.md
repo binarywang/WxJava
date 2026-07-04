@@ -29,7 +29,7 @@
 ### 关注公众号
 想获得技术交流群（QQ群/微信群/钉钉群）等信息，请扫码关注 `WxJava` 公众号：
 
-[![WxJava 公众号二维码](https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png)](http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect)
+[![WxJava 公众号二维码](https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png)](https://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect)
 
 ### 目录索引
 - [快速开始（3分钟）](#快速开始3分钟)
