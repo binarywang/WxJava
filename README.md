@@ -21,32 +21,15 @@
 ### 微信 `Java` 开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
 
 ### 特别赞助
-<div align="center">
-  <table cellspacing="0" cellpadding="0" width="500">
-    <tr>
-      <td align="center" colspan="2">
-        <a href="https://www.jeequan.com/product/jeepay.html" target="_blank">
-          <img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统">
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://github.crmeb.net/u/wxjava" target="_blank">
-          <img height="120" src="https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png" alt="ad">
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" style="font-size: 18px; font-weight: bold; vertical-align: middle;">
-        赞助商招募中
-      </td>
-      <td align="center" colspan="2">
-        <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
-          <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png" alt="mp qrcode">
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
+- [![计全支付Jeepay,开源支付系统](https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png)](https://www.jeequan.com/product/jeepay.html)
+- [![CRMEB](https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png)](https://github.crmeb.net/u/wxjava)
+
+> 赞助商招募中，欢迎联系合作。
+
+### 关注公众号
+想获得技术交流群（QQ群/微信群/钉钉群）等信息，请扫码关注 `WxJava` 公众号：
+
+[![WxJava 公众号二维码](https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png)](http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect)
 
 ### 目录索引
 - [快速开始（3分钟）](#快速开始3分钟)
@@ -58,6 +41,7 @@
 - [版本说明](#版本说明)
 - [应用案例](#应用案例)
 - [特别赞助](#特别赞助)
+- [关注公众号](#关注公众号)
 - [贡献者列表](#贡献者列表)
 
 ### 快速开始（3分钟）
