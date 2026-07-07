@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.bean.WxAccessTokenEntity;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxMpErrorMsgEnum;
+import me.chanjar.weixin.common.util.http.HttpClientType;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import org.apache.commons.lang3.StringUtils;
 import org.mockito.Mockito;
@@ -118,6 +119,8 @@ public class WxMaServiceImplTest {
 
   @Test
   public void testGetRequestType() {
+    assertThat(new WxMaServiceImpl().getRequestType()).isEqualTo(HttpClientType.APACHE_HTTP);
+    assertThat(new WxMaServiceHttpComponentsImpl().getRequestType()).isEqualTo(HttpClientType.HTTP_COMPONENTS);
   }
 
   @Test
