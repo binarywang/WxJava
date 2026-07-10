@@ -31,7 +31,7 @@ public class DataUtilsTest {
 
   @Test
   public void testHandleDataWithSecretAsFirstParam() {
-    // Secret is the first/only parameter, so there is no leading &
+    // Secret is the first parameter, so there is no leading &
     String data = "secret=abc123&appid=wx123";
     final String s = DataUtils.handleDataWithSecret(data);
     assertFalse(s.contains("abc123"), "Secret as the first parameter should be masked");
