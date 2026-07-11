@@ -38,7 +38,7 @@ public class WxChannelQicServiceImpl implements WxChannelQicService {
 
   @Override
   public SubmitConfigResponse getSubmitConfig(String orderId) throws WxErrorException {
-    String queryParam = StringUtils.isBlank(orderId) ? "" : "order_id=" + orderId;
+    String queryParam = StringUtils.isBlank(orderId) ? null : "order_id=" + orderId;
     String respJson = shopService.get(GET_SUBMIT_CONFIG_URL, queryParam);
     return ResponseUtils.decode(respJson, SubmitConfigResponse.class);
   }
