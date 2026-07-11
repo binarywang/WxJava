@@ -175,7 +175,8 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
         responseString = EntityUtils.toString(entity, StandardCharsets.UTF_8);
       }
 
-      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode
+        || (HttpStatus.SC_ACCEPTED == statusCode && url.endsWith("/codepay"))) {
         this.logRequestAndResponse(url, requestStr, responseString);
         return responseString;
       }

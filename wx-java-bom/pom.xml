@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.8.3.B</version>
+    <version>4.8.4.B</version>
   </parent>
 
   <artifactId>wx-java-bom</artifactId>
@@ -60,6 +60,11 @@
       <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-qidian</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-aispeech</artifactId>
         <version>${project.version}</version>
       </dependency>
 

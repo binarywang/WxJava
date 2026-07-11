@@ -215,6 +215,37 @@ public class WxChannelApiUrlConstants {
     String VIRTUAL_TEL_NUMBER_URL = "https://api.weixin.qq.com/channels/ec/order/virtualtelnumber/get";
     /** 解码订单包含的敏感数据 */
     String DECODE_SENSITIVE_INFO_URL = "https://api.weixin.qq.com/channels/ec/order/sensitiveinfo/decode";
+    /** 礼物订单新增备注信息 */
+    String PRESENT_NOTE_ADD_URL = "https://api.weixin.qq.com/channels/ec/order/presentnote/add";
+    /** 获取礼物单的子单列表 */
+    String PRESENT_SUB_ORDER_GET_URL = "https://api.weixin.qq.com/channels/ec/order/presentsuborder/get";
+    /** 获取待发货前更换sku待处理请求 */
+    String PRE_SHIPMENT_CHANGE_SKU_GET_URL = "https://api.weixin.qq.com/channels/ec/order/preshipmentchangesku/get";
+    /** 同意待发货前更换sku请求 */
+    String PRE_SHIPMENT_CHANGE_SKU_APPROVE_URL = "https://api.weixin.qq.com/channels/ec/order/preshipmentchangesku/approve";
+    /** 拒绝待发货前更换sku请求 */
+    String PRE_SHIPMENT_CHANGE_SKU_REJECT_URL = "https://api.weixin.qq.com/channels/ec/order/preshipmentchangesku/reject";
+    /** 申请查看订单真实号码 */
+    String REAL_NUMBER_APPLY_URL = "https://api.weixin.qq.com/channels/ec/order/realnumber/apply";
+    /** 查看订单真实号审核状态 */
+    String REAL_NUMBER_VIEW_AUDIT_GET_URL = "https://api.weixin.qq.com/channels/ec/order/realnumberviewaudit/get";
+    /** 订单再次申请虚拟号 */
+    String VIRTUAL_NUMBER_APPLY_AGAIN_URL = "https://api.weixin.qq.com/channels/ec/order/virtualnumber/applyagain";
+    /** 订单虚拟号延期 */
+    String VIRTUAL_NUMBER_DELAY_URL = "https://api.weixin.qq.com/channels/ec/order/virtualnumber/delay";
+    /** 订单补发货 */
+    String DELIVERY_COMPENSATION_URL = "https://api.weixin.qq.com/channels/ec/order/delivery/compensation";
+  }
+
+  /** 虚拟号管理相关接口 */
+  public interface PrivateNumber {
+
+    /** 添加待认证的手机号 */
+    String ADD_PHONE_URL = "https://api.weixin.qq.com/channels/ec/merchant/privatenumber/addphone";
+    /** 获取短信验证码 */
+    String SEND_VERIFY_CODE_URL = "https://api.weixin.qq.com/channels/ec/merchant/privatenumber/sendverifycode";
+    /** 获取小店手机号认证状态 */
+    String GET_PHONE_URL = "https://api.weixin.qq.com/channels/ec/merchant/privatenumber/getphone";
   }
 
   /** 售后相关接口 */
@@ -508,6 +539,20 @@ public class WxChannelApiUrlConstants {
 
     /** 更新用户等级 */
     String GRADE_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/vip/user/grade/update";
+  }
+
+  /** 质检管理相关接口 */
+  public interface Qic {
+    /** 查询质检仓配置 */
+    String GET_INSPECT_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/config/get";
+    /** 查询送检配置模板信息 */
+    String GET_SUBMIT_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/submitconfig/get";
+    /** 打印质检码 */
+    String PRINT_INSPECT_CODE_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/code/print";
+    /** 绑定送检信息 */
+    String SUBMIT_INSPECT_INFO_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/submit";
+    /** 自寄快递送检 */
+    String REGISTER_LOGISTICS_URL = "https://api.weixin.qq.com/channels/ec/qic/inspect/register_logistics";
   }
 
   /**

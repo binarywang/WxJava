@@ -7,7 +7,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.8.3.B</version>
+    <version>4.8.4.B</version>
   </parent>
 
   <artifactId>weixin-java-qidian</artifactId>
@@ -34,7 +34,6 @@
     <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>

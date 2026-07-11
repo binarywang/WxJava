@@ -39,6 +39,11 @@ public class WxOpenMultiProperties implements Serializable {
     private StorageType type = StorageType.memory;
 
     /**
+     * http客户端类型.
+     */
+    private HttpClientType httpClientType = HttpClientType.HTTP_COMPONENTS;
+
+    /**
      * 指定key前缀.
      */
     private String keyPrefix = "wx:open:multi";
@@ -120,6 +125,17 @@ public class WxOpenMultiProperties implements Serializable {
      * redisTemplate
      */
     redistemplate
+  }
+
+  public enum HttpClientType {
+    /**
+     * Apache HttpClient 4.x
+     */
+    APACHE_HTTP,
+    /**
+     * Apache HttpClient 5.x (HttpComponents)
+     */
+    HTTP_COMPONENTS
   }
 
 }

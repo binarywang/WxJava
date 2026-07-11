@@ -107,6 +107,11 @@ public class BaseWxCpServiceImplTest {
       }
 
       @Override
+      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "mock_contact_access_token";
+      }
+
+      @Override
       public void initHttp() {
 
       }

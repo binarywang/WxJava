@@ -130,6 +130,45 @@ public interface TransferService {
 
   /**
    * <pre>
+   * 发起转账并完成免确认收款授权API
+   *
+   * 该接口与 {@link #transferBills(TransferBillsRequest)} 都会创建商家转账单，
+   * 区别是本接口可额外携带免确认收款授权信息，在用户确认收款流程中同步引导用户完成授权。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills/pre-transfer-with-authorization">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4014399293">发起转账并完成免确认收款授权</a>
+   * </pre>
+   *
+   * @param request 发起转账并完成免确认收款授权请求参数
+   * @return PreTransferWithAuthorizationResult 发起结果
+   * @throws WxPayException .
+   */
+  PreTransferWithAuthorizationResult transferBillsWithAuthorization(PreTransferWithAuthorizationRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 用户授权后转账API
+   *
+   * 该接口与 {@link #transferBills(TransferBillsRequest)} 都会创建商家转账单，
+   * 区别是本接口用于用户已经完成免确认收款授权后的直接转账场景。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/transfer-bills/transfer">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4014399371">用户授权后转账</a>
+   * </pre>
+   *
+   * @param request 用户授权后转账请求参数
+   * @return TransferBillsAfterAuthorizationResult 转账结果
+   * @throws WxPayException .
+   */
+  TransferBillsAfterAuthorizationResult transferBillsAfterAuthorization(TransferBillsAfterAuthorizationRequest request)
+    throws WxPayException;
+
+  /**
+   * <pre>
    *
    * 2025.1.15 开始新接口 撤销转账API
    *
@@ -191,6 +230,83 @@ public interface TransferService {
   TransferBillsNotifyResult parseTransferBillsNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   // ===================== 用户授权免确认模式相关接口 =====================
+
+  /**
+   * <pre>
+   * 发起免确认收款授权API
+   *
+   * 该接口只创建免确认收款授权申请，不创建转账单。接口返回的 package_info
+   * 需要用于 JSAPI/APP 调起用户授权页面。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/user-confirm-authorization">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015901167">发起免确认收款授权</a>
+   * </pre>
+   *
+   * @param request 发起免确认收款授权请求参数
+   * @return UserConfirmAuthorizationResult 授权申请结果
+   * @throws WxPayException .
+   */
+  UserConfirmAuthorizationResult userConfirmAuthorization(UserConfirmAuthorizationRequest request) throws WxPayException;
+
+  /**
+   * <pre>
+   * 商户单号查询免确认收款授权结果API
+   *
+   * 商户可通过发起授权时传入的 out_authorization_no 查询用户是否已经完成免确认收款授权。
+   * 当返回 state 为 TAKING_EFFECT 时，表示授权生效中，可用于用户授权后转账。
+   *
+   * 请求方式：GET（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/{out_authorization_no}">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4014399423">商户单号查询授权结果</a>
+   * </pre>
+   *
+   * @param outAuthorizationNo     商户侧授权单号
+   * @param isDisplayAuthorization 是否返回用于调起授权页面的 package_info
+   * @return UserConfirmAuthorizationResult 授权结果
+   * @throws WxPayException .
+   */
+  UserConfirmAuthorizationResult getUserConfirmAuthorizationByOutAuthorizationNo(String outAuthorizationNo,
+                                                                                Boolean isDisplayAuthorization)
+    throws WxPayException;
+
+  /**
+   * <pre>
+   * 解除免确认收款授权API
+   *
+   * 商户可通过发起授权时传入的 out_authorization_no 主动关闭用户的免确认收款授权。
+   *
+   * 请求方式：POST（HTTPS）
+   * 请求地址：<a href="https://api.mch.weixin.qq.com/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/{out_authorization_no}/close">请求地址</a>
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4015653811">解除免确认收款授权</a>
+   * </pre>
+   *
+   * @param outAuthorizationNo 商户侧授权单号
+   * @return UserConfirmAuthorizationResult 解除授权结果
+   * @throws WxPayException .
+   */
+  UserConfirmAuthorizationResult closeUserConfirmAuthorization(String outAuthorizationNo) throws WxPayException;
+
+  /**
+   * <pre>
+   * 解析免确认收款授权结果通知
+   *
+   * 微信支付会把用户确认授权或关闭授权的结果通知到商户在发起授权时传入的 authorization_notify_url。
+   * 通知报文中的 resource 为 AES-256-GCM 加密内容，本方法会完成签名校验（传入 header 时）和资源解密。
+   *
+   * 文档地址：<a href="https://pay.weixin.qq.com/doc/v3/merchant/4014512908">免确认收款授权结果通知</a>
+   * </pre>
+   *
+   * @param notifyData 通知数据
+   * @param header     通知头部数据，不传则表示不校验头
+   * @return UserAuthorizationNotifyResult 授权通知结果
+   * @throws WxPayException .
+   */
+  UserAuthorizationNotifyResult parseUserAuthorizationNotifyResult(String notifyData, SignatureHeader header)
+    throws WxPayException;
 
   /**
    * <pre>

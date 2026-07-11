@@ -5,16 +5,29 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delive
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Delivery.GET_DELIVERY_COMPANY_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ACCEPT_ADDRESS_MODIFY_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.DECODE_SENSITIVE_INFO_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.DELIVERY_COMPENSATION_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_GET_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_LIST_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.ORDER_SEARCH_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.PRE_SHIPMENT_CHANGE_SKU_APPROVE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.PRE_SHIPMENT_CHANGE_SKU_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.PRE_SHIPMENT_CHANGE_SKU_REJECT_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.PRESENT_NOTE_ADD_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.PRESENT_SUB_ORDER_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.REAL_NUMBER_APPLY_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.REAL_NUMBER_VIEW_AUDIT_GET_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.REJECT_ADDRESS_MODIFY_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_ADDRESS_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_EXPRESS_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_PRICE_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPDATE_REMARK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.UPLOAD_FRESH_INSPECT_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.VIRTUAL_NUMBER_APPLY_AGAIN_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.VIRTUAL_NUMBER_DELAY_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Order.VIRTUAL_TEL_NUMBER_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.PrivateNumber.ADD_PHONE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.PrivateNumber.GET_PHONE_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.PrivateNumber.SEND_VERIFY_CODE_URL;
 
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +43,7 @@ import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
 import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressParam;
+import me.chanjar.weixin.channel.bean.order.OrderCompensationDeliveryParam;
 import me.chanjar.weixin.channel.bean.order.OrderIdParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
@@ -38,6 +52,14 @@ import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderPriceParam;
 import me.chanjar.weixin.channel.bean.order.OrderRemarkParam;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.PreShipmentChangeSkuRejectParam;
+import me.chanjar.weixin.channel.bean.order.PreShipmentChangeSkuResponse;
+import me.chanjar.weixin.channel.bean.order.PresentNoteAddParam;
+import me.chanjar.weixin.channel.bean.order.PresentSubOrderResponse;
+import me.chanjar.weixin.channel.bean.order.PrivateNumberAddPhoneParam;
+import me.chanjar.weixin.channel.bean.order.PrivateNumberGetPhoneResponse;
+import me.chanjar.weixin.channel.bean.order.PrivateNumberSendVerifyCodeParam;
+import me.chanjar.weixin.channel.bean.order.RealNumberViewAuditResponse;
 import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -177,5 +199,96 @@ public class WxChannelOrderServiceImpl implements WxChannelOrderService {
     String reqJson = "{\"order_id\":\"" + orderId + "\"}";
     String resJson = shopService.post(DECODE_SENSITIVE_INFO_URL, reqJson);
     return ResponseUtils.decode(resJson, DecodeSensitiveInfoResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse addPresentNote(String orderId, String note) throws WxErrorException {
+    PresentNoteAddParam param = new PresentNoteAddParam(orderId, note);
+    String resJson = shopService.post(PRESENT_NOTE_ADD_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public PresentSubOrderResponse getPresentSubOrders(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(PRESENT_SUB_ORDER_GET_URL, param);
+    return ResponseUtils.decode(resJson, PresentSubOrderResponse.class);
+  }
+
+  @Override
+  public PreShipmentChangeSkuResponse getPreShipmentChangeSku(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(PRE_SHIPMENT_CHANGE_SKU_GET_URL, param);
+    return ResponseUtils.decode(resJson, PreShipmentChangeSkuResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse approvePreShipmentChangeSku(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(PRE_SHIPMENT_CHANGE_SKU_APPROVE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse rejectPreShipmentChangeSku(String orderId, String rejectReason)
+    throws WxErrorException {
+    PreShipmentChangeSkuRejectParam param = new PreShipmentChangeSkuRejectParam(orderId, rejectReason);
+    String resJson = shopService.post(PRE_SHIPMENT_CHANGE_SKU_REJECT_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse applyRealNumber(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(REAL_NUMBER_APPLY_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public RealNumberViewAuditResponse getRealNumberViewAudit(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(REAL_NUMBER_VIEW_AUDIT_GET_URL, param);
+    return ResponseUtils.decode(resJson, RealNumberViewAuditResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse applyVirtualNumberAgain(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(VIRTUAL_NUMBER_APPLY_AGAIN_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse delayVirtualNumber(String orderId) throws WxErrorException {
+    OrderIdParam param = new OrderIdParam(orderId);
+    String resJson = shopService.post(VIRTUAL_NUMBER_DELAY_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse addPrivatePhone(String phone) throws WxErrorException {
+    PrivateNumberAddPhoneParam param = new PrivateNumberAddPhoneParam(phone);
+    String resJson = shopService.post(ADD_PHONE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse sendPrivatePhoneVerifyCode(String phone) throws WxErrorException {
+    PrivateNumberSendVerifyCodeParam param = new PrivateNumberSendVerifyCodeParam(phone);
+    String resJson = shopService.post(SEND_VERIFY_CODE_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public PrivateNumberGetPhoneResponse getPrivatePhone() throws WxErrorException {
+    String resJson = shopService.post(GET_PHONE_URL, "{}");
+    return ResponseUtils.decode(resJson, PrivateNumberGetPhoneResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse compensationDelivery(OrderCompensationDeliveryParam param)
+    throws WxErrorException {
+    String resJson = shopService.post(DELIVERY_COMPENSATION_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 }

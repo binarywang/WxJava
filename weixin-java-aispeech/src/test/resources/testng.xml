@@ -1,0 +1,8 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Aispeech Tests" verbose="1">
+  <test name="Aispeech Unit Tests">
+    <packages>
+      <package name="me.chanjar.weixin.aispeech.*"/>
+    </packages>
+  </test>
+</suite>

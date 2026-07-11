@@ -154,6 +154,11 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
       }
 
       @Override
+      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "mock_contact_access_token";
+      }
+
+      @Override
       public void initHttp() {
       }
 
@@ -211,6 +216,11 @@ public class WxCpServiceGetMsgAuditAccessTokenTest {
         } finally {
           lock.unlock();
         }
+      }
+
+      @Override
+      public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+        return "mock_contact_access_token";
       }
 
       @Override
