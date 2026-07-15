@@ -629,9 +629,40 @@ public class WxMaMessage implements Serializable {
     }
   }
 
+  /**
+   * 从加密字符串转换.
+   *
+   * @param encryptedJson 密文
+   * @param config        配置存储器对象
+   * @param timestamp     时间戳
+   * @param nonce         随机串
+   * @param msgSignature  签名串
+   */
+  public static WxMaMessage fromEncryptedJson(String encryptedJson, WxMaConfig config,
+                                              String timestamp, String nonce, String msgSignature) {
+    try {
+      WxMaMessage encryptedMessage = fromJson(encryptedJson);
+      String plainText = new WxMaCryptUtils(config).decryptContent(msgSignature, timestamp, nonce,
+        encryptedMessage.getEncrypt());
+      return fromJson(plainText);
+    } catch (Exception e) {
+      throw new WxRuntimeException(e);
+    }
+  }
+
   public static WxMaMessage fromEncryptedJson(InputStream inputStream, WxMaConfig config) {
     try {
       return fromEncryptedJson(IOUtils.toString(inputStream, StandardCharsets.UTF_8), config);
+    } catch (IOException e) {
+      throw new WxRuntimeException(e);
+    }
+  }
+
+  public static WxMaMessage fromEncryptedJson(InputStream inputStream, WxMaConfig config,
+                                              String timestamp, String nonce, String msgSignature) {
+    try {
+      return fromEncryptedJson(IOUtils.toString(inputStream, StandardCharsets.UTF_8), config,
+        timestamp, nonce, msgSignature);
     } catch (IOException e) {
       throw new WxRuntimeException(e);
     }

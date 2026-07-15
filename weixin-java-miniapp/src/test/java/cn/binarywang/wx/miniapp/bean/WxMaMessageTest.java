@@ -2,14 +2,21 @@ package cn.binarywang.wx.miniapp.bean;
 
 import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayTeamInfo;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
+import cn.binarywang.wx.miniapp.config.impl.WxMaDefaultConfigImpl;
+import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.error.WxRuntimeException;
+import me.chanjar.weixin.common.util.crypto.SHA1;
 import org.testng.annotations.Test;
 
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -457,6 +464,48 @@ public class WxMaMessageTest {
     assertEquals(msg.getComplaintTime(), new Long(1700000050L));
     assertEquals(msg.getRetryTimes(), new Integer(0));
     assertEquals(msg.getRequestId(), "req_005");
+  }
+
+  @Test
+  public void testFromEncryptedJsonWithSignature() {
+    WxMaDefaultConfigImpl config = buildMessagePushConfig();
+    String plainJson = "{\"ToUserName\":\"gh_123456789abc\",\"FromUserName\":\"fromUser\",\"CreateTime\":1710000000,"
+      + "\"MsgType\":\"event\",\"Event\":\"subscribe_msg_popup_event\"}";
+    String encrypt = new WxMaCryptUtils(config).encrypt("1234567890abcdef", plainJson);
+    String timestamp = "1710000000";
+    String nonce = "nonce123";
+    String msgSignature = SHA1.gen(config.getToken(), timestamp, nonce, encrypt);
+    String encryptedJson = "{\"Encrypt\":\"" + encrypt + "\"}";
+
+    WxMaMessage wxMessage = WxMaMessage.fromEncryptedJson(new ByteArrayInputStream(
+      encryptedJson.getBytes(StandardCharsets.UTF_8)), config, timestamp, nonce, msgSignature);
+
+    assertEquals(wxMessage.getToUser(), "gh_123456789abc");
+    assertEquals(wxMessage.getFromUser(), "fromUser");
+    assertEquals(wxMessage.getCreateTime(), new Integer(1710000000));
+    assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(wxMessage.getEvent(), "subscribe_msg_popup_event");
+  }
+
+  @Test
+  public void testFromEncryptedJsonWithSignatureInvalidMsgSignature() {
+    WxMaDefaultConfigImpl config = buildMessagePushConfig();
+    String plainJson = "{\"ToUserName\":\"gh_123456789abc\",\"FromUserName\":\"fromUser\"}";
+    String encrypt = new WxMaCryptUtils(config).encrypt("1234567890abcdef", plainJson);
+    String encryptedJson = "{\"Encrypt\":\"" + encrypt + "\"}";
+
+    assertThatThrownBy(() -> WxMaMessage.fromEncryptedJson(encryptedJson, config,
+      "1710000000", "nonce123", "invalidSignature"))
+      .isInstanceOf(WxRuntimeException.class)
+      .hasMessageContaining("加密消息签名校验失败");
+  }
+
+  private WxMaDefaultConfigImpl buildMessagePushConfig() {
+    WxMaDefaultConfigImpl config = new WxMaDefaultConfigImpl();
+    config.setAppid("wx1234567890abcdef");
+    config.setToken("testToken");
+    config.setAesKey("abcdefghijklmnopqrstuvwxyz0123456789ABCDEFG");
+    return config;
   }
 
   /**
