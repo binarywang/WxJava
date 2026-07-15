@@ -638,19 +638,12 @@ public class WxMaMessage implements Serializable {
    * @param nonce         随机串
    * @param msgSignature  签名串
    */
-public static WxMaMessage fromEncryptedJson(String encryptedJson, WxMaConfig config,
-                                            String timestamp, String nonce, String msgSignature) {
-  try {
+  public static WxMaMessage fromEncryptedJson(String encryptedJson, WxMaConfig config,
+                                              String timestamp, String nonce, String msgSignature) {
     WxMaMessage encryptedMessage = fromJson(encryptedJson);
     String plainText = new WxMaCryptUtils(config).decryptContent(msgSignature, timestamp, nonce,
       encryptedMessage.getEncrypt());
     return fromJson(plainText);
-  } catch (WxRuntimeException e) {
-    throw e;
-  } catch (Exception e) {
-    throw new WxRuntimeException(e);
-  }
-}
   }
 
   public static WxMaMessage fromEncryptedJson(InputStream inputStream, WxMaConfig config) {
