@@ -2,6 +2,9 @@ package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlResult;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
+import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
+import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -29,4 +32,34 @@ public interface PartnerInvoiceService {
    * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4015792574">官方文档</a>
    */
   void issueGeneralInvoice(GeneralInvoiceRequest request) throws WxPayException;
+
+  /**
+   * 查询电子发票。
+   *
+   * @param fapiaoApplyId 开票申请单号
+   * @param subMchId 子商户号
+   * @param fapiaoId 可选，商户发票单号
+   * @return 发票信息
+   * @throws WxPayException 微信支付异常
+   */
+  InvoiceResult getInvoice(String fapiaoApplyId, String subMchId, String fapiaoId) throws WxPayException;
+
+  /**
+   * 冲红电子发票。
+   *
+   * @param request 冲红申请
+   * @throws WxPayException 微信支付异常
+   */
+  void reverseInvoice(ReverseInvoiceRequest request) throws WxPayException;
+
+  /**
+   * 获取发票文件下载信息。
+   *
+   * @param fapiaoApplyId 开票申请单号
+   * @param subMchId 子商户号
+   * @param fapiaoId 可选，商户发票单号
+   * @return 发票文件下载信息
+   * @throws WxPayException 微信支付异常
+   */
+  InvoiceFileResult getInvoiceFileDownloadInfo(String fapiaoApplyId, String subMchId, String fapiaoId) throws WxPayException;
 }
