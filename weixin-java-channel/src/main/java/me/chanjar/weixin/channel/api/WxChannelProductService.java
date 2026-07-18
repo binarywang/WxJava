@@ -6,14 +6,17 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.GiftActivityAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftActivityInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductGetResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
+import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
-import me.chanjar.weixin.channel.bean.product.GiftActivityInfo;
-import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
-import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
-import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
 import me.chanjar.weixin.channel.bean.product.SpuInfo;
 import me.chanjar.weixin.channel.bean.product.SpuListResponse;
 import me.chanjar.weixin.channel.bean.product.SpuUpdateInfo;
@@ -214,35 +217,37 @@ public interface WxChannelProductService {
    * 添加非卖商品
    *
    * @param info 赠品信息
-   * @return 赠品商品ID
+   * @return 添加赠品响应
    * @throws WxErrorException 异常
    */
-  String addGiftProduct(GiftProductInfo info) throws WxErrorException;
+  GiftProductAddResponse addGiftProduct(GiftProductInfo info) throws WxErrorException;
 
   /**
    * 更新非卖商品
    *
    * @param info 赠品信息
+   * @return 操作响应
    * @throws WxErrorException 异常
    */
-  void updateGiftProduct(GiftProductInfo info) throws WxErrorException;
+  WxChannelBaseResponse updateGiftProduct(GiftProductInfo info) throws WxErrorException;
 
   /**
    * 在售商品转赠品
    *
    * @param productId 商品ID
+   * @return 操作响应
    * @throws WxErrorException 异常
    */
-  void setProductAsGift(String productId) throws WxErrorException;
+  WxChannelBaseResponse setProductAsGift(String productId) throws WxErrorException;
 
   /**
    * 获取赠品
    *
    * @param productId 赠品商品ID
-   * @return 赠品信息
+   * @return 赠品详情响应
    * @throws WxErrorException 异常
    */
-  GiftProductInfo getGiftProduct(String productId) throws WxErrorException;
+  GiftProductGetResponse getGiftProduct(String productId) throws WxErrorException;
 
   /**
    * 获取赠品列表
@@ -258,35 +263,41 @@ public interface WxChannelProductService {
    *
    * @param productId 赠品商品ID
    * @param skuId     赠品sku_id
-   * @param stock     库存值
+   * @param diffType  修改类型 1增加 2减少 3设置
+   *                  建议使用1或2，不建议使用3，因为使用3在高并发场景可能会出现预期外表现
+   * @param num       增加、减少或者设置的库存值
+   * @return 操作响应
    * @throws WxErrorException 异常
    */
-  void updateGiftStock(String productId, String skuId, Integer stock) throws WxErrorException;
+  WxChannelBaseResponse updateGiftStock(String productId, String skuId, Integer diffType, Integer num)
+    throws WxErrorException;
 
   /**
    * 创建赠品活动
    *
    * @param info 活动信息
-   * @return 活动ID
+   * @return 创建赠品活动响应
    * @throws WxErrorException 异常
    */
-  String addGiftActivity(GiftActivityInfo info) throws WxErrorException;
+  GiftActivityAddResponse addGiftActivity(GiftActivityInfo info) throws WxErrorException;
 
   /**
    * 删除赠品活动
    *
    * @param activityId 活动ID
+   * @return 操作响应
    * @throws WxErrorException 异常
    */
-  void deleteGiftActivity(String activityId) throws WxErrorException;
+  WxChannelBaseResponse deleteGiftActivity(String activityId) throws WxErrorException;
 
   /**
    * 停止赠品活动
    *
    * @param activityId 活动ID
+   * @return 操作响应
    * @throws WxErrorException 异常
    */
-  void stopGiftActivity(String activityId) throws WxErrorException;
+  WxChannelBaseResponse stopGiftActivity(String activityId) throws WxErrorException;
 
   /**
    * 添加限时抢购任务

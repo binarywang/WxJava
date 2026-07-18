@@ -229,33 +229,31 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
   }
 
   @Override
-  public String addGiftProduct(GiftProductInfo info) throws WxErrorException {
+  public GiftProductAddResponse addGiftProduct(GiftProductInfo info) throws WxErrorException {
     String reqJson = JsonUtils.encode(info);
     String resJson = shopService.post(GIFT_PRODUCT_ADD_URL, reqJson);
-    GiftProductAddResponse response = ResponseUtils.decode(resJson, GiftProductAddResponse.class);
-    return response.getProductId();
+    return ResponseUtils.decode(resJson, GiftProductAddResponse.class);
   }
 
   @Override
-  public void updateGiftProduct(GiftProductInfo info) throws WxErrorException {
+  public WxChannelBaseResponse updateGiftProduct(GiftProductInfo info) throws WxErrorException {
     String reqJson = JsonUtils.encode(info);
     String resJson = shopService.post(GIFT_PRODUCT_UPDATE_URL, reqJson);
-    ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public void setProductAsGift(String productId) throws WxErrorException {
+  public WxChannelBaseResponse setProductAsGift(String productId) throws WxErrorException {
     String reqJson = "{\"product_id\":\"" + productId + "\"}";
     String resJson = shopService.post(GIFT_PRODUCT_ON_SALE_SET_URL, reqJson);
-    ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public GiftProductInfo getGiftProduct(String productId) throws WxErrorException {
+  public GiftProductGetResponse getGiftProduct(String productId) throws WxErrorException {
     String reqJson = "{\"product_id\":\"" + productId + "\"}";
     String resJson = shopService.post(GIFT_PRODUCT_GET_URL, reqJson);
-    GiftProductGetResponse response = ResponseUtils.decode(resJson, GiftProductGetResponse.class);
-    return response.getProduct() != null ? response.getProduct() : response.getEditProduct();
+    return ResponseUtils.decode(resJson, GiftProductGetResponse.class);
   }
 
   @Override
@@ -266,34 +264,34 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
   }
 
   @Override
-  public void updateGiftStock(String productId, String skuId, Integer stock) throws WxErrorException {
-    SkuStockParam param = new SkuStockParam(productId, skuId, 3, stock);
+  public WxChannelBaseResponse updateGiftStock(String productId, String skuId, Integer diffType, Integer num)
+    throws WxErrorException {
+    SkuStockParam param = new SkuStockParam(productId, skuId, diffType, num);
     String reqJson = JsonUtils.encode(param);
     String resJson = shopService.post(GIFT_PRODUCT_STOCK_UPDATE_URL, reqJson);
-    ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public String addGiftActivity(GiftActivityInfo info) throws WxErrorException {
+  public GiftActivityAddResponse addGiftActivity(GiftActivityInfo info) throws WxErrorException {
     GiftActivityAddParam param = new GiftActivityAddParam(info);
     String reqJson = JsonUtils.encode(param);
     String resJson = shopService.post(GIFT_ACTIVITY_ADD_URL, reqJson);
-    GiftActivityAddResponse response = ResponseUtils.decode(resJson, GiftActivityAddResponse.class);
-    return response.getActivityId();
+    return ResponseUtils.decode(resJson, GiftActivityAddResponse.class);
   }
 
   @Override
-  public void deleteGiftActivity(String activityId) throws WxErrorException {
+  public WxChannelBaseResponse deleteGiftActivity(String activityId) throws WxErrorException {
     String reqJson = "{\"activity_id\":\"" + activityId + "\"}";
     String resJson = shopService.post(GIFT_ACTIVITY_DELETE_URL, reqJson);
-    ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public void stopGiftActivity(String activityId) throws WxErrorException {
+  public WxChannelBaseResponse stopGiftActivity(String activityId) throws WxErrorException {
     String reqJson = "{\"activity_id\":\"" + activityId + "\"}";
     String resJson = shopService.post(GIFT_ACTIVITY_STOP_URL, reqJson);
-    ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
