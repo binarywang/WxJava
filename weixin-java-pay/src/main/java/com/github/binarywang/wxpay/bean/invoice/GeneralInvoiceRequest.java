@@ -25,30 +25,6 @@ public class GeneralInvoiceRequest implements Serializable {
   private FapiaoInformation fapiaoInformation;
 
   @Data
-  public static class BuyerInformation implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private String type;
-    private String name;
-    @SerializedName("taxpayer_id")
-    private String taxpayerId;
-    private String address;
-    private String telephone;
-    @SerializedName("bank_name")
-    private String bankName;
-    @SerializedName("bank_account")
-    private String bankAccount;
-    private String phone;
-    private String email;
-    private Integer amount;
-    @SerializedName("out_trade_no")
-    private String outTradeNo;
-    @SerializedName("fapiao_bill_type")
-    private String fapiaoBillType;
-    @SerializedName("user_apply_message")
-    private String userApplyMessage;
-  }
-
-  @Data
   public static class FapiaoInformation implements Serializable {
     private static final long serialVersionUID = 1L;
     @SerializedName("fapiao_id")

@@ -66,7 +66,8 @@ public class WechatPayUploadHttpPost extends HttpPost {
       this.fileName = fileName;
       this.fileInputStream = inputStream;
       this.customMeta = meta;
-      this.fileContentType = ContentType.create("application/pdf");
+      String mimeType = URLConnection.guessContentTypeFromName(fileName);
+      this.fileContentType = ContentType.create(mimeType == null ? "application/octet-stream" : mimeType);
       return this;
     }
 

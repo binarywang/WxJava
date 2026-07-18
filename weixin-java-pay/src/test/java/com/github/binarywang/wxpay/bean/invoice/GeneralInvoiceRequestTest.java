@@ -19,7 +19,7 @@ public class GeneralInvoiceRequestTest {
     request.setSubMchid("1900000109");
     request.setFapiaoApplyId("apply_20260718_001");
 
-    GeneralInvoiceRequest.BuyerInformation buyer = new GeneralInvoiceRequest.BuyerInformation();
+    BuyerInformation buyer = new BuyerInformation();
     buyer.setType("ORGANIZATION");
     buyer.setName("示例企业");
     buyer.setTaxpayerId("91440300TEST00001");

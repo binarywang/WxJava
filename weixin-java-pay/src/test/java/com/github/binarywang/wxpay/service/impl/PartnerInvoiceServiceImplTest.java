@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
 import com.github.binarywang.wxpay.bean.invoice.SubMerchantInvoiceStatus;
+import com.github.binarywang.wxpay.bean.invoice.TitleUrlRequest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -159,5 +160,36 @@ public class PartnerInvoiceServiceImplTest {
 
     Assert.assertEquals(requestedUrl.get(), "https://api.mch.weixin.qq.com/v3/new-tax-control-fapiao/merchant/1900000109/check-status");
     Assert.assertEquals(result.getThirdMode().getStatus(), "ENABLED");
+  }
+
+  @Test
+  public void shouldEncodeTitleUrlParametersAndIncludeOptionalFields() throws Exception {
+    AtomicReference<String> requestedUrl = new AtomicReference<>();
+    WxPayService payService = (WxPayService) Proxy.newProxyInstance(
+      getClass().getClassLoader(), new Class[]{WxPayService.class}, (proxy, method, args) -> {
+        if ("getPayBaseUrl".equals(method.getName())) {
+          return "https://api.mch.weixin.qq.com";
+        }
+        if ("getV3".equals(method.getName())) {
+          requestedUrl.set((String) args[0]);
+          return "{}";
+        }
+        throw new UnsupportedOperationException(method.getName());
+      });
+    TitleUrlRequest request = new TitleUrlRequest();
+    request.setSubMchid("1900000109");
+    request.setFapiaoApplyId("apply|001");
+    request.setSource("WEB");
+    request.setAppid("wx123");
+    request.setOpenid("openid");
+    request.setTotalAmount(100);
+    request.setSellerName("测试 商户");
+    request.setShowPhoneCell(true);
+
+    new PartnerInvoiceServiceImpl(payService).getUserTitleUrl(request);
+
+    Assert.assertTrue(requestedUrl.get().contains("fapiao_apply_id=apply%7C001"));
+    Assert.assertTrue(requestedUrl.get().contains("seller_name=%E6%B5%8B%E8%AF%95+%E5%95%86%E6%88%B7"));
+    Assert.assertTrue(requestedUrl.get().contains("show_phone_cell=true"));
   }
 }
