@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlResult;
+import com.github.binarywang.wxpay.bean.invoice.InviteUrlRequest;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
@@ -50,10 +51,25 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
 
   @Override
   public InviteUrlResult getInviteUrl(String subMchId) throws WxPayException {
+    InviteUrlRequest request = new InviteUrlRequest();
+    request.setSubMchid(subMchId);
+    return getInviteUrl(request);
+  }
+
+  @Override
+  public InviteUrlResult getInviteUrl(InviteUrlRequest request) throws WxPayException {
     String url = this.payService.getPayBaseUrl() + INVITE_URL_PATH;
-    if (StringUtils.isNotBlank(subMchId)) {
-      url += "?sub_mchid=" + encode(subMchId);
+    if (StringUtils.isNotBlank(request.getSubMchid())) {
+      url += "?" + query("sub_mchid", request.getSubMchid());
     }
+    url = appendQuery(url, "operation_type", request.getOperationType());
+    url = appendQuery(url, "fapiao_mode", request.getFapiaoMode());
+    if (request.getFapiaoAbilityTypeList() != null && !request.getFapiaoAbilityTypeList().isEmpty()) {
+      url = appendQuery(url, "fapiao_ability_type_list", String.join(",", request.getFapiaoAbilityTypeList()));
+    }
+    url = appendQuery(url, "invite_channel", request.getInviteChannel());
+    url = appendQuery(url, "operate_user", request.getOperateUser());
+    url = appendQuery(url, "invite_code", request.getInviteCode());
     String response = this.payService.getV3(url);
     return GSON.fromJson(response, InviteUrlResult.class);
   }
@@ -105,7 +121,7 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
   @Override
   public DevelopmentConfigResult updateDevelopmentConfig(DevelopmentConfigRequest request) throws WxPayException {
     String url = this.payService.getPayBaseUrl() + "/v3/new-tax-control-fapiao/merchant/development-config";
-    return GSON.fromJson(this.payService.putV3(url, GSON.toJson(request)), DevelopmentConfigResult.class);
+    return GSON.fromJson(this.payService.patchV3(url, GSON.toJson(request)), DevelopmentConfigResult.class);
   }
 
   @Override
@@ -179,7 +195,7 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
   }
 
   private static String appendQuery(String url, String key, Object value) {
-    return value == null ? url : url + "&" + query(key, value);
+    return value == null ? url : url + (url.contains("?") ? "&" : "?") + query(key, value);
   }
 
   private static String encode(Object value) {

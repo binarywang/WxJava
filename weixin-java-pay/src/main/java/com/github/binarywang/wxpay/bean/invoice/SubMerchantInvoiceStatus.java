@@ -34,6 +34,8 @@ public class SubMerchantInvoiceStatus implements Serializable {
     private String expiredTime;
     @SerializedName("access_fail_reason")
     private String accessFailReason;
+    @SerializedName("ability_info")
+    private List<Ability> abilityInfo;
   }
 
   @Data
@@ -41,5 +43,12 @@ public class SubMerchantInvoiceStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     private String id;
     private String name;
+  }
+
+  @Data
+  public static class Ability implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private String type;
+    private String status;
   }
 }

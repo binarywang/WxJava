@@ -32,6 +32,8 @@ public class ReverseInvoiceRequest implements Serializable {
 
     @SerializedName("fapiao_id")
     private String fapiaoId;
+    @SerializedName("fapiao_code")
+    private String fapiaoCode;
     @SerializedName("fapiao_number")
     private String fapiaoNumber;
   }

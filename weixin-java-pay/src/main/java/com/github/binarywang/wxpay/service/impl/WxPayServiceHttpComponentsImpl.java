@@ -135,7 +135,7 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
         responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
       }
 
-      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode || HttpStatus.SC_ACCEPTED == statusCode) {
         this.logRequestAndResponse(url, requestStr, responseString);
         return responseString;
       }
@@ -207,7 +207,7 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
         responseString = EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8);
       }
 
-      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode) {
+      if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode || HttpStatus.SC_ACCEPTED == statusCode) {
         log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
         return responseString;
       }

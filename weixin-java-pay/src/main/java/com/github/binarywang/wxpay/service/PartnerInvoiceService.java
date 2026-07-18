@@ -1,6 +1,7 @@
 package com.github.binarywang.wxpay.service;
 
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlResult;
+import com.github.binarywang.wxpay.bean.invoice.InviteUrlRequest;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
@@ -38,6 +39,8 @@ public interface PartnerInvoiceService {
    * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4015941495">官方文档</a>
    */
   InviteUrlResult getInviteUrl(String subMchId) throws WxPayException;
+
+  InviteUrlResult getInviteUrl(InviteUrlRequest request) throws WxPayException;
 
   /**
    * 开具通用行业电子发票。接口受理成功后，请通过查询电子发票接口获取处理结果。
