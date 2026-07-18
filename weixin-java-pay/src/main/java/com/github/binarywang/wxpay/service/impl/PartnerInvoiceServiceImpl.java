@@ -181,7 +181,7 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
     meta.addProperty("sub_mchid", request.getSubMchid());
     meta.addProperty("file_type", request.getFileType());
     // 微信支付官方接口字段即为 digest_alogrithm（文档中的既定拼写）。
-    meta.addProperty("digest_alogrithm", request.getDigestAlogrithm());
+    meta.addProperty("digest_alogrithm", request.getDigestAlgorithm());
     meta.addProperty("digest", request.getDigest());
     try (FileInputStream inputStream = new FileInputStream(request.getFile())) {
       WechatPayUploadHttpPost post = new WechatPayUploadHttpPost.Builder(URI.create(url))

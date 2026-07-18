@@ -9,6 +9,6 @@ import java.io.Serializable;
   private File file;
   @SerializedName("sub_mchid") private String subMchid;
   @SerializedName("file_type") private String fileType = "PDF";
-  @SerializedName("digest_alogrithm") private String digestAlogrithm = "SM3";
+  @SerializedName("digest_alogrithm") private String digestAlgorithm = "SM3";
   private String digest;
 }
