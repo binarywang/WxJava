@@ -23,7 +23,7 @@ public class DropshipInfo implements Serializable {
   @JsonProperty("supplier_id")
   private String supplierId;
 
-  @JsonProperty("dropship_id")
+  @JsonProperty("ds_order_id")
   private String dropshipId;
 
   @JsonProperty("status")

@@ -18,12 +18,22 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 视频号小店代发管理服务。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
- * @link <a href="https://developers.weixin.qq.com/doc/channels/API/supplier/">代发管理接口文档</a>
+ * @see <a href="https://developers.weixin.qq.com/doc/channels/API/supplier/">代发管理接口文档</a>
  */
 public interface WxChannelSupplierService {
 
   /** 获取供货商列表。 */
   SupplierListResponse getSupplierList() throws WxErrorException;
+
+  /**
+   * 获取供货商列表。
+   *
+   * @param pageSize 每页数量
+   * @param nextKey  由上次请求返回，记录翻页的上下文。传入时会从上次返回的结果往后翻一页
+   * @return 供货商列表响应
+   * @throws WxErrorException 异常
+   */
+  SupplierListResponse getSupplierList(Integer pageSize, String nextKey) throws WxErrorException;
 
   /** 获取分配方式。 */
   DistributeTypeResponse getDistribute() throws WxErrorException;

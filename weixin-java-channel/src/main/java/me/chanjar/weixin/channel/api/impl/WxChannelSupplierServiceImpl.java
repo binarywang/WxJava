@@ -1,7 +1,9 @@
 package me.chanjar.weixin.channel.api.impl;
 
+import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelSupplierService;
+import me.chanjar.weixin.channel.bean.base.StreamPageParam;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.supplier.DistributeTypeResponse;
 import me.chanjar.weixin.channel.bean.supplier.DropshipAssignRequest;
@@ -16,6 +18,7 @@ import me.chanjar.weixin.channel.bean.supplier.SupplierInfoResponse;
 import me.chanjar.weixin.channel.bean.supplier.SupplierListResponse;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.json.GsonHelper;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Supplier.ASSIGN_DROPSHIP_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Supplier.CANCEL_DROPSHIP_URL;
@@ -46,7 +49,13 @@ public class WxChannelSupplierServiceImpl implements WxChannelSupplierService {
 
   @Override
   public SupplierListResponse getSupplierList() throws WxErrorException {
-    String respJson = shopService.post(GET_SUPPLIER_LIST_URL, "{}");
+    return getSupplierList(null, null);
+  }
+
+  @Override
+  public SupplierListResponse getSupplierList(Integer pageSize, String nextKey) throws WxErrorException {
+    StreamPageParam param = new StreamPageParam(pageSize, nextKey);
+    String respJson = shopService.post(GET_SUPPLIER_LIST_URL, param);
     return ResponseUtils.decode(respJson, SupplierListResponse.class);
   }
 
@@ -64,8 +73,7 @@ public class WxChannelSupplierServiceImpl implements WxChannelSupplierService {
 
   @Override
   public WxChannelBaseResponse setAllDistribute(String supplierId) throws WxErrorException {
-    ProductDistributeRequest req = new ProductDistributeRequest();
-    req.setSupplierId(supplierId);
+    JsonObject req = GsonHelper.buildJsonObject("supplier_id", supplierId);
     String respJson = shopService.post(SET_ALL_DISTRIBUTION_URL, req);
     return ResponseUtils.decode(respJson, WxChannelBaseResponse.class);
   }
@@ -78,13 +86,15 @@ public class WxChannelSupplierServiceImpl implements WxChannelSupplierService {
 
   @Override
   public SupplierInfoResponse getProductDefaultDistribute(String productId) throws WxErrorException {
-    String respJson = shopService.post(GET_PRODUCT_DEFAULT_DISTRIBUTE_URL, "{\"product_id\":\"" + productId + "\"}");
+    JsonObject req = GsonHelper.buildJsonObject("product_id", productId);
+    String respJson = shopService.post(GET_PRODUCT_DEFAULT_DISTRIBUTE_URL, req);
     return ResponseUtils.decode(respJson, SupplierInfoResponse.class);
   }
 
   @Override
   public ProductListResponse getProductList(String supplierId) throws WxErrorException {
-    String respJson = shopService.post(GET_PRODUCT_LIST_URL, "{\"supplier_id\":\"" + supplierId + "\"}");
+    JsonObject req = GsonHelper.buildJsonObject("supplier_id", supplierId);
+    String respJson = shopService.post(GET_PRODUCT_LIST_URL, req);
     return ResponseUtils.decode(respJson, ProductListResponse.class);
   }
 
@@ -96,13 +106,15 @@ public class WxChannelSupplierServiceImpl implements WxChannelSupplierService {
 
   @Override
   public WxChannelBaseResponse cancelDropship(String orderId) throws WxErrorException {
-    String respJson = shopService.post(CANCEL_DROPSHIP_URL, "{\"order_id\":\"" + orderId + "\"}");
+    JsonObject req = GsonHelper.buildJsonObject("order_id", orderId);
+    String respJson = shopService.post(CANCEL_DROPSHIP_URL, req);
     return ResponseUtils.decode(respJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public DropshipDetailResponse getDropship(String orderId) throws WxErrorException {
-    String respJson = shopService.post(GET_DROPSHIP_URL, "{\"order_id\":\"" + orderId + "\"}");
+    JsonObject req = GsonHelper.buildJsonObject("order_id", orderId);
+    String respJson = shopService.post(GET_DROPSHIP_URL, req);
     return ResponseUtils.decode(respJson, DropshipDetailResponse.class);
   }
 

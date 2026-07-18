@@ -23,7 +23,9 @@ public class WxChannelSupplierBeanTest {
     assertNotNull(json);
     assertFalse(json.contains("supplierId"));
     assertFalse(json.contains("productIdList"));
-    assertEquals(json, "{\"supplier_id\":\"1001\",\"product_id_list\":[\"p1\",\"p2\"]}");
+    ProductDistributeRequest decoded = JsonUtils.decode(json, ProductDistributeRequest.class);
+    assertEquals(decoded.getSupplierId(), "1001");
+    assertEquals(decoded.getProductIdList(), Arrays.asList("p1", "p2"));
   }
 
   @Test
@@ -34,7 +36,9 @@ public class WxChannelSupplierBeanTest {
 
     String json = JsonUtils.encode(request);
     assertNotNull(json);
-    assertEquals(json, "{\"order_id\":\"o1\",\"supplier_id\":\"s1\"}");
+    DropshipAssignRequest decoded = JsonUtils.decode(json, DropshipAssignRequest.class);
+    assertEquals(decoded.getOrderId(), "o1");
+    assertEquals(decoded.getSupplierId(), "s1");
   }
 
   @Test
@@ -46,5 +50,13 @@ public class WxChannelSupplierBeanTest {
     assertEquals(response.getErrCode(), 0);
     assertEquals(response.getSupplierList().size(), 1);
     assertEquals(response.getSupplierList().get(0).getSupplierId(), "s1");
+  }
+
+  @Test
+  public void testDecodeDropshipInfo() {
+    DropshipInfo info = JsonUtils.decode("{\"ds_order_id\":\"d1\"}", DropshipInfo.class);
+
+    assertNotNull(info);
+    assertEquals(info.getDropshipId(), "d1");
   }
 }
