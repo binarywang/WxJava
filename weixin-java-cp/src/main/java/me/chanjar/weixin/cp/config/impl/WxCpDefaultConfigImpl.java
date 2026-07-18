@@ -45,6 +45,16 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   private volatile String aesKey;
   private volatile long expiresTime;
   /**
+   * 通讯录同步secret及其access token
+   */
+  private volatile String contactSecret;
+  private volatile String contactAccessToken;
+  private volatile long contactAccessTokenExpiresTime;
+  /**
+   * 通讯录同步access token锁
+   */
+  protected transient Lock contactAccessTokenLock = new ReentrantLock();
+  /**
    * 会话存档私钥以及sdk路径
    */
   private volatile String msgAuditSecret;
@@ -466,6 +476,49 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
+  public String getContactSecret() {
+    return this.contactSecret;
+  }
+
+  /**
+   * 设置通讯录同步secret.
+   *
+   * @param contactSecret 通讯录同步secret
+   * @return this
+   */
+  public WxCpDefaultConfigImpl setContactSecret(String contactSecret) {
+    this.contactSecret = contactSecret;
+    return this;
+  }
+
+  @Override
+  public String getContactAccessToken() {
+    return this.contactAccessToken;
+  }
+
+  @Override
+  public Lock getContactAccessTokenLock() {
+    return this.contactAccessTokenLock;
+  }
+
+  @Override
+  public boolean isContactAccessTokenExpired() {
+    return System.currentTimeMillis() > this.contactAccessTokenExpiresTime;
+  }
+
+  @Override
+  public void expireContactAccessToken() {
+    this.contactAccessTokenExpiresTime = 0;
+  }
+
+  @Override
+  public synchronized void updateContactAccessToken(String accessToken, int expiresInSeconds) {
+    this.contactAccessToken = accessToken;
+    // 预留200秒的时间
+    this.contactAccessTokenExpiresTime = System.currentTimeMillis() + (expiresInSeconds - 200) * 1000L;
+  }
+
+  @Override
   public String getMsgAuditSecret() {
     return this.msgAuditSecret;
   }
@@ -556,9 +609,9 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public synchronized int decrementMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
-      // 当引用计数降为0时，自动销毁SDK以释放资源
-      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
-      if (newCount == 0 && this.msgAuditSdk == sdk) {
+      // 当引用计数降为0且SDK已过期时，才销毁SDK以释放资源
+      // 如果SDK尚未过期，保留SDK缓存以供后续调用复用，避免频繁初始化和销毁
+      if (newCount == 0 && this.msgAuditSdk == sdk && isMsgAuditSdkExpired()) {
         Finance.DestroySdk(sdk);
         this.msgAuditSdk = 0;
         this.msgAuditSdkExpiresTime = 0;
@@ -593,9 +646,9 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   public synchronized void releaseMsgAuditSdk(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
-      // 当引用计数降为0时，自动销毁SDK以释放资源
-      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
-      if (newCount == 0 && this.msgAuditSdk == sdk) {
+      // 当引用计数降为0且SDK已过期时，才销毁SDK以释放资源
+      // 如果SDK尚未过期，保留SDK缓存以供后续调用复用，避免频繁初始化和销毁
+      if (newCount == 0 && this.msgAuditSdk == sdk && isMsgAuditSdkExpired()) {
         Finance.DestroySdk(sdk);
         this.msgAuditSdk = 0;
         this.msgAuditSdkExpiresTime = 0;

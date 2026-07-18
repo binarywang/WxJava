@@ -17,11 +17,16 @@ import me.chanjar.weixin.channel.bean.order.ChangeOrderInfo;
 import me.chanjar.weixin.channel.bean.order.DecodeSensitiveInfoResponse;
 import me.chanjar.weixin.channel.bean.order.DeliveryUpdateParam;
 import me.chanjar.weixin.channel.bean.order.OrderAddressInfo;
+import me.chanjar.weixin.channel.bean.order.OrderCompensationDeliveryParam;
 import me.chanjar.weixin.channel.bean.order.OrderInfoResponse;
 import me.chanjar.weixin.channel.bean.order.OrderListParam;
 import me.chanjar.weixin.channel.bean.order.OrderListResponse;
 import me.chanjar.weixin.channel.bean.order.OrderSearchCondition;
 import me.chanjar.weixin.channel.bean.order.OrderSearchParam;
+import me.chanjar.weixin.channel.bean.order.PreShipmentChangeSkuResponse;
+import me.chanjar.weixin.channel.bean.order.PresentSubOrderResponse;
+import me.chanjar.weixin.channel.bean.order.PrivateNumberGetPhoneResponse;
+import me.chanjar.weixin.channel.bean.order.RealNumberViewAuditResponse;
 import me.chanjar.weixin.channel.bean.order.VirtualTelNumberResponse;
 import me.chanjar.weixin.channel.test.ApiTestModule;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -195,6 +200,125 @@ public class WxChannelOrderServiceImplTest {
     WxChannelOrderService orderService = channelService.getOrderService();
     String orderId = "123";
     DecodeSensitiveInfoResponse response = orderService.decodeSensitiveInfo(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testAddPresentNote() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    String note = "测试备注";
+    WxChannelBaseResponse response = orderService.addPresentNote(orderId, note);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetPresentSubOrders() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    PresentSubOrderResponse response = orderService.getPresentSubOrders(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetPreShipmentChangeSku() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    PreShipmentChangeSkuResponse response = orderService.getPreShipmentChangeSku(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testApprovePreShipmentChangeSku() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.approvePreShipmentChangeSku(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testRejectPreShipmentChangeSku() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    String rejectReason = "库存不足";
+    WxChannelBaseResponse response = orderService.rejectPreShipmentChangeSku(orderId, rejectReason);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testApplyRealNumber() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.applyRealNumber(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetRealNumberViewAudit() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    RealNumberViewAuditResponse response = orderService.getRealNumberViewAudit(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testApplyVirtualNumberAgain() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.applyVirtualNumberAgain(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testDelayVirtualNumber() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String orderId = "";
+    WxChannelBaseResponse response = orderService.delayVirtualNumber(orderId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testAddPrivatePhone() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String phone = "13800138000";
+    WxChannelBaseResponse response = orderService.addPrivatePhone(phone);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testSendPrivatePhoneVerifyCode() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    String phone = "13800138000";
+    WxChannelBaseResponse response = orderService.sendPrivatePhoneVerifyCode(phone);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetPrivatePhone() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    PrivateNumberGetPhoneResponse response = orderService.getPrivatePhone();
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testCompensationDelivery() throws WxErrorException {
+    WxChannelOrderService orderService = channelService.getOrderService();
+    OrderCompensationDeliveryParam param = new OrderCompensationDeliveryParam();
+    param.setOrderId("");
+    WxChannelBaseResponse response = orderService.compensationDelivery(param);
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }

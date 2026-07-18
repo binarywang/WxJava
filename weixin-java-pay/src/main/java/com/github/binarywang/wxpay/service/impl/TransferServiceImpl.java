@@ -9,6 +9,7 @@ import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 
 import java.security.cert.X509Certificate;
 import java.util.List;
@@ -96,6 +97,59 @@ public class TransferServiceImpl implements TransferService {
   }
 
   @Override
+  public PreTransferWithAuthorizationResult transferBillsWithAuthorization(PreTransferWithAuthorizationRequest request) throws WxPayException {
+    this.checkTransferBillsWithAuthorizationRequest(request);
+    String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills/pre-transfer-with-authorization",
+      this.payService.getPayBaseUrl());
+    if (request.getUserName() != null && !request.getUserName().isEmpty()) {
+      X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+      RsaCryptoUtil.encryptFields(request, validCertificate);
+    }
+    String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(result, PreTransferWithAuthorizationResult.class);
+  }
+
+  @Override
+  public TransferBillsAfterAuthorizationResult transferBillsAfterAuthorization(
+    TransferBillsAfterAuthorizationRequest request) throws WxPayException {
+    this.checkTransferBillsAfterAuthorizationRequest(request);
+    String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills/transfer",
+      this.payService.getPayBaseUrl());
+    if (request.getUserName() != null && !request.getUserName().isEmpty()) {
+      X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+      RsaCryptoUtil.encryptFields(request, validCertificate);
+    }
+    String result = this.payService.postV3WithWechatpaySerial(url, GSON.toJson(request));
+    return GSON.fromJson(result, TransferBillsAfterAuthorizationResult.class);
+  }
+
+  private void checkTransferBillsWithAuthorizationRequest(PreTransferWithAuthorizationRequest request) throws WxPayException {
+    if (request == null) {
+      throw new WxPayException("发起转账并完成免确认收款授权请求参数不能为空");
+    }
+
+    PreTransferWithAuthorizationRequest.AuthorizationInfo authorizationInfo = request.getAuthorizationInfo();
+    if (authorizationInfo == null) {
+      throw new WxPayException("免确认收款授权信息authorizationInfo不能为空");
+    }
+
+    if (StringUtils.isAnyBlank(authorizationInfo.getUserDisplayName(),
+      authorizationInfo.getOutAuthorizationNo(), authorizationInfo.getAuthorizationNotifyUrl())) {
+      throw new WxPayException("免确认收款授权信息中的userDisplayName、outAuthorizationNo、authorizationNotifyUrl不能为空");
+    }
+  }
+
+  private void checkTransferBillsAfterAuthorizationRequest(TransferBillsAfterAuthorizationRequest request) throws WxPayException {
+    if (request == null) {
+      throw new WxPayException("用户授权后转账请求参数不能为空");
+    }
+
+    if (StringUtils.isBlank(request.getAuthorizationId()) && StringUtils.isBlank(request.getOutAuthorizationNo())) {
+      throw new WxPayException("用户授权后转账authorizationId和outAuthorizationNo不能同时为空");
+    }
+  }
+
+  @Override
   public TransferBillsCancelResult transformBillsCancel(String outBillNo) throws WxPayException {
     String url = String.format("%s/v3/fund-app/mch-transfer/transfer-bills/out-bill-no/%s/cancel",
       this.payService.getPayBaseUrl(), outBillNo);
@@ -128,6 +182,51 @@ public class TransferServiceImpl implements TransferService {
   // ===================== 用户授权免确认模式相关接口实现 =====================
 
   @Override
+  public UserConfirmAuthorizationResult userConfirmAuthorization(UserConfirmAuthorizationRequest request) throws WxPayException {
+    String url = String.format("%s/v3/fund-app/mch-transfer/user-confirm-authorization", this.payService.getPayBaseUrl());
+    String result = this.payService.postV3(url, GSON.toJson(request));
+    return GSON.fromJson(result, UserConfirmAuthorizationResult.class);
+  }
+
+  @Override
+  public UserConfirmAuthorizationResult getUserConfirmAuthorizationByOutAuthorizationNo(String outAuthorizationNo,
+                                                                                       Boolean isDisplayAuthorization)
+    throws WxPayException {
+    if (StringUtils.isBlank(outAuthorizationNo)) {
+      throw new WxPayException("商户侧授权单号outAuthorizationNo不能为空");
+    }
+
+    StringBuilder url = new StringBuilder();
+    url.append(this.payService.getPayBaseUrl())
+      .append("/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/")
+      .append(outAuthorizationNo);
+    if (isDisplayAuthorization != null) {
+      url.append("?is_display_authorization=").append(isDisplayAuthorization);
+    }
+    String result = this.payService.getV3(url.toString());
+    return GSON.fromJson(result, UserConfirmAuthorizationResult.class);
+  }
+
+  @Override
+  public UserConfirmAuthorizationResult closeUserConfirmAuthorization(String outAuthorizationNo) throws WxPayException {
+    if (StringUtils.isBlank(outAuthorizationNo)) {
+      throw new WxPayException("商户侧授权单号outAuthorizationNo不能为空");
+    }
+
+    String url = String.format("%s/v3/fund-app/mch-transfer/user-confirm-authorization/out-authorization-no/%s/close",
+      this.payService.getPayBaseUrl(), outAuthorizationNo);
+    String result = this.payService.postV3(url, "");
+    return GSON.fromJson(result, UserConfirmAuthorizationResult.class);
+  }
+
+  @Override
+  public UserAuthorizationNotifyResult parseUserAuthorizationNotifyResult(String notifyData, SignatureHeader header)
+    throws WxPayException {
+    return this.payService.baseParseOrderNotifyV3Result(notifyData, header, UserAuthorizationNotifyResult.class,
+      UserAuthorizationNotifyResult.DecryptNotifyResult.class);
+  }
+
+  @Override
   public UserAuthorizationStatusResult getUserAuthorizationStatus(String openid, String transferSceneId) throws WxPayException {
     String url = String.format("%s/v3/fund-app/mch-transfer/authorization/openid/%s?transfer_scene_id=%s",
       this.payService.getPayBaseUrl(), openid, transferSceneId);
@@ -140,9 +239,12 @@ public class TransferServiceImpl implements TransferService {
     String url = String.format("%s/v3/fund-app/mch-transfer/reservation/transfer-batches", this.payService.getPayBaseUrl());
     List<ReservationTransferBatchRequest.TransferDetail> transferDetailList = request.getTransferDetailList();
     if (transferDetailList != null && !transferDetailList.isEmpty()) {
-      X509Certificate validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+      X509Certificate validCertificate = null;
       for (ReservationTransferBatchRequest.TransferDetail detail : transferDetailList) {
         if (detail.getUserName() != null && !detail.getUserName().isEmpty()) {
+          if (validCertificate == null) {
+            validCertificate = this.payService.getConfig().getVerifier().getValidCertificate();
+          }
           RsaCryptoUtil.encryptFields(detail, validCertificate);
         }
       }

@@ -301,6 +301,16 @@ public class WxMaApiUrlConstants {
     String QUERY_URLLINK_URL = "https://api.weixin.qq.com/wxa/query_urllink";
   }
 
+  /**
+   * URL Link 二维码快速跳转规则管理.
+   */
+  public interface QrcodeJump {
+    String QRCODE_JUMP_ADD = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/addcategoryrule";
+    String QRCODE_JUMP_GET = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/getcategory";
+    String QRCODE_JUMP_GET_LIST = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/getcategorybypage";
+    String QRCODE_JUMP_DELETE = "https://api.weixin.qq.com/wxaapi/wxaqrcodefast/deletecategoryrule";
+  }
+
   public interface ShortLink {
     String GENERATE_SHORT_LINK_URL = "https://api.weixin.qq.com/wxa/genwxashortlink";
   }
@@ -393,6 +403,8 @@ public class WxMaApiUrlConstants {
     String FILE_BIZ_LICENSE = "https://api.weixin.qq.com/cv/ocr/bizlicense";
     String COMM = "https://api.weixin.qq.com/cv/ocr/comm?img_url=%s";
     String FILE_COMM = "https://api.weixin.qq.com/cv/ocr/comm";
+    String MENU = "https://api.weixin.qq.com/cv/ocr/menu?img_url=%s";
+    String FILE_MENU = "https://api.weixin.qq.com/cv/ocr/menu";
   }
 
   public interface Product {

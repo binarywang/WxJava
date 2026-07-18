@@ -71,6 +71,18 @@ public class WxChannelAfterSaleServiceImplTest {
   }
 
   @Test
+  public void testRejectWithCertificates() throws WxErrorException {
+    WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
+    String afterSaleOrderId = "";
+    String rejectReason = null;
+    List<String> rejectCertificates = new ArrayList<>(4);
+    rejectCertificates.add("THE_FILE_ID_1");
+    WxChannelBaseResponse response = afterSaleService.reject(afterSaleOrderId, rejectReason, 1, rejectCertificates);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
   public void testUploadRefundEvidence() throws WxErrorException {
     WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
     String afterSaleOrderId = "";

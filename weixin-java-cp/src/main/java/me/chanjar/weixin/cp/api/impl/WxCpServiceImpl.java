@@ -71,6 +71,49 @@ public class WxCpServiceImpl extends WxCpServiceApacheHttpClientImpl {
   }
 
   @Override
+  public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+    final WxCpConfigStorage configStorage = getWxCpConfigStorage();
+    if (!configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+      return configStorage.getContactAccessToken();
+    }
+    Lock lock = configStorage.getContactAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+        return configStorage.getContactAccessToken();
+      }
+      // 使用通讯录同步secret获取access_token
+      String contactSecret = configStorage.getContactSecret();
+      if (contactSecret == null || contactSecret.trim().isEmpty()) {
+        throw new WxErrorException("通讯录同步secret未配置");
+      }
+      String url = String.format(configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN),
+        this.configStorage.getCorpId(), contactSecret);
+      try {
+        HttpGet httpGet = new HttpGet(url);
+        if (getRequestHttpProxy() != null) {
+          RequestConfig config = RequestConfig.custom().setProxy(getRequestHttpProxy()).build();
+          httpGet.setConfig(config);
+        }
+        String resultContent = getRequestHttpClient().execute(httpGet, ApacheBasicResponseHandler.INSTANCE);
+        WxError error = WxError.fromJson(resultContent, WxType.CP);
+        if (error.getErrorCode() != 0) {
+          throw new WxErrorException(error);
+        }
+
+        WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+        configStorage.updateContactAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+      } catch (IOException e) {
+        throw new WxRuntimeException(e);
+      }
+    } finally {
+      lock.unlock();
+    }
+    return configStorage.getContactAccessToken();
+  }
+
+  @Override
   public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
     final WxCpConfigStorage configStorage = getWxCpConfigStorage();
     if (!configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {

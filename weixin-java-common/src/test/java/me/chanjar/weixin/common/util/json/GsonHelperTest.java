@@ -136,4 +136,29 @@ public class GsonHelperTest {
     System.out.println(GsonHelper.buildJsonObject(1, true, "jsonElement", new JsonObject()));
     System.out.println(GsonHelper.buildJsonObject("num", 2, "string", "cde", "char", 'a', "bool", true));
   }
+
+  /**
+   * If the JSON property exists but is NOT a JSON array (e.g. a plain string),
+   * getIntArray should return null gracefully rather than throwing ClassCastException.
+   */
+  @Test
+  public void testGetIntArrayNonArrayProperty() {
+    JsonObject json = new JsonObject();
+    json.addProperty("items", "not-an-array");
+    assertThat(GsonHelper.getIntArray(json, "items")).isNull();
+  }
+
+  @Test
+  public void testGetStringArrayNonArrayProperty() {
+    JsonObject json = new JsonObject();
+    json.addProperty("items", 123);
+    assertThat(GsonHelper.getStringArray(json, "items")).isNull();
+  }
+
+  @Test
+  public void testGetLongArrayNonArrayProperty() {
+    JsonObject json = new JsonObject();
+    json.addProperty("items", "not-an-array");
+    assertThat(GsonHelper.getLongArray(json, "items")).isNull();
+  }
 }

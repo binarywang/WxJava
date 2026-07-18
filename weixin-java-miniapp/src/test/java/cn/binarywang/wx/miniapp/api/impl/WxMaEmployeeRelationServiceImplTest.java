@@ -66,7 +66,7 @@ public class WxMaEmployeeRelationServiceImplTest {
   @Test
   public void testUnbinduserb2cauthinfo() throws WxErrorException {
     WxMaUnbindEmployeeRequest wxMaUnbindEmployeeRequest = new WxMaUnbindEmployeeRequest();
-    wxMaUnbindEmployeeRequest.setOpenidList(List.of("o0uBr12b1zdgCk1qDoBivmSYb9GA"));
+    wxMaUnbindEmployeeRequest.setOpenidList(Collections.singletonList("o0uBr12b1zdgCk1qDoBivmSYb9GA"));
     this.wxService.getEmployeeRelationService().unbindEmployee(wxMaUnbindEmployeeRequest);
   }
 

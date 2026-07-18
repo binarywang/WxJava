@@ -59,6 +59,11 @@ public class BaseWxPayServiceImplTest {
   @Inject
   private WxPayService payService;
 
+  @Test
+  public void testDefaultImplUsesApacheHttpClient() {
+    assertThat(new WxPayServiceImpl()).isInstanceOf(WxPayServiceApacheHttpImpl.class);
+  }
+
   /**
    * Test method for {@link WxPayService#unifiedOrder(WxPayUnifiedOrderRequest)}.
    *

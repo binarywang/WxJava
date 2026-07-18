@@ -196,19 +196,22 @@ msgAuditService.downloadMediaFile(sdkFileId, null, null, 1000L, data -> {
 
 1. **获取SDK时**：引用计数 +1
 2. **使用完成后**：引用计数 -1
-3. **计数归零时**：SDK被自动释放
+3. **计数归零且SDK已过期时**：SDK被销毁并清理缓存
+4. **计数归零但SDK未过期时**：保留缓存，供后续调用直接复用
+
+> **注意**：引用计数归零并不等同于立即销毁SDK。只有在 SDK 已超过有效期的情况下，框架才会调用 `Finance.DestroySdk()` 释放资源。这一机制避免了每次 API 调用后的频繁初始化/销毁循环。
 
 ```java
 // 框架内部实现（简化版）
 public void downloadMediaFile(String sdkFileId, ...) {
-    long sdk = initSdk();  // 获取或初始化SDK
+    long sdk = initSdk();  // 获取或初始化SDK（有效期内直接复用缓存）
     configStorage.incrementMsgAuditSdkRefCount(sdk);  // 引用计数 +1
-    
+
     try {
         // 执行实际操作
         getMediaFile(sdk, sdkFileId, ...);
     } finally {
-        // 确保引用计数一定会减少
+        // 确保引用计数一定会减少；仅在归零且过期时销毁
         configStorage.decrementMsgAuditSdkRefCount(sdk);  // 引用计数 -1
     }
 }
@@ -216,13 +219,13 @@ public void downloadMediaFile(String sdkFileId, ...) {
 
 ### SDK缓存机制
 
-SDK初始化后会缓存7200秒（企业微信官方文档规定），避免频繁初始化：
+SDK初始化后会缓存7200秒，避免频繁初始化：
 
 - **首次调用**：初始化新的SDK
-- **7200秒内**：复用缓存的SDK
-- **超过7200秒**：重新初始化SDK
+- **7200秒内**：复用缓存的SDK（即使引用计数曾归零也不重新初始化）
+- **超过7200秒**：下次 `acquireMsgAuditSdk()` 返回0，触发重新初始化，旧SDK在重新初始化时被销毁
 
-新API的引用计数机制与缓存机制完美配合，确保SDK不会被提前销毁。
+新API的引用计数机制与缓存机制完美配合，确保SDK不会被提前销毁，也不会永久残留。
 
 ## 迁移指南
 

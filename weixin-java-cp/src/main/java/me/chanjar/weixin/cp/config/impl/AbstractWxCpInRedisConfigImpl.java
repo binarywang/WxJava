@@ -1,10 +1,12 @@
 package me.chanjar.weixin.cp.config.impl;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.bean.WxAccessToken;
 import me.chanjar.weixin.common.redis.WxRedisOps;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 
@@ -12,6 +14,7 @@ import java.util.concurrent.locks.Lock;
  * @author yl
  * created on  2023/04/23
  */
+@Slf4j
 public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImpl {
   private static final long serialVersionUID = 7157341535439380615L;
   /**
@@ -120,8 +123,34 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
 
   @Override
   public boolean isAccessTokenExpired() {
-    Long expire = redisOps.getExpire(this.accessTokenKey);
-    return expire == null || expire < 2;
+    try {
+      Long expire = redisOps.getExpire(this.accessTokenKey);
+      return expire == null || expire < 2;
+    } catch (Exception e) {
+      log.warn("获取access_token过期时间时发生异常，将视为已过期以触发刷新，异常信息: {}", e.getMessage());
+      // 仅在当前线程已中断且异常为中断相关时，才清除中断标志，避免吞掉上层的中断语义
+      if (Thread.currentThread().isInterrupted() && isInterruptionRelated(e)) {
+        Thread.interrupted();
+      }
+      return true;
+    }
+  }
+
+  /**
+   * 判断异常及其原因链是否为中断相关异常。
+   *
+   * @param throwable 异常
+   * @return 如果异常链中包含 {@link InterruptedException} 或 {@link CancellationException}，返回 true；否则返回 false
+   */
+  private boolean isInterruptionRelated(Throwable throwable) {
+    Throwable current = throwable;
+    while (current != null) {
+      if (current instanceof InterruptedException || current instanceof CancellationException) {
+        return true;
+      }
+      current = current.getCause();
+    }
+    return false;
   }
 
   @Override
@@ -146,8 +175,13 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
 
   @Override
   public boolean isJsapiTicketExpired() {
-    Long expire = redisOps.getExpire(this.jsapiTicketKey);
-    return expire == null || expire < 2;
+    try {
+      Long expire = redisOps.getExpire(this.jsapiTicketKey);
+      return expire == null || expire < 2;
+    } catch (Exception e) {
+      log.warn("获取jsapi_ticket过期时间时发生异常，将视为已过期，异常信息: {}", e.getMessage());
+      return true;
+    }
   }
 
   @Override
@@ -177,8 +211,17 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
 
   @Override
   public boolean isAgentJsapiTicketExpired() {
-    Long expire = redisOps.getExpire(this.agentJsapiTicketKey);
-    return expire == null || expire < 2;
+    try {
+      Long expire = redisOps.getExpire(this.agentJsapiTicketKey);
+      return expire == null || expire < 2;
+    } catch (Exception e) {
+      log.warn("获取agent_jsapi_ticket过期时间时发生异常，将视为已过期，异常信息: {}", e.getMessage());
+      // 仅在当前线程已中断且异常为中断相关时，才清除中断标志，避免吞掉上层的中断语义
+      if (Thread.currentThread().isInterrupted() && isInterruptionRelated(e)) {
+        Thread.interrupted();
+      }
+      return true;
+    }
   }
 
   @Override

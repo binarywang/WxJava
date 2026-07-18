@@ -143,4 +143,24 @@ public class WxMpOcrServiceImpl implements WxOcrService {
       FILE_COMM.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
     return WxOcrCommResult.fromJson(result);
   }
+
+  @Override
+  public WxOcrMenuResult menu(String imgUrl) throws WxErrorException {
+    try {
+      imgUrl = URLEncoder.encode(imgUrl, StandardCharsets.UTF_8.name());
+    } catch (UnsupportedEncodingException e) {
+      // ignore cannot happen
+    }
+
+    final String result = this.mainService.post(String.format(MENU.getUrl(this.mainService.getWxMpConfigStorage()),
+      imgUrl), (String) null);
+    return WxOcrMenuResult.fromJson(result);
+  }
+
+  @Override
+  public WxOcrMenuResult menu(File imgFile) throws WxErrorException {
+    String result = this.mainService.execute(OcrDiscernRequestExecutor.create(this.mainService.getRequestHttp()),
+      FILE_MENU.getUrl(this.mainService.getWxMpConfigStorage()), imgFile);
+    return WxOcrMenuResult.fromJson(result);
+  }
 }

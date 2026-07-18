@@ -57,13 +57,10 @@ public class FileUtils {
    * @return base64编码
    */
   public static String imageToBase64ByStream(InputStream in) {
-    byte[] data = null;
     // 读取图片字节数组
     try {
-      data = new byte[in.available()];
-      in.read(data);
       // 返回Base64编码过的字节数组字符串
-      return Base64.getEncoder().encodeToString(data);
+      return Base64.getEncoder().encodeToString(IOUtils.toByteArray(in));
     } catch (IOException e) {
       e.printStackTrace();
     } finally {
