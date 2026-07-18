@@ -5,6 +5,7 @@ import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
+import com.github.binarywang.wxpay.bean.invoice.SubMerchantInvoiceStatus;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -137,5 +138,26 @@ public class PartnerInvoiceServiceImplTest {
 
     Assert.assertEquals(requestedUrl.get(), "https://api.mch.weixin.qq.com/v3/new-tax-control-fapiao/fapiao-applications/apply-001/fapiao-files?sub_mchid=1900000109&fapiao_id=fapiao-001");
     Assert.assertEquals(result.getFapiaoDownloadInfoList().get(0).getDownloadUrl(), "https://download.example.com/file");
+  }
+
+  @Test
+  public void shouldCheckSubMerchantInvoiceStatus() throws Exception {
+    AtomicReference<String> requestedUrl = new AtomicReference<>();
+    WxPayService payService = (WxPayService) Proxy.newProxyInstance(
+      getClass().getClassLoader(), new Class[]{WxPayService.class}, (proxy, method, args) -> {
+        if ("getPayBaseUrl".equals(method.getName())) {
+          return "https://api.mch.weixin.qq.com";
+        }
+        if ("getV3".equals(method.getName())) {
+          requestedUrl.set((String) args[0]);
+          return "{\"sub_mchid\":\"1900000109\",\"third_mode\":{\"status\":\"ENABLED\"}}";
+        }
+        throw new UnsupportedOperationException(method.getName());
+      });
+
+    SubMerchantInvoiceStatus result = new PartnerInvoiceServiceImpl(payService).getSubMerchantInvoiceStatus("1900000109");
+
+    Assert.assertEquals(requestedUrl.get(), "https://api.mch.weixin.qq.com/v3/new-tax-control-fapiao/merchant/1900000109/check-status");
+    Assert.assertEquals(result.getThirdMode().getStatus(), "ENABLED");
   }
 }

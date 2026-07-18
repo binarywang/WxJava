@@ -5,6 +5,21 @@ import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.SubMerchantInvoiceStatus;
+import com.github.binarywang.wxpay.bean.invoice.CardTemplateRequest;
+import com.github.binarywang.wxpay.bean.invoice.CardTemplateResult;
+import com.github.binarywang.wxpay.bean.invoice.DevelopmentConfigRequest;
+import com.github.binarywang.wxpay.bean.invoice.DevelopmentConfigResult;
+import com.github.binarywang.wxpay.bean.invoice.TitleUrlRequest;
+import com.github.binarywang.wxpay.bean.invoice.TitleUrlResult;
+import com.github.binarywang.wxpay.bean.invoice.BuyerInformation;
+import com.github.binarywang.wxpay.bean.invoice.IndustryInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.InsertCardRequest;
+import com.github.binarywang.wxpay.bean.invoice.InviteMerchantQuery;
+import com.github.binarywang.wxpay.bean.invoice.InviteMerchantResult;
+import com.github.binarywang.wxpay.bean.invoice.InvoiceFileUploadRequest;
+import com.github.binarywang.wxpay.bean.invoice.InvoiceFileUploadResult;
+import java.io.IOException;
 import com.github.binarywang.wxpay.exception.WxPayException;
 
 /**
@@ -62,4 +77,31 @@ public interface PartnerInvoiceService {
    * @throws WxPayException 微信支付异常
    */
   InvoiceFileResult getInvoiceFileDownloadInfo(String fapiaoApplyId, String subMchId, String fapiaoId) throws WxPayException;
+
+  /**
+   * 检查子商户开票功能状态。
+   *
+   * @param subMchId 子商户号
+   * @return 子商户电子发票能力状态
+   * @throws WxPayException 微信支付异常
+   */
+  SubMerchantInvoiceStatus getSubMerchantInvoiceStatus(String subMchId) throws WxPayException;
+
+  CardTemplateResult createCardTemplate(CardTemplateRequest request) throws WxPayException;
+
+  DevelopmentConfigResult updateDevelopmentConfig(DevelopmentConfigRequest request) throws WxPayException;
+
+  TitleUrlResult getUserTitleUrl(TitleUrlRequest request) throws WxPayException;
+
+  BuyerInformation getUserTitle(String subMchId, String scene, String fapiaoApplyId) throws WxPayException;
+
+  void issueRealEstateLeasingInvoice(IndustryInvoiceRequest request) throws WxPayException;
+
+  void issueRefinedOilInvoice(IndustryInvoiceRequest request) throws WxPayException;
+
+  void insertCards(InsertCardRequest request) throws WxPayException;
+
+  InviteMerchantResult listInviteMerchants(InviteMerchantQuery query) throws WxPayException;
+
+  InvoiceFileUploadResult uploadInvoiceFile(InvoiceFileUploadRequest request) throws WxPayException, IOException;
 }
