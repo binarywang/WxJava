@@ -102,21 +102,6 @@ public class ProfitSharingResult implements Serializable {
    */
   @SerializedName(value = "receivers")
   private List<Receiver> receivers;
-  /**
-   * <pre>
-   * 字段名：关单原因
-   * 变量名：close_reason
-   * 是否必填：否
-   * 类型：string (32)
-   * 描述：
-   *  关单原因描述，当分账单状态status为CLOSED（处理失败，已关单）时，返回该字段。
-   * 枚举值：
-   *    NO_AUTH：分账授权已解除
-   * 示例值：NO_AUTH
-   * </pre>
-   */
-  @SerializedName(value = "close_reason")
-  private String closeReason;
 
   /**
    * <pre>
@@ -149,7 +134,7 @@ public class ProfitSharingResult implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Receiver implements Serializable {
-
+    private static final long serialVersionUID = 1L;
     /**
      * <pre>
      * 字段名：分账金额
