@@ -102,21 +102,6 @@ public class WxMaEntrustRequest extends BaseWxPayRequest {
 
   /**
    * <pre>
-   * 版本号
-   * sign
-   * 是
-   * string(8)
-   * 1.0
-   * 固定值1.0
-   * </pre>
-   */
-  @Required
-  @XStreamAlias("version")
-  private String version;
-
-
-  /**
-   * <pre>
    * 时间戳
    * timestamp
    * 是
