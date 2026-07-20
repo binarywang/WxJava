@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 提现状态变更通知结果
  * <pre>
- *   文档地址：https://pay.weixin.qq.com/doc/v3/partner/4013049135
+ *   文档地址：<a href="https://pay.weixin.qq.com/doc/v3/partner/4013049135">商户提现状态变更通知</a>
  * </pre>
  *
  * @author copilot
@@ -117,12 +117,12 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：提现发起时间
+   * 字段名：提交预约时间
    * 变量名：create_time
    * 是否必填：是
    * 类型：string（29）
    * 描述：
-   *  提现发起时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
+   *  提交预约时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
    *  YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss:sss表示时分秒毫秒，
    *  TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。
    *  例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日13点29分35秒
@@ -134,12 +134,12 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：提现更新时间
+   * 字段名：提现状态更新时间
    * 变量名：update_time
    * 是否必填：是
    * 类型：string（29）
    * 描述：
-   *  提现更新时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
+   *  提现状态更新时间，遵循rfc3339标准格式，格式为YYYY-MM-DDTHH:mm:ss:sss+TIMEZONE，
    *  YYYY-MM-DD表示年月日，T出现在字符串中，表示time元素的开头，HH:mm:ss:sss表示时分秒毫秒，
    *  TIMEZONE表示时区（+08:00表示东八区时间，领先UTC 8小时，即北京时间）。
    *  例如：2015-05-20T13:29:35.120+08:00表示，北京时间2015年5月20日13点29分35秒
@@ -193,12 +193,12 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：账户类型
+   * 字段名：出款账户类型
    * 变量名：account_type
    * 是否必填：否
    * 类型：string（16）
    * 描述：
-   *  提现账户类型，仅电商平台提现时返回：
+   *  出款账户类型：
    *  BASIC：基本账户
    *  OPERATION：运营账户
    *  FEES：手续费账户
@@ -224,41 +224,29 @@ public class WithdrawNotifyResult implements Serializable {
 
   /**
    * <pre>
-   * 字段名：出款户名
-   * 变量名：account_name
-   * 是否必填：否
-   * 类型：string（256）
-   * 描述：
-   *  出款户名（加密）
-   * 示例值：2mPt3pWzZ+O3dSGbGnCrR3bqMZ5pwfpQy1NNrA==
-   * </pre>
-   */
-  @SerializedName(value = "account_name")
-  private String accountName;
-
-  /**
-   * <pre>
-   * 字段名：出款账号
+   * 字段名：入账银行账号后四位
    * 变量名：account_number
    * 是否必填：否
    * 类型：string（256）
-   * 描述：
-   *  出款账号（加密）
-   * 示例值：2mPt3pWzZ+O3dSGbGnCrR3bqMZ5pwfpQy1NNrA==
+   * 描述：提现入账的银行账号，仅显示后四位
    * </pre>
    */
   @SerializedName(value = "account_number")
   private String accountNumber;
 
   /**
+   * 提现入账的开户银行
+   */
+  @SerializedName(value = "account_bank")
+  private String accountBank;
+
+  /**
    * <pre>
-   * 字段名：出款银行全称（含支行）
+   * 字段名：入账银行全称（含支行）
    * 变量名：bank_name
    * 是否必填：否
    * 类型：string（256）
-   * 描述：
-   *  出款银行全称（含支行）（加密）
-   * 示例值：2mPt3pWzZ+O3dSGbGnCrR3bqMZ5pwfpQy1NNrA==
+   * 描述：提现入账的开户银行全称（含支行）
    * </pre>
    */
   @SerializedName(value = "bank_name")

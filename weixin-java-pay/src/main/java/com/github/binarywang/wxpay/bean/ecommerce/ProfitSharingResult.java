@@ -82,10 +82,8 @@ public class ProfitSharingResult implements Serializable {
    * 类型：string (64)
    * 描述：
    *  分账单状态，枚举值：
-   *    ACCEPTED：受理成功
-   *    PROCESSING：处理中
-   *    FINISHED：分账成功
-   *    CLOSED：处理失败，已关单
+   *    PROCESSING：处理中，非终态
+   *    FINISHED：分账完成，终态
    *  示例值：FINISHED
    * </pre>
    */
@@ -151,20 +149,6 @@ public class ProfitSharingResult implements Serializable {
   @Data
   @NoArgsConstructor
   public static class Receiver implements Serializable {
-
-    /**
-     * <pre>
-     * 字段名：分账接收商户号
-     * 变量名：receiver_mchid
-     * 是否必填：是
-     * 类型：string (32)
-     * 描述：
-     *  填写微信支付分配的商户号，仅支持通过添加分账接收方接口添加的接收方；电商平台商户已默认添加到分账接收方，无需重复添加。
-     * 示例值：1900000109
-     * </pre>
-     */
-    @SerializedName(value = "receiver_mchid")
-    private String receiverMchid;
 
     /**
      * <pre>
