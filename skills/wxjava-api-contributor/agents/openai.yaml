@@ -1,0 +1,4 @@
+interface:
+  display_name: "WxJava 接口贡献"
+  short_description: "按 WxJava 项目约定新增或维护 SDK 接口能力"
+  default_prompt: "使用 $wxjava-api-contributor 为 WxJava 新增微信接口支持。"

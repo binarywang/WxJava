@@ -1,0 +1,4 @@
+interface:
+  display_name: "WxJava 接入指南"
+  short_description: "生成可验证的 WxJava 最小接入方案与配置示例"
+  default_prompt: "使用 $wxjava-integration-guide 为我的项目生成 WxJava 接入代码。"

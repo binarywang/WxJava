@@ -1,0 +1,4 @@
+interface:
+  display_name: "WxJava 升级迁移"
+  short_description: "规划 WxJava 版本升级、依赖调整与兼容性迁移"
+  default_prompt: "使用 $wxjava-upgrade-guide 制定 WxJava 版本升级方案。"
