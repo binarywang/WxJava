@@ -29,7 +29,7 @@
 
 ### 目录索引
 - [快速开始（3分钟）](#快速开始3分钟)
-- [Codex SKILL 安装](#codex-skill-安装)
+- [AI 编程智能体 SKILL 安装](#ai-编程智能体-skill-安装)
 - [我该选哪个模块？](#我该选哪个模块)
 - [Maven 引用方式](#maven-引用方式)
 - [最小示例](#最小示例)
@@ -46,11 +46,13 @@
 2. 引入 Maven 依赖并选择对应模块
 3. 参考最小示例完成初始化并调用 API
 
-### Codex SKILL 安装
+### AI 编程智能体 SKILL 安装
 
-仓库的 [`skills`](skills) 目录提供面向 WxJava 用户和贡献者的 Codex SKILL，包括模块选择、接入、排障、接口贡献和升级迁移。
+仓库的 [`skills`](skills) 目录提供面向 WxJava 用户和贡献者的通用 SKILL，包括模块选择、接入、排障、接口贡献和升级迁移。每个 SKILL 都以 `SKILL.md` 为入口，可用于支持该约定的 AI 编程智能体。
 
-克隆仓库后，将所需 SKILL 复制到 Codex 的个人 SKILL 目录：
+克隆仓库后，将所需的 `skills/wxjava-*` 目录导入所使用智能体的 SKILL 目录或工作区配置目录。不同智能体的目录和启用方式可能不同，请以其官方文档为准。
+
+以 Codex 为例，可复制到个人 SKILL 目录：
 
 ```shell
 git clone https://github.com/binarywang/WxJava.git
@@ -65,7 +67,7 @@ mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
 cp -R skills/wxjava-* "${CODEX_HOME:-$HOME/.codex}/skills/"
 ```
 
-重启或新建 Codex 会话后，即可按需使用，例如：`使用 $wxjava-integration-guide 为我的 Spring Boot 项目接入微信支付。`
+重启或新建智能体会话后，即可按需使用。例如：`使用 wxjava-integration-guide 为我的 Spring Boot 项目接入微信支付。`
 
 ### 我该选哪个模块？
 
