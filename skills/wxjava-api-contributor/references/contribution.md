@@ -10,7 +10,7 @@
 2. 搜索同产品的相邻能力，复用其 Service 分层、Bean 命名、请求执行和错误处理模式；不要只新增 Bean 而遗漏 Service 暴露。
 3. 若接口尚未支持，优先使用现有通用执行能力；MP/CP Wiki 说明通用执行器会处理 access token 刷新及 `errcode` 到异常的转换。
 4. 为字段边界、空值、JSON/XML 映射和异常路径添加 TestNG 回归测试。API 路径或字段问题是历史 bug 的高频来源，例如 [#3982](https://github.com/binarywang/WxJava/issues/3982)、[#4000](https://github.com/binarywang/WxJava/issues/4000)。
-5. 按 [贡献指南](../../../CONTRIBUTING.md) 使用 `develop` 作为 PR 目标；说明 Issue、兼容性影响和验证命令。
+5. 按 [贡献指南](https://github.com/binarywang/WxJava/blob/develop/CONTRIBUTING.md) 使用 `develop` 作为 PR 目标；说明 Issue、兼容性影响和验证命令。
 
 ## 一手资料入口
 

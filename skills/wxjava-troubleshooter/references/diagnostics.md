@@ -16,7 +16,7 @@
 | `NoClassDefFoundError`、`NoSuchMethodError` | `mvn dependency:tree`、HttpClient/commons-lang/xstream 冲突及 BOM 是否统一版本 | Wiki 的异常排查页与 HTTP 客户端升级指南 |
 | 回调验签或重复处理 | 原始请求体、时间戳/nonce/签名、回调 URL、业务幂等键 | MP 合法性校验与支付回调说明 |
 | HTTP 连接、超时或代理问题 | 连接/读取超时、代理、TLS、正反向代理是否混用 | Wiki 的 HttpClient 参数与代理文档 |
-| 企业微信会话存档崩溃 | 是否仍手动销毁旧 SDK 实例，是否已迁移安全 API | [会话存档安全使用指南](../../../docs/CP_MSG_AUDIT_SDK_SAFE_USAGE.md) |
+| 企业微信会话存档崩溃 | 是否仍手动销毁旧 SDK 实例，是否已迁移安全 API | [会话存档安全使用指南](https://github.com/binarywang/WxJava/blob/develop/docs/CP_MSG_AUDIT_SDK_SAFE_USAGE.md) |
 | 视频号/小店接口 404 或字段不匹配 | 当前官方路径与请求字段、目标 SDK 版本、历史 Issue 是否已修复 | 关闭的 bug Issue，如 [#3982](https://github.com/binarywang/WxJava/issues/3982) |
 
 ## 一手资料入口

@@ -9,7 +9,7 @@
 
 ### HTTP 客户端
 
-从 4.7.x 起，项目支持并推荐 Apache HttpClient 5.x，同时保留部分 4.x 兼容性。先按 [HTTP 客户端升级指南](../../../docs/HTTPCLIENT_UPGRADE_GUIDE.md) 核对模块、依赖与 `http-client-type`，再检查代理 host、port、username、password 的完整性。历史 [#3836](https://github.com/binarywang/WxJava/issues/3836) 表明可选代理配置也需要回归。
+从 4.7.x 起，项目支持并推荐 Apache HttpClient 5.x，同时保留部分 4.x 兼容性。先按 [HTTP 客户端升级指南](https://github.com/binarywang/WxJava/blob/develop/docs/HTTPCLIENT_UPGRADE_GUIDE.md) 核对模块、依赖与 `http-client-type`，再检查代理 host、port、username、password 的完整性。历史 [#3836](https://github.com/binarywang/WxJava/issues/3836) 表明可选代理配置也需要回归。
 
 ### BOM 与依赖冲突
 
@@ -24,7 +24,9 @@ mvn dependency:tree
 
 ### 企业微信会话存档
 
-升级到 4.8.0 或更高版本时，查找旧的 `getChatDatas`、`getDecryptData`、`getChatPlainText`、`getMediaFile` 和手动 `Finance.DestroySdk()`。按 [ThreadLocal 生命周期迁移文档](../../../docs/CP_MSG_AUDIT_THREADLOCAL_LIFECYCLE_REFACTOR.md) 切换至框架管理生命周期的新 API，并做并发验证。
+升级到 4.8.0 或更高版本时，查找旧的 `getChatDatas`、`getDecryptData`、`getChatPlainText`、`getMediaFile` 和手动 `Finance.DestroySdk()`。按 [ThreadLocal 生命周期迁移文档](https://github.com/binarywang/WxJava/blob/develop/docs/CP_MSG_AUDIT_THREADLOCAL_LIFECYCLE_REFACTOR.md) 切换至新 API，并做并发验证。
+
+ThreadLocal SDK 不会在线程结束时自动释放。在线程池、定时任务或一次性线程中，必须在任务的 `finally` 块调用 `msgAuditService.closeThreadLocalSdk()`；应用停止时再用 `closeAllSdks()` 做全局兜底。不要在业务代码中直接调用 `Finance.DestroySdk()`。
 
 ### 回调与支付
 
