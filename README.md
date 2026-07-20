@@ -50,7 +50,19 @@
 
 仓库的 [`skills`](skills) 目录提供面向 WxJava 用户和贡献者的通用 SKILL，包括模块选择、接入、排障、接口贡献和升级迁移。每个 SKILL 都以 `SKILL.md` 为入口，可用于支持该约定的 AI 编程智能体。
 
-克隆仓库后，将所需的 `skills/wxjava-*` 目录导入所使用智能体的 SKILL 目录或工作区配置目录。不同智能体的目录和启用方式可能不同，请以其官方文档为准。
+支持远程安装 SKILL 的智能体，可以直接使用自然语言指令安装所需目录。例如：
+
+> 安装 https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-integration-guide 中的技能。
+
+可安装的 SKILL 包括：
+
+- [模块选择](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-module-selector)
+- [接入指南](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-integration-guide)
+- [故障排查](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-troubleshooter)
+- [接口贡献](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-api-contributor)
+- [升级迁移](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-upgrade-guide)
+
+不支持远程安装时，可将所需的 `skills/wxjava-*` 目录复制到智能体的 SKILL 目录或工作区配置目录；不同智能体的目录和启用方式请以其官方文档为准。
 
 以 Codex 为例，可复制到个人 SKILL 目录：
 
