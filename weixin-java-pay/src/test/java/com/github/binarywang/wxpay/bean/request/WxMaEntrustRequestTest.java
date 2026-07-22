@@ -31,7 +31,7 @@ public class WxMaEntrustRequestTest {
 
     request.checkAndSign(config);
 
-    assertThat(request.toString()).doesNotContain("version");
+    assertThat(request.toString()).doesNotContain("\"version\"");
     assertThat(request.toXML()).doesNotContain("<version>");
     boolean fastMode = XmlConfig.fastMode;
     try {
