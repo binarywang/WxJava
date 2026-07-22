@@ -26,6 +26,8 @@ import java.util.Map;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxMaEntrustRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = -2823017402712927893L;
+
   /**
    * <pre>
    * 协议模板ID

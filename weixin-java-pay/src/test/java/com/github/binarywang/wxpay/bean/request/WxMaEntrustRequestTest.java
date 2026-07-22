@@ -32,15 +32,15 @@ public class WxMaEntrustRequestTest {
     request.checkAndSign(config);
 
     assertThat(request.toString()).doesNotContain("\"version\"");
-    assertThat(request.toXML()).doesNotContain("<version>");
+    assertThat(request.toXML()).doesNotContain("<version");
     boolean fastMode = XmlConfig.fastMode;
     try {
       XmlConfig.fastMode = true;
-      assertThat(request.toXML()).doesNotContain("<version>");
+      assertThat(request.toXML()).doesNotContain("<version");
     } finally {
       XmlConfig.fastMode = fastMode;
     }
     assertThat(request.getSign()).isEqualTo(SignUtils.createSign(
-      request, WxPayConstants.SignType.MD5, config.getMchKey(), new String[]{"version"}));
+      request, WxPayConstants.SignType.MD5, config.getMchKey(), null));
   }
 }
