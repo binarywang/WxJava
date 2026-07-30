@@ -50,6 +50,10 @@ public class WxCpMessage implements Serializable {
   public void setAgentId(long agentId) {
     this.agentId = Long.valueOf(agentId);
   }
+
+  public void setAgentId(Long agentId) {
+    this.agentId = agentId;
+  }
   /**
    * 消息类型
    * 文本消息: text

@@ -32,7 +32,7 @@ public class WxCpAgent implements Serializable {
   private String errMsg;
 
   @SerializedName("agentid")
-  private Integer agentId;
+  private Long agentId;
 
   @SerializedName("name")
   private String name;

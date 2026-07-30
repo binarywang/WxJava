@@ -80,6 +80,10 @@ public class WxCpSchoolContactMessage implements Serializable {
     this.agentId = Long.valueOf(agentId);
   }
 
+  public void setAgentId(Long agentId) {
+    this.agentId = agentId;
+  }
+
   /**
    * 消息内容，最长不超过2048个字节（支持id转译）
    */
