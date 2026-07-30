@@ -47,4 +47,14 @@ public class DataUtilsTest {
     assertFalse(s.contains("%2F"), "Encoded characters in the secret must be masked too");
     assertTrue(s.contains("&secret=******&"), "Secret should be replaced with asterisks");
   }
+
+  @Test
+  public void testHandleDataWithOpenidInJson() {
+    String data = "{\"code\":\"phone-code\",\"openid\":\"user-openid\"}";
+
+    String result = DataUtils.handleDataWithSecret(data);
+
+    assertFalse(result.contains("user-openid"));
+    assertTrue(result.contains("\"openid\":\"******\""));
+  }
 }
