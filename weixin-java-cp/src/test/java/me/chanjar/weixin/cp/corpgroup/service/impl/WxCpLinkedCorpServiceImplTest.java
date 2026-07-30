@@ -56,7 +56,7 @@ public class WxCpLinkedCorpServiceImplTest {
   public WxCpCorpGroupConfigStorage wxCpCorpGroupConfigStorage() {
     wxCpCorpGroupConfigStorage = new WxCpCorpGroupDefaultConfigImpl();
     wxCpCorpGroupConfigStorage.setCorpId(wxCpService.getWxCpConfigStorage().getCorpId());
-    wxCpCorpGroupConfigStorage.setAgentId(wxCpService.getWxCpConfigStorage().getAgentId());
+    wxCpCorpGroupConfigStorage.setAgentId(wxCpService.getWxCpConfigStorage().getAgentId().intValue());
     return wxCpCorpGroupConfigStorage;
   }
 

@@ -34,7 +34,7 @@ public class WxCpProperties {
   /**
    * 微信企业号应用 ID
    */
-  private Integer agentId;
+  private Long agentId;
   /**
    * 微信企业号应用 EncodingAESKey
    */

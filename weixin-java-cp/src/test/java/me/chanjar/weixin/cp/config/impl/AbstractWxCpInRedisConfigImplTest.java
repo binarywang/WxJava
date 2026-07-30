@@ -29,7 +29,7 @@ public class AbstractWxCpInRedisConfigImplTest {
       // 使用匿名类提供具体实现用于测试
     };
     config.setCorpId("testCorpId");
-    config.setAgentId(1);
+    config.setAgentId(1L);
   }
 
   /**

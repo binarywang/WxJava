@@ -30,7 +30,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   /**
    * The Agent id.
    */
-  protected volatile Integer agentId;
+  protected volatile Long agentId;
   /**
    * The Jsapi ticket lock.
    */
@@ -320,7 +320,7 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
   }
 
   @Override
-  public Integer getAgentId() {
+  public Long getAgentId() {
     return this.agentId;
   }
 
@@ -329,8 +329,12 @@ public class WxCpDefaultConfigImpl implements WxCpConfigStorage, Serializable {
    *
    * @param agentId the agent id
    */
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     this.agentId = agentId;
+  }
+
+  public void setAgentId(long agentId) {
+    this.setAgentId(Long.valueOf(agentId));
   }
 
   /**

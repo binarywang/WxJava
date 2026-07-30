@@ -109,7 +109,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .content("你的快递已到，请携带工卡前往邮件中心领取。\n出发前可查看<a href=\"http://work.weixin.qq.com\">邮件中心视频实况</a>，聪明避开排队。")
       .enableIdTrans(false)
       .enableDuplicateCheck(false)
@@ -123,7 +123,7 @@ public class WxCpSchoolContactMessageTest {
     schoolContactMessage1.setToStudentUserId(new String[]{"student_userid1", "student_userid2"});
     schoolContactMessage1.setToParty(new String[]{"partyid1", "partyid2"});
     schoolContactMessage1.setToAll(false);
-    schoolContactMessage1.setAgentId(1);
+    schoolContactMessage1.setAgentId(1L);
     schoolContactMessage1.setContent("你的快递已到，请携带工卡前往邮件中心领取");
     schoolContactMessage1.setEnableIdTrans(false);
     schoolContactMessage1.setEnableDuplicateCheck(false);
@@ -163,7 +163,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .mediaId("MEDIA_ID")
       .build();
 
@@ -198,7 +198,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .mediaId("MEDIA_ID")
       .build();
 
@@ -233,7 +233,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .mediaId("MEDIA_ID")
       .title("Title")
       .description("Description")
@@ -272,7 +272,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .mediaId("1Yv-zXfHjSjU-7LH-GwtYqDGS-zz6w22KmWAT5COgP7o")
       .build();
 
@@ -307,7 +307,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .articles(Lists.newArrayList(NewArticle.builder()
         .title("中秋节礼品领取")
         .description("今年中秋节公司有豪礼相送")
@@ -357,7 +357,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .mpNewsArticles(Lists.newArrayList(MpnewsArticle.newBuilder()
         .title("Title")
         .thumbMediaId("MEDIA_ID")
@@ -409,7 +409,7 @@ public class WxCpSchoolContactMessageTest {
       .toStudentUserId(new String[]{"student_userid1", "student_userid2"})
       .toParty(new String[]{"partyid1", "partyid2"})
       .toAll(false)
-      .agentId(1)
+      .agentId(1L)
       .appId("APPID")
       .title("欢迎报名夏令营")
       .thumbMediaId("MEDIA_ID")

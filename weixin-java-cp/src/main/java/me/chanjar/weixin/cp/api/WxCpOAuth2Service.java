@@ -85,7 +85,7 @@ public interface WxCpOAuth2Service {
    * @throws WxErrorException 异常
    * @see #getUserInfo(String) #getUserInfo(String)
    */
-  WxCpOauth2UserInfo getUserInfo(Integer agentId, String code) throws WxErrorException;
+  WxCpOauth2UserInfo getUserInfo(Long agentId, String code) throws WxErrorException;
 
   /**
    * 获取家校访问用户身份

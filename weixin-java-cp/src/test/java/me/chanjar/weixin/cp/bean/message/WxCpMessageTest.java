@@ -238,7 +238,7 @@ public class WxCpMessageTest {
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
       .toParty("PartyID1 | PartyID2")
       .toTag("TagID1 | TagID2")
-      .agentId(1000002)
+      .agentId(1000002L)
       .cardType(WxConsts.TemplateCardType.TEXT_NOTICE)
       .taskId("task_id")
       .sourceIconUrl("图片的url")
@@ -328,7 +328,7 @@ public class WxCpMessageTest {
       .build();
 
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
-      .agentId(1000002)
+      .agentId(1000002L)
       .cardType(WxConsts.TemplateCardType.NEWS_NOTICE)
       .sourceIconUrl("图片的url")
       .sourceDesc("企业微信")
@@ -395,7 +395,7 @@ public class WxCpMessageTest {
       .build();
 
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
-      .agentId(1000002)
+      .agentId(1000002L)
       .cardType(WxConsts.TemplateCardType.BUTTON_INTERACTION)
       .sourceIconUrl("图片的url")
       .sourceDesc("企业微信")
@@ -444,7 +444,7 @@ public class WxCpMessageTest {
       .build();
 
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
-      .agentId(1000002)
+      .agentId(1000002L)
       .cardType(WxConsts.TemplateCardType.VOTE_INTERACTION)
       .sourceIconUrl("图片的url")
       .sourceDesc("企业微信")
@@ -510,7 +510,7 @@ public class WxCpMessageTest {
 
 
     WxCpMessage reply = WxCpMessage.TEMPLATECARD().toUser("OPENID")
-      .agentId(1000002)
+      .agentId(1000002L)
       .cardType(WxConsts.TemplateCardType.MULTIPLE_INTERACTION)
       .sourceIconUrl("图片的url")
       .sourceDesc("企业微信")

@@ -23,7 +23,7 @@ public class WxCpCorpGroupServiceImplTest {
 
   @Test
   public void testListAppShareInfo() throws WxErrorException {
-    Integer agentId = wxService.getWxCpConfigStorage().getAgentId();
+    Long agentId = wxService.getWxCpConfigStorage().getAgentId();
     Integer businessType = 1;
     String corpId = null;
     Integer limit = null;

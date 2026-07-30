@@ -77,7 +77,7 @@ public class WxCpTpMessageServiceImplTest {
       + "?access_token=" + accessToken;
     when(wxCpTpService.post(eq(expectedUrl), anyString(), eq(true))).thenReturn(mockResponse);
 
-    WxCpMessage message = WxCpMessage.TEXT().toUser("zhangsan").content("hello").agentId(1).build();
+    WxCpMessage message = WxCpMessage.TEXT().toUser("zhangsan").content("hello").agentId(1L).build();
     WxCpMessageSendResult result = wxCpTpMessageService.send(message, corpId);
     assertNotNull(result);
 

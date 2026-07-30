@@ -158,7 +158,7 @@ public interface WxCpConfigStorage {
    *
    * @return the agent id
    */
-  Integer getAgentId();
+  Long getAgentId();
 
   /**
    * Gets token.

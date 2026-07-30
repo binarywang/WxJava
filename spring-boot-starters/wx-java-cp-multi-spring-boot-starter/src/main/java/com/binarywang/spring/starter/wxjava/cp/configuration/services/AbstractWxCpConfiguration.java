@@ -125,7 +125,7 @@ public abstract class AbstractWxCpConfiguration {
   private void configCorp(WxCpDefaultConfigImpl config, WxCpSingleProperties wxCpSingleProperties) {
     String corpId = wxCpSingleProperties.getCorpId();
     String corpSecret = wxCpSingleProperties.getCorpSecret();
-    Integer agentId = wxCpSingleProperties.getAgentId();
+    Long agentId = wxCpSingleProperties.getAgentId();
     String token = wxCpSingleProperties.getToken();
     String aesKey = wxCpSingleProperties.getAesKey();
     // 企业微信，私钥，会话存档路径

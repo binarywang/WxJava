@@ -40,7 +40,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile String corpSecret;
   private volatile String token;
   private volatile String aesKey;
-  private volatile Integer agentId;
+  private volatile Long agentId;
   private volatile String msgAuditPriKey;
   private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
@@ -312,7 +312,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   }
 
   @Override
-  public Integer getAgentId() {
+  public Long getAgentId() {
     return this.agentId;
   }
 
@@ -321,7 +321,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
    *
    * @param agentId the agent id
    */
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     this.agentId = agentId;
   }
 

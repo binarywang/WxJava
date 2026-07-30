@@ -55,7 +55,11 @@ public class WxCpLinkedCorpMessage implements Serializable {
   /**
    * 企业应用的id，整型。可在应用的设置页面查看
    */
-  private Integer agentId;
+  private Long agentId;
+
+  public void setAgentId(long agentId) {
+    this.agentId = Long.valueOf(agentId);
+  }
   private String msgType;
   /**
    * 消息内容，最长不超过2048个字节

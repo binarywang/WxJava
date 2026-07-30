@@ -15,7 +15,7 @@ public abstract class BaseBuilder<T> {
   /**
    * The Agent id.
    */
-  protected Integer agentId;
+  protected Long agentId;
   /**
    * The To user.
    */
@@ -39,9 +39,13 @@ public abstract class BaseBuilder<T> {
    * @param agentId the agent id
    * @return the t
    */
-  public T agentId(Integer agentId) {
+  public T agentId(Long agentId) {
     this.agentId = agentId;
     return (T) this;
+  }
+
+  public T agentId(long agentId) {
+    return this.agentId(Long.valueOf(agentId));
   }
 
   /**

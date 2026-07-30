@@ -40,7 +40,7 @@ public interface WxCpMenuService {
    * @throws WxErrorException the wx error exception
    * @see #create(me.chanjar.weixin.common.bean.menu.WxMenu) #create(me.chanjar.weixin.common.bean.menu.WxMenu)
    */
-  void create(Integer agentId, WxMenu menu) throws WxErrorException;
+  void create(Long agentId, WxMenu menu) throws WxErrorException;
 
   /**
    * <pre>
@@ -67,7 +67,7 @@ public interface WxCpMenuService {
    * @throws WxErrorException the wx error exception
    * @see #delete() #delete()
    */
-  void delete(Integer agentId) throws WxErrorException;
+  void delete(Long agentId) throws WxErrorException;
 
   /**
    * <pre>
@@ -96,5 +96,5 @@ public interface WxCpMenuService {
    * @throws WxErrorException the wx error exception
    * @see #get() #get()
    */
-  WxMenu get(Integer agentId) throws WxErrorException;
+  WxMenu get(Long agentId) throws WxErrorException;
 }

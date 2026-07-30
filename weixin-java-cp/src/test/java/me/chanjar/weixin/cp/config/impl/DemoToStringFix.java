@@ -30,7 +30,7 @@ public class DemoToStringFix {
         };
         
         config.setCorpId("demoCorpId");
-        config.setAgentId(1001);
+        config.setAgentId(1001L);
         
         System.out.println("Testing toString() method:");
         try {

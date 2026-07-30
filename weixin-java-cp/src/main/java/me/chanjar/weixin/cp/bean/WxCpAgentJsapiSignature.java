@@ -21,7 +21,7 @@ public class WxCpAgentJsapiSignature implements Serializable {
 
   private String corpid;
 
-  private Integer agentid;
+  private Long agentid;
 
   private long timestamp;
 

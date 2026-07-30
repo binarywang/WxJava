@@ -21,7 +21,7 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
 
   @Override
   public WxCpMessageSendResult send(WxCpMessage message) throws WxErrorException {
-    Integer agentId = message.getAgentId();
+    Long agentId = message.getAgentId();
     if (null == agentId) {
       message.setAgentId(this.cpService.getWxCpConfigStorage().getAgentId());
     }
@@ -38,7 +38,7 @@ public class WxCpMessageServiceImpl implements WxCpMessageService {
 
   @Override
   public WxCpLinkedCorpMessageSendResult sendLinkedCorpMessage(WxCpLinkedCorpMessage message) throws WxErrorException {
-    Integer agentId = message.getAgentId();
+    Long agentId = message.getAgentId();
     if (null == agentId) {
       message.setAgentId(this.cpService.getWxCpConfigStorage().getAgentId());
     }

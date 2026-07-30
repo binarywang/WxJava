@@ -34,7 +34,7 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
   private final WxCpService mainService;
 
   @Override
-  public WxCpAgent get(Integer agentId) throws WxErrorException {
+  public WxCpAgent get(Long agentId) throws WxErrorException {
     if (agentId == null) {
       throw new IllegalArgumentException("缺少agentid参数");
     }
@@ -67,7 +67,7 @@ public class WxCpAgentServiceImpl implements WxCpAgentService {
   }
 
   @Override
-  public WxCpTpAdmin getAdminList(Integer agentId) throws WxErrorException {
+  public WxCpTpAdmin getAdminList(Long agentId) throws WxErrorException {
     if (agentId == null) {
       throw new IllegalArgumentException("缺少agentid参数");
     }

@@ -74,7 +74,7 @@ public abstract class AbstractWxCpInRedisConfigImpl extends WxCpDefaultConfigImp
    * @param agentId 应用 agentId
    */
   @Override
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     super.setAgentId(agentId);
     String ukey;
     if (agentId != null) {

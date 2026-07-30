@@ -121,7 +121,7 @@ public class BaseWxCpServiceImplTest {
         return config;
       }
     };
-    config.setAgentId(1);
+    config.setAgentId(1L);
     service.setWxCpConfigStorage(config);
     RequestExecutor<Object, Object> re = mock(RequestExecutor.class);
 
