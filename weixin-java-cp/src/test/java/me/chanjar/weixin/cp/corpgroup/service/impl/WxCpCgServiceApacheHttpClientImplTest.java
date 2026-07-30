@@ -38,7 +38,7 @@ public class WxCpCgServiceApacheHttpClientImplTest {
   //下游企业的corpId
   String corpId = "";
   //下游企业的agentId
-  int agentId = 0;
+  Long agentId = 0L;
   int businessType = 0;
   String userId = "";
   WxCpCorpGroupCorpGetTokenReq wxCpCorpGroupCorpGetTokenReq;
@@ -57,7 +57,7 @@ public class WxCpCgServiceApacheHttpClientImplTest {
   public WxCpCorpGroupConfigStorage wxCpCorpGroupConfigStorage() {
     wxCpCorpGroupConfigStorage = new WxCpCorpGroupDefaultConfigImpl();
     wxCpCorpGroupConfigStorage.setCorpId(wxCpService.getWxCpConfigStorage().getCorpId());
-    wxCpCorpGroupConfigStorage.setAgentId(wxCpService.getWxCpConfigStorage().getAgentId().intValue());
+    wxCpCorpGroupConfigStorage.setAgentId(wxCpService.getWxCpConfigStorage().getAgentId());
     return wxCpCorpGroupConfigStorage;
   }
 

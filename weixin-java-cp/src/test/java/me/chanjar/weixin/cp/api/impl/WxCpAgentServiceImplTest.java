@@ -65,7 +65,7 @@ public class WxCpAgentServiceImplTest {
     this.wxCpService.getAgentService().set(WxCpAgent.builder()
       .description("abcddd")
       .logoMediaId("aaaaaaaaaaaaaa")
-      .agentId(agentId.intValue())
+      .agentId(agentId)
       .build());
   }
 
