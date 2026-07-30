@@ -16,6 +16,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.SignUtils;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class WxMaUserServiceImpl implements WxMaUserService {
   public WxMaPhoneNumberInfo getPhoneNumber(String code, String openid) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
-    if (openid != null) {
+    if (StringUtils.isNotBlank(openid)) {
       param.addProperty("openid", openid);
     }
     String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());

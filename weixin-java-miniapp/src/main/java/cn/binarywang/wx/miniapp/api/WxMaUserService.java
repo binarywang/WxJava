@@ -82,7 +82,9 @@ public interface WxMaUserService {
    * @throws WxErrorException .
    * @apiNote 该接口用于将code换取用户手机号。
    */
-  WxMaPhoneNumberInfo getPhoneNumber(String code, String openid) throws WxErrorException;
+  default WxMaPhoneNumberInfo getPhoneNumber(String code, String openid) throws WxErrorException {
+    return this.getPhoneNumber(code);
+  }
 
   /**
    * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起

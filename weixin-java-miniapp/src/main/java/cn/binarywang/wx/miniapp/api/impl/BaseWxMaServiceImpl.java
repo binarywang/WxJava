@@ -374,7 +374,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       Map<String, String> headers,
       String data)
       throws WxErrorException {
-    String dataForLog = "Headers: " + headers.toString() + " Body: " + data;
+    String dataForLog = "Headers: " + headers.toString() + " Body: " + DataUtils.handleDataWithSecret(data);
     return executeWithRetry(
         (uriWithAccessToken) -> executor.execute(uriWithAccessToken, headers, data, WxType.MiniApp),
         uri,
