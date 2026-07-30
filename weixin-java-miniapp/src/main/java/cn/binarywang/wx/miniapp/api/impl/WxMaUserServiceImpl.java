@@ -67,8 +67,16 @@ public class WxMaUserServiceImpl implements WxMaUserService {
 
   @Override
   public WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException {
+    return this.getPhoneNumber(code, null);
+  }
+
+  @Override
+  public WxMaPhoneNumberInfo getPhoneNumber(String code, String openid) throws WxErrorException {
     JsonObject param = new JsonObject();
     param.addProperty("code", code);
+    if (openid != null) {
+      param.addProperty("openid", openid);
+    }
     String responseContent = this.service.post(GET_PHONE_NUMBER_URL, param.toString());
     JsonObject response = GsonParser.parse(responseContent);
     if (response.has(PHONE_INFO)) {

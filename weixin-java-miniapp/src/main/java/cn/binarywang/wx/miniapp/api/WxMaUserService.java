@@ -74,6 +74,17 @@ public interface WxMaUserService {
   WxMaPhoneNumberInfo getPhoneNumber(String code) throws WxErrorException;
 
   /**
+   * 获取手机号信息，并校验手机号获取凭证与用户的绑定关系。
+   *
+   * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
+   * @param openid 用户openid，传入后微信服务端将校验其与code的绑定关系
+   * @return 用户手机号信息
+   * @throws WxErrorException .
+   * @apiNote 该接口用于将code换取用户手机号。
+   */
+  WxMaPhoneNumberInfo getPhoneNumber(String code, String openid) throws WxErrorException;
+
+  /**
    * 获取手机号信息,基础库:2.21.2及以上或2023年8月28日起
    *
    * @param code 每个code只能使用一次，code的有效期为5min。code获取方式参考<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/getPhoneNumber.html">手机号快速验证组件</a>
