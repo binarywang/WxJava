@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.util.fs;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -55,24 +56,16 @@ public class FileUtils {
    *
    * @param in 文件流
    * @return base64编码
+   * @throws WxRuntimeException 读取文件流失败时抛出
    */
   public static String imageToBase64ByStream(InputStream in) {
     // 读取图片字节数组
-    try {
+    try (InputStream input = in) {
       // 返回Base64编码过的字节数组字符串
-      return Base64.getEncoder().encodeToString(IOUtils.toByteArray(in));
+      return Base64.getEncoder().encodeToString(IOUtils.toByteArray(input));
     } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      if (in != null) {
-        try {
-          in.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
+      throw new WxRuntimeException(e);
     }
-    return null;
   }
 
 }
