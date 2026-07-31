@@ -3,7 +3,9 @@ package me.chanjar.weixin.channel.executor;
 import me.chanjar.weixin.channel.bean.image.ChannelImageResponse;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -62,6 +64,45 @@ public abstract class ChannelMediaDownloadRequestExecutor<H, P> implements Reque
       IOUtils.copy(in, out);
     }
     return resultFile;
+  }
+
+  /**
+   * 把请求参数拼接到请求地址上
+   *
+   * @param uri  请求地址
+   * @param data 请求参数，可为空
+   * @return 拼接后的请求地址
+   */
+  protected String appendDataToUri(String uri, String data) {
+    if (data == null) {
+      return uri;
+    }
+    String result = uri;
+    if (result.indexOf('?') == -1) {
+      result += '?';
+    }
+    return result + (result.endsWith("?") ? data : '&' + data);
+  }
+
+  /**
+   * 按照响应中的文件名把媒体内容写入临时文件
+   *
+   * @param inputStream 媒体内容
+   * @param fileName    响应中解析出的文件名，可为空
+   * @return 临时文件
+   */
+  protected File saveTmpFile(InputStream inputStream, String fileName) throws IOException {
+    String name = StringUtils.isBlank(fileName) ? String.valueOf(System.currentTimeMillis()) : fileName;
+
+    String baseName = FilenameUtils.getBaseName(name);
+    if (StringUtils.isBlank(baseName) || baseName.length() < 3) {
+      baseName = String.valueOf(System.currentTimeMillis());
+    }
+    String extension = FilenameUtils.getExtension(name);
+    if (StringUtils.isBlank(extension)) {
+      extension = "unknown";
+    }
+    return createTmpFile(inputStream, baseName, extension, tmpDirFile);
   }
 
   protected String createDefaultFileName() {
