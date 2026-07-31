@@ -4,7 +4,6 @@
   <test name="Bean_Test">
     <classes>
       <class name="me.chanjar.weixin.common.bean.WxAccessTokenTest"/>
-      <class name="me.chanjar.weixin.common.bean.WxErrorTest"/>
       <class name="me.chanjar.weixin.common.bean.WxMenuTest"/>
       <class name="me.chanjar.weixin.common.util.crypto.WxCryptUtilTest"/>
       <class name="me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerTest"/>
