@@ -8,4 +8,11 @@
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaBeenSetCategoryResultTest"/>
     </classes>
   </test>
+  <test name="Util_Test">
+    <classes>
+      <class name="me.chanjar.weixin.open.util.WxOpenCryptUtilTest"/>
+      <class name="me.chanjar.weixin.open.util.json.WxOpenGsonBuilderTest"/>
+      <class name="me.chanjar.weixin.open.bean.message.WxOpenXmlMessageTest"/>
+    </classes>
+  </test>
 </suite>
