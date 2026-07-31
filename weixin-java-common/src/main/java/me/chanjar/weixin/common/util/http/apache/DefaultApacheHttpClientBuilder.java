@@ -100,6 +100,14 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
   private String[] supportedProtocols = {"TLSv1.2", "TLSv1.3", "TLSv1.1", "TLSv1"};
 
   /**
+   * 是否跳过服务器端证书校验，默认false，即校验证书。
+   * <p>
+   * 仅在自签名证书的抓包代理等特殊调试场景下才可以设置为true，生产环境开启会导致中间人攻击风险。
+   * </p>
+   */
+  private boolean skipServerCertificateVerification = false;
+
+  /**
    * 自定义请求拦截器
    */
   private List<HttpRequestInterceptor> requestInterceptors = new ArrayList<>();
@@ -263,9 +271,13 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
   private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() {
     try {
-      SSLContext sslcontext = SSLContexts.custom()
+      SSLContext sslcontext;
+      if (this.skipServerCertificateVerification) {
         //忽略掉对服务器端证书的校验
-        .loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
+        sslcontext = SSLContexts.custom().loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
+      } else {
+        sslcontext = SSLContexts.createSystemDefault();
+      }
 
       return new SSLConnectionSocketFactory(
         sslcontext,
