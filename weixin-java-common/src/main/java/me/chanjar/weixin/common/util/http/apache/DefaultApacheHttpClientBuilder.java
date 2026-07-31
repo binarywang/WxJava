@@ -129,7 +129,13 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
   private final HttpRequestRetryHandler defaultHttpRequestRetryHandler = (exception, executionCount, context) -> false;
 
-  private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
+  /**
+   * 默认的SSL连接工厂，用于判断使用方是否自定义过连接工厂
+   */
+  private static final SSLConnectionSocketFactory DEFAULT_SSL_CONNECTION_SOCKET_FACTORY =
+    SSLConnectionSocketFactory.getSocketFactory();
+
+  private SSLConnectionSocketFactory sslConnectionSocketFactory = DEFAULT_SSL_CONNECTION_SOCKET_FACTORY;
   private final PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;
   private int httpProxyPort;
@@ -207,9 +213,10 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     if (prepared.get()) {
       return;
     }
+    SSLConnectionSocketFactory httpsSocketFactory = this.resolveSSLConnectionSocketFactory();
     Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
       .register("http", this.plainConnectionSocketFactory)
-      .register("https", this.sslConnectionSocketFactory)
+      .register("https", httpsSocketFactory)
       .build();
 
     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
@@ -229,7 +236,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     HttpClientBuilder httpClientBuilder = HttpClients.custom()
       .setConnectionManager(connectionManager)
       .setConnectionManagerShared(true)
-      .setSSLSocketFactory(this.buildSSLConnectionSocketFactory())
+      .setSSLSocketFactory(httpsSocketFactory)
       .setDefaultRequestConfig(RequestConfig.custom()
         .setSocketTimeout(this.soTimeout)
         .setConnectTimeout(this.connectionTimeout)
@@ -267,6 +274,18 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
     this.closeableHttpClient = httpClientBuilder.build();
     prepared.set(true);
+  }
+
+  /**
+   * 使用方自定义的连接工厂优先，否则按照证书校验开关构造连接工厂.
+   */
+  private SSLConnectionSocketFactory resolveSSLConnectionSocketFactory() {
+    if (this.sslConnectionSocketFactory != DEFAULT_SSL_CONNECTION_SOCKET_FACTORY) {
+      return this.sslConnectionSocketFactory;
+    }
+
+    SSLConnectionSocketFactory factory = this.buildSSLConnectionSocketFactory();
+    return factory == null ? DEFAULT_SSL_CONNECTION_SOCKET_FACTORY : factory;
   }
 
   private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() {
