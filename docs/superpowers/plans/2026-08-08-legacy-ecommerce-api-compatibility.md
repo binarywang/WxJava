@@ -6,7 +6,7 @@
 
 **Architecture:** Deprecated legacy models remain in `bean.ecommerce`; `EcommerceService` exposes overloads with those legacy types. Each overload maps the input to the unified request/enums, invokes the existing unified method, and maps the response back, so transport and signature logic remain singular.
 
-**Tech Stack:** Java 8, Maven, JUnit 5, Gson, Lombok.
+**Tech Stack:** Java 8, Maven, TestNG, Gson, Lombok.
 
 ## Global Constraints
 

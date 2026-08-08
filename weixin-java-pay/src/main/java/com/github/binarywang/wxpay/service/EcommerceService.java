@@ -42,9 +42,85 @@ public interface EcommerceService {
     com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest unifiedRequest =
       LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
         com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class);
-    CombineTransactionsResult unifiedResult = combine(TradeTypeEnum.valueOf(tradeType.name()), unifiedRequest);
+    CombineTransactionsResult unifiedResult = combine(toUnifiedTradeType(tradeType), unifiedRequest);
     return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(unifiedResult),
       com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use the unified overload. */
+  @Deprecated
+  default <T> T combineTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+                                    com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsRequest request) throws WxPayException {
+    return combineTransactions(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+      com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class));
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #parseCombineNotifyResult(String, SignatureHeader)}. */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData,
+      com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    CombineNotifyResult result = parseCombineNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(result),
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #queryCombine(String)}. */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(queryCombine(outTradeNo)),
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #unifiedPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}. */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult partner(
+      com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsRequest request) throws WxPayException {
+    WxPayUnifiedOrderV3Result result = unifiedPartnerOrder(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(
+      LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerUnifiedOrderV3Request.class));
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(result),
+      com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #createPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}. */
+  @Deprecated
+  default <T> T partnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsRequest request) throws WxPayException {
+    return createPartnerOrder(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+      WxPayPartnerUnifiedOrderV3Request.class));
+  }
+
+  /** @deprecated since 4.8.5.B; use the unified notification parser. */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData,
+      com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(parsePartnerNotifyResult(notifyData, toUnifiedSignatureHeader(header))),
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #queryPartnerOrder(WxPayPartnerOrderQueryV3Request)}. */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult queryPartnerTransactions(
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsQueryRequest request) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(queryPartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(
+      LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderQueryV3Request.class))),
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult.class);
+  }
+
+  /** @deprecated since 4.8.5.B; use {@link #closePartnerOrder(WxPayPartnerOrderCloseV3Request)}. */
+  @Deprecated
+  default String closePartnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest request) throws WxPayException {
+    closePartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderCloseV3Request.class));
+    return null;
+  }
+
+  static TradeTypeEnum toUnifiedTradeType(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType) {
+    return tradeType == com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum.MWEB ? TradeTypeEnum.H5 : TradeTypeEnum.valueOf(tradeType.name());
+  }
+
+  static SignatureHeader toUnifiedSignatureHeader(com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) {
+    return header == null ? null : SignatureHeader.builder().timeStamp(header.getTimeStamp()).nonce(header.getNonce())
+      .signature(header.getSigned()).serial(header.getSerialNo()).build();
   }
 
   /**

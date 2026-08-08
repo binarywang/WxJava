@@ -6,8 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 /**
- * Verifies that source code written against the pre-#4014 e-commerce API can
- * still compile while the unified API remains the implementation path.
+ * Compile-time compatibility checks for the pre-#4014 e-commerce API.
  */
 public class LegacyEcommerceApiCompatibilityTest {
 
