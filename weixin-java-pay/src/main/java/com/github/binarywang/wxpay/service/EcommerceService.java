@@ -32,8 +32,7 @@ public interface EcommerceService {
   Gson LEGACY_ECOMMERCE_GSON = new Gson();
 
   /**
-   * @deprecated since 4.8.5.B; use {@link #combine(TradeTypeEnum, com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest)}.
-   * This compatibility entry point will be removed in 5.0.
+   * @deprecated 从 4.8.5.B 起，请改用 {@link #combine(TradeTypeEnum, com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest)}；5.0 将移除该兼容入口。
    */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult combine(
@@ -47,7 +46,7 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use the unified overload. */
+  /** @deprecated 从 4.8.5.B 起，请改用使用统一请求模型的同名方法；5.0 将移除该兼容入口。 */
   @Deprecated
   default <T> T combineTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
                                     com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsRequest request) throws WxPayException {
@@ -55,7 +54,7 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class));
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #parseCombineNotifyResult(String, SignatureHeader)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #parseCombineNotifyResult(String, SignatureHeader)}；5.0 将移除。 */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData,
       com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
@@ -64,14 +63,14 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #queryCombine(String)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #queryCombine(String)}；5.0 将移除。 */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException {
     return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(queryCombine(outTradeNo)),
       com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #unifiedPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #unifiedPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}；5.0 将移除。 */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult partner(
       com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
@@ -82,7 +81,7 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #createPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #createPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}；5.0 将移除。 */
   @Deprecated
   default <T> T partnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
       com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsRequest request) throws WxPayException {
@@ -90,7 +89,7 @@ public interface EcommerceService {
       WxPayPartnerUnifiedOrderV3Request.class));
   }
 
-  /** @deprecated since 4.8.5.B; use the unified notification parser. */
+  /** @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。 */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData,
       com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
@@ -98,7 +97,7 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #queryPartnerOrder(WxPayPartnerOrderQueryV3Request)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #queryPartnerOrder(WxPayPartnerOrderQueryV3Request)}；5.0 将移除。 */
   @Deprecated
   default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult queryPartnerTransactions(
       com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsQueryRequest request) throws WxPayException {
@@ -107,7 +106,7 @@ public interface EcommerceService {
       com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult.class);
   }
 
-  /** @deprecated since 4.8.5.B; use {@link #closePartnerOrder(WxPayPartnerOrderCloseV3Request)}. */
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #closePartnerOrder(WxPayPartnerOrderCloseV3Request)}；5.0 将移除。 */
   @Deprecated
   default String closePartnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest request) throws WxPayException {
     closePartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderCloseV3Request.class));
