@@ -13,6 +13,7 @@ import com.github.binarywang.wxpay.bean.result.WxPayPartnerOrderQueryV3Result;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,24 @@ import java.io.InputStream;
  * created on  2020 /08/17
  */
 public interface EcommerceService {
+  Gson LEGACY_ECOMMERCE_GSON = new Gson();
+
+  /**
+   * @deprecated since 4.8.5.B; use {@link #combine(TradeTypeEnum, com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest)}.
+   * This compatibility entry point will be removed in 5.0.
+   */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult combine(
+      com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsRequest request) throws WxPayException {
+    com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest unifiedRequest =
+      LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+        com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class);
+    CombineTransactionsResult unifiedResult = combine(TradeTypeEnum.valueOf(tradeType.name()), unifiedRequest);
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(unifiedResult),
+      com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
+  }
+
   /**
    * <pre>
    * 二级商户进件API
@@ -80,7 +99,8 @@ public interface EcommerceService {
    * @return 微信合单支付返回 CombineTransactionsResult
    * @throws WxPayException the wx pay exception
    */
-  CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+  CombineTransactionsResult combine(TradeTypeEnum tradeType,
+                                   com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -95,7 +115,8 @@ public interface EcommerceService {
    * @return 调起支付需要的参数 t
    * @throws WxPayException the wx pay exception
    */
-  <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+  <T> T combineTransactions(TradeTypeEnum tradeType,
+                            com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * <pre>
