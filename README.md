@@ -12,7 +12,7 @@
 
 [<img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6de6147050c94db4aedfd7098d19f8d8&claim_uid=mwKh0tILBfjlezR" alt="Featured｜HelloGitHub" width="250" height="55">](https://hellogithub.com/repository/6de6147050c94db4aedfd7098d19f8d8)
 [<img src="https://trendshift.io/api/badge/repositories/12152" alt="binarywang/WxJava | 趋势转变" width="250" height="55">](https://trendshift.io/repositories/12152)
-[<img src="https://api.star-history.com/badge?repo=binarywang/WxJava" alt="Star History" width="250" height="55">](https://www.star-history.com/binarywang/wxjava)
+[<img src="https://star-history.dera.page/badge?repo=binarywang/WxJava" alt="Star History" width="250" height="55">](https://star-history.dera.page/binarywang/wxjava)
 
 ### 微信 `Java` 开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
 
@@ -319,10 +319,10 @@ System.out.println(result.getOpenid());
 
 ### GitHub Stargazers over time
 
-<a href="https://www.star-history.com/?repos=binarywang%2FWxJava&type=date&legend=top-left">
+<a href="https://star-history.dera.page/#binarywang/WxJava&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&theme=dark&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=binarywang/WxJava&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=binarywang/WxJava&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=binarywang/WxJava&type=date&legend=top-left" />
  </picture>
 </a>
