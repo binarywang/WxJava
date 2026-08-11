@@ -673,4 +673,11 @@ public interface WxCpService extends WxService {
    * @return 人事助手服务 hr service
    */
   WxCpHrService getHrService();
+
+  /**
+   * 获取待办服务
+   *
+   * @return 待办服务 todo service
+   */
+  WxCpTodoService getTodoService();
 }

@@ -77,6 +77,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private final WxCpCorpGroupService corpGroupService = new WxCpCorpGroupServiceImpl(this);
   private final WxCpIntelligentRobotService intelligentRobotService = new WxCpIntelligentRobotServiceImpl(this);
   private final WxCpHrService hrService = new WxCpHrServiceImpl(this);
+  private final WxCpTodoService todoService = new WxCpTodoServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -752,5 +753,10 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpHrService getHrService() {
     return this.hrService;
+  }
+
+  @Override
+  public WxCpTodoService getTodoService() {
+    return this.todoService;
   }
 }
