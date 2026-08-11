@@ -9,13 +9,13 @@ import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * 单元测试类.
  *
  * @author <a href="https://github.com/binarywang">Binary Wang</a> created on  2026-08-11
  */
-@Test
 @Guice(modules = ApiTestModule.class)
 public class WxCpTodoServiceImplTest {
   /**
@@ -32,6 +32,29 @@ public class WxCpTodoServiceImplTest {
   @Test
   public void testGet() throws WxErrorException {
     this.wxService.getTodoService().get("17c7d2bd9f20d652840f72f59e796AAA");
+  }
+
+  /**
+   * Test get details.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testGetDetails() throws WxErrorException {
+    this.wxService.getTodoService().getDetails(Collections.singletonList("17c7d2bd9f20d652840f72f59e796AAA"));
+  }
+
+  /**
+   * Test get details batch.
+   *
+   * @throws WxErrorException the wx error exception
+   */
+  @Test
+  public void testGetDetailsBatch() throws WxErrorException {
+    this.wxService.getTodoService().getDetails(Arrays.asList(
+      "17c7d2bd9f20d652840f72f59e796AAA",
+      "17c7d2bd9f20d652840f72f59e796BBB"
+    ));
   }
 
   /**
@@ -53,7 +76,7 @@ public class WxCpTodoServiceImplTest {
   public void testUpdateWithAttendees() throws WxErrorException {
     this.wxService.getTodoService().update("17c7d2bd9f20d652840f72f59e796AAA", 1,
       Arrays.asList(
-        new WxCpTodo.Attendee().setUserid("lisi").setStatus(2),
+        new WxCpTodo.Attendee().setUserid("lisi").setStatus(0),
         new WxCpTodo.Attendee().setUserid("zhangsan").setStatus(1)
       ));
   }
