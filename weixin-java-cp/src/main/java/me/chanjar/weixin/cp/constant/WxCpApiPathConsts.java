@@ -399,6 +399,17 @@ public interface WxCpApiPathConsts {
     String SCHEDULE_LIST = "/cgi-bin/oa/schedule/get_by_calendar";
 
     /**
+     * 待办。
+     * https://developer.work.weixin.qq.com/document/path/101524
+     */
+    String TODO_GET = "/cgi-bin/oa/todo/get";
+    /**
+     * 更新待办状态。
+     * https://developer.work.weixin.qq.com/document/path/101531
+     */
+    String TODO_UPDATE_STATUS = "/cgi-bin/oa/todo/update_status";
+
+    /**
      * 会议
      * https://developer.work.weixin.qq.com/document/path/93626
      */

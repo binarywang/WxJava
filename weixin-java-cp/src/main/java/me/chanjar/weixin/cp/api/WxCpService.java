@@ -556,6 +556,13 @@ public interface WxCpService extends WxService {
   WxCpOaScheduleService getOaScheduleService();
 
   /**
+   * 获取待办相关接口的服务类对象。
+   *
+   * @return the oa todo service
+   */
+  WxCpOaTodoService getOaTodoService();
+
+  /**
    * 获取群机器人消息推送服务
    *
    * @return 群机器人消息推送服务 group robot service

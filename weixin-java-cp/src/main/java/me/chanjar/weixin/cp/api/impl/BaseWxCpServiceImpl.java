@@ -68,6 +68,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private final WxCpOaCalendarService oaCalendarService = new WxCpOaCalendarServiceImpl(this);
   private final WxCpOaMeetingRoomService oaMeetingRoomService = new WxCpOaMeetingRoomServiceImpl(this);
   private final WxCpOaScheduleService oaScheduleService = new WxCpOaOaScheduleServiceImpl(this);
+  private final WxCpOaTodoService oaTodoService = new WxCpOaTodoServiceImpl(this);
   private final WxCpAgentWorkBenchService workBenchService = new WxCpAgentWorkBenchServiceImpl(this);
   private WxCpKfService kfService = new WxCpKfServiceImpl(this);
 
@@ -711,6 +712,11 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpOaScheduleService getOaScheduleService() {
     return this.oaScheduleService;
+  }
+
+  @Override
+  public WxCpOaTodoService getOaTodoService() {
+    return this.oaTodoService;
   }
 
   @Override
