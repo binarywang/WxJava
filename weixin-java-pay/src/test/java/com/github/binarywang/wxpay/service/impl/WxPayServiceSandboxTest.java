@@ -36,4 +36,18 @@ public class WxPayServiceSandboxTest {
 
     assertEquals(exception.getMessage(), "微信支付V3 目前不支持沙箱模式！");
   }
+
+  @Test
+  public void shouldRejectHttpComponentsV3RequestWhenSandboxIsEnabled() {
+    WxPayConfig config = new WxPayConfig();
+    config.setUseSandboxEnv(true);
+
+    WxPayServiceHttpComponentsImpl service = new WxPayServiceHttpComponentsImpl();
+    service.setConfig(config);
+
+    WxRuntimeException exception = expectThrows(WxRuntimeException.class,
+      () -> service.postV3("https://api.mch.weixin.qq.com/v3/pay/transactions/jsapi", "{}"));
+
+    assertEquals(exception.getMessage(), "微信支付V3 目前不支持沙箱模式！");
+  }
 }

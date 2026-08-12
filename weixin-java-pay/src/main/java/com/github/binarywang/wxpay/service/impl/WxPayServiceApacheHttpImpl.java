@@ -7,7 +7,6 @@ import com.github.binarywang.wxpay.v3.WxPayV3DownloadHttpGet;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import lombok.extern.slf4j.Slf4j;
-import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.http.apache.ByteArrayResponseHandler;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import org.apache.commons.lang3.StringUtils;
@@ -304,12 +303,6 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       .setConnectTimeout(this.getConfig().getHttpConnectionTimeout())
       .setSocketTimeout(this.getConfig().getHttpTimeout())
       .build());
-  }
-
-  private void checkV3SandboxNotSupported() {
-    if (this.getConfig().isUseSandboxEnv()) {
-      throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
-    }
   }
 
   private CloseableHttpClient createApiV3HttpClient() throws WxPayException {

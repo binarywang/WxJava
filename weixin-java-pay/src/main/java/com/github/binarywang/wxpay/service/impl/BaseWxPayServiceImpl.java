@@ -373,6 +373,12 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
     return this.getConfig().getApiHostWithPathPrefix();
   }
 
+  protected void checkV3SandboxNotSupported() {
+    if (this.getConfig().isUseSandboxEnv()) {
+      throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
+    }
+  }
+
   @Override
   public WxPayRefundResult refund(WxPayRefundRequest request) throws WxPayException {
     request.checkAndSign(this.getConfig());
