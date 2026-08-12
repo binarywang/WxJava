@@ -67,12 +67,10 @@ public class WxCpTodoServiceImplTest {
         new WxCpTodo.Attendee().setUserid("zhangsan").setStatus(1)
       ));
     // 更新成功后通过 get() 回查，验证参与人列表确实写入
-    // 注意：GET 响应中参与人字段为 follower_list.followers[].follower_id/follower_status
     final WxCpTodo todo = this.wxService.getTodoService().get(TODO_ID);
     assertNotNull(todo, "回查待办不应为 null");
-    assertNotNull(todo.getFollowerList(), "follower_list 不应为 null");
-    assertNotNull(todo.getFollowerList().getFollowers(), "followers 列表不应为 null");
-    assertEquals(todo.getFollowerList().getFollowers().size(), 2, "参与人数量应为 2");
+    assertNotNull(todo.getAttendees(), "attendees 列表不应为 null");
+    assertEquals(todo.getAttendees().size(), 2, "参与人数量应为 2");
     assertEquals(todo.getStatus(), Integer.valueOf(1), "待办整体状态应为 1（进行中）");
   }
 }
