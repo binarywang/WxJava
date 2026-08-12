@@ -1884,4 +1884,22 @@ public interface WxCpApiPathConsts {
      */
     String UPDATE_EMPLOYEE_FIELD_INFO = "/cgi-bin/hr/update_staff_info";
   }
+
+  /**
+   * 待办相关接口.
+   * 官方文档：https://developer.work.weixin.qq.com/document/path/101524
+   */
+  interface Todo {
+    /**
+     * 获取待办详情
+     * https://developer.work.weixin.qq.com/document/path/101524
+     */
+    String TODO_GET = "/cgi-bin/todo/get";
+
+    /**
+     * 更新待办状态
+     * https://developer.work.weixin.qq.com/document/path/101534
+     */
+    String TODO_UPDATE = "/cgi-bin/todo/update";
+  }
 }
