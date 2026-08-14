@@ -15,7 +15,7 @@
 
 | HTTP 客户端 | 版本 | 配置值 | 状态 | 说明 |
 |------------|------|--------|------|------|
-| Apache HttpClient 5.x | 5.5 | `HttpComponents` | ⭐ 推荐 | 最新稳定版本 |
+| Apache HttpClient 5.x | 5.6.3 | `HttpComponents` | ⭐ 推荐 | 最新稳定版本 |
 | Apache HttpClient 4.x | 4.5.13 | `HttpClient` | ✅ 支持 | 向后兼容 |
 | OkHttp | 4.12.0 | `OkHttp` | ✅ 支持 | 需自行添加依赖 |
 | Jodd-http | 6.3.0 | `JoddHttp` | ✅ 支持 | 需自行添加依赖 |
