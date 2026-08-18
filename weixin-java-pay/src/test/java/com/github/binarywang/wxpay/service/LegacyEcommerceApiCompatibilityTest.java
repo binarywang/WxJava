@@ -25,4 +25,23 @@ public class LegacyEcommerceApiCompatibilityTest {
     Assert.assertNotNull(EcommerceService.class.getMethod("parseRefundNotifyResult", String.class, legacyHeader));
     Assert.assertNotNull(EcommerceService.class.getMethod("parseWithdrawNotifyResult", String.class, legacyHeader));
   }
+
+  @Test
+  public void shouldMakeLegacyHeaderMoreSpecificAndPreserveSignatureFields() {
+    com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader legacyHeader =
+      new com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader();
+    legacyHeader.setTimeStamp("timestamp");
+    legacyHeader.setNonce("nonce");
+    legacyHeader.setSigned("signed");
+    legacyHeader.setSerialNo("serial-no");
+
+    Assert.assertTrue(com.github.binarywang.wxpay.bean.notify.SignatureHeader.class
+      .isAssignableFrom(legacyHeader.getClass()));
+    com.github.binarywang.wxpay.bean.notify.SignatureHeader unifiedHeader =
+      EcommerceService.toUnifiedSignatureHeader(legacyHeader);
+    Assert.assertEquals(unifiedHeader.getTimeStamp(), "timestamp");
+    Assert.assertEquals(unifiedHeader.getNonce(), "nonce");
+    Assert.assertEquals(unifiedHeader.getSignature(), "signed");
+    Assert.assertEquals(unifiedHeader.getSerial(), "serial-no");
+  }
 }

@@ -18,7 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Deprecated
-public class SignatureHeader implements Serializable {
+public class SignatureHeader extends com.github.binarywang.wxpay.bean.notify.SignatureHeader implements Serializable {
   private static final long serialVersionUID = -6958015499416059949L;
   /**
    * 时间戳
