@@ -17,4 +17,12 @@ public class LegacyEcommerceApiCompatibilityTest {
     Assert.assertNotNull(result);
     Assert.assertEquals(TradeTypeEnum.JSAPI.name(), "JSAPI");
   }
+
+  @Test
+  public void shouldKeepLegacyRefundAndWithdrawNotificationSignatures() throws Exception {
+    Class<?> legacyHeader = com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader.class;
+
+    Assert.assertNotNull(EcommerceService.class.getMethod("parseRefundNotifyResult", String.class, legacyHeader));
+    Assert.assertNotNull(EcommerceService.class.getMethod("parseWithdrawNotifyResult", String.class, legacyHeader));
+  }
 }

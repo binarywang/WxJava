@@ -533,6 +533,15 @@ public interface EcommerceService {
   RefundNotifyResult parseRefundNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
+   * @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。
+   */
+  @Deprecated
+  default RefundNotifyResult parseRefundNotifyResult(String notifyData,
+                                                     com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return parseRefundNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+  }
+
+  /**
    * <pre>
    * 提现状态变更通知回调数据处理
    * <a href="https://pay.weixin.qq.com/doc/v3/partner/4013049135">接口文档</a>
@@ -544,6 +553,15 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。
+   */
+  @Deprecated
+  default WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData,
+                                                         com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return parseWithdrawNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+  }
 
   /**
    * <pre>
