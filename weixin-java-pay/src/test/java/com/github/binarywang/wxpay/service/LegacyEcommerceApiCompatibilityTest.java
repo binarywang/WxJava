@@ -29,11 +29,12 @@ public class LegacyEcommerceApiCompatibilityTest {
   @Test
   public void shouldMakeLegacyHeaderMoreSpecificAndPreserveSignatureFields() {
     com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader legacyHeader =
-      new com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader();
-    legacyHeader.setTimeStamp("timestamp");
-    legacyHeader.setNonce("nonce");
-    legacyHeader.setSigned("signed");
-    legacyHeader.setSerialNo("serial-no");
+      com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader.builder()
+        .timeStamp("timestamp")
+        .nonce("nonce")
+        .signed("signed")
+        .serialNo("serial-no")
+        .build();
 
     Assert.assertTrue(com.github.binarywang.wxpay.bean.notify.SignatureHeader.class
       .isAssignableFrom(legacyHeader.getClass()));

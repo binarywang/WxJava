@@ -1,9 +1,9 @@
 package com.github.binarywang.wxpay.bean.ecommerce;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.io.Serializable;
 
@@ -14,22 +14,12 @@ import java.io.Serializable;
  * @author cloudX
  */
 @Data
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Deprecated
 public class SignatureHeader extends com.github.binarywang.wxpay.bean.notify.SignatureHeader implements Serializable {
   private static final long serialVersionUID = -6958015499416059949L;
-  /**
-   * 时间戳
-   */
-  private String timeStamp;
-
-  /**
-   * 随机串
-   */
-  private String nonce;
-
   /**
    * 已签名字符串
    */
