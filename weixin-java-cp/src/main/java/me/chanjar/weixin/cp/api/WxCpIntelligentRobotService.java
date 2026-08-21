@@ -94,9 +94,11 @@ public interface WxCpIntelligentRobotService {
    * @param aiBotId        机器人 ID
    * @return 解密并解析后的回调消息
    */
-  WxCpIntelligentRobotMessage parseEncryptedCallbackMessage(String msgSignature, String timestamp, String nonce,
-                                                             String encryptedJson, String token, String encodingAesKey,
-                                                             String aiBotId);
+  default WxCpIntelligentRobotMessage parseEncryptedCallbackMessage(String msgSignature, String timestamp, String nonce,
+                                                                     String encryptedJson, String token, String encodingAesKey,
+                                                                     String aiBotId) {
+    throw new UnsupportedOperationException("当前智能机器人服务不支持 API 模式回调解析");
+  }
 
   /**
    * 加密并向智能机器人 API 模式的临时 response_url 回复消息.
@@ -111,7 +113,9 @@ public interface WxCpIntelligentRobotService {
    * @return 企业微信响应内容
    * @throws WxErrorException 微信接口异常
    */
-  String replyMessage(String responseUrl, String plainJson, String token, String encodingAesKey, String aiBotId,
-                      String timestamp, String nonce) throws WxErrorException;
+  default String replyMessage(String responseUrl, String plainJson, String token, String encodingAesKey, String aiBotId,
+                              String timestamp, String nonce) throws WxErrorException {
+    throw new UnsupportedOperationException("当前智能机器人服务不支持 API 模式消息回复");
+  }
 
 }
