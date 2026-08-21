@@ -12,6 +12,7 @@
       <class name="me.chanjar.weixin.cp.tp.service.impl.WxCpTpTagServiceImplTest"/>
       <class name="me.chanjar.weixin.cp.tp.service.impl.WxCpTpMessageServiceImplTest"/>
       <class name="me.chanjar.weixin.cp.api.impl.WxCpHrServiceImplTest"/>
+      <class name="me.chanjar.weixin.cp.api.impl.BaseWxCpServiceImplTest"/>
       <class name="me.chanjar.weixin.cp.api.impl.WxCpIntelligentRobotApiModeServiceTest"/>
     </classes>
   </test>

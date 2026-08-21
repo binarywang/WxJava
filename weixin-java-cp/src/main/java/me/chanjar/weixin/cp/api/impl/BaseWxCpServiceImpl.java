@@ -430,21 +430,27 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
    * 普通请求，不自动带accessToken
    */
   private <T, E> T executeNormal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+    String uriForLog = redactQueryString(uri);
     try {
       T result = executor.execute(uri, data, WxType.CP);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriForLog, data, result);
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri, data, error);
+        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriForLog, data, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
+      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriForLog, data, e.getMessage());
       throw new WxErrorException(e);
     }
+  }
+
+  static String redactQueryString(String uri) {
+    int queryStart = uri.indexOf('?');
+    return queryStart < 0 ? uri : uri.substring(0, queryStart) + "?******";
   }
 
   @Override
