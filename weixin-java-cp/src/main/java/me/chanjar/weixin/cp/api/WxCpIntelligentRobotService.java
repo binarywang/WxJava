@@ -82,4 +82,36 @@ public interface WxCpIntelligentRobotService {
    */
   WxCpIntelligentRobotMessage parseCallbackMessage(String callbackMessageJson);
 
+  /**
+   * 解密并解析智能机器人 API 模式回调消息.
+   *
+   * @param msgSignature   回调 URL 参数中的签名
+   * @param timestamp      回调 URL 参数中的时间戳
+   * @param nonce          回调 URL 参数中的随机串
+   * @param encryptedJson  回调 JSON 信封中的 encrypt 字段
+   * @param token          机器人后台配置的 Token
+   * @param encodingAesKey 机器人后台配置的 EncodingAESKey
+   * @param aiBotId        机器人 ID
+   * @return 解密并解析后的回调消息
+   */
+  WxCpIntelligentRobotMessage parseEncryptedCallbackMessage(String msgSignature, String timestamp, String nonce,
+                                                             String encryptedJson, String token, String encodingAesKey,
+                                                             String aiBotId);
+
+  /**
+   * 加密并向智能机器人 API 模式的临时 response_url 回复消息.
+   *
+   * @param responseUrl    回调消息中的 response_url
+   * @param plainJson      回复的明文 JSON
+   * @param token          机器人后台配置的 Token
+   * @param encodingAesKey 机器人后台配置的 EncodingAESKey
+   * @param aiBotId        机器人 ID
+   * @param timestamp      回复时间戳
+   * @param nonce          回复随机串
+   * @return 企业微信响应内容
+   * @throws WxErrorException 微信接口异常
+   */
+  String replyMessage(String responseUrl, String plainJson, String token, String encodingAesKey, String aiBotId,
+                      String timestamp, String nonce) throws WxErrorException;
+
 }
