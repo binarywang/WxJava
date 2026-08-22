@@ -7,9 +7,11 @@ import me.chanjar.weixin.channel.api.WxChannelKfService;
 import me.chanjar.weixin.channel.bean.kf.WxChannelKfCosUploadResponse;
 import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgParam;
 import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgResponse;
+import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 
 /** 视频号小店商家客服服务实现。 */
 public class WxChannelKfServiceImpl implements WxChannelKfService {
@@ -36,7 +38,8 @@ public class WxChannelKfServiceImpl implements WxChannelKfService {
 
   @Override
   public WxChannelKfSendMsgResponse sendMessage(WxChannelKfSendMsgParam param) throws WxErrorException {
-    String responseJson = channelService.post(SEND_MSG_URL, param);
+    String responseJson = channelService.executeWithoutLog(SimplePostRequestExecutor.create(channelService), SEND_MSG_URL,
+      JsonUtils.encode(param));
     return ResponseUtils.decode(responseJson, WxChannelKfSendMsgResponse.class);
   }
 }

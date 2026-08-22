@@ -4,11 +4,15 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertSame;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgParam;
 import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgResponse;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.common.bean.CommonUploadParam;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.RequestExecutor;
 import org.testng.annotations.Test;
 
 /** 商家客服服务离线测试。 */
@@ -49,8 +53,17 @@ public class WxChannelKfServiceImplTest {
     assertEquals(channelService.postUrl, "https://api.weixin.qq.com/channels/ec/commkf/sendmsg");
     assertEquals(channelService.postJson,
       "{\"request_id\":\"request-id\",\"open_id\":\"open-id\",\"msg_type\":\"text\",\"text\":{\"content\":\"hello\"}}");
+    assertEquals(channelService.executeWithoutLogCalled, true);
     assertEquals(response.getMsgId(), "message-id");
     assertEquals(response.getErrCode(), 0);
+  }
+
+  @Test
+  public void shouldProvideFreshUploadStreamForEachAttempt() throws IOException {
+    CommonUploadParam uploadParam = CommonUploadParam.fromBytes("file", "image.png", new byte[]{1, 2, 3});
+
+    assertEquals(readAllBytes(uploadParam.getData().getInputStream()), new byte[]{1, 2, 3});
+    assertEquals(readAllBytes(uploadParam.getData().getInputStream()), new byte[]{1, 2, 3});
   }
 
   @Test
@@ -68,6 +81,7 @@ public class WxChannelKfServiceImplTest {
     private CommonUploadParam uploadParam;
     private String postUrl;
     private String postJson;
+    private boolean executeWithoutLogCalled;
 
     @Override
     public String upload(String url, CommonUploadParam param) {
@@ -81,6 +95,26 @@ public class WxChannelKfServiceImplTest {
       this.postUrl = url;
       this.postJson = JsonUtils.encode(obj);
       return postResult;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T, E> T executeWithoutLog(RequestExecutor<T, E> executor, String uri, E data) {
+      this.executeWithoutLogCalled = true;
+      this.postUrl = uri;
+      this.postJson = (String) data;
+      return (T) postResult;
+    }
+  }
+
+  private byte[] readAllBytes(InputStream inputStream) throws IOException {
+    try (InputStream stream = inputStream; ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+      byte[] buffer = new byte[16];
+      int count;
+      while ((count = stream.read(buffer)) != -1) {
+        outputStream.write(buffer, 0, count);
+      }
+      return outputStream.toByteArray();
     }
   }
 }
