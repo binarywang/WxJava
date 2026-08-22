@@ -10,6 +10,6 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 public class AfterSaleCreateResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 2680676438284658410L;
 
-  @JsonProperty("aftersale_id")
-  private String afterSaleId;
+  @JsonProperty("after_sale_order_id")
+  private String afterSaleOrderId;
 }

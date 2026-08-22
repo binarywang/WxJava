@@ -163,14 +163,14 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
 
   @Override
   public GuaranteeOrderResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
-    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    GuaranteeIdParam param = new GuaranteeIdParam(guaranteeOrderId);
     String resJson = shopService.post(AFTER_SALE_GET_GUARANTEE_ORDER_URL, param);
     return ResponseUtils.decode(resJson, GuaranteeOrderResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse merchantAcceptGuarantee(String guaranteeOrderId) throws WxErrorException {
-    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    GuaranteeIdParam param = new GuaranteeIdParam(guaranteeOrderId);
     String resJson = shopService.post(AFTER_SALE_MERCHANT_ACCEPT_GUARANTEE_URL, param);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }

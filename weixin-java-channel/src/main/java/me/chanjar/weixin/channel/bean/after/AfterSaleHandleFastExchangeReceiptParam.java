@@ -25,5 +25,5 @@ public class AfterSaleHandleFastExchangeReceiptParam extends AfterSaleIdParam {
   private String merchantText;
 
   @JsonProperty("reject_confirm_exchange")
-  private List<Object> rejectConfirmExchange;
+  private List<String> rejectConfirmExchange;
 }

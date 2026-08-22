@@ -19,4 +19,7 @@ public class AfterSaleGenAfterSaleOrderParam extends AfterSaleRefundPriceDiffPar
 
   @JsonProperty("address_id")
   private String addressId;
+
+  @JsonProperty("exchange_sku_info")
+  private ExchangeSkuInfo exchangeSkuInfo;
 }

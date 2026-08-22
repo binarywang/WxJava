@@ -21,6 +21,7 @@ import me.chanjar.weixin.channel.bean.after.AfterSaleRejectReasonResponse;
 import me.chanjar.weixin.channel.bean.after.AfterSaleVirtualTelNumResponse;
 import me.chanjar.weixin.channel.bean.after.GuaranteeMerchantModifyParam;
 import me.chanjar.weixin.channel.bean.after.GuaranteeMerchantProofParam;
+import me.chanjar.weixin.channel.bean.after.GuaranteeProofInfo;
 import me.chanjar.weixin.channel.bean.after.GuaranteeOrderResponse;
 import me.chanjar.weixin.channel.bean.after.SyncWorkOrderParam;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
@@ -221,7 +222,7 @@ public class WxChannelAfterSaleServiceImplTest {
   public void testMerchantModifyGuarantee() throws WxErrorException {
     WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
     GuaranteeMerchantModifyParam param = new GuaranteeMerchantModifyParam();
-    param.setGuaranteeOrderId("");
+    param.setGuaranteeId("");
     param.setBadLevel(10);
     param.setMerchantRemark("remark");
     WxChannelBaseResponse response = afterSaleService.merchantModifyGuarantee(param);
@@ -233,9 +234,11 @@ public class WxChannelAfterSaleServiceImplTest {
   public void testMerchantProofGuarantee() throws WxErrorException {
     WxChannelAfterSaleService afterSaleService = channelService.getAfterSaleService();
     GuaranteeMerchantProofParam param = new GuaranteeMerchantProofParam();
-    param.setGuaranteeOrderId("");
-    param.setContent("proof");
-    param.setPicList(new ArrayList<>(4));
+    param.setGuaranteeId("");
+    GuaranteeProofInfo proofInfo = new GuaranteeProofInfo();
+    proofInfo.setText("proof");
+    proofInfo.setImageIds(new ArrayList<>(4));
+    param.setProofInfo(proofInfo);
     WxChannelBaseResponse response = afterSaleService.merchantProofGuarantee(param);
     assertNotNull(response);
     assertTrue(response.isSuccess());
