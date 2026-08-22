@@ -36,6 +36,34 @@ public interface WxChannelService extends BaseWxChannelService {
   WxChannelProductService getProductService();
 
   /**
+   * 赠品与买赠活动服务
+   *
+   * @return 赠品与买赠活动服务
+   */
+  WxChannelGiftService getGiftService();
+
+  /**
+   * 限时抢购服务
+   *
+   * @return 限时抢购服务
+   */
+  WxChannelLimitedDiscountService getLimitedDiscountService();
+
+  /**
+   * 商品库存服务
+   *
+   * @return 商品库存服务
+   */
+  WxChannelProductStockService getProductStockService();
+
+  /**
+   * 商品辅助功能服务
+   *
+   * @return 商品辅助功能服务
+   */
+  WxChannelProductAssistantService getProductAssistantService();
+
+  /**
    * 仓库服务
    *
    * @return 仓库服务

@@ -37,7 +37,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private final WxChannelBasicService basicService = new WxChannelBasicServiceImpl(this);
   private final WxChannelCategoryService categoryService = new WxChannelCategoryServiceImpl(this);
   private final WxChannelBrandService brandService = new WxChannelBrandServiceImpl(this);
-  private final WxChannelProductService productService = new WxChannelProductServiceImpl(this);
+  private final WxChannelGiftService giftService = new WxChannelGiftServiceImpl(this);
+  private final WxChannelLimitedDiscountService limitedDiscountService =
+    new WxChannelLimitedDiscountServiceImpl(this);
+  private final WxChannelProductStockService productStockService = new WxChannelProductStockServiceImpl(this);
+  private final WxChannelProductAssistantService productAssistantService =
+    new WxChannelProductAssistantServiceImpl(this);
+  private final WxChannelProductService productService = new WxChannelProductServiceImpl(
+    this, giftService, limitedDiscountService, productStockService);
   private final WxChannelWarehouseService warehouseService = new WxChannelWarehouseServiceImpl(this);
   private final WxChannelOrderService orderService = new WxChannelOrderServiceImpl(this);
   private final WxChannelAfterSaleService afterSaleService = new WxChannelAfterSaleServiceImpl(this);
@@ -334,6 +341,26 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   @Override
   public WxChannelProductService getProductService() {
     return productService;
+  }
+
+  @Override
+  public WxChannelGiftService getGiftService() {
+    return giftService;
+  }
+
+  @Override
+  public WxChannelLimitedDiscountService getLimitedDiscountService() {
+    return limitedDiscountService;
+  }
+
+  @Override
+  public WxChannelProductStockService getProductStockService() {
+    return productStockService;
+  }
+
+  @Override
+  public WxChannelProductAssistantService getProductAssistantService() {
+    return productAssistantService;
   }
 
   @Override
