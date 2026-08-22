@@ -13,6 +13,26 @@ import me.chanjar.weixin.channel.bean.product.GiftProductGetResponse;
 import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
 import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
 import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
+import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
+import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingNewResponse;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingParam;
+import me.chanjar.weixin.channel.bean.product.ExternalProductMappingResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditQuotaResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductAuditStrategySetParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendParam;
+import me.chanjar.weixin.channel.bean.product.ProductBrandRecommendResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryClassifyResponse;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckParam;
+import me.chanjar.weixin.channel.bean.product.ProductCategoryPreCheckResponse;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeParam;
+import me.chanjar.weixin.channel.bean.product.ProductSchemeResponse;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowParam;
+import me.chanjar.weixin.channel.bean.product.ProductStockFlowResponse;
+import me.chanjar.weixin.channel.bean.product.ProductTimingSaleParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
@@ -212,6 +232,47 @@ public interface WxChannelProductService {
    * @throws WxErrorException 异常
    */
   ProductTagLinkResponse getProductTagLink(String productId) throws WxErrorException;
+
+  /** 获取商品的移动应用跳转 scheme 码. */
+  ProductSchemeResponse getProductScheme(ProductSchemeParam param) throws WxErrorException;
+
+  /** 商品类目推荐. */
+  ProductCategoryClassifyResponse classifyProductCategory(ProductCategoryClassifyParam param) throws WxErrorException;
+
+  /** 商品立即开售. */
+  WxChannelBaseResponse beginTimingSale(ProductTimingSaleParam param) throws WxErrorException;
+
+  /** 取消商品开售. */
+  WxChannelBaseResponse cancelTimingSale(String productId) throws WxErrorException;
+
+  /** 站内外商品属性映射. */
+  ExternalProductMappingResponse externalProductMapping(ExternalProductMappingParam param) throws WxErrorException;
+
+  /** 发品前校验. */
+  ProductCategoryPreCheckResponse categoryPreCheck(ProductCategoryPreCheckParam param) throws WxErrorException;
+
+  /** 获取商品上架策略. */
+  ProductAuditStrategyResponse getProductAuditStrategy() throws WxErrorException;
+
+  /** 设置商品上架策略. */
+  WxChannelBaseResponse setProductAuditStrategy(ProductAuditStrategySetParam param) throws WxErrorException;
+
+  /** 获取商品提审限额. */
+  ProductAuditQuotaResponse getProductAuditQuota() throws WxErrorException;
+
+  /** 商品属性映射及推荐. */
+  ExternalProductMappingNewResponse externalProductMappingNew(ExternalProductMappingNewParam param)
+    throws WxErrorException;
+
+  /** 商品品牌推荐. */
+  ProductBrandRecommendResponse productBrandRecommend(ProductBrandRecommendParam param) throws WxErrorException;
+
+  /** 新增第三方货源信息. */
+  AddProductThirdPartySourceResponse addProductThirdPartySource(AddProductThirdPartySourceParam param)
+    throws WxErrorException;
+
+  /** 获取库存流水. */
+  ProductStockFlowResponse getStockFlow(ProductStockFlowParam param) throws WxErrorException;
 
   /**
    * 添加非卖商品

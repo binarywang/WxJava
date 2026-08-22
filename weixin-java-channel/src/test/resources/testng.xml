@@ -3,6 +3,7 @@
 <suite name="Weixin-java-tool-suite" verbose="1">
   <test name="Result_Test">
     <classes>
+      <class name="me.chanjar.weixin.channel.api.impl.WxChannelProductManagementServiceImplTest"/>
       <!--<class name="me.chanjar.weixin.open.bean.result.WxFastMaAccountBasicInfoResultTest"/>
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaCanSetCategoryResultTest"/>
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaBeenSetCategoryResultTest"/>-->

@@ -1,0 +1,25 @@
+package me.chanjar.weixin.channel.bean.product;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
+
+/** 获取库存流水响应. */
+@Data
+@EqualsAndHashCode(callSuper = true)
+public class ProductStockFlowResponse extends WxChannelBaseResponse {
+  private static final long serialVersionUID = 7600529379926896515L;
+
+  private StockFlowData data;
+
+  @Data
+  public static class StockFlowData {
+    @JsonProperty("stock_flow_info_list")
+    private List<JsonNode> stockFlowInfoList;
+    @JsonProperty("next_key")
+    private String nextKey;
+  }
+}

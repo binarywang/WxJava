@@ -158,10 +158,36 @@ public class WxChannelApiUrlConstants {
     String SPU_H5URL_URL = "https://api.weixin.qq.com/channels/ec/product/h5url/get";
     /** 获取商品二维码 */
     String SPU_QRCODE_URL = "https://api.weixin.qq.com/channels/ec/product/qrcode/get";
+    /** 获取商品移动应用跳转 scheme 码 */
+    String SPU_SCHEME_URL = "https://api.weixin.qq.com/channels/ec/product/scheme/get";
     /** 获取商品口令 */
     String SPU_TAGLINK_URL = "https://api.weixin.qq.com/channels/ec/product/taglink/get";
+    /** 商品类目推荐 */
+    String SPU_CATEGORY_CLASSIFY_URL = "https://api.weixin.qq.com/channels/ec/product/category/classify";
+    /** 商品立即开售 */
+    String SPU_BEGIN_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/begintimingsale";
+    /** 取消商品开售 */
+    String SPU_CANCEL_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/canceltimingsale";
+    /** 站内外商品属性映射 */
+    String SPU_EXTERNAL_PRODUCT_MAPPING_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmapping";
+    /** 发品前校验 */
+    String SPU_CATEGORY_PRE_CHECK_URL = "https://api.weixin.qq.com/channels/ec/product/categoryprecheck";
+    /** 获取商品上架策略 */
+    String SPU_AUDIT_STRATEGY_GET_URL = "https://api.weixin.qq.com/channels/ec/product/auditstrategy/get";
+    /** 设置商品上架策略 */
+    String SPU_AUDIT_STRATEGY_SET_URL = "https://api.weixin.qq.com/channels/ec/product/auditstrategy/set";
+    /** 获取商品提审限额 */
+    String SPU_GET_AUDIT_QUOTA_URL = "https://api.weixin.qq.com/channels/ec/product/getauditquota";
+    /** 商品属性映射及推荐 */
+    String SPU_EXTERNAL_PRODUCT_MAPPING_NEW_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmappingnew";
+    /** 商品品牌推荐 */
+    String SPU_PRODUCT_BRAND_RECOMMEND_URL = "https://api.weixin.qq.com/channels/ec/product/productbrandrecommend";
+    /** 新增第三方货源信息 */
+    String SPU_ADD_PRODUCT_THIRD_PARTY_SOURCE_URL = "https://api.weixin.qq.com/channels/ec/product/addproductthirdpartysource";
     /** 获取实时库存 */
     String SPU_GET_STOCK_URL = "https://api.weixin.qq.com/channels/ec/product/stock/get";
+    /** 获取库存流水 */
+    String SPU_GET_STOCK_FLOW_URL = "https://api.weixin.qq.com/channels/ec/product/stock/getflow";
     /** 获取实时库存 */
     String SPU_GET_STOCK_BATCH_URL = "https://api.weixin.qq.com/channels/ec/product/stock/batchget";
     /** 更新商品库存 */
