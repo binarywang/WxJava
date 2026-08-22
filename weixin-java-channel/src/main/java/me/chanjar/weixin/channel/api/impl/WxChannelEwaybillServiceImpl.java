@@ -25,6 +25,9 @@ import me.chanjar.weixin.channel.bean.ewaybill.AddSubOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.CreateOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.CreateOrderResponse;
 import me.chanjar.weixin.channel.bean.ewaybill.DeliveryListResponse;
+import me.chanjar.weixin.channel.bean.ewaybill.EwaybillOrderIdParam;
+import me.chanjar.weixin.channel.bean.ewaybill.PrintOrderRequest;
+import me.chanjar.weixin.channel.bean.ewaybill.BatchPrintOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.OrderDetailResponse;
 import me.chanjar.weixin.channel.bean.ewaybill.PreCreateRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.PreCreateResponse;
@@ -125,33 +128,33 @@ public class WxChannelEwaybillServiceImpl implements WxChannelEwaybillService {
   }
 
   @Override
-  public WxChannelBaseResponse cancelOrder(String waybillId) throws WxErrorException {
-    String resJson = post(CANCEL_ORDER_URL, new WaybillIdParam(waybillId));
+  public WxChannelBaseResponse cancelOrder(PrintOrderRequest req) throws WxErrorException {
+    String resJson = post(CANCEL_ORDER_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public OrderDetailResponse getOrder(String waybillId) throws WxErrorException {
-    String resJson = post(GET_ORDER_URL, new WaybillIdParam(waybillId));
+  public OrderDetailResponse getOrder(String ewaybillOrderId) throws WxErrorException {
+    String resJson = post(GET_ORDER_URL, new EwaybillOrderIdParam(ewaybillOrderId));
     return ResponseUtils.decode(resJson, OrderDetailResponse.class);
   }
 
   @Override
-  public PrintContentResponse getPrintContent(List<String> waybillIds, String templateId)
+  public PrintContentResponse getPrintContent(String ewaybillOrderId, String templateId)
       throws WxErrorException {
-    String resJson = post(GET_PRINT_CONTENT_URL, new PrintContentParam(waybillIds, templateId));
+    String resJson = post(GET_PRINT_CONTENT_URL, new PrintContentParam(ewaybillOrderId, templateId));
     return ResponseUtils.decode(resJson, PrintContentResponse.class);
   }
 
   @Override
-  public WxChannelBaseResponse printOrder(String waybillId) throws WxErrorException {
-    String resJson = post(PRINT_ORDER_URL, new WaybillIdParam(waybillId));
+  public WxChannelBaseResponse printOrder(PrintOrderRequest req) throws WxErrorException {
+    String resJson = post(PRINT_ORDER_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
-  public WxChannelBaseResponse batchPrintOrder(List<String> waybillIds) throws WxErrorException {
-    String resJson = post(BATCH_PRINT_ORDER_URL, new WaybillIdsParam(waybillIds));
+  public WxChannelBaseResponse batchPrintOrder(BatchPrintOrderRequest req) throws WxErrorException {
+    String resJson = post(BATCH_PRINT_ORDER_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 

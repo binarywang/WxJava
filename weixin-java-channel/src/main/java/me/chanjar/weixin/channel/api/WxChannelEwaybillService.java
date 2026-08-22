@@ -7,6 +7,8 @@ import me.chanjar.weixin.channel.bean.ewaybill.AddSubOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.CreateOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.CreateOrderResponse;
 import me.chanjar.weixin.channel.bean.ewaybill.DeliveryListResponse;
+import me.chanjar.weixin.channel.bean.ewaybill.PrintOrderRequest;
+import me.chanjar.weixin.channel.bean.ewaybill.BatchPrintOrderRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.OrderDetailResponse;
 import me.chanjar.weixin.channel.bean.ewaybill.PreCreateRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.PreCreateResponse;
@@ -59,18 +61,18 @@ public interface WxChannelEwaybillService {
   WxChannelBaseResponse addSubOrder(AddSubOrderRequest req) throws WxErrorException;
 
   /** 取消电子面单下单。 @param waybillId 运单 ID @return 操作结果 @throws WxErrorException 调用失败 */
-  WxChannelBaseResponse cancelOrder(String waybillId) throws WxErrorException;
+  WxChannelBaseResponse cancelOrder(PrintOrderRequest req) throws WxErrorException;
 
   /** 查询电子面单详情。 @param waybillId 运单 ID @return 面单详情 @throws WxErrorException 调用失败 */
-  OrderDetailResponse getOrder(String waybillId) throws WxErrorException;
+  OrderDetailResponse getOrder(String ewaybillOrderId) throws WxErrorException;
 
   /** 获取打印报文。 @param waybillIds 运单 ID 列表 @param templateId 可选模板 ID @return 打印内容 @throws WxErrorException 调用失败 */
-  PrintContentResponse getPrintContent(List<String> waybillIds, String templateId)
+  PrintContentResponse getPrintContent(String ewaybillOrderId, String templateId)
       throws WxErrorException;
 
   /** 通知单个运单打印成功。 @param waybillId 运单 ID @return 操作结果 @throws WxErrorException 调用失败 */
-  WxChannelBaseResponse printOrder(String waybillId) throws WxErrorException;
+  WxChannelBaseResponse printOrder(PrintOrderRequest req) throws WxErrorException;
 
   /** 批量通知运单打印成功。 @param waybillIds 运单 ID 列表 @return 操作结果 @throws WxErrorException 调用失败 */
-  WxChannelBaseResponse batchPrintOrder(List<String> waybillIds) throws WxErrorException;
+  WxChannelBaseResponse batchPrintOrder(BatchPrintOrderRequest req) throws WxErrorException;
 }
