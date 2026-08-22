@@ -1,6 +1,7 @@
 package me.chanjar.weixin.channel.bean.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
@@ -15,7 +16,9 @@ public class ProductAuditQuotaResponse extends WxChannelBaseResponse {
   private AuditQuota auditQuota;
 
   @Data
-  public static class AuditQuota {
+  public static class AuditQuota implements Serializable {
+    private static final long serialVersionUID = 6066821247844334714L;
+
     @JsonProperty("block_status")
     private Integer blockStatus;
     @JsonProperty("avail_quota")

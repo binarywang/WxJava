@@ -1,6 +1,7 @@
 package me.chanjar.weixin.channel.bean.product;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,12 +18,16 @@ public class ProductCategoryClassifyResponse extends WxChannelBaseResponse {
   private Boolean wrongCat;
 
   @Data
-  public static class CategoryInfo {
+  public static class CategoryInfo implements Serializable {
+    private static final long serialVersionUID = -4800760946330901306L;
+
     private List<CategoryLevel> cats;
   }
 
   @Data
-  public static class CategoryLevel {
+  public static class CategoryLevel implements Serializable {
+    private static final long serialVersionUID = 8010801623725584755L;
+
     @JsonProperty("cat_info")
     private Category catInfo;
     @JsonProperty("has_permission")
@@ -30,7 +35,9 @@ public class ProductCategoryClassifyResponse extends WxChannelBaseResponse {
   }
 
   @Data
-  public static class Category {
+  public static class Category implements Serializable {
+    private static final long serialVersionUID = -9013991576741902059L;
+
     @JsonProperty("cat_id")
     private String catId;
     @JsonProperty("cat_name")

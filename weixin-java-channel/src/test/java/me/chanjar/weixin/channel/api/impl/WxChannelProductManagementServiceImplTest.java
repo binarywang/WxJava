@@ -3,6 +3,9 @@ package me.chanjar.weixin.channel.api.impl;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Arrays;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
@@ -213,6 +216,21 @@ public class WxChannelProductManagementServiceImplTest {
     assertEquals(result.getData().getNextKey(), "next");
   }
 
+  @Test
+  public void shouldSerializeNestedProductManagementResponses() throws IOException {
+    ProductAuditQuotaResponse.AuditQuota auditQuota = new ProductAuditQuotaResponse.AuditQuota();
+    ProductCategoryClassifyResponse.Category category = new ProductCategoryClassifyResponse.Category();
+    ProductCategoryClassifyResponse.CategoryLevel categoryLevel = new ProductCategoryClassifyResponse.CategoryLevel();
+    ProductCategoryClassifyResponse.CategoryInfo categoryInfo = new ProductCategoryClassifyResponse.CategoryInfo();
+    ProductStockFlowResponse.StockFlowData stockFlowData = new ProductStockFlowResponse.StockFlowData();
+
+    assertSerializable(auditQuota);
+    assertSerializable(category);
+    assertSerializable(categoryLevel);
+    assertSerializable(categoryInfo);
+    assertSerializable(stockFlowData);
+  }
+
   private static WxChannelProductServiceImpl productService(RecordingChannelService channelService) {
     return new WxChannelProductServiceImpl(channelService);
   }
@@ -228,6 +246,13 @@ public class WxChannelProductManagementServiceImplTest {
   private static void assertRequest(RecordingChannelService channelService, String path, String expectedJson) {
     assertTrue(channelService.getUrl().endsWith(path));
     assertEquals(JsonUtils.decode(channelService.getRequestJson(), Object.class), JsonUtils.decode(expectedJson, Object.class));
+  }
+
+  private static void assertSerializable(Object value) throws IOException {
+    ByteArrayOutputStream output = new ByteArrayOutputStream();
+    try (ObjectOutputStream objectOutput = new ObjectOutputStream(output)) {
+      objectOutput.writeObject(value);
+    }
   }
 
   private static class RecordingChannelService extends WxChannelServiceHttpClientImpl {
