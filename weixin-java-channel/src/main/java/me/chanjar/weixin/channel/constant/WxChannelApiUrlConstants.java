@@ -302,6 +302,18 @@ public class WxChannelApiUrlConstants {
     String AFTER_SALE_REJECT_EXCHANGE_RESHIP_URL = "https://api.weixin.qq.com/channels/ec/aftersale/rejectexchangereship";
     /** 商家协商*/
     String AFTER_SALE_MERCHANT_UPDATE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantupdateaftersale";
+    /** 获取保障单列表 */
+    String GUARANTEE_ORDER_LIST_URL = "https://api.weixin.qq.com/channels/ec/aftersale/searchguaranteeorder";
+    /** 获取保障单详情 */
+    String GUARANTEE_ORDER_GET_URL = "https://api.weixin.qq.com/channels/ec/aftersale/getguaranteeorder";
+    /** 同意保障单申请 */
+    String GUARANTEE_ORDER_ACCEPT_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantacceptguarantee";
+    /** 商家协商保障单 */
+    String GUARANTEE_ORDER_MODIFY_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantmodifyguarantee";
+    /** 商家举证保障单 */
+    String GUARANTEE_ORDER_PROOF_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantproofguarantee";
+    /** 拒绝保障单申请 */
+    String GUARANTEE_ORDER_REFUSE_URL = "https://api.weixin.qq.com/channels/ec/aftersale/merchantrefuseguarantee";
   }
 
   /** 纠纷相关接口 */
