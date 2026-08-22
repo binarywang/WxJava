@@ -167,6 +167,7 @@ public class WxChannelProductManagementServiceImplTest {
     ExternalProductMappingNewResponse result = productService(channelService).externalProductMappingNew(param);
 
     assertRequest(channelService, "/channels/ec/product/externalproductmappingnew", "{\"cat_id\":6000,\"external_category_name\":\"母婴:童鞋\",\"head_imgs\":[\"https://example.com/head\"],\"title\":\"儿童雨鞋\",\"external_attributes\":[{\"key\":\"材质\",\"value\":\"塑胶\"}]}");
+    assertTrue(result.getAttributes().get(0) instanceof ExternalProductMappingNewResponse.Attribute);
     assertEquals(result.getAttributes().get(0).getKey(), "鞋面材质");
   }
 

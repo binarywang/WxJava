@@ -344,7 +344,7 @@ public interface WxChannelProductService {
   /**
    * 获取商品库存流水.
    *
-   * @param param 商品、SKU、库存类型、时间范围和分页参数；pageSize 必填，库存类型非 0 和 1 时 stockTypeId 必填
+   * @param param 商品、SKU、库存类型、时间范围和分页参数；pageSize 必填，stockType 为 1 时 finderId 必填，库存类型非 0 和 1 时 stockTypeId 必填
    * @return 库存流水及下一页标识
    * @throws WxErrorException 调用微信接口失败
    */
