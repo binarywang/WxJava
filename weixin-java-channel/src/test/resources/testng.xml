@@ -16,4 +16,9 @@
       <class name="me.chanjar.weixin.channel.util.ResponseUtilsTest"/>
     </classes>
   </test>
+  <test name="Service_Test">
+    <classes>
+      <class name="me.chanjar.weixin.channel.api.impl.WxChannelServiceImplTest"/>
+    </classes>
+  </test>
 </suite>

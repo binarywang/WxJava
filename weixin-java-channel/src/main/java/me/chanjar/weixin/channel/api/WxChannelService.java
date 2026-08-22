@@ -40,28 +40,36 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 赠品与买赠活动服务
    */
-  WxChannelGiftService getGiftService();
+  default WxChannelGiftService getGiftService() {
+    throw new UnsupportedOperationException("Gift service is not supported by this implementation");
+  }
 
   /**
    * 限时抢购服务
    *
    * @return 限时抢购服务
    */
-  WxChannelLimitedDiscountService getLimitedDiscountService();
+  default WxChannelLimitedDiscountService getLimitedDiscountService() {
+    throw new UnsupportedOperationException("Limited discount service is not supported by this implementation");
+  }
 
   /**
    * 商品库存服务
    *
    * @return 商品库存服务
    */
-  WxChannelProductStockService getProductStockService();
+  default WxChannelProductStockService getProductStockService() {
+    throw new UnsupportedOperationException("Product stock service is not supported by this implementation");
+  }
 
   /**
    * 商品辅助功能服务
    *
    * @return 商品辅助功能服务
    */
-  WxChannelProductAssistantService getProductAssistantService();
+  default WxChannelProductAssistantService getProductAssistantService() {
+    throw new UnsupportedOperationException("Product assistant service is not supported by this implementation");
+  }
 
   /**
    * 仓库服务

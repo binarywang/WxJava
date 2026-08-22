@@ -2,10 +2,15 @@ package me.chanjar.weixin.channel.api.impl;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import me.chanjar.weixin.channel.api.WxChannelService;
+import me.chanjar.weixin.channel.bean.limit.LimitSku;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
 import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
 import org.testng.annotations.Test;
@@ -16,56 +21,102 @@ import org.testng.annotations.Test;
 public class WxChannelServiceImplTest {
 
   @Test
-  public void shouldExposeProductDomainServicesAndKeepProductServiceRoutesCompatible() throws Exception {
+  public void shouldKeepNewDomainServiceAccessorsCompatibleWithExistingImplementations() throws Exception {
+    assertDefaultMethod("getGiftService");
+    assertDefaultMethod("getLimitedDiscountService");
+    assertDefaultMethod("getProductStockService");
+    assertDefaultMethod("getProductAssistantService");
+  }
+
+  @Test
+  public void shouldExposeProductDomainServices() {
     CapturingChannelService channelService = new CapturingChannelService();
     assertNotNull(channelService.getGiftService());
     assertNotNull(channelService.getLimitedDiscountService());
     assertNotNull(channelService.getProductStockService());
     assertNotNull(channelService.getProductAssistantService());
+  }
 
-    assertSameRequest(channelService, new RequestCall() {
+  @Test
+  public void shouldRouteGiftProductCallsExactlyOnce() throws Exception {
+    CapturingChannelService channelService = new CapturingChannelService();
+    GiftProductInfo info = new GiftProductInfo();
+    info.setListing(1);
+
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
-        channelService.getGiftService().addGiftProduct(new GiftProductInfo());
+        channelService.getGiftService().addGiftProduct(info);
       }
-    }, new RequestCall() {
+    }, "https://api.weixin.qq.com/channels/ec/product/gift/add", "{\"listing\":1}");
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
-        channelService.getProductService().addGiftProduct(new GiftProductInfo());
+        channelService.getProductService().addGiftProduct(info);
       }
-    });
-    assertSameRequest(channelService, new RequestCall() {
+    }, "https://api.weixin.qq.com/channels/ec/product/gift/add", "{\"listing\":1}");
+  }
+
+  @Test
+  public void shouldRouteLimitedDiscountCallsExactlyOnce() throws Exception {
+    CapturingChannelService channelService = new CapturingChannelService();
+    LimitTaskParam param = new LimitTaskParam();
+    param.setProductId("product-id");
+    param.setStartTime(new Date(1_000));
+    param.setEndTime(new Date(2_000));
+    param.setSkus(Arrays.asList(new LimitSku("sku-id", 100, 2)));
+
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
-        channelService.getLimitedDiscountService().addLimitTask(new LimitTaskParam());
+        channelService.getLimitedDiscountService().addLimitTask(param);
       }
-    }, new RequestCall() {
+    }, "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/add",
+      "{\"product_id\":\"product-id\",\"start_time\":1000,\"end_time\":2000," +
+        "\"limited_discount_skus\":[{\"sku_id\":\"sku-id\",\"sale_price\":100,\"sale_stock\":2}]}");
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
-        channelService.getProductService().addLimitTask(new LimitTaskParam());
+        channelService.getProductService().addLimitTask(param);
       }
-    });
-    assertSameRequest(channelService, new RequestCall() {
+    }, "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/add",
+      "{\"product_id\":\"product-id\",\"start_time\":1000,\"end_time\":2000," +
+        "\"limited_discount_skus\":[{\"sku_id\":\"sku-id\",\"sale_price\":100,\"sale_stock\":2}]}");
+  }
+
+  @Test
+  public void shouldRouteStockCallsExactlyOnce() throws Exception {
+    CapturingChannelService channelService = new CapturingChannelService();
+
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
         channelService.getProductStockService().updateStock("product-id", "sku-id", 1, 2);
       }
-    }, new RequestCall() {
+    }, "https://api.weixin.qq.com/channels/ec/product/stock/update",
+      "{\"product_id\":\"product-id\",\"sku_id\":\"sku-id\",\"diff_type\":1,\"num\":2}");
+    assertRequest(channelService, new RequestCall() {
       @Override
       public void call() throws Exception {
         channelService.getProductService().updateStock("product-id", "sku-id", 1, 2);
       }
-    });
+    }, "https://api.weixin.qq.com/channels/ec/product/stock/update",
+      "{\"product_id\":\"product-id\",\"sku_id\":\"sku-id\",\"diff_type\":1,\"num\":2}");
   }
 
-  private void assertSameRequest(CapturingChannelService channelService, RequestCall domainCall,
-                                 RequestCall compatibilityCall) throws Exception {
+  private void assertDefaultMethod(String methodName) throws Exception {
+    Method method = WxChannelService.class.getMethod(methodName);
+    assertTrue(method.isDefault(), methodName + " must remain compatible with existing implementations");
+  }
+
+  private void assertRequest(CapturingChannelService channelService, RequestCall call,
+                             String expectedUrl, String expectedJson) throws Exception {
     channelService.clearRequests();
-    domainCall.call();
-    List<Request> domainRequests = channelService.getRequests();
-    channelService.clearRequests();
-    compatibilityCall.call();
-    assertEquals(channelService.getRequests(), domainRequests);
+    call.call();
+    List<Request> requests = channelService.getRequests();
+    assertEquals(requests.size(), 1);
+    assertEquals(requests.get(0).url, expectedUrl);
+    assertEquals(requests.get(0).json, expectedJson);
   }
 
   private interface RequestCall {
@@ -99,18 +150,5 @@ public class WxChannelServiceImplTest {
       this.json = json;
     }
 
-    @Override
-    public boolean equals(Object other) {
-      if (!(other instanceof Request)) {
-        return false;
-      }
-      Request request = (Request) other;
-      return this.url.equals(request.url) && this.json.equals(request.json);
-    }
-
-    @Override
-    public int hashCode() {
-      return 31 * this.url.hashCode() + this.json.hashCode();
-    }
   }
 }
