@@ -409,6 +409,13 @@ public interface WxPayService {
   MerchantLimitationService getMerchantLimitationService();
 
   /**
+   * 获取点金计划服务类
+   *
+   * @return 点金计划服务
+   */
+  GoldPlanService getGoldPlanService();
+
+  /**
    * 获取服务商电子发票服务类。
    *
    * @return 服务商电子发票服务
