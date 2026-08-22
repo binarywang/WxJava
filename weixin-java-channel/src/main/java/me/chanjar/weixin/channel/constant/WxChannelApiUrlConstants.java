@@ -196,6 +196,19 @@ public class WxChannelApiUrlConstants {
     String DELETE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/delete";
     /** 更新限时抢购任务 */
     String UPDATE_LIMIT_TASK_URL = "https://api.weixin.qq.com/channels/ec/product/limiteddiscounttask/update";
+    /** 发品前校验 */
+    String CATEGORY_PRE_CHECK_URL = "https://api.weixin.qq.com/channels/ec/product/categoryprecheck";
+    /** 商品品牌推荐 */
+    String PRODUCT_BRAND_RECOMMEND_URL = "https://api.weixin.qq.com/channels/ec/product/productbrandrecommend";
+    /** 站内外商品属性映射 */
+    String EXTERNAL_PRODUCT_MAPPING_URL = "https://api.weixin.qq.com/channels/ec/product/externalproductmapping";
+    /** 商品属性映射及推荐 */
+    String EXTERNAL_PRODUCT_MAPPING_NEW_URL =
+      "https://api.weixin.qq.com/channels/ec/product/externalproductmappingnew";
+    /** 商品立即开售 */
+    String BEGIN_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/begintimingsale";
+    /** 取消商品开售 */
+    String CANCEL_TIMING_SALE_URL = "https://api.weixin.qq.com/channels/ec/product/canceltimingsale";
   }
 
   /** 区域仓库 */

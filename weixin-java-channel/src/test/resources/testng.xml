@@ -21,6 +21,7 @@
       <class name="me.chanjar.weixin.channel.api.impl.WxChannelServiceImplTest"/>
       <class name="me.chanjar.weixin.channel.api.impl.WxChannelLimitedDiscountServiceImplTest"/>
       <class name="me.chanjar.weixin.channel.api.impl.WxChannelProductStockServiceImplTest"/>
+      <class name="me.chanjar.weixin.channel.api.impl.WxChannelProductAssistantServiceImplTest"/>
     </classes>
   </test>
 </suite>
