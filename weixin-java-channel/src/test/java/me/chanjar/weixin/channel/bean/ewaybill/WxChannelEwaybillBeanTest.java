@@ -24,6 +24,14 @@ public class WxChannelEwaybillBeanTest {
   }
 
   @Test
+  public void testTemplateCodeParamNoArgsConstructor() {
+    TemplateCodeParam param = new TemplateCodeParam();
+    param.setTemplateCode("standard_tpl");
+
+    assertTrue(JsonUtils.encode(param).contains("\"template_code\":\"standard_tpl\""));
+  }
+
+  @Test
   public void testWaybillIdsParamEncode() {
     WaybillIdsParam param = new WaybillIdsParam(Arrays.asList("wb_1", "wb_2"));
     String json = JsonUtils.encode(param);
@@ -48,12 +56,11 @@ public class WxChannelEwaybillBeanTest {
 
   @Test
   public void testDynamicResponseDecode() {
-    String json = "{\"errcode\":0,\"errmsg\":\"ok\",\"waybill_id\":\"wb_1\",\"print_info\":\"abc\"}";
+    String json = "{\"errcode\":0,\"errmsg\":\"ok\",\"future_extension\":\"value\"}";
     PrintContentResponse response = ResponseUtils.decode(json, PrintContentResponse.class);
 
     assertNotNull(response);
     assertTrue(response.isSuccess());
-    assertEquals(response.getExtra().get("waybill_id"), "wb_1");
-    assertEquals(response.getExtra().get("print_info"), "abc");
+    assertEquals(response.getExtra().get("future_extension"), "value");
   }
 }

@@ -22,7 +22,8 @@ public abstract class AbstractEwaybillRequest implements Serializable {
 
   private static final long serialVersionUID = 4213577159985597237L;
 
-  @JsonIgnore private Map<String, Object> params = new LinkedHashMap<>();
+  @JsonIgnore
+  private Map<String, Object> params = new LinkedHashMap<>();
 
   @JsonAnySetter
   public void addParam(String key, Object value) {

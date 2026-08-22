@@ -11,6 +11,14 @@ import org.testng.annotations.Test;
 public class PrintContentParamTest {
 
   @Test
+  public void shouldHaveNoArgsConstructor() {
+    PrintContentParam param = new PrintContentParam();
+    param.setWaybillIds(Arrays.asList("wb_1"));
+
+    assertTrue(JsonUtils.encode(param).contains("\"waybill_ids\""));
+  }
+
+  @Test
   public void shouldEncodeWaybillIdsAndOptionalTemplateId() {
     String json = JsonUtils.encode(new PrintContentParam(Arrays.asList("wb_1", "wb_2"), "tpl_1"));
 

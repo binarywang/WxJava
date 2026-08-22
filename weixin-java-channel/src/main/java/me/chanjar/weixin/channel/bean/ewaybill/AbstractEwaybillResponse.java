@@ -23,7 +23,8 @@ public abstract class AbstractEwaybillResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -2460196179063989718L;
 
-  @JsonIgnore private Map<String, Object> extra = new LinkedHashMap<>();
+  @JsonIgnore
+  private Map<String, Object> extra = new LinkedHashMap<>();
 
   @JsonAnySetter
   public void addExtra(String key, Object value) {
