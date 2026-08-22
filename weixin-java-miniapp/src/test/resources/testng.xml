@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="weixin-java-miniapp-unit-tests" verbose="1">
+  <test name="Unit_Test">
+    <classes>
+      <class name="cn.binarywang.wx.miniapp.api.impl.WxMaSubscribeServiceImplUrlTest"/>
+    </classes>
+  </test>
+</suite>
