@@ -12,7 +12,9 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商家客服服务
    */
-  WxChannelKfService getKfService();
+  default WxChannelKfService getKfService() {
+    throw new UnsupportedOperationException("WxChannelService implementation does not support getKfService()");
+  }
 
   /**
    * 基础接口服务
