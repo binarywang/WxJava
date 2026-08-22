@@ -1,6 +1,7 @@
 package me.chanjar.weixin.channel.api.impl;
 
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_BATCH_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_FLOW_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_GET_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_STOCK_URL;
 
@@ -11,6 +12,8 @@ import me.chanjar.weixin.channel.bean.product.SkuStockBatchParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
+import me.chanjar.weixin.channel.bean.product.stock.StockFlowParam;
+import me.chanjar.weixin.channel.bean.product.stock.StockFlowResponse;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -48,5 +51,12 @@ public class WxChannelProductStockServiceImpl implements WxChannelProductStockSe
     String reqJson = JsonUtils.encode(param);
     String resJson = shopService.post(SPU_GET_STOCK_BATCH_URL, reqJson);
     return ResponseUtils.decode(resJson, SkuStockBatchResponse.class);
+  }
+
+  @Override
+  public StockFlowResponse getStockFlow(StockFlowParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(SPU_GET_STOCK_FLOW_URL, reqJson);
+    return ResponseUtils.decode(resJson, StockFlowResponse.class);
   }
 }

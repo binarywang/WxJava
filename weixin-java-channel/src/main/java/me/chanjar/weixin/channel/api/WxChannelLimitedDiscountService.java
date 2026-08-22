@@ -4,6 +4,8 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -48,4 +50,13 @@ public interface WxChannelLimitedDiscountService {
    * @throws WxErrorException 异常
    */
   WxChannelBaseResponse deleteLimitTask(String taskId) throws WxErrorException;
+
+  /**
+   * 更新限时抢购任务。
+   *
+   * @param param 更新任务参数
+   * @return 更新任务响应
+   * @throws WxErrorException 异常
+   */
+  LimitTaskUpdateResponse updateLimitTask(LimitTaskUpdateParam param) throws WxErrorException;
 }

@@ -4,6 +4,8 @@ import java.util.List;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
+import me.chanjar.weixin.channel.bean.product.stock.StockFlowParam;
+import me.chanjar.weixin.channel.bean.product.stock.StockFlowResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -42,4 +44,13 @@ public interface WxChannelProductStockService {
    * @throws WxErrorException 异常
    */
   SkuStockBatchResponse getSkuStockBatch(List<String> productIds) throws WxErrorException;
+
+  /**
+   * 获取商品库存流水。
+   *
+   * @param param 库存流水查询参数
+   * @return 库存流水响应
+   * @throws WxErrorException 异常
+   */
+  StockFlowResponse getStockFlow(StockFlowParam param) throws WxErrorException;
 }

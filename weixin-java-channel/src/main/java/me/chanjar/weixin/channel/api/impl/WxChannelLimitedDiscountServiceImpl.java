@@ -4,6 +4,7 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.AD
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.DELETE_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.LIST_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.STOP_LIMIT_TASK_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.UPDATE_LIMIT_TASK_URL;
 
 import me.chanjar.weixin.channel.api.WxChannelLimitedDiscountService;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
@@ -11,6 +12,8 @@ import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListParam;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateParam;
+import me.chanjar.weixin.channel.bean.limit.LimitTaskUpdateResponse;
 import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
@@ -54,5 +57,12 @@ public class WxChannelLimitedDiscountServiceImpl implements WxChannelLimitedDisc
     String reqJson = "{\"task_id\": \"" + taskId + "\"}";
     String resJson = shopService.post(DELETE_LIMIT_TASK_URL, reqJson);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public LimitTaskUpdateResponse updateLimitTask(LimitTaskUpdateParam param) throws WxErrorException {
+    String reqJson = JsonUtils.encode(param);
+    String resJson = shopService.post(UPDATE_LIMIT_TASK_URL, reqJson);
+    return ResponseUtils.decode(resJson, LimitTaskUpdateResponse.class);
   }
 }
