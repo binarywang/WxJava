@@ -9,6 +9,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Answers.CALLS_REAL_METHODS;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_ACCEPT_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_GET_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_LIST_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_MODIFY_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_PROOF_URL;
+import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_REFUSE_URL;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,12 +30,6 @@ import me.chanjar.weixin.channel.bean.after.GuaranteeRefuseRequest;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import org.testng.annotations.Test;
 
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_ACCEPT_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_GET_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_LIST_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_MODIFY_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_PROOF_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.AfterSale.GUARANTEE_ORDER_REFUSE_URL;
 
 /**
  * 保障单模型 JSON 映射测试。
@@ -82,15 +82,18 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
   @Test
   public void shouldSerializeGuaranteeOrderListParamWithOfficialFieldNames() throws Exception {
     GuaranteeOrderListParam param = OBJECT_MAPPER.readValue(
-      "{\"begin_create_time\":1,\"end_create_time\":2,\"begin_update_time\":3,"
-        + "\"end_update_time\":4,\"next_key\":\"next\"}", GuaranteeOrderListParam.class);
+      "{\"guarantee_order_id_list\":[\"g-1\"],\"order_id_list\":[\"o-1\"],\"type\":2,"
+        + "\"begin_time\":1,\"end_time\":2,\"status_list\":\"PENDING\",\"offset\":3,\"limit\":10}", GuaranteeOrderListParam.class);
 
     JsonNode json = OBJECT_MAPPER.readTree(OBJECT_MAPPER.writeValueAsString(param));
-    assertEquals(json.get("begin_create_time").asLong(), 1L);
-    assertEquals(json.get("end_create_time").asLong(), 2L);
-    assertEquals(json.get("begin_update_time").asLong(), 3L);
-    assertEquals(json.get("end_update_time").asLong(), 4L);
-    assertEquals(json.get("next_key").asText(), "next");
+    assertEquals(json.get("guarantee_order_id_list").get(0).asText(), "g-1");
+    assertEquals(json.get("order_id_list").get(0).asText(), "o-1");
+    assertEquals(json.get("type").asInt(), 2);
+    assertEquals(json.get("begin_time").asLong(), 1L);
+    assertEquals(json.get("end_time").asLong(), 2L);
+    assertEquals(json.get("status_list").asText(), "PENDING");
+    assertEquals(json.get("offset").asInt(), 3);
+    assertEquals(json.get("limit").asInt(), 10);
   }
 
   @Test
@@ -114,10 +117,10 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
 
   @Test
   public void shouldDelegateGuaranteeOrderEndpointsAndDecodeResponses() throws Exception {
-    BaseWxChannelServiceImpl shopService = mock(BaseWxChannelServiceImpl.class);
+    BaseWxChannelServiceImpl<?, ?> shopService = mock(BaseWxChannelServiceImpl.class);
     WxChannelAfterSaleServiceImpl service = new WxChannelAfterSaleServiceImpl(shopService);
     GuaranteeOrderListParam listParam = new GuaranteeOrderListParam();
-    listParam.setBeginCreateTime(1L);
+    listParam.setLimit(10);
     GuaranteeModifyRequest modifyRequest = new GuaranteeModifyRequest("guarantee-1", 50, "协商说明");
     GuaranteeProofRequest proofRequest = new GuaranteeProofRequest("guarantee-1", "举证说明",
       Arrays.asList("media-1"));

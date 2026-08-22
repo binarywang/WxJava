@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
+import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -17,23 +18,27 @@ public class GuaranteeOrderListParam implements Serializable {
 
   private static final long serialVersionUID = 1622570776364341988L;
 
-  /** 订单创建启始时间，Unix 时间戳（秒）。 */
-  @JsonProperty("begin_create_time")
-  private Long beginCreateTime;
+  @JsonProperty("guarantee_order_id_list")
+  private List<String> guaranteeOrderIdList;
 
-  /** 订单创建结束时间，Unix 时间戳（秒）。 */
-  @JsonProperty("end_create_time")
-  private Long endCreateTime;
+  @JsonProperty("order_id_list")
+  private List<String> orderIdList;
 
-  /** 保障单更新启始时间，Unix 时间戳（秒）。 */
-  @JsonProperty("begin_update_time")
-  private Long beginUpdateTime;
+  @JsonProperty("type")
+  private Integer type;
 
-  /** 保障单更新结束时间，Unix 时间戳（秒）。 */
-  @JsonProperty("end_update_time")
-  private Long endUpdateTime;
+  @JsonProperty("begin_time")
+  private Long beginTime;
 
-  /** 翻页参数。 */
-  @JsonProperty("next_key")
-  private String nextKey;
+  @JsonProperty("end_time")
+  private Long endTime;
+
+  @JsonProperty("status_list")
+  private String statusList;
+
+  @JsonProperty("offset")
+  private Integer offset;
+
+  @JsonProperty("limit")
+  private Integer limit;
 }
