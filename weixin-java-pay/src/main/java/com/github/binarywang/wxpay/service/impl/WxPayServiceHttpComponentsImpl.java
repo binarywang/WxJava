@@ -156,6 +156,7 @@ public class WxPayServiceHttpComponentsImpl extends BaseWxPayServiceImpl {
   public String patchV3(String url, String requestStr) throws WxPayException {
     HttpPatch httpPatch = new HttpPatch(url);
     httpPatch.setEntity(createEntry(requestStr));
+    this.configureRequest(httpPatch);
     return this.requestV3(url, requestStr, httpPatch);
   }
 
