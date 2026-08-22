@@ -1,7 +1,6 @@
 package me.chanjar.weixin.channel.api.impl;
 
 
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.ADD_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.CANCEL_AUDIT_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.DELETE_LIMIT_TASK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.GIFT_ACTIVITY_ADD_URL;
@@ -39,17 +38,17 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SP
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_QRCODE_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_SCHEME_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_TAGLINK_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_STOCK_URL;
 import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.SPU_UPDATE_URL;
-import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Spu.STOP_LIMIT_TASK_URL;
 
 import java.util.Collections;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.channel.api.WxChannelGiftService;
+import me.chanjar.weixin.channel.api.WxChannelLimitedDiscountService;
 import me.chanjar.weixin.channel.api.WxChannelProductService;
+import me.chanjar.weixin.channel.api.WxChannelProductStockService;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
-import me.chanjar.weixin.channel.bean.limit.LimitTaskListParam;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
 import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
@@ -82,7 +81,6 @@ import me.chanjar.weixin.channel.bean.product.ProductStockFlowResponse;
 import me.chanjar.weixin.channel.bean.product.ProductTimingSaleParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
-import me.chanjar.weixin.channel.bean.product.SkuStockParam;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuFastInfo;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
@@ -108,9 +106,22 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
 
   /** 微信商店服务 */
   private final BaseWxChannelServiceImpl<?, ?> shopService;
+  private final WxChannelGiftService giftService;
+  private final WxChannelLimitedDiscountService limitedDiscountService;
+  private final WxChannelProductStockService productStockService;
 
   public WxChannelProductServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService) {
+    this(shopService, new WxChannelGiftServiceImpl(shopService),
+      new WxChannelLimitedDiscountServiceImpl(shopService), new WxChannelProductStockServiceImpl(shopService));
+  }
+
+  WxChannelProductServiceImpl(BaseWxChannelServiceImpl<?, ?> shopService, WxChannelGiftService giftService,
+                              WxChannelLimitedDiscountService limitedDiscountService,
+                              WxChannelProductStockService productStockService) {
     this.shopService = shopService;
+    this.giftService = giftService;
+    this.limitedDiscountService = limitedDiscountService;
+    this.productStockService = productStockService;
   }
 
   @Override
@@ -151,10 +162,7 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
   @Override
   public WxChannelBaseResponse updateStock(String productId, String skuId, Integer diffType, Integer num)
     throws WxErrorException {
-    SkuStockParam param = new SkuStockParam(productId, skuId, diffType, num);
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(SPU_UPDATE_STOCK_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return productStockService.updateStock(productId, skuId, diffType, num);
   }
 
   /**
@@ -228,17 +236,12 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
 
   @Override
   public SkuStockResponse getSkuStock(String productId, String skuId) throws WxErrorException {
-    String reqJson = "{\"product_id\":\"" + productId + "\",\"sku_id\":\"" + skuId + "\"}";
-    String resJson = shopService.post(SPU_GET_STOCK_URL, reqJson);
-    return ResponseUtils.decode(resJson, SkuStockResponse.class);
+    return productStockService.getSkuStock(productId, skuId);
   }
 
   @Override
   public SkuStockBatchResponse getSkuStockBatch(List<String> productIds) throws WxErrorException {
-    SkuStockBatchParam param = new SkuStockBatchParam(productIds);
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(SPU_GET_STOCK_BATCH_URL, reqJson);
-    return ResponseUtils.decode(resJson, SkuStockBatchResponse.class);
+    return productStockService.getSkuStockBatch(productIds);
   }
 
   @Override
@@ -343,97 +346,68 @@ public class WxChannelProductServiceImpl implements WxChannelProductService {
 
   @Override
   public GiftProductAddResponse addGiftProduct(GiftProductInfo info) throws WxErrorException {
-    String reqJson = JsonUtils.encode(info);
-    String resJson = shopService.post(GIFT_PRODUCT_ADD_URL, reqJson);
-    return ResponseUtils.decode(resJson, GiftProductAddResponse.class);
+    return giftService.addGiftProduct(info);
   }
 
   @Override
   public WxChannelBaseResponse updateGiftProduct(GiftProductInfo info) throws WxErrorException {
-    String reqJson = JsonUtils.encode(info);
-    String resJson = shopService.post(GIFT_PRODUCT_UPDATE_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return giftService.updateGiftProduct(info);
   }
 
   @Override
   public WxChannelBaseResponse setProductAsGift(String productId) throws WxErrorException {
-    String reqJson = "{\"product_id\":\"" + productId + "\"}";
-    String resJson = shopService.post(GIFT_PRODUCT_ON_SALE_SET_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return giftService.setProductAsGift(productId);
   }
 
   @Override
   public GiftProductGetResponse getGiftProduct(String productId) throws WxErrorException {
-    String reqJson = "{\"product_id\":\"" + productId + "\"}";
-    String resJson = shopService.post(GIFT_PRODUCT_GET_URL, reqJson);
-    return ResponseUtils.decode(resJson, GiftProductGetResponse.class);
+    return giftService.getGiftProduct(productId);
   }
 
   @Override
   public GiftProductListResponse listGiftProduct(GiftProductListParam param) throws WxErrorException {
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(GIFT_PRODUCT_LIST_URL, reqJson);
-    return ResponseUtils.decode(resJson, GiftProductListResponse.class);
+    return giftService.listGiftProduct(param);
   }
 
   @Override
   public WxChannelBaseResponse updateGiftStock(String productId, String skuId, Integer diffType, Integer num)
     throws WxErrorException {
-    SkuStockParam param = new SkuStockParam(productId, skuId, diffType, num);
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(GIFT_PRODUCT_STOCK_UPDATE_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return giftService.updateGiftStock(productId, skuId, diffType, num);
   }
 
   @Override
   public GiftActivityAddResponse addGiftActivity(GiftActivityInfo info) throws WxErrorException {
-    GiftActivityAddParam param = new GiftActivityAddParam(info);
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(GIFT_ACTIVITY_ADD_URL, reqJson);
-    return ResponseUtils.decode(resJson, GiftActivityAddResponse.class);
+    return giftService.addGiftActivity(info);
   }
 
   @Override
   public WxChannelBaseResponse deleteGiftActivity(String activityId) throws WxErrorException {
-    String reqJson = "{\"activity_id\":\"" + activityId + "\"}";
-    String resJson = shopService.post(GIFT_ACTIVITY_DELETE_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return giftService.deleteGiftActivity(activityId);
   }
 
   @Override
   public WxChannelBaseResponse stopGiftActivity(String activityId) throws WxErrorException {
-    String reqJson = "{\"activity_id\":\"" + activityId + "\"}";
-    String resJson = shopService.post(GIFT_ACTIVITY_STOP_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return giftService.stopGiftActivity(activityId);
   }
 
   @Override
   public LimitTaskAddResponse addLimitTask(LimitTaskParam param) throws WxErrorException {
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(ADD_LIMIT_TASK_URL, reqJson);
-    return ResponseUtils.decode(resJson, LimitTaskAddResponse.class);
+    return limitedDiscountService.addLimitTask(param);
   }
 
   @Override
   public LimitTaskListResponse listLimitTask(Integer pageSize, String nextKey, Integer status)
     throws WxErrorException {
-    LimitTaskListParam param = new LimitTaskListParam(pageSize, nextKey, status);
-    String reqJson = JsonUtils.encode(param);
-    String resJson = shopService.post(LIST_LIMIT_TASK_URL, reqJson);
-    return ResponseUtils.decode(resJson, LimitTaskListResponse.class);
+    return limitedDiscountService.listLimitTask(pageSize, nextKey, status);
   }
 
   @Override
   public WxChannelBaseResponse stopLimitTask(String taskId) throws WxErrorException {
-    String reqJson = "{\"task_id\": \"" + taskId + "\"}";
-    String resJson = shopService.post(STOP_LIMIT_TASK_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return limitedDiscountService.stopLimitTask(taskId);
   }
 
   @Override
   public WxChannelBaseResponse deleteLimitTask(String taskId) throws WxErrorException {
-    String reqJson = "{\"task_id\": \"" + taskId + "\"}";
-    String resJson = shopService.post(DELETE_LIMIT_TASK_URL, reqJson);
-    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+    return limitedDiscountService.deleteLimitTask(taskId);
   }
 }

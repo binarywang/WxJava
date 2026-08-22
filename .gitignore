@@ -58,3 +58,6 @@ docs/superpowers/
 .factorypath
 *.zip
 .worktrees
+
+# Local Superpowers working documents; do not commit.
+/docs/superpowers/

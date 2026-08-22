@@ -36,6 +36,42 @@ public interface WxChannelService extends BaseWxChannelService {
   WxChannelProductService getProductService();
 
   /**
+   * 赠品与买赠活动服务
+   *
+   * @return 赠品与买赠活动服务
+   */
+  default WxChannelGiftService getGiftService() {
+    throw new UnsupportedOperationException("Gift service is not supported by this implementation");
+  }
+
+  /**
+   * 限时抢购服务
+   *
+   * @return 限时抢购服务
+   */
+  default WxChannelLimitedDiscountService getLimitedDiscountService() {
+    throw new UnsupportedOperationException("Limited discount service is not supported by this implementation");
+  }
+
+  /**
+   * 商品库存服务
+   *
+   * @return 商品库存服务
+   */
+  default WxChannelProductStockService getProductStockService() {
+    throw new UnsupportedOperationException("Product stock service is not supported by this implementation");
+  }
+
+  /**
+   * 商品辅助功能服务
+   *
+   * @return 商品辅助功能服务
+   */
+  default WxChannelProductAssistantService getProductAssistantService() {
+    throw new UnsupportedOperationException("Product assistant service is not supported by this implementation");
+  }
+
+  /**
    * 仓库服务
    *
    * @return 仓库服务
@@ -209,5 +245,14 @@ public interface WxChannelService extends BaseWxChannelService {
    * @return 收藏管理服务
    */
   WxChannelFavoriteService getFavoriteService();
+
+  /**
+   * 电子面单服务
+   *
+   * @return 电子面单服务
+   */
+  default WxChannelEwaybillService getEwaybillService() {
+    throw new UnsupportedOperationException("当前 WxChannelService 实现不支持电子面单服务");
+  }
 
 }

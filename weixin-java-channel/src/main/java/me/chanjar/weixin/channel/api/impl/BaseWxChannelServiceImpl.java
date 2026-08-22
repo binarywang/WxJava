@@ -37,7 +37,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private final WxChannelBasicService basicService = new WxChannelBasicServiceImpl(this);
   private final WxChannelCategoryService categoryService = new WxChannelCategoryServiceImpl(this);
   private final WxChannelBrandService brandService = new WxChannelBrandServiceImpl(this);
-  private final WxChannelProductService productService = new WxChannelProductServiceImpl(this);
+  private final WxChannelGiftService giftService = new WxChannelGiftServiceImpl(this);
+  private final WxChannelLimitedDiscountService limitedDiscountService =
+    new WxChannelLimitedDiscountServiceImpl(this);
+  private final WxChannelProductStockService productStockService = new WxChannelProductStockServiceImpl(this);
+  private final WxChannelProductAssistantService productAssistantService =
+    new WxChannelProductAssistantServiceImpl(this);
+  private final WxChannelProductService productService = new WxChannelProductServiceImpl(
+    this, giftService, limitedDiscountService, productStockService);
   private final WxChannelWarehouseService warehouseService = new WxChannelWarehouseServiceImpl(this);
   private final WxChannelOrderService orderService = new WxChannelOrderServiceImpl(this);
   private final WxChannelAfterSaleService afterSaleService = new WxChannelAfterSaleServiceImpl(this);
@@ -64,6 +71,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxChannelQicService qicService = null;
   private WxTalentService talentService = null;
   private WxChannelFavoriteService favoriteService = null;
+  private WxChannelEwaybillService ewaybillService = null;
 
   protected WxChannelConfig config;
   private int retrySleepMillis = 1000;
@@ -235,7 +243,8 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
 
     try {
       T result = executor.execute(uriWithAccessToken, data, WxType.Channel);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog,
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken,
+        printResult ? dataForLog : "...",
         printResult ? result : "...");
       return result;
     } catch (WxErrorException e) {
@@ -262,12 +271,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       }
 
       if (error.getErrorCode() != 0) {
-        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken,
+          printResult ? dataForLog : "...", error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken,
+        printResult ? dataForLog : "...", e.getMessage());
       throw new WxRuntimeException(e);
     }
   }
@@ -330,6 +341,26 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   @Override
   public WxChannelProductService getProductService() {
     return productService;
+  }
+
+  @Override
+  public WxChannelGiftService getGiftService() {
+    return giftService;
+  }
+
+  @Override
+  public WxChannelLimitedDiscountService getLimitedDiscountService() {
+    return limitedDiscountService;
+  }
+
+  @Override
+  public WxChannelProductStockService getProductStockService() {
+    return productStockService;
+  }
+
+  @Override
+  public WxChannelProductAssistantService getProductAssistantService() {
+    return productAssistantService;
   }
 
   @Override
@@ -507,6 +538,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       favoriteService = new WxChannelFavoriteServiceImpl(this);
     }
     return favoriteService;
+  }
+
+  @Override
+  public synchronized WxChannelEwaybillService getEwaybillService() {
+    if (ewaybillService == null) {
+      ewaybillService = new WxChannelEwaybillServiceImpl(this);
+    }
+    return ewaybillService;
   }
 
 }
