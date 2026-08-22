@@ -55,3 +55,6 @@ sonar-project.properties
 .factorypath
 *.zip
 .worktrees
+
+# Local Superpowers working documents; do not commit.
+/docs/superpowers/
