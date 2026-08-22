@@ -201,92 +201,74 @@ public interface WxChannelAfterSaleService {
   WxChannelBaseResponse merchantUpdateAfterSale(AfterSaleMerchantUpdateParam param) throws WxErrorException;
 
   /**
-   * 代用户发起售后
+   * 获取保障单列表。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_searchguaranteeorder
    *
-   * @param param 参数
-   * @return 发起结果
-   *
+   * @param param 查询参数
+   * @return 保障单列表
    * @throws WxErrorException 异常
    */
-  AfterSaleCreateResponse genAfterSaleOrder(AfterSaleGenAfterSaleOrderParam param) throws WxErrorException;
+  default GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
-   * 代用户发起退差价
-   *
-   * @param param 参数
-   * @return 发起结果
-   *
-   * @throws WxErrorException 异常
-   */
-  AfterSaleCreateResponse refundPriceDiff(AfterSaleRefundPriceDiffParam param) throws WxErrorException;
-
-  /**
-   * 售后单兑换虚拟号
-   *
-   * @param afterSaleOrderId 售后单号
-   * @return 虚拟号信息
-   *
-   * @throws WxErrorException 异常
-   */
-  AfterSaleVirtualTelNumResponse applyVirtualTelNum(String afterSaleOrderId) throws WxErrorException;
-
-  /**
-   * 商家处理极速换货用户退货（同意/拒绝）
-   *
-   * @param param 参数
-   * @return BaseResponse
-   *
-   * @throws WxErrorException 异常
-   */
-  WxChannelBaseResponse handleFastExchangeReceipt(AfterSaleHandleFastExchangeReceiptParam param) throws WxErrorException;
-
-  /**
-   * 获取保障单详情
+   * 获取保障单详情。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_getguaranteeorder
    *
    * @param guaranteeOrderId 保障单号
    * @return 保障单详情
-   *
    * @throws WxErrorException 异常
    */
-  GuaranteeOrderResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException;
+  default GuaranteeOrderInfoResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
-   * 商家同意保障单申请
+   * 同意保障单申请。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantacceptguarantee
    *
    * @param guaranteeOrderId 保障单号
-   * @return BaseResponse
-   *
+   * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse merchantAcceptGuarantee(String guaranteeOrderId) throws WxErrorException;
+  default WxChannelBaseResponse acceptGuarantee(String guaranteeOrderId) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
-   * 商家协商保障单
+   * 商家协商保障单。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantmodifyguarantee
    *
-   * @param param 参数
-   * @return BaseResponse
-   *
+   * @param request 协商参数
+   * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse merchantModifyGuarantee(GuaranteeMerchantModifyParam param) throws WxErrorException;
+  default WxChannelBaseResponse modifyGuarantee(GuaranteeModifyRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
-   * 商家举证保障单
+   * 商家举证保障单。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantproofguarantee
    *
-   * @param param 参数
-   * @return BaseResponse
-   *
+   * @param request 举证参数
+   * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse merchantProofGuarantee(GuaranteeMerchantProofParam param) throws WxErrorException;
+  default WxChannelBaseResponse proofGuarantee(GuaranteeProofRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
-   * 同步工单
+   * 拒绝保障单申请。
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantrefuseguarantee
    *
-   * @param param 参数
-   * @return BaseResponse
-   *
+   * @param request 拒绝参数
+   * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse syncWorkOrder(SyncWorkOrderParam param) throws WxErrorException;
+  default WxChannelBaseResponse refuseGuarantee(GuaranteeRefuseRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 }
