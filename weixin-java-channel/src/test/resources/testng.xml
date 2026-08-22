@@ -28,6 +28,7 @@
   </test>
   <test name="Kf_Service_Test">
     <classes>
+      <class name="me.chanjar.weixin.channel.bean.kf.WxChannelKfBeanTest"/>
       <class name="me.chanjar.weixin.channel.api.impl.WxChannelKfServiceImplTest"/>
     </classes>
   </test>

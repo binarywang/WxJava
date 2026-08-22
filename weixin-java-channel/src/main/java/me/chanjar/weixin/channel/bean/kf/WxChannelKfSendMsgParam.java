@@ -28,6 +28,26 @@ public class WxChannelKfSendMsgParam implements Serializable {
   @JsonProperty("text")
   private Text text;
 
+  /** 图片消息内容。 */
+  @JsonProperty("image")
+  private CosUrlMessage image;
+
+  /** 视频消息内容。 */
+  @JsonProperty("video")
+  private CosUrlMessage video;
+
+  /** 文件消息内容。 */
+  @JsonProperty("file")
+  private CosUrlMessage file;
+
+  /** 商品卡片消息内容。 */
+  @JsonProperty("product_share")
+  private ProductShareMessage productShare;
+
+  /** 订单卡片消息内容。 */
+  @JsonProperty("order_share")
+  private OrderShareMessage orderShare;
+
   @Data
   @NoArgsConstructor
   public static class Text implements Serializable {
@@ -36,5 +56,35 @@ public class WxChannelKfSendMsgParam implements Serializable {
 
     @JsonProperty("content")
     private String content;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class CosUrlMessage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @JsonProperty("cos_url")
+    private String cosUrl;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class ProductShareMessage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @JsonProperty("product_id")
+    private String productId;
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class OrderShareMessage implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @JsonProperty("order_id")
+    private String orderId;
   }
 }
