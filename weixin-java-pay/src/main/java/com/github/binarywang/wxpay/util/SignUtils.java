@@ -6,6 +6,7 @@ import com.github.binarywang.wxpay.constant.WxPayConstants.SignType;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -238,6 +239,10 @@ public class SignUtils {
 
     for (Field field : fields) {
       try {
+        if (field.isAnnotationPresent(XStreamOmitField.class)) {
+          continue;
+        }
+
         boolean isAccessible = field.isAccessible();
         field.setAccessible(true);
         if (field.get(bean) == null) {

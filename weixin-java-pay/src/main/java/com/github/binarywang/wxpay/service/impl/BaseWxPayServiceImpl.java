@@ -148,6 +148,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Getter
   private final MerchantLimitationService merchantLimitationService = new MerchantLimitationServiceImpl(this);
 
+  @Getter
+  private final PartnerInvoiceService partnerInvoiceService = new PartnerInvoiceServiceImpl(this);
+
   protected Map<String, WxPayConfig> configMap = new ConcurrentHashMap<>();
 
   @Override
@@ -365,12 +368,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public String getPayBaseUrl() {
     if (this.getConfig().isUseSandboxEnv()) {
-      if (StringUtils.isNotBlank(this.getConfig().getApiV3Key())) {
-        throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
-      }
       return this.getConfig().getApiHostWithPathPrefix() + "/xdc/apiv2sandbox";
     }
     return this.getConfig().getApiHostWithPathPrefix();
+  }
+
+  protected void checkV3SandboxNotSupported() {
+    if (this.getConfig().isUseSandboxEnv()) {
+      throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
+    }
   }
 
   @Override

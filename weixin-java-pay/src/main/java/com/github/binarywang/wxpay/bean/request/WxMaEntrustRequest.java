@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.annotations.SerializedName;
 import com.thoughtworks.xstream.annotations.XStreamAlias;
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import lombok.*;
 import me.chanjar.weixin.common.annotation.Required;
 
@@ -25,6 +26,8 @@ import java.util.Map;
 @AllArgsConstructor
 @XStreamAlias("xml")
 public class WxMaEntrustRequest extends BaseWxPayRequest {
+  private static final long serialVersionUID = -2823017402712927893L;
+
   /**
    * <pre>
    * 协议模板ID
@@ -101,18 +104,12 @@ public class WxMaEntrustRequest extends BaseWxPayRequest {
   private String notifyUrl;
 
   /**
-   * <pre>
-   * 版本号
-   * sign
-   * 是
-   * string(8)
-   * 1.0
-   * 固定值1.0
-   * </pre>
+   * @deprecated 小程序纯签约接口不支持该参数，设置后不会参与请求序列化或签名。
    */
-  @Required
+  @Deprecated
+  @XStreamOmitField
   @XStreamAlias("version")
-  private String version;
+  private transient String version;
 
 
   /**
@@ -153,6 +150,11 @@ public class WxMaEntrustRequest extends BaseWxPayRequest {
   @Override
   protected boolean needNonceStr() {
     return false;
+  }
+
+  @Override
+  protected String[] getIgnoredParamsForSign() {
+    return new String[]{"version"};
   }
 
   @Override

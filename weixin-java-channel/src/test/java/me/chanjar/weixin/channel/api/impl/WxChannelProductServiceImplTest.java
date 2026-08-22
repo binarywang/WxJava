@@ -12,6 +12,13 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.GiftActivityAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftActivityInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductGetResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
+import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.SpuGetResponse;
@@ -209,6 +216,82 @@ public class WxChannelProductServiceImplTest {
     WxChannelProductService productService = channelService.getProductService();
     String taskId = "";
     WxChannelBaseResponse response = productService.deleteLimitTask(taskId);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testAddGiftProduct() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    GiftProductInfo info = new GiftProductInfo();
+    GiftProductAddResponse response = productService.addGiftProduct(info);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testUpdateGiftProduct() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    GiftProductInfo info = new GiftProductInfo();
+    WxChannelBaseResponse response = productService.updateGiftProduct(info);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testSetProductAsGift() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    WxChannelBaseResponse response = productService.setProductAsGift("");
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testGetGiftProduct() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    GiftProductGetResponse response = productService.getGiftProduct("");
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testListGiftProduct() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    GiftProductListParam param = new GiftProductListParam(10, null, null);
+    GiftProductListResponse response = productService.listGiftProduct(param);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testUpdateGiftStock() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    WxChannelBaseResponse response = productService.updateGiftStock("", "", 1, 10);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testAddGiftActivity() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    GiftActivityInfo info = new GiftActivityInfo();
+    GiftActivityAddResponse response = productService.addGiftActivity(info);
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testDeleteGiftActivity() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    WxChannelBaseResponse response = productService.deleteGiftActivity("");
+    assertNotNull(response);
+    assertTrue(response.isSuccess());
+  }
+
+  @Test
+  public void testStopGiftActivity() throws WxErrorException {
+    WxChannelProductService productService = channelService.getProductService();
+    WxChannelBaseResponse response = productService.stopGiftActivity("");
     assertNotNull(response);
     assertTrue(response.isSuccess());
   }

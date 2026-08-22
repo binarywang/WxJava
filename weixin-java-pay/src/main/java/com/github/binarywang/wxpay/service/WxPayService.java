@@ -409,6 +409,13 @@ public interface WxPayService {
   MerchantLimitationService getMerchantLimitationService();
 
   /**
+   * 获取服务商电子发票服务类。
+   *
+   * @return 服务商电子发票服务
+   */
+  PartnerInvoiceService getPartnerInvoiceService();
+
+  /**
    * <pre>
    * 查询订单.
    * 详见https://pay.weixin.qq.com/wiki/doc/api/jsapi.php?chapter=9_2

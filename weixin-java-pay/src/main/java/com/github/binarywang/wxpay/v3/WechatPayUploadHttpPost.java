@@ -30,6 +30,7 @@ public class WechatPayUploadHttpPost extends HttpPost {
     private InputStream fileInputStream;
     private ContentType fileContentType;
     private URI uri;
+    private String customMeta;
 
     public Builder(URI uri) {
       this.uri = uri;
@@ -56,6 +57,32 @@ public class WechatPayUploadHttpPost extends HttpPost {
 
     public Builder withVideo(String fileName, String fileSha256, InputStream inputStream) {
       return withMedia(fileName, fileSha256, inputStream);
+    }
+
+    /**
+     * 服务商电子发票文件上传。该接口签名和 multipart 的 meta 均使用业务元信息。
+     */
+    public Builder withFapiaoFile(String fileName, String meta, InputStream inputStream) {
+      this.fileName = fileName;
+      this.fileInputStream = inputStream;
+      this.customMeta = meta;
+      String mimeType = URLConnection.guessContentTypeFromName(fileName);
+      this.fileContentType = ContentType.create(mimeType == null ? "application/octet-stream" : mimeType);
+      return this;
+    }
+
+    public WechatPayUploadHttpPost buildFapiaoFile() {
+      if (fileName == null || fileInputStream == null || customMeta == null || uri == null) {
+        throw new IllegalArgumentException("缺少电子发票文件上传信息");
+      }
+      WechatPayUploadHttpPost request = new WechatPayUploadHttpPost(uri, customMeta);
+      MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+      entityBuilder.setMode(HttpMultipartMode.RFC6532)
+        .addBinaryBody("file", fileInputStream, fileContentType, fileName)
+        .addTextBody("meta", customMeta, ContentType.APPLICATION_JSON);
+      request.setEntity(entityBuilder.build());
+      request.addHeader("Accept", ContentType.APPLICATION_JSON.toString());
+      return request;
     }
 
     public WechatPayUploadHttpPost build() {

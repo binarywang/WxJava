@@ -27,7 +27,7 @@ public interface WxCpAgentService {
    * @return wx cp agent
    * @throws WxErrorException the wx error exception
    */
-  WxCpAgent get(Integer agentId) throws WxErrorException;
+  WxCpAgent get(Long agentId) throws WxErrorException;
 
   /**
    * <pre>
@@ -65,6 +65,6 @@ public interface WxCpAgentService {
    * @return admin list
    * @throws WxErrorException the wx error exception
    */
-  WxCpTpAdmin getAdminList(Integer agentId) throws WxErrorException;
+  WxCpTpAdmin getAdminList(Long agentId) throws WxErrorException;
 
 }

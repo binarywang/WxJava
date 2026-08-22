@@ -158,7 +158,7 @@ public interface WxCpConfigStorage {
    *
    * @return the agent id
    */
-  Integer getAgentId();
+  Long getAgentId();
 
   /**
    * Gets token.
@@ -259,6 +259,47 @@ public interface WxCpConfigStorage {
   String getWebhookKey();
 
   /**
+   * 获取通讯录同步的secret
+   *
+   * @return contact secret
+   */
+  String getContactSecret();
+
+  /**
+   * 获取通讯录同步的access token
+   *
+   * @return contact access token
+   */
+  String getContactAccessToken();
+
+  /**
+   * 获取通讯录同步access token的锁
+   *
+   * @return contact access token lock
+   */
+  Lock getContactAccessTokenLock();
+
+  /**
+   * 检查通讯录同步access token是否已过期
+   *
+   * @return true: 已过期, false: 未过期
+   */
+  boolean isContactAccessTokenExpired();
+
+  /**
+   * 强制将通讯录同步access token过期掉
+   */
+  void expireContactAccessToken();
+
+  /**
+   * 更新通讯录同步access token
+   *
+   * @param accessToken      通讯录同步access token
+   * @param expiresInSeconds 过期时间（秒）
+   */
+  void updateContactAccessToken(String accessToken, int expiresInSeconds);
+
+  /**
    * 获取会话存档的secret
    *
    * @return msg audit secret
@@ -351,10 +392,11 @@ public interface WxCpConfigStorage {
 
   /**
    * 减少会话存档SDK的引用计数
-   * 当引用计数降为0时，自动销毁SDK以释放资源
+   * 当引用计数降为0且SDK已过期时，才自动销毁SDK以释放资源
+   * 如果SDK尚未过期，保留SDK缓存以供后续调用复用
    *
    * @param sdk sdk id
-   * @return 减少后的引用计数，如果返回0表示SDK已被销毁，如果SDK不匹配返回-1
+   * @return 减少后的引用计数；SDK不匹配或引用计数已为0时返回-1
    * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。
    */
   @Deprecated
@@ -383,7 +425,8 @@ public interface WxCpConfigStorage {
 
   /**
    * 减少SDK引用计数并在必要时释放（原子操作）
-   * 此方法确保引用计数递减和SDK检查在同一个同步块内完成
+   * 当引用计数降为0且SDK已过期时，才销毁SDK以释放资源
+   * 如果SDK尚未过期，保留SDK缓存以供后续调用复用，避免频繁初始化和销毁
    *
    * @param sdk sdk id
    * @deprecated 引用计数机制已废弃，由 ThreadLocal 模式替代。

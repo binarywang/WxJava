@@ -36,9 +36,9 @@ public class WxMpInRedissonConfigStorageConfiguration extends AbstractWxMpConfig
   }
 
   private WxMpRedissonConfigImpl getWxMpInRedissonConfigStorage() {
-    RedisProperties redisProperties = properties.getConfigStorage().getRedis();
+    String configuredHost = applicationContext.cfg().get(WxMpProperties.PREFIX + ".config-storage.redis.host");
     RedissonClient redissonClient;
-    if (redisProperties != null && StringUtils.isNotEmpty(redisProperties.getHost())) {
+    if (StringUtils.isNotEmpty(configuredHost)) {
       redissonClient = applicationContext.getBean("wxMpRedissonClient");
     } else {
       redissonClient = applicationContext.getBean(RedissonClient.class);

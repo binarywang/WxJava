@@ -1,0 +1,4 @@
+interface:
+  display_name: "WxJava 模块选择"
+  short_description: "按微信业务场景选择 WxJava 模块、依赖与示例"
+  default_prompt: "使用 $wxjava-module-selector 为我的微信业务选择合适的 WxJava 模块。"

@@ -28,7 +28,7 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
 
   @Override
   public void update(List<String> userIds, String taskId, String replaceName) throws WxErrorException {
-    Integer agentId = this.mainService.getWxCpConfigStorage().getAgentId();
+    Long agentId = this.mainService.getWxCpConfigStorage().getAgentId();
 
     Map<String, Object> data = new HashMap<>(4);
     data.put("userids", userIds);
@@ -45,7 +45,7 @@ public class WxCpTaskCardServiceImpl implements WxCpTaskCardService {
   public void updateTemplateCardButton(List<String> userIds, List<Integer> partyIds,
                                        List<Integer> tagIds, Integer atAll,
                                        String responseCode, String replaceName) throws WxErrorException {
-    Integer agentId = this.mainService.getWxCpConfigStorage().getAgentId();
+    Long agentId = this.mainService.getWxCpConfigStorage().getAgentId();
     Map<String, Object> data = new HashMap<>(7);
     data.put("userids", userIds);
     data.put("partyids", partyIds);

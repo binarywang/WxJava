@@ -473,6 +473,15 @@ public interface WxMaService extends WxService {
   WxMaLinkService getLinkService();
 
   /**
+   * 获取 URL Link 二维码快速跳转规则管理服务对象。
+   *
+   * 文档：https://developers.weixin.qq.com/miniprogram/dev/OpenApiDoc/qrcode-link/url-link/qr-code-quickly-jump.html
+   *
+   * @return                 二维码快速跳转规则管理服务对象WxMaQrcodeJumpService
+   */
+  WxMaQrcodeJumpService getQrcodeJumpService();
+
+  /**
    * 获取电子发票报销方服务接口服务对象。
    *
    * @return                 电子发票报销方服务对象WxMaReimburseInvoiceService

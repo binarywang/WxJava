@@ -27,7 +27,7 @@ public class WxCpMenuServiceImpl implements WxCpMenuService {
   }
 
   @Override
-  public void create(Integer agentId, WxMenu menu) throws WxErrorException {
+  public void create(Long agentId, WxMenu menu) throws WxErrorException {
     String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(MENU_CREATE), agentId);
     this.mainService.post(url, menu.toJson());
   }
@@ -38,7 +38,7 @@ public class WxCpMenuServiceImpl implements WxCpMenuService {
   }
 
   @Override
-  public void delete(Integer agentId) throws WxErrorException {
+  public void delete(Long agentId) throws WxErrorException {
     String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(MENU_DELETE), agentId);
     this.mainService.get(url, null);
   }
@@ -49,7 +49,7 @@ public class WxCpMenuServiceImpl implements WxCpMenuService {
   }
 
   @Override
-  public WxMenu get(Integer agentId) throws WxErrorException {
+  public WxMenu get(Long agentId) throws WxErrorException {
     String url = String.format(this.mainService.getWxCpConfigStorage().getApiUrl(MENU_GET), agentId);
     try {
       String resultContent = this.mainService.get(url, null);

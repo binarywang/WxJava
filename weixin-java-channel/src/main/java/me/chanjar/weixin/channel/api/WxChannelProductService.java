@@ -6,6 +6,13 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskAddResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskListResponse;
 import me.chanjar.weixin.channel.bean.limit.LimitTaskParam;
+import me.chanjar.weixin.channel.bean.product.GiftActivityAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftActivityInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductAddResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductGetResponse;
+import me.chanjar.weixin.channel.bean.product.GiftProductInfo;
+import me.chanjar.weixin.channel.bean.product.GiftProductListParam;
+import me.chanjar.weixin.channel.bean.product.GiftProductListResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockBatchResponse;
 import me.chanjar.weixin.channel.bean.product.SkuStockResponse;
 import me.chanjar.weixin.channel.bean.product.AddProductThirdPartySourceParam;
@@ -342,6 +349,92 @@ public interface WxChannelProductService {
   ProductStockFlowResponse getStockFlow(ProductStockFlowParam param) throws WxErrorException;
 
   /**
+   * 添加非卖商品
+   *
+   * @param info 赠品信息
+   * @return 添加赠品响应
+   * @throws WxErrorException 异常
+   */
+  GiftProductAddResponse addGiftProduct(GiftProductInfo info) throws WxErrorException;
+
+  /**
+   * 更新非卖商品
+   *
+   * @param info 赠品信息
+   * @return 操作响应
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse updateGiftProduct(GiftProductInfo info) throws WxErrorException;
+
+  /**
+   * 在售商品转赠品
+   *
+   * @param productId 商品ID
+   * @return 操作响应
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse setProductAsGift(String productId) throws WxErrorException;
+
+  /**
+   * 获取赠品
+   *
+   * @param productId 赠品商品ID
+   * @return 赠品详情响应
+   * @throws WxErrorException 异常
+   */
+  GiftProductGetResponse getGiftProduct(String productId) throws WxErrorException;
+
+  /**
+   * 获取赠品列表
+   *
+   * @param param 查询参数
+   * @return 赠品列表
+   * @throws WxErrorException 异常
+   */
+  GiftProductListResponse listGiftProduct(GiftProductListParam param) throws WxErrorException;
+
+  /**
+   * 更新赠品库存
+   *
+   * @param productId 赠品商品ID
+   * @param skuId     赠品sku_id
+   * @param diffType  修改类型 1增加 2减少 3设置
+   *                  建议使用1或2，不建议使用3，因为使用3在高并发场景可能会出现预期外表现
+   * @param num       增加、减少或者设置的库存值
+   * @return 操作响应
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse updateGiftStock(String productId, String skuId, Integer diffType, Integer num)
+    throws WxErrorException;
+
+  /**
+   * 创建赠品活动
+   *
+   * @param info 活动信息
+   * @return 创建赠品活动响应
+   * @throws WxErrorException 异常
+   */
+  GiftActivityAddResponse addGiftActivity(GiftActivityInfo info) throws WxErrorException;
+
+  /**
+   * 删除赠品活动
+   *
+   * @param activityId 活动ID
+   * @return 操作响应
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse deleteGiftActivity(String activityId) throws WxErrorException;
+
+  /**
+   * 停止赠品活动
+   *
+   * @param activityId 活动ID
+   * @return 操作响应
+   * @throws WxErrorException 异常
+   */
+   WxChannelBaseResponse stopGiftActivity(String activityId) throws WxErrorException;
+
+   /**
    * 添加限时抢购任务
    *
    * @param param 限时抢购任务

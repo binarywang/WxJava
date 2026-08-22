@@ -78,6 +78,22 @@ public interface WxChannelAfterSaleService {
   WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason, Integer rejectReasonType) throws WxErrorException;
 
   /**
+   * 拒绝售后（支持拒绝凭证）
+   * 文档地址 https://developers.weixin.qq.com/doc/channels/API/aftersale/rejectapply.html
+   *
+   * @param afterSaleOrderId   售后单号
+   * @param rejectReason       拒绝原因
+   * @param rejectReasonType   拒绝原因枚举值
+   * @param rejectCertificates 拒绝凭证图片列表，可使用图片上传接口获取media_id
+   * @see #getRejectReason()
+   * @return BaseResponse
+   *
+   * @throws WxErrorException 异常
+   */
+  WxChannelBaseResponse reject(String afterSaleOrderId, String rejectReason, Integer rejectReasonType,
+    List<String> rejectCertificates) throws WxErrorException;
+
+  /**
    * 上传退款凭证
    *
    * @param afterSaleOrderId 售后单号

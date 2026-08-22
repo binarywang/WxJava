@@ -39,7 +39,7 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   /**
    * 微信企业号应用 ID
    */
-  private volatile Integer agentId;
+  private volatile Long agentId;
 
   @Override
   public void setBaseApiUrl(String baseUrl) {
@@ -65,17 +65,17 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   }
 
   @Override
-  public Integer getAgentId() {
+  public Long getAgentId() {
     return agentId;
   }
 
   @Override
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     this.agentId = agentId;
   }
 
   @Override
-  public void updateCorpAccessToken(String corpId, Integer agentId, String corpAccessToken, int expiresInSeconds) {
+  public void updateCorpAccessToken(String corpId, Long agentId, String corpAccessToken, int expiresInSeconds) {
     String key = generateAccessTokenKey(corpId, agentId);
     corpAccessTokenMap.put(key, corpAccessToken);
     //预留200秒的时间
@@ -83,12 +83,12 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   }
 
   @Override
-  public String getCorpAccessToken(String corpId, Integer agentId) {
+  public String getCorpAccessToken(String corpId, Long agentId) {
     return this.corpAccessTokenMap.get(generateAccessTokenKey(corpId, agentId));
   }
 
   @Override
-  public WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId) {
+  public WxAccessToken getCorpAccessTokenEntity(String corpId, Long agentId) {
     String key = generateAccessTokenKey(corpId, agentId);
     String accessToken = corpAccessTokenMap.getOrDefault(key, StringUtils.EMPTY);
     Long expire = corpAccessTokenExpireTimeMap.getOrDefault(key, 0L);
@@ -99,7 +99,7 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   }
 
   @Override
-  public boolean isCorpAccessTokenExpired(String corpId, Integer agentId) {
+  public boolean isCorpAccessTokenExpired(String corpId, Long agentId) {
     //不存在或者过期
     String key = generateAccessTokenKey(corpId, agentId);
     return corpAccessTokenExpireTimeMap.get(key) == null
@@ -107,7 +107,7 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   }
 
   @Override
-  public void expireCorpAccessToken(String corpId, Integer agentId) {
+  public void expireCorpAccessToken(String corpId, Long agentId) {
     String key = generateAccessTokenKey(corpId, agentId);
     corpAccessTokenMap.remove(key);
     corpAccessTokenExpireTimeMap.remove(key);
@@ -189,12 +189,12 @@ public class WxCpCorpGroupDefaultConfigImpl implements WxCpCorpGroupConfigStorag
   }
 
   @Override
-  public Lock getCorpAccessTokenLock(String corpId, Integer agentId) {
+  public Lock getCorpAccessTokenLock(String corpId, Long agentId) {
     return this.corpAccessTokenLocker
       .computeIfAbsent(generateAccessTokenKey(corpId, agentId), key -> new ReentrantLock());
   }
 
-  private String generateAccessTokenKey(String corpId, Integer agentId) {
+  private String generateAccessTokenKey(String corpId, Long agentId) {
     return String.join(":", this.corpId, String.valueOf(this.agentId), corpId, String.valueOf(agentId));
   }
 }

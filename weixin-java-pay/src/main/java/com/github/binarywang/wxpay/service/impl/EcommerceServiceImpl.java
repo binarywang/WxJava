@@ -70,12 +70,14 @@ public class EcommerceServiceImpl implements EcommerceService {
   }
 
   @Override
-  public CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException {
+  public CombineTransactionsResult combine(TradeTypeEnum tradeType,
+                                           com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException {
     return this.payService.combine(tradeType, request);
   }
 
   @Override
-  public <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException {
+  public <T> T combineTransactions(TradeTypeEnum tradeType,
+                                    com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException {
     return this.payService.combineTransactions(tradeType, request);
   }
 

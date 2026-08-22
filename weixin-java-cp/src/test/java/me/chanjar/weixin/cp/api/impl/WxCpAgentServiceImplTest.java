@@ -43,7 +43,7 @@ public class WxCpAgentServiceImplTest {
    */
   @Test
   public void testGet() throws Exception {
-    final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
+    final Long agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
     WxCpAgent wxCpAgent = this.wxCpService.getAgentService().get(agentId);
 
     assertThat(wxCpAgent.getAgentId()).isEqualTo(agentId);
@@ -60,7 +60,7 @@ public class WxCpAgentServiceImplTest {
    */
   @Test
   public void testSet() throws WxErrorException {
-    final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
+    final Long agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
 
     this.wxCpService.getAgentService().set(WxCpAgent.builder()
       .description("abcddd")
@@ -92,7 +92,7 @@ public class WxCpAgentServiceImplTest {
    */
   @Test
   public void testGetAdminList() throws WxErrorException {
-    final Integer agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
+    final Long agentId = this.wxCpService.getWxCpConfigStorage().getAgentId();
     WxCpTpAdmin adminList = this.wxCpService.getAgentService().getAdminList(agentId);
 
     assertThat(adminList).isNotNull();
@@ -124,7 +124,7 @@ public class WxCpAgentServiceImplTest {
       when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
 
       WxCpAgentService wxAgentService = this.wxService.getAgentService();
-      WxCpAgent wxCpAgent = wxAgentService.get(9);
+      WxCpAgent wxCpAgent = wxAgentService.get(9L);
 
       assertEquals(9, wxCpAgent.getAgentId().intValue());
 
@@ -171,7 +171,7 @@ public class WxCpAgentServiceImplTest {
       when(wxService.getAgentService()).thenReturn(new WxCpAgentServiceImpl(wxService));
 
       WxCpAgentService wxAgentService = this.wxService.getAgentService();
-      WxCpTpAdmin adminList = wxAgentService.getAdminList(9);
+      WxCpTpAdmin adminList = wxAgentService.getAdminList(9L);
 
       assertEquals(0, adminList.getErrcode().intValue());
       assertEquals(2, adminList.getAdmin().size());

@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
-import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -27,7 +26,7 @@ public class WxMaInternetServiceImpl implements WxMaInternetService {
 
   private String sha256(String data, String sessionKey) throws Exception {
     Mac sha256_HMAC = Mac.getInstance("HmacSHA256");
-    SecretKeySpec secret_key = new SecretKeySpec(Base64.decodeBase64(sessionKey), "HmacSHA256");
+    SecretKeySpec secret_key = new SecretKeySpec(sessionKey.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
     sha256_HMAC.init(secret_key);
     byte[] array = sha256_HMAC.doFinal(data.getBytes(StandardCharsets.UTF_8));
     StringBuilder sb = new StringBuilder();

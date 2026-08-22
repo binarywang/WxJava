@@ -66,6 +66,45 @@ public class WxCpServiceJoddHttpImpl extends BaseWxCpServiceImpl<HttpConnectionP
   }
 
   @Override
+  public String getContactAccessToken(boolean forceRefresh) throws WxErrorException {
+    if (!this.configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+      return this.configStorage.getContactAccessToken();
+    }
+
+    Lock lock = this.configStorage.getContactAccessTokenLock();
+    lock.lock();
+    try {
+      // 拿到锁之后，再次判断一下最新的token是否过期，避免重刷
+      if (!this.configStorage.isContactAccessTokenExpired() && !forceRefresh) {
+        return this.configStorage.getContactAccessToken();
+      }
+      // 使用通讯录同步secret获取access_token
+      String contactSecret = this.configStorage.getContactSecret();
+      if (contactSecret == null || contactSecret.trim().isEmpty()) {
+        throw new WxErrorException("通讯录同步secret未配置");
+      }
+      HttpRequest request = HttpRequest.get(String.format(this.configStorage.getApiUrl(WxCpApiPathConsts.GET_TOKEN),
+        this.configStorage.getCorpId(), contactSecret));
+      if (this.httpProxy != null) {
+        httpClient.useProxy(this.httpProxy);
+      }
+      request.withConnectionProvider(httpClient);
+      HttpResponse response = request.send();
+
+      String resultContent = response.bodyText();
+      WxError error = WxError.fromJson(resultContent, WxType.CP);
+      if (error.getErrorCode() != 0) {
+        throw new WxErrorException(error);
+      }
+      WxAccessToken accessToken = WxAccessToken.fromJson(resultContent);
+      this.configStorage.updateContactAccessToken(accessToken.getAccessToken(), accessToken.getExpiresIn());
+    } finally {
+      lock.unlock();
+    }
+    return this.configStorage.getContactAccessToken();
+  }
+
+  @Override
   public String getMsgAuditAccessToken(boolean forceRefresh) throws WxErrorException {
     if (!this.configStorage.isMsgAuditAccessTokenExpired() && !forceRefresh) {
       return this.configStorage.getMsgAuditAccessToken();

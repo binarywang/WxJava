@@ -52,7 +52,7 @@ public class WxCpSingleProperties implements Serializable {
    * <p>使用自建应用 Secret 时，需要填写对应应用的 AgentId。</p>
    * <p>使用通讯录同步 Secret 时，无需填写此字段。</p>
    */
-  private Integer agentId;
+  private Long agentId;
   /**
    * 微信企业号应用 EncodingAESKey
    */

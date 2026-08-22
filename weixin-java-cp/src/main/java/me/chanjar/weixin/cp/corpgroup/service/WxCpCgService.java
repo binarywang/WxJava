@@ -24,11 +24,11 @@ public interface WxCpCgService {
    * @param corpAccessToken  the corp access token
    * @param expiresInSeconds the expires in seconds
    */
-  void updateCorpAccessToken(String corpId, Integer agentId, String corpAccessToken, int expiresInSeconds);
+  void updateCorpAccessToken(String corpId, Long agentId, String corpAccessToken, int expiresInSeconds);
 
-  String getCorpAccessToken(String corpId, Integer agentId, Integer businessType) throws WxErrorException;
+  String getCorpAccessToken(String corpId, Long agentId, Integer businessType) throws WxErrorException;
 
-  String getCorpAccessToken(String corpId, Integer agentId, Integer businessType, boolean forceRefresh) throws WxErrorException;
+  String getCorpAccessToken(String corpId, Long agentId, Integer businessType, boolean forceRefresh) throws WxErrorException;
 
   /**
    * 授权企业的access token相关
@@ -39,7 +39,7 @@ public interface WxCpCgService {
    * @return the access token
    * @throws WxErrorException 微信错误异常
    */
-  WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId, Integer businessType) throws WxErrorException;
+  WxAccessToken getCorpAccessTokenEntity(String corpId, Long agentId, Integer businessType) throws WxErrorException;
 
   /**
    * Gets access token entity.
@@ -51,7 +51,7 @@ public interface WxCpCgService {
    * @return the access token entity
    * @throws WxErrorException 微信错误异常
    */
-  WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId, Integer businessType, boolean forceRefresh) throws WxErrorException;
+  WxAccessToken getCorpAccessTokenEntity(String corpId, Long agentId, Integer businessType, boolean forceRefresh) throws WxErrorException;
 
   /**
    * Is access token expired boolean.
@@ -60,7 +60,7 @@ public interface WxCpCgService {
    * @param agentId 应用ID
    * @return the boolean
    */
-  boolean isCorpAccessTokenExpired(String corpId, Integer agentId);
+  boolean isCorpAccessTokenExpired(String corpId, Long agentId);
 
   /**
    * Expire access token.
@@ -68,7 +68,7 @@ public interface WxCpCgService {
    * @param corpId  企业ID
    * @param agentId 应用ID
    */
-  void expireCorpAccessToken(String corpId, Integer agentId);
+  void expireCorpAccessToken(String corpId, Long agentId);
 
   /**
    * 当本Service没有实现某个API的时候，可以用这个，针对所有微信API中的GET请求.

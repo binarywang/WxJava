@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * 售后单拒绝信息
  *
@@ -27,6 +29,12 @@ public class AfterSaleRejectParam extends AfterSaleIdParam {
   @JsonProperty("reject_reason_type")
   private Integer rejectReasonType;
 
+  /**
+   * 拒绝凭证图片列表，可使用图片上传接口获取media_id
+   */
+  @JsonProperty("reject_certificates")
+  private List<String> rejectCertificates;
+
   public AfterSaleRejectParam() {
   }
 
@@ -39,5 +47,13 @@ public class AfterSaleRejectParam extends AfterSaleIdParam {
     super(afterSaleOrderId);
     this.rejectReason = rejectReason;
     this.rejectReasonType = rejectReasonType;
+  }
+
+  public AfterSaleRejectParam(String afterSaleOrderId, String rejectReason, Integer rejectReasonType,
+    List<String> rejectCertificates) {
+    super(afterSaleOrderId);
+    this.rejectReason = rejectReason;
+    this.rejectReasonType = rejectReasonType;
+    this.rejectCertificates = rejectCertificates;
   }
 }

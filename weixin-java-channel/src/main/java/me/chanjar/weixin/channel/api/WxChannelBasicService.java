@@ -5,7 +5,10 @@ import me.chanjar.weixin.channel.bean.address.AddressCodeResponse;
 import me.chanjar.weixin.channel.bean.image.ChannelImageInfo;
 import me.chanjar.weixin.channel.bean.image.ChannelImageResponse;
 import me.chanjar.weixin.channel.bean.image.QualificationFileResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopH5UrlResponse;
 import me.chanjar.weixin.channel.bean.shop.ShopInfoResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopQrCodeResponse;
+import me.chanjar.weixin.channel.bean.shop.ShopTagLinkResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
@@ -21,6 +24,31 @@ public interface WxChannelBasicService {
    * @return 店铺基本信息
    */
   ShopInfoResponse getShopInfo() throws WxErrorException;
+
+  /**
+   * 获取店铺H5链接
+   *
+   * @return 店铺H5链接
+   * @throws WxErrorException 异常
+   */
+  ShopH5UrlResponse getShopH5Url() throws WxErrorException;
+
+  /**
+   * 获取店铺二维码
+   *
+   * @param qrcodeType 二维码类型，1:二维码；2:标准物料；3:送礼物物料
+   * @return 店铺二维码
+   * @throws WxErrorException 异常
+   */
+  ShopQrCodeResponse getShopQrCode(int qrcodeType) throws WxErrorException;
+
+  /**
+   * 获取店铺口令
+   *
+   * @return 店铺口令
+   * @throws WxErrorException 异常
+   */
+  ShopTagLinkResponse getShopTagLink() throws WxErrorException;
 
   /**
    * 上传图片

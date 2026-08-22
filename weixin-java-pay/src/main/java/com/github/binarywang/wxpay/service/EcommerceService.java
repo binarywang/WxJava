@@ -13,6 +13,7 @@ import com.github.binarywang.wxpay.bean.result.WxPayPartnerOrderQueryV3Result;
 import com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3Result;
 import com.github.binarywang.wxpay.bean.result.enums.TradeTypeEnum;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,99 @@ import java.io.InputStream;
  * created on  2020 /08/17
  */
 public interface EcommerceService {
+  Gson LEGACY_ECOMMERCE_GSON = new Gson();
+
+  /**
+   * @deprecated 从 4.8.5.B 起，请改用 {@link #combine(TradeTypeEnum, com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest)}；5.0 将移除该兼容入口。
+   */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult combine(
+      com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsRequest request) throws WxPayException {
+    com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest unifiedRequest =
+      LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+        com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class);
+    CombineTransactionsResult unifiedResult = combine(toUnifiedTradeType(tradeType), unifiedRequest);
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(unifiedResult),
+      com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用使用统一请求模型的同名方法；5.0 将移除该兼容入口。 */
+  @Deprecated
+  default <T> T combineTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+                                    com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsRequest request) throws WxPayException {
+    return combineTransactions(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+      com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest.class));
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #parseCombineNotifyResult(String, SignatureHeader)}；5.0 将移除。 */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult parseCombineNotifyResult(String notifyData,
+      com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    CombineNotifyResult result = parseCombineNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(result),
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsNotifyResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #queryCombine(String)}；5.0 将移除。 */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult queryCombineTransactions(String outTradeNo) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(queryCombine(outTradeNo)),
+      com.github.binarywang.wxpay.bean.ecommerce.CombineTransactionsResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #unifiedPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}；5.0 将移除。 */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult partner(
+      com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsRequest request) throws WxPayException {
+    WxPayUnifiedOrderV3Result result = unifiedPartnerOrder(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(
+      LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerUnifiedOrderV3Request.class));
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(result),
+      com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #createPartnerOrder(TradeTypeEnum, WxPayPartnerUnifiedOrderV3Request)}；5.0 将移除。 */
+  @Deprecated
+  default <T> T partnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType,
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsRequest request) throws WxPayException {
+    return createPartnerOrder(toUnifiedTradeType(tradeType), LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request),
+      WxPayPartnerUnifiedOrderV3Request.class));
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。 */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult parsePartnerNotifyResult(String notifyData,
+      com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(parsePartnerNotifyResult(notifyData, toUnifiedSignatureHeader(header))),
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsNotifyResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #queryPartnerOrder(WxPayPartnerOrderQueryV3Request)}；5.0 将移除。 */
+  @Deprecated
+  default com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult queryPartnerTransactions(
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsQueryRequest request) throws WxPayException {
+    return LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(queryPartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(
+      LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderQueryV3Request.class))),
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsResult.class);
+  }
+
+  /** @deprecated 从 4.8.5.B 起，请改用 {@link #closePartnerOrder(WxPayPartnerOrderCloseV3Request)}；5.0 将移除。 */
+  @Deprecated
+  default String closePartnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest request) throws WxPayException {
+    closePartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderCloseV3Request.class));
+    return null;
+  }
+
+  static TradeTypeEnum toUnifiedTradeType(com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum tradeType) {
+    return tradeType == com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum.MWEB ? TradeTypeEnum.H5 : TradeTypeEnum.valueOf(tradeType.name());
+  }
+
+  static SignatureHeader toUnifiedSignatureHeader(com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) {
+    return header == null ? null : SignatureHeader.builder().timeStamp(header.getTimeStamp()).nonce(header.getNonce())
+      .signature(header.getSigned()).serial(header.getSerialNo()).build();
+  }
+
   /**
    * <pre>
    * 二级商户进件API
@@ -80,7 +174,8 @@ public interface EcommerceService {
    * @return 微信合单支付返回 CombineTransactionsResult
    * @throws WxPayException the wx pay exception
    */
-  CombineTransactionsResult combine(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+  CombineTransactionsResult combine(TradeTypeEnum tradeType,
+                                   com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -95,7 +190,8 @@ public interface EcommerceService {
    * @return 调起支付需要的参数 t
    * @throws WxPayException the wx pay exception
    */
-  <T> T combineTransactions(TradeTypeEnum tradeType, CombineTransactionsRequest request) throws WxPayException;
+  <T> T combineTransactions(TradeTypeEnum tradeType,
+                            com.github.binarywang.wxpay.bean.request.CombineTransactionsRequest request) throws WxPayException;
 
   /**
    * <pre>
@@ -437,6 +533,15 @@ public interface EcommerceService {
   RefundNotifyResult parseRefundNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
 
   /**
+   * @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。
+   */
+  @Deprecated
+  default RefundNotifyResult parseRefundNotifyResult(String notifyData,
+                                                     com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return parseRefundNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+  }
+
+  /**
    * <pre>
    * 提现状态变更通知回调数据处理
    * <a href="https://pay.weixin.qq.com/doc/v3/partner/4013049135">接口文档</a>
@@ -448,6 +553,15 @@ public interface EcommerceService {
    * @throws WxPayException the wx pay exception
    */
   WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData, SignatureHeader header) throws WxPayException;
+
+  /**
+   * @deprecated 从 4.8.5.B 起，请改用使用 {@link SignatureHeader} 的同名方法；5.0 将移除。
+   */
+  @Deprecated
+  default WithdrawNotifyResult parseWithdrawNotifyResult(String notifyData,
+                                                         com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) throws WxPayException {
+    return parseWithdrawNotifyResult(notifyData, toUnifiedSignatureHeader(header));
+  }
 
   /**
    * <pre>

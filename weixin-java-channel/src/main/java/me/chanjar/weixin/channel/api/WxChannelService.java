@@ -120,6 +120,13 @@ public interface WxChannelService extends BaseWxChannelService {
   WxLeagueWindowService getLeagueWindowService();
 
   /**
+   * 代发管理服务
+   *
+   * @return 代发管理服务
+   */
+  WxChannelSupplierService getSupplierService();
+
+  /**
    * 优选联盟-团长服务
    *
    * @return 团长服务
@@ -181,5 +188,26 @@ public interface WxChannelService extends BaseWxChannelService {
    * @return 直播大屏数据服务
    */
   WxChannelLiveDashboardService getLiveDashboardService();
+
+  /**
+   * 质检管理服务.
+   *
+   * @return 质检管理服务
+   */
+  WxChannelQicService getQicService();
+
+  /**
+   * 微信小店-带货助手服务
+   *
+   * @return 带货助手服务
+   */
+  WxTalentService getTalentService();
+
+  /**
+   * 收藏管理服务
+   *
+   * @return 收藏管理服务
+   */
+  WxChannelFavoriteService getFavoriteService();
 
 }

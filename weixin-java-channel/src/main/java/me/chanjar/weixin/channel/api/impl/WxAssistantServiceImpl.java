@@ -31,25 +31,25 @@ public class WxAssistantServiceImpl implements WxAssistantService {
   private final BaseWxChannelServiceImpl<?, ?> shopService;
   @Override
   public WxChannelBaseResponse addWindowProduct(AddWindowProductRequest req) throws WxErrorException {
-    String resJson = shopService.post(ADD_WINDOW_PRODUCT_URL, "{}");
+    String resJson = shopService.post(ADD_WINDOW_PRODUCT_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public GetWindowProductResponse getWindowProduct(WindowProductRequest req) throws WxErrorException {
-    String resJson = shopService.post(GET_WINDOW_PRODUCT_URL, "{}");
+    String resJson = shopService.post(GET_WINDOW_PRODUCT_URL, req);
     return ResponseUtils.decode(resJson, GetWindowProductResponse.class);
   }
 
   @Override
   public GetWindowProductListResponse getWindowProductList(GetWindowProductListRequest req) throws WxErrorException {
-    String resJson = shopService.post(LIST_WINDOW_PRODUCT_URL, "{}");
+    String resJson = shopService.post(LIST_WINDOW_PRODUCT_URL, req);
     return ResponseUtils.decode(resJson, GetWindowProductListResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse offWindowProduct(WindowProductRequest req) throws WxErrorException {
-    String resJson = shopService.post(OFF_WINDOW_PRODUCT_URL, "{}");
+    String resJson = shopService.post(OFF_WINDOW_PRODUCT_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 }

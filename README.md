@@ -8,60 +8,28 @@
 [![Build Status](https://img.shields.io/circleci/project/github/binarywang/WxJava/develop.svg?sanitize=true&label=Build)](https://circleci.com/gh/binarywang/WxJava/tree/develop)
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/binarywang/WxJava)
 
-<div align="center">
-  <a href="https://hellogithub.com/repository/6de6147050c94db4aedfd7098d19f8d8" target="_blank">
-    <img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6de6147050c94db4aedfd7098d19f8d8&claim_uid=mwKh0tILBfjlezR" alt="Featured｜HelloGitHub" width="250" height="54" />
-  </a>
-  <a href="https://trendshift.io/repositories/12152" target="_blank">
-    <img src="https://trendshift.io/api/badge/repositories/12152" alt="binarywang%2FWxJava | 趋势转变" width="250" height="55" />
-  </a>
-</div>
+[<img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6de6147050c94db4aedfd7098d19f8d8&claim_uid=mwKh0tILBfjlezR" alt="Featured｜HelloGitHub" width="250" height="55">](https://hellogithub.com/repository/6de6147050c94db4aedfd7098d19f8d8)
+[<img src="https://trendshift.io/api/badge/repositories/12152" alt="binarywang/WxJava | 趋势转变" width="250" height="55">](https://trendshift.io/repositories/12152)
+[<img src="https://api.star-history.com/badge?repo=binarywang/WxJava" alt="Star History" width="250" height="55">](https://www.star-history.com/binarywang/wxjava)
 
 ### 微信 `Java` 开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
 
 ### 特别赞助
-<div align="center">
-  <table cellspacing="0" cellpadding="0" width="500">
-    <tr>
-      <td align="center" colspan="3">
-        <a href="http://www.ccflow.org/?from=wxjava" target="_blank">
-          <img height="120" src="https://ccfast.cc/AD/ccflow2.png" alt="ccflow">
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center" colspan="2">
-        <a href="https://www.jeequan.com/product/jeepay.html" target="_blank">
-          <img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统">
-        </a>
-      </td>
-      <td align="center">
-        <a href="https://www.mall4j.com/cn/?statId=9" target="_blank">
-          <img height="120" src="https://img.mall4j.com/mall.png" alt="Mall4j">
-        </a>
-      </td>
-    </tr>
-    <tr>
-      <td align="center">
-        <a href="http://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect" target="_blank">
-          <img height="120" src="https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png" alt="mp qrcode">
-        </a>
-      </td>
-      <td align="center" style="font-size: 18px; font-weight: bold; vertical-align: middle;">
-        赞助商招募中
-      </td>
-      <td align="center">
-        <a href="https://github.crmeb.net/u/wxjava" target="_blank">
-          <img height="120" src="https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png" alt="ad">
-        </a>
-      </td>
-    </tr>
-  </table>
-</div>
+- <a href="https://www.jeequan.com/product/jeepay.html"><img height="120" src="https://jeequan.oss-cn-beijing.aliyuncs.com/jeepay/img/wxjava_jeepay.png" alt="计全支付Jeepay,开源支付系统"></a>
+- <a href="https://github.crmeb.net/u/wxjava"><img height="120" src="https://crmebjavamer.oss-cn-beijing.aliyuncs.com/crmebimage/image/2026/01/30/0a71b2b3535d42b187fff977c33faa30mh9gipgeja.png" alt="CRMEB"></a>
+
+> 赞助商招募中，欢迎联系合作。
+
+### 关注公众号
+想获得技术交流群（QQ群/微信群/钉钉群）等信息，请扫码关注 `WxJava` 公众号：
+
+[![WxJava 公众号二维码](https://gitee.com/binary/weixin-java-tools/raw/develop/images/qrcodes/mp.png)](https://mp.weixin.qq.com/mp/homepage?__biz=MzI3MzAwMzk4OA==&hid=1&sn=f31af3bf562b116b061c9ab4edf70b61&scene=18#wechat_redirect)
 
 ### 目录索引
 - [快速开始（3分钟）](#快速开始3分钟)
+- [AI 编程智能体 SKILL 安装](#ai-编程智能体-skill-安装)
 - [我该选哪个模块？](#我该选哪个模块)
 - [Maven 引用方式](#maven-引用方式)
 - [最小示例](#最小示例)
@@ -70,12 +38,48 @@
 - [版本说明](#版本说明)
 - [应用案例](#应用案例)
 - [特别赞助](#特别赞助)
+- [关注公众号](#关注公众号)
 - [贡献者列表](#贡献者列表)
 
 ### 快速开始（3分钟）
 1. 根据业务场景选择模块（见下方“我该选哪个模块？”）
 2. 引入 Maven 依赖并选择对应模块
 3. 参考最小示例完成初始化并调用 API
+
+### AI 编程智能体 SKILL 安装
+
+仓库的 [`skills`](skills) 目录提供面向 WxJava 用户和贡献者的通用 SKILL，包括模块选择、接入、排障、接口贡献和升级迁移。每个 SKILL 都以 `SKILL.md` 为入口，可用于支持该约定的 AI 编程智能体。
+
+支持远程安装 SKILL 的智能体，可以直接使用自然语言指令安装所需目录。例如：
+
+> 安装 https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-integration-guide 中的技能。
+
+可安装的 SKILL 包括：
+
+- [模块选择](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-module-selector)
+- [接入指南](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-integration-guide)
+- [故障排查](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-troubleshooter)
+- [接口贡献](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-api-contributor)
+- [升级迁移](https://github.com/binarywang/WxJava/tree/develop/skills/wxjava-upgrade-guide)
+
+不支持远程安装时，可将所需的 `skills/wxjava-*` 目录复制到智能体的 SKILL 目录或工作区配置目录；不同智能体的目录和启用方式请以其官方文档为准。
+
+以 Codex 为例，可复制到个人 SKILL 目录：
+
+```shell
+git clone https://github.com/binarywang/WxJava.git
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R WxJava/skills/wxjava-* "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+如果已在本仓库根目录，可直接执行：
+
+```shell
+mkdir -p "${CODEX_HOME:-$HOME/.codex}/skills"
+cp -R skills/wxjava-* "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+重启或新建智能体会话后，即可按需使用。例如：`使用 wxjava-integration-guide 为我的 Spring Boot 项目接入微信支付。`
 
 ### 我该选哪个模块？
 
@@ -314,4 +318,11 @@ System.out.println(result.getOpenid());
 </a>
 
 ### GitHub Stargazers over time
-[![Star History Chart](https://api.star-history.com/svg?repos=binarywang/WxJava&type=Date)](https://star-history.com/#binarywang/WxJava&Date)
+
+<a href="https://www.star-history.com/?repos=binarywang%2FWxJava&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&theme=dark&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=binarywang/WxJava&type=date&legend=top-left&sealed_token=OP4kucyxzW7JGPofQJzItoAcfUD3qaphFu3Ep_dTal_VwcvtSLVGMA_T-1emtwK6w0g5eKVdfZyfBBVYlcFqvLR9Ehk4P3uoD5yH44HUIT2zjvnNTIYhUA" />
+ </picture>
+</a>

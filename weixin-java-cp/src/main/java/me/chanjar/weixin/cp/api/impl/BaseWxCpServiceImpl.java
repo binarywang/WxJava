@@ -77,6 +77,7 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   private final WxCpCorpGroupService corpGroupService = new WxCpCorpGroupServiceImpl(this);
   private final WxCpIntelligentRobotService intelligentRobotService = new WxCpIntelligentRobotServiceImpl(this);
   private final WxCpHrService hrService = new WxCpHrServiceImpl(this);
+  private final WxCpTodoService todoService = new WxCpTodoServiceImpl(this);
 
   /**
    * 全局的是否正在刷新access token的锁.
@@ -313,6 +314,29 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
     return this.executeNormal(SimplePostRequestExecutor.create(this), urlWithToken, postData);
   }
 
+  @Override
+  public String getForContact(String url, String queryParam) throws WxErrorException {
+    // 获取通讯录同步专用的access token
+    String contactAccessToken = getContactAccessToken(false);
+    // 拼接access_token参数
+    String urlWithToken = url + (url.contains("?") ? "&" : "?") + "access_token=" + contactAccessToken;
+    if (queryParam != null && !queryParam.isEmpty()) {
+      urlWithToken = urlWithToken + "&" + queryParam;
+    }
+    // 使用executeNormal方法，不自动添加token
+    return this.executeNormal(SimpleGetRequestExecutor.create(this), urlWithToken, null);
+  }
+
+  @Override
+  public String postForContact(String url, String postData) throws WxErrorException {
+    // 获取通讯录同步专用的access token
+    String contactAccessToken = getContactAccessToken(false);
+    // 拼接access_token参数
+    String urlWithToken = url + (url.contains("?") ? "&" : "?") + "access_token=" + contactAccessToken;
+    // 使用executeNormal方法，不自动添加token
+    return this.executeNormal(SimplePostRequestExecutor.create(this), urlWithToken, postData);
+  }
+
   /**
    * 向微信端发送请求，在这里执行的策略是当发生access_token过期时才去刷新，然后重新执行请求，而不是全局定时请求.
    */
@@ -406,21 +430,27 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
    * 普通请求，不自动带accessToken
    */
   private <T, E> T executeNormal(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+    String uriForLog = redactQueryString(uri);
     try {
       T result = executor.execute(uri, data, WxType.CP);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriForLog, data, result);
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
       if (error.getErrorCode() != 0) {
-        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri, data, error);
+        log.error("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriForLog, data, error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
+      log.error("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriForLog, data, e.getMessage());
       throw new WxErrorException(e);
     }
+  }
+
+  static String redactQueryString(String uri) {
+    int queryStart = uri.indexOf('?');
+    return queryStart < 0 ? uri : uri.substring(0, queryStart) + "?******";
   }
 
   @Override
@@ -729,5 +759,10 @@ public abstract class BaseWxCpServiceImpl<H, P> implements WxCpService, RequestH
   @Override
   public WxCpHrService getHrService() {
     return this.hrService;
+  }
+
+  @Override
+  public WxCpTodoService getTodoService() {
+    return this.todoService;
   }
 }

@@ -17,5 +17,5 @@ public class WxCpCorpGroupCorpGetTokenReq implements Serializable {
   @SerializedName("business_type")
   private int businessType;
   @SerializedName("agentid")
-  private int agentId;
+  private long agentId;
 }

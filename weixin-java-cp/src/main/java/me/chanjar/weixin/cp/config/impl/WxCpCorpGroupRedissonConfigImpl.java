@@ -60,7 +60,7 @@ public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStora
   /**
    * 微信企业号应用 ID
    */
-  private volatile Integer agentId;
+  private volatile Long agentId;
 
   @Override
   public void setBaseApiUrl(String baseUrl) {
@@ -86,27 +86,27 @@ public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStora
   }
 
   @Override
-  public Integer getAgentId() {
+  public Long getAgentId() {
     return agentId;
   }
 
   @Override
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     this.agentId = agentId;
   }
 
   @Override
-  public void updateCorpAccessToken(String corpId, Integer agentId, String corpAccessToken, int expiresInSeconds) {
+  public void updateCorpAccessToken(String corpId, Long agentId, String corpAccessToken, int expiresInSeconds) {
     wxRedisOps.setValue(generateAccessTokenKey(corpId, agentId), corpAccessToken, expiresInSeconds, TimeUnit.SECONDS);
   }
 
   @Override
-  public String getCorpAccessToken(String corpId, Integer agentId) {
+  public String getCorpAccessToken(String corpId, Long agentId) {
     return wxRedisOps.getValue(generateAccessTokenKey(corpId, agentId));
   }
 
   @Override
-  public WxAccessToken getCorpAccessTokenEntity(String corpId, Integer agentId) {
+  public WxAccessToken getCorpAccessTokenEntity(String corpId, Long agentId) {
     String key = generateAccessTokenKey(corpId, agentId);
     String accessToken = wxRedisOps.getValue(key);
     Long expire = wxRedisOps.getExpire(key);
@@ -120,13 +120,13 @@ public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStora
   }
 
   @Override
-  public boolean isCorpAccessTokenExpired(String corpId, Integer agentId) {
+  public boolean isCorpAccessTokenExpired(String corpId, Long agentId) {
     String key = generateAccessTokenKey(corpId, agentId);
     return wxRedisOps.getExpire(key) == 0L || wxRedisOps.getExpire(key) == -2;
   }
 
   @Override
-  public void expireCorpAccessToken(String corpId, Integer agentId) {
+  public void expireCorpAccessToken(String corpId, Long agentId) {
     wxRedisOps.expire(generateAccessTokenKey(corpId, agentId), 0, TimeUnit.SECONDS);
   }
 
@@ -206,11 +206,11 @@ public class WxCpCorpGroupRedissonConfigImpl implements WxCpCorpGroupConfigStora
   }
 
   @Override
-  public Lock getCorpAccessTokenLock(String corpId, Integer agentId) {
+  public Lock getCorpAccessTokenLock(String corpId, Long agentId) {
     return this.getLockByKey(String.join(":", corpId, String.valueOf(agentId), LOCKER_CORP_ACCESS_TOKEN));
   }
 
-  private String generateAccessTokenKey(String corpId, Integer agentId) {
+  private String generateAccessTokenKey(String corpId, Long agentId) {
     return String.join(":", keyPrefix, CG_ACCESS_TOKEN_KEY, corpId, String.valueOf(agentId));
   }
 

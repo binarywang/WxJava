@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.8.3.B</version>
+  <version>4.8.5.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -124,6 +124,7 @@
     <module>weixin-java-miniapp</module>
     <module>weixin-java-open</module>
     <module>weixin-java-qidian</module>
+    <module>weixin-java-aispeech</module>
     <module>weixin-java-channel</module>
     <module>spring-boot-starters</module>
     <module>solon-plugins</module>
@@ -137,9 +138,10 @@
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
-    <httpclient5.version>5.5.2</httpclient5.version>
+    <httpclient5.version>5.6.3</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
     <bouncycastle.version>1.84</bouncycastle.version>
+    <spring-data-redis.version>2.3.3.RELEASE</spring-data-redis.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -160,7 +162,7 @@
         <version>4.12.0</version>
         <scope>provided</scope>
       </dependency>
-      <!-- HttpClient 5.x - 默认依赖（推荐使用） -->
+      <!-- HttpClient 5.x - 可选依赖，显式使用 HttpComponents 实现时需要 -->
       <dependency>
         <groupId>org.apache.httpcomponents.client5</groupId>
         <artifactId>httpclient5</artifactId>
@@ -321,13 +323,6 @@
             <artifactId>reactive-streams</artifactId>
           </exclusion>
         </exclusions>
-      </dependency>
-      <dependency>
-        <groupId>org.springframework.data</groupId>
-        <artifactId>spring-data-redis</artifactId>
-        <version>2.3.3.RELEASE</version>
-        <optional>true</optional>
-        <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.projectlombok</groupId>

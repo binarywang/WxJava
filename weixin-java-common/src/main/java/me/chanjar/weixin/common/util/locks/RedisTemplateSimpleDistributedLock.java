@@ -42,12 +42,16 @@ public class RedisTemplateSimpleDistributedLock implements Lock {
 
   @Override
   public void lock() {
+    boolean interrupted = false;
     while (!tryLock()) {
       try {
         Thread.sleep(1000);
       } catch (InterruptedException e) {
-        // Ignore
+        interrupted = true;
       }
+    }
+    if (interrupted) {
+      Thread.currentThread().interrupt();
     }
   }
 

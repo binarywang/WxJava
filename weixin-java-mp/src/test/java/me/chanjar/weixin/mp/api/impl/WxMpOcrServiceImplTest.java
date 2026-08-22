@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.bean.ocr.WxOcrCommResult;
 import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingLicenseResult;
 import me.chanjar.weixin.common.bean.ocr.WxOcrDrivingResult;
 import me.chanjar.weixin.common.bean.ocr.WxOcrIdCardResult;
+import me.chanjar.weixin.common.bean.ocr.WxOcrMenuResult;
 import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
@@ -133,6 +134,22 @@ public class WxMpOcrServiceImplTest {
     InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
     File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
     final WxOcrCommResult result = this.service.getOcrService().comm(tempFile);
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testMenu() throws WxErrorException {
+    final WxOcrMenuResult result = this.service.getOcrService().menu("https://res.wx.qq.com/op_res/apCy0YbnEdjYsa_cjW6x3FlpCc20uQ-2BYE7aXnFsrB-ALHZNgdKXhzIUcrRnDoL");
+    assertThat(result).isNotNull();
+    System.out.println(result);
+  }
+
+  @Test
+  public void testMenu2() throws Exception {
+    InputStream inputStream = ClassLoader.getSystemResourceAsStream("mm.jpeg");
+    File tempFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), TestConstants.FILE_JPG);
+    final WxOcrMenuResult result = this.service.getOcrService().menu(tempFile);
     assertThat(result).isNotNull();
     System.out.println(result);
   }
@@ -387,6 +404,47 @@ public class WxMpOcrServiceImplTest {
       final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
 
       final WxOcrCommResult result = wxMpOcrService.comm("abc");
+      assertThat(result).isNotNull();
+      System.out.println(result);
+    }
+
+    @Test
+    public void testMenu() throws Exception {
+      String returnJson = "{\n" +
+        "    \"errcode\": 0, \n" +
+        "    \"errmsg\": \"ok\", \n" +
+        "    \"items\": [\n" +
+        "        {\n" +
+        "            \"text\": \"红烧肉\", \n" +
+        "            \"pos\": {\n" +
+        "                \"left_top\": {\n" +
+        "                    \"x\": 575, \n" +
+        "                    \"y\": 519\n" +
+        "                }, \n" +
+        "                \"right_top\": {\n" +
+        "                    \"x\": 744, \n" +
+        "                    \"y\": 519\n" +
+        "                }, \n" +
+        "                \"right_bottom\": {\n" +
+        "                    \"x\": 744, \n" +
+        "                    \"y\": 532\n" +
+        "                }, \n" +
+        "                \"left_bottom\": {\n" +
+        "                    \"x\": 573, \n" +
+        "                    \"y\": 532\n" +
+        "                }\n" +
+        "            }\n" +
+        "        }\n" +
+        "    ], \n" +
+        "    \"img_size\": {\n" +
+        "        \"w\": 1280, \n" +
+        "        \"h\": 720\n" +
+        "    }\n" +
+        "}";
+      when(wxService.post(anyString(), anyString())).thenReturn(returnJson);
+      final WxMpOcrServiceImpl wxMpOcrService = new WxMpOcrServiceImpl(wxService);
+
+      final WxOcrMenuResult result = wxMpOcrService.menu("abc");
       assertThat(result).isNotNull();
       System.out.println(result);
     }

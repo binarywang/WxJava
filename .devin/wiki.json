@@ -1,0 +1,181 @@
+{
+  "repo_notes": [
+    {
+      "content": "请将整个 WxJava Wiki 以简体中文生成。所有页面标题、正文、图表标题、表格标题和说明文字均使用中文。代码、类名、方法名、包名、配置键和 Maven artifactId 保持原样；首次出现的专业术语可写为中文（English）。内容应面向 Java 开发者，准确说明公众号、小程序、企业微信、微信支付等模块。"
+    }
+  ],
+  "pages": [
+    {
+      "title": "WxJava 概览",
+      "purpose": "介绍 WxJava 仓库，说明其核心用途、模块结构和一般使用方式，并链接到模块架构与快速入门等子页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "模块架构",
+      "purpose": "说明 WxJava 的整体模块架构及组件依赖关系，包括通用核心库、服务模块、Spring Boot Starter、Solon 插件和 GraalVM 支持。",
+      "parent": "WxJava 概览",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "快速入门",
+      "purpose": "提供在不同场景中使用 WxJava 的快速入门说明，包括 Maven/Gradle 依赖配置、基础服务初始化和 HTTP 客户端选择。",
+      "parent": "WxJava 概览",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "通用组件",
+      "purpose": "记录所有 WxJava 模块共用的工具类、常量和通用模式，并链接到消息处理与 HTTP 基础设施等子页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "消息处理框架",
+      "purpose": "说明不同模块使用的核心消息处理与路由架构，包括 WxConsts 消息类型、XML 消息解析、XStream 序列化，以及路由器、处理器和拦截器模式。",
+      "parent": "通用组件",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "HTTP 客户端基础设施",
+      "purpose": "记录 HTTP 客户端抽象层，包括 RequestExecutor 策略模式、Apache HttpClient 4/5、OkHttp 和 Jodd-Http 支持、代理配置及 HttpClient 升级指南。",
+      "parent": "通用组件",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "分布式状态与锁",
+      "purpose": "说明 WxJava 如何借助 Redis（Jedis、Redisson、Spring Data Redis）管理 access token 等凭据的分布式状态，包括 WxRedisOps 抽象和分布式锁实现。",
+      "parent": "通用组件",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信公众号（MP）模块",
+      "purpose": "记录用于接入微信公众号的 MP 模块，概述 WxMpService、配置方式，并链接到服务实现、消息路由和子服务等页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "MP 服务实现",
+      "purpose": "详述 WxMpService 及其 Apache、OkHttp、Jodd HTTP 客户端实现、access token 生命周期、多账号切换，以及 BaseWxMpServiceImpl 请求处理流程。",
+      "parent": "微信公众号（MP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "MP 消息路由",
+      "purpose": "说明 MP 模块的消息路由、处理器和拦截器，包括 WxMpMessageRouter 规则配置、WxMpXmlMessage 解析和 XML 被动回复消息构建器。",
+      "parent": "微信公众号（MP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "MP 子服务",
+      "purpose": "记录 MP 模块的专用子服务，包括用户管理、客服（Kefu）、模板消息、群发消息、素材管理、卡券、菜单、二维码、数据立方体分析和订阅通知。",
+      "parent": "微信公众号（MP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "企业微信（CP）模块",
+      "purpose": "记录接入企业微信的 CP 模块，概述 WxCpService、配置存储，并链接到客户联系、用户管理、OA 功能和第三方平台等子页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "CP 客户联系管理",
+      "purpose": "说明如何管理企业微信外部联系人（客户），包括 ContactWay 配置、客户详情获取、ID 迁移、群聊管理、客户转接、拦截规则和商品图册。",
+      "parent": "企业微信（CP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "CP 用户管理",
+      "purpose": "详述企业微信的用户管理操作，包括 WxCpUserService、WxCpUser 对象、OAuth2 认证、部门与标签管理、应用管理和人事员工字段管理。",
+      "parent": "企业微信（CP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "CP OA 与消息能力",
+      "purpose": "记录办公自动化（OA）能力，包括打卡、审批、WeDrive 文件管理，以及 CP 消息能力，包括群机器人、客服（KF）、智能机器人和消息审计（会话存档）。",
+      "parent": "企业微信（CP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "CP 第三方平台（TP）",
+      "purpose": "记录面向企业微信 ISV 的 CP 第三方平台服务（WxCpTpService），包括永久授权码管理、消息路由、定制应用、版本与订单管理和许可服务。",
+      "parent": "企业微信（CP）模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信支付模块",
+      "purpose": "记录接入微信支付 API 的支付模块，概述 WxPayService、V2/V3 API 差异，并链接到配置、核心操作和专用支付服务等子页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信支付配置",
+      "purpose": "说明微信支付的配置选项和安全设置，包括 WxPayConfig、多商户/多 appId 支持、V3 证书管理、AutoUpdateCertificatesVerifier、SignatureExec 和可信主机配置。",
+      "parent": "微信支付模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "电商服务",
+      "purpose": "记录微信支付中的专用电商操作，包括服务商模式的 EcommerceService、二级商户进件（Applyment4Sub）、分账（V2/V3）、转账、投诉处理和微信支付分。",
+      "parent": "微信支付模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "支付核心操作与数据对象",
+      "purpose": "记录核心支付操作（统一下单、退款、查询、回调通知）以及 V2/V3 请求和结果数据对象的层次结构，包括 WxPayUnifiedOrderRequest、退款对象、订单通知结果和企业付款（EntPay）。",
+      "parent": "微信支付模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信小程序模块",
+      "purpose": "记录面向微信小程序的 MiniApp 模块，概述 WxMaService、配置方式，并链接到服务实现、消息处理和专用子服务等页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "小程序服务与配置",
+      "purpose": "详述 WxMaService 接口、BaseWxMaServiceImpl 请求处理流程、多租户配置、API 签名机制、WxMaConfig 实现（内存、Redis、Redisson）和 HTTP 客户端变体。",
+      "parent": "微信小程序模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "小程序消息与用户服务",
+      "purpose": "记录小程序消息路由（WxMaMessageRouter）、WxMaMessage 解析、客服（Kefu）消息、模板/订阅消息、用户服务（jsCode2Session、手机号）、二维码生成和直播服务。",
+      "parent": "微信小程序模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "小程序代码管理与开放平台集成",
+      "purpose": "记录小程序代码生命周期管理（提交、审核、发布）、代码模板、类目管理，以及通过开放平台进行第三方小程序管理的集成方式。",
+      "parent": "微信小程序模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信开放平台模块",
+      "purpose": "记录面向第三方应用开发者的开放平台模块，概述 WxOpenComponentService、授权流程，并链接到组件服务和小程序/公众号管理等子页面。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "开放平台组件服务",
+      "purpose": "详述 WxOpenComponentService 的实现、组件 access token 管理、verify ticket 处理、预授权码生成、授权码交换、服务工厂方法和平台事件消息路由。",
+      "parent": "微信开放平台模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "开放平台小程序与公众号管理",
+      "purpose": "记录通过开放平台对小程序（WxOpenMaService）和公众号（WxOpenMpService）的代管理能力，包括代码管理、域名配置、ICP备案、快速注册和隐私设置。",
+      "parent": "微信开放平台模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "微信视频号模块",
+      "purpose": "记录面向视频号和微信小店的 weixin-java-channel 模块，涵盖 WxChannelService 接口、商品/订单/售后管理、直播、优选联盟功能，以及 Spring Boot/Solon 集成。",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "视频号服务 API",
+      "purpose": "详述 WxChannelService 接口及其子服务，包括商品管理、订单处理、售后处理、优惠券管理、资金操作、VIP 会员和罗盘分析服务。",
+      "parent": "微信视频号模块",
+      "page_notes": [{ "content": "" }]
+    },
+    {
+      "title": "视频号直播与优选联盟能力",
+      "purpose": "记录视频号直播服务（WxFinderLiveService、WxChannelLiveDashboardService）、优选联盟的供货商、推广员、商品和橱窗服务，以及视频号助手能力。",
+      "parent": "微信视频号模块",
+      "page_notes": [{ "content": "" }]
+    }
+  ]
+}

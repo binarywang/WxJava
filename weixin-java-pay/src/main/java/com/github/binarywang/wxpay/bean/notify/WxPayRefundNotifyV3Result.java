@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 退款结果通知.
@@ -175,7 +176,7 @@ public class WxPayRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV
     /**
      * <pre>
      * 字段名：退款金额
-     * 变量名：refund
+     * 变量名：refund_fee
      * 是否必填：是
      * 类型：int
      * 描述：
@@ -183,8 +184,21 @@ public class WxPayRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV
      *  示例值：999
      * </pre>
      */
-    @SerializedName(value = "refund")
-    private Integer refund;
+    @SerializedName(value = "refund_fee", alternate = {"refund"})
+    private Integer refundFee;
+    /**
+     * <pre>
+     * 字段名：退款结算金额
+     * 变量名：settlement_refund
+     * 是否必填：否
+     * 类型：int
+     * 描述：
+     *  退款结算金额，单位为分。
+     *  示例值：999
+     * </pre>
+     */
+    @SerializedName(value = "settlement_refund")
+    private Integer settlementRefund;
     /**
      * <pre>
      * 字段名：用户支付金额
@@ -211,5 +225,101 @@ public class WxPayRefundNotifyV3Result implements Serializable, WxPayBaseNotifyV
      */
     @SerializedName(value = "payer_refund")
     private Integer payerRefund;
+    /**
+     * <pre>
+     * 字段名：币种
+     * 变量名：currency
+     * 是否必填：否
+     * 类型：string[1,16]
+     * 描述：
+     *  符合ISO 4217标准的三位字母代码，目前只支持人民币：CNY。
+     *  示例值：CNY
+     * </pre>
+     */
+    @SerializedName(value = "currency")
+    private String currency;
+    /**
+     * <pre>
+     * 字段名：结算金额
+     * 变量名：settlement_total
+     * 是否必填：否
+     * 类型：int
+     * 描述：
+     *  结算金额，单位为分。
+     *  示例值：999
+     * </pre>
+     */
+    @SerializedName(value = "settlement_total")
+    private Integer settlementTotal;
+    /**
+     * <pre>
+     * 字段名：优惠券退款金额
+     * 变量名：discount_refund
+     * 是否必填：否
+     * 类型：int
+     * 描述：
+     *  优惠券退款金额，单位为分。
+     *  示例值：0
+     * </pre>
+     */
+    @SerializedName(value = "discount_refund")
+    private Integer discountRefund;
+    /**
+     * <pre>
+     * 字段名：退款账户来源
+     * 变量名：from
+     * 是否必填：否
+     * 类型：array
+     * 描述：
+     *  退款出资的账户类型及金额信息
+     * </pre>
+     */
+    @SerializedName(value = "from")
+    private List<FromItem> from;
+
+    @Deprecated
+    public Integer getRefund() {
+      return this.refundFee;
+    }
+
+    @Deprecated
+    public void setRefund(Integer refund) {
+      this.refundFee = refund;
+    }
+  }
+
+  @Data
+  @NoArgsConstructor
+  public static class FromItem implements Serializable {
+    private static final long serialVersionUID = 1L;
+    /**
+     * <pre>
+     * 字段名：退款账户类型
+     * 变量名：account
+     * 是否必填：是
+     * 类型：string[1,32]
+     * 描述：
+     *  下面枚举值多选一。
+     *  枚举值：
+     *  AVAILABLE : 可用余额
+     *  UNAVAILABLE : 不可用余额
+     *  示例值：AVAILABLE
+     * </pre>
+     */
+    @SerializedName(value = "account")
+    private String account;
+    /**
+     * <pre>
+     * 字段名：退款账户金额
+     * 变量名：amount
+     * 是否必填：是
+     * 类型：int
+     * 描述：
+     *  对应账户退款金额
+     *  示例值：444
+     * </pre>
+     */
+    @SerializedName(value = "amount")
+    private Integer amount;
   }
 }

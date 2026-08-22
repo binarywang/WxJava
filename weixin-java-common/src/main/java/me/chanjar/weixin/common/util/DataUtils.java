@@ -17,8 +17,10 @@ public class DataUtils {
    */
   public static <E> E handleDataWithSecret(E data) {
     E dataForLog = data;
-    if(data instanceof String && StringUtils.contains((String)data, "&secret=")){
-      dataForLog = (E) RegExUtils.replaceAll((String)data,"&secret=\\w+&","&secret=******&");
+    if (data instanceof String) {
+      String stringData = (String) data;
+      stringData = RegExUtils.replaceAll(stringData, "(^|[?&])secret=[^&]*", "$1secret=******");
+      dataForLog = (E) RegExUtils.replaceAll(stringData, "(\\\"openid\\\"\\s*:\\s*\\\")[^\\\"]*(\\\")", "$1******$2");
     }
     return dataForLog;
   }

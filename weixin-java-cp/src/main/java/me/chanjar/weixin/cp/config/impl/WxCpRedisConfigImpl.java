@@ -40,7 +40,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   private volatile String corpSecret;
   private volatile String token;
   private volatile String aesKey;
-  private volatile Integer agentId;
+  private volatile Long agentId;
   private volatile String msgAuditPriKey;
   private volatile String msgAuditLibPath;
   private volatile String oauth2redirectUri;
@@ -312,7 +312,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   }
 
   @Override
-  public Integer getAgentId() {
+  public Long getAgentId() {
     return this.agentId;
   }
 
@@ -321,7 +321,7 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
    *
    * @param agentId the agent id
    */
-  public void setAgentId(Integer agentId) {
+  public void setAgentId(Long agentId) {
     this.agentId = agentId;
   }
 
@@ -493,6 +493,36 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   }
 
   @Override
+  public String getContactSecret() {
+    return null;
+  }
+
+  @Override
+  public String getContactAccessToken() {
+    return null;
+  }
+
+  @Override
+  public Lock getContactAccessTokenLock() {
+    return this.msgAuditAccessTokenLock;
+  }
+
+  @Override
+  public boolean isContactAccessTokenExpired() {
+    return true;
+  }
+
+  @Override
+  public void expireContactAccessToken() {
+    // 不支持
+  }
+
+  @Override
+  public void updateContactAccessToken(String accessToken, int expiresInSeconds) {
+    // 不支持
+  }
+
+  @Override
   public String getMsgAuditAccessToken() {
     return null;
   }
@@ -559,9 +589,9 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   public synchronized int decrementMsgAuditSdkRefCount(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
-      // 当引用计数降为0时，自动销毁SDK以释放资源
-      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
-      if (newCount == 0 && this.msgAuditSdk == sdk) {
+      // 当引用计数降为0且SDK已过期时，才销毁SDK以释放资源
+      // 如果SDK尚未过期，保留SDK缓存以供后续调用复用，避免频繁初始化和销毁
+      if (newCount == 0 && this.msgAuditSdk == sdk && isMsgAuditSdkExpired()) {
         Finance.DestroySdk(sdk);
         this.msgAuditSdk = 0;
         this.msgAuditSdkExpiresTime = 0;
@@ -593,9 +623,9 @@ public class WxCpRedisConfigImpl implements WxCpConfigStorage {
   public synchronized void releaseMsgAuditSdk(long sdk) {
     if (this.msgAuditSdk == sdk && this.msgAuditSdkRefCount > 0) {
       int newCount = --this.msgAuditSdkRefCount;
-      // 当引用计数降为0时，自动销毁SDK以释放资源
-      // 再次检查SDK是否仍然是当前缓存的SDK（防止并发重新初始化）
-      if (newCount == 0 && this.msgAuditSdk == sdk) {
+      // 当引用计数降为0且SDK已过期时，才销毁SDK以释放资源
+      // 如果SDK尚未过期，保留SDK缓存以供后续调用复用，避免频繁初始化和销毁
+      if (newCount == 0 && this.msgAuditSdk == sdk && isMsgAuditSdkExpired()) {
         Finance.DestroySdk(sdk);
         this.msgAuditSdk = 0;
         this.msgAuditSdkExpiresTime = 0;

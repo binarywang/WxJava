@@ -1,0 +1,4 @@
+interface:
+  display_name: "WxJava 故障排查"
+  short_description: "定位 WxJava 配置、回调、签名与接口调用问题"
+  default_prompt: "使用 $wxjava-troubleshooter 排查我的 WxJava 调用异常。"
