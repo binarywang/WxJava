@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class GuaranteeMerchantModifyParam extends GuaranteeIdParam {
+public class GuaranteeMerchantModifyParam extends GuaranteeOrderIdParam {
   private static final long serialVersionUID = 9193536167701367687L;
 
   @JsonProperty("bad_level")

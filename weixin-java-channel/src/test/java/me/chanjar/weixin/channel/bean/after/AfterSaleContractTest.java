@@ -20,10 +20,10 @@ public class AfterSaleContractTest {
     AfterSaleHandleFastExchangeReceiptParam receiptParam = new AfterSaleHandleFastExchangeReceiptParam();
     receiptParam.setRejectConfirmExchange(Collections.singletonList("media-1"));
 
-    GuaranteeIdParam guaranteeParam = new GuaranteeIdParam("guarantee-1");
+    GuaranteeOrderIdParam guaranteeParam = new GuaranteeOrderIdParam("guarantee-1");
     assertTrue(OBJECT_MAPPER.writeValueAsString(afterSaleParam).contains("\"exchange_sku_info\":{\"new_sku_id\":\"new-sku\"}"));
     assertTrue(OBJECT_MAPPER.writeValueAsString(receiptParam).contains("\"reject_confirm_exchange\":[\"media-1\"]"));
-    assertTrue(OBJECT_MAPPER.writeValueAsString(guaranteeParam).contains("\"guarantee_id\":\"guarantee-1\""));
+    assertTrue(OBJECT_MAPPER.writeValueAsString(guaranteeParam).contains("\"guarantee_order_id\":\"guarantee-1\""));
   }
 
   @Test
@@ -31,9 +31,9 @@ public class AfterSaleContractTest {
     AfterSaleCreateResponse createResponse = OBJECT_MAPPER.readValue(
         "{\"errcode\":0,\"after_sale_order_id\":\"after-1\"}", AfterSaleCreateResponse.class);
     GuaranteeOrderResponse guaranteeResponse = OBJECT_MAPPER.readValue(
-        "{\"errcode\":0,\"guarantee_info\":{\"guarantee_id\":\"guarantee-1\"}}", GuaranteeOrderResponse.class);
+        "{\"errcode\":0,\"guarantee_order\":{\"guarantee_order_id\":\"guarantee-1\"}}", GuaranteeOrderResponse.class);
 
     assertEquals(createResponse.getAfterSaleOrderId(), "after-1");
-    assertEquals(guaranteeResponse.getGuaranteeInfo().getGuaranteeId(), "guarantee-1");
+    assertEquals(guaranteeResponse.getGuaranteeOrder().get("guarantee_order_id").asText(), "guarantee-1");
   }
 }
