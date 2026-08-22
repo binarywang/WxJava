@@ -236,7 +236,8 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
 
     try {
       T result = executor.execute(uriWithAccessToken, data, WxType.Channel);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog,
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken,
+        printResult ? dataForLog : "...",
         printResult ? result : "...");
       return result;
     } catch (WxErrorException e) {
@@ -263,12 +264,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       }
 
       if (error.getErrorCode() != 0) {
-        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken,
+          printResult ? dataForLog : "...", error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken,
+        printResult ? dataForLog : "...", e.getMessage());
       throw new WxRuntimeException(e);
     }
   }

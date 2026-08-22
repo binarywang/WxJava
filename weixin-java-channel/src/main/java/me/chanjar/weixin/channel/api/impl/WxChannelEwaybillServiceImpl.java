@@ -39,8 +39,10 @@ import me.chanjar.weixin.channel.bean.ewaybill.TemplateInfoResponse;
 import me.chanjar.weixin.channel.bean.ewaybill.TemplateUpdateRequest;
 import me.chanjar.weixin.channel.bean.ewaybill.WaybillIdParam;
 import me.chanjar.weixin.channel.bean.ewaybill.WaybillIdsParam;
+import me.chanjar.weixin.channel.util.JsonUtils;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 
 /**
  * 视频号小店电子面单服务实现。
@@ -58,98 +60,103 @@ public class WxChannelEwaybillServiceImpl implements WxChannelEwaybillService {
 
   @Override
   public TemplateConfigResponse getTemplateConfig() throws WxErrorException {
-    String resJson = shopService.post(GET_TEMPLATE_CONFIG_URL, "{}");
+    String resJson = post(GET_TEMPLATE_CONFIG_URL, "{}");
     return ResponseUtils.decode(resJson, TemplateConfigResponse.class);
   }
 
   @Override
   public TemplateIdResponse createTemplate(TemplateCreateRequest req) throws WxErrorException {
-    String resJson = shopService.post(CREATE_TEMPLATE_URL, req);
+    String resJson = post(CREATE_TEMPLATE_URL, req);
     return ResponseUtils.decode(resJson, TemplateIdResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse deleteTemplate(String templateId) throws WxErrorException {
-    String resJson = shopService.post(DELETE_TEMPLATE_URL, new TemplateIdParam(templateId));
+    String resJson = post(DELETE_TEMPLATE_URL, new TemplateIdParam(templateId));
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse updateTemplate(TemplateUpdateRequest req) throws WxErrorException {
-    String resJson = shopService.post(UPDATE_TEMPLATE_URL, req);
+    String resJson = post(UPDATE_TEMPLATE_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public TemplateInfoResponse getTemplate(String templateCode) throws WxErrorException {
-    String resJson = shopService.post(GET_TEMPLATE_URL, new TemplateCodeParam(templateCode));
+    String resJson = post(GET_TEMPLATE_URL, new TemplateCodeParam(templateCode));
     return ResponseUtils.decode(resJson, TemplateInfoResponse.class);
   }
 
   @Override
   public TemplateInfoResponse getTemplateById(String templateId) throws WxErrorException {
-    String resJson = shopService.post(GET_TEMPLATE_BY_ID_URL, new TemplateIdParam(templateId));
+    String resJson = post(GET_TEMPLATE_BY_ID_URL, new TemplateIdParam(templateId));
     return ResponseUtils.decode(resJson, TemplateInfoResponse.class);
   }
 
   @Override
   public AccountInfoResponse getAccount() throws WxErrorException {
-    String resJson = shopService.post(GET_ACCOUNT_URL, "{}");
+    String resJson = post(GET_ACCOUNT_URL, "{}");
     return ResponseUtils.decode(resJson, AccountInfoResponse.class);
   }
 
   @Override
   public DeliveryListResponse getDeliveryList() throws WxErrorException {
-    String resJson = shopService.post(GET_DELIVERY_LIST_URL, "{}");
+    String resJson = post(GET_DELIVERY_LIST_URL, "{}");
     return ResponseUtils.decode(resJson, DeliveryListResponse.class);
   }
 
   @Override
   public PreCreateResponse preCreateOrder(PreCreateRequest req) throws WxErrorException {
-    String resJson = shopService.post(PRE_CREATE_ORDER_URL, req);
+    String resJson = post(PRE_CREATE_ORDER_URL, req);
     return ResponseUtils.decode(resJson, PreCreateResponse.class);
   }
 
   @Override
   public CreateOrderResponse createOrder(CreateOrderRequest req) throws WxErrorException {
-    String resJson = shopService.post(CREATE_ORDER_URL, req);
+    String resJson = post(CREATE_ORDER_URL, req);
     return ResponseUtils.decode(resJson, CreateOrderResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse addSubOrder(AddSubOrderRequest req) throws WxErrorException {
-    String resJson = shopService.post(ADD_SUB_ORDER_URL, req);
+    String resJson = post(ADD_SUB_ORDER_URL, req);
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse cancelOrder(String waybillId) throws WxErrorException {
-    String resJson = shopService.post(CANCEL_ORDER_URL, new WaybillIdParam(waybillId));
+    String resJson = post(CANCEL_ORDER_URL, new WaybillIdParam(waybillId));
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public OrderDetailResponse getOrder(String waybillId) throws WxErrorException {
-    String resJson = shopService.post(GET_ORDER_URL, new WaybillIdParam(waybillId));
+    String resJson = post(GET_ORDER_URL, new WaybillIdParam(waybillId));
     return ResponseUtils.decode(resJson, OrderDetailResponse.class);
   }
 
   @Override
   public PrintContentResponse getPrintContent(List<String> waybillIds, String templateId)
       throws WxErrorException {
-    String resJson = shopService.post(GET_PRINT_CONTENT_URL, new PrintContentParam(waybillIds, templateId));
+    String resJson = post(GET_PRINT_CONTENT_URL, new PrintContentParam(waybillIds, templateId));
     return ResponseUtils.decode(resJson, PrintContentResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse printOrder(String waybillId) throws WxErrorException {
-    String resJson = shopService.post(PRINT_ORDER_URL, new WaybillIdParam(waybillId));
+    String resJson = post(PRINT_ORDER_URL, new WaybillIdParam(waybillId));
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
   @Override
   public WxChannelBaseResponse batchPrintOrder(List<String> waybillIds) throws WxErrorException {
-    String resJson = shopService.post(BATCH_PRINT_ORDER_URL, new WaybillIdsParam(waybillIds));
+    String resJson = post(BATCH_PRINT_ORDER_URL, new WaybillIdsParam(waybillIds));
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  private String post(String url, Object request) throws WxErrorException {
+    return shopService.executeWithoutLog(
+      SimplePostRequestExecutor.create(shopService), url, JsonUtils.encode(request));
   }
 }

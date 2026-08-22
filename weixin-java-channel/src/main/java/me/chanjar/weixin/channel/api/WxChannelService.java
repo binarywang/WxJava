@@ -215,6 +215,8 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 电子面单服务
    */
-  WxChannelEwaybillService getEwaybillService();
+  default WxChannelEwaybillService getEwaybillService() {
+    throw new UnsupportedOperationException("当前 WxChannelService 实现不支持电子面单服务");
+  }
 
 }
