@@ -17,31 +17,23 @@ public class GuaranteeOrderListParam implements Serializable {
 
   private static final long serialVersionUID = 1622570776364341988L;
 
-  /** 保障单号。 */
-  @JsonProperty("guarantee_order_id")
-  private String guaranteeOrderId;
+  /** 订单创建启始时间，Unix 时间戳（秒）。 */
+  @JsonProperty("begin_create_time")
+  private Long beginCreateTime;
 
-  /** 订单号。 */
-  @JsonProperty("order_id")
-  private String orderId;
+  /** 订单创建结束时间，Unix 时间戳（秒）。 */
+  @JsonProperty("end_create_time")
+  private Long endCreateTime;
 
-  /** 申请开始时间，Unix 时间戳（秒）。 */
-  @JsonProperty("begin_apply_time")
-  private Long beginApplyTime;
+  /** 保障单更新启始时间，Unix 时间戳（秒）。 */
+  @JsonProperty("begin_update_time")
+  private Long beginUpdateTime;
 
-  /** 申请结束时间，Unix 时间戳（秒）。 */
-  @JsonProperty("end_apply_time")
-  private Long endApplyTime;
+  /** 保障单更新结束时间，Unix 时间戳（秒）。 */
+  @JsonProperty("end_update_time")
+  private Long endUpdateTime;
 
-  /** 保障单状态。 */
-  @JsonProperty("status")
-  private Integer status;
-
-  /** 分页偏移量。 */
-  @JsonProperty("offset")
-  private Integer offset;
-
-  /** 返回条数。 */
-  @JsonProperty("limit")
-  private Integer limit;
+  /** 翻页参数。 */
+  @JsonProperty("next_key")
+  private String nextKey;
 }

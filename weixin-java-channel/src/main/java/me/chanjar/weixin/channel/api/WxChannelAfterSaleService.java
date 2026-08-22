@@ -202,61 +202,73 @@ public interface WxChannelAfterSaleService {
 
   /**
    * 获取保障单列表。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/searchguaranteeorder.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_searchguaranteeorder
    *
    * @param param 查询参数
    * @return 保障单列表
    * @throws WxErrorException 异常
    */
-  GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException;
+  default GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * 获取保障单详情。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/getguaranteeorder.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_getguaranteeorder
    *
    * @param guaranteeOrderId 保障单号
    * @return 保障单详情
    * @throws WxErrorException 异常
    */
-  GuaranteeOrderInfoResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException;
+  default GuaranteeOrderInfoResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * 同意保障单申请。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/merchantacceptguarantee.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantacceptguarantee
    *
    * @param guaranteeOrderId 保障单号
    * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse acceptGuarantee(String guaranteeOrderId) throws WxErrorException;
+  default WxChannelBaseResponse acceptGuarantee(String guaranteeOrderId) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * 商家协商保障单。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/merchantmodifyguarantee.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantmodifyguarantee
    *
    * @param request 协商参数
    * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse modifyGuarantee(GuaranteeModifyRequest request) throws WxErrorException;
+  default WxChannelBaseResponse modifyGuarantee(GuaranteeModifyRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * 商家举证保障单。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/merchantproofguarantee.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantproofguarantee
    *
    * @param request 举证参数
    * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse proofGuarantee(GuaranteeProofRequest request) throws WxErrorException;
+  default WxChannelBaseResponse proofGuarantee(GuaranteeProofRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 
   /**
    * 拒绝保障单申请。
-   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/aftersale/merchantrefuseguarantee.html
+   * 文档地址：https://developers.weixin.qq.com/doc/channels/API/channels-shop-aftersale/guarantee/api_merchantrefuseguarantee
    *
    * @param request 拒绝参数
    * @return 响应结果
    * @throws WxErrorException 异常
    */
-  WxChannelBaseResponse refuseGuarantee(GuaranteeRefuseRequest request) throws WxErrorException;
+  default WxChannelBaseResponse refuseGuarantee(GuaranteeRefuseRequest request) throws WxErrorException {
+    throw new UnsupportedOperationException();
+  }
 }

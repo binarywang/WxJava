@@ -1,15 +1,19 @@
 package me.chanjar.weixin.channel.api.impl;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Answers.CALLS_REAL_METHODS;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
+import me.chanjar.weixin.channel.api.WxChannelAfterSaleService;
 import me.chanjar.weixin.channel.bean.after.GuaranteeModifyRequest;
 import me.chanjar.weixin.channel.bean.after.GuaranteeOrderIdParam;
 import me.chanjar.weixin.channel.bean.after.GuaranteeOrderInfoResponse;
@@ -56,26 +60,56 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
   @Test
   public void shouldDeserializeGuaranteeOrderListAndDetail() throws Exception {
     String listJson = "{\"errcode\":0,\"total_num\":1,\"guarantee_order_list\":[{"
-      + "\"guarantee_order_id\":\"2000001077270153\",\"apply_reason\":\"质量问题\","
-      + "\"pay_amount\":100,\"product_info\":{\"product_id\":\"123\","
-      + "\"sku_id\":\"456\",\"sku_name\":\"红色\"}}]}";
+      + "\"guarantee_order_id\":\"2000001077270153\",\"status\":\"PENDING\","
+      + "\"product_info\":[{\"product_id\":\"123\"}]}]}";
     GuaranteeOrderListResponse listResponse = OBJECT_MAPPER.readValue(
       listJson, GuaranteeOrderListResponse.class);
     assertEquals(listResponse.getTotalNum(), Integer.valueOf(1));
     assertEquals(listResponse.getGuaranteeOrderList().get(0).getGuaranteeOrderId(), "2000001077270153");
-    assertEquals(listResponse.getGuaranteeOrderList().get(0).getApplyReason(), "质量问题");
-    assertEquals(listResponse.getGuaranteeOrderList().get(0).getPayAmount(), Integer.valueOf(100));
-    assertEquals(listResponse.getGuaranteeOrderList().get(0).getProductInfo().getProductId(), "123");
-    assertEquals(listResponse.getGuaranteeOrderList().get(0).getProductInfo().getSkuName(), "红色");
+    assertEquals(listResponse.getGuaranteeOrderList().get(0).getStatus(), "PENDING");
+    assertEquals(listResponse.getGuaranteeOrderList().get(0).getProductInfo().get(0).getProductId(), "123");
 
     String detailJson = "{\"errcode\":0,\"guarantee_order\":{"
-      + "\"guarantee_order_id\":\"2000001077270153\",\"apply_reason\":\"质量问题\","
-      + "\"pay_amount\":100,\"product_info\":{\"product_id\":\"123\","
-      + "\"sku_id\":\"456\",\"sku_name\":\"红色\"}}}";
+      + "\"guarantee_order_id\":\"2000001077270153\",\"status\":\"PENDING\","
+      + "\"product_info\":{\"product_id\":\"123\"}}}";
     GuaranteeOrderInfoResponse detailResponse = OBJECT_MAPPER.readValue(
       detailJson, GuaranteeOrderInfoResponse.class);
     assertEquals(detailResponse.getGuaranteeOrder().getGuaranteeOrderId(), "2000001077270153");
-    assertEquals(detailResponse.getGuaranteeOrder().getProductInfo().getSkuId(), "456");
+    assertEquals(detailResponse.getGuaranteeOrder().getStatus(), "PENDING");
+    assertEquals(detailResponse.getGuaranteeOrder().getProductInfo().getProductId(), "123");
+  }
+
+  @Test
+  public void shouldSerializeGuaranteeOrderListParamWithOfficialFieldNames() throws Exception {
+    GuaranteeOrderListParam param = OBJECT_MAPPER.readValue(
+      "{\"begin_create_time\":1,\"end_create_time\":2,\"begin_update_time\":3,"
+        + "\"end_update_time\":4,\"next_key\":\"next\"}", GuaranteeOrderListParam.class);
+
+    JsonNode json = OBJECT_MAPPER.readTree(OBJECT_MAPPER.writeValueAsString(param));
+    assertEquals(json.get("begin_create_time").asLong(), 1L);
+    assertEquals(json.get("end_create_time").asLong(), 2L);
+    assertEquals(json.get("begin_update_time").asLong(), 3L);
+    assertEquals(json.get("end_update_time").asLong(), 4L);
+    assertEquals(json.get("next_key").asText(), "next");
+  }
+
+  @Test
+  public void shouldExposeGuaranteeMethodsAsDefaultMethods() throws Exception {
+    assertTrue(WxChannelAfterSaleService.class.getMethod("listGuaranteeOrder", GuaranteeOrderListParam.class)
+      .isDefault());
+    assertTrue(WxChannelAfterSaleService.class.getMethod("getGuaranteeOrder", String.class).isDefault());
+    assertTrue(WxChannelAfterSaleService.class.getMethod("acceptGuarantee", String.class).isDefault());
+    assertTrue(WxChannelAfterSaleService.class.getMethod("modifyGuarantee", GuaranteeModifyRequest.class).isDefault());
+    assertTrue(WxChannelAfterSaleService.class.getMethod("proofGuarantee", GuaranteeProofRequest.class).isDefault());
+    assertTrue(WxChannelAfterSaleService.class.getMethod("refuseGuarantee", GuaranteeRefuseRequest.class).isDefault());
+
+    WxChannelAfterSaleService service = mock(WxChannelAfterSaleService.class, CALLS_REAL_METHODS);
+    try {
+      service.acceptGuarantee("guarantee-1");
+      fail("Expected UnsupportedOperationException");
+    } catch (UnsupportedOperationException ignored) {
+      // Expected from the compatibility default method.
+    }
   }
 
   @Test
@@ -83,7 +117,7 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
     BaseWxChannelServiceImpl shopService = mock(BaseWxChannelServiceImpl.class);
     WxChannelAfterSaleServiceImpl service = new WxChannelAfterSaleServiceImpl(shopService);
     GuaranteeOrderListParam listParam = new GuaranteeOrderListParam();
-    listParam.setOrderId("order-1");
+    listParam.setBeginCreateTime(1L);
     GuaranteeModifyRequest modifyRequest = new GuaranteeModifyRequest("guarantee-1", 50, "协商说明");
     GuaranteeProofRequest proofRequest = new GuaranteeProofRequest("guarantee-1", "举证说明",
       Arrays.asList("media-1"));
@@ -101,7 +135,7 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
     when(shopService.post(eq(GUARANTEE_ORDER_PROOF_URL), eq(proofRequest)))
       .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
     when(shopService.post(eq(GUARANTEE_ORDER_REFUSE_URL), eq(refuseRequest)))
-      .thenReturn("{\"errcode\":0,\"errmsg\":\"ok\"}");
+      .thenReturn("{\"errcode\":40001,\"errmsg\":\"invalid credential\"}");
 
     GuaranteeOrderListResponse listResponse = service.listGuaranteeOrder(listParam);
     GuaranteeOrderInfoResponse detailResponse = service.getGuaranteeOrder("guarantee-1");
@@ -115,7 +149,7 @@ public class WxChannelAfterSaleServiceImplGuaranteeTest {
     assertTrue(acceptResponse.isSuccess());
     assertTrue(modifyResponse.isSuccess());
     assertTrue(proofResponse.isSuccess());
-    assertTrue(refuseResponse.isSuccess());
+    assertFalse(refuseResponse.isSuccess());
     verify(shopService).post(GUARANTEE_ORDER_LIST_URL, listParam);
     verify(shopService).post(GUARANTEE_ORDER_GET_URL, new GuaranteeOrderIdParam("guarantee-1"));
     verify(shopService).post(GUARANTEE_ORDER_ACCEPT_URL, new GuaranteeOrderIdParam("guarantee-1"));
