@@ -49,6 +49,15 @@ public class WxChannelApiUrlConstants {
     String GET_FAVORITE_COUNT = "https://api.weixin.qq.com/channels/ec/favorites/count/get";
   }
 
+  /** 商家客服相关接口 */
+  public interface Kf {
+
+    /** 上传客服素材 */
+    String COS_UPLOAD_URL = "https://api.weixin.qq.com/channels/ec/commkf/cosupload";
+    /** 发送客服消息 */
+    String SEND_MSG_URL = "https://api.weixin.qq.com/channels/ec/commkf/sendmsg";
+  }
+
   /** 商品类目相关接口 */
   public interface Category {
 

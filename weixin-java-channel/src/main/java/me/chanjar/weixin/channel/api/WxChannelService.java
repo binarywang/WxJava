@@ -8,6 +8,13 @@ package me.chanjar.weixin.channel.api;
 public interface WxChannelService extends BaseWxChannelService {
 
   /**
+   * 商家客服服务。
+   *
+   * @return 商家客服服务
+   */
+  WxChannelKfService getKfService();
+
+  /**
    * 基础接口服务
    *
    * @return 基础接口服务
