@@ -210,4 +210,11 @@ public interface WxChannelService extends BaseWxChannelService {
    */
   WxChannelFavoriteService getFavoriteService();
 
+  /**
+   * 电子面单服务
+   *
+   * @return 电子面单服务
+   */
+  WxChannelEwaybillService getEwaybillService();
+
 }

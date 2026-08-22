@@ -64,6 +64,7 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
   private WxChannelQicService qicService = null;
   private WxTalentService talentService = null;
   private WxChannelFavoriteService favoriteService = null;
+  private WxChannelEwaybillService ewaybillService = null;
 
   protected WxChannelConfig config;
   private int retrySleepMillis = 1000;
@@ -507,6 +508,14 @@ public abstract class BaseWxChannelServiceImpl<H, P> implements WxChannelService
       favoriteService = new WxChannelFavoriteServiceImpl(this);
     }
     return favoriteService;
+  }
+
+  @Override
+  public synchronized WxChannelEwaybillService getEwaybillService() {
+    if (ewaybillService == null) {
+      ewaybillService = new WxChannelEwaybillServiceImpl(this);
+    }
+    return ewaybillService;
   }
 
 }

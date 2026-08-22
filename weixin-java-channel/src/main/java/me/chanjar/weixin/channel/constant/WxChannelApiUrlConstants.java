@@ -325,6 +325,42 @@ public class WxChannelApiUrlConstants {
     String DELIVERY_SEND_URL = "https://api.weixin.qq.com/channels/ec/order/delivery/send";
   }
 
+  /** 电子面单相关接口 */
+  public interface Ewaybill {
+    /** 获取面单标准模板 */
+    String GET_TEMPLATE_CONFIG_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/config";
+    /** 新增面单模板 */
+    String CREATE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/create";
+    /** 删除面单模板 */
+    String DELETE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/delete";
+    /** 更新面单模板 */
+    String UPDATE_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/update";
+    /** 获取面单模板信息 */
+    String GET_TEMPLATE_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/get";
+    /** 根据模板ID获取面单模板信息 */
+    String GET_TEMPLATE_BY_ID_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/template/getbyid";
+    /** 查询开通的电子面单网点/账号信息 */
+    String GET_ACCOUNT_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/account/get";
+    /** 查询开通的快递公司列表 */
+    String GET_DELIVERY_LIST_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/delivery/get";
+    /** 电子面单预取号 */
+    String PRE_CREATE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/precreate";
+    /** 电子面单取号 */
+    String CREATE_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/create";
+    /** 电子面单子件追加 */
+    String ADD_SUB_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/addsuborder";
+    /** 电子面单取消下单 */
+    String CANCEL_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/cancel";
+    /** 查询面单详情 */
+    String GET_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/get";
+    /** 获取打印报文 */
+    String GET_PRINT_CONTENT_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/print/get";
+    /** 打印成功通知 */
+    String PRINT_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/print";
+    /** 批量打印通知 */
+    String BATCH_PRINT_ORDER_URL = "https://api.weixin.qq.com/channels/ec/logistics/ewaybill/biz/order/batchprint";
+  }
+
   /** 运费模板相关接口 */
   public interface FreightTemplate {
 
