@@ -1,7 +1,9 @@
 package com.github.binarywang.wxpay.service;
 
+import com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest;
 import com.github.binarywang.wxpay.bean.ecommerce.TransactionsResult;
 import com.github.binarywang.wxpay.bean.ecommerce.enums.TradeTypeEnum;
+import com.github.binarywang.wxpay.bean.request.WxPayPartnerOrderCloseV3Request;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -66,6 +68,21 @@ public class LegacyEcommerceApiCompatibilityTest {
       new com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader("timestamp-2", "nonce", "signed", "serial-no");
 
     Assert.assertNotEquals(first, second);
+  }
+
+  @Test
+  public void shouldPreserveOutTradeNoWhenMappingLegacyCloseRequest() {
+    PartnerTransactionsCloseRequest legacyRequest = new PartnerTransactionsCloseRequest();
+    legacyRequest.setSpMchid("1230000109");
+    legacyRequest.setSubMchid("1900000109");
+    legacyRequest.setOutTradeNo("1217752501201407033233368018");
+
+    WxPayPartnerOrderCloseV3Request unifiedRequest =
+      EcommerceService.toUnifiedPartnerOrderCloseRequest(legacyRequest);
+
+    Assert.assertEquals(unifiedRequest.getSpMchId(), "1230000109");
+    Assert.assertEquals(unifiedRequest.getSubMchId(), "1900000109");
+    Assert.assertEquals(unifiedRequest.getOutTradeNo(), "1217752501201407033233368018");
   }
 
   @Test

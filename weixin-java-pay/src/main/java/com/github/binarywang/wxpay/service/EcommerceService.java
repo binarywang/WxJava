@@ -109,7 +109,7 @@ public interface EcommerceService {
   /** @deprecated 从 4.8.5.B 起，请改用 {@link #closePartnerOrder(WxPayPartnerOrderCloseV3Request)}；5.0 将移除。 */
   @Deprecated
   default String closePartnerTransactions(com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest request) throws WxPayException {
-    closePartnerOrder(LEGACY_ECOMMERCE_GSON.fromJson(LEGACY_ECOMMERCE_GSON.toJson(request), WxPayPartnerOrderCloseV3Request.class));
+    closePartnerOrder(toUnifiedPartnerOrderCloseRequest(request));
     return null;
   }
 
@@ -120,6 +120,21 @@ public interface EcommerceService {
   static SignatureHeader toUnifiedSignatureHeader(com.github.binarywang.wxpay.bean.ecommerce.SignatureHeader header) {
     return header == null ? null : SignatureHeader.builder().timeStamp(header.getTimeStamp()).nonce(header.getNonce())
       .signature(header.getSigned()).serial(header.getSerialNo()).build();
+  }
+
+  /**
+   * 旧电商关闭请求转统一模型。
+   * <p>{@code outTradeNo} 在两侧均为 path 参数（{@code transient}），不能走 Gson 往返，否则会丢失。
+   */
+  static WxPayPartnerOrderCloseV3Request toUnifiedPartnerOrderCloseRequest(
+      com.github.binarywang.wxpay.bean.ecommerce.PartnerTransactionsCloseRequest request) {
+    if (request == null) {
+      return null;
+    }
+    return new WxPayPartnerOrderCloseV3Request()
+      .setSpMchId(request.getSpMchid())
+      .setSubMchId(request.getSubMchid())
+      .setOutTradeNo(request.getOutTradeNo());
   }
 
   /**
