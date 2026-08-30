@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderGreetingCardInfo implements Serializable {
   private static final long serialVersionUID = -6391443179945240242L;
 

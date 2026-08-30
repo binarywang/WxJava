@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class QualificationFileId implements Serializable {
 
   private static final long serialVersionUID = -546135264746778249L;

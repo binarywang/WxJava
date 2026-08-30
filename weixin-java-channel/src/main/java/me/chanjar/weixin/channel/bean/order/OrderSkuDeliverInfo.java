@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderSkuDeliverInfo implements Serializable {
 
   private static final long serialVersionUID = 4075897806362929800L;

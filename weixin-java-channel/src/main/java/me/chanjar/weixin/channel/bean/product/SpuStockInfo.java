@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SpuStockInfo implements Serializable {
 
   /** 商品ID */

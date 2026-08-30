@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderIdInfo implements Serializable {
 
   private static final long serialVersionUID = 5547544436235032051L;

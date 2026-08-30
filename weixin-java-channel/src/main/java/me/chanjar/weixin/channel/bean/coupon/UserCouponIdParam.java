@@ -8,6 +8,7 @@ import lombok.Data;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
+@Deprecated
 public class UserCouponIdParam implements Serializable {
 
   private static final long serialVersionUID = 3967276158727848348L;

@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class FreshInspectParam implements Serializable {
   private static final long serialVersionUID = -1635894867602084789L;
 

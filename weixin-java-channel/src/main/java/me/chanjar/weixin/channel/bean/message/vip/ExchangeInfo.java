@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@Deprecated
 public class ExchangeInfo implements Serializable {
 
   private static final long serialVersionUID = -5692646625631036694L;

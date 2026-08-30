@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class LimitTaskUpdateResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 4429517792042527433L;

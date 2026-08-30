@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
+@Deprecated
 public class AfterSaleReturnParam implements Serializable {
 
   private static final long serialVersionUID = -1101993925465293521L;

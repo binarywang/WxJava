@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class TemplateIdResponse extends AbstractEwaybillResponse {
   private static final long serialVersionUID = -6756111662032438585L;
 

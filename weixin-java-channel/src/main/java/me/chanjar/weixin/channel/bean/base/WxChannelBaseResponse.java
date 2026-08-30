@@ -9,6 +9,7 @@ import java.util.StringJoiner;
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
+@Deprecated
 public class WxChannelBaseResponse implements Serializable {
 
   private static final long serialVersionUID = 3141420881984171781L;

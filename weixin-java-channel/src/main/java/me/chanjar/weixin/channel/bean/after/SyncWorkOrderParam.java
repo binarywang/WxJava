@@ -8,6 +8,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SyncWorkOrderParam implements Serializable {
   private static final long serialVersionUID = -7336088606071452113L;
 

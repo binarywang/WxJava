@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author <a href="https://github.com/features/copilot">GitHub Copilot</a>
  */
+@Deprecated
 public interface WxTalentService {
 
   /**

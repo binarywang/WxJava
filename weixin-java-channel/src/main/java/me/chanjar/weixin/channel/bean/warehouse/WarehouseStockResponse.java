@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
+@Deprecated
 public class WarehouseStockResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 1810645965041317763L;

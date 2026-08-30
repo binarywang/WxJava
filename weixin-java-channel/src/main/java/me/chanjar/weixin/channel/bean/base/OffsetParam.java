@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class OffsetParam implements Serializable {
 
   private static final long serialVersionUID = -1268796871980541662L;

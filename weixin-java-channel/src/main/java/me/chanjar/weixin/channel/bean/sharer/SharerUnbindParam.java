@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class SharerUnbindParam implements Serializable {
 
   private static final long serialVersionUID = -4515654492511136037L;

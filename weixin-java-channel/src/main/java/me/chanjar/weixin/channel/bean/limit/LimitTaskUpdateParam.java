@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class LimitTaskUpdateParam implements Serializable {
 
   private static final long serialVersionUID = 7277247203887803045L;

@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OrderAddressInfo extends AddressInfo {
 
   private static final long serialVersionUID = 3062707865189774795L;

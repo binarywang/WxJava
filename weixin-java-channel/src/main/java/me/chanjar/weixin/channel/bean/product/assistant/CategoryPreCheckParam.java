@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CategoryPreCheckParam implements Serializable {
 
   private static final long serialVersionUID = 3616569394767815856L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class OfflineAddressType implements Serializable {
 
   private static final long serialVersionUID = 636850757572901377L;

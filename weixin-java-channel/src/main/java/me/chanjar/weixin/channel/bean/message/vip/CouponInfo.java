@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@Deprecated
 public class CouponInfo implements Serializable {
 
   private static final long serialVersionUID = -3659710836197413932L;

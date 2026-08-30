@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 /** 发送客服消息请求参数。 */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class WxChannelKfSendMsgParam implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VipScoreResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -7252972818862693546L;

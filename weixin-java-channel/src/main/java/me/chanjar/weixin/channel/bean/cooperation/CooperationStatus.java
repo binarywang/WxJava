@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CooperationStatus implements Serializable {
 
   private static final long serialVersionUID = -7096916911986699150L;

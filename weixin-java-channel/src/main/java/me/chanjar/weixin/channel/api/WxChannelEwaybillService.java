@@ -25,6 +25,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author GitHub Copilot
  */
+@Deprecated
 public interface WxChannelEwaybillService {
 
   /** 获取可用的标准面单模板。 @return 模板配置 @throws WxErrorException 微信接口调用失败 */

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class NotSendArea extends AddressInfoList {
 
   private static final long serialVersionUID = -1836467830293286560L;

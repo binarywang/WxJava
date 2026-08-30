@@ -14,6 +14,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class OrderPriceParam implements Serializable {
 
   private static final long serialVersionUID = -7925819981481556218L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class ExpressInfo implements Serializable {
 
   private static final long serialVersionUID = 3274035362148612426L;

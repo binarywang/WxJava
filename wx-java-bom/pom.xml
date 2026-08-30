@@ -59,6 +59,11 @@
       </dependency>
       <dependency>
         <groupId>com.github.binarywang</groupId>
+        <artifactId>weixin-java-store</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
         <artifactId>weixin-java-qidian</artifactId>
         <version>${project.version}</version>
       </dependency>

@@ -12,6 +12,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商家客服服务
    */
+  @Deprecated
   default WxChannelKfService getKfService() {
     throw new UnsupportedOperationException("WxChannelService implementation does not support getKfService()");
   }
@@ -21,6 +22,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 基础接口服务
    */
+  @Deprecated
   WxChannelBasicService getBasicService();
 
   /**
@@ -28,6 +30,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商品类目服务
    */
+  @Deprecated
   WxChannelCategoryService getCategoryService();
 
   /**
@@ -35,6 +38,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 品牌服务
    */
+  @Deprecated
   WxChannelBrandService getBrandService();
 
   /**
@@ -42,6 +46,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商品服务
    */
+  @Deprecated
   WxChannelProductService getProductService();
 
   /**
@@ -49,6 +54,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 赠品与买赠活动服务
    */
+  @Deprecated
   default WxChannelGiftService getGiftService() {
     throw new UnsupportedOperationException("Gift service is not supported by this implementation");
   }
@@ -58,6 +64,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 限时抢购服务
    */
+  @Deprecated
   default WxChannelLimitedDiscountService getLimitedDiscountService() {
     throw new UnsupportedOperationException("Limited discount service is not supported by this implementation");
   }
@@ -67,6 +74,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商品库存服务
    */
+  @Deprecated
   default WxChannelProductStockService getProductStockService() {
     throw new UnsupportedOperationException("Product stock service is not supported by this implementation");
   }
@@ -76,6 +84,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 商品辅助功能服务
    */
+  @Deprecated
   default WxChannelProductAssistantService getProductAssistantService() {
     throw new UnsupportedOperationException("Product assistant service is not supported by this implementation");
   }
@@ -85,6 +94,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 仓库服务
    */
+  @Deprecated
   WxChannelWarehouseService getWarehouseService();
 
   /**
@@ -92,6 +102,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 订单服务
    */
+  @Deprecated
   WxChannelOrderService getOrderService();
 
   /**
@@ -99,6 +110,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 售后服务
    */
+  @Deprecated
   WxChannelAfterSaleService getAfterSaleService();
 
   /**
@@ -106,6 +118,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 运费模板服务
    */
+  @Deprecated
   WxChannelFreightTemplateService getFreightTemplateService();
 
   /**
@@ -113,6 +126,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 地址服务
    */
+  @Deprecated
   WxChannelAddressService getAddressService();
 
   /**
@@ -120,6 +134,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 优惠券服务
    */
+  @Deprecated
   WxChannelCouponService getCouponService();
 
   /**
@@ -127,6 +142,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 分享员服务
    */
+  @Deprecated
   WxChannelSharerService getSharerService();
 
   /**
@@ -134,6 +150,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 资金服务
    */
+  @Deprecated
   WxChannelFundService getFundService();
 
   /**
@@ -141,6 +158,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 主页管理服务
    */
+  @Deprecated
   WxStoreHomePageService getHomePageService();
 
   /**
@@ -148,6 +166,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 团长合作服务
    */
+  @Deprecated
   WxStoreCooperationService getCooperationService();
 
   /**
@@ -155,6 +174,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 罗盘商家版服务
    */
+  @Deprecated
   WxChannelCompassShopService getCompassShopService();
 
   /**
@@ -169,6 +189,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 代发管理服务
    */
+  @Deprecated
   WxChannelSupplierService getSupplierService();
 
   /**
@@ -218,6 +239,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 会员服务
    */
+  @Deprecated
   WxChannelVipService getVipService();
 
   /**
@@ -239,6 +261,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 质检管理服务
    */
+  @Deprecated
   WxChannelQicService getQicService();
 
   /**
@@ -253,6 +276,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 收藏管理服务
    */
+  @Deprecated
   WxChannelFavoriteService getFavoriteService();
 
   /**
@@ -260,6 +284,7 @@ public interface WxChannelService extends BaseWxChannelService {
    *
    * @return 电子面单服务
    */
+  @Deprecated
   default WxChannelEwaybillService getEwaybillService() {
     throw new UnsupportedOperationException("当前 WxChannelService 实现不支持电子面单服务");
   }

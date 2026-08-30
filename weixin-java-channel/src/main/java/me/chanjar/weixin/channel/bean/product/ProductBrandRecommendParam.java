@@ -7,6 +7,7 @@ import lombok.Data;
 
 /** 商品品牌推荐请求参数. */
 @Data
+@Deprecated
 public class ProductBrandRecommendParam implements Serializable {
   private static final long serialVersionUID = 6462717198206491138L;
 

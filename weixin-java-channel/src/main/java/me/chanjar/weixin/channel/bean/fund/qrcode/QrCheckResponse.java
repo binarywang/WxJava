@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class QrCheckResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -3860756719827268969L;

@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleRefundPriceDiffParam implements Serializable {
   private static final long serialVersionUID = 3875058376021518123L;
 

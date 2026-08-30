@@ -6,6 +6,7 @@ import lombok.Data;
 
 /** 商品立即开售请求参数. */
 @Data
+@Deprecated
 public class ProductTimingSaleParam implements Serializable {
   private static final long serialVersionUID = -7185451543781817487L;
 

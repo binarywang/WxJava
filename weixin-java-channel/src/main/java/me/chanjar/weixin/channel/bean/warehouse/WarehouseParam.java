@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class WarehouseParam extends Warehouse {
 
   private static final long serialVersionUID = -3412047348380785225L;

@@ -12,6 +12,7 @@ import java.util.List;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FreeGiftInfo implements Serializable {
 
   private static final long serialVersionUID = 2024061212345678901L;

@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleReason implements Serializable {
 
   private static final long serialVersionUID = -3674527884494606230L;

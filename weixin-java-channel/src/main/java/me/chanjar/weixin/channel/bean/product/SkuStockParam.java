@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class SkuStockParam implements Serializable {
 
   private static final long serialVersionUID = -5542939078361208816L;

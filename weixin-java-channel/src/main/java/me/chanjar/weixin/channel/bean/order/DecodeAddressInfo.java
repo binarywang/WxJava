@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class DecodeAddressInfo extends AddressInfo {
 
   /** 虚拟发货订单联系方式，在发货方式为无需快递(deliver_method=1)时返回 */

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AllConditionFreeDetail implements Serializable {
 
   private static final long serialVersionUID = -1649520737632417036L;

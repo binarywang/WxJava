@@ -9,6 +9,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleHandleFastExchangeReceiptParam extends AfterSaleIdParam {
   private static final long serialVersionUID = 5430106715116197677L;
 

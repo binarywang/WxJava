@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class TreeProductListResult implements Serializable {
 
   private static final long serialVersionUID = 4566848209585635054L;

@@ -9,6 +9,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /** 发品前校验响应. */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ProductCategoryPreCheckResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 7136603000806024499L;
 

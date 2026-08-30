@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleGenAfterSaleOrderParam extends AfterSaleRefundPriceDiffParam {
   private static final long serialVersionUID = -6873909673739068936L;
 

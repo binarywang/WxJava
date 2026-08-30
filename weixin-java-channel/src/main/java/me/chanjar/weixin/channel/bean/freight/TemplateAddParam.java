@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class TemplateAddParam implements Serializable {
 
   private static final long serialVersionUID = 2602919369418149309L;

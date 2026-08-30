@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class EwaybillOrderIdParam {
   @JsonProperty("ewaybill_order_id")
   private String ewaybillOrderId;

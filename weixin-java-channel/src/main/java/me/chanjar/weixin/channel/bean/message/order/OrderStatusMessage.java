@@ -18,6 +18,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class OrderStatusMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -356717038344749283L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OrderPayInfo extends OrderIdInfo {
 
   private static final long serialVersionUID = -3502786073769735831L;

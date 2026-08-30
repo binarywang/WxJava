@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ScoreInfo implements Serializable {
 
   private static final long serialVersionUID = -3290653233070826576L;

@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /** 商品类目推荐响应. */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ProductCategoryClassifyResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 8258747142248203374L;
 

@@ -15,6 +15,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class BankListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 7912035853286944260L;

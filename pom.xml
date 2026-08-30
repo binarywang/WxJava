@@ -126,6 +126,7 @@
     <module>weixin-java-qidian</module>
     <module>weixin-java-aispeech</module>
     <module>weixin-java-channel</module>
+    <module>weixin-java-store</module>
     <module>spring-boot-starters</module>
     <module>solon-plugins</module>
     <module>wx-java-bom</module>

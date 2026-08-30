@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class StreamPageParam implements Serializable {
 
   private static final long serialVersionUID = -4098060161712929196L;

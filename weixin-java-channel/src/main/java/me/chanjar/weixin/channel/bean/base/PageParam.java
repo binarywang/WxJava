@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class PageParam implements Serializable {
 
   private static final long serialVersionUID = -2606033044242617845L;

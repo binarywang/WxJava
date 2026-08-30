@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class StockFlowExtInfo implements Serializable {
 
   private static final long serialVersionUID = 1170328051641116647L;

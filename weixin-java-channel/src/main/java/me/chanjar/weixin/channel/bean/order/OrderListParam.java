@@ -18,6 +18,7 @@ import me.chanjar.weixin.channel.bean.base.TimeRange;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class OrderListParam extends StreamPageParam {
 
   private static final long serialVersionUID = 3780097459964746890L;

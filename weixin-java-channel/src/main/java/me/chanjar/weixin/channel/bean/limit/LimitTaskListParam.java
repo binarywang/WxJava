@@ -8,6 +8,7 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
+@Deprecated
 public class LimitTaskListParam extends StreamPageParam {
 
   private static final long serialVersionUID = -7227161890365102302L;

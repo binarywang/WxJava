@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleInfo implements Serializable {
 
 

@@ -17,6 +17,7 @@ import java.io.Serializable;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@Deprecated
 public class UserInfo implements Serializable {
 
   private static final long serialVersionUID = 1239486732464880985L;

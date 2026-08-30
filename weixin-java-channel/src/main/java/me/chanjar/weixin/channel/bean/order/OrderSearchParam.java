@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_EMPTY)
+@Deprecated
 public class OrderSearchParam extends StreamPageParam {
 
   private static final long serialVersionUID = 5737520097455135218L;

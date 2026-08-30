@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OneLevelTreeNode extends CatTreeNode {
 
   /** 二级分类 */

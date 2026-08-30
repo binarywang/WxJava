@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderProductExtraService implements Serializable {
 
   private static final long serialVersionUID = -8752053507170277156L;

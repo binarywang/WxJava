@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BrandGrantDetail implements Serializable {
 
   private static final long serialVersionUID = 3537812707384823606L;

@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BankProvinceResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -6187805847136359892L;

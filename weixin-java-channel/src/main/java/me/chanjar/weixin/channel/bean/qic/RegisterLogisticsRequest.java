@@ -11,6 +11,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class RegisterLogisticsRequest implements Serializable {
   private static final long serialVersionUID = 4346443649534209624L;
 

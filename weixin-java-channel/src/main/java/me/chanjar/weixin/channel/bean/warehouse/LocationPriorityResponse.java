@@ -15,6 +15,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class LocationPriorityResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -4037484169497319150L;

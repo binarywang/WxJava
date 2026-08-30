@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class TreeShowSetResponse extends WxChannelBaseResponse {
 
   /** resp */

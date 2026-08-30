@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FinderSceneInfo implements Serializable {
 
   private static final long serialVersionUID = 5298261857489231549L;

@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class DropshipSearchRequest extends DropshipListRequest {
   private static final long serialVersionUID = 3915264648809784742L;
 

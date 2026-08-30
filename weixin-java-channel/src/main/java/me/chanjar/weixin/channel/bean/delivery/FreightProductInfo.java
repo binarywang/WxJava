@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FreightProductInfo implements Serializable {
   private static final long serialVersionUID = -3751269707150372172L;
 

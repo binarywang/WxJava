@@ -11,6 +11,7 @@ import lombok.EqualsAndHashCode;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class CouponStatusParam extends CouponIdInfo {
 
   private static final long serialVersionUID = -7108348049925634704L;

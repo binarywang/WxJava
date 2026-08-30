@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ChangeSkuInfo implements Serializable {
 
   private static final long serialVersionUID = 8783442929429377519L;

@@ -14,6 +14,7 @@ import java.util.List;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleRejectParam extends AfterSaleIdParam {
 
   private static final long serialVersionUID = -7507483859864253314L;

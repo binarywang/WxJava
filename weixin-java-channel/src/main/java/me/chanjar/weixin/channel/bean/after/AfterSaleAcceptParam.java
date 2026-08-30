@@ -12,6 +12,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleAcceptParam extends AfterSaleIdParam {
 
   private static final long serialVersionUID = -4352801757159074950L;

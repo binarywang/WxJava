@@ -9,6 +9,7 @@ import lombok.Data;
  * @author <a href="https://github.com/imyzt">imyzt</a>
  */
 @Data
+@Deprecated
 public class TelNumberExtInfo {
 
   /**

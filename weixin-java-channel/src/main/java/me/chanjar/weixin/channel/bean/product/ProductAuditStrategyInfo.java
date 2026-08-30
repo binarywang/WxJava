@@ -6,6 +6,7 @@ import lombok.Data;
 
 /** 商品上架策略信息. */
 @Data
+@Deprecated
 public class ProductAuditStrategyInfo implements Serializable {
   private static final long serialVersionUID = -2747596416115475981L;
 

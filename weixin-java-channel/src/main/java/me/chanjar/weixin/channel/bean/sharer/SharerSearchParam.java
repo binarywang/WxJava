@@ -11,6 +11,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class SharerSearchParam implements Serializable {
 
   private static final long serialVersionUID = -6763899740755735718L;

@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SubmitConfigResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 2456553692263326158L;
 

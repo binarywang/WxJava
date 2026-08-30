@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ConditionFreeDetail extends AddressInfoList {
 
   private static final long serialVersionUID = 9204578767029379142L;

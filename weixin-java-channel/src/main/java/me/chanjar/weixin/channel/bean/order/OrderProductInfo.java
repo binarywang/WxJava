@@ -16,6 +16,7 @@ import me.chanjar.weixin.channel.bean.base.AttrInfo;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderProductInfo implements Serializable {
 
   private static final long serialVersionUID = -2193536732955185928L;

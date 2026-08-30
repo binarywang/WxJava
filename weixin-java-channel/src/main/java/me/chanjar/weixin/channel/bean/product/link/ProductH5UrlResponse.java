@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ProductH5UrlResponse extends WxChannelBaseResponse {
 
   /** 商品H5短链 */

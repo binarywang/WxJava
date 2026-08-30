@@ -16,6 +16,7 @@ import me.chanjar.weixin.channel.bean.base.OffsetParam;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AddressListParam extends OffsetParam {
 
   private static final long serialVersionUID = -4434287264623932176L;

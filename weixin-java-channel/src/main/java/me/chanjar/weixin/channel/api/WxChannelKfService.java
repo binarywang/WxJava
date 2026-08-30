@@ -5,6 +5,7 @@ import me.chanjar.weixin.channel.bean.kf.WxChannelKfSendMsgResponse;
 import me.chanjar.weixin.common.error.WxErrorException;
 
 /** 视频号小店商家客服服务。 */
+@Deprecated
 public interface WxChannelKfService {
 
   /**

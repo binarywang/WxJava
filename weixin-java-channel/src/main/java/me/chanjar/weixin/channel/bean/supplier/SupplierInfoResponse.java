@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class SupplierInfoResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = -3071464065836573893L;
 

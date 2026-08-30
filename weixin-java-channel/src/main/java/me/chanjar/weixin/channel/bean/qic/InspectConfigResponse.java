@@ -11,6 +11,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class InspectConfigResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 6463651966377955876L;
 

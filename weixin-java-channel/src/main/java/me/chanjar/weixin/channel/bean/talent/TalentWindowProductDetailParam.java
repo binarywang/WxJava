@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class TalentWindowProductDetailParam implements Serializable {
 
   private static final long serialVersionUID = 3849271605183749261L;

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class QualityInsepctInfo implements Serializable {
 
   private static final long serialVersionUID = 8109819414306253475L;

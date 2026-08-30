@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ShopInfoResponse extends WxChannelBaseResponse {
 
   @JsonProperty("info")

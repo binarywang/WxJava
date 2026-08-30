@@ -17,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Deprecated
 public class VipInfoParam implements Serializable {
   private static final long serialVersionUID = -4196252299609288196L;
   @JsonProperty("openid")

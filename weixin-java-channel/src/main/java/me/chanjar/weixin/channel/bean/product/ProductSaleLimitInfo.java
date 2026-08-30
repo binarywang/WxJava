@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class ProductSaleLimitInfo implements Serializable {
 
   /** 是否受到管控，商品存在售卖限制时，固定返回1 */

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleProductInfo implements Serializable {
 
   private static final long serialVersionUID = 4205179093262757775L;

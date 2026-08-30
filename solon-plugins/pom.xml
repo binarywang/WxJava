@@ -29,6 +29,8 @@
     <module>wx-java-cp-solon-plugin</module>
     <module>wx-java-channel-solon-plugin</module>
     <module>wx-java-channel-multi-solon-plugin</module>
+    <module>wx-java-store-solon-plugin</module>
+    <module>wx-java-store-multi-solon-plugin</module>
   </modules>
 
   <dependencies>

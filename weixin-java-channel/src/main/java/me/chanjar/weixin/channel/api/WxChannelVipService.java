@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/asushiye">aushiye</a>
  * @link <a href="https://developers.weixin.qq.com/doc/channels/API/vip/access_guide.html">会员功能接口文档</a>
  */
+@Deprecated
 public interface WxChannelVipService {
   /** 拉取用户详情 */
   // String VIP_USER_INFO_URL = "https://api.weixin.qq.com/channels/ec/vip/user/info/get";

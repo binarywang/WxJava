@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class GiftProductListParam extends StreamPageParam {
 
   private static final long serialVersionUID = 7583500622060651067L;

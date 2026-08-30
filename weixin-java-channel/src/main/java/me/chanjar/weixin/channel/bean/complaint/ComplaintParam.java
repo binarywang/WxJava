@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class ComplaintParam implements Serializable {
 
   private static final long serialVersionUID = 6146118590005718327L;

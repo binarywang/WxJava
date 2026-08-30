@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ValidInfo implements Serializable {
 
   private static final long serialVersionUID = -4550516248380285635L;

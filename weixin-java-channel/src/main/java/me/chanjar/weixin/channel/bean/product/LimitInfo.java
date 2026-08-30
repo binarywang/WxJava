@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class LimitInfo implements Serializable {
 
   private static final long serialVersionUID = -4670198322237114719L;

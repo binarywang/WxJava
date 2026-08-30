@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class CategoryAuditInfo implements Serializable {
 
   private static final long serialVersionUID = -8792967130645424788L;

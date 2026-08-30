@@ -12,6 +12,7 @@ import lombok.Data;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Data
+@Deprecated
 public class AllFreightCalcMethod implements Serializable {
 
   private static final long serialVersionUID = 6330919525271991949L;

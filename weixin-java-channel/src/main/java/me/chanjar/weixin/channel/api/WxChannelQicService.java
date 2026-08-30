@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 /**
  * 视频号小店 质检管理接口.
  */
+@Deprecated
 public interface WxChannelQicService {
 
   /**

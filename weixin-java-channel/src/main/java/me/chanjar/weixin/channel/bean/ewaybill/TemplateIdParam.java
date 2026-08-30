@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TemplateIdParam implements Serializable {
   private static final long serialVersionUID = -2397006631686547550L;
 

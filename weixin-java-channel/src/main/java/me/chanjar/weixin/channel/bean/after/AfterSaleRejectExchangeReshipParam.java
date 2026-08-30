@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleRejectExchangeReshipParam extends AfterSaleIdParam {
   private static final long serialVersionUID = -7946679037747710613L;
 

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class RechargeInfo implements Serializable {
 
   /** 虚拟商品充值账号，当account_type=qq或phone_number或mail的时候返回 */

@@ -18,6 +18,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class DeliverySendParam implements Serializable {
 
   private static final long serialVersionUID = 4555821308266899135L;

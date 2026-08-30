@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class FavoriteCountResponse extends WxChannelBaseResponse {
 
   /** 店铺首页收藏用户数 */

@@ -7,6 +7,7 @@ import lombok.Data;
 
 /** 获取库存流水请求参数. */
 @Data
+@Deprecated
 public class ProductStockFlowParam implements Serializable {
   private static final long serialVersionUID = -407227347279113050L;
 

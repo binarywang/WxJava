@@ -9,6 +9,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class WarehouseLocationParam extends WarehouseLocation {
 
   private static final long serialVersionUID = 3347484433136057123L;

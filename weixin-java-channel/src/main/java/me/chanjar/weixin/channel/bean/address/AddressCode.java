@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AddressCode implements Serializable {
 
   private static final long serialVersionUID = -6782328785056142627L;

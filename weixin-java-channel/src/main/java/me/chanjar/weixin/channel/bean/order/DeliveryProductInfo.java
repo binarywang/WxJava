@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.delivery.FreightProductInfo;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class DeliveryProductInfo implements Serializable {
 
   private static final long serialVersionUID = -8110532854439612471L;

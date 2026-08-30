@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class BannerApplyDetail implements Serializable {
 
   private static final long serialVersionUID = -4622897527243343862L;

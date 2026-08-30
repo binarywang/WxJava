@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WindowProductIndexParam implements Serializable {
 
   private static final long serialVersionUID = 1370480140179330908L;

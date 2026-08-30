@@ -52,6 +52,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  * @see <a href="https://developers.weixin.qq.com/doc/store/API/product/product_status.html">商品状态流转图</a>
  */
+@Deprecated
 public interface WxChannelProductService {
 
   /**

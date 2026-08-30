@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class TalentOrderDetailParam implements Serializable {
 
   private static final long serialVersionUID = 8741285036412736219L;

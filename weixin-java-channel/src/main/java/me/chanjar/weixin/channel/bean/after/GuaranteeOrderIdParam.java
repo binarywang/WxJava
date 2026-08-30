@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class GuaranteeOrderIdParam implements Serializable {
 
   private static final long serialVersionUID = -6638498743123537413L;

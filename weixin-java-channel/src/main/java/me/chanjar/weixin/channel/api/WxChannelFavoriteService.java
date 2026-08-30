@@ -9,6 +9,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/copilot">GitHub Copilot</a>
  * @link <a href="https://developers.weixin.qq.com/doc/channels/API/favorite/shopfavorite/">收藏管理接口文档</a>
  */
+@Deprecated
 public interface WxChannelFavoriteService {
 
   /**

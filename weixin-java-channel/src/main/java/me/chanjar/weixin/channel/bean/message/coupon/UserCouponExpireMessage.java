@@ -18,6 +18,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class UserCouponExpireMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -2557475297107588372L;

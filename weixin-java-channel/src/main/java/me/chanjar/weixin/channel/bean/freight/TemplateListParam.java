@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.OffsetParam;
 @Data
 @JsonInclude(Include.NON_NULL)
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class TemplateListParam extends OffsetParam {
 
   private static final long serialVersionUID = -6716154891499581562L;

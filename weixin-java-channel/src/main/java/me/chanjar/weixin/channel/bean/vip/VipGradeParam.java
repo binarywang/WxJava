@@ -18,6 +18,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Deprecated
 public class VipGradeParam implements Serializable {
 
 

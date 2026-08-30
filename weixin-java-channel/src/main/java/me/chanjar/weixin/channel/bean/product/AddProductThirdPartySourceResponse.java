@@ -8,6 +8,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /** 新增第三方货源信息响应. */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class AddProductThirdPartySourceResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = -7528226120383065861L;
 

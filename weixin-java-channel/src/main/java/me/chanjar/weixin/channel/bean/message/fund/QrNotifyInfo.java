@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class QrNotifyInfo implements Serializable {
 
   private static final long serialVersionUID = 2470016408300157273L;

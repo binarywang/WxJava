@@ -5,6 +5,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  *
  * @author GitHub Copilot
  */
+@Deprecated
 public class PreCreateRequest extends AbstractEwaybillRequest {
   private static final long serialVersionUID = 3761501770378571724L;
 }

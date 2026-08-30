@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AddressInfoList implements Serializable {
 
   private static final long serialVersionUID = 5923805297331862706L;

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BatchPrintOrderRequest {
   @JsonProperty("req_list") private List<PrintOrderRequest> reqList;
 }

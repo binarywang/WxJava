@@ -11,6 +11,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class DropshipInfo implements Serializable {
 
   private static final long serialVersionUID = -4562618835611282016L;

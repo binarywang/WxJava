@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WithdrawListParam implements Serializable {
 
   private static final long serialVersionUID = -672422656564313999L;

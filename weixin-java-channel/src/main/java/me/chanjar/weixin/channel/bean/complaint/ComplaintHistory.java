@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ComplaintHistory implements Serializable {
 
   private static final long serialVersionUID = -4706637116597650133L;

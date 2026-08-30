@@ -23,6 +23,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Deprecated
 public class VipScoreParam implements Serializable {
   private static final long serialVersionUID = -4122983978977407168L;
   @JsonProperty("openid")

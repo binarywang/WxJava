@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class BrandSearchParam extends StreamPageParam {
 
   private static final long serialVersionUID = 5961201403338269712L;

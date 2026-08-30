@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ChannelImageInfo implements Serializable {
 
   private static final long serialVersionUID = 8883519290965944530L;

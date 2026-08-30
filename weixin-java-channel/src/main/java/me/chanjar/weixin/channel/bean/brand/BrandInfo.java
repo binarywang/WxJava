@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class BrandInfo extends Brand {
 
   private static final long serialVersionUID = 5464505958132626159L;

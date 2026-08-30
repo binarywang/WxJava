@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class RefundEvidenceParam implements Serializable {
 
   private static final long serialVersionUID = 2117305897849528009L;

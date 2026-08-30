@@ -7,6 +7,7 @@ import lombok.Data;
 
 /** 商品属性映射及推荐请求参数. */
 @Data
+@Deprecated
 public class ExternalProductMappingNewParam implements Serializable {
   private static final long serialVersionUID = -7982070319116550518L;
 

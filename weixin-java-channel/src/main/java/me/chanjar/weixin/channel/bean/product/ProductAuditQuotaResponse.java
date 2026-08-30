@@ -9,6 +9,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /** 商品提审限额响应. */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ProductAuditQuotaResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = -6242837308752181147L;
 

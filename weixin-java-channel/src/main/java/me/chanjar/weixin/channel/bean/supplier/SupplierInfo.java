@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SupplierInfo implements Serializable {
   private static final long serialVersionUID = -6480813119738259476L;
 

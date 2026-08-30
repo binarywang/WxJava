@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 /**
  * 微信小店限时抢购服务。
  */
+@Deprecated
 public interface WxChannelLimitedDiscountService {
 
   /**

@@ -5,6 +5,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  *
  * @author GitHub Copilot
  */
+@Deprecated
 public class TemplateUpdateRequest extends AbstractEwaybillRequest {
   private static final long serialVersionUID = -6201137374059216895L;
 }

@@ -32,6 +32,8 @@
     <module>wx-java-cp-spring-boot-starter</module>
     <module>wx-java-channel-spring-boot-starter</module>
     <module>wx-java-channel-multi-spring-boot-starter</module>
+    <module>wx-java-store-spring-boot-starter</module>
+    <module>wx-java-store-multi-spring-boot-starter</module>
   </modules>
 
   <dependencies>

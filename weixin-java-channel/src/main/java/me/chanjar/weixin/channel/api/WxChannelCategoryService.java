@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  * @see <a href="https://developers.weixin.qq.com/doc/store/API/category/new_old_diff.html">新旧类目树差异</a>
  */
+@Deprecated
 public interface WxChannelCategoryService {
 
   /**

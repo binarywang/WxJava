@@ -16,6 +16,7 @@ import me.chanjar.weixin.channel.bean.delivery.FreightProductInfo;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class DeliveryUpdateParam implements Serializable {
 
   /** 订单ID */

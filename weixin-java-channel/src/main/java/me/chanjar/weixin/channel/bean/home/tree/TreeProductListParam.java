@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TreeProductListParam implements Serializable {
 
   private static final long serialVersionUID = -8444106841479328711L;

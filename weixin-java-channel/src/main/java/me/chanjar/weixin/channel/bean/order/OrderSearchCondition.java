@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_EMPTY)
+@Deprecated
 public class OrderSearchCondition implements Serializable {
 
   private static final long serialVersionUID = 5492584333971883140L;

@@ -13,6 +13,7 @@ import lombok.Data;
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class GiftActivityInfo implements Serializable {
 
   private static final long serialVersionUID = 3970308144375119175L;

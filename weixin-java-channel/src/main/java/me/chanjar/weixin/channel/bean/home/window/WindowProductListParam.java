@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WindowProductListParam implements Serializable {
 
   /** 每页数量（默认10，不超过30） */

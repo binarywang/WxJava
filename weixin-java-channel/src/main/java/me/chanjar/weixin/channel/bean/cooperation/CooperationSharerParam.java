@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class CooperationSharerParam implements Serializable {
 
   private static final long serialVersionUID = 5032621997764493109L;

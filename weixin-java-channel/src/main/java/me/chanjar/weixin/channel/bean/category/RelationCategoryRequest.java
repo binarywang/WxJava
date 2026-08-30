@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class RelationCategoryRequest implements Serializable {
 
   private static final long serialVersionUID = -8765432109876543210L;

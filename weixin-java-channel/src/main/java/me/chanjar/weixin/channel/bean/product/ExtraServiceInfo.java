@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ExtraServiceInfo implements Serializable {
 
   private static final long serialVersionUID = -5517806977282063174L;

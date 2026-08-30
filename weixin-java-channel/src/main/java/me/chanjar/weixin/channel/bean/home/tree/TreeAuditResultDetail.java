@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class TreeAuditResultDetail implements Serializable {
 
   private static final long serialVersionUID = -6085892397971684732L;

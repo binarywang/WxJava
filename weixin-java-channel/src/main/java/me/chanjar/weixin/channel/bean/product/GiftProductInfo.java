@@ -5,6 +5,7 @@ package me.chanjar.weixin.channel.bean.product;
  *
  * @author GitHub Copilot
  */
+@Deprecated
 public class GiftProductInfo extends SpuUpdateInfo {
 
   private static final long serialVersionUID = -4366133550331058445L;

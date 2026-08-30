@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.PageParam;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class SharerListParam extends PageParam {
 
   private static final long serialVersionUID = -2454284952706596246L;

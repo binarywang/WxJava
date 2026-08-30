@@ -16,6 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class WindowProductSetting implements Serializable {
 
   private static final long serialVersionUID = -5931781905709862287L;

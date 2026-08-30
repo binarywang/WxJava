@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleListParam implements Serializable {
 
   private static final long serialVersionUID = -103549981452112069L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class GiftActivityAddParam implements Serializable {
 
   private static final long serialVersionUID = -3332952823917162308L;

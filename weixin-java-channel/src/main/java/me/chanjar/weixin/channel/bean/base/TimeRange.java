@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class TimeRange implements Serializable {
 
   private static final long serialVersionUID = -8149679871789511479L;

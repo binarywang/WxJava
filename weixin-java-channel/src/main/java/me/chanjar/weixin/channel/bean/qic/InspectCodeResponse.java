@@ -12,6 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class InspectCodeResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = -6242555695898612990L;
 

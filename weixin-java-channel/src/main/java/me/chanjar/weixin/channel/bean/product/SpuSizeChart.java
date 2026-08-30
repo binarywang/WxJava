@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SpuSizeChart implements Serializable {
 
   private static final long serialVersionUID = -5019617420608575610L;

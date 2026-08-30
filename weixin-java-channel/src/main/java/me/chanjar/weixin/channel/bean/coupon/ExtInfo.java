@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ExtInfo implements Serializable {
 
   private static final long serialVersionUID = 9053035437087423233L;

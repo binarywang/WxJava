@@ -15,6 +15,7 @@ import me.chanjar.weixin.channel.enums.PackageAuditItemType;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class PackageAuditInfo implements Serializable {
   private static final long serialVersionUID = 1118087167138310282L;
 

@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@Deprecated
 public class AfterSaleReasonResponse extends WxChannelBaseResponse {
 
 

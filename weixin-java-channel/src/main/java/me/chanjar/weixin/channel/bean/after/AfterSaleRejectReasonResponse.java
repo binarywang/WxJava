@@ -16,6 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@Deprecated
 public class AfterSaleRejectReasonResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -7946679037747710613L;

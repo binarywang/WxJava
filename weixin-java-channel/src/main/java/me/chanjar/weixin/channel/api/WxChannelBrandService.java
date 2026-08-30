@@ -14,6 +14,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
+@Deprecated
 public interface WxChannelBrandService {
 
   /**

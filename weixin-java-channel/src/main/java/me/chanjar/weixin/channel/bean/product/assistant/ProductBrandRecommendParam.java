@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ProductBrandRecommendParam implements Serializable {
 
   private static final long serialVersionUID = 4516219198778673928L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class LimitTaskParam implements Serializable {
 
   private static final long serialVersionUID = 3885409806249022528L;

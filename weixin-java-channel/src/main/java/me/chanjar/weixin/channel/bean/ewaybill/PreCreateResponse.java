@@ -5,6 +5,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  *
  * @author GitHub Copilot
  */
+@Deprecated
 public class PreCreateResponse extends AbstractEwaybillResponse {
   private static final long serialVersionUID = -6302826807350860584L;
 }

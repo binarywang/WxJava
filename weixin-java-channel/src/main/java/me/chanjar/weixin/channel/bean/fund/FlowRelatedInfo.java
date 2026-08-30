@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FlowRelatedInfo implements Serializable {
 
   private static final long serialVersionUID = 3757839018198212504L;

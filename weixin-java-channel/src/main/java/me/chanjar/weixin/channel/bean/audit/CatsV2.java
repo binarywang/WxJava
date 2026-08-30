@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class CatsV2 implements Serializable {
   private static final long serialVersionUID = -2484092110142035589L;
 

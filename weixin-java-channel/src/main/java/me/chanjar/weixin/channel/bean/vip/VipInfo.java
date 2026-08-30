@@ -25,6 +25,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VipInfo implements Serializable {
   private static final long serialVersionUID = -215590991862774701L;
 

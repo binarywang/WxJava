@@ -7,6 +7,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /** 获取商品移动应用跳转 scheme 码响应. */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ProductSchemeResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 7310433919100539990L;
 

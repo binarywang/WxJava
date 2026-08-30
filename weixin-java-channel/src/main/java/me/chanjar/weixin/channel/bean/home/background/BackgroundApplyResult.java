@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BackgroundApplyResult implements Serializable {
 
   private static final long serialVersionUID = 3154900058221168732L;

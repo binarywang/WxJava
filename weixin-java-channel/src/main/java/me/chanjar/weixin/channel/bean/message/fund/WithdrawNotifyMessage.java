@@ -17,6 +17,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class WithdrawNotifyMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -2504086242143523430L;

@@ -8,6 +8,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class GuaranteeOrderResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 3977781489692530604L;
 

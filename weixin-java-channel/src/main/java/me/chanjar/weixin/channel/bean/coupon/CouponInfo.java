@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CouponInfo extends CouponIdInfo {
 
   private static final long serialVersionUID = -5862063828870424262L;

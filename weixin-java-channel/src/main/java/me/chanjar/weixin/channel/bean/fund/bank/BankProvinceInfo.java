@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BankProvinceInfo implements Serializable {
 
   private static final long serialVersionUID = -3409931656361300144L;

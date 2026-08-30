@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FundsFlow implements Serializable {
 
   private static final long serialVersionUID = -2785498655066305510L;

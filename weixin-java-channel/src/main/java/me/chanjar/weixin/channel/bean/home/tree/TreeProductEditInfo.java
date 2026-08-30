@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TreeProductEditInfo implements Serializable {
 
   private static final long serialVersionUID = -5596947592282082891L;

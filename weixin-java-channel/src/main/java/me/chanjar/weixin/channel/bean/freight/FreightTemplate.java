@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FreightTemplate implements Serializable {
 
   private static final long serialVersionUID = -7876281924385999053L;

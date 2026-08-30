@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class UserCoupon extends UserCouponIdInfo {
 
   private static final long serialVersionUID = -4777537717885622888L;

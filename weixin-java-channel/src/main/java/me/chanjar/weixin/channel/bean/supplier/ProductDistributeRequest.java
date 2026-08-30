@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class ProductDistributeRequest implements Serializable {
   private static final long serialVersionUID = 4201609097231290078L;
 

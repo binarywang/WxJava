@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BranchInfo implements Serializable {
 
   private static final long serialVersionUID = -2744729367131146892L;

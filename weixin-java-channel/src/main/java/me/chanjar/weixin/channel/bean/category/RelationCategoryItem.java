@@ -13,6 +13,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class RelationCategoryItem implements Serializable {
 
   /** 类目id */

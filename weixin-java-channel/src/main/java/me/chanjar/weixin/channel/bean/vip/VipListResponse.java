@@ -14,6 +14,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VipListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -8127372979925053579L;

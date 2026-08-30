@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class DropshipListRequest implements Serializable {
   private static final long serialVersionUID = 2638071229335192596L;
 

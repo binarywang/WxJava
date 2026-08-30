@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class GuaranteeProofRequest extends GuaranteeOrderIdParam {
 
   private static final long serialVersionUID = 6599721896742974275L;

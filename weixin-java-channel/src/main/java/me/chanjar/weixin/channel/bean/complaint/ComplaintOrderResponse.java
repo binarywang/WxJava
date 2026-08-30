@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ComplaintOrderResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 1968530826349555367L;

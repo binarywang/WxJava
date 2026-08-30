@@ -27,6 +27,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  * @link <a href="https://developers.weixin.qq.com/doc/channels/API/order/order_status_graph.html">订单接口文档</a>
  */
+@Deprecated
 public interface WxChannelOrderService {
 
   /**

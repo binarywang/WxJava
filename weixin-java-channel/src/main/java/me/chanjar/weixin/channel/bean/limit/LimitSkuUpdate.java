@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class LimitSkuUpdate implements Serializable {
 
   private static final long serialVersionUID = 4209672674401016015L;

@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class BranchSearchParam implements Serializable {
 
   private static final long serialVersionUID = -8800316690160248833L;

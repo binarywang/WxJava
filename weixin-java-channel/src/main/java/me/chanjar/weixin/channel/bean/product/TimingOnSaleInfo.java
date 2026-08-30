@@ -15,6 +15,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TimingOnSaleInfo implements Serializable {
 
   /** 状态枚举 0-没有待开售；1-待开售 */

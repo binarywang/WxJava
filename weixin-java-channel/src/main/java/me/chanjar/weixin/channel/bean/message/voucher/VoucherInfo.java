@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VoucherInfo implements Serializable {
   private static final long serialVersionUID = 6007964849358969438L;
 

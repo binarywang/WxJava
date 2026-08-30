@@ -14,6 +14,7 @@ import lombok.experimental.Accessors;
 @Data
 @NoArgsConstructor
 @Accessors(chain = true)
+@Deprecated
 public class AddressInfo implements Serializable {
 
   private static final long serialVersionUID = 6928300709804576100L;

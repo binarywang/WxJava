@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ExternalProductMappingParam implements Serializable {
 
   private static final long serialVersionUID = 1944528166283981889L;

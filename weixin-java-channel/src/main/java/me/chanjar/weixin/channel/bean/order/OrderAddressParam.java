@@ -18,6 +18,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class OrderAddressParam implements Serializable {
 
   private static final long serialVersionUID = 2277618297276466650L;

@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class WithdrawNotifyInfo implements Serializable {
 
   private static final long serialVersionUID = 2987401114254821956L;

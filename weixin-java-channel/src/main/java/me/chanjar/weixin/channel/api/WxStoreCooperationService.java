@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  * @see <a href="https://developers.weixin.qq.com/doc/store/API/cooperation/">合作账号状态机</a>
  */
+@Deprecated
 public interface WxStoreCooperationService {
 
   /**

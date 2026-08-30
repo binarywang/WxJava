@@ -16,6 +16,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 /**
  * 微信小店商品辅助功能服务。
  */
+@Deprecated
 public interface WxChannelProductAssistantService {
 
   /**

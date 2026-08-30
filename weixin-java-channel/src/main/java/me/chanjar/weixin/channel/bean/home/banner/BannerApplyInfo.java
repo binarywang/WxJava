@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BannerApplyInfo implements Serializable {
 
   private static final long serialVersionUID = 72190625450999960L;

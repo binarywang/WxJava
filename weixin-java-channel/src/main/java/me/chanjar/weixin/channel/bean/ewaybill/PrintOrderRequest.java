@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class PrintOrderRequest extends EwaybillOrderIdParam {
   @JsonProperty("delivery_id") private String deliveryId;
   @JsonProperty("waybill_id") private String waybillId;

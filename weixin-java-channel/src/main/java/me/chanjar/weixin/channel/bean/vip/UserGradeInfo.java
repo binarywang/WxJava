@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class UserGradeInfo implements Serializable {
 
   private static final long serialVersionUID = -8040963202754069865L;

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class PassCategoryInfo implements Serializable {
 
   private static final long serialVersionUID = 1152077957498898216L;

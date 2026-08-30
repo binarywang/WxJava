@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BasicBrand implements Serializable {
 
   private static final long serialVersionUID = -1991771439710177859L;

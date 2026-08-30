@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class AttrInfo implements Serializable {
 
   private static final long serialVersionUID = -790859309885311785L;

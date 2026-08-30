@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class PriorityLocationParam extends WarehouseLocation {
 
   private static final long serialVersionUID = -3087702364669180903L;

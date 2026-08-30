@@ -17,6 +17,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class StableTokenParam implements Serializable {
   private static final long serialVersionUID = 6849364823232834171L;
 

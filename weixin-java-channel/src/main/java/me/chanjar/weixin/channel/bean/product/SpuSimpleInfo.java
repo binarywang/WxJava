@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SpuSimpleInfo implements Serializable {
 
   private static final long serialVersionUID = 5583726432139404883L;

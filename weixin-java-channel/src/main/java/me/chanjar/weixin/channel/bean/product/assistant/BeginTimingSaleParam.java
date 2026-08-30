@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BeginTimingSaleParam implements Serializable {
 
   private static final long serialVersionUID = -1525220756273987016L;

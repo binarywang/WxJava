@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WaybillIdParam implements Serializable {
   private static final long serialVersionUID = -7601452772833268240L;
 

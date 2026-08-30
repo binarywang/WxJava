@@ -17,6 +17,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class GetWindowProductListResponse extends WxChannelBaseResponse {
 
   /**

@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SpuCategory implements Serializable {
 
   private static final long serialVersionUID = -8500610555473351789L;

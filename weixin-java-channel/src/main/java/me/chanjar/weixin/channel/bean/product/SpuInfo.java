@@ -17,6 +17,7 @@ import me.chanjar.weixin.channel.bean.base.AttrInfo;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class SpuInfo extends SpuSimpleInfo {
 
   private static final long serialVersionUID = -1183209029245287297L;

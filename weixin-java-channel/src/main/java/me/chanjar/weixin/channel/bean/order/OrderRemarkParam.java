@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class OrderRemarkParam implements Serializable {
 
   private static final long serialVersionUID = 2285714780419948468L;

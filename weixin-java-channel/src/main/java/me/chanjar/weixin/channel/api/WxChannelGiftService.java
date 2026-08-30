@@ -13,6 +13,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 /**
  * 微信小店赠品与买赠活动服务。
  */
+@Deprecated
 public interface WxChannelGiftService {
 
   /**

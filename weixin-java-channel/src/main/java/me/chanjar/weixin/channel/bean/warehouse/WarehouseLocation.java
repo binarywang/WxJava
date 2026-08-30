@@ -14,6 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WarehouseLocation implements Serializable {
 
   private static final long serialVersionUID = 1626579682640060352L;
