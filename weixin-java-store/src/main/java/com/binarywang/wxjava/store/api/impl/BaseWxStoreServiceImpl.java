@@ -235,7 +235,7 @@ public abstract class BaseWxStoreServiceImpl<H, P> implements WxStoreService, Re
 
     try {
       T result = executor.execute(uriWithAccessToken, data, WxType.Channel);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken,
+      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri,
         printResult ? dataForLog : "...",
         printResult ? result : "...");
       return result;
@@ -263,13 +263,13 @@ public abstract class BaseWxStoreServiceImpl<H, P> implements WxStoreService, Re
       }
 
       if (error.getErrorCode() != 0) {
-        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken,
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri,
           printResult ? dataForLog : "...", error);
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken,
+      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri,
         printResult ? dataForLog : "...", e.getMessage());
       throw new WxRuntimeException(e);
     }
@@ -283,7 +283,7 @@ public abstract class BaseWxStoreServiceImpl<H, P> implements WxStoreService, Re
    * @throws WxErrorException 异常
    */
   protected String extractAccessToken(String resultContent) throws WxErrorException {
-    log.debug("access-token response: {}", resultContent);
+    log.debug("access-token response received");
     WxStoreConfig config = this.getConfig();
     WxError error = WxError.fromJson(resultContent, WxType.Channel);
     if (error.getErrorCode() != 0) {

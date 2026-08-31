@@ -35,7 +35,6 @@ import com.binarywang.wxjava.store.message.WxStoreMessage;
 import com.binarywang.wxjava.store.message.WxStoreMessageRouter;
 import com.binarywang.wxjava.store.message.WxStoreMessageRouterRule;
 import com.binarywang.wxjava.store.message.rule.HandlerConsumer;
-import com.binarywang.wxjava.store.util.JsonUtils;
 import me.chanjar.weixin.common.session.WxSessionManager;
 
 import static com.binarywang.wxjava.store.constant.MessageEventConstants.*;
@@ -180,240 +179,240 @@ public abstract class BaseWxStoreMessageServiceImpl implements BaseWxStoreMessag
   @Override
   public void orderNew(OrderIdMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单下单:{}", JsonUtils.encode(message));
+    log.info("订单下单, event={}", message.getEvent());
   }
 
   @Override
   public void orderCancel(OrderCancelMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单取消:{}", JsonUtils.encode(message));
+    log.info("订单取消, event={}", message.getEvent());
   }
 
   @Override
   public void orderPay(OrderPayMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单支付成功:{}", JsonUtils.encode(message));
+    log.info("订单支付成功, event={}", message.getEvent());
   }
 
   @Override
   public void orderWaitShipping(OrderIdMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单待发货:{}", JsonUtils.encode(message));
+    log.info("订单待发货, event={}", message.getEvent());
   }
 
   @Override
   public void orderDelivery(OrderDeliveryMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单发货:{}", JsonUtils.encode(message));
+    log.info("订单发货, event={}", message.getEvent());
   }
 
   @Override
   public void orderConfirm(OrderConfirmMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单确认收货:{}", JsonUtils.encode(message));
+    log.info("订单确认收货, event={}", message.getEvent());
   }
 
   @Override
   public void orderSettle(OrderSettleMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单结算:{}", JsonUtils.encode(message));
+    log.info("订单结算, event={}", message.getEvent());
   }
 
   @Override
   public void orderExtInfoUpdate(OrderExtMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单其他信息更新:{}", JsonUtils.encode(message));
+    log.info("订单其他信息更新, event={}", message.getEvent());
   }
 
   @Override
   public void orderStatusUpdate(OrderStatusMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("订单状态更新:{}", JsonUtils.encode(message));
+    log.info("订单状态更新, event={}", message.getEvent());
   }
 
   @Override
   public void spuAudit(SpuAuditMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("商品审核:{}", JsonUtils.encode(message));
+    log.info("商品审核, event={}", message.getEvent());
   }
 
   @Override
   public void spuStatusUpdate(SpuAuditMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("商品状态更新:{}", JsonUtils.encode(message));
+    log.info("商品状态更新, event={}", message.getEvent());
   }
 
   @Override
   public void spuUpdate(SpuAuditMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("商品更新:{}", JsonUtils.encode(message));
+    log.info("商品更新, event={}", message.getEvent());
   }
 
   @Override
   public void stockNoEnough(SpuStockMessage message, String content, String appId,
           Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("商品库存不足:{}", JsonUtils.encode(message));
+    log.info("商品库存不足, event={}", message.getEvent());
   }
 
   @Override
   public void categoryAudit(CategoryAuditMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("分类审核:{}", JsonUtils.encode(message));
+    log.info("分类审核, event={}", message.getEvent());
   }
 
   @Override
   public void brandUpdate(BrandMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("品牌更新:{}", JsonUtils.encode(message));
+    log.info("品牌更新, event={}", message.getEvent());
   }
 
   @Override
   public void afterSaleStatusUpdate(AfterSaleMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("售后状态更新:{}", JsonUtils.encode(message));
+    log.info("售后状态更新, event={}", message.getEvent());
   }
 
   @Override
   public void complaintNotify(ComplaintMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("投诉通知:{}", JsonUtils.encode(message));
+    log.info("投诉通知, event={}", message.getEvent());
   }
 
   @Override
   public void couponReceive(CouponReceiveMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券领取:{}", JsonUtils.encode(message));
+    log.info("优惠券领取, event={}", message.getEvent());
   }
 
   @Override
   public void couponCreate(CouponActionMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券创建:{}", JsonUtils.encode(message));
+    log.info("优惠券创建, event={}", message.getEvent());
   }
 
   @Override
   public void couponDelete(CouponActionMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券删除:{}", JsonUtils.encode(message));
+    log.info("优惠券删除, event={}", message.getEvent());
   }
 
   @Override
   public void couponExpire(CouponActionMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券过期:{}", JsonUtils.encode(message));
+    log.info("优惠券过期, event={}", message.getEvent());
   }
 
   @Override
   public void couponUpdate(CouponActionMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券更新:{}", JsonUtils.encode(message));
+    log.info("优惠券更新, event={}", message.getEvent());
   }
 
   @Override
   public void couponInvalid(CouponActionMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("优惠券失效:{}", JsonUtils.encode(message));
+    log.info("优惠券失效, event={}", message.getEvent());
   }
 
   @Override
   public void userCouponExpire(UserCouponExpireMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户优惠券过期:{}", JsonUtils.encode(message));
+    log.info("用户优惠券过期, event={}", message.getEvent());
   }
 
   @Override
   public void userCouponUse(UserCouponExpireMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户优惠券使用:{}", JsonUtils.encode(message));
+    log.info("用户优惠券使用, event={}", message.getEvent());
   }
 
   @Override
   public void userCouponUnuse(UserCouponExpireMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户优惠券取消使用:{}", JsonUtils.encode(message));
+    log.info("用户优惠券取消使用, event={}", message.getEvent());
   }
 
   @Override
   public void voucherSendSucc(VoucherMessage message, String content, String appId,
           Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("发放团购优惠成功:{}", JsonUtils.encode(message));
+    log.info("发放团购优惠成功, event={}", message.getEvent());
   }
 
   @Override
   public void accountNotify(AccountNotifyMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("账户通知:{}", JsonUtils.encode(message));
+    log.info("账户通知, event={}", message.getEvent());
   }
 
   @Override
   public void withdrawNotify(WithdrawNotifyMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("提现通知:{}", JsonUtils.encode(message));
+    log.info("提现通知, event={}", message.getEvent());
   }
 
   @Override
   public void qrNotify(QrNotifyMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("二维码通知:{}", JsonUtils.encode(message));
+    log.info("二维码通知, event={}", message.getEvent());
   }
 
   @Override
   public void supplierItemUpdate(SupplierItemMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("供应商商品更新:{}", JsonUtils.encode(message));
+    log.info("供应商商品更新, event={}", message.getEvent());
   }
 
   @Override
   public Object defaultMessageHandler(WxStoreMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("默认消息处理:{}", JsonUtils.encode(message));
+    log.info("默认消息处理, event={}", message.getEvent());
     return null;
   }
 
   @Override
   public void sharerChange(WxStoreMessage message, String content, String appId, Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("分享员变更:{}", JsonUtils.encode(message));
+    log.info("分享员变更, event={}", message.getEvent());
   }
 
   @Override
   public void vipJoin(UserInfoMessage message, String content, String appId,
                                Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户加入会员:{}", JsonUtils.encode(message));
+    log.info("用户加入会员, event={}", message.getEvent());
   }
 
   @Override
   public void vipClose(UserInfoMessage message, String content, String appId,
                                       Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户注销会员:{}", JsonUtils.encode(message));
+    log.info("用户注销会员, event={}", message.getEvent());
   }
 
   @Override
   public void vipGradeUpdate(UserInfoMessage message, String content, String appId,
                                             Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户等级信息更新:{}", JsonUtils.encode(message));
+    log.info("用户等级信息更新, event={}", message.getEvent());
   }
 
   @Override
   public void vipScoreUpdate(UserInfoMessage message, String content, String appId,
                                             Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户积分更新:{}", JsonUtils.encode(message));
+    log.info("用户积分更新, event={}", message.getEvent());
   }
 
   @Override
   public void vipScoreExchange(ExchangeInfoMessage message, String content, String appId,
                                               Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("用户积分兑换:{}", JsonUtils.encode(message));
+    log.info("用户积分兑换, event={}", message.getEvent());
   }
 
   @Override
   public void closeStore(CloseStoreMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("小店注销:{}", JsonUtils.encode(message));
+    log.info("小店注销, event={}", message.getEvent());
   }
 
   @Override
   public void updateNickname(NicknameUpdateMessage message, String content, String appId,
     Map<String, Object> context, WxSessionManager sessionManager) {
-    log.info("小店修改名称:{}", JsonUtils.encode(message));
+    log.info("小店修改名称, event={}", message.getEvent());
   }
 }

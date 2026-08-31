@@ -91,7 +91,10 @@ public class WxStoreServiceHttpComponentsImpl extends BaseWxStoreServiceImpl<Htt
   @Override
   protected String doGetStableAccessTokenRequest(boolean forceRefresh) throws IOException {
     WxStoreConfig config = this.getConfig();
-    String url = GET_STABLE_ACCESS_TOKEN_URL;
+    String url = StringUtils.isNotEmpty(config.getAccessTokenUrl()) ?
+      config.getAccessTokenUrl() : StringUtils.isNotEmpty(config.getApiHostUrl()) ?
+      GET_STABLE_ACCESS_TOKEN_URL.replace("https://api.weixin.qq.com", config.getApiHostUrl()) :
+      GET_STABLE_ACCESS_TOKEN_URL;
 
     HttpPost httpPost = new HttpPost(url);
     if (this.getRequestHttpProxy() != null) {

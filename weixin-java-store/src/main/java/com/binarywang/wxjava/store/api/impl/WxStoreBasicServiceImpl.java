@@ -11,7 +11,6 @@ import static com.binarywang.wxjava.store.constant.WxStoreApiUrlConstants.Basics
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import lombok.extern.slf4j.Slf4j;
 import com.binarywang.wxjava.store.api.WxStoreBasicService;
 import com.binarywang.wxjava.store.bean.address.AddressCodeResponse;
@@ -80,8 +79,12 @@ public class WxStoreBasicServiceImpl implements WxStoreBasicService {
     StoreImageResponse rs;
     try {
       String url = GET_IMG_URL + "?media_id=" + mediaId;
+      File tempDirectory = new File(System.getProperty("java.io.tmpdir"), "wxjava-store-" + appId);
+      if (!tempDirectory.exists() && !tempDirectory.mkdirs()) {
+        throw new IOException("无法创建临时目录: " + tempDirectory);
+      }
       RequestExecutor<StoreImageResponse, String> executor = StoreMediaDownloadRequestExecutor.create(shopService,
-        Files.createTempDirectory("wxjava-channel-" + appId).toFile());
+        tempDirectory);
       rs = shopService.execute(executor, url, null);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);

@@ -23,6 +23,6 @@ public class UserInfoMessage extends WxStoreMessage {
   private static final long serialVersionUID = 6926608689621530622L;
   /** 用户信息 */
   @JsonProperty("user_info")
-  @JacksonXmlProperty(localName = "order_info")
+  @JacksonXmlProperty(localName = "user_info")
   private UserInfo userInfo;
 }

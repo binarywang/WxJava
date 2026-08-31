@@ -2,6 +2,8 @@ package com.binarywang.wxjava.store.api;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
+import com.binarywang.wxjava.store.bean.message.vip.UserInfoMessage;
+import com.binarywang.wxjava.store.util.XmlUtils;
 
 import java.util.Arrays;
 
@@ -35,5 +37,17 @@ public class WxStoreServiceContractTest {
       .anyMatch(method -> method.getName().equals("getAfterSaleService")));
     Assert.assertTrue(Arrays.stream(WxStoreService.class.getMethods())
       .anyMatch(method -> method.getName().equals("getFundService")));
+  }
+
+  @Test
+  public void shouldDeserializeVipUserInfoFromXml() {
+    UserInfoMessage message = XmlUtils.decode(
+      "<xml><user_info><phone_number>13800000000</phone_number><grade>2</grade></user_info></xml>",
+      UserInfoMessage.class);
+
+    Assert.assertNotNull(message);
+    Assert.assertNotNull(message.getUserInfo());
+    Assert.assertEquals(message.getUserInfo().getPhoneNumber(), "13800000000");
+    Assert.assertEquals(message.getUserInfo().getGrade(), Integer.valueOf(2));
   }
 }

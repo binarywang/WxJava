@@ -55,7 +55,7 @@ public class WxStoreMultiProperties implements Serializable {
     /**
      * http客户端类型.
      */
-    private HttpClientType httpClientType = HttpClientType.HTTP_COMPONENTS;
+    private HttpClientType httpClientType = HttpClientType.HTTP_CLIENT;
 
     /**
      * http代理主机.

@@ -18,7 +18,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * @author <a href="https://github.com/lixize">Zeyes</a>
  */
 @Configuration
-@ConditionalOnProperty(prefix = WxStoreProperties.PREFIX + ".config-storage", name = "type", havingValue = "redistemplate")
+@ConditionalOnProperty(prefix = WxStoreProperties.PREFIX + ".config-storage", name = "type", havingValue = "redis_template")
 @ConditionalOnClass(StringRedisTemplate.class)
 @RequiredArgsConstructor
 public class WxStoreInRedisTemplateConfigStorageConfiguration extends AbstractWxStoreConfigStorageConfiguration {

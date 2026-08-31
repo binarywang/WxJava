@@ -41,14 +41,17 @@ public class WxStoreMessageRouter {
   private WxErrorExceptionHandler exceptionHandler;
   /** 消息重复检查器 */
   private WxMessageDuplicateChecker messageDuplicateChecker;
+  /** 默认会话管理器 */
+  private WxSessionManager sessionManager;
 
   public WxStoreMessageRouter() {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxChMsgRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(2, 100,
       0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
-    //this.sessionManager = new StandardSessionManager();
+    this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
     this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
+    this.sessionManager = new StandardSessionManager();
   }
 
   /**
@@ -106,7 +109,7 @@ public class WxStoreMessageRouter {
    */
   public Object route(final WxStoreMessage message, final String content, final String appId,
     final WxStoreService service) {
-    return this.route(message, content, appId, new HashMap<>(2), service, new StandardSessionManager());
+    return this.route(message, content, appId, new HashMap<>(2), service, this.sessionManager);
   }
 
   /**

@@ -2,9 +2,11 @@ package com.binarywang.spring.starter.wxjava.store.config;
 
 
 import com.binarywang.spring.starter.wxjava.store.properties.WxStoreProperties;
+import com.binarywang.spring.starter.wxjava.store.enums.HttpClientType;
 import lombok.AllArgsConstructor;
 import com.binarywang.wxjava.store.api.WxStoreService;
-import com.binarywang.wxjava.store.api.impl.WxStoreServiceImpl;
+import com.binarywang.wxjava.store.api.impl.WxStoreServiceHttpClientImpl;
+import com.binarywang.wxjava.store.api.impl.WxStoreServiceHttpComponentsImpl;
 import com.binarywang.wxjava.store.config.WxStoreConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,7 +32,9 @@ public class WxStoreServiceAutoConfiguration {
   @ConditionalOnMissingBean(WxStoreService.class)
   @ConditionalOnBean(WxStoreConfig.class)
   public WxStoreService wxStoreService(WxStoreConfig wxStoreConfig) {
-    WxStoreService wxStoreService = new WxStoreServiceImpl();
+    HttpClientType httpClientType = properties.getConfigStorage().getHttpClientType();
+    WxStoreService wxStoreService = httpClientType == HttpClientType.HttpClient
+      ? new WxStoreServiceHttpClientImpl() : new WxStoreServiceHttpComponentsImpl();
     wxStoreService.setConfig(wxStoreConfig);
     return wxStoreService;
   }

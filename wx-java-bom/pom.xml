@@ -141,6 +141,16 @@
       </dependency>
       <dependency>
         <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-store-spring-boot-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-store-multi-spring-boot-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
         <artifactId>wx-java-qidian-spring-boot-starter</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -194,6 +204,16 @@
       <dependency>
         <groupId>com.github.binarywang</groupId>
         <artifactId>wx-java-channel-multi-solon-plugin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-store-solon-plugin</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.github.binarywang</groupId>
+        <artifactId>wx-java-store-multi-solon-plugin</artifactId>
         <version>${project.version}</version>
       </dependency>
       <dependency>

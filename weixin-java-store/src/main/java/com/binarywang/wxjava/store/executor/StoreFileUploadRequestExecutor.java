@@ -27,6 +27,9 @@ public abstract class StoreFileUploadRequestExecutor<H, P> implements RequestExe
       case HTTP_COMPONENTS:
         return new HttpComponentsStoreFileUploadRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp);
+      case OK_HTTP:
+        return new OkHttpStoreFileUploadRequestExecutor(
+          (RequestHttp<okhttp3.OkHttpClient, me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo>) requestHttp);
       default:
         throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }

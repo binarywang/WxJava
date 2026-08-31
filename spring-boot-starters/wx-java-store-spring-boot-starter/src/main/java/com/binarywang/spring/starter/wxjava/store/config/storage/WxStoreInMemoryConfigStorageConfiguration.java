@@ -21,7 +21,7 @@ public class WxStoreInMemoryConfigStorageConfiguration extends AbstractWxStoreCo
   private final WxStoreProperties properties;
 
   @Bean
-  @ConditionalOnMissingBean(WxStoreProperties.class)
+  @ConditionalOnMissingBean(WxStoreConfig.class)
   public WxStoreConfig wxStoreConfig() {
     WxStoreDefaultConfigImpl config = new WxStoreDefaultConfigImpl();
     return this.config(config, properties);

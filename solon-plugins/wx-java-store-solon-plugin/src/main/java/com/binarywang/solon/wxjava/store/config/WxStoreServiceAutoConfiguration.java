@@ -2,9 +2,11 @@ package com.binarywang.solon.wxjava.store.config;
 
 
 import com.binarywang.solon.wxjava.store.properties.WxStoreProperties;
+import com.binarywang.solon.wxjava.store.enums.HttpClientType;
 import lombok.AllArgsConstructor;
 import com.binarywang.wxjava.store.api.WxStoreService;
-import com.binarywang.wxjava.store.api.impl.WxStoreServiceImpl;
+import com.binarywang.wxjava.store.api.impl.WxStoreServiceHttpClientImpl;
+import com.binarywang.wxjava.store.api.impl.WxStoreServiceHttpComponentsImpl;
 import com.binarywang.wxjava.store.config.WxStoreConfig;
 import org.noear.solon.annotation.Bean;
 import org.noear.solon.annotation.Condition;
@@ -28,7 +30,9 @@ public class WxStoreServiceAutoConfiguration {
   @Bean
   @Condition(onMissingBean=WxStoreService.class, onBean = WxStoreConfig.class)
   public WxStoreService wxStoreService(WxStoreConfig wxStoreConfig) {
-    WxStoreService wxStoreService = new WxStoreServiceImpl();
+    HttpClientType httpClientType = properties.getConfigStorage().getHttpClientType();
+    WxStoreService wxStoreService = httpClientType == HttpClientType.HttpClient
+      ? new WxStoreServiceHttpClientImpl() : new WxStoreServiceHttpComponentsImpl();
     wxStoreService.setConfig(wxStoreConfig);
     return wxStoreService;
   }

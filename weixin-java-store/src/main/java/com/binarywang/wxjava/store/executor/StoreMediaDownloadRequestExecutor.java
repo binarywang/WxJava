@@ -41,6 +41,9 @@ public abstract class StoreMediaDownloadRequestExecutor<H, P> implements Request
       case HTTP_COMPONENTS:
         return new HttpComponentsStoreMediaDownloadRequestExecutor(
           (RequestHttp<org.apache.hc.client5.http.impl.classic.CloseableHttpClient, org.apache.hc.core5.http.HttpHost>) requestHttp, tmpDirFile);
+      case OK_HTTP:
+        return new OkHttpStoreMediaDownloadRequestExecutor(
+          (RequestHttp<okhttp3.OkHttpClient, me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo>) requestHttp, tmpDirFile);
       default:
         throw new IllegalArgumentException("不支持的http执行器类型：" + requestHttp.getRequestType());
     }
