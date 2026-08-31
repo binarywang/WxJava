@@ -60,7 +60,6 @@ public abstract class StoreMediaDownloadRequestExecutor<H, P> implements Request
   public static File createTmpFile(InputStream inputStream, String name, String ext, File tmpDirFile)
     throws IOException {
     File resultFile = File.createTempFile(name, '.' + ext, tmpDirFile);
-    resultFile.deleteOnExit();
     try (InputStream in = inputStream; OutputStream out = openOutputStream(resultFile)) {
       IOUtils.copy(in, out);
     }

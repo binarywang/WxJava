@@ -88,6 +88,7 @@ public interface WxStoreBasicService {
    * 根据media_id获取图片
    *
    * @param mediaId media_id
+   * @return 图片下载结果；调用方使用完 {@link StoreImageResponse#getFile()} 后必须删除该临时文件
    */
   StoreImageResponse getImg(String mediaId) throws WxErrorException;
 

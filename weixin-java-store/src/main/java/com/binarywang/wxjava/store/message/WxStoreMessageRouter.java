@@ -35,7 +35,10 @@ import org.apache.commons.lang3.StringUtils;
 public class WxStoreMessageRouter {
   /** 规则列表 */
   private final List<WxStoreMessageRouterRule<? extends WxStoreMessage>> rules = new ArrayList<>();
-  /** 线程池 */
+  /**
+   * 线程池。默认使用容量为 1000 的有界队列；队列与最大线程数均耗尽时，
+   * 由提交消息的调用线程执行任务，以施加背压并避免丢弃回调消息。
+   */
   private ExecutorService executorService;
   /** 异常处理器 */
   private WxErrorExceptionHandler exceptionHandler;
@@ -47,7 +50,8 @@ public class WxStoreMessageRouter {
   public WxStoreMessageRouter() {
     ThreadFactory namedThreadFactory = new ThreadFactoryBuilder().setNameFormat("WxChMsgRouter-pool-%d").build();
     this.executorService = new ThreadPoolExecutor(2, 100,
-      0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>(), namedThreadFactory);
+      60L, TimeUnit.SECONDS, new LinkedBlockingQueue<>(1000), namedThreadFactory,
+      new ThreadPoolExecutor.CallerRunsPolicy());
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
     this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
