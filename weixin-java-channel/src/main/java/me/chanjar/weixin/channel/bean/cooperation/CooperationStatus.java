@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 合作账号状态
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.cooperation.CooperationStatus}。
  */
 @Data
 @NoArgsConstructor

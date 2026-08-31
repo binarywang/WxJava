@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 发放团购优惠成功消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.voucher.VoucherMessage}。
  */
 @Data
 @NoArgsConstructor

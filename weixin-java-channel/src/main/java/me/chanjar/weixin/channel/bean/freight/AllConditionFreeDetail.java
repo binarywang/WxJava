@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  * 计费规则列表
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.AllConditionFreeDetail}。
  */
 @Data
 @NoArgsConstructor

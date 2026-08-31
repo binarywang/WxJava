@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  * 运费模板 请求参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.TemplateAddParam}。
  */
 @Data
 @NoArgsConstructor

@@ -11,6 +11,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author <a href="https://github.com/asushiye">aushiye</a>
  * @link <a href="https://developers.weixin.qq.com/doc/channels/API/vip/access_guide.html">会员功能接口文档</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreVipService}。
  */
 @Deprecated
 public interface WxChannelVipService {

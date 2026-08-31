@@ -13,6 +13,7 @@ import java.util.List;
  * 获取账号收集的留资数据详情
  * @author imyzt
  * @date 2024/01/27
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.window.response.GetWindowProductListResponse}。
  */
 @Data
 @NoArgsConstructor

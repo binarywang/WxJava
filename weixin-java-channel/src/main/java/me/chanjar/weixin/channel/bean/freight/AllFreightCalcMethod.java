@@ -10,6 +10,7 @@ import lombok.Data;
  * 具体计费方法，默认运费，指定地区运费等
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.AllFreightCalcMethod}。
  */
 @Data
 @Deprecated

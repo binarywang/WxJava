@@ -9,6 +9,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 /**
  * 保障单详情响应。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.GuaranteeOrderInfoResponse}。
  */
 @Data
 @NoArgsConstructor

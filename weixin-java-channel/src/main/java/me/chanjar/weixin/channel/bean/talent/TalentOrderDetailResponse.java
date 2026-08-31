@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 带货助手-获取佣金单详情 响应
  *
  * @author <a href="https://github.com/features/copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.talent.TalentOrderDetailResponse}。
  */
 @Data
 @NoArgsConstructor

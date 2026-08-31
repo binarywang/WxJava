@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 订单id消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.order.OrderIdMessage}。
  */
 @Data
 @NoArgsConstructor

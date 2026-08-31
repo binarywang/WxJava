@@ -4,6 +4,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  * 面单模板信息响应。
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.TemplateInfoResponse}。
  */
 @Deprecated
 public class TemplateInfoResponse extends AbstractEwaybillResponse {

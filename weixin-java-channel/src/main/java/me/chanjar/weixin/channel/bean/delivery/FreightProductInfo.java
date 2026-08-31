@@ -10,6 +10,7 @@ import java.io.Serializable;
  * 包裹中商品信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.delivery.FreightProductInfo}。
  */
 @Data
 @NoArgsConstructor

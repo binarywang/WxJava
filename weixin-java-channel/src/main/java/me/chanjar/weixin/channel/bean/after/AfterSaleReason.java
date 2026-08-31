@@ -11,6 +11,7 @@ import java.io.Serializable;
  *
  * @author lizhengwu
  * @date 2024/7/24
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleReason}。
  */
 @Data
 @NoArgsConstructor

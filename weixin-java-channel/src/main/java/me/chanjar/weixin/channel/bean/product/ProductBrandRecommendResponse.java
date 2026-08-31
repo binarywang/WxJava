@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
-/** 商品品牌推荐响应. */
+/** 商品品牌推荐响应.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductBrandRecommendResponse}。
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Deprecated

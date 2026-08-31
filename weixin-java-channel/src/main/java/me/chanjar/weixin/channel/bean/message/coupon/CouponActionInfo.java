@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 优惠券操作消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.coupon.CouponActionInfo}。
  */
 @Data
 @NoArgsConstructor

@@ -4,6 +4,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  * 电子面单网点/账号信息响应。
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.AccountInfoResponse}。
  */
 @Deprecated
 public class AccountInfoResponse extends AbstractEwaybillResponse {

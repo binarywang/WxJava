@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
  * 商品打包信息 参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.delivery.FreshInspectParam}。
  */
 @Data
 @NoArgsConstructor

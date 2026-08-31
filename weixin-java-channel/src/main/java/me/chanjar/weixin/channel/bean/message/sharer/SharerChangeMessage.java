@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * https://developers.weixin.qq.com/doc/channels/API/sharer/callback/channels_ec_sharer_change.html
  *
  * @author sd-hxf
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.sharer.SharerChangeMessage}。
  */
 @Data
 @NoArgsConstructor

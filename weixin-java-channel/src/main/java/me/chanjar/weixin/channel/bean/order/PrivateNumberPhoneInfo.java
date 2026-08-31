@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 手机号认证信息
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.PrivateNumberPhoneInfo}。
  */
 @Data
 @NoArgsConstructor

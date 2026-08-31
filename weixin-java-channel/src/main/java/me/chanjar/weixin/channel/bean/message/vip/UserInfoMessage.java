@@ -12,6 +12,7 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 用户信息消息
  *
  * @author <a href="https://github.com/asushiye">asushiye</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.vip.UserInfoMessage}。
  */
 
 @Data

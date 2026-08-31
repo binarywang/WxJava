@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 合作账号二维码数据
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.cooperation.CooperationQrCode}。
  */
 @Data
 @NoArgsConstructor

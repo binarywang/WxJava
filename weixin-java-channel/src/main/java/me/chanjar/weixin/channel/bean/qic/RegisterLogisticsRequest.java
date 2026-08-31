@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.qic.RegisterLogisticsRequest}。
+ */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

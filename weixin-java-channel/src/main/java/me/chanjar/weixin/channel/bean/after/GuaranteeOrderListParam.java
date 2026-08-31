@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 保障单列表请求参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.GuaranteeOrderListParam}。
  */
 @Data
 @NoArgsConstructor

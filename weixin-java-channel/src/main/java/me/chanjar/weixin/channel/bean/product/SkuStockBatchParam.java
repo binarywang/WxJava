@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 /**
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SkuStockBatchParam}。
  */
 @Data
 @NoArgsConstructor

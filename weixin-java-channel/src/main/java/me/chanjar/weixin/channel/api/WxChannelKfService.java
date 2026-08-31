@@ -7,7 +7,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 /**
  * 视频号小店商家客服服务。
  *
- * @deprecated 请迁移至 {@code com.binarywang.wxjava.store.api.WxStoreKfService}。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreKfService}。
  */
 @Deprecated
 public interface WxChannelKfService {

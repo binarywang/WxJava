@@ -11,6 +11,7 @@ import java.io.Serializable;
  * 商品待开售信息
  *
  * @author <a href="https://gitee.com/cchengg">chu</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.TimingOnSaleInfo}。
  */
 @Data
 @NoArgsConstructor

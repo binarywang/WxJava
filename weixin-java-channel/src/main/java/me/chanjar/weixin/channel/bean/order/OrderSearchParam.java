@@ -9,6 +9,7 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderSearchParam}。
  */
 @Data
 @NoArgsConstructor

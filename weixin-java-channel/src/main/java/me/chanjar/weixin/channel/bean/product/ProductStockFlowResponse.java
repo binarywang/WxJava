@@ -8,7 +8,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
-/** 获取库存流水响应. */
+/** 获取库存流水响应.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductStockFlowResponse}。
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Deprecated

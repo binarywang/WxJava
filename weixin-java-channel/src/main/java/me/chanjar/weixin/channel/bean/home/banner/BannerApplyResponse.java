@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 提交精选展位申请 结果
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.banner.BannerApplyResponse}。
  */
 @Data
 @NoArgsConstructor

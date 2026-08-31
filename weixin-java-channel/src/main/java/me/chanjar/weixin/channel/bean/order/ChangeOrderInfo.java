@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 订单修改信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.ChangeOrderInfo}。
  */
 @Data
 @NoArgsConstructor

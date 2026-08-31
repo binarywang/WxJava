@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 类目权限列表请求参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.RelationCategoryRequest}。
  */
 @Data
 @NoArgsConstructor

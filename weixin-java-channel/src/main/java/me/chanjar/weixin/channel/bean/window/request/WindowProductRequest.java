@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  * 橱窗商品
  * @author imyzt
  * @date 2024/01/27
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.window.request.WindowProductRequest}。
  */
 @Data
 @NoArgsConstructor

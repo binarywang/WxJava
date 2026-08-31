@@ -9,6 +9,9 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.qic.InspectCodeResponse}。
+ */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

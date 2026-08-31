@@ -4,6 +4,7 @@ package me.chanjar.weixin.channel.bean.ewaybill;
  * 电子面单子件追加请求。
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.AddSubOrderRequest}。
  */
 @Deprecated
 public class AddSubOrderRequest extends AbstractEwaybillRequest {

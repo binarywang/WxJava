@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 
-/** 商品类目推荐请求参数. */
+/** 商品类目推荐请求参数.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductCategoryClassifyParam}。
+*/
 @Data
 @Deprecated
 public class ProductCategoryClassifyParam implements Serializable {

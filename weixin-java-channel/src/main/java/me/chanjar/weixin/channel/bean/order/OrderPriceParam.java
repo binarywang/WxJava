@@ -11,6 +11,7 @@ import lombok.Data;
  * 订单价格参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderPriceParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)

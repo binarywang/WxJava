@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  * 类目审核信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.audit.CategoryAuditInfo}。
  */
 @Data
 @NoArgsConstructor

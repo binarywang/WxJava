@@ -8,6 +8,7 @@ import lombok.Data;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.sharer.SharerSearchParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)

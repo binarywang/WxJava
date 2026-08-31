@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 分类中的品牌
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.audit.CategoryBrand}。
  */
 @Data
 @NoArgsConstructor

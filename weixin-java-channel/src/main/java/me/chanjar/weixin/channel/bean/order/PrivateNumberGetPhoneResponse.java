@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 获取小店手机号认证状态 响应
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.PrivateNumberGetPhoneResponse}。
  */
 @Data
 @NoArgsConstructor

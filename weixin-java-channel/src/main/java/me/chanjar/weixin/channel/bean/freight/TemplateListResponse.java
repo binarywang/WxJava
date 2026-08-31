@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 运费模板 列表 响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.TemplateListResponse}。
  */
 @Data
 @NoArgsConstructor

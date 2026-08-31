@@ -8,6 +8,7 @@ import java.io.Serializable;
 
 /**
  * 更换sku信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.ChangeSkuInfo}。
  */
 @Data
 @NoArgsConstructor

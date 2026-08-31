@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 代发单信息。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.supplier.DropshipInfo}。
  */
 @Data
 @NoArgsConstructor

@@ -14,6 +14,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 微信小店-带货助手服务接口
  *
  * @author <a href="https://github.com/features/copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxTalentService}。
  */
 @Deprecated
 public interface WxTalentService {

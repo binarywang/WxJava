@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
  * 获取短信验证码 请求参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.PrivateNumberSendVerifyCodeParam}。
  */
 @Data
 @NoArgsConstructor

@@ -24,6 +24,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 资金相关服务
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreFundService}。
  */
 @Deprecated
 public interface WxChannelFundService {

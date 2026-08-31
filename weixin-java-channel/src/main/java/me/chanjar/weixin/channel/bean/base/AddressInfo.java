@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
  * 地址信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.base.AddressInfo}。
  */
 @Data
 @NoArgsConstructor

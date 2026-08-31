@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 资金流水参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.FundsListParam}。
  */
 @Data
 @NoArgsConstructor

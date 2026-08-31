@@ -16,6 +16,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 视频号/微信小店 罗盘商家版服务
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreCompassShopService}。
  */
 @Deprecated
 public interface WxChannelCompassShopService {

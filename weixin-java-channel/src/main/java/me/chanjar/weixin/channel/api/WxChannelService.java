@@ -11,6 +11,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 商家客服服务。
    *
    * @return 商家客服服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getKfService()}。
    */
   @Deprecated
   default WxChannelKfService getKfService() {
@@ -21,6 +23,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 基础接口服务
    *
    * @return 基础接口服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getBasicService()}。
    */
   @Deprecated
   WxChannelBasicService getBasicService();
@@ -29,6 +33,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 商品类目服务
    *
    * @return 商品类目服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getCategoryService()}。
    */
   @Deprecated
   WxChannelCategoryService getCategoryService();
@@ -37,6 +43,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 品牌服务
    *
    * @return 品牌服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getBrandService()}。
    */
   @Deprecated
   WxChannelBrandService getBrandService();
@@ -45,6 +53,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 商品服务
    *
    * @return 商品服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getProductService()}。
    */
   @Deprecated
   WxChannelProductService getProductService();
@@ -53,6 +63,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 赠品与买赠活动服务
    *
    * @return 赠品与买赠活动服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getGiftService()}。
    */
   @Deprecated
   default WxChannelGiftService getGiftService() {
@@ -63,6 +75,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 限时抢购服务
    *
    * @return 限时抢购服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getLimitedDiscountService()}。
    */
   @Deprecated
   default WxChannelLimitedDiscountService getLimitedDiscountService() {
@@ -73,6 +87,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 商品库存服务
    *
    * @return 商品库存服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getProductStockService()}。
    */
   @Deprecated
   default WxChannelProductStockService getProductStockService() {
@@ -83,6 +99,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 商品辅助功能服务
    *
    * @return 商品辅助功能服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getProductAssistantService()}。
    */
   @Deprecated
   default WxChannelProductAssistantService getProductAssistantService() {
@@ -93,6 +111,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 仓库服务
    *
    * @return 仓库服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getWarehouseService()}。
    */
   @Deprecated
   WxChannelWarehouseService getWarehouseService();
@@ -101,6 +121,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 订单服务
    *
    * @return 订单服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getOrderService()}。
    */
   @Deprecated
   WxChannelOrderService getOrderService();
@@ -109,6 +131,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 售后服务
    *
    * @return 售后服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getAfterSaleService()}。
    */
   @Deprecated
   WxChannelAfterSaleService getAfterSaleService();
@@ -117,6 +141,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 运费模板服务
    *
    * @return 运费模板服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getFreightTemplateService()}。
    */
   @Deprecated
   WxChannelFreightTemplateService getFreightTemplateService();
@@ -125,6 +151,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 地址服务
    *
    * @return 地址服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getAddressService()}。
    */
   @Deprecated
   WxChannelAddressService getAddressService();
@@ -133,6 +161,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 优惠券服务
    *
    * @return 优惠券服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getCouponService()}。
    */
   @Deprecated
   WxChannelCouponService getCouponService();
@@ -141,6 +171,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 分享员服务
    *
    * @return 分享员服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getSharerService()}。
    */
   @Deprecated
   WxChannelSharerService getSharerService();
@@ -149,6 +181,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 资金服务
    *
    * @return 资金服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getFundService()}。
    */
   @Deprecated
   WxChannelFundService getFundService();
@@ -157,6 +191,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 主页管理服务
    *
    * @return 主页管理服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getHomePageService()}。
    */
   @Deprecated
   WxStoreHomePageService getHomePageService();
@@ -165,6 +201,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 合作账号服务
    *
    * @return 团长合作服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getCooperationService()}。
    */
   @Deprecated
   WxStoreCooperationService getCooperationService();
@@ -173,6 +211,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 视频号/微信小店 罗盘商家版服务
    *
    * @return 罗盘商家版服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getCompassShopService()}。
    */
   @Deprecated
   WxChannelCompassShopService getCompassShopService();
@@ -188,6 +228,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 代发管理服务
    *
    * @return 代发管理服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getSupplierService()}。
    */
   @Deprecated
   WxChannelSupplierService getSupplierService();
@@ -238,6 +280,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 会员功能
    *
    * @return 会员服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getVipService()}。
    */
   @Deprecated
   WxChannelVipService getVipService();
@@ -260,6 +304,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 质检管理服务.
    *
    * @return 质检管理服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getQicService()}。
    */
   @Deprecated
   WxChannelQicService getQicService();
@@ -275,6 +321,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 收藏管理服务
    *
    * @return 收藏管理服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getFavoriteService()}。
    */
   @Deprecated
   WxChannelFavoriteService getFavoriteService();
@@ -283,6 +331,8 @@ public interface WxChannelService extends BaseWxChannelService {
    * 电子面单服务
    *
    * @return 电子面单服务
+
+   * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreService#getEwaybillService()}。
    */
   @Deprecated
   default WxChannelEwaybillService getEwaybillService() {

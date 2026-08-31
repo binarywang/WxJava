@@ -9,6 +9,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 /**
  * 发品前校验响应。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.assistant.CategoryPreCheckResponse}。
  */
 @Data
 @NoArgsConstructor

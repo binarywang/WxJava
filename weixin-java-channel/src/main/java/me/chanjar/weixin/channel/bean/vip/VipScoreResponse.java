@@ -8,6 +8,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 /**
  * @author : zhenyun.su
  * @since : 2023/10/8
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipScoreResponse}。
  */
 
 @Data

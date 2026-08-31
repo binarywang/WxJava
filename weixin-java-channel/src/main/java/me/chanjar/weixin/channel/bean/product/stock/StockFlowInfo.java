@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 库存流水信息。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.stock.StockFlowInfo}。
  */
 @Data
 @NoArgsConstructor

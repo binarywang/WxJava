@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * 换货类型的发货物流信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleExchangeDeliveryInfo}。
  */
 @Data
 @NoArgsConstructor

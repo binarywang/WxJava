@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Data;
 
-/** 获取商品移动应用跳转 scheme 码请求参数. */
+/** 获取商品移动应用跳转 scheme 码请求参数.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductSchemeParam}。
+*/
 @Data
 @Deprecated
 public class ProductSchemeParam implements Serializable {

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 线下配送地址类型
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.address.OfflineAddressType}。
  */
 @Data
 @NoArgsConstructor

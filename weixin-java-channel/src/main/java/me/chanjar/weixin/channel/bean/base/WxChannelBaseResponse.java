@@ -8,6 +8,7 @@ import java.util.StringJoiner;
  * 视频号小店 基础响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.base.WxStoreBaseResponse}。
  */
 @Deprecated
 public class WxChannelBaseResponse implements Serializable {

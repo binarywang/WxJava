@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 分类审核结果
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.TreeAuditResultDetail}。
  */
 @Data
 @NoArgsConstructor

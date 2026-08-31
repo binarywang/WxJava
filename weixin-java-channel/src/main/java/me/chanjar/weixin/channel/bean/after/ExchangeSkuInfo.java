@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Data;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.ExchangeSkuInfo}。
+ */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Deprecated

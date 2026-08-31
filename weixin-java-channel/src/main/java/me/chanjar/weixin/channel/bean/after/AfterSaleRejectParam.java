@@ -11,6 +11,7 @@ import java.util.List;
  * 售后单拒绝信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleRejectParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)

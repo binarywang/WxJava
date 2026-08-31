@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
-/** 商品属性映射及推荐响应. */
+/** 商品属性映射及推荐响应.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ExternalProductMappingNewResponse}。
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Deprecated

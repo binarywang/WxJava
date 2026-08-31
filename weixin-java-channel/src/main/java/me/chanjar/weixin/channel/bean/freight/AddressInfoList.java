@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * 地址列表
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.AddressInfoList}。
  */
 @Data
 @NoArgsConstructor

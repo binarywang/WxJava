@@ -10,6 +10,7 @@ import java.io.Serializable;
  * 商品额外服务信息
  *
  * @author <a href="https://github.com/qrpcode">北鹤M</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderProductExtraService}。
  */
 @Data
 @NoArgsConstructor

@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.qic.SubmitInspectRequest}。
+ */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)

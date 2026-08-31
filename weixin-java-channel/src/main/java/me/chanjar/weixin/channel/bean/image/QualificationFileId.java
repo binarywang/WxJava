@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 资质文件id
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.image.QualificationFileId}。
  */
 @Data
 @NoArgsConstructor

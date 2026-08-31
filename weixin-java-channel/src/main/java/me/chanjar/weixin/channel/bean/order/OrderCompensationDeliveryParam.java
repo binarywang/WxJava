@@ -14,6 +14,7 @@ import me.chanjar.weixin.channel.bean.delivery.DeliveryInfo;
  * 订单补发货 请求参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderCompensationDeliveryParam}。
  */
 @Data
 @NoArgsConstructor

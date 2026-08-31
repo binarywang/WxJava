@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 区域库存
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.WarehouseStockInfo}。
  */
 @Data
 @NoArgsConstructor

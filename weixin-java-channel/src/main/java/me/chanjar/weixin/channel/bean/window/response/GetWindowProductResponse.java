@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 获取橱窗商品详情
  * @author imyzt
  * @date 2024/01/27
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.window.response.GetWindowProductResponse}。
  */
 @Data
 @NoArgsConstructor

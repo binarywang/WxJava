@@ -6,7 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/** 面单标准模板编码请求参数。 */
+/** 面单标准模板编码请求参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.TemplateCodeParam}。
+*/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

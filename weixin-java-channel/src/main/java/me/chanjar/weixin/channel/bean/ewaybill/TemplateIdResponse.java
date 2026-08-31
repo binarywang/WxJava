@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
  * 面单模板ID响应。
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.TemplateIdResponse}。
  */
 @Data
 @NoArgsConstructor

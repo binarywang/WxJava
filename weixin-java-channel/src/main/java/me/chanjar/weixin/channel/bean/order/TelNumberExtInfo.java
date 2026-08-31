@@ -7,6 +7,7 @@ import lombok.Data;
  * 联系方式信息
  *
  * @author <a href="https://github.com/imyzt">imyzt</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.TelNumberExtInfo}。
  */
 @Data
 @Deprecated

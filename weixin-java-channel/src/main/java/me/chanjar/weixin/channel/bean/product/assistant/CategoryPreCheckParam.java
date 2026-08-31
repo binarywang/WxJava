@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 发品前校验参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.assistant.CategoryPreCheckParam}。
  */
 @Data
 @NoArgsConstructor

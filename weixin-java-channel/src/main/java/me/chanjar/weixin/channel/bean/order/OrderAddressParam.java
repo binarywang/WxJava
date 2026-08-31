@@ -13,6 +13,7 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * 订单地址参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderAddressParam}。
  */
 @Data
 @NoArgsConstructor

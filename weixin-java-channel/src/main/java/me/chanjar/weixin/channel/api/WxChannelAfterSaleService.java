@@ -12,6 +12,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 视频号小店 售后服务接口
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreAfterSaleService}。
  */
 @Deprecated
 public interface WxChannelAfterSaleService {

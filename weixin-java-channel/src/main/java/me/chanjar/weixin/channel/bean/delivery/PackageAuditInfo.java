@@ -11,6 +11,7 @@ import me.chanjar.weixin.channel.enums.PackageAuditItemType;
  * 商品打包信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.delivery.PackageAuditInfo}。
  */
 @Data
 @NoArgsConstructor

@@ -8,6 +8,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
 /**
  * 更新限时抢购任务响应。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.limit.LimitTaskUpdateResponse}。
  */
 @Data
 @NoArgsConstructor

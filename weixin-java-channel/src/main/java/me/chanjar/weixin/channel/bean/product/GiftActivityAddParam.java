@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 创建买赠活动参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.GiftActivityAddParam}。
  */
 @Data
 @NoArgsConstructor

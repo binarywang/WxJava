@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 店铺收藏人数 响应
  *
  * @author <a href="https://github.com/copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.favorite.FavoriteCountResponse}。
  */
 @Data
 @NoArgsConstructor

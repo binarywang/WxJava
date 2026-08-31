@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * 微信小店商品库存服务。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreProductStockService}。
  */
 @Deprecated
 public interface WxChannelProductStockService {

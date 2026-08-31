@@ -5,7 +5,9 @@ import java.io.Serializable;
 import java.util.List;
 import lombok.Data;
 
-/** 获取库存流水请求参数. */
+/** 获取库存流水请求参数.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductStockFlowParam}。
+*/
 @Data
 @Deprecated
 public class ProductStockFlowParam implements Serializable {

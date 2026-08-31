@@ -4,7 +4,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
-/** 获取商品移动应用跳转 scheme 码响应. */
+/** 获取商品移动应用跳转 scheme 码响应.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductSchemeResponse}。
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Deprecated

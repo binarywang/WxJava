@@ -17,6 +17,7 @@ import java.io.Serializable;
  *   "remark": "备注",
  *   "request_id": "REQUEST_ID"
  * }
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipScoreParam}。
  */
 
 @Data

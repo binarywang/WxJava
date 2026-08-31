@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 限时抢购任务的 SKU 更新信息。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.limit.LimitSkuUpdate}。
  */
 @Data
 @NoArgsConstructor

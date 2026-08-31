@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * 微信小店限时抢购服务。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreLimitedDiscountService}。
  */
 @Deprecated
 public interface WxChannelLimitedDiscountService {

@@ -10,6 +10,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 
 /**
  * 视频号小店 质检管理接口.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreQicService}。
  */
 @Deprecated
 public interface WxChannelQicService {

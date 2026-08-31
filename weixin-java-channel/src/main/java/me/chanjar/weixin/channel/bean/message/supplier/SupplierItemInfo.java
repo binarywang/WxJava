@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  * 团长商品变更信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.supplier.SupplierItemInfo}。
  */
 @Data
 @NoArgsConstructor

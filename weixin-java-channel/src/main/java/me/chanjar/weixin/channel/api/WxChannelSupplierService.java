@@ -19,6 +19,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
  * @see <a href="https://developers.weixin.qq.com/doc/channels/API/supplier/">代发管理接口文档</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreSupplierService}。
  */
 @Deprecated
 public interface WxChannelSupplierService {

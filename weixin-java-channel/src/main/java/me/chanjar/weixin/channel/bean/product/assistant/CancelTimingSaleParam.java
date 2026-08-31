@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 取消商品开售参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.assistant.CancelTimingSaleParam}。
  */
 @Data
 @NoArgsConstructor

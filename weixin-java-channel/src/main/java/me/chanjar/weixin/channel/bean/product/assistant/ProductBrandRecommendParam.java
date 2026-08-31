@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 商品品牌推荐参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.assistant.ProductBrandRecommendParam}。
  */
 @Data
 @NoArgsConstructor

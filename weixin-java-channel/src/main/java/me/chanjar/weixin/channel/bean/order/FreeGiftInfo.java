@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * 赠品信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.FreeGiftInfo}。
  */
 @Data
 @NoArgsConstructor

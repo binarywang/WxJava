@@ -12,6 +12,7 @@ import java.io.Serializable;
  * 获取优惠券ID列表接口的请求参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.CouponListParam}。
  */
 @Data
 @NoArgsConstructor

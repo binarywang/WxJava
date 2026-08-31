@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 模板ID请求参数。
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.ewaybill.TemplateIdParam}。
  */
 @Data
 @NoArgsConstructor

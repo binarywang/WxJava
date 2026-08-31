@@ -13,6 +13,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 视频号小店 分享员服务接口
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreSharerService}。
  */
 @Deprecated
 public interface WxChannelSharerService {

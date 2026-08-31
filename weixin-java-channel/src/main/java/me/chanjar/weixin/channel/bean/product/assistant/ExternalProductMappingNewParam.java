@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 /**
  * 商品属性映射及推荐参数。
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.assistant.ExternalProductMappingNewParam}。
  */
 @Data
 @NoArgsConstructor

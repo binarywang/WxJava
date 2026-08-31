@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
  * 带优先级的仓库区域
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.warehouse.PriorityLocationParam}。
  */
 @Data
 @NoArgsConstructor

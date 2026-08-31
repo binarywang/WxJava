@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 查看订单真实号审核状态 响应
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.RealNumberViewAuditResponse}。
  */
 @Data
 @NoArgsConstructor

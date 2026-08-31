@@ -6,7 +6,9 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 
-/** 商品提审限额响应. */
+/** 商品提审限额响应.
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductAuditQuotaResponse}。
+*/
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Deprecated

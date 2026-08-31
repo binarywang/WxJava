@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
  * 精选展示位申请详情
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.banner.BannerApplyDetail}。
  */
 @Data
 @NoArgsConstructor

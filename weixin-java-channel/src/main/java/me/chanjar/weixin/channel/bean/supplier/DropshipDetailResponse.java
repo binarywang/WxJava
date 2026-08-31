@@ -10,6 +10,7 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 代发单详情响应。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.supplier.DropshipDetailResponse}。
  */
 @Data
 @NoArgsConstructor
