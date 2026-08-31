@@ -13,6 +13,7 @@ import me.chanjar.weixin.common.util.http.okhttp.OkHttpProxyInfo;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -28,9 +29,13 @@ public class OkHttpStoreMediaDownloadRequestExecutor extends StoreMediaDownloadR
       uri += (uri.contains("?") ? "&" : "?") + data;
     }
     try (Response response = requestHttp.getRequestHttpClient().newCall(new Request.Builder().url(uri).get().build()).execute()) {
+      ResponseBody responseBody = response.body();
+      if (responseBody == null) {
+        throw new IOException("下载图片响应体为空");
+      }
       String contentType = response.header("Content-Type");
       if (contentType != null && contentType.startsWith("application/json")) {
-        return JsonUtils.decode(response.body().string(), StoreImageResponse.class);
+        return JsonUtils.decode(responseBody.string(), StoreImageResponse.class);
       }
       String fileName = extractFileNameFromContentString(response.header("Content-disposition"));
       String baseName = FilenameUtils.getBaseName(fileName);
@@ -41,7 +46,7 @@ public class OkHttpStoreMediaDownloadRequestExecutor extends StoreMediaDownloadR
       if (StringUtils.isBlank(extension)) {
         extension = "unknown";
       }
-      try (InputStream inputStream = response.body().byteStream()) {
+      try (InputStream inputStream = responseBody.byteStream()) {
         return new StoreImageResponse(createTmpFile(inputStream, baseName, extension, tmpDirFile), contentType);
       }
     }

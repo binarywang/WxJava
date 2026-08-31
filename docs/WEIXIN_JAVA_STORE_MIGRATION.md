@@ -24,7 +24,10 @@
 </dependency>
 ```
 
-新模块不依赖 `weixin-java-channel`；两者可以同时引入，适合按业务逐步迁移。
+新模块不依赖 `weixin-java-channel`。仅接入微信小店的店铺、商品、订单、售后、
+物流和资金等经营能力时，只需依赖 `weixin-java-store`；只有同时需要视频号直播、
+Finder 或橱窗等视频号能力时，才额外依赖 `weixin-java-channel`。两者可以同时引入，
+适合按业务逐步迁移。
 
 ## 包名与入口替换
 

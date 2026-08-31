@@ -45,8 +45,7 @@ public class HttpComponentsStoreMediaDownloadRequestExecutor extends StoreMediaD
       httpGet.setConfig(config);
     }
 
-    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpGet);
-         InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
+    try (CloseableHttpResponse response = requestHttp.getRequestHttpClient().execute(httpGet)) {
       Header[] contentTypeHeader = response.getHeaders("Content-Type");
       String contentType = null;
       if (contentTypeHeader != null && contentTypeHeader.length > 0) {
@@ -58,21 +57,23 @@ public class HttpComponentsStoreMediaDownloadRequestExecutor extends StoreMediaD
         }
       }
 
-      String fileName = this.getFileName(response);
-      if (StringUtils.isBlank(fileName)) {
-        fileName = String.valueOf(System.currentTimeMillis());
-      }
+      try (InputStream inputStream = InputStreamResponseHandler.INSTANCE.handleResponse(response)) {
+        String fileName = this.getFileName(response);
+        if (StringUtils.isBlank(fileName)) {
+          fileName = String.valueOf(System.currentTimeMillis());
+        }
 
-      String baseName = FilenameUtils.getBaseName(fileName);
-      if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
-        baseName = String.valueOf(System.currentTimeMillis());
+        String baseName = FilenameUtils.getBaseName(fileName);
+        if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
+          baseName = String.valueOf(System.currentTimeMillis());
+        }
+        String extension = FilenameUtils.getExtension(fileName);
+        if (StringUtils.isBlank(extension)) {
+          extension = "unknown";
+        }
+        File file = createTmpFile(inputStream, baseName, extension, tmpDirFile);
+        return new StoreImageResponse(file, contentType);
       }
-      String extension = FilenameUtils.getExtension(fileName);
-      if (StringUtils.isBlank(extension)) {
-        extension = "unknown";
-      }
-      File file = createTmpFile(inputStream, baseName, extension, tmpDirFile);
-      return new StoreImageResponse(file, contentType);
     } catch (HttpException httpException) {
       throw new ClientProtocolException(httpException.getMessage(), httpException);
     }

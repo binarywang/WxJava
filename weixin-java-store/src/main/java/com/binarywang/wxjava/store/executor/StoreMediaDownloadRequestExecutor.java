@@ -25,7 +25,7 @@ public abstract class StoreMediaDownloadRequestExecutor<H, P> implements Request
   protected RequestHttp<H, P> requestHttp;
   protected File tmpDirFile;
 
-  private static final Pattern PATTERN = Pattern.compile(".*filename=\"(.*)\"");
+  private static final Pattern PATTERN = Pattern.compile(".*filename=\"([^\"]+)\".*");
 
   public StoreMediaDownloadRequestExecutor(RequestHttp<H, P> requestHttp, File tmpDirFile) {
     this.requestHttp = requestHttp;

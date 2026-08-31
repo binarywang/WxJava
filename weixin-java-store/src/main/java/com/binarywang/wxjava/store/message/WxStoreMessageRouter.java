@@ -55,7 +55,6 @@ public class WxStoreMessageRouter {
     this.sessionManager = new StandardSessionManager();
     this.exceptionHandler = new LogExceptionHandler();
     this.messageDuplicateChecker = WxMessageInMemoryDuplicateCheckerSingleton.getInstance();
-    this.sessionManager = new StandardSessionManager();
   }
 
   /**
@@ -171,7 +170,11 @@ public class WxStoreMessageRouter {
             future.get();
             // 异步操作结束，session访问结束
             sessionEndAccess(sessionManager, message, true);
-          } catch (InterruptedException | ExecutionException e) {
+          } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.error("Error happened when wait task finish", e);
+            break;
+          } catch (ExecutionException e) {
             log.error("Error happened when wait task finish", e);
           }
         }

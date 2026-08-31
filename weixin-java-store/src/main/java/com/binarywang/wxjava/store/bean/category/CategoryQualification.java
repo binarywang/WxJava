@@ -30,7 +30,11 @@ public class CategoryQualification implements Serializable {
   @Deprecated
   private QualificationInfo productInfo;
 
-  /** 品牌资质信息 */
+  /**
+   * 品牌资质信息。
+   *
+   * @deprecated 微信接口仍返回该字段，暂未提供替代字段。
+   */
   @JsonProperty("brand_qua")
   @Deprecated
   private QualificationInfo brandQua;
