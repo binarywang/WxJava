@@ -296,7 +296,7 @@ public interface WxCpKfService {
    * 添加知识库分组。
    *
    * @param group 分组信息
-   * @return 新建分组的 ID
+   * @return 新增结果，包含分组 ID
    * @throws WxErrorException 异常
    */
   WxCpKfKnowledgeGroupAddResp addKnowledgeGroup(WxCpKfKnowledgeGroup group) throws WxErrorException;
@@ -334,7 +334,7 @@ public interface WxCpKfService {
    * 添加知识库问答。
    *
    * @param intent 问答信息
-   * @return 新建问答的 ID
+   * @return 新增结果，包含问答 ID
    * @throws WxErrorException 异常
    */
   WxCpKfKnowledgeIntentAddResp addKnowledgeIntent(WxCpKfKnowledgeIntent intent) throws WxErrorException;

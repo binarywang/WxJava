@@ -35,6 +35,9 @@ public class WxCpKfKnowledgeIntent implements Serializable {
   public static class Question implements Serializable {
     private static final long serialVersionUID = -1833564733770700525L;
     private Text text;
+    @SerializedName("similar_questions")
+    private SimilarQuestions similarQuestions;
+    private List<Answer> answers;
   }
 
   @Data

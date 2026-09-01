@@ -339,7 +339,7 @@ public class WxCpKfServiceImpl implements WxCpKfService {
   @Override
   public WxCpKfKnowledgeGroupListResp listKnowledgeGroup(String cursor, Integer limit, String groupId) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_LIST_GROUP);
-    String responseContent = cpService.post(url, listKnowledgeJson(cursor, limit, groupId, null).toString());
+    String responseContent = cpService.post(url, GSON.toJson(listKnowledgeJson(cursor, limit, groupId, null)));
     return WxCpKfKnowledgeGroupListResp.fromJson(responseContent);
   }
 
@@ -365,7 +365,7 @@ public class WxCpKfServiceImpl implements WxCpKfService {
   @Override
   public WxCpKfKnowledgeIntentListResp listKnowledgeIntent(String cursor, Integer limit, String groupId, String intentId) throws WxErrorException {
     String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_LIST_INTENT);
-    String responseContent = cpService.post(url, listKnowledgeJson(cursor, limit, groupId, intentId).toString());
+    String responseContent = cpService.post(url, GSON.toJson(listKnowledgeJson(cursor, limit, groupId, intentId)));
     return WxCpKfKnowledgeIntentListResp.fromJson(responseContent);
   }
 
@@ -373,7 +373,7 @@ public class WxCpKfServiceImpl implements WxCpKfService {
     String url = cpService.getWxCpConfigStorage().getApiUrl(apiPath);
     JsonObject json = new JsonObject();
     json.addProperty(key, value);
-    String responseContent = cpService.post(url, json.toString());
+    String responseContent = cpService.post(url, GSON.toJson(json));
     return WxCpBaseResp.fromJson(responseContent);
   }
 
