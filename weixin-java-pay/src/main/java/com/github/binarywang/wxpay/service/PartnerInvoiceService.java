@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.service;
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlResult;
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlRequest;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.PassengerTransportInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
@@ -50,6 +51,21 @@ public interface PartnerInvoiceService {
    * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4015792574">官方文档</a>
    */
   void issueGeneralInvoice(GeneralInvoiceRequest request) throws WxPayException;
+
+  /**
+   * 开具旅客运输行业电子发票。
+   *
+   * <p>接口受理成功时返回 HTTP 202 Accepted，无应答包体。受理成功不代表开票完成，
+   * 请通过开票结果回调或查询电子发票接口获取处理结果。</p>
+   *
+   * @param request 开票申请
+   * @throws WxPayException 微信支付异常
+   * @throws UnsupportedOperationException 当前实现不支持开具旅客运输行业电子发票
+   * @see <a href="https://pay.weixin.qq.com/doc/v3/partner/4025863376">官方文档</a>
+   */
+  default void issuePassengerTransportInvoice(PassengerTransportInvoiceRequest request) throws WxPayException {
+    throw new UnsupportedOperationException("当前实现不支持开具旅客运输行业电子发票");
+  }
 
   /**
    * 查询电子发票。
