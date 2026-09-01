@@ -100,6 +100,14 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
   private String[] supportedProtocols = {"TLSv1.2", "TLSv1.3", "TLSv1.1", "TLSv1"};
 
   /**
+   * 是否跳过服务器端证书校验，默认false，即校验证书。
+   * <p>
+   * 仅在自签名证书的抓包代理等特殊调试场景下才可以设置为true，生产环境开启会导致中间人攻击风险。
+   * </p>
+   */
+  private boolean skipServerCertificateVerification = false;
+
+  /**
    * 自定义请求拦截器
    */
   private List<HttpRequestInterceptor> requestInterceptors = new ArrayList<>();
@@ -121,7 +129,13 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
 
   private final HttpRequestRetryHandler defaultHttpRequestRetryHandler = (exception, executionCount, context) -> false;
 
-  private SSLConnectionSocketFactory sslConnectionSocketFactory = SSLConnectionSocketFactory.getSocketFactory();
+  /**
+   * 默认的SSL连接工厂，用于判断使用方是否自定义过连接工厂
+   */
+  private static final SSLConnectionSocketFactory DEFAULT_SSL_CONNECTION_SOCKET_FACTORY =
+    SSLConnectionSocketFactory.getSocketFactory();
+
+  private SSLConnectionSocketFactory sslConnectionSocketFactory = DEFAULT_SSL_CONNECTION_SOCKET_FACTORY;
   private final PlainConnectionSocketFactory plainConnectionSocketFactory = PlainConnectionSocketFactory.getSocketFactory();
   private String httpProxyHost;
   private int httpProxyPort;
@@ -199,9 +213,10 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     if (prepared.get()) {
       return;
     }
+    SSLConnectionSocketFactory httpsSocketFactory = this.resolveSSLConnectionSocketFactory();
     Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
       .register("http", this.plainConnectionSocketFactory)
-      .register("https", this.sslConnectionSocketFactory)
+      .register("https", httpsSocketFactory)
       .build();
 
     PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager(registry);
@@ -221,7 +236,7 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     HttpClientBuilder httpClientBuilder = HttpClients.custom()
       .setConnectionManager(connectionManager)
       .setConnectionManagerShared(true)
-      .setSSLSocketFactory(this.buildSSLConnectionSocketFactory())
+      .setSSLSocketFactory(httpsSocketFactory)
       .setDefaultRequestConfig(RequestConfig.custom()
         .setSocketTimeout(this.soTimeout)
         .setConnectTimeout(this.connectionTimeout)
@@ -261,11 +276,27 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
     prepared.set(true);
   }
 
+  /**
+   * 使用方自定义的连接工厂优先，否则按照证书校验开关构造连接工厂.
+   */
+  private SSLConnectionSocketFactory resolveSSLConnectionSocketFactory() {
+    if (this.sslConnectionSocketFactory != DEFAULT_SSL_CONNECTION_SOCKET_FACTORY) {
+      return this.sslConnectionSocketFactory;
+    }
+
+    SSLConnectionSocketFactory factory = this.buildSSLConnectionSocketFactory();
+    return factory == null ? DEFAULT_SSL_CONNECTION_SOCKET_FACTORY : factory;
+  }
+
   private SSLConnectionSocketFactory buildSSLConnectionSocketFactory() {
     try {
-      SSLContext sslcontext = SSLContexts.custom()
+      SSLContext sslcontext;
+      if (this.skipServerCertificateVerification) {
         //忽略掉对服务器端证书的校验
-        .loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
+        sslcontext = SSLContexts.custom().loadTrustMaterial((TrustStrategy) (chain, authType) -> true).build();
+      } else {
+        sslcontext = SSLContexts.createSystemDefault();
+      }
 
       return new SSLConnectionSocketFactory(
         sslcontext,

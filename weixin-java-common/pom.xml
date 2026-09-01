@@ -122,6 +122,12 @@
       <artifactId>assertj-guava</artifactId>
       <scope>test</scope>
     </dependency>
+    <!-- 测试中生成自签名证书，用于验证TLS证书校验行为 -->
+    <dependency>
+      <groupId>org.bouncycastle</groupId>
+      <artifactId>bcpkix-jdk18on</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.dom4j</groupId>
       <artifactId>dom4j</artifactId>

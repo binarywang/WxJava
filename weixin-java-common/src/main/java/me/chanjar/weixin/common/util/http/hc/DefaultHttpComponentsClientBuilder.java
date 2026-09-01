@@ -19,6 +19,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManager;
 import org.apache.hc.client5.http.impl.io.PoolingHttpClientConnectionManagerBuilder;
 import org.apache.hc.client5.http.ssl.DefaultClientTlsStrategy;
+import org.apache.hc.client5.http.ssl.DefaultHostnameVerifier;
 import org.apache.hc.client5.http.ssl.NoopHostnameVerifier;
 import org.apache.hc.client5.http.ssl.TrustAllStrategy;
 import org.apache.hc.core5.http.HttpHost;
@@ -93,6 +94,14 @@ public class DefaultHttpComponentsClientBuilder implements HttpComponentsClientB
    * 自定义httpclient的User Agent
    */
   private String userAgent;
+
+  /**
+   * 是否跳过服务器端证书校验，默认false，即校验证书。
+   * <p>
+   * 仅在自签名证书的抓包代理等特殊调试场景下才可以设置为true，生产环境开启会导致中间人攻击风险。
+   * </p>
+   */
+  private boolean skipServerCertificateVerification = false;
 
   /**
    * 自定义请求拦截器
@@ -173,16 +182,21 @@ public class DefaultHttpComponentsClientBuilder implements HttpComponentsClientB
 
     SSLContext sslcontext;
     try {
-      sslcontext = SSLContexts.custom()
-        .loadTrustMaterial(TrustAllStrategy.INSTANCE) // 忽略对服务器端证书的校验
-        .build();
+      if (this.skipServerCertificateVerification) {
+        sslcontext = SSLContexts.custom()
+          .loadTrustMaterial(TrustAllStrategy.INSTANCE) // 忽略对服务器端证书的校验
+          .build();
+      } else {
+        sslcontext = SSLContexts.createSystemDefault();
+      }
     } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
       log.error("构建 SSLContext 时发生异常！", e);
       throw new RuntimeException(e);
     }
 
     PoolingHttpClientConnectionManager connManager = PoolingHttpClientConnectionManagerBuilder.create()
-      .setTlsSocketStrategy(new DefaultClientTlsStrategy(sslcontext, NoopHostnameVerifier.INSTANCE))
+      .setTlsSocketStrategy(new DefaultClientTlsStrategy(sslcontext,
+        this.skipServerCertificateVerification ? NoopHostnameVerifier.INSTANCE : new DefaultHostnameVerifier()))
       .setMaxConnTotal(this.maxTotalConn)
       .setMaxConnPerRoute(this.maxConnPerHost)
       .setDefaultSocketConfig(SocketConfig.custom()
