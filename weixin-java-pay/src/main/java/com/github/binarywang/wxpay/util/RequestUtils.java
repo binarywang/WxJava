@@ -1,5 +1,7 @@
 package com.github.binarywang.wxpay.util;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
+
 import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,12 +21,11 @@ public class RequestUtils {
    *
    * @param request HTTP请求对象
    * @return 字符串
+   * @throws WxRuntimeException 读取请求体失败时抛出
    */
   public static String readData(HttpServletRequest request) {
-    BufferedReader br = null;
     StringBuilder result = new StringBuilder();
-    try {
-      br = request.getReader();
+    try (BufferedReader br = request.getReader()) {
       for (String line; (line = br.readLine()) != null; ) {
         if (result.length() > 0) {
           result.append("\n");
@@ -32,15 +33,7 @@ public class RequestUtils {
         result.append(line);
       }
     } catch (IOException e) {
-      e.printStackTrace();
-    } finally {
-      if (br != null) {
-        try {
-          br.close();
-        } catch (IOException e) {
-          e.printStackTrace();
-        }
-      }
+      throw new WxRuntimeException("读取请求体失败", e);
     }
 
     return result.toString();

@@ -12,6 +12,7 @@ import com.thoughtworks.xstream.converters.reflection.ReflectionProvider;
 import com.thoughtworks.xstream.io.HierarchicalStreamReader;
 import com.thoughtworks.xstream.io.HierarchicalStreamWriter;
 import com.thoughtworks.xstream.mapper.Mapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.beans.PropertyDescriptor;
@@ -26,6 +27,7 @@ import java.util.Map;
  *
  * @author aimilin
  */
+@Slf4j
 public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter {
 
   /**
@@ -116,7 +118,8 @@ public class WxPayOrderNotifyResultConverter extends AbstractReflectionConverter
         PropertyDescriptor pd = new PropertyDescriptor((String) field.getName(), obj.getClass());
         pd.getWriteMethod().invoke(obj, val);
       }
-    } catch (Exception ignored) {
+    } catch (Exception e) {
+      log.warn("支付回调报文字段赋值失败，field={}", field.getName(), e);
     }
   }
 

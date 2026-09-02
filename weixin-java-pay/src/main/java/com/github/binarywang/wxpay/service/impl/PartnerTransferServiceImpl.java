@@ -7,6 +7,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.PartnerTransferService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import jodd.util.StringUtil;
@@ -315,16 +316,15 @@ public class PartnerTransferServiceImpl implements PartnerTransferService {
    * @param accountType 服务商账户类型
    * @param date        查询日期 2020-09-11
    * @return 返回数据 fund balance result
-   * @throws WxPayException the wx pay exception
+   * @throws WxRuntimeException 查询失败时抛出，具体原因参见 cause
    */
   @Override
   public FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date) {
     try {
       return this.payService.getEcommerceService().spDayEndBalance(accountType, date);
-    } catch (Exception e) {
-      e.printStackTrace();
+    } catch (WxPayException e) {
+      throw new WxRuntimeException(e);
     }
-    return null;
   }
 
 
