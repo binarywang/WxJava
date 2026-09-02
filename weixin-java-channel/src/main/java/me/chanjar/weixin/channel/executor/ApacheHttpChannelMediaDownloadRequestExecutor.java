@@ -8,8 +8,6 @@ import me.chanjar.weixin.common.util.http.RequestHttp;
 import me.chanjar.weixin.common.util.http.ResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.InputStreamResponseHandler;
 import me.chanjar.weixin.common.util.http.apache.Utf8ResponseHandler;
-import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.client.config.RequestConfig;
@@ -30,14 +28,7 @@ public class ApacheHttpChannelMediaDownloadRequestExecutor extends ChannelMediaD
 
   @Override
   public ChannelImageResponse execute(String uri, String data, WxType wxType) throws WxErrorException, IOException {
-    if (data != null) {
-      if (uri.indexOf('?') == -1) {
-        uri += '?';
-      }
-      uri += uri.endsWith("?") ? data : '&' + data;
-    }
-
-    HttpGet httpGet = new HttpGet(uri);
+    HttpGet httpGet = new HttpGet(this.appendDataToUri(uri, data));
     if (requestHttp.getRequestHttpProxy() != null) {
       RequestConfig config = RequestConfig.custom().setProxy(requestHttp.getRequestHttpProxy()).build();
       httpGet.setConfig(config);
@@ -56,20 +47,7 @@ public class ApacheHttpChannelMediaDownloadRequestExecutor extends ChannelMediaD
         }
       }
 
-      String fileName = this.getFileName(response);
-      if (StringUtils.isBlank(fileName)) {
-        fileName = String.valueOf(System.currentTimeMillis());
-      }
-
-      String baseName = FilenameUtils.getBaseName(fileName);
-      if (StringUtils.isBlank(fileName) || baseName.length() < 3) {
-        baseName = String.valueOf(System.currentTimeMillis());
-      }
-      String extension = FilenameUtils.getExtension(fileName);
-      if (StringUtils.isBlank(extension)) {
-        extension = "unknown";
-      }
-      File file = createTmpFile(inputStream, baseName, extension, tmpDirFile);
+      File file = this.saveTmpFile(inputStream, this.getFileName(response));
       return new ChannelImageResponse(file, contentType);
     }
   }
