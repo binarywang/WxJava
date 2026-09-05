@@ -1,6 +1,8 @@
 package cn.binarywang.wx.miniapp.bean;
 
+import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayGoodsInfo;
 import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayTeamInfo;
+import cn.binarywang.wx.miniapp.bean.xpay.WxMaXPayWeChatPayInfo;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.util.crypt.WxMaCryptUtils;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
@@ -212,6 +214,31 @@ public class WxMaMessage implements Serializable {
 
   @XStreamAlias("SubscribeMsgSentEvent")
   private WxMaSubscribeMsgEvent.SubscribeMsgSentEvent subscribeMsgSentEvent;
+
+  /**
+   * 商户订单号.
+   * xpay_goods_deliver_notify
+   */
+  @SerializedName("OutTradeNo")
+  @XStreamAlias("OutTradeNo")
+  @XStreamConverter(value = XStreamCDataConverter.class)
+  private String outTradeNo;
+
+  /**
+   * 微信支付信息.
+   * xpay_goods_deliver_notify
+   */
+  @SerializedName("WeChatPayInfo")
+  @XStreamAlias("WeChatPayInfo")
+  private WxMaXPayWeChatPayInfo weChatPayInfo;
+
+  /**
+   * 道具信息.
+   * xpay_goods_deliver_notify
+   */
+  @SerializedName("GoodsInfo")
+  @XStreamAlias("GoodsInfo")
+  private WxMaXPayGoodsInfo goodsInfo;
 
   // 小程序基本信息
 
