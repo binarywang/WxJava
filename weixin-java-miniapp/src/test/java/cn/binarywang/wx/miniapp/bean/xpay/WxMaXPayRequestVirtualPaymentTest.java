@@ -1,11 +1,13 @@
 package cn.binarywang.wx.miniapp.bean.xpay;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.api.impl.WxMaXPayServiceImpl;
 import cn.binarywang.wx.miniapp.constant.WxMaConstants;
 import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import org.testng.annotations.Test;
 
+import static org.mockito.Mockito.mock;
 import static org.testng.Assert.assertEquals;
 
 /**
@@ -64,7 +66,7 @@ public class WxMaXPayRequestVirtualPaymentTest {
       .sessionKey("session_key_123")
       .build();
 
-    WxMaXPayRequestVirtualPaymentData payData = new WxMaXPayServiceImpl(null)
+    WxMaXPayRequestVirtualPaymentData payData = new WxMaXPayServiceImpl(mock(WxMaService.class))
       .createRequestVirtualPaymentData(request, sigParams);
 
     assertEquals(payData.getMode(), WxMaConstants.XPayPaymentMode.GOODS);

@@ -58,8 +58,10 @@ public interface WxMaXPayService {
    * @param sigParams 签名参数对象
    * @return 支付参数
    */
-  WxMaXPayRequestVirtualPaymentData createRequestVirtualPaymentData(WxMaXPayRequestVirtualPaymentRequest request,
-                                                                    WxMaXPaySigParams sigParams);
+  default WxMaXPayRequestVirtualPaymentData createRequestVirtualPaymentData(WxMaXPayRequestVirtualPaymentRequest request,
+                                                                            WxMaXPaySigParams sigParams) {
+    return request.createPayData(sigParams);
+  }
 
   /**
    * 通知发货。
