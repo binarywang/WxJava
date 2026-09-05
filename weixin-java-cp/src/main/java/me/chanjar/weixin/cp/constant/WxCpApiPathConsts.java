@@ -1719,6 +1719,23 @@ public interface WxCpApiPathConsts {
      */
     String CUSTOMER_CANCEL_UPGRADE_SERVICE = "/cgi-bin/kf/customer/cancel_upgrade_service";
 
+    /** 添加知识库分组。 */
+    String KNOWLEDGE_ADD_GROUP = "/cgi-bin/kf/knowledge/add_group";
+    /** 删除知识库分组。 */
+    String KNOWLEDGE_DEL_GROUP = "/cgi-bin/kf/knowledge/del_group";
+    /** 修改知识库分组。 */
+    String KNOWLEDGE_MOD_GROUP = "/cgi-bin/kf/knowledge/mod_group";
+    /** 获取知识库分组列表。 */
+    String KNOWLEDGE_LIST_GROUP = "/cgi-bin/kf/knowledge/list_group";
+    /** 添加知识库问答。 */
+    String KNOWLEDGE_ADD_INTENT = "/cgi-bin/kf/knowledge/add_intent";
+    /** 删除知识库问答。 */
+    String KNOWLEDGE_DEL_INTENT = "/cgi-bin/kf/knowledge/del_intent";
+    /** 修改知识库问答。 */
+    String KNOWLEDGE_MOD_INTENT = "/cgi-bin/kf/knowledge/mod_intent";
+    /** 获取知识库问答列表。 */
+    String KNOWLEDGE_LIST_INTENT = "/cgi-bin/kf/knowledge/list_intent";
+
   }
 
   /**

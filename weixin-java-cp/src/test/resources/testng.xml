@@ -28,6 +28,7 @@
       <class name="me.chanjar.weixin.cp.bean.message.WxCpXmlOutTextMessageTest"/>
       <class name="me.chanjar.weixin.cp.bean.todo.WxCpTodoServiceMockTest"/>
       <class name="me.chanjar.weixin.cp.util.crypto.WxCpIntelligentRobotCryptUtilTest"/>
+      <class name="me.chanjar.weixin.cp.bean.kf.WxCpKfKnowledgeTest"/>
     </classes>
   </test>
 </suite>
