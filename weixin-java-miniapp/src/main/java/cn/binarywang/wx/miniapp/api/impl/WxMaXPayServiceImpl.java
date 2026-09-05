@@ -77,6 +77,12 @@ public class WxMaXPayServiceImpl implements WxMaXPayService {
   }
 
   @Override
+  public WxMaXPayRequestVirtualPaymentData createRequestVirtualPaymentData(WxMaXPayRequestVirtualPaymentRequest request,
+                                                                           WxMaXPaySigParams sigParams) {
+    return request.createPayData(sigParams);
+  }
+
+  @Override
   public boolean notifyProvideGoods(WxMaXPayNotifyProvideGoodsRequest request, WxMaXPaySigParams sigParams) throws WxErrorException {
     final String postBody = request.toJson();
     final String uri = sigParams.signUriWithPay(NOTIFY_PROVIDE_GOODS_URL, postBody);
