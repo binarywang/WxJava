@@ -211,16 +211,22 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   @Override
   public WxMaJscode2SessionResult jsCode2SessionInfo(String jsCode) throws WxErrorException {
-    final WxMaConfig config = getWxMaConfig();
-    Map<String, String> params = new HashMap<>(8);
-    params.put("appid", config.getAppid());
-    params.put("secret", config.getSecret());
-    params.put("js_code", jsCode);
-    params.put("grant_type", "authorization_code");
+    try {
+      final WxMaConfig config = getWxMaConfig();
+      Map<String, String> params = new HashMap<>(8);
+      params.put("appid", SensitiveRequestUtils.encodeQueryValue(config.getAppid()));
+      params.put("secret", SensitiveRequestUtils.encodeQueryValue(config.getSecret()));
+      params.put("js_code", SensitiveRequestUtils.encodeQueryValue(jsCode));
+      params.put("grant_type", "authorization_code");
 
-    String result =
-        get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
-    return WxMaJscode2SessionResult.fromJson(result);
+      String result =
+          get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+      return WxMaJscode2SessionResult.fromJson(result);
+    } catch (WxErrorException e) {
+      throw SensitiveRequestUtils.sanitize(e);
+    } catch (RuntimeException e) {
+      throw SensitiveRequestUtils.sanitize(e);
+    }
   }
 
   @Override
@@ -390,7 +396,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, dataForLog, false);
+        return this.executeInternal(executor, uri, dataForLog, false, JSCODE_TO_SESSION_URL.equals(uri));
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", maxRetryTimes);
@@ -423,7 +429,8 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   private <R, T> R executeInternal(
-      ExecutorAction<R> executor, String uri, String dataForLog, boolean doNotAutoRefreshToken)
+      ExecutorAction<R> executor, String uri, String dataForLog, boolean doNotAutoRefreshToken,
+      boolean code2Session)
       throws WxErrorException {
 
     if (uri.contains("access_token=")) {
@@ -440,7 +447,11 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
         uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
     try {
       R result = executor.execute(uriWithAccessToken);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
+      if (code2Session) {
+        log.debug("code2Session request completed");
+      } else {
+        log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uriWithAccessToken, dataForLog, result);
+      }
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
@@ -459,15 +470,18 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
         }
         if (this.getWxMaConfig().autoRefreshToken() && !doNotAutoRefreshToken) {
           log.warn(
-              "即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
+              "即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(),
+              code2Session ? "[redacted]" : error.getErrorMsg());
           // 下一次不再自动重试
           // 当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
-          return this.executeInternal(executor, uri, dataForLog, true);
+          return this.executeInternal(executor, uri, dataForLog, true, code2Session);
         }
       }
 
       if (error.getErrorCode() != 0) {
-        if (error.getErrorCode() == WxMaErrorMsgEnum.CODE_43101.getCode()) {
+        if (code2Session) {
+          log.warn("code2Session request failed, error code: {}", error.getErrorCode());
+        } else if (error.getErrorCode() == WxMaErrorMsgEnum.CODE_43101.getCode()) {
           // 43101 日志太多, 打印为debug, 其他情况打印为warn
           log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uriWithAccessToken, dataForLog, error);
         } else {
@@ -477,8 +491,12 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       }
       return null;
     } catch (IOException e) {
-      log.warn(
-          "\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      if (code2Session) {
+        log.warn("code2Session request failed, exception type: {}", e.getClass().getName());
+      } else {
+        log.warn(
+            "\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uriWithAccessToken, dataForLog, e.getMessage());
+      }
       throw new WxRuntimeException(e);
     }
   }
@@ -491,7 +509,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
    * @throws WxErrorException 异常
    */
   protected String extractAccessToken(String resultContent) throws WxErrorException {
-    log.debug("access-token response: {}", resultContent);
+    log.debug("access-token response received");
     WxMaConfig config = this.getWxMaConfig();
     WxError error = WxError.fromJson(resultContent, WxType.MiniApp);
     if (error.getErrorCode() != 0) {

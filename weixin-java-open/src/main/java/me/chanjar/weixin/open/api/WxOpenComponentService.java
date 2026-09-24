@@ -496,6 +496,9 @@ public interface WxOpenComponentService {
 
   /**
    * Miniapp jscode 2 session wx ma jscode 2 session result.
+   * Pass raw parameter values, without URL encoding. Failures retain error codes and stack
+   * frames but omit raw responses, causes and suppressed exceptions to protect credentials.
+   * Other runtime exception subclasses may be converted to WxRuntimeException.
    *
    * @param appId  the app id
    * @param jsCode the js code

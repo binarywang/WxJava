@@ -38,6 +38,8 @@ public interface WxMaService extends WxService {
 
   /**
    * 获取登录后的 session 信息。
+   * 登录参数按原始值传入，无需 URL 编码。为防止泄露凭证，失败异常保留错误码和栈帧，
+   * 不包含原始请求、响应、cause 或 suppressed 异常；其他运行时异常可能转换为 WxRuntimeException。
    *
    * @param jsCode           登录时获取的 code
    * @return                 登录 session 结果对象

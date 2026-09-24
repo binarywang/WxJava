@@ -144,6 +144,8 @@
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
     <bouncycastle.version>1.85</bouncycastle.version>
     <spring-data-redis.version>2.3.3.RELEASE</spring-data-redis.version>
+    <!-- Binding used by log-capture tests against the production SLF4J 1.7 API. -->
+    <logback-slf4j1-test.version>1.2.13</logback-slf4j1-test.version>
   </properties>
   <dependencyManagement>
     <dependencies>

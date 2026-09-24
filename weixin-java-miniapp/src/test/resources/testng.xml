@@ -3,6 +3,7 @@
 <suite name="weixin-java-miniapp-unit-tests" verbose="1">
   <test name="Unit_Test">
     <classes>
+      <class name="cn.binarywang.wx.miniapp.api.impl.WxMaCode2SessionSecurityTest"/>
       <class name="cn.binarywang.wx.miniapp.api.impl.WxMaSubscribeServiceImplUrlTest"/>
       <class name="cn.binarywang.wx.miniapp.api.impl.WxMaUserServiceImplCheckSessionKeyTest"/>
     </classes>
