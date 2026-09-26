@@ -101,6 +101,19 @@ public class WxCpKfKnowledgeTest {
       "{}"));
   }
 
+  @Test
+  public void testKfMsgListRejectSwitchFromJson() {
+    String json = "{\"errcode\":0,\"errmsg\":\"ok\",\"msg_list\":[{\"msgid\":\"msg-1\",\"send_time\":1,\"origin\":4,\"msgtype\":\"event\",\"event\":{\"event_type\":\"reject_customer_msg_switch_change\",\"servicer_userid\":\"Zhangsan\",\"open_kfid\":\"wkAJ2GCAAASSm4_FhToWMFea0xAFfd3Q\",\"external_userid\":\"wmAJ2GCAAAme1XQRC-NI-q0_ZM9ukoAw\",\"reject_switch\":1}}]}";
+
+    WxCpKfMsgListResp response = WxCpKfMsgListResp.fromJson(json);
+
+    assertThat(response.getMsgList()).singleElement().satisfies(item -> {
+      assertThat(item.getEvent().getEventType()).isEqualTo("reject_customer_msg_switch_change");
+      assertThat(item.getEvent().getServicerUserId()).isEqualTo("Zhangsan");
+      assertThat(item.getEvent().getRejectSwitch()).isEqualTo(1);
+    });
+  }
+
   private void assertJsonRequests(List<String> actual, List<String> expected) {
     assertThat(actual).hasSameSizeAs(expected);
     for (int i = 0; i < actual.size(); i++) {

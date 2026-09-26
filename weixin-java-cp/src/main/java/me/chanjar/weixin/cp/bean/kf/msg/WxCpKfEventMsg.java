@@ -40,4 +40,6 @@ public class WxCpKfEventMsg {
   private String msgCode;
   @SerializedName("recall_msgid")
   private String recallMsgId;
+  @SerializedName("reject_switch")
+  private Integer rejectSwitch;
 }
