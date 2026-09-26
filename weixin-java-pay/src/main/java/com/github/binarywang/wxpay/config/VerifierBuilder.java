@@ -4,6 +4,7 @@ import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.v3.auth.*;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
@@ -17,6 +18,7 @@ import java.security.PublicKey;
  *
  * @author holy
  */
+@Slf4j
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 class VerifierBuilder {
   /**
@@ -127,8 +129,8 @@ class VerifierBuilder {
         if (StringUtils.isNotBlank(rawPath) && !"/".equals(rawPath)) {
           signUriStripPrefix = rawPath;
         }
-      } catch (URISyntaxException ignored) {
-        // ignore
+      } catch (URISyntaxException e) {
+        log.warn("payBaseUrl不是合法的URI，将不使用签名前缀剪裁，payBaseUrl={}", payBaseUrl, e);
       }
     }
     return new AutoUpdateCertificatesVerifier(

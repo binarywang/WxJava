@@ -16,6 +16,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpMemberCardService;
@@ -253,9 +254,8 @@ public class WxMpMemberCardServiceImpl implements WxMpMemberCardService {
       activatePluginParam.setBiz(resultMap.get("biz") + "==");
       return activatePluginParam;
     } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
+      throw new WxErrorException(WxError.builder().errorMsg("解析激活插件参数失败：" + e.getMessage()).build(), e);
     }
-    return null;
   }
 
 

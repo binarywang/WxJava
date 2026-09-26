@@ -3,8 +3,10 @@ package com.github.binarywang.wxpay.v3.auth;
 import java.security.*;
 import java.security.cert.X509Certificate;
 import java.util.Base64;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 
+@Slf4j
 public class PublicCertificateVerifier implements Verifier{
 
     private final PublicKey publicKey;
@@ -32,6 +34,7 @@ public class PublicCertificateVerifier implements Verifier{
                 }
             } catch (Exception e) {
                 // 证书验证失败，继续尝试公钥验证
+                log.debug("平台证书验签失败，降级为公钥验签，serialNumber={}", serialNumber, e);
             }
         }
         // 使用公钥验证（兜底方案，适用于公钥转账等场景）

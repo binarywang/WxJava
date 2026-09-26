@@ -195,7 +195,7 @@ public interface PartnerTransferService {
    * @param accountType 服务商账户类型
    * @param date        查询日期 2020-09-11
    * @return 返回数据 fund balance result
-   * @throws WxPayException the wx pay exception
+   * @throws me.chanjar.weixin.common.error.WxRuntimeException 查询失败时抛出，具体原因参见 cause
    */
   FundBalanceResult spDayEndBalance(SpAccountTypeEnum accountType, String date);
 }
