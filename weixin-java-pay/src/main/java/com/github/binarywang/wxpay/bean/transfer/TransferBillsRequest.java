@@ -88,6 +88,12 @@ public class TransferBillsRequest implements Serializable {
   private List<TransferSceneReportInfo> transferSceneReportInfos;
 
   /**
+   * 用户收款样式；不传时默认展示收款确认页。
+   */
+  @SerializedName("user_recv_style")
+  private UserRecvStyle userRecvStyle;
+
+  /**
    * 自动收款授权信息
    */
   @SerializedName("authorization_info")
@@ -142,6 +148,21 @@ public class TransferBillsRequest implements Serializable {
      */
     @SerializedName("info_content")
     private String infoContent;
+  }
+
+  /**
+   * 用户收款样式。
+   */
+  @Data
+  @Builder(builderMethodName = "newBuilder")
+  @AllArgsConstructor
+  @NoArgsConstructor
+  public static class UserRecvStyle {
+    /**
+     * 样式类型：CONFIRM_PAGE 为收款确认页，RED_PACKET 为红包；红包仅支持部分转账场景且单笔金额不超过 200 元。
+     */
+    @SerializedName("type")
+    private String type;
   }
 
   @Data
