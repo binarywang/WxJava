@@ -94,6 +94,19 @@ public class TransferBillsRequest implements Serializable {
   private UserRecvStyle userRecvStyle;
 
   /**
+   * 保留原有全参构造函数，所有参数语义不变，用户收款样式默认不设置。
+   */
+  public TransferBillsRequest(String appid, String outBillNo, String transferSceneId,
+      String openid, String userName, Integer transferAmount, String transferRemark,
+      String notifyUrl, String userRecvPerception,
+      List<TransferSceneReportInfo> transferSceneReportInfos, AuthorizationInfo authorizationInfo,
+      String authorizationId, String outAuthorizationNo, String receiptAuthorizationMode) {
+    this(appid, outBillNo, transferSceneId, openid, userName, transferAmount, transferRemark,
+      notifyUrl, userRecvPerception, transferSceneReportInfos, null, authorizationInfo,
+      authorizationId, outAuthorizationNo, receiptAuthorizationMode);
+  }
+
+  /**
    * 自动收款授权信息
    */
   @SerializedName("authorization_info")
