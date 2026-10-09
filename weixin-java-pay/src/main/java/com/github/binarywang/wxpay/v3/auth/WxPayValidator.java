@@ -107,6 +107,12 @@ public class WxPayValidator implements Validator {
       return false;
     }
 
+    // 秒级 Unix 时间戳不可能为负；先拒绝负值，后面的减法和 Math.abs 才不会溢出
+    if (responseTime < 0) {
+      log.warn("微信支付应答时间戳为负数，拒绝该应答: Wechatpay-Timestamp={}", timestamp);
+      return false;
+    }
+
     long offset = Math.abs(this.currentTimeSeconds.getAsLong() - responseTime);
     if (offset > this.timestampToleranceSeconds) {
       log.warn("微信支付应答时间戳超出允许范围，拒绝该应答以防止重放: Wechatpay-Timestamp={}, 与本地时间相差 {} 秒, 允许偏差 {} 秒",

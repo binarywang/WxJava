@@ -105,6 +105,15 @@ public class WxPayValidatorTest {
   }
 
   @Test
+  public void testNegativeTimestampIsRejected() throws IOException {
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse("-1")));
+    // 差值会溢出成 Long.MIN_VALUE，Math.abs 仍为负数；若不先拒绝负值，该时间戳会被误判为新鲜
+    long overflowing = Long.MIN_VALUE + NOW_SECONDS;
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse(String.valueOf(overflowing))),
+      "导致减法溢出的时间戳必须被拒绝");
+  }
+
+  @Test
   public void testMissingTimestampHeaderIsRejected() throws IOException {
     assertFalse(validator(FIVE_MINUTES).validate(jsonResponse(null)));
   }
