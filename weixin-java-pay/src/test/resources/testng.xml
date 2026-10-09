@@ -53,6 +53,7 @@
       <class name="com.github.binarywang.wxpay.util.SignUtilsTest"/>
       <class name="com.github.binarywang.wxpay.v3.SignatureExecTrustedHostTest"/>
       <class name="com.github.binarywang.wxpay.v3.auth.AutoUpdateCertificatesVerifierPublicKeyModeTest"/>
+      <class name="com.github.binarywang.wxpay.v3.auth.WxPayValidatorTest"/>
       <class name="com.github.binarywang.wxpay.v3.util.RsaCryptoUtilTest"/>
     </classes>
   </test>
