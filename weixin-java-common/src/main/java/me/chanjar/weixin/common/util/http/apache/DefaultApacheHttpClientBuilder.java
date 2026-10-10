@@ -318,7 +318,9 @@ public class DefaultApacheHttpClientBuilder implements ApacheHttpClientBuilder {
               TimeUnit.MILLISECONDS);
           }
         }
-      } catch (InterruptedException ignore) {
+      } catch (InterruptedException e) {
+        log.debug("空闲连接监控线程被中断，退出监控", e);
+        Thread.currentThread().interrupt();
       }
     }
 
