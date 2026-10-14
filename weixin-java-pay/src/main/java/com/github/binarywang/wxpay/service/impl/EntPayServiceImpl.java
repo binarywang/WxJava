@@ -89,17 +89,21 @@ public class EntPayServiceImpl implements EntPayService {
   @Override
   public EntPayBankResult payBank(EntPayBankRequest request) throws WxPayException {
     File publicKeyFile = this.buildPublicKeyFile();
-    request.setEncBankNo(this.encryptRSA(publicKeyFile, request.getEncBankNo()));
-    request.setEncTrueName(this.encryptRSA(publicKeyFile, request.getEncTrueName()));
-    publicKeyFile.deleteOnExit();
+    try {
+      request.setEncBankNo(this.encryptRSA(publicKeyFile, request.getEncBankNo()));
+      request.setEncTrueName(this.encryptRSA(publicKeyFile, request.getEncTrueName()));
 
-    request.checkAndSign(this.payService.getConfig());
+      request.checkAndSign(this.payService.getConfig());
 
-    String url = this.payService.getPayBaseUrl() + "/mmpaysptrans/pay_bank";
-    String responseContent = this.payService.post(url, request.toXML(), true);
-    EntPayBankResult result = BaseWxPayResult.fromXML(responseContent, EntPayBankResult.class);
-    result.checkResult(this.payService, request.getSignType(), true);
-    return result;
+      String url = this.payService.getPayBaseUrl() + "/mmpaysptrans/pay_bank";
+      String responseContent = this.payService.post(url, request.toXML(), true);
+      EntPayBankResult result = BaseWxPayResult.fromXML(responseContent, EntPayBankResult.class);
+      result.checkResult(this.payService, request.getSignType(), true);
+      return result;
+    } finally {
+      // 使用完毕后立即删除临时公钥文件，避免运行期间临时文件堆积
+      publicKeyFile.delete();
+    }
   }
 
   @Override
