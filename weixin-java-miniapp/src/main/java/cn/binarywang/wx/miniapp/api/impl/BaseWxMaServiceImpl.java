@@ -220,7 +220,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       params.put("grant_type", "authorization_code");
 
       String result =
-          get(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
+          getWithoutToken(JSCODE_TO_SESSION_URL, Joiner.on("&").withKeyValueSeparator("=").join(params));
       return WxMaJscode2SessionResult.fromJson(result);
     } catch (WxErrorException e) {
       throw SensitiveRequestUtils.sanitize(e);
@@ -374,6 +374,12 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
   }
 
   @Override
+  public <R, T> R executeWithoutToken(RequestExecutor<R, T> executor, String uri, T data)
+      throws WxErrorException {
+    return executeWithRetry(url -> executor.execute(url, data, WxType.MiniApp), uri, null, false);
+  }
+
+  @Override
   public WxMaApiResponse execute(
       ApiSignaturePostRequestExecutor<?, ?> executor,
       String uri,
@@ -393,10 +399,16 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   private <R, T> R executeWithRetry(ExecutorAction<R> executor, String uri, String dataForLog)
       throws WxErrorException {
+    return executeWithRetry(executor, uri, dataForLog, true);
+  }
+
+  private <R> R executeWithRetry(ExecutorAction<R> executor, String uri, String dataForLog,
+      boolean withToken) throws WxErrorException {
     int retryTimes = 0;
     do {
       try {
-        return this.executeInternal(executor, uri, dataForLog, false, JSCODE_TO_SESSION_URL.equals(uri));
+        return this.executeInternal(executor, uri, dataForLog, false,
+          !withToken || JSCODE_TO_SESSION_URL.equals(uri), withToken);
       } catch (WxErrorException e) {
         if (retryTimes + 1 > this.maxRetryTimes) {
           log.warn("重试达到最大次数【{}】", maxRetryTimes);
@@ -430,13 +442,13 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
 
   private <R, T> R executeInternal(
       ExecutorAction<R> executor, String uri, String dataForLog, boolean doNotAutoRefreshToken,
-      boolean code2Session)
+      boolean code2Session, boolean withToken)
       throws WxErrorException {
 
-    if (uri.contains("access_token=")) {
+    if (withToken && uri.contains("access_token=")) {
       throw new IllegalArgumentException("uri参数中不允许有access_token: " + uri);
     }
-    String accessToken = getAccessToken(false);
+    String accessToken = withToken ? getAccessToken(false) : null;
 
     String effectiveApiHostUrl = this.getWxMaConfig().getEffectiveApiHostUrl();
     if (!WxMaConfig.DEFAULT_API_HOST_URL.equals(effectiveApiHostUrl)) {
@@ -444,7 +456,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
     }
 
     String uriWithAccessToken =
-        uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken;
+        withToken ? uri + (uri.contains("?") ? "&" : "?") + "access_token=" + accessToken : uri;
     try {
       R result = executor.execute(uriWithAccessToken);
       if (code2Session) {
@@ -455,7 +467,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
-      if (WxConsts.ACCESS_TOKEN_ERROR_CODES.contains(error.getErrorCode())) {
+      if (withToken && WxConsts.ACCESS_TOKEN_ERROR_CODES.contains(error.getErrorCode())) {
         // 强制设置WxMaConfig的access token过期了，这样在下一次请求里就会刷新access token
         Lock lock = this.getWxMaConfig().getAccessTokenLock();
         lock.lock();
@@ -474,7 +486,7 @@ public abstract class BaseWxMaServiceImpl<H, P> implements WxMaService, RequestH
               code2Session ? "[redacted]" : error.getErrorMsg());
           // 下一次不再自动重试
           // 当小程序误调用第三方平台专属接口时,第三方无法使用小程序的access token,如果可以继续自动获取token会导致无限循环重试,直到栈溢出
-          return this.executeInternal(executor, uri, dataForLog, true, code2Session);
+          return this.executeInternal(executor, uri, dataForLog, true, code2Session, withToken);
         }
       }
 
