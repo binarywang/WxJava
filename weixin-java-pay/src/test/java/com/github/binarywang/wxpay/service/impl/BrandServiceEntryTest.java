@@ -10,7 +10,7 @@ public class BrandServiceEntryTest {
   public void shouldExposeBrandServicesOnAllHttpClients() throws Exception {
     String[] getters = {"getBrandApplymentService", "getBrandStoreService", "getBrandProfitSharingService"};
     WxPayService[] clients = {new WxPayServiceImpl(), new WxPayServiceApacheHttpImpl(),
-      new WxPayServiceHttpComponentsImpl(), new WxPayServiceJoddHttpImpl()};
+      new WxPayServiceHttpComponentsImpl()};
     for (String getter : getters) {
       Assert.assertTrue(WxPayService.class.getMethod(getter).isDefault());
       for (WxPayService client : clients) {
@@ -19,5 +19,12 @@ public class BrandServiceEntryTest {
         Assert.assertSame(WxPayService.class.getMethod(getter).invoke(client), service);
       }
     }
+  }
+  @Test
+  public void shouldRejectBrandServicesOnJodd() {
+    WxPayService client = new WxPayServiceJoddHttpImpl();
+    Assert.expectThrows(UnsupportedOperationException.class, client::getBrandApplymentService);
+    Assert.expectThrows(UnsupportedOperationException.class, client::getBrandStoreService);
+    Assert.expectThrows(UnsupportedOperationException.class, client::getBrandProfitSharingService);
   }
 }

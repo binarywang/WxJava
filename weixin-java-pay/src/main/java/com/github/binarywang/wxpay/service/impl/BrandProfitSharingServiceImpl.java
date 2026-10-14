@@ -8,9 +8,13 @@ import com.github.binarywang.wxpay.service.BrandProfitSharingService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.v3.util.RsaCryptoUtil;
 import com.google.gson.Gson;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /** 连锁品牌分账接口实现。 */
 public class BrandProfitSharingServiceImpl implements BrandProfitSharingService {
@@ -82,13 +86,13 @@ public class BrandProfitSharingServiceImpl implements BrandProfitSharingService 
 
   @Override
   public BrandProfitSharingReceiverResult addReceiver(BrandProfitSharingReceiverRequest request) throws WxPayException {
-    return GSON.fromJson(this.payService.postV3(url("/receivers/add"), GSON.toJson(request)),
+    return GSON.fromJson(postReceiver("/receivers/add", request),
       BrandProfitSharingReceiverResult.class);
   }
 
   @Override
   public BrandProfitSharingReceiverResult deleteReceiver(BrandProfitSharingReceiverDeleteRequest request) throws WxPayException {
-    return GSON.fromJson(this.payService.postV3(url("/receivers/delete"), GSON.toJson(request)),
+    return GSON.fromJson(postReceiver("/receivers/delete", request),
       BrandProfitSharingReceiverResult.class);
   }
 
@@ -98,6 +102,14 @@ public class BrandProfitSharingServiceImpl implements BrandProfitSharingService 
       throw new WxPayException("通知签名头不能为空");
     }
     return new ProfitSharingServiceImpl(this.payService).parseProfitSharingNotifyResult(notifyData, header);
+  }
+
+  // 使用通用执行器，保留接口要求的明文实体，同时避免记录收款人信息。
+  private String postReceiver(String path, Object request) throws WxPayException {
+    String address = url(path);
+    HttpPost post = new HttpPost(address);
+    post.setEntity(new StringEntity(GSON.toJson(request), ContentType.create("application/json", StandardCharsets.UTF_8)));
+    return this.payService.requestV3(address, post);
   }
 
   private String url(String path) {

@@ -2,6 +2,8 @@
 
 `weixin-java-pay` 提供服务商模式下的品牌入驻、品牌门店和连锁品牌分账。它们与品牌红包转账、普通商户分账分别使用独立服务和接口。
 
+品牌服务需要支持 APIv3 的 ApacheHttp 或 HttpComponents 客户端；Jodd 客户端的品牌服务入口会明确抛出 `UnsupportedOperationException`。
+
 ## 服务入口
 
 ```java
@@ -23,7 +25,7 @@ BrandProfitSharingService profitSharing = wxPayService.getBrandProfitSharingServ
 查询品牌入驻申请：
 
 ```java
-BrandApplymentQueryResult application = applyments.queryApplymentByBusinessCode("brand-application-001");
+BrandApplymentQueryResult application = applyments.queryApplymentByBusinessCode("brand_application_001");
 ```
 
 查询或删除品牌门店：

@@ -81,14 +81,14 @@ public class BrandProfitSharingServiceTest {
       .appid("app").subAppid("brand-app").type("MERCHANT_ID").account("receiver")
       .name("测试名称").relationType("SUPPLIER").build());
     Assert.assertEquals(capture.url, BASE + "/receivers/add");
-    Assert.assertEquals(capture.method, "postV3");
+    Assert.assertEquals(capture.method, "requestV3");
     Assert.assertEquals(capture.json().get("brand_mchid").getAsString(), "brand");
     Assert.assertEquals(capture.json().get("name").getAsString(), "测试名称");
     Assert.assertFalse(capture.json().has("sub_mchid"));
     service.deleteReceiver(BrandProfitSharingReceiverDeleteRequest.newBuilder().brandMchId("brand")
       .appid("app").subAppid("brand-app").type("MERCHANT_ID").account("receiver").build());
     Assert.assertEquals(capture.url, BASE + "/receivers/delete");
-    Assert.assertEquals(capture.method, "postV3");
+    Assert.assertEquals(capture.method, "requestV3");
     Assert.assertFalse(capture.json().has("name"));
   }
 
@@ -194,7 +194,9 @@ public class BrandProfitSharingServiceTest {
           if (called.getName().equals("getConfig")) return config;
           method = called.getName();
           url = (String) args[0];
-          body = args.length > 1 ? (String) args[1] : null;
+          body = args.length > 1 ? (args[1] instanceof org.apache.http.client.methods.HttpPost
+            ? org.apache.http.util.EntityUtils.toString(((org.apache.http.client.methods.HttpPost) args[1]).getEntity(), "UTF-8")
+            : (String) args[1]) : null;
           if (error != null) throw error;
           return response;
         });
