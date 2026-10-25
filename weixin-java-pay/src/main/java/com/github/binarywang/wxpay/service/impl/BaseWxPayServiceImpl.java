@@ -134,6 +134,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
 
   @Getter
+  private final BrandApplymentService brandApplymentService = new BrandApplymentServiceImpl(this);
+
+  @Getter
+  private final BrandStoreService brandStoreService = new BrandStoreServiceImpl(this);
+
+  @Getter
+  private final BrandProfitSharingService brandProfitSharingService = new BrandProfitSharingServiceImpl(this);
+
+  @Getter
   private final SubscriptionBillingService subscriptionBillingService = new SubscriptionBillingServiceImpl(this);
 
   @Getter

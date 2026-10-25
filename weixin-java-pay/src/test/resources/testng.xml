@@ -4,6 +4,11 @@
   <!-- Credential-dependent tests remain runnable explicitly with -Dtest. -->
   <test name="Unit_Tests">
     <classes>
+      <class name="com.github.binarywang.wxpay.service.BrandApplymentServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandStoreServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandProfitSharingServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandServiceEntryTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandSensitiveLoggingTest"/>
       <class name="com.github.binarywang.wxpay.bean.applyment.WxPayApplyment4SubCreateRequestTest"/>
       <class name="com.github.binarywang.wxpay.bean.entpay.EntPayRequestTest"/>
       <class name="com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequestTest"/>

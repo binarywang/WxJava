@@ -61,6 +61,7 @@
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
+      <version>${logback-slf4j1-test.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
