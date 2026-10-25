@@ -1,5 +1,6 @@
 package com.github.binarywang.wxpay.v3.util;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.Cipher;
@@ -123,9 +124,8 @@ public class AesUtils {
         sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
       }
       return sb.toString().toUpperCase();
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
+    } catch (GeneralSecurityException | IllegalArgumentException e) {
+      throw new WxRuntimeException("HMAC-SHA256签名计算失败", e);
     }
   }
 

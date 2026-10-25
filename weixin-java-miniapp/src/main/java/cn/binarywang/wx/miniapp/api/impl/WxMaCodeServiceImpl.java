@@ -7,6 +7,7 @@ import cn.binarywang.wx.miniapp.json.WxMaGsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
@@ -29,6 +30,7 @@ import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Code.*;
  * @author <a href="https://github.com/charmingoh">Charming</a>
  * @since 2018-04-26 20:00
  */
+@Slf4j
 @RequiredArgsConstructor
 public class WxMaCodeServiceImpl implements WxMaCodeService {
   private final WxMaService service;
@@ -60,7 +62,8 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
         try {
           // 及时删除二维码文件，避免积压过多缓存文件
           Files.delete(qrCodeFilePath);
-        } catch (Exception ignored) {
+        } catch (Exception e) {
+          log.warn("删除临时二维码文件失败，path={}", qrCodeFilePath, e);
         }
       }
     }
