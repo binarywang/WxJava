@@ -6,6 +6,7 @@
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaAccountBasicInfoResultTest"/>
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaCanSetCategoryResultTest"/>
       <class name="me.chanjar.weixin.open.bean.result.WxFastMaBeenSetCategoryResultTest"/>
+      <class name="me.chanjar.weixin.open.bean.result.WxOpenMaDomainResultTest"/>
     </classes>
   </test>
   <test name="Util_Test">
