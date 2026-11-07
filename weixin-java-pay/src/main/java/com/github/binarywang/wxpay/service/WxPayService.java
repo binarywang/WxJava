@@ -388,6 +388,30 @@ public interface WxPayService {
   BrandMerchantTransferService getBrandMerchantTransferService();
 
   /**
+   * 获取连锁品牌入驻服务。
+   * @return 品牌入驻服务
+   */
+  default BrandApplymentService getBrandApplymentService() {
+    return new com.github.binarywang.wxpay.service.impl.BrandApplymentServiceImpl(this);
+  }
+
+  /**
+   * 获取连锁品牌门店服务。
+   * @return 品牌门店服务
+   */
+  default BrandStoreService getBrandStoreService() {
+    return new com.github.binarywang.wxpay.service.impl.BrandStoreServiceImpl(this);
+  }
+
+  /**
+   * 获取连锁品牌分账服务。
+   * @return 品牌分账服务
+   */
+  default BrandProfitSharingService getBrandProfitSharingService() {
+    return new com.github.binarywang.wxpay.service.impl.BrandProfitSharingServiceImpl(this);
+  }
+
+  /**
    * 获取微信支付预约扣费服务类 (连续包月功能)
    *
    * @return the subscription billing service
