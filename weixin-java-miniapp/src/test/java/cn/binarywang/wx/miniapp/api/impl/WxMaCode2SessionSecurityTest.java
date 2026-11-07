@@ -47,6 +47,24 @@ public class WxMaCode2SessionSecurityTest {
         out.write(body);
       }
     });
+    server.createContext("/custom", exchange -> {
+      query.set(exchange.getRequestURI().getRawQuery());
+      String result = exchange.getRequestMethod();
+      if ("POST".equals(result)) {
+        java.io.ByteArrayOutputStream body = new java.io.ByteArrayOutputStream();
+        byte[] buffer = new byte[128];
+        int count;
+        while ((count = exchange.getRequestBody().read(buffer)) != -1) {
+          body.write(buffer, 0, count);
+        }
+        result += ":" + new String(body.toByteArray(), StandardCharsets.UTF_8);
+      }
+      byte[] body = ("{\"result\":\"" + result + "\"}").getBytes(StandardCharsets.UTF_8);
+      exchange.sendResponseHeaders(200, body.length);
+      try (java.io.OutputStream out = exchange.getResponseBody()) {
+        out.write(body);
+      }
+    });
     server.start();
     try (LogCapture logs = new LogCapture()) {
       BaseWxMaServiceImpl<?, ?>[] services = {new WxMaServiceImpl(), new WxMaServiceHttpComponentsImpl(),
@@ -58,15 +76,22 @@ public class WxMaCode2SessionSecurityTest {
         config.setApiHostUrl("http://127.0.0.1:" + server.getAddress().getPort());
         service.setWxMaConfig(config);
         try {
+          config.expireAccessToken();
+          assertEquals(service.getWithoutToken("https://api.weixin.qq.com/custom", "value=a%2Fb"), "{\"result\":\"GET\"}");
+          assertEquals(decode(query.get()).get("value"), "a/b");
+          assertFalse(query.get().contains("access_token="));
+          assertEquals(service.postWithoutToken("https://api.weixin.qq.com/custom?value=1", "payload"),
+            "{\"result\":\"POST:payload\"}");
+          assertEquals(query.get(), "value=1");
           response.set(RESULT);
           for (String code : new String[]{"NORMAL_CODE", "a b\n", "a+&=#?%2F", "中文\uD83D\uDE00", ""}) {
             assertEquals(service.jsCode2SessionInfo(code).getSessionKey(), SESSION);
             Map<String, String> params = decode(query.get());
-            assertEquals(params.size(), 5);
+            assertEquals(params.size(), 4);
             assertEquals(params.get("js_code"), code);
             assertEquals(params.get("secret"), config.getSecret());
             assertEquals(params.get("appid"), config.getAppid());
-            assertEquals(params.get("access_token"), TOKEN);
+            assertNull(params.get("access_token"));
           }
           response.set("{\"errcode\":40029,\"errmsg\":\"" + SECRET + TOKEN + "\"}");
           try {
@@ -98,10 +123,10 @@ public class WxMaCode2SessionSecurityTest {
       TestService service = service();
       service.getWxMaConfig().setApiHostUrl("http://proxy.invalid");
       when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp)))
-        .thenThrow(error(40001)).thenThrow(error(-1)).thenReturn(RESULT);
+        .thenThrow(error(-1)).thenReturn(RESULT);
       assertEquals(service.jsCode2SessionInfo("FAKE_CODE").getSessionKey(), SESSION);
-      assertEquals(service.tokenRequests, 1);
-      verify(service.executor, times(3)).execute(startsWith("http://proxy.invalid/"), anyString(), eq(WxType.MiniApp));
+      assertEquals(service.tokenRequests, 0);
+      verify(service.executor, times(2)).execute(startsWith("http://proxy.invalid/"), anyString(), eq(WxType.MiniApp));
 
       for (Exception failure : new Exception[]{error(40029), new IOException(SECRET + TOKEN),
         new IllegalArgumentException(SECRET + TOKEN), new IllegalStateException(SECRET + TOKEN)}) {
@@ -123,13 +148,13 @@ public class WxMaCode2SessionSecurityTest {
   }
 
   @Test
-  public void tokenAndParsingFailuresAreProtectedAndNullRemainsNullFailure() throws Exception {
+  public void loginDoesNotRequireTokenAndParsingFailuresRemainProtected() throws Exception {
     try (LogCapture logs = new LogCapture()) {
       TestService service = service();
       service.getWxMaConfig().expireAccessToken();
       when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp))).thenReturn(RESULT);
       assertEquals(service.jsCode2SessionInfo("FAKE_CODE").getSessionKey(), SESSION);
-      assertEquals(service.tokenRequests, 1);
+      assertEquals(service.tokenRequests, 0);
       when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp)))
         .thenReturn("{\"session_key\":\"" + SESSION + "\",\"expires_in\":");
       try {
@@ -146,14 +171,80 @@ public class WxMaCode2SessionSecurityTest {
       }
       service.getWxMaConfig().expireAccessToken();
       service.failToken = true;
-      try {
-        service.jsCode2SessionInfo("FAKE_CODE");
-        fail("Expected token failure");
-      } catch (WxRuntimeException e) {
-        assertSafe(e);
-      }
+      when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp))).thenReturn(RESULT);
+      assertEquals(service.jsCode2SessionInfo("FAKE_CODE").getSessionKey(), SESSION);
+      assertEquals(service.tokenRequests, 0);
       logs.assertSafe();
     }
+  }
+
+  @Test
+  public void tokenFreeExecutionRetriesBusyButDoesNotRefreshInvalidToken() throws Exception {
+    TestService service = service();
+    service.getWxMaConfig().setApiHostUrl("http://proxy.invalid");
+    when(service.executor.execute(anyString(), eq("payload"), eq(WxType.MiniApp)))
+      .thenThrow(error(-1)).thenReturn("ok");
+    assertEquals(service.executeWithoutToken(service.executor,
+      "https://api.weixin.qq.com/custom", "payload"), "ok");
+    verify(service.executor, times(2)).execute("http://proxy.invalid/custom", "payload", WxType.MiniApp);
+    assertEquals(service.tokenRequests, 0);
+
+    reset(service.executor);
+    when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp))).thenThrow(error(40001));
+    try {
+      service.executeWithoutToken(service.executor, "https://api.weixin.qq.com/custom", "payload");
+      fail("Expected invalid token error");
+    } catch (WxErrorException e) {
+      assertEquals(e.getError().getErrorCode(), 40001);
+    }
+    verify(service.executor).execute(anyString(), anyString(), eq(WxType.MiniApp));
+    assertEquals(service.getWxMaConfig().getAccessToken(), TOKEN);
+    assertFalse(service.getWxMaConfig().isAccessTokenExpired());
+    assertEquals(service.tokenRequests, 0);
+  }
+
+  @Test
+  public void tokenFreeExecutionStopsAtRetryLimit() throws Exception {
+    TestService service = service();
+    service.setMaxRetryTimes(2);
+    when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp))).thenThrow(error(-1));
+    try {
+      service.executeWithoutToken(service.executor, "https://api.weixin.qq.com/custom", "payload");
+      fail("Expected exhausted retries");
+    } catch (WxErrorException e) {
+      assertEquals(e.getError().getErrorCode(), -1);
+    }
+    verify(service.executor, times(3)).execute(anyString(), anyString(), eq(WxType.MiniApp));
+    assertEquals(service.tokenRequests, 0);
+  }
+
+  @Test
+  public void customServiceDefaultExecutionPreservesTransportContract() throws Exception {
+    cn.binarywang.wx.miniapp.api.WxMaService service =
+      mock(cn.binarywang.wx.miniapp.api.WxMaService.class, CALLS_REAL_METHODS);
+    RequestExecutor<String, String> executor = mock(RequestExecutor.class);
+    when(executor.execute("https://example.invalid/custom", "payload", WxType.MiniApp)).thenReturn("ok");
+    assertEquals(service.executeWithoutToken(executor, "https://example.invalid/custom", "payload"), "ok");
+    IOException failure = new IOException("transport failure");
+    when(executor.execute(anyString(), anyString(), eq(WxType.MiniApp))).thenThrow(failure);
+    try {
+      service.executeWithoutToken(executor, "https://example.invalid/custom", "payload");
+      fail("Expected transport failure");
+    } catch (WxRuntimeException e) {
+      assertSame(e.getCause(), failure);
+    }
+    verify(service, never()).getAccessToken(anyBoolean());
+  }
+
+  @Test
+  public void ordinaryExecutionStillAddsAndRefreshesToken() throws Exception {
+    TestService service = service();
+    when(service.executor.execute(anyString(), anyString(), eq(WxType.MiniApp)))
+      .thenThrow(error(40001)).thenReturn("ok");
+    assertEquals(service.get("https://api.weixin.qq.com/custom", "query=1"), "ok");
+    verify(service.executor, times(2)).execute(
+      "https://api.weixin.qq.com/custom?access_token=" + TOKEN, "query=1", WxType.MiniApp);
+    assertEquals(service.tokenRequests, 1);
   }
 
   @Test
@@ -186,10 +277,10 @@ public class WxMaCode2SessionSecurityTest {
       String uri = invocation.getArgument(0);
       if ("SECOND_APP_ID".equals(params.get("appid"))) {
         assertEquals(params.get("secret"), "SECOND_SECRET");
-        assertTrue(uri.endsWith("access_token=SECOND_TOKEN"));
+        assertFalse(uri.contains("access_token="));
       } else {
         assertEquals(params.get("secret"), SECRET);
-        assertTrue(uri.endsWith("access_token=" + TOKEN));
+        assertFalse(uri.contains("access_token="));
       }
       return RESULT;
     });
@@ -283,6 +374,11 @@ public class WxMaCode2SessionSecurityTest {
     @Override
     public String get(String url, String query) throws WxErrorException {
       return (String) super.execute(executor, url, query);
+    }
+
+    @Override
+    public String getWithoutToken(String url, String query) throws WxErrorException {
+      return (String) super.executeWithoutToken(executor, url, query);
     }
 
     @Override

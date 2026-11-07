@@ -5,15 +5,20 @@ import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.config.WxMaConfig;
 import cn.binarywang.wx.miniapp.executor.ApiSignaturePostRequestExecutor;
 import com.google.gson.JsonObject;
+import java.io.IOException;
 import java.util.Map;
 import java.util.function.Function;
+import me.chanjar.weixin.common.enums.WxType;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.service.WxImgProcService;
 import me.chanjar.weixin.common.service.WxOcrService;
 import me.chanjar.weixin.common.service.WxService;
 import me.chanjar.weixin.common.util.http.MediaUploadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestHttp;
+import me.chanjar.weixin.common.util.http.SimpleGetRequestExecutor;
+import me.chanjar.weixin.common.util.http.SimplePostRequestExecutor;
 
 /**
  * 微信小程序主服务接口，定义了所有小程序相关的核心操作方法。
@@ -37,7 +42,7 @@ public interface WxMaService extends WxService {
   String SET_DYNAMIC_DATA_URL = "https://api.weixin.qq.com/wxa/setdynamicdata";
 
   /**
-   * 获取登录后的 session 信息。
+   * 获取登录后的 session 信息，不获取或携带 access_token。
    * 登录参数按原始值传入，无需 URL 编码。为防止泄露凭证，失败异常保留错误码和栈帧，
    * 不包含原始请求、响应、cause 或 suppressed 异常；其他运行时异常可能转换为 WxRuntimeException。
    *
@@ -123,6 +128,54 @@ public interface WxMaService extends WxService {
    * @throws WxErrorException 微信接口调用异常
    */
   <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException;
+
+  /**
+   * 执行无需自动获取或携带 access_token 的自定义请求。
+   * 默认实现直接执行请求；SDK 内置实现同时支持 API 主机配置和系统繁忙重试，
+   * 不因 token 错误刷新配置中的 access_token。
+   *
+   * @param executor 请求执行器
+   * @param uri 接口地址
+   * @param data 请求数据
+   * @param <T> 返回类型
+   * @param <E> 请求数据类型
+   * @return 接口响应
+   * @throws WxErrorException 微信接口调用异常
+   */
+  default <T, E> T executeWithoutToken(RequestExecutor<T, E> executor, String uri, E data)
+      throws WxErrorException {
+    try {
+      return executor.execute(uri, data, WxType.MiniApp);
+    } catch (IOException e) {
+      throw new WxRuntimeException(e);
+    }
+  }
+
+  /**
+   * 发起无需自动获取或携带 access_token 的 GET 请求。
+   *
+   * @param url 接口地址
+   * @param queryParam 已编码的查询参数，可为 null
+   * @return 接口响应
+   * @throws WxErrorException 微信接口调用异常
+   */
+  default String getWithoutToken(String url, String queryParam) throws WxErrorException {
+    return executeWithoutToken(SimpleGetRequestExecutor.create(getRequestHttp()),
+      url, queryParam);
+  }
+
+  /**
+   * 发起无需自动获取或携带 access_token 的 POST 请求，不自动启用接口签名。
+   *
+   * @param url 接口地址
+   * @param postData 请求体
+   * @return 接口响应
+   * @throws WxErrorException 微信接口调用异常
+   */
+  default String postWithoutToken(String url, String postData) throws WxErrorException {
+    return executeWithoutToken(SimplePostRequestExecutor.create(getRequestHttp()),
+      url, postData);
+  }
 
   /**
    * 执行带有签名的微信API请求。
