@@ -1,5 +1,6 @@
 package me.chanjar.weixin.common.util.fs;
 
+import me.chanjar.weixin.common.error.WxRuntimeException;
 import org.apache.commons.io.IOUtils;
 import org.testng.annotations.Test;
 
@@ -13,6 +14,7 @@ import java.util.Base64;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class FileUtilsTest {
 
@@ -58,5 +60,18 @@ public class FileUtilsTest {
     };
     String result = FileUtils.imageToBase64ByStream(chunked);
     assertThat(result).isEqualTo(Base64.getEncoder().encodeToString(original));
+  }
+
+  @Test
+  public void testImageToBase64ByStreamThrowsOnIoError() {
+    InputStream failing = new InputStream() {
+      @Override
+      public int read() throws IOException {
+        throw new IOException("read failed");
+      }
+    };
+    assertThatThrownBy(() -> FileUtils.imageToBase64ByStream(failing))
+      .isInstanceOf(WxRuntimeException.class)
+      .hasCauseInstanceOf(IOException.class);
   }
 }

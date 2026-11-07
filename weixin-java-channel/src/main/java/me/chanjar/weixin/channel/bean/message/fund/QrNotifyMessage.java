@@ -12,11 +12,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 提现二维码回调 消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.fund.QrNotifyMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class QrNotifyMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -4705790895359679423L;

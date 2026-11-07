@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
  * 拒绝待发货前更换SKU请求 请求参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.PreShipmentChangeSkuRejectParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class PreShipmentChangeSkuRejectParam implements Serializable {
 
   private static final long serialVersionUID = 1L;

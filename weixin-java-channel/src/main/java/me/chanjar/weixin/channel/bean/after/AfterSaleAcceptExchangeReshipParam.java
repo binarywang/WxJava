@@ -8,9 +8,11 @@ import lombok.Data;
  * 售后单换货发货信息
  *
  * @author <a href="https://gitee.com/cchengg">Chu</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleAcceptExchangeReshipParam}。
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleAcceptExchangeReshipParam extends AfterSaleIdParam {
   private static final long serialVersionUID = -7946679037747710613L;
 

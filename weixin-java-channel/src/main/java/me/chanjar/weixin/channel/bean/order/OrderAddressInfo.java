@@ -10,10 +10,12 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * 地址信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderAddressInfo}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OrderAddressInfo extends AddressInfo {
 
   private static final long serialVersionUID = 3062707865189774795L;

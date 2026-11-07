@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
  * 结算信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderSettleInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderSettleInfo implements Serializable {
 
   private static final long serialVersionUID = 2140632631448343656L;

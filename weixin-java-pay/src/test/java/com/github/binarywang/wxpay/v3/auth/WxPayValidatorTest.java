@@ -1,0 +1,241 @@
+package com.github.binarywang.wxpay.v3.auth;
+
+import org.apache.http.ProtocolVersion;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.message.BasicHttpResponse;
+import org.apache.http.message.BasicStatusLine;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
+
+import java.io.IOException;
+import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertFalse;
+import static org.testng.Assert.assertTrue;
+
+/**
+ * 测试 WxPayValidator 对应答时间戳的新鲜度校验（防重放）。
+ *
+ * @author sisyfy-Zhang
+ */
+public class WxPayValidatorTest {
+
+  /**
+   * 固定的"当前时间"（秒），便于构造超前/滞后的应答时间戳
+   */
+  private static final long NOW_SECONDS = 1_700_000_000L;
+
+  private static final long FIVE_MINUTES = TimeUnit.MINUTES.toSeconds(5);
+  private static final long SIX_MINUTES = TimeUnit.MINUTES.toSeconds(6);
+  private static final long TEN_MINUTES = TimeUnit.MINUTES.toSeconds(10);
+
+  /**
+   * 最简 CloseableHttpResponse 实现，仅用于单元测试
+   */
+  private static class StubCloseableHttpResponse extends BasicHttpResponse implements CloseableHttpResponse {
+    StubCloseableHttpResponse() {
+      super(new BasicStatusLine(new ProtocolVersion("HTTP", 1, 1), 200, "OK"));
+    }
+
+    @Override
+    public void close() {
+    }
+  }
+
+  /**
+   * 永远验签通过的 Verifier，用于把测试聚焦在时间戳校验上
+   */
+  private static final Verifier ALWAYS_VALID = new Verifier() {
+    @Override
+    public boolean verify(String serialNumber, byte[] message, String signature) {
+      return true;
+    }
+
+    @Override
+    public X509Certificate getValidCertificate() {
+      return null;
+    }
+  };
+
+  private static class CountingVerifier implements Verifier {
+    private final boolean valid;
+    private int calls;
+
+    CountingVerifier(boolean valid) {
+      this.valid = valid;
+    }
+
+    @Override
+    public boolean verify(String serialNumber, byte[] message, String signature) {
+      calls++;
+      return valid;
+    }
+
+    @Override
+    public X509Certificate getValidCertificate() {
+      return null;
+    }
+  }
+
+  private static WxPayValidator validator(long toleranceSeconds) {
+    return new WxPayValidator(ALWAYS_VALID, toleranceSeconds, () -> NOW_SECONDS);
+  }
+
+  private static CloseableHttpResponse jsonResponse(String timestamp) {
+    StubCloseableHttpResponse response = new StubCloseableHttpResponse();
+    response.setHeader("Content-Type", ContentType.APPLICATION_JSON.toString());
+    if (timestamp != null) {
+      response.setHeader("Wechatpay-Timestamp", timestamp);
+    }
+    response.setHeader("Wechatpay-Nonce", "nonce");
+    response.setHeader("Wechatpay-Signature", "signature");
+    response.setHeader("Wechatpay-Serial", "SERIAL");
+    response.setEntity(new StringEntity("{\"code\":\"OK\"}", ContentType.APPLICATION_JSON));
+    return response;
+  }
+
+  @Test
+  public void testFreshTimestampPasses() throws IOException {
+    assertTrue(validator(FIVE_MINUTES).validate(jsonResponse(String.valueOf(NOW_SECONDS))));
+  }
+
+  @Test
+  public void testTimestampAtToleranceBoundaryPasses() throws IOException {
+    assertTrue(validator(FIVE_MINUTES).validate(jsonResponse(String.valueOf(NOW_SECONDS - FIVE_MINUTES))));
+    assertTrue(validator(FIVE_MINUTES).validate(jsonResponse(String.valueOf(NOW_SECONDS + FIVE_MINUTES))));
+  }
+
+  @Test
+  public void testStaleTimestampIsRejected() throws IOException {
+    CountingVerifier verifier = new CountingVerifier(true);
+    WxPayValidator validator = new WxPayValidator(verifier, FIVE_MINUTES, () -> NOW_SECONDS);
+    assertFalse(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS - SIX_MINUTES))),
+      "滞后超过容差的应答应被判定为验签失败");
+    assertEquals(verifier.calls, 0, "过期应答不得进入验签");
+  }
+
+  @Test
+  public void testFutureTimestampIsRejected() throws IOException {
+    CountingVerifier verifier = new CountingVerifier(true);
+    WxPayValidator validator = new WxPayValidator(verifier, FIVE_MINUTES, () -> NOW_SECONDS);
+    assertFalse(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS + SIX_MINUTES))),
+      "超前超过容差的应答应被判定为验签失败");
+    assertEquals(verifier.calls, 0, "超前应答不得进入验签");
+  }
+
+  @Test
+  public void testNonNumericTimestampIsRejected() throws IOException {
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse("not-a-number")));
+  }
+
+  @Test
+  public void testNegativeTimestampIsRejected() throws IOException {
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse("-1")));
+    // 差值会溢出成 Long.MIN_VALUE，Math.abs 仍为负数；若不先拒绝负值，该时间戳会被误判为新鲜
+    long overflowing = Long.MIN_VALUE + NOW_SECONDS;
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse(String.valueOf(overflowing))),
+      "导致减法溢出的时间戳必须被拒绝");
+  }
+
+  @Test
+  public void testMissingTimestampHeaderIsRejected() throws IOException {
+    assertFalse(validator(FIVE_MINUTES).validate(jsonResponse(null)));
+  }
+
+  @Test
+  public void testCustomToleranceIsHonoured() throws IOException {
+    assertTrue(validator(TEN_MINUTES).validate(jsonResponse(String.valueOf(NOW_SECONDS - SIX_MINUTES))),
+      "容差放宽到 10 分钟后，滞后 6 分钟的应答应通过");
+  }
+
+  @Test
+  public void testZeroToleranceDisablesTimestampCheck() throws IOException {
+    assertTrue(validator(0).validate(jsonResponse(String.valueOf(NOW_SECONDS - TEN_MINUTES))),
+      "容差为 0 表示关闭时间戳校验");
+    assertTrue(validator(0).validate(jsonResponse("not-a-number")),
+      "关闭校验后不再解析时间戳");
+  }
+
+  @Test
+  public void testFreshTimestampStillRequiresValidSignature() throws IOException {
+    CountingVerifier verifier = new CountingVerifier(false);
+    WxPayValidator validator = new WxPayValidator(verifier, FIVE_MINUTES, () -> NOW_SECONDS);
+    assertFalse(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS))));
+    assertEquals(verifier.calls, 1, "新鲜应答必须使用验签结果");
+  }
+
+  @DataProvider(name = "rejectedTimestamps")
+  public Object[][] rejectedTimestamps() {
+    return new Object[][] {
+      {String.valueOf(NOW_SECONDS - FIVE_MINUTES - 1)},
+      {String.valueOf(NOW_SECONDS + FIVE_MINUTES + 1)},
+      {String.valueOf(Long.MAX_VALUE)},
+      {"9223372036854775808"},
+      {"-9223372036854775809"},
+      {""},
+      {" \t\r\n"}
+    };
+  }
+
+  @Test(dataProvider = "rejectedTimestamps")
+  public void testInvalidOrOutOfRangeTimestampSkipsVerification(String timestamp) throws IOException {
+    CountingVerifier verifier = new CountingVerifier(true);
+    WxPayValidator validator = new WxPayValidator(verifier, FIVE_MINUTES, () -> NOW_SECONDS);
+    assertFalse(validator.validate(jsonResponse(timestamp)));
+    assertEquals(verifier.calls, 0, "被拒绝的时间戳不得进入验签");
+  }
+
+  @DataProvider(name = "disabledFreshness")
+  public Object[][] disabledFreshness() {
+    return new Object[][] {
+      {String.valueOf(NOW_SECONDS - TEN_MINUTES), true},
+      {String.valueOf(NOW_SECONDS - TEN_MINUTES), false},
+      {"not-a-number", true},
+      {"not-a-number", false}
+    };
+  }
+
+  @Test(dataProvider = "disabledFreshness")
+  public void testNegativeToleranceStillRequiresSignature(String timestamp, boolean valid) throws IOException {
+    CountingVerifier verifier = new CountingVerifier(valid);
+    WxPayValidator validator = new WxPayValidator(verifier, -1, () -> NOW_SECONDS);
+    assertEquals(validator.validate(jsonResponse(timestamp)), valid);
+    assertEquals(verifier.calls, 1, "负容差只关闭新鲜度校验，仍须验签");
+  }
+
+  @Test
+  public void testAdvancingClockExpiresTimestampAfterInclusiveBoundary() throws IOException {
+    AtomicLong clock = new AtomicLong(NOW_SECONDS);
+    CountingVerifier verifier = new CountingVerifier(true);
+    WxPayValidator validator = new WxPayValidator(verifier, FIVE_MINUTES, clock::get);
+    assertTrue(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS))));
+    assertEquals(verifier.calls, 1);
+    clock.addAndGet(FIVE_MINUTES);
+    assertTrue(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS))));
+    assertEquals(verifier.calls, 2, "恰好 300 秒时仍须验签");
+    clock.incrementAndGet();
+    assertFalse(validator.validate(jsonResponse(String.valueOf(NOW_SECONDS))));
+    assertEquals(verifier.calls, 2, "超过 300 秒后应短路验签");
+  }
+
+  @Test
+  public void testDefaultConstructorUsesFiveMinutes() throws IOException {
+    long nowSeconds = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis());
+    WxPayValidator validator = new WxPayValidator(ALWAYS_VALID);
+    assertTrue(validator.validate(jsonResponse(String.valueOf(nowSeconds))));
+    assertFalse(validator.validate(jsonResponse(String.valueOf(nowSeconds - SIX_MINUTES))));
+  }
+
+  @Test
+  public void testNonJsonResponseSkipsValidation() throws IOException {
+    StubCloseableHttpResponse response = new StubCloseableHttpResponse();
+    response.setHeader("Content-Type", ContentType.APPLICATION_OCTET_STREAM.toString());
+    // 非 JSON 应答（如下载账单）不做验签，这是既有行为，时间戳校验不应改变它
+    assertTrue(validator(FIVE_MINUTES).validate(response));
+  }
+}

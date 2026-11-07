@@ -6,7 +6,7 @@
   <parent>
     <groupId>com.github.binarywang</groupId>
     <artifactId>wx-java</artifactId>
-    <version>4.8.5.B</version>
+    <version>4.8.6.B</version>
   </parent>
   <packaging>pom</packaging>
   <artifactId>wx-java-solon-plugins</artifactId>
@@ -29,6 +29,8 @@
     <module>wx-java-cp-solon-plugin</module>
     <module>wx-java-channel-solon-plugin</module>
     <module>wx-java-channel-multi-solon-plugin</module>
+    <module>wx-java-store-solon-plugin</module>
+    <module>wx-java-store-multi-solon-plugin</module>
   </modules>
 
   <dependencies>

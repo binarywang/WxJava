@@ -10,9 +10,11 @@ import java.util.List;
  * 售后单商家协商信息
  *
  * @author <a href="https://gitee.com/cchengg">Chu</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleMerchantUpdateParam}。
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AfterSaleMerchantUpdateParam extends AfterSaleIdParam {
   private static final long serialVersionUID = -3672834150982780L;
 

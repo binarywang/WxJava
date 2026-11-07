@@ -10,9 +10,11 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 提现列表响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.WithdrawListResponse}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class WithdrawListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -7950467108750325235L;

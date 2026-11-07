@@ -11,10 +11,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 店铺的类目权限列表响应
  *
  * @author <a href="https://gitee.com/cchengg">chucheng</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.RelationCategoryResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class RelationCategoryResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -8473920857463918245L;

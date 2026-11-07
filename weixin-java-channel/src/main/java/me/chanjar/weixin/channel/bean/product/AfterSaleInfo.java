@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 
 /**
  * 商品售后信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.AfterSaleInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleInfo implements Serializable {
 
 

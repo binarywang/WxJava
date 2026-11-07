@@ -143,7 +143,7 @@ public class WxMenuTest {
         + "}"
         + "],"
         + "\"matchrule\":{"
-        + "\"group_id\":\"2\","
+        + "\"tag_id\":\"2\","
         + "\"sex\":\"1\","
         + "\"country\":\"中国\","
         + "\"province\":\"广东\","

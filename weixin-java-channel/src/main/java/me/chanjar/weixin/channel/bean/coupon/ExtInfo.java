@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 额外信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.ExtInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ExtInfo implements Serializable {
 
   private static final long serialVersionUID = 9053035437087423233L;

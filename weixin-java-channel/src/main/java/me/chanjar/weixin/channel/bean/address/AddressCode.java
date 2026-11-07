@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 地址编码
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.address.AddressCode}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AddressCode implements Serializable {
 
   private static final long serialVersionUID = -6782328785056142627L;

@@ -291,4 +291,81 @@ public interface WxCpKfService {
    */
   WxCpBaseResp cancelUpgradeService(String openKfid, String externalUserId)
     throws WxErrorException;
+
+  /**
+   * 添加知识库分组。
+   *
+   * @param group 分组信息
+   * @return 新增结果，包含分组 ID
+   * @throws WxErrorException 异常
+   */
+  WxCpKfKnowledgeGroupAddResp addKnowledgeGroup(WxCpKfKnowledgeGroup group) throws WxErrorException;
+
+  /**
+   * 删除知识库分组。
+   *
+   * @param groupId 分组 ID
+   * @return 接口返回结果
+   * @throws WxErrorException 异常
+   */
+  WxCpBaseResp delKnowledgeGroup(String groupId) throws WxErrorException;
+
+  /**
+   * 修改知识库分组。
+   *
+   * @param group 分组信息，必须包含分组 ID 和名称
+   * @return 接口返回结果
+   * @throws WxErrorException 异常
+   */
+  WxCpBaseResp modKnowledgeGroup(WxCpKfKnowledgeGroup group) throws WxErrorException;
+
+  /**
+   * 分页获取知识库分组。
+   *
+   * @param cursor 分页游标，可为空
+   * @param limit 每页数量，可为空
+   * @param groupId 指定分组 ID，可为空
+   * @return 分组列表
+   * @throws WxErrorException 异常
+   */
+  WxCpKfKnowledgeGroupListResp listKnowledgeGroup(String cursor, Integer limit, String groupId) throws WxErrorException;
+
+  /**
+   * 添加知识库问答。
+   *
+   * @param intent 问答信息
+   * @return 新增结果，包含问答 ID
+   * @throws WxErrorException 异常
+   */
+  WxCpKfKnowledgeIntentAddResp addKnowledgeIntent(WxCpKfKnowledgeIntent intent) throws WxErrorException;
+
+  /**
+   * 删除知识库问答。
+   *
+   * @param intentId 问答 ID
+   * @return 接口返回结果
+   * @throws WxErrorException 异常
+   */
+  WxCpBaseResp delKnowledgeIntent(String intentId) throws WxErrorException;
+
+  /**
+   * 修改知识库问答。
+   *
+   * @param intent 问答信息，必须包含问答 ID
+   * @return 接口返回结果
+   * @throws WxErrorException 异常
+   */
+  WxCpBaseResp modKnowledgeIntent(WxCpKfKnowledgeIntent intent) throws WxErrorException;
+
+  /**
+   * 分页获取知识库问答。
+   *
+   * @param cursor 分页游标，可为空
+   * @param limit 每页数量，可为空
+   * @param groupId 指定分组 ID，可为空
+   * @param intentId 指定问答 ID，可为空
+   * @return 问答列表
+   * @throws WxErrorException 异常
+   */
+  WxCpKfKnowledgeIntentListResp listKnowledgeIntent(String cursor, Integer limit, String groupId, String intentId) throws WxErrorException;
 }

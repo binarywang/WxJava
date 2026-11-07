@@ -5,6 +5,7 @@ import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlMessage;
 import me.chanjar.weixin.cp.bean.message.WxCpXmlOutMessage;
+import me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;
 import me.chanjar.weixin.cp.message.WxCpMessageHandler;
 import me.chanjar.weixin.cp.message.WxCpMessageMatcher;
 import me.chanjar.weixin.cp.message.WxCpMessageRouter;
@@ -31,6 +32,7 @@ public class WxCpMessageRouterTest {
    */
   @Test(enabled = false)
   public void prepare(boolean async, StringBuffer sb, WxCpMessageRouter router) {
+    router.setMessageDuplicateChecker(new me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker());
     router
       .rule()
       .async(async)
@@ -72,7 +74,7 @@ public class WxCpMessageRouterTest {
   @Test(dataProvider = "messages-1")
   public void testSync(WxCpXmlMessage message, String expected) {
     StringBuffer sb = new StringBuffer();
-    WxCpMessageRouter router = new WxCpMessageRouter(null);
+    WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
     prepare(false, sb, router);
     router.route(message);
     Assert.assertEquals(sb.toString(), expected);
@@ -88,7 +90,7 @@ public class WxCpMessageRouterTest {
   @Test(dataProvider = "messages-1")
   public void testAsync(WxCpXmlMessage message, String expected) throws InterruptedException {
     StringBuffer sb = new StringBuffer();
-    WxCpMessageRouter router = new WxCpMessageRouter(null);
+    WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
     prepare(true, sb, router);
     router.route(message);
     Thread.sleep(500);
@@ -101,7 +103,7 @@ public class WxCpMessageRouterTest {
    * @throws InterruptedException the interrupted exception
    */
   public void testConcurrency() throws InterruptedException {
-    final WxCpMessageRouter router = new WxCpMessageRouter(null);
+    final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
     router.rule().handler(new WxCpMessageHandler() {
       @Override
       public WxCpXmlOutMessage handle(WxCpXmlMessage wxMessage, Map<String, Object> context, WxCpService wxCpService,
@@ -214,7 +216,7 @@ public class WxCpMessageRouterTest {
   public void testSessionClean1(StandardSessionManager ism) throws InterruptedException {
 
     // 两个同步请求，看是否处理完毕后会被清理掉
-    final WxCpMessageRouter router = new WxCpMessageRouter(null);
+    final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
     router.setSessionManager(ism);
     router
       .rule().async(false).handler(new WxSessionMessageHandler()).next()
@@ -240,7 +242,7 @@ public class WxCpMessageRouterTest {
 
     // 1个同步,1个异步请求，看是否处理完毕后会被清理掉
     {
-      final WxCpMessageRouter router = new WxCpMessageRouter(null);
+      final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
       router.setSessionManager(ism);
       router
         .rule().async(false).handler(new WxSessionMessageHandler()).next()
@@ -254,7 +256,7 @@ public class WxCpMessageRouterTest {
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
     {
-      final WxCpMessageRouter router = new WxCpMessageRouter(null);
+      final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
       router.setSessionManager(ism);
       router
         .rule().async(true).handler(new WxSessionMessageHandler()).next()
@@ -280,7 +282,7 @@ public class WxCpMessageRouterTest {
   public void testSessionClean3(StandardSessionManager ism) throws InterruptedException {
 
     // 2个异步请求，看是否处理完毕后会被清理掉
-    final WxCpMessageRouter router = new WxCpMessageRouter(null);
+    final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
     router.setSessionManager(ism);
     router
       .rule().async(true).handler(new WxSessionMessageHandler()).next()
@@ -306,7 +308,7 @@ public class WxCpMessageRouterTest {
 
     // 一个同步请求，看是否处理完毕后会被清理掉
     {
-      final WxCpMessageRouter router = new WxCpMessageRouter(null);
+      final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
       router.setSessionManager(ism);
       router
         .rule().async(false).handler(new WxSessionMessageHandler()).end();
@@ -320,7 +322,7 @@ public class WxCpMessageRouterTest {
     }
 
     {
-      final WxCpMessageRouter router = new WxCpMessageRouter(null);
+      final WxCpMessageRouter router = new WxCpMessageRouter(new WxCpServiceImpl());
       router.setSessionManager(ism);
       router
         .rule().async(true).handler(new WxSessionMessageHandler()).end();

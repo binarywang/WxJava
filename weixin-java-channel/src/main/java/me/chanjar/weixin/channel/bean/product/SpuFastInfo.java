@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
  * 商品免审更新参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SpuFastInfo}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SpuFastInfo implements Serializable {
 
   /** 商品ID */

@@ -8,9 +8,11 @@ import lombok.Data;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.sharer.SharerSearchParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class SharerSearchParam implements Serializable {
 
   private static final long serialVersionUID = -6763899740755735718L;

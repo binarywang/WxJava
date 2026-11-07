@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 主页分类信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.CatTreeNode}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class CatTreeNode implements Serializable {
 
   private static final long serialVersionUID = 3154219180098003510L;

@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 带货助手-获取达人橱窗商品列表 请求参数
  *
  * @author <a href="https://github.com/features/copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.talent.TalentWindowProductListParam}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class TalentWindowProductListParam implements Serializable {
 
   private static final long serialVersionUID = 7419836250174638291L;

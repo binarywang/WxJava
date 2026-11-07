@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 纠纷信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.after.ComplaintInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ComplaintInfo implements Serializable {
 
   private static final long serialVersionUID = 3988395560953978239L;

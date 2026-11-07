@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.github.binarywang</groupId>
   <artifactId>wx-java</artifactId>
-  <version>4.8.5.B</version>
+  <version>4.8.6.B</version>
   <packaging>pom</packaging>
   <name>WxJava - Weixin/Wechat Java SDK</name>
   <description>微信开发Java SDK</description>
@@ -126,6 +126,7 @@
     <module>weixin-java-qidian</module>
     <module>weixin-java-aispeech</module>
     <module>weixin-java-channel</module>
+    <module>weixin-java-store</module>
     <module>spring-boot-starters</module>
     <module>solon-plugins</module>
     <module>wx-java-bom</module>
@@ -135,13 +136,16 @@
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.test.skip>true</maven.test.skip>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <httpclient.version>4.5.13</httpclient.version>
-    <httpclient5.version>5.5.2</httpclient5.version>
+    <httpclient5.version>5.6.3</httpclient5.version>
     <jetty.version>9.4.57.v20241219</jetty.version> <!-- 这个不能用10以上的版本，不支持jdk8-->
-    <bouncycastle.version>1.84</bouncycastle.version>
+    <bouncycastle.version>1.85</bouncycastle.version>
     <spring-data-redis.version>2.3.3.RELEASE</spring-data-redis.version>
+    <!-- Binding used by log-capture tests against the production SLF4J 1.7 API. -->
+    <logback-slf4j1-test.version>1.2.13</logback-slf4j1-test.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -208,7 +212,7 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>33.3.1-jre</version>
+        <version>33.7.1-jre</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
@@ -424,7 +428,7 @@
           <artifactId>maven-surefire-plugin</artifactId>
           <version>2.17</version>
           <configuration>
-            <skip>true</skip>
+            <skip>${maven.test.skip}</skip>
           </configuration>
         </plugin>
       </plugins>

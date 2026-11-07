@@ -398,6 +398,77 @@ public class WxMaMessageTest {
   }
 
   /**
+   * 个人主体虚拟支付发货通知事件 xpay_goods_deliver_notify 测试用例（XML格式）。
+   */
+  @Test
+  public void testXPayGoodsDeliverNotifyFromXml() {
+    String xml = "<xml>\n" +
+      "  <ToUserName><![CDATA[gh_abcdefg]]></ToUserName>\n" +
+      "  <FromUserName><![CDATA[oABCDEFG]]></FromUserName>\n" +
+      "  <CreateTime>1700000000</CreateTime>\n" +
+      "  <MsgType><![CDATA[event]]></MsgType>\n" +
+      "  <Event><![CDATA[xpay_goods_deliver_notify]]></Event>\n" +
+      "  <OpenId><![CDATA[oABCDEFG]]></OpenId>\n" +
+      "  <OutTradeNo><![CDATA[order12345]]></OutTradeNo>\n" +
+      "  <WeChatPayInfo>\n" +
+      "    <MchOrderNo><![CDATA[wx_order_123]]></MchOrderNo>\n" +
+      "  </WeChatPayInfo>\n" +
+      "  <GoodsInfo>\n" +
+      "    <ProductId><![CDATA[product_001]]></ProductId>\n" +
+      "    <Quantity>2</Quantity>\n" +
+      "  </GoodsInfo>\n" +
+      "  <RetryTimes>0</RetryTimes>\n" +
+      "</xml>";
+
+    WxMaMessage msg = WxMaMessage.fromXml(xml);
+
+    checkXPayGoodsDeliverNotifyMessage(msg);
+  }
+
+  /**
+   * 个人主体虚拟支付发货通知事件 xpay_goods_deliver_notify 测试用例（JSON格式）。
+   */
+  @Test
+  public void testXPayGoodsDeliverNotifyFromJson() {
+    String json = "{\n" +
+      "  \"ToUserName\": \"gh_abcdefg\",\n" +
+      "  \"FromUserName\": \"oABCDEFG\",\n" +
+      "  \"CreateTime\": 1700000000,\n" +
+      "  \"MsgType\": \"event\",\n" +
+      "  \"Event\": \"xpay_goods_deliver_notify\",\n" +
+      "  \"OpenId\": \"oABCDEFG\",\n" +
+      "  \"OutTradeNo\": \"order12345\",\n" +
+      "  \"WeChatPayInfo\": {\n" +
+      "    \"MchOrderNo\": \"wx_order_123\"\n" +
+      "  },\n" +
+      "  \"GoodsInfo\": {\n" +
+      "    \"ProductId\": \"product_001\",\n" +
+      "    \"Quantity\": 2\n" +
+      "  },\n" +
+      "  \"RetryTimes\": 0\n" +
+      "}";
+
+    WxMaMessage msg = WxMaMessage.fromJson(json);
+    checkXPayGoodsDeliverNotifyMessage(msg);
+  }
+
+  private void checkXPayGoodsDeliverNotifyMessage(WxMaMessage msg) {
+    assertEquals(msg.getToUser(), "gh_abcdefg");
+    assertEquals(msg.getFromUser(), "oABCDEFG");
+    assertEquals(msg.getCreateTime(), new Integer(1700000000));
+    assertEquals(msg.getMsgType(), WxConsts.XmlMsgType.EVENT);
+    assertEquals(msg.getEvent(), WxMaConstants.XPayNotifyEvent.GOODS_DELIVER);
+    assertEquals(msg.getOpenId(), "oABCDEFG");
+    assertEquals(msg.getOutTradeNo(), "order12345");
+    assertNotNull(msg.getWeChatPayInfo());
+    assertEquals(msg.getWeChatPayInfo().getMchOrderNo(), "wx_order_123");
+    assertNotNull(msg.getGoodsInfo());
+    assertEquals(msg.getGoodsInfo().getProductId(), "product_001");
+    assertEquals(msg.getGoodsInfo().getQuantity(), new Integer(2));
+    assertEquals(msg.getRetryTimes(), new Integer(0));
+  }
+
+  /**
    * 虚拟支付投诉推送事件 xpay_complaint_notify 测试用例（XML格式）
    */
   @Test

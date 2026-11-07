@@ -12,12 +12,14 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 积分兑换消息
  *
  * @author <a href="https://github.com/asushiye">asushiye</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.vip.ExchangeInfoMessage}。
  */
 
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class ExchangeInfoMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = 2926346100146724110L;

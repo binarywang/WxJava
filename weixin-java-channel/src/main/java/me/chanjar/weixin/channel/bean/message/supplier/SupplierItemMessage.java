@@ -12,11 +12,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 团长商品变更 消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.supplier.SupplierItemMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class SupplierItemMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -4520611382070764349L;

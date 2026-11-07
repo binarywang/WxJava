@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 商品类目
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.ShopCategory}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ShopCategory implements Serializable {
 
   /** 类目ID */

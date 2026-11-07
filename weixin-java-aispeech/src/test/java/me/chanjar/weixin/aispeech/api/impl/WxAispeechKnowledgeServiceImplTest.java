@@ -43,11 +43,11 @@ public class WxAispeechKnowledgeServiceImplTest {
     WxAispeechKnowledgeServiceImpl knowledgeService = new WxAispeechKnowledgeServiceImpl(service);
 
     List<KnowledgeInfo> result = knowledgeService.listKnowledgeByIds(Arrays.asList("k1", "k2"));
+    Assert.assertEquals(service.lastQueryParams.get("ids"), "k1,k2");
     KnowledgeMoveProgress progress = knowledgeService.getMoveProgress("task-1");
 
     Assert.assertEquals(result.size(), 2);
     Assert.assertEquals(result.get(0).getId(), "k1");
-    Assert.assertEquals(service.lastQueryParams.get("ids"), "k1,k2");
     Assert.assertEquals(progress.getTaskId(), "task-1");
     Assert.assertEquals(progress.getStatus(), "processing");
   }

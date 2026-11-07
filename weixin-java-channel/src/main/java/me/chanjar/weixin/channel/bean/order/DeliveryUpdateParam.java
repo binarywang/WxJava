@@ -12,10 +12,12 @@ import me.chanjar.weixin.channel.bean.delivery.FreightProductInfo;
  * 修改物流参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.DeliveryUpdateParam}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class DeliveryUpdateParam implements Serializable {
 
   /** 订单ID */

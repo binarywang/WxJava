@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
  * 银行查询参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.bank.BankSearchParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class BankSearchParam implements Serializable {
 
   private static final long serialVersionUID = 6070269209439188188L;

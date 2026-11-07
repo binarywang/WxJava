@@ -15,6 +15,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 import me.chanjar.weixin.common.util.crypto.SHA1;
 import me.chanjar.weixin.common.util.http.URIUtil;
+import me.chanjar.weixin.common.util.http.SensitiveRequestUtils;
 import me.chanjar.weixin.common.util.json.GsonParser;
 import me.chanjar.weixin.common.util.json.WxGsonBuilder;
 import me.chanjar.weixin.mp.api.WxMpService;
@@ -272,7 +273,8 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
           lock.unlock();
         }
         if (this.getWxOpenConfigStorage().autoRefreshToken()) {
-          log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(), error.getErrorMsg());
+          log.warn("即将重新获取新的access_token，错误代码：{}，错误信息：{}", error.getErrorCode(),
+            WxOpenServiceAbstractImpl.isSensitiveRequest(uri) ? "[redacted]" : error.getErrorMsg());
           return this.get(uri, accessTokenKey);
         }
       }
@@ -494,9 +496,18 @@ public class WxOpenComponentServiceImpl implements WxOpenComponentService {
 
   @Override
   public WxMaJscode2SessionResult miniappJscode2Session(String appId, String jsCode) throws WxErrorException {
-    String url = String.format(MINIAPP_JSCODE_2_SESSION, appId, jsCode, getWxOpenConfigStorage().getComponentAppId());
-    String responseContent = get(url);
-    return WxMaJscode2SessionResult.fromJson(responseContent);
+    try {
+      String url = String.format(MINIAPP_JSCODE_2_SESSION,
+        SensitiveRequestUtils.encodeQueryValue(String.valueOf(appId)),
+        SensitiveRequestUtils.encodeQueryValue(String.valueOf(jsCode)),
+        SensitiveRequestUtils.encodeQueryValue(String.valueOf(getWxOpenConfigStorage().getComponentAppId())));
+      String responseContent = get(url);
+      return WxMaJscode2SessionResult.fromJson(responseContent);
+    } catch (WxErrorException e) {
+      throw SensitiveRequestUtils.sanitize(e);
+    } catch (RuntimeException e) {
+      throw SensitiveRequestUtils.sanitize(e);
+    }
   }
 
   @Override

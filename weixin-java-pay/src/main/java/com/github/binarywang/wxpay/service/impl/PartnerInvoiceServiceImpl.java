@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.service.impl;
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlResult;
 import com.github.binarywang.wxpay.bean.invoice.InviteUrlRequest;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.PassengerTransportInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
@@ -45,6 +46,7 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
   private static final com.google.gson.Gson GSON = WxGsonBuilder.create();
   private static final String INVITE_URL_PATH = "/v3/new-tax-control-fapiao/fapiaomerchant/getspinviteurl";
   private static final String ISSUE_GENERAL_PATH = "/v3/new-tax-control-fapiao/fapiao-applications/issue-general";
+  private static final String ISSUE_PASSENGER_TRANSPORT_PATH = "/v3/new-tax-control-fapiao/fapiao-applications/issue-passenger-transport";
   private static final String FAPIAO_APPLICATIONS_PATH = "/v3/new-tax-control-fapiao/fapiao-applications/";
 
   private final WxPayService payService;
@@ -77,6 +79,12 @@ public class PartnerInvoiceServiceImpl implements PartnerInvoiceService {
   @Override
   public void issueGeneralInvoice(GeneralInvoiceRequest request) throws WxPayException {
     String url = this.payService.getPayBaseUrl() + ISSUE_GENERAL_PATH;
+    this.payService.postV3(url, GSON.toJson(request));
+  }
+
+  @Override
+  public void issuePassengerTransportInvoice(PassengerTransportInvoiceRequest request) throws WxPayException {
+    String url = this.payService.getPayBaseUrl() + ISSUE_PASSENGER_TRANSPORT_PATH;
     this.payService.postV3(url, GSON.toJson(request));
   }
 

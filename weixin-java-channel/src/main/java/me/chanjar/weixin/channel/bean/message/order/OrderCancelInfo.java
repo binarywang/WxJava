@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 订单取消信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.order.OrderCancelInfo}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OrderCancelInfo extends OrderIdInfo {
 
   private static final long serialVersionUID = -8022876997578127873L;

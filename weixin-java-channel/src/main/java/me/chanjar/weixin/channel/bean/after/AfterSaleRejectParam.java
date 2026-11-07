@@ -11,9 +11,11 @@ import java.util.List;
  * 售后单拒绝信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleRejectParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleRejectParam extends AfterSaleIdParam {
 
   private static final long serialVersionUID = -7507483859864253314L;

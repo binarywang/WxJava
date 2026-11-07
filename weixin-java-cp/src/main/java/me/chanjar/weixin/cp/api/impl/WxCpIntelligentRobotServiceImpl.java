@@ -6,6 +6,7 @@ import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.cp.api.WxCpIntelligentRobotService;
 import me.chanjar.weixin.cp.api.WxCpService;
 import me.chanjar.weixin.cp.bean.intelligentrobot.*;
+import me.chanjar.weixin.cp.util.crypto.WxCpIntelligentRobotCryptUtil;
 import me.chanjar.weixin.cp.util.json.WxCpGsonBuilder;
 
 import static me.chanjar.weixin.cp.constant.WxCpApiPathConsts.IntelligentRobot.*;
@@ -70,6 +71,21 @@ public class WxCpIntelligentRobotServiceImpl implements WxCpIntelligentRobotServ
   @Override
   public WxCpIntelligentRobotMessage parseCallbackMessage(String callbackMessageJson) {
     return WxCpIntelligentRobotMessage.fromJson(callbackMessageJson);
+  }
+
+  @Override
+  public WxCpIntelligentRobotMessage parseEncryptedCallbackMessage(String msgSignature, String timestamp, String nonce,
+                                                                    String encryptedJson, String token,
+                                                                    String encodingAesKey, String aiBotId) {
+    WxCpIntelligentRobotCryptUtil cryptUtil = new WxCpIntelligentRobotCryptUtil(token, encodingAesKey, aiBotId);
+    return parseCallbackMessage(cryptUtil.decrypt(msgSignature, timestamp, nonce, encryptedJson));
+  }
+
+  @Override
+  public String replyMessage(String responseUrl, String plainJson, String token, String encodingAesKey,
+                             String aiBotId, String timestamp, String nonce) throws WxErrorException {
+    WxCpIntelligentRobotCryptUtil cryptUtil = new WxCpIntelligentRobotCryptUtil(token, encodingAesKey, aiBotId);
+    return this.cpService.postWithoutToken(responseUrl, cryptUtil.encrypt(plainJson, timestamp, nonce));
   }
 
 }

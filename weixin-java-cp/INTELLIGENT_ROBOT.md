@@ -1,6 +1,9 @@
 # 企业微信智能机器人接口
 
-本模块提供企业微信智能机器人相关的API接口实现。
+本模块提供企业微信智能机器人相关的 API 接口实现。
+
+> `createRobot`、`chat`、`sendMessage` 等既有方法走企业应用 `access_token` 接口，
+> 需要在 `WxCpConfigStorage` 中配置应用 `agentId` 和 `secret`。它们不适用于机器人后台创建的新版 API 模式。
 
 ## 官方文档
 
@@ -73,7 +76,7 @@ String sessionId = "session123";
 robotService.resetSession(robotId, userid, sessionId);
 ```
 
-### 主动发送消息
+### 旧版 access_token 主动发送消息
 
 智能机器人可以主动向用户发送消息，用于推送通知或提醒。
 
@@ -89,34 +92,29 @@ String msgId = response.getMsgId();
 String sessionId = response.getSessionId();
 ```
 
-### 接收用户消息
+### 新版 API 模式：接收回调与回复消息
 
-当用户向智能机器人发送消息时，企业微信会通过回调接口推送消息。可以使用 `WxCpXmlMessage` 接收和解析这些消息：
-
-```java
-// 在接收回调消息的接口中
-WxCpXmlMessage message = WxCpXmlMessage.fromEncryptedXml(
-    requestBody, wxCpConfigStorage, timestamp, nonce, msgSignature
-);
-
-// 获取智能机器人相关字段
-String robotId = message.getRobotId();        // 机器人ID
-String sessionId = message.getSessionId();    // 会话ID
-String content = message.getContent();         // 消息内容
-String fromUser = message.getFromUserName();   // 发送用户
-
-// 处理消息并回复
-// ...
-```
-
-对于智能机器人 API 模式的 JSON 回调消息，可使用 `WxCpIntelligentRobotMessage` 解析：
+在机器人后台开启 API 模式后，配置 URL、Token、EncodingAESKey。企业微信会推送加密 JSON 回调；
+它不是 XML，也不需要企业应用 `secret`。从请求参数取得 `msg_signature`、`timestamp`、`nonce`，
+从请求体取得 `encrypt` 字段后，可以直接解密和解析：
 
 ```java
 WxCpIntelligentRobotMessage callbackMessage =
-    robotService.parseCallbackMessage(jsonBody);
-String botId = callbackMessage.getAiBotId();
-String userId = callbackMessage.getFrom().getUserid();
-String msgType = callbackMessage.getMsgType();
+    robotService.parseEncryptedCallbackMessage(
+        msgSignature, timestamp, nonce, encryptedJson,
+        token, encodingAesKey, aiBotId);
+
+String responseUrl = callbackMessage.getResponseUrl();
+String content = callbackMessage.getText().getContent();
+```
+
+回复时使用回调中的短期 `response_url`，不调用基于 `access_token` 的 `sendMessage`：
+
+```java
+String replyJson = "{\"msgtype\":\"text\",\"text\":{\"content\":\"您好\"}}";
+robotService.replyMessage(
+    responseUrl, replyJson, token, encodingAesKey, aiBotId,
+    String.valueOf(System.currentTimeMillis() / 1000), java.util.UUID.randomUUID().toString());
 ```
 
 ### 删除智能机器人
@@ -144,7 +142,8 @@ robotService.deleteRobot(robotId);
 
 ### 消息接收
 
-- `WxCpXmlMessage`: 支持接收智能机器人回调消息，包含 `robotId` 和 `sessionId` 字段
+- `WxCpIntelligentRobotMessage`: 智能机器人 API 模式的已解密 JSON 回调消息
+- `WxCpIntelligentRobotCryptUtil`: 智能机器人 API 模式的消息加解密工具
 
 ### 服务接口
 
@@ -153,7 +152,6 @@ robotService.deleteRobot(robotId);
 
 ## 注意事项
 
-1. 需要确保企业微信应用具有智能机器人相关权限
-2. 智能机器人功能可能需要特定的企业微信版本支持
-3. 会话ID可以用于保持对话的连续性，提升用户体验
-4. 机器人状态: 0表示停用，1表示启用
+1. 新版 API 模式的 Token、EncodingAESKey 和机器人 ID 由机器人后台配置，不要填写企业应用 secret。
+2. `response_url` 是回调附带的临时地址，应及时使用，且不应持久化。
+3. `parseCallbackMessage` 仅用于已解密的 JSON；HTTP 回调入口应使用 `parseEncryptedCallbackMessage`。

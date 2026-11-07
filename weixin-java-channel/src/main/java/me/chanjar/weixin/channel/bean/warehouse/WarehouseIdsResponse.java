@@ -11,9 +11,11 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 仓库id列表响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.warehouse.WarehouseIdsResponse}。
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class WarehouseIdsResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 3974529583232187473L;

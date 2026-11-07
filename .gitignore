@@ -51,6 +51,14 @@ sonar-project.properties
 !/.mvn/wrapper/maven-wrapper.jar
 *.versionsBackup
 
+# Local Superpowers planning artifacts
+docs/superpowers/
+
 # STS
 .factorypath
 *.zip
+.worktrees
+# Local Superpowers working documents; do not commit.
+/docs/superpowers/
+/.firecrawl/
+.repo_memory/

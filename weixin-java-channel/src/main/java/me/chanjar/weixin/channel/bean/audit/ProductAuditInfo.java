@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 商品审核信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.audit.ProductAuditInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ProductAuditInfo implements Serializable {
 
   private static final long serialVersionUID = -5264206679057480206L;

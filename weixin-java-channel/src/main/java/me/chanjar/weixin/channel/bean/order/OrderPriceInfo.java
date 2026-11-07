@@ -10,9 +10,11 @@ import java.io.Serializable;
  * 商店订单价格信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderPriceInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderPriceInfo implements Serializable {
   private static final long serialVersionUID = 5216506688949493432L;
 

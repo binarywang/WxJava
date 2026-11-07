@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 获取主页展示商品列表 参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.window.WindowProductListParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WindowProductListParam implements Serializable {
 
   /** 每页数量（默认10，不超过30） */

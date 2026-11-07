@@ -6,8 +6,10 @@ import lombok.Data;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.UserCouponIdParam}。
  */
 @Data
+@Deprecated
 public class UserCouponIdParam implements Serializable {
 
   private static final long serialVersionUID = 3967276158727848348L;

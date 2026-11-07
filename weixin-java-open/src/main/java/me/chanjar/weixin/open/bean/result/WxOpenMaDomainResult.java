@@ -39,6 +39,16 @@ public class WxOpenMaDomainResult extends WxOpenResult {
   @SerializedName("downloaddomain")
   private List<String> downloadDomain;
   /**
+   * udp合法域名
+   */
+  @SerializedName("udpdomain")
+  private List<String> udpDomain;
+  /**
+   * tcp合法域名
+   */
+  @SerializedName("tcpdomain")
+  private List<String> tcpDomain;
+  /**
    * request不合法域名
    */
   @SerializedName("invalid_requestdomain")
@@ -58,6 +68,16 @@ public class WxOpenMaDomainResult extends WxOpenResult {
    */
   @SerializedName("invalid_downloaddomain")
   private List<String> invalidDownloadDomain;
+  /**
+   * udp不合法域名
+   */
+  @SerializedName("invalid_udpdomain")
+  private List<String> invalidUdpDomain;
+  /**
+   * tcp不合法域名
+   */
+  @SerializedName("invalid_tcpdomain")
+  private List<String> invalidTcpDomain;
 
   public static WxOpenMaDomainResult fromJson(String json) {
     return WxGsonBuilder.create().fromJson(json, WxOpenMaDomainResult.class);

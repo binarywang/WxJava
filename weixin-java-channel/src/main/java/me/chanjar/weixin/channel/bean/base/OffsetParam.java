@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
  * 偏移参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.base.OffsetParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class OffsetParam implements Serializable {
 
   private static final long serialVersionUID = -1268796871980541662L;

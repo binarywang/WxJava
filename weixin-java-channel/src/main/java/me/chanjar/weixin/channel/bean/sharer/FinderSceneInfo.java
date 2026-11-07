@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 视频号场景信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.sharer.FinderSceneInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FinderSceneInfo implements Serializable {
 
   private static final long serialVersionUID = 5298261857489231549L;

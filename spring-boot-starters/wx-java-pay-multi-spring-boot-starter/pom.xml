@@ -5,7 +5,7 @@
   <parent>
     <artifactId>wx-java-spring-boot-starters</artifactId>
     <groupId>com.github.binarywang</groupId>
-    <version>4.8.5.B</version>
+    <version>4.8.6.B</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
@@ -14,6 +14,13 @@
   <description>微信支付开发的 Spring Boot Starter::支持多公众号关联配置</description>
 
   <dependencies>
+    <!-- Spring Boot 2.5's test context uses the SLF4J 1.7 Logback binding. -->
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.13</version>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>com.github.binarywang</groupId>
       <artifactId>weixin-java-pay</artifactId>
@@ -29,6 +36,11 @@
 
   <build>
     <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.2.5</version>
+      </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

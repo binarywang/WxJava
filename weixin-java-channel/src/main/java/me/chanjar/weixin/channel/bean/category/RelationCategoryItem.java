@@ -10,9 +10,11 @@ import java.io.Serializable;
  * 店铺类目权限列表项
  *
  * @author <a href="https://gitee.com/cchengg">chucheng</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.RelationCategoryItem}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class RelationCategoryItem implements Serializable {
 
   /** 类目id */

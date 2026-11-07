@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 运费信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ExpressInfo}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class ExpressInfo implements Serializable {
 
   private static final long serialVersionUID = 3274035362148612426L;

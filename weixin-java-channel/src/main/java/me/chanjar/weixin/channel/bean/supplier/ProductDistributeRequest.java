@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
  * 按商品自动分配请求。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.supplier.ProductDistributeRequest}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class ProductDistributeRequest implements Serializable {
   private static final long serialVersionUID = 4201609097231290078L;
 

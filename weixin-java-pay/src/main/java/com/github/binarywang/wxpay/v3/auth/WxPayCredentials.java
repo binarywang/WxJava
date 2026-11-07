@@ -79,7 +79,6 @@ public class WxPayCredentials implements Credentials {
     long timestamp = generateTimestamp();
 
     String message = buildMessage(nonceStr, timestamp, request);
-    log.debug("authorization message=[{}]", message);
 
     Signer.SignatureResult signature = signer.sign(message.getBytes(StandardCharsets.UTF_8));
 
@@ -88,7 +87,6 @@ public class WxPayCredentials implements Credentials {
         + "timestamp=\"" + timestamp + "\","
         + "serial_no=\"" + signature.certificateSerialNumber + "\","
         + "signature=\"" + signature.sign + "\"";
-    log.debug("authorization token=[{}]", token);
 
     return token;
   }

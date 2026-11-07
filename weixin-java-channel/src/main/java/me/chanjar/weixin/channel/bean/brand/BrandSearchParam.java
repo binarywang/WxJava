@@ -10,10 +10,12 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
  * 品牌搜索参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.brand.BrandSearchParam}。
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class BrandSearchParam extends StreamPageParam {
 
   private static final long serialVersionUID = 5961201403338269712L;

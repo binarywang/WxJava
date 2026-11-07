@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 折扣条件
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.DiscountCondition}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class DiscountCondition implements Serializable {
 
   private static final long serialVersionUID = 3250293381093835082L;

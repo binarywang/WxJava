@@ -7,9 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.qic.SubmitInspectRequest}。
+ */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SubmitInspectRequest implements Serializable {
   private static final long serialVersionUID = 6396115469552098613L;
 

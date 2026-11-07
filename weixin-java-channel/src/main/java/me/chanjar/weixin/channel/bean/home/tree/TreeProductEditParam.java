@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 添加/删除分类关联的商品 参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.TreeProductEditParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TreeProductEditParam implements Serializable {
 
   private static final long serialVersionUID = -4906016235749892703L;

@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 查询分类关联的商品 参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.TreeProductListInfo}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TreeProductListInfo implements Serializable {
 
   private static final long serialVersionUID = 2774682583380930076L;

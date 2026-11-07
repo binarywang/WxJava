@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 品牌信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.brand.BrandInfo}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class BrandInfo extends Brand {
 
   private static final long serialVersionUID = 5464505958132626159L;

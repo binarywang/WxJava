@@ -10,11 +10,13 @@ import java.io.Serializable;
 
 /**
  * 获取订单详情参数
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderInfoParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class OrderInfoParam implements Serializable {
 
   private static final long serialVersionUID = 42L;

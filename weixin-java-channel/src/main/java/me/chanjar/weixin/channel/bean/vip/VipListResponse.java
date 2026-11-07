@@ -10,10 +10,12 @@ import java.util.List;
 /**
  * @author : zhenyun.su
  * @since : 2023/10/8
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipListResponse}。
  */
 
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VipListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -8127372979925053579L;

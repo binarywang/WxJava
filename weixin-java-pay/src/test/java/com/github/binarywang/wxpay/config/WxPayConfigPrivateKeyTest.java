@@ -11,47 +11,23 @@ import static org.testng.Assert.*;
 public class WxPayConfigPrivateKeyTest {
 
   @Test
-  public void testPrivateKeyStringFormat_PemFormat() {
+  public void testPrivateKeyStringFormat_PemFormat() throws Exception {
+    java.security.KeyPairGenerator generator = java.security.KeyPairGenerator.getInstance("RSA");
+    generator.initialize(2048);
+    java.security.KeyPair pair = generator.generateKeyPair();
+    java.util.Base64.Encoder encoder = java.util.Base64.getMimeEncoder(64, new byte[]{'\n'});
     WxPayConfig config = new WxPayConfig();
-    
-    // Set minimal required configuration 
     config.setMchId("1234567890");
     config.setApiV3Key("test-api-v3-key-32-characters-long");
     config.setCertSerialNo("test-serial-number");
-    
-    // Test with PEM format private key string that would previously fail
-    String pemKey = "-----BEGIN PRIVATE KEY-----\n" +
-                   "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC2pK3buBufh8Vo\n" +
-                   "X4sfYbZ5CcPeGMnVQTGmj0b6\n" +
-                   "-----END PRIVATE KEY-----";
-    
-    config.setPrivateKeyString(pemKey);
-    
-    // This should not throw a "无效的密钥格式" exception immediately
-    // The actual key validation will happen during HTTP client initialization
-    // but at least the format parsing should not fail
-    
-    try {
-      // Try to initialize API V3 HTTP client - this might fail for other reasons 
-      // (like invalid key content) but should not fail due to format parsing
-      config.initApiV3HttpClient();
-      // If we get here without InvalidKeySpecException, the format detection worked
-    } catch (WxPayException e) {
-      // Check that it's not the specific "无效的密钥格式" error from PemUtils
-      if (e.getCause() != null && 
-          e.getCause().getMessage() != null && 
-          e.getCause().getMessage().contains("无效的密钥格式")) {
-        fail("Private key format detection failed - PEM format was not handled correctly: " + e.getMessage());
-      }
-      // Other exceptions are acceptable for this test since we're using a dummy key
-    } catch (Exception e) {
-      // Check for the specific InvalidKeySpecException that indicates format problems
-      if (e.getCause() != null && 
-          e.getCause().getMessage() != null && 
-          e.getCause().getMessage().contains("无效的密钥格式")) {
-        fail("Private key format detection failed - PEM format was not handled correctly: " + e.getMessage());
-      }
-      // Other exceptions are acceptable for this test since we're using a dummy key
+    config.setPrivateKeyString("-----BEGIN PRIVATE KEY-----\n"
+      + encoder.encodeToString(pair.getPrivate().getEncoded()) + "\n-----END PRIVATE KEY-----");
+    config.setFullPublicKeyModel(true);
+    config.setPublicKeyId("PUB_KEY_ID_TEST");
+    config.setPublicKeyString("-----BEGIN PUBLIC KEY-----\n"
+      + encoder.encodeToString(pair.getPublic().getEncoded()) + "\n-----END PUBLIC KEY-----");
+    try (org.apache.http.impl.client.CloseableHttpClient client = config.initApiV3HttpClient()) {
+      assertNotNull(client);
     }
   }
 

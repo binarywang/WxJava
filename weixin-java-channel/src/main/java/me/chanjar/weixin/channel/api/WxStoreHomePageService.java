@@ -19,7 +19,9 @@ import me.chanjar.weixin.common.error.WxErrorException;
  * 微信小店 主页管理相关接口
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.api.WxStoreHomePageService}。
  */
+@Deprecated
 public interface WxStoreHomePageService {
 
   /**

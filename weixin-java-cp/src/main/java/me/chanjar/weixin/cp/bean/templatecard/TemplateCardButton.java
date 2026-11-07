@@ -59,7 +59,9 @@ public class TemplateCardButton implements Serializable {
       btnObject.addProperty("style", this.getStyle());
     }
     btnObject.addProperty("key", this.getKey());
-    btnObject.addProperty("type", this.getType());
+    if (this.getType() != 0) {
+      btnObject.addProperty("type", this.getType());
+    }
     if (null != this.getUrl()) {
       btnObject.addProperty("url", this.getUrl());
     }

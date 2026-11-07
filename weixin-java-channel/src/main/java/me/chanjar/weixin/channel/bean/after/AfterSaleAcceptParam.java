@@ -9,9 +9,11 @@ import lombok.Data;
  * 售后单同意信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleAcceptParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleAcceptParam extends AfterSaleIdParam {
 
   private static final long serialVersionUID = -4352801757159074950L;

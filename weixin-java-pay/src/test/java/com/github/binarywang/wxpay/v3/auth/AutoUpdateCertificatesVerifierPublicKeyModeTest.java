@@ -22,16 +22,18 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
   private WxPayCredentials credentials;
 
   @BeforeMethod
-  public void setUp() {
+  public void setUp() throws Exception {
     // 使用无效的配置，模拟证书下载失败的场景
     invalidMchId = "invalid_mch_id";
     invalidApiV3Key = "invalid_api_v3_key_must_be_32_b";
     invalidCertSerialNo = "invalid_serial_no";
     payBaseUrl = "https://api.mch.weixin.qq.com";
 
+    java.security.KeyPairGenerator generator = java.security.KeyPairGenerator.getInstance("RSA");
+    generator.initialize(2048);
     credentials = new WxPayCredentials(
       invalidMchId,
-      new PrivateKeySigner(invalidCertSerialNo, null)
+      new PrivateKeySigner(invalidCertSerialNo, generator.generateKeyPair().getPrivate())
     );
   }
 
@@ -48,7 +50,14 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
       60,
       payBaseUrl,
       null
-    );
+    ) {
+      @Override
+      public void customHttpClientBuilder(com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder builder) {
+        builder.addInterceptorFirst((org.apache.http.HttpRequestInterceptor) (request, context) -> {
+          throw new java.io.IOException("simulated certificate download failure");
+        });
+      }
+    };
     // 如果没有抛出异常，测试通过
     assertNotNull(verifier);
   }
@@ -64,7 +73,14 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
       60,
       payBaseUrl,
       null
-    );
+    ) {
+      @Override
+      public void customHttpClientBuilder(com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder builder) {
+        builder.addInterceptorFirst((org.apache.http.HttpRequestInterceptor) (request, context) -> {
+          throw new java.io.IOException("simulated certificate download failure");
+        });
+      }
+    };
 
     // verify 方法应该返回 false，而不是抛出异常
     boolean result = verifier.verify("test_serial", "test_message".getBytes(), "test_signature");
@@ -83,7 +99,14 @@ public class AutoUpdateCertificatesVerifierPublicKeyModeTest {
       60,
       payBaseUrl,
       null
-    );
+    ) {
+      @Override
+      public void customHttpClientBuilder(com.github.binarywang.wxpay.v3.WxPayV3HttpClientBuilder builder) {
+        builder.addInterceptorFirst((org.apache.http.HttpRequestInterceptor) (request, context) -> {
+          throw new java.io.IOException("simulated certificate download failure");
+        });
+      }
+    };
 
     // 应该抛出有意义的异常
     X509Certificate certificate = verifier.getValidCertificate();

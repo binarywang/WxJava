@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 授权账号信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderAgentInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderAgentInfo implements Serializable {
 
   private static final long serialVersionUID = 6396067079343033841L;

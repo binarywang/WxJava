@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 订单退款信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderRefundInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderRefundInfo implements Serializable {
   private static final long serialVersionUID = -7257910073388645919L;
 

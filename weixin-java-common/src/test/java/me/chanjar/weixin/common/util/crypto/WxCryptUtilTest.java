@@ -17,7 +17,7 @@ import static org.testng.Assert.*;
 
 @Test
 public class WxCryptUtilTest {
-  String encodingAesKey = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFG";
+  String encodingAesKey = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFE";
   String token = "pamtest";
   String timestamp = "1409304348";
   String nonce = "xxxxxx";

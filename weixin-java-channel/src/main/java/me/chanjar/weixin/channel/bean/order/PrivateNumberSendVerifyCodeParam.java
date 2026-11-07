@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
  * 获取短信验证码 请求参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.PrivateNumberSendVerifyCodeParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class PrivateNumberSendVerifyCodeParam implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -52,6 +52,18 @@ public interface WxMaXPayService {
   WxMaXPayCancelCurrencyPayResponse cancelCurrencyPay(WxMaXPayCancelCurrencyPayRequest request, WxMaXPaySigParams sigParams) throws WxErrorException;
 
   /**
+   * 生成调起 wx.requestVirtualPayment 所需的支付参数。
+   *
+   * @param request   虚拟支付调起参数
+   * @param sigParams 签名参数对象
+   * @return 支付参数
+   */
+  default WxMaXPayRequestVirtualPaymentData createRequestVirtualPaymentData(WxMaXPayRequestVirtualPaymentRequest request,
+                                                                            WxMaXPaySigParams sigParams) {
+    return request.createPayData(sigParams);
+  }
+
+  /**
    * 通知发货。
    *
    * @param request          通知发货请求对象

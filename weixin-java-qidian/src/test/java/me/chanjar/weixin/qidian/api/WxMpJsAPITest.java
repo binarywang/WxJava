@@ -1,10 +1,7 @@
 package me.chanjar.weixin.qidian.api;
 
-import com.google.inject.Inject;
 import me.chanjar.weixin.common.util.crypto.SHA1;
-import me.chanjar.weixin.qidian.api.test.ApiTestModule;
 import org.testng.Assert;
-import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 /**
@@ -13,11 +10,7 @@ import org.testng.annotations.Test;
  * @author chanjarster
  */
 @Test
-@Guice(modules = ApiTestModule.class)
 public class WxMpJsAPITest {
-
-  @Inject
-  protected WxQidianService wxService;
 
   public void test() {
     long timestamp = 1419835025L;

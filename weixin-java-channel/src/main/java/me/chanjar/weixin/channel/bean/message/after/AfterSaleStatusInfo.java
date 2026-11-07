@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 售后信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.after.AfterSaleStatusInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleStatusInfo implements Serializable {
 
   private static final long serialVersionUID = -7309656340583314591L;

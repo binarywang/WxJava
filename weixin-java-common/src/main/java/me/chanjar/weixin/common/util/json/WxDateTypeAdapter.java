@@ -35,7 +35,12 @@ public class WxDateTypeAdapter extends TypeAdapter<Date> {
         in.nextNull();
         return null;
       case NUMBER:
-        return new Date(in.nextInt() * 1000);
+        long seconds = in.nextLong();
+        try {
+          return new Date(Math.multiplyExact(seconds, 1000L));
+        } catch (ArithmeticException e) {
+          throw new JsonParseException("Timestamp seconds out of range: " + seconds, e);
+        }
       default:
         throw new JsonParseException("Expected NUMBER but was " + peek);
     }

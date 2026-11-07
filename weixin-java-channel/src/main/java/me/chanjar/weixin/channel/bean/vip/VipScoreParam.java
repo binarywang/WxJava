@@ -17,12 +17,14 @@ import java.io.Serializable;
  *   "remark": "备注",
  *   "request_id": "REQUEST_ID"
  * }
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipScoreParam}。
  */
 
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Deprecated
 public class VipScoreParam implements Serializable {
   private static final long serialVersionUID = -4122983978977407168L;
   @JsonProperty("openid")

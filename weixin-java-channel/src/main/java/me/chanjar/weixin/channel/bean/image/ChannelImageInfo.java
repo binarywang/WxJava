@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 微信图片信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.image.StoreImageInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ChannelImageInfo implements Serializable {
 
   private static final long serialVersionUID = 8883519290965944530L;

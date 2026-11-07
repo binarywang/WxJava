@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 精选展示位申请信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.banner.BannerApplyInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BannerApplyInfo implements Serializable {
 
   private static final long serialVersionUID = 72190625450999960L;

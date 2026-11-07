@@ -25,12 +25,13 @@ public class WxMpBusyRetryTest {
         RequestExecutor<T, E> executor, String uri, E data)
         throws WxErrorException {
         log.info("Executed");
-        throw new WxErrorException("something");
+        throw new WxErrorException(me.chanjar.weixin.common.error.WxError.builder()
+          .errorCode(-1).errorMsg("system busy").build());
       }
     };
 
     service.setMaxRetryTimes(3);
-    service.setRetrySleepMillis(500);
+    service.setRetrySleepMillis(1);
     return new Object[][]{{service}};
   }
 
@@ -51,7 +52,7 @@ public class WxMpBusyRetryTest {
       } catch (WxErrorException e) {
         throw new WxRuntimeException(e);
       } catch (RuntimeException e) {
-        // OK
+        org.testng.Assert.assertTrue(e.getMessage().contains("超出重试次数"));
       }
     };
     Future<?> submit1 = executorService.submit(runnable);

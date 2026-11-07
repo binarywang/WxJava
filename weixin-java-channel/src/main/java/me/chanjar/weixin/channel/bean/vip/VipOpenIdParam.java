@@ -11,12 +11,14 @@ import java.io.Serializable;
 /**
  * @author : zhenyun.su
  * @since : 2023/10/8
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipOpenIdParam}。
  */
 
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
+@Deprecated
 public class VipOpenIdParam implements Serializable {
   private static final long serialVersionUID = -7924178026258012317L;
   @JsonProperty("openid")

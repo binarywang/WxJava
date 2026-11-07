@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 尺码表信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SpuSizeChart}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SpuSizeChart implements Serializable {
 
   private static final long serialVersionUID = -5019617420608575610L;

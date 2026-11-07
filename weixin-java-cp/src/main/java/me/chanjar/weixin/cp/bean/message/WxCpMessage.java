@@ -545,8 +545,12 @@ public class WxCpMessage implements Serializable {
           articleJson.addProperty("description", article.getDescription());
           articleJson.addProperty("url", article.getUrl());
           articleJson.addProperty("picurl", article.getPicUrl());
-          articleJson.addProperty("appid", article.getAppid());
-          articleJson.addProperty("pagepath", article.getPagepath());
+          if (StringUtils.isNotBlank(article.getAppid())) {
+            articleJson.addProperty("appid", article.getAppid());
+          }
+          if (StringUtils.isNotBlank(article.getPagepath())) {
+            articleJson.addProperty("pagepath", article.getPagepath());
+          }
           articleJsonArray.add(articleJson);
         }
         newsJsonObject.add("articles", articleJsonArray);
@@ -619,7 +623,9 @@ public class WxCpMessage implements Serializable {
           if (StringUtils.isNotBlank(this.getSourceDesc())) {
             source.addProperty("desc", this.getSourceDesc());
           }
-          source.addProperty("desc_color", this.getSourceDescColor());
+          if (this.getSourceDescColor() != null) {
+            source.addProperty("desc_color", this.getSourceDescColor());
+          }
           template.add("source", source);
         }
 

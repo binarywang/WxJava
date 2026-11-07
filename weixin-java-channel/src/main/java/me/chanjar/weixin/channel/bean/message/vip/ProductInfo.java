@@ -12,11 +12,13 @@ import java.io.Serializable;
  * 商品信息
  *
  * @author <a href="https://github.com/asushiye">asushiye</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.vip.ProductInfo}。
  */
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@Deprecated
 public class ProductInfo implements Serializable {
 
   private static final long serialVersionUID = -3037180342360944232L;

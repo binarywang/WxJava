@@ -13,10 +13,12 @@ import java.util.List;
  *
  *
  * @author lizhengwu
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleReasonResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode
+@Deprecated
 public class AfterSaleReasonResponse extends WxChannelBaseResponse {
 
 

@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * sku发货信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SkuDeliverInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SkuDeliverInfo implements Serializable {
 
   private static final long serialVersionUID = 8046963723772755406L;

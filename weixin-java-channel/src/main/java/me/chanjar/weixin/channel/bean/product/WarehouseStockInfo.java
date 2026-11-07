@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 区域库存
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.WarehouseStockInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class WarehouseStockInfo implements Serializable {
 
   private static final long serialVersionUID = 3184902895765107425L;

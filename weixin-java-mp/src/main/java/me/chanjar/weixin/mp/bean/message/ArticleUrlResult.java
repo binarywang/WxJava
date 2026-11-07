@@ -22,6 +22,8 @@ import java.util.List;
 public class ArticleUrlResult implements Serializable {
 
   @XStreamAlias("ResultList")
+  @XStreamConverter(value = com.thoughtworks.xstream.converters.extended.NamedCollectionConverter.class,
+    strings = "item", types = Item.class, useImplicitType = false)
   @JacksonXmlProperty(localName = "ResultList")
   private List<Item> resultList;
 

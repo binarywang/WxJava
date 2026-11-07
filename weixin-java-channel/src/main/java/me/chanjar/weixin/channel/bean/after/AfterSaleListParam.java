@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
  * 售后单列表 请求参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleListParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class AfterSaleListParam implements Serializable {
 
   private static final long serialVersionUID = -103549981452112069L;

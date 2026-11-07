@@ -9,9 +9,11 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 账户余额信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.BalanceInfoResponse}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BalanceInfoResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 4480496860612566921L;

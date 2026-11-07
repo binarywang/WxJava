@@ -43,20 +43,40 @@ public abstract class WxOpenServiceAbstractImpl<H, P> implements WxOpenService, 
   public abstract void initHttp();
 
   protected <T, E> T execute(RequestExecutor<T, E> executor, String uri, E data) throws WxErrorException {
+    boolean sensitive = isSensitiveRequest(uri);
     try {
       T result = executor.execute(uri, data, WxType.Open);
-      log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
+      if (sensitive) {
+        log.debug("Sensitive request completed");
+      } else {
+        log.debug("\n【请求地址】: {}\n【请求参数】：{}\n【响应数据】：{}", uri, data, result);
+      }
       return result;
     } catch (WxErrorException e) {
       WxError error = e.getError();
       if (error.getErrorCode() != 0) {
-        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri, data, error);
+        if (sensitive) {
+          log.warn("Sensitive request failed, error code: {}", error.getErrorCode());
+        } else {
+          log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【错误信息】：{}", uri, data, error);
+        }
         throw new WxErrorException(error, e);
       }
       return null;
     } catch (IOException e) {
-      log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
+      if (sensitive) {
+        log.warn("Sensitive request failed, exception type: {}", e.getClass().getName());
+      } else {
+        log.warn("\n【请求地址】: {}\n【请求参数】：{}\n【异常信息】：{}", uri, data, e.getMessage());
+      }
       throw new WxRuntimeException(e);
     }
+  }
+
+  static boolean isSensitiveRequest(String uri) {
+    String loginUrl = WxOpenComponentService.MINIAPP_JSCODE_2_SESSION.split("\\?", 2)[0];
+    String tokenUrl = WxOpenComponentService.API_COMPONENT_TOKEN_URL;
+    return uri.equals(loginUrl) || uri.startsWith(loginUrl + "?")
+      || uri.equals(tokenUrl) || uri.startsWith(tokenUrl + "?");
   }
 }
