@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 虚拟商品充值账户信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.RechargeInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class RechargeInfo implements Serializable {
 
   /** 虚拟商品充值账号，当account_type=qq或phone_number或mail的时候返回 */

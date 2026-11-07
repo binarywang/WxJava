@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 商品销售库存限制
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ProductSaleLimitInfo}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class ProductSaleLimitInfo implements Serializable {
 
   /** 是否受到管控，商品存在售卖限制时，固定返回1 */

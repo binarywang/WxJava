@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
  * 运费计算方法
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.FreightCalcMethod}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class FreightCalcMethod extends AddressInfoList {
 
   private static final long serialVersionUID = -8857987538121721376L;

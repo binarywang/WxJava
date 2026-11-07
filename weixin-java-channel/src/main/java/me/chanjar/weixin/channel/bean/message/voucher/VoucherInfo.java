@@ -8,9 +8,11 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.voucher.VoucherInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VoucherInfo implements Serializable {
   private static final long serialVersionUID = 6007964849358969438L;
 

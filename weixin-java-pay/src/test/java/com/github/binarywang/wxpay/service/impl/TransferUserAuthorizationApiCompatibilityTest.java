@@ -11,6 +11,8 @@ import com.github.binarywang.wxpay.bean.transfer.UserConfirmAuthorizationRequest
 import com.github.binarywang.wxpay.bean.transfer.UserConfirmAuthorizationResult;
 import com.github.binarywang.wxpay.exception.WxPayException;
 import com.github.binarywang.wxpay.service.WxPayService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -41,7 +43,32 @@ public class TransferUserAuthorizationApiCompatibilityTest {
 
     Assert.assertEquals(handler.lastPostWithSerialUrl, BASE_URL + "/v3/fund-app/mch-transfer/transfer-bills");
     Assert.assertFalse(handler.lastPostWithSerialBody.contains("authorization_info"));
+    Assert.assertFalse(handler.lastPostWithSerialBody.contains("user_recv_style"));
     Assert.assertEquals(result.getPackageInfo(), "transfer-package");
+  }
+
+  /**
+   * 验证发起转账时用户收款样式及类型按微信接口字段名发送。
+   */
+  public void shouldSendUserRecvStyleInTransferBillsRequest() throws Exception {
+    RequestCaptureHandler handler = new RequestCaptureHandler();
+    TransferServiceImpl transferService = new TransferServiceImpl(handler.createWxPayService());
+
+    transferService.transferBills(TransferBillsRequest.newBuilder()
+      .appid("wxf636efh567hg4356")
+      .outBillNo("plfk2020042014")
+      .transferSceneId("1000")
+      .openid("o-MYE42l80oelYMDE34nYD456Xoy")
+      .transferAmount(100)
+      .transferRemark("活动奖励")
+      .userRecvStyle(TransferBillsRequest.UserRecvStyle.newBuilder()
+        .type("RED_PACKET")
+        .build())
+      .build());
+
+    JsonObject body = new Gson().fromJson(handler.lastPostWithSerialBody, JsonObject.class);
+    Assert.assertEquals(handler.lastPostWithSerialUrl, BASE_URL + "/v3/fund-app/mch-transfer/transfer-bills");
+    Assert.assertEquals(body.getAsJsonObject("user_recv_style").get("type").getAsString(), "RED_PACKET");
   }
 
   /**

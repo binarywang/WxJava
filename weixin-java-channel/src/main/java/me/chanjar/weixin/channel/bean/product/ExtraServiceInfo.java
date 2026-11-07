@@ -7,9 +7,11 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.ExtraServiceInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ExtraServiceInfo implements Serializable {
 
   private static final long serialVersionUID = -5517806977282063174L;

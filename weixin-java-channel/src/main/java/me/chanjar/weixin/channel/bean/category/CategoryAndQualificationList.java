@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 分类资质响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.CategoryAndQualificationList}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CategoryAndQualificationList implements Serializable {
 
   private static final long serialVersionUID = 4245906598437404655L;

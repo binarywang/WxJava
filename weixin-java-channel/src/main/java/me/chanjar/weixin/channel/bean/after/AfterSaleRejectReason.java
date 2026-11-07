@@ -11,9 +11,11 @@ import java.io.Serializable;
  *
  * @author lizhengwu
  * @date 2024/7/24
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleRejectReason}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class AfterSaleRejectReason implements Serializable {
 
   private static final long serialVersionUID = -3672834150982780L;

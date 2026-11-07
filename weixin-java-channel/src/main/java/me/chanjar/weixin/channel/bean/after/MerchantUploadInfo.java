@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 商家上传的信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.MerchantUploadInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class MerchantUploadInfo implements Serializable {
 
   private static final long serialVersionUID = 373513419356603563L;

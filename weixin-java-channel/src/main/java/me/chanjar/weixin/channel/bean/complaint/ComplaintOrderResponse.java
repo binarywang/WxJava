@@ -10,9 +10,11 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 纠纷单响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.complaint.ComplaintOrderResponse}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ComplaintOrderResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 1968530826349555367L;

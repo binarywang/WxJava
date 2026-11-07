@@ -13,10 +13,12 @@ import me.chanjar.weixin.channel.bean.base.AttrInfo;
  * Spu信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SpuInfo}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class SpuInfo extends SpuSimpleInfo {
 
   private static final long serialVersionUID = -1183209029245287297L;

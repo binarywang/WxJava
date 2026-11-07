@@ -10,9 +10,11 @@ import java.io.Serializable;
  * 商品额外服务信息
  *
  * @author <a href="https://github.com/qrpcode">北鹤M</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderProductExtraService}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderProductExtraService implements Serializable {
 
   private static final long serialVersionUID = -8752053507170277156L;

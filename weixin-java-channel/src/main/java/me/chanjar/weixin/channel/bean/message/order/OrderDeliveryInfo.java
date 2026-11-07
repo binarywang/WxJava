@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 订单发货信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.order.OrderDeliveryInfo}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OrderDeliveryInfo extends OrderIdInfo {
 
   private static final long serialVersionUID = 117962754344887556L;

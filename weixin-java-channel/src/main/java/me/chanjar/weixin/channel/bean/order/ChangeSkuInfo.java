@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 /**
  * 更换sku信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.ChangeSkuInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ChangeSkuInfo implements Serializable {
 
   private static final long serialVersionUID = 8783442929429377519L;

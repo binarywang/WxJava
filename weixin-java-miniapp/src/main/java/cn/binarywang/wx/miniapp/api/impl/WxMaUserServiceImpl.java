@@ -109,7 +109,7 @@ public class WxMaUserServiceImpl implements WxMaUserService {
 
   @Override
   public boolean checkSessionKey(String openid, String sessionKey) throws WxErrorException {
-    String signature = SignUtils.createHmacSha256Sign(openid, sessionKey);
+    String signature = SignUtils.createHmacSha256Sign("", sessionKey).toLowerCase();
     String url = String.format(CHECK_SESSION_KEY_URL, openid, signature);
     this.service.get(url, null);
     return true;

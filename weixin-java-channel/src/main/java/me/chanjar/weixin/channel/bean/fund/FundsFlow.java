@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 资金流水
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.FundsFlow}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FundsFlow implements Serializable {
 
   private static final long serialVersionUID = -2785498655066305510L;

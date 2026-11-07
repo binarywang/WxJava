@@ -13,11 +13,13 @@ import lombok.NoArgsConstructor;
  * 商品打包信息 参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.delivery.FreshInspectParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class FreshInspectParam implements Serializable {
   private static final long serialVersionUID = -1635894867602084789L;
 

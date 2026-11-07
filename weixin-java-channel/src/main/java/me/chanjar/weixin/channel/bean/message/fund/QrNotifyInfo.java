@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 提现二维码回调 消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.fund.QrNotifyInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class QrNotifyInfo implements Serializable {
 
   private static final long serialVersionUID = 2470016408300157273L;

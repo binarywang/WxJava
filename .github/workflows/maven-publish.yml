@@ -93,13 +93,13 @@ jobs:
           fi
           echo "Final version: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
-          mvn versions:set -DnewVersion=$VERSION --no-transfer-progress
+          ./mvnw versions:set -DnewVersion=$VERSION --no-transfer-progress
         env:
           TZ: Asia/Shanghai
 
       - name: Publish to Maven Central
         run: |
-          mvn clean deploy -P release \
+          ./mvnw clean deploy -P release \
             -Dmaven.test.skip=true \
             -Dgpg.args="--batch --yes --pinentry-mode loopback" \
             --no-transfer-progress

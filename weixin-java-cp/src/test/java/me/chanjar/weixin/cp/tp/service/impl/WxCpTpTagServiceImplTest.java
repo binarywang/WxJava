@@ -86,7 +86,7 @@ public class WxCpTpTagServiceImplTest {
     String url = configStorage.getApiUrl(TAG_LIST);
     String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"taglist\":[{\"tagid\":1,\"tagname\":\"a\"},{\"tagid\":2," +
       "\"tagname\":\"b\"}]}";
-    when(wxCpTpService.get(eq(url), anyString())).thenReturn(result);
+    when(wxCpTpService.get(eq(url), isNull())).thenReturn(result);
 
     List<WxCpTpTag> wxCpTpTags = wxCpTpTagService.listAll();
     assertNotNull(wxCpTpTags);
@@ -106,7 +106,7 @@ public class WxCpTpTagServiceImplTest {
     String url = String.format(configStorage.getApiUrl(TAG_GET), tagId);
     String result = "{\"errcode\":0,\"errmsg\":\"ok\",\"tagname\":\"乒乓球协会\",\"userlist\":[{\"userid\":\"zhangsan\"," +
       "\"name\":\"李四\"}],\"partylist\":[2]}";
-    when(wxCpTpService.get(eq(url), anyString())).thenReturn(result);
+    when(wxCpTpService.get(eq(url), isNull())).thenReturn(result);
 
     WxCpTpTagGetResult getResult = wxCpTpTagService.get(tagId);
     assertEquals(getResult.getTagname(), "乒乓球协会");

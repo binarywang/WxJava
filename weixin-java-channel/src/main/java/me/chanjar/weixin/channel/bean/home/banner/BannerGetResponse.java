@@ -10,10 +10,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 精选展位返回结果
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.banner.BannerGetResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class BannerGetResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -1563254921362215934L;

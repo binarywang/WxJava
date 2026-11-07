@@ -11,10 +11,12 @@ import java.io.Serializable;
  * 商品待开售信息
  *
  * @author <a href="https://gitee.com/cchengg">chu</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.TimingOnSaleInfo}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class TimingOnSaleInfo implements Serializable {
 
   /** 状态枚举 0-没有待开售；1-待开售 */

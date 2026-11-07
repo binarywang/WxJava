@@ -1,7 +1,9 @@
 package com.github.binarywang.wxpay.service.impl;
 
+import com.github.binarywang.wxpay.service.PartnerInvoiceService;
 import com.github.binarywang.wxpay.service.WxPayService;
 import com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequest;
+import com.github.binarywang.wxpay.bean.invoice.PassengerTransportInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceResult;
 import com.github.binarywang.wxpay.bean.invoice.ReverseInvoiceRequest;
 import com.github.binarywang.wxpay.bean.invoice.InvoiceFileResult;
@@ -17,6 +19,12 @@ import java.util.concurrent.atomic.AtomicReference;
  * {@link PartnerInvoiceServiceImpl} 测试。
  */
 public class PartnerInvoiceServiceImplTest {
+
+  @Test
+  public void shouldKeepPassengerTransportInvoiceMethodSourceCompatible() throws Exception {
+    Assert.assertTrue(PartnerInvoiceService.class
+      .getMethod("issuePassengerTransportInvoice", PassengerTransportInvoiceRequest.class).isDefault());
+  }
 
   @Test
   public void shouldRequestInviteUrlWithOptionalSubMchId() throws Exception {
@@ -65,6 +73,44 @@ public class PartnerInvoiceServiceImplTest {
     Assert.assertEquals(requestedUrl.get(),
       "https://api.mch.weixin.qq.com/v3/new-tax-control-fapiao/fapiao-applications/issue-general");
     Assert.assertTrue(requestedBody.get().contains("\"fapiao_apply_id\":\"invoice-001\""));
+  }
+
+  @Test
+  public void shouldPostPassengerTransportInvoiceToV3Endpoint() throws Exception {
+    AtomicReference<String> requestedUrl = new AtomicReference<>();
+    AtomicReference<String> requestedBody = new AtomicReference<>();
+    WxPayService payService = (WxPayService) Proxy.newProxyInstance(
+      getClass().getClassLoader(), new Class[]{WxPayService.class}, (proxy, method, args) -> {
+        if ("getPayBaseUrl".equals(method.getName())) {
+          return "https://api.mch.weixin.qq.com";
+        }
+        if ("postV3".equals(method.getName())) {
+          requestedUrl.set((String) args[0]);
+          requestedBody.set((String) args[1]);
+          return null;
+        }
+        throw new UnsupportedOperationException(method.getName());
+      });
+    PassengerTransportInvoiceRequest request = new PassengerTransportInvoiceRequest();
+    request.setSubMchid("1900000109");
+    request.setFapiaoApplyId("invoice-002");
+    PassengerTransportInvoiceRequest.PassengerInformation passenger =
+      new PassengerTransportInvoiceRequest.PassengerInformation();
+    passenger.setCertificateNumber("encrypted-certificate-number");
+    PassengerTransportInvoiceRequest.InvoiceItem item = new PassengerTransportInvoiceRequest.InvoiceItem();
+    item.setPassengerInformation(passenger);
+    PassengerTransportInvoiceRequest.FapiaoInformation fapiao =
+      new PassengerTransportInvoiceRequest.FapiaoInformation();
+    fapiao.setItems(java.util.Collections.singletonList(item));
+    request.setFapiaoInformation(fapiao);
+
+    new PartnerInvoiceServiceImpl(payService).issuePassengerTransportInvoice(request);
+
+    Assert.assertEquals(requestedUrl.get(),
+      "https://api.mch.weixin.qq.com/v3/new-tax-control-fapiao/fapiao-applications/issue-passenger-transport");
+    Assert.assertTrue(requestedBody.get().contains("\"fapiao_apply_id\":\"invoice-002\""));
+    Assert.assertTrue(requestedBody.get().contains("\"passenger_information\""));
+    Assert.assertTrue(requestedBody.get().contains("\"certificate_number\":\"encrypted-certificate-number\""));
   }
 
   @Test

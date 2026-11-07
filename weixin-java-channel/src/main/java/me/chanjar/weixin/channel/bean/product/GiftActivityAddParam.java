@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 创建买赠活动参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.GiftActivityAddParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class GiftActivityAddParam implements Serializable {
 
   private static final long serialVersionUID = -3332952823917162308L;

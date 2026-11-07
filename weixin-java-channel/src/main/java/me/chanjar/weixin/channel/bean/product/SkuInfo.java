@@ -10,8 +10,10 @@ import me.chanjar.weixin.channel.bean.base.AttrInfo;
  * SKU信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SkuInfo}。
  */
 @Data
+@Deprecated
 public class SkuInfo implements Serializable {
 
   private static final long serialVersionUID = -8734396136299597845L;

@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 商品库存
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SkuStockInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class SkuStockInfo implements Serializable {
 
   private static final long serialVersionUID = 4719729125885685958L;

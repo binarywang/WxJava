@@ -317,4 +317,81 @@ public class WxCpKfServiceImpl implements WxCpKfService {
     return WxCpKfGetServicerStatisticResp.fromJson(responseContent);
   }
 
+  @Override
+  public WxCpKfKnowledgeGroupAddResp addKnowledgeGroup(WxCpKfKnowledgeGroup group) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_ADD_GROUP);
+    String responseContent = cpService.post(url, GSON.toJson(group));
+    return WxCpKfKnowledgeGroupAddResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp delKnowledgeGroup(String groupId) throws WxErrorException {
+    return knowledgeBaseResp(KNOWLEDGE_DEL_GROUP, "group_id", groupId);
+  }
+
+  @Override
+  public WxCpBaseResp modKnowledgeGroup(WxCpKfKnowledgeGroup group) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_MOD_GROUP);
+    String responseContent = cpService.post(url, GSON.toJson(group));
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpKfKnowledgeGroupListResp listKnowledgeGroup(String cursor, Integer limit, String groupId) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_LIST_GROUP);
+    String responseContent = cpService.post(url, GSON.toJson(listKnowledgeJson(cursor, limit, groupId, null)));
+    return WxCpKfKnowledgeGroupListResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpKfKnowledgeIntentAddResp addKnowledgeIntent(WxCpKfKnowledgeIntent intent) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_ADD_INTENT);
+    String responseContent = cpService.post(url, GSON.toJson(intent));
+    return WxCpKfKnowledgeIntentAddResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpBaseResp delKnowledgeIntent(String intentId) throws WxErrorException {
+    return knowledgeBaseResp(KNOWLEDGE_DEL_INTENT, "intent_id", intentId);
+  }
+
+  @Override
+  public WxCpBaseResp modKnowledgeIntent(WxCpKfKnowledgeIntent intent) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_MOD_INTENT);
+    String responseContent = cpService.post(url, GSON.toJson(intent));
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  @Override
+  public WxCpKfKnowledgeIntentListResp listKnowledgeIntent(String cursor, Integer limit, String groupId, String intentId) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(KNOWLEDGE_LIST_INTENT);
+    String responseContent = cpService.post(url, GSON.toJson(listKnowledgeJson(cursor, limit, groupId, intentId)));
+    return WxCpKfKnowledgeIntentListResp.fromJson(responseContent);
+  }
+
+  private WxCpBaseResp knowledgeBaseResp(String apiPath, String key, String value) throws WxErrorException {
+    String url = cpService.getWxCpConfigStorage().getApiUrl(apiPath);
+    JsonObject json = new JsonObject();
+    json.addProperty(key, value);
+    String responseContent = cpService.post(url, GSON.toJson(json));
+    return WxCpBaseResp.fromJson(responseContent);
+  }
+
+  private JsonObject listKnowledgeJson(String cursor, Integer limit, String groupId, String intentId) {
+    JsonObject json = new JsonObject();
+    if (cursor != null) {
+      json.addProperty("cursor", cursor);
+    }
+    if (limit != null) {
+      json.addProperty("limit", limit);
+    }
+    if (groupId != null) {
+      json.addProperty("group_id", groupId);
+    }
+    if (intentId != null) {
+      json.addProperty("intent_id", intentId);
+    }
+    return json;
+  }
+
 }

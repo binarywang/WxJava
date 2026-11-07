@@ -10,9 +10,11 @@ import java.io.Serializable;
  * Sku层分享信息
  *
  * @author <a href="https://github.com/qrpcode">北鹤M</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderSkuShareInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderSkuShareInfo implements Serializable {
 
   private static final long serialVersionUID = 705312408112124476L;

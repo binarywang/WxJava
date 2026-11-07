@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 分类资质信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.category.CategoryQualification}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CategoryQualification implements Serializable {
 
   private static final long serialVersionUID = 6495550078851408381L;
@@ -30,7 +32,11 @@ public class CategoryQualification implements Serializable {
   @Deprecated
   private QualificationInfo productInfo;
 
-  /** 品牌资质信息 */
+  /**
+   * 品牌资质信息。
+   *
+   * @deprecated 微信接口仍返回该字段，暂未提供替代字段。
+   */
   @JsonProperty("brand_qua")
   @Deprecated
   private QualificationInfo brandQua;

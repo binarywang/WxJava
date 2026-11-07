@@ -13,11 +13,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 用户卡券过期 消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.coupon.UserCouponExpireMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class UserCouponExpireMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = -2557475297107588372L;

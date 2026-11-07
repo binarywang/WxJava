@@ -11,9 +11,11 @@ import java.io.Serializable;
  *
  * @author <a href="https://github.com/asushiye">asushiye</a>
  *
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.UserGradeInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class UserGradeInfo implements Serializable {
 
   private static final long serialVersionUID = -8040963202754069865L;

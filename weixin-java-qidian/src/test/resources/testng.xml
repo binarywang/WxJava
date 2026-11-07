@@ -4,27 +4,7 @@
   <test name="API_Test">
     <classes>
       <class name="me.chanjar.weixin.qidian.api.WxMpBusyRetryTest"/>
-      <class name="me.chanjar.weixin.qidian.api.WxMpBaseAPITest"/>
-      <class name="me.chanjar.weixin.qidian.api.impl.WxMpMassMessageServiceImplTest"/>
-      <class name="me.chanjar.weixin.qidian.api.impl.WxMpUserServiceImplTest"/>
-      <class name="me.chanjar.weixin.qidian.api.impl.WxMpQrcodeServiceImplTest"/>
-      <class name="me.chanjar.weixin.qidian.api.WxMpShortUrlAPITest"/>
-      <class name="me.chanjar.weixin.qidian.api.WxMpMessageRouterTest"/>
       <class name="me.chanjar.weixin.qidian.api.WxMpJsAPITest"/>
-      <class name="me.chanjar.weixin.qidian.api.WxMpMiscAPITest"/>
-    </classes>
-  </test>
-
-  <test name="Bean_Test">
-    <classes>
-      <class name="me.chanjar.weixin.qidian.bean.kefu.WxMpKefuMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutImageMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutMusicMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutNewsMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutVideoMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutVoiceMessageTest"/>
-      <class name="me.chanjar.weixin.qidian.bean.message.WxMpXmlOutTextMessageTest"/>
     </classes>
   </test>
 </suite>

@@ -3,6 +3,7 @@ package me.chanjar.weixin.open.bean.result;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.List;
 
@@ -16,10 +17,28 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 public class WxFastMaCanSetCategoryResult extends WxOpenResult {
   private static final long serialVersionUID = -2469386233538980102L;
-  @SerializedName("errcode")
-  private int errCode;
   @SerializedName("categories_list")
   private CategoriesListBean categoriesList;
+
+  /**
+   * 错误码，已弃用，未来将删除
+   *
+   * @see WxOpenResult#getErrcode() 应使用此方法
+   */
+  @Deprecated
+  public int getErrCode() {
+    return NumberUtils.toInt(this.errcode);
+  }
+
+  /**
+   * 错误码，已弃用，未来将删除
+   *
+   * @see WxOpenResult#setErrcode(String) 应使用此方法
+   */
+  @Deprecated
+  public void setErrCode(int errCode) {
+    this.errcode = String.valueOf(errCode);
+  }
 
   @Data
   public static class CategoriesListBean {

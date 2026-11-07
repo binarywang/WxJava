@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
  * 一级分类
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.OneLevelTreeNode}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class OneLevelTreeNode extends CatTreeNode {
 
   /** 二级分类 */

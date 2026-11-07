@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
  * 订单 搜索条件
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderSearchCondition}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(Include.NON_EMPTY)
+@Deprecated
 public class OrderSearchCondition implements Serializable {
 
   private static final long serialVersionUID = 5492584333971883140L;

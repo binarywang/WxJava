@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 店铺信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.shop.ShopInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class ShopInfo implements Serializable {
 
   /** 店铺名称 */

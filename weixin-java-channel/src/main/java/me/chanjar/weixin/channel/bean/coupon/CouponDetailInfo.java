@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
  * 优惠券信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.CouponDetailInfo}。
  */
 @Data
 @NoArgsConstructor
 
+@Deprecated
 public class CouponDetailInfo implements Serializable {
 
   private static final long serialVersionUID = 5994815232349181577L;

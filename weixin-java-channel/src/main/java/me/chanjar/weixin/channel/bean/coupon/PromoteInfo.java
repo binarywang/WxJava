@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 推广信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.PromoteInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class PromoteInfo implements Serializable {
 
   private static final long serialVersionUID = -3030639750899957382L;

@@ -12,10 +12,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 带货助手-获取达人橱窗商品列表 响应
  *
  * @author <a href="https://github.com/features/copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.talent.TalentWindowProductListResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class TalentWindowProductListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 8263047195826340712L;

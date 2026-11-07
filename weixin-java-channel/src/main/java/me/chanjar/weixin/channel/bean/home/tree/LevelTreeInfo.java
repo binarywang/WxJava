@@ -11,10 +11,12 @@ import lombok.NoArgsConstructor;
  * 分类信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.tree.LevelTreeInfo}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class LevelTreeInfo implements Serializable {
 
   /** 一级分类 */

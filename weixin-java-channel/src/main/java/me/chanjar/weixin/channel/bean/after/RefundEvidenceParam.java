@@ -12,11 +12,13 @@ import lombok.NoArgsConstructor;
  * 退款凭证信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.RefundEvidenceParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class RefundEvidenceParam implements Serializable {
 
   private static final long serialVersionUID = 2117305897849528009L;

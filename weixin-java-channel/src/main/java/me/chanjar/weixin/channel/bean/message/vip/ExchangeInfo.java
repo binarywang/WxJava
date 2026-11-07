@@ -12,11 +12,13 @@ import java.io.Serializable;
  * 积分兑换
  *
  * @author <a href="https://github.com/asushiye">asushiye</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.vip.ExchangeInfo}。
  */
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
+@Deprecated
 public class ExchangeInfo implements Serializable {
 
   private static final long serialVersionUID = -5692646625631036694L;

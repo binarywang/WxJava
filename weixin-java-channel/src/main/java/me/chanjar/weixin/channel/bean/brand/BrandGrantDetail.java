@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 商标授权信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.brand.BrandGrantDetail}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BrandGrantDetail implements Serializable {
 
   private static final long serialVersionUID = 3537812707384823606L;

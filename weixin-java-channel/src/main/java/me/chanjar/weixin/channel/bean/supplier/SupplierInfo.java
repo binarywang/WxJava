@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 供货商信息。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.supplier.SupplierInfo}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SupplierInfo implements Serializable {
   private static final long serialVersionUID = -6480813119738259476L;
 

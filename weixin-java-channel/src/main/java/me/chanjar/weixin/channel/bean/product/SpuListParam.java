@@ -10,9 +10,11 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
  * 商品列表查询参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SpuListParam}。
  */
 @Data
 @JsonInclude(Include.NON_NULL)
+@Deprecated
 public class SpuListParam extends StreamPageParam {
 
   private static final long serialVersionUID = -242932365961748404L;

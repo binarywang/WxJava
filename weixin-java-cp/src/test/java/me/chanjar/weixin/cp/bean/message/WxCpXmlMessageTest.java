@@ -124,7 +124,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getFromUserName(), "xiaohe");
     assertEquals(wxMessage.getCreateTime(), Long.valueOf(1502012364L));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
-    assertEquals(wxMessage.getAgentId(), Integer.valueOf(1000004));
+    assertEquals(wxMessage.getAgentId(), "1000004");
     assertEquals(wxMessage.getEvent(), "pic_weixin");
     assertEquals(wxMessage.getEventKey(), "faceSimilarity");
     assertNotNull(wxMessage.getSendPicsInfo());
@@ -190,7 +190,7 @@ public class WxCpXmlMessageTest {
     assertEquals(wxMessage.getFromUserName(), "FromUser");
     assertEquals(wxMessage.getCreateTime(), Long.valueOf(123456789L));
     assertEquals(wxMessage.getMsgType(), WxConsts.XmlMsgType.EVENT);
-    assertEquals(wxMessage.getAgentId(), Integer.valueOf(1));
+    assertEquals(wxMessage.getAgentId(), "1");
     assertEquals(wxMessage.getEvent(), TASKCARD_CLICK);
     assertEquals(wxMessage.getEventKey(), "key111");
     assertEquals(wxMessage.getTaskId(), "taskid111");

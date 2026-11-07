@@ -2,6 +2,9 @@ package com.github.binarywang.wxpay.service.impl;
 
 import com.github.binarywang.wxpay.bean.WxPayApiData;
 import com.github.binarywang.wxpay.exception.WxPayException;
+import com.github.binarywang.wxpay.service.BrandApplymentService;
+import com.github.binarywang.wxpay.service.BrandStoreService;
+import com.github.binarywang.wxpay.service.BrandProfitSharingService;
 import jodd.http.HttpConnectionProvider;
 import jodd.http.HttpRequest;
 import jodd.http.HttpResponse;
@@ -27,6 +30,22 @@ import java.util.Base64;
  */
 @Slf4j
 public class WxPayServiceJoddHttpImpl extends BaseWxPayServiceImpl {
+  /** Jodd 尚不支持 APIv3，品牌服务不能通过该客户端执行。 */
+  @Override
+  public BrandApplymentService getBrandApplymentService() {
+    throw new UnsupportedOperationException("Jodd 客户端不支持 APIv3 品牌入驻，请使用 ApacheHttp 或 HttpComponents 客户端");
+  }
+
+  @Override
+  public BrandStoreService getBrandStoreService() {
+    throw new UnsupportedOperationException("Jodd 客户端不支持 APIv3 品牌门店，请使用 ApacheHttp 或 HttpComponents 客户端");
+  }
+
+  @Override
+  public BrandProfitSharingService getBrandProfitSharingService() {
+    throw new UnsupportedOperationException("Jodd 客户端不支持 APIv3 品牌分账，请使用 ApacheHttp 或 HttpComponents 客户端");
+  }
+
   @Override
   public byte[] postForBytes(String url, String requestStr, boolean useKey) throws WxPayException {
     try {

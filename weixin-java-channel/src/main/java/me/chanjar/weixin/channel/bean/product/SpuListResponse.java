@@ -11,10 +11,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 商品列表信息 响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SpuListResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class SpuListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -7448819335418389308L;

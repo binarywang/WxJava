@@ -13,11 +13,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * SPU审核消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.product.SpuAuditMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class SpuAuditMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = 1763291928383078102L;

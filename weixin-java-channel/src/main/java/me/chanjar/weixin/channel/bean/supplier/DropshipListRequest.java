@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 代发单列表请求。
  *
  * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.supplier.DropshipListRequest}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class DropshipListRequest implements Serializable {
   private static final long serialVersionUID = 2638071229335192596L;
 

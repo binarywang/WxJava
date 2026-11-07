@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 提现列表参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.WithdrawListParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class WithdrawListParam implements Serializable {
 
   private static final long serialVersionUID = -672422656564313999L;

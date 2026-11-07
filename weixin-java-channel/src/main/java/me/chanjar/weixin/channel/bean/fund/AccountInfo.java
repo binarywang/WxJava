@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 账户信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.AccountInfo}。
  */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class AccountInfo implements Serializable {
 
   private static final long serialVersionUID = -2107134853480093451L;

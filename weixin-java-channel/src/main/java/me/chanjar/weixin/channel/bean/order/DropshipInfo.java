@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 /**
  * 代发相关信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.DropshipInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class DropshipInfo implements Serializable {
 
   private static final long serialVersionUID = -4562618835611282016L;

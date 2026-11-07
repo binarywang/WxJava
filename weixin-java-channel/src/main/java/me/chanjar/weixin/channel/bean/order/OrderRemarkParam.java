@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 订单备注
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderRemarkParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class OrderRemarkParam implements Serializable {
 
   private static final long serialVersionUID = 2285714780419948468L;

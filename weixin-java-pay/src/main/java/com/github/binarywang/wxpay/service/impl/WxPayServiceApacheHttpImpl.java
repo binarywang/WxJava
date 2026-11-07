@@ -128,6 +128,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   }
 
   private String requestV3(String url, String requestStr, HttpRequestBase httpRequestBase) throws WxPayException {
+    this.checkV3SandboxNotSupported();
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     try (CloseableHttpResponse response = httpClient.execute(httpRequestBase)) {
       //v3已经改为通过状态码判断200 204 成功
@@ -139,7 +140,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode || HttpStatus.SC_ACCEPTED == statusCode) {
-        this.logRequestAndResponse(url, requestStr, responseString);
+        if (java.net.URI.create(url).getPath().contains("/v3/brand/")) {
+          log.info("\n【请求地址】：{}\n【响应状态码】：{}", url, statusCode);
+        } else {
+          this.logRequestAndResponse(url, requestStr, responseString);
+        }
         return responseString;
       }
 
@@ -147,7 +152,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.logError(url, requestStr, e);
+      if (java.net.URI.create(url).getPath().contains("/v3/brand/")) {
+        log.error("\n【请求地址】：{}\n【异常类型】：{}", url, e.getClass().getSimpleName());
+      } else {
+        this.logError(url, requestStr, e);
+      }
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpRequestBase.releaseConnection();
@@ -158,11 +167,13 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   public String patchV3(String url, String requestStr) throws WxPayException {
     HttpPatch httpPatch = new HttpPatch(url);
     httpPatch.setEntity(createEntry(requestStr));
+    this.configureRequest(httpPatch);
     return this.requestV3(url, requestStr, httpPatch);
   }
 
   @Override
   public String postV3WithWechatpaySerial(String url, String requestStr) throws WxPayException {
+    this.checkV3SandboxNotSupported();
     HttpPost httpPost = this.createHttpPost(url, requestStr);
     this.configureRequest(httpPost);
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
@@ -177,7 +188,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode
         || (HttpStatus.SC_ACCEPTED == statusCode && url.endsWith("/codepay"))) {
-        this.logRequestAndResponse(url, requestStr, responseString);
+        if (java.net.URI.create(url).getPath().contains("/v3/brand/")) {
+          log.info("\n【请求地址】：{}\n【响应状态码】：{}", url, statusCode);
+        } else {
+          this.logRequestAndResponse(url, requestStr, responseString);
+        }
         return responseString;
       }
 
@@ -185,7 +200,11 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      this.logError(url, requestStr, e);
+      if (java.net.URI.create(url).getPath().contains("/v3/brand/")) {
+        log.error("\n【请求地址】：{}\n【异常类型】：{}", url, e.getClass().getSimpleName());
+      } else {
+        this.logError(url, requestStr, e);
+      }
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpPost.releaseConnection();
@@ -199,6 +218,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public String requestV3(String url, HttpRequestBase httpRequest) throws WxPayException {
+    this.checkV3SandboxNotSupported();
     this.configureRequest(httpRequest);
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
     try (CloseableHttpResponse response = httpClient.execute(httpRequest)) {
@@ -211,7 +231,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       }
 
       if (HttpStatus.SC_OK == statusCode || HttpStatus.SC_NO_CONTENT == statusCode || HttpStatus.SC_ACCEPTED == statusCode) {
-        log.info("\n【请求地址】：{}\n【响应数据】：{}", url, responseString);
+        log.info("\n【请求地址】：{}\n【响应状态码】：{}", url, statusCode);
         return responseString;
       }
 
@@ -219,7 +239,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
       JsonObject jsonObject = GsonParser.parse(responseString);
       throw convertException(jsonObject);
     } catch (Exception e) {
-      log.error("\n【请求地址】：{}\n【异常信息】：{}", url, e.getMessage());
+      log.error("\n【请求地址】：{}\n【异常类型】：{}", url, e.getClass().getSimpleName());
       throw (e instanceof WxPayException) ? (WxPayException) e : new WxPayException(e.getMessage(), e);
     } finally {
       httpRequest.releaseConnection();
@@ -243,6 +263,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
 
   @Override
   public InputStream downloadV3(String url) throws WxPayException {
+    this.checkV3SandboxNotSupported();
     HttpGet httpGet = new WxPayV3DownloadHttpGet(url);
     this.configureRequest(httpGet);
     CloseableHttpClient httpClient = this.createApiV3HttpClient();
@@ -285,6 +306,7 @@ public class WxPayServiceApacheHttpImpl extends BaseWxPayServiceImpl {
   }
 
   private void configureRequest(HttpRequestBase request) {
+    this.checkV3SandboxNotSupported();
     String serialNumber = getWechatPaySerial(getConfig());
     String method = request.getMethod();
     request.addHeader(ACCEPT, APPLICATION_JSON);

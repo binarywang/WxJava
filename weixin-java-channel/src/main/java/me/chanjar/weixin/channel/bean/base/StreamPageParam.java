@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 流式分页参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.base.StreamPageParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class StreamPageParam implements Serializable {
 
   private static final long serialVersionUID = -4098060161712929196L;

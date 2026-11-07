@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 物流信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.delivery.DeliveryInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class DeliveryInfo implements Serializable {
 
   private static final long serialVersionUID = -6205626967305385248L;

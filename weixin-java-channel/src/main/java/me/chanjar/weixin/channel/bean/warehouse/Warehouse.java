@@ -10,9 +10,11 @@ import lombok.NoArgsConstructor;
  * 仓库
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.warehouse.Warehouse}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class Warehouse implements Serializable {
 
   private static final long serialVersionUID = -2322154583471063637L;

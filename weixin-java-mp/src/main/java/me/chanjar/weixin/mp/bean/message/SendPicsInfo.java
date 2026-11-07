@@ -27,6 +27,8 @@ public class SendPicsInfo implements Serializable {
   private static final long serialVersionUID = -4572837013294199227L;
 
   @XStreamAlias("PicList")
+  @XStreamConverter(value = com.thoughtworks.xstream.converters.extended.NamedCollectionConverter.class,
+    strings = "item", types = Item.class, useImplicitType = false)
   @JacksonXmlProperty(localName = "PicList")
   protected final List<Item> picList = new ArrayList<>();
 

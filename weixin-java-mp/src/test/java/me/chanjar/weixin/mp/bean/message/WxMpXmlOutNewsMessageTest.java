@@ -24,7 +24,6 @@ public class WxMpXmlOutNewsMessageTest {
       + "<FromUserName><![CDATA[fromUser]]></FromUserName>"
       + "<CreateTime>1122</CreateTime>"
       + "<MsgType><![CDATA[news]]></MsgType>"
-      + "    <ArticleCount>2</ArticleCount>"
       + "    <Articles>"
       + "        <item>"
       + "            <Title><![CDATA[title]]></Title>"
@@ -39,6 +38,7 @@ public class WxMpXmlOutNewsMessageTest {
       + "            <Url><![CDATA[url]]></Url>"
       + "        </item>"
       + "    </Articles>"
+      + "    <ArticleCount>2</ArticleCount>"
       + "</xml>";
     System.out.println(m.toXml());
     Assert.assertEquals(m.toXml().replaceAll("\\s", ""), expected.replaceAll("\\s", ""));

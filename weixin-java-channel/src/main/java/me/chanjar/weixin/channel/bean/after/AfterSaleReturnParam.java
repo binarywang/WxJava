@@ -9,8 +9,10 @@ import me.chanjar.weixin.channel.bean.base.AddressInfo;
  * 退货信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.after.AfterSaleReturnParam}。
  */
 @Data
+@Deprecated
 public class AfterSaleReturnParam implements Serializable {
 
   private static final long serialVersionUID = -1101993925465293521L;

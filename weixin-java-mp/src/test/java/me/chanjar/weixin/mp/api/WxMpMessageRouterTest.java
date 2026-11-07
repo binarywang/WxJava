@@ -1,6 +1,9 @@
 package me.chanjar.weixin.mp.api;
 
 import me.chanjar.weixin.common.api.WxConsts;
+import me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateChecker;
+import me.chanjar.weixin.mp.api.impl.WxMpServiceImpl;
+import me.chanjar.weixin.mp.config.impl.WxMpDefaultConfigImpl;
 import me.chanjar.weixin.common.session.StandardSessionManager;
 import me.chanjar.weixin.common.session.WxSessionManager;
 import me.chanjar.weixin.mp.bean.message.WxMpXmlMessage;
@@ -20,8 +23,17 @@ import java.util.Map;
 @Test
 public class WxMpMessageRouterTest {
 
+  private WxMpService newTestService() {
+    WxMpDefaultConfigImpl config = new WxMpDefaultConfigImpl();
+    config.setAppId("test-app-id");
+    WxMpService service = new WxMpServiceImpl();
+    service.setWxMpConfigStorage(config);
+    return service;
+  }
+
   @Test(enabled = false)
   public void prepare(boolean async, StringBuffer sb, WxMpMessageRouter router) {
+    router.setMessageDuplicateChecker(new WxMessageInMemoryDuplicateChecker());
     router
       .rule()
       .async(async)
@@ -56,7 +68,7 @@ public class WxMpMessageRouterTest {
   @Test(dataProvider = "messages-1")
   public void testSync(WxMpXmlMessage message, String expected) {
     StringBuffer sb = new StringBuffer();
-    WxMpMessageRouter router = new WxMpMessageRouter(null);
+    WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
     prepare(false, sb, router);
     router.route(message);
     Assert.assertEquals(sb.toString(), expected);
@@ -65,7 +77,7 @@ public class WxMpMessageRouterTest {
   @Test(dataProvider = "messages-1")
   public void testAsync(WxMpXmlMessage message, String expected) throws InterruptedException {
     StringBuffer sb = new StringBuffer();
-    WxMpMessageRouter router = new WxMpMessageRouter(null);
+    WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
     prepare(true, sb, router);
     router.route(message);
     Thread.sleep(500);
@@ -77,7 +89,7 @@ public class WxMpMessageRouterTest {
   public void testExternalExcutorService(WxMpXmlMessage message, String expected) throws InterruptedException {
     StringBuffer sb = new StringBuffer();
     ExecutorService executorService = Executors.newFixedThreadPool(100);
-    WxMpMessageRouter router = new WxMpMessageRouter(null, executorService);
+    WxMpMessageRouter router = new WxMpMessageRouter(newTestService(), executorService);
     prepare(true, sb, router);
     router.route(message);
     Thread.sleep(500);
@@ -87,7 +99,7 @@ public class WxMpMessageRouterTest {
 
 
   public void testConcurrency() throws InterruptedException {
-    final WxMpMessageRouter router = new WxMpMessageRouter(null);
+    final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
     router.rule().handler(new WxMpMessageHandler() {
       @Override
       public WxMpXmlOutMessage handle(WxMpXmlMessage wxMessage, Map<String, Object> context, WxMpService wxMpService,
@@ -183,7 +195,7 @@ public class WxMpMessageRouterTest {
   public void testSessionClean1(StandardSessionManager ism) throws InterruptedException {
 
     // 两个同步请求，看是否处理完毕后会被清理掉
-    final WxMpMessageRouter router = new WxMpMessageRouter(null);
+    final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
     router.setSessionManager(ism);
     router
       .rule().async(false).handler(new WxSessionMessageHandler()).next()
@@ -203,7 +215,7 @@ public class WxMpMessageRouterTest {
 
     // 1个同步,1个异步请求，看是否处理完毕后会被清理掉
     {
-      final WxMpMessageRouter router = new WxMpMessageRouter(null);
+      final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
       router.setSessionManager(ism);
       router
         .rule().async(false).handler(new WxSessionMessageHandler()).next()
@@ -217,7 +229,7 @@ public class WxMpMessageRouterTest {
       Assert.assertEquals(ism.getActiveSessions(), 0);
     }
     {
-      final WxMpMessageRouter router = new WxMpMessageRouter(null);
+      final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
       router.setSessionManager(ism);
       router
         .rule().async(true).handler(new WxSessionMessageHandler()).next()
@@ -237,7 +249,7 @@ public class WxMpMessageRouterTest {
   public void testSessionClean3(StandardSessionManager ism) throws InterruptedException {
 
     // 2个异步请求，看是否处理完毕后会被清理掉
-    final WxMpMessageRouter router = new WxMpMessageRouter(null);
+    final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
     router.setSessionManager(ism);
     router
       .rule().async(true).handler(new WxSessionMessageHandler()).next()
@@ -257,7 +269,7 @@ public class WxMpMessageRouterTest {
 
     // 一个同步请求，看是否处理完毕后会被清理掉
     {
-      final WxMpMessageRouter router = new WxMpMessageRouter(null);
+      final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
       router.setSessionManager(ism);
       router
         .rule().async(false).handler(new WxSessionMessageHandler()).end();
@@ -271,7 +283,7 @@ public class WxMpMessageRouterTest {
     }
 
     {
-      final WxMpMessageRouter router = new WxMpMessageRouter(null);
+      final WxMpMessageRouter router = new WxMpMessageRouter(newTestService());
       router.setSessionManager(ism);
       router
         .rule().async(true).handler(new WxSessionMessageHandler()).end();

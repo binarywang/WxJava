@@ -13,9 +13,11 @@ import me.chanjar.weixin.channel.bean.base.AttrInfo;
  * 订单商品信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.OrderProductInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class OrderProductInfo implements Serializable {
 
   private static final long serialVersionUID = -2193536732955185928L;

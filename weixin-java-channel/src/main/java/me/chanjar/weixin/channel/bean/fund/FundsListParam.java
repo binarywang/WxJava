@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 资金流水参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.FundsListParam}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class FundsListParam implements Serializable {
 
   private static final long serialVersionUID = 2998955690332382229L;

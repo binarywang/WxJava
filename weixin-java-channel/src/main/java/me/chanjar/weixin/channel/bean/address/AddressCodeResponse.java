@@ -11,10 +11,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 地址编码 响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.address.AddressCodeResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class AddressCodeResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -8994407971295563982L;

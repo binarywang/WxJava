@@ -22,9 +22,11 @@ import java.io.Serializable;
  *       "experience_value": "100"
  *     }
  *   }
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.vip.VipInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class VipInfo implements Serializable {
   private static final long serialVersionUID = -215590991862774701L;
 

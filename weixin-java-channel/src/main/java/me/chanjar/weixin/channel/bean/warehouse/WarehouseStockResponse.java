@@ -9,8 +9,10 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 仓库库存响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.warehouse.WarehouseStockResponse}。
  */
 @Data
+@Deprecated
 public class WarehouseStockResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 1810645965041317763L;

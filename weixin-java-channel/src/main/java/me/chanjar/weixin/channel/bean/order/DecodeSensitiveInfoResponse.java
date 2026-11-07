@@ -10,10 +10,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 解码订单包含的敏感数据响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.DecodeSensitiveInfoResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class DecodeSensitiveInfoResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = 935829924760021624L;

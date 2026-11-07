@@ -1,0 +1,29 @@
+package com.binarywang.wxjava.store.bean.supplier;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import com.binarywang.wxjava.store.bean.base.WxStoreBaseResponse;
+
+/**
+ * 代发单列表响应。
+ *
+ * @author <a href="https://github.com/github-copilot">GitHub Copilot</a>
+ */
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class DropshipListResponse extends WxStoreBaseResponse {
+  private static final long serialVersionUID = -2850183412032417307L;
+
+  @JsonProperty("dropship_list")
+  private List<DropshipInfo> dropshipList;
+
+  @JsonProperty("next_key")
+  private String nextKey;
+
+  @JsonProperty("has_more")
+  private Boolean hasMore;
+}

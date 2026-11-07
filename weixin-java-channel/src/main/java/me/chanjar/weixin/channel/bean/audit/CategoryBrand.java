@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
  * 分类中的品牌
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.audit.CategoryBrand}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class CategoryBrand implements Serializable {
   private static final long serialVersionUID = -5437441266080209907L;
 

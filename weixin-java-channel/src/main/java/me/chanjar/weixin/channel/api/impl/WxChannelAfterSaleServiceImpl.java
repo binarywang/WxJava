@@ -136,4 +136,42 @@ public class WxChannelAfterSaleServiceImpl implements WxChannelAfterSaleService 
     return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
   }
 
+  @Override
+  public GuaranteeOrderListResponse listGuaranteeOrder(GuaranteeOrderListParam param) throws WxErrorException {
+    String resJson = shopService.post(GUARANTEE_ORDER_LIST_URL, param);
+    return ResponseUtils.decode(resJson, GuaranteeOrderListResponse.class);
+  }
+
+  @Override
+  public GuaranteeOrderInfoResponse getGuaranteeOrder(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    String resJson = shopService.post(GUARANTEE_ORDER_GET_URL, param);
+    return ResponseUtils.decode(resJson, GuaranteeOrderInfoResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse acceptGuarantee(String guaranteeOrderId) throws WxErrorException {
+    GuaranteeOrderIdParam param = new GuaranteeOrderIdParam(guaranteeOrderId);
+    String resJson = shopService.post(GUARANTEE_ORDER_ACCEPT_URL, param);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse modifyGuarantee(GuaranteeModifyRequest request) throws WxErrorException {
+    String resJson = shopService.post(GUARANTEE_ORDER_MODIFY_URL, request);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse proofGuarantee(GuaranteeProofRequest request) throws WxErrorException {
+    String resJson = shopService.post(GUARANTEE_ORDER_PROOF_URL, request);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
+  @Override
+  public WxChannelBaseResponse refuseGuarantee(GuaranteeRefuseRequest request) throws WxErrorException {
+    String resJson = shopService.post(GUARANTEE_ORDER_REFUSE_URL, request);
+    return ResponseUtils.decode(resJson, WxChannelBaseResponse.class);
+  }
+
 }

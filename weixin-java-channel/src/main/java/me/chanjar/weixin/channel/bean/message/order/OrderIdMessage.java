@@ -12,11 +12,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 订单id消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.order.OrderIdMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class OrderIdMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = 3793987364799712798L;

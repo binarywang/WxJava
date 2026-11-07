@@ -12,11 +12,13 @@ import me.chanjar.weixin.channel.message.WxChannelMessage;
  * 订单取消消息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.message.order.OrderCancelMessage}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @JacksonXmlRootElement(localName = "xml")
+@Deprecated
 public class OrderCancelMessage extends WxChannelMessage {
 
   private static final long serialVersionUID = 5389546516473919310L;

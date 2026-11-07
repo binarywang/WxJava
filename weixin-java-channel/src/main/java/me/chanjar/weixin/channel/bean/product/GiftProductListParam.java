@@ -9,9 +9,11 @@ import me.chanjar.weixin.channel.bean.base.StreamPageParam;
  * 赠品列表查询参数
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.GiftProductListParam}。
  */
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class GiftProductListParam extends StreamPageParam {
 
   private static final long serialVersionUID = 7583500622060651067L;

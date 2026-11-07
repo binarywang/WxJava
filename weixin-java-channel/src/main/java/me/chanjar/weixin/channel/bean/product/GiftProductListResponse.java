@@ -11,10 +11,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 赠品列表响应
  *
  * @author GitHub Copilot
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.GiftProductListResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class GiftProductListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -2734111694780970778L;

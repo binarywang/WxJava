@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 背景图审核信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.home.background.BackgroundApplyResult}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BackgroundApplyResult implements Serializable {
 
   private static final long serialVersionUID = 3154900058221168732L;

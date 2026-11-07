@@ -1,0 +1,65 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd" >
+
+<suite name="WxPay-Offline-Tests" verbose="1">
+  <!-- Credential-dependent tests remain runnable explicitly with -Dtest. -->
+  <test name="Unit_Tests">
+    <classes>
+      <class name="com.github.binarywang.wxpay.service.BrandApplymentServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandStoreServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandProfitSharingServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandServiceEntryTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BrandSensitiveLoggingTest"/>
+      <class name="com.github.binarywang.wxpay.bean.applyment.WxPayApplyment4SubCreateRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.entpay.EntPayRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.invoice.GeneralInvoiceRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.marketing.FavorStocksGetResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.marketing.transfer.BatchDetailsResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.notify.WxPayNotifyResponseTest"/>
+      <class name="com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.notify.WxPayOrderNotifyUnknownFieldTest"/>
+      <class name="com.github.binarywang.wxpay.bean.notify.WxPayRefundNotifyV3ResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.notify.WxScanPayNotifyResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.payscore.WxPartnerPayScoreRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.payscore.WxPayScoreRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingQueryResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.profitsharing.ProfitSharingV3ResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.request.CombineCloseRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.request.WxMaEntrustRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.request.WxPayPartnerRefundV3RequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.request.WxPayRefundRequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.request.WxPayRefundV3RequestTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.BaseWxPayResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayBillResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayRedpackQueryResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayRefundQueryResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayRefundResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPaySendRedpackResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxPayUnifiedOrderV3ResultTest"/>
+      <class name="com.github.binarywang.wxpay.bean.result.WxSignQueryResultTest"/>
+      <class name="com.github.binarywang.wxpay.config.WxPayConfigPrivateKeyTest"/>
+      <class name="com.github.binarywang.wxpay.config.WxPayConfigTest">
+        <methods>
+          <!-- These examples require a merchant certificate or external URL. -->
+          <exclude name="testInitSSLContext.*"/>
+        </methods>
+      </class>
+      <class name="com.github.binarywang.wxpay.service.BusinessOperationTransferServiceTest"/>
+      <class name="com.github.binarywang.wxpay.service.LegacyEcommerceApiCompatibilityTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.BaseWxPayServiceGlobalImplTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.ConnectionPoolUsageExampleTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.MultiAppIdSwitchoverTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.PartnerInvoiceServiceImplTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.TransferAuthorizationApiCompatibilityTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.TransferReceiptApiCompatibilityTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.TransferUserAuthorizationApiCompatibilityTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.WxPayServiceApacheHttpImplConnectionPoolTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.WxPayServiceSandboxTest"/>
+      <class name="com.github.binarywang.wxpay.util.SignUtilsTest"/>
+      <class name="com.github.binarywang.wxpay.v3.SignatureExecTrustedHostTest"/>
+      <class name="com.github.binarywang.wxpay.v3.auth.AutoUpdateCertificatesVerifierPublicKeyModeTest"/>
+      <class name="com.github.binarywang.wxpay.v3.auth.WxPayValidatorTest"/>
+      <class name="com.github.binarywang.wxpay.v3.util.RsaCryptoUtilTest"/>
+    </classes>
+  </test>
+</suite>

@@ -7,10 +7,12 @@ import lombok.EqualsAndHashCode;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.CouponStatusParam}。
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class CouponStatusParam extends CouponIdInfo {
 
   private static final long serialVersionUID = -7108348049925634704L;

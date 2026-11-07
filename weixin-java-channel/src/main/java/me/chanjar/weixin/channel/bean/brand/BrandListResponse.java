@@ -11,10 +11,12 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
  * 品牌列表响应
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.brand.BrandListResponse}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class BrandListResponse extends WxChannelBaseResponse {
 
   private static final long serialVersionUID = -5335449078706304920L;

@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
  * 合作账号参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.cooperation.CooperationSharerParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class CooperationSharerParam implements Serializable {
 
   private static final long serialVersionUID = 5032621997764493109L;

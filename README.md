@@ -8,11 +8,11 @@
 [![Build Status](https://img.shields.io/circleci/project/github/binarywang/WxJava/develop.svg?sanitize=true&label=Build)](https://circleci.com/gh/binarywang/WxJava/tree/develop)
 [![使用IntelliJ IDEA开发维护](https://img.shields.io/badge/IntelliJ%20IDEA-支持-blue.svg)](https://www.jetbrains.com/?from=WxJava-weixin-java-tools)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/binarywang/WxJava)
 
 [<img src="https://api.hellogithub.com/v1/widgets/recommend.svg?rid=6de6147050c94db4aedfd7098d19f8d8&claim_uid=mwKh0tILBfjlezR" alt="Featured｜HelloGitHub" width="250" height="55">](https://hellogithub.com/repository/6de6147050c94db4aedfd7098d19f8d8)
 [<img src="https://trendshift.io/api/badge/repositories/12152" alt="binarywang/WxJava | 趋势转变" width="250" height="55">](https://trendshift.io/repositories/12152)
 [<img src="https://api.star-history.com/badge?repo=binarywang/WxJava" alt="Star History" width="250" height="55">](https://www.star-history.com/binarywang/wxjava)
-
 
 ### 微信 `Java` 开发工具包，支持包括微信支付、开放平台、公众号、企业微信、视频号、小程序等微信功能模块的后端开发。
 

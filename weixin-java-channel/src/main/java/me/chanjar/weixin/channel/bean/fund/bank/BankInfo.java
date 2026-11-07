@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
  * 银行信息
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.fund.bank.BankInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class BankInfo implements Serializable {
 
   private static final long serialVersionUID = -4837989875996346711L;

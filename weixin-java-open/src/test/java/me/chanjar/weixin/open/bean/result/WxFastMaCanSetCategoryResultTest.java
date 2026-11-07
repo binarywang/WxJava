@@ -3,7 +3,9 @@ package me.chanjar.weixin.open.bean.result;
 import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 import org.testng.annotations.Test;
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertTrue;
 
 
 public class WxFastMaCanSetCategoryResultTest {
@@ -73,6 +75,10 @@ public class WxFastMaCanSetCategoryResultTest {
 
     assertNotNull(res);
     assertNotNull(res.getCategoriesList());
+    assertEquals(res.getErrcode(), "0");
+    assertEquals(res.getErrmsg(), "ok");
+    assertEquals(res.getErrCode(), 0);
+    assertTrue(res.isSuccess());
     System.out.println(res);
   }
 

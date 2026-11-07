@@ -6,9 +6,11 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.coupon.CouponInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class CouponInfo extends CouponIdInfo {
 
   private static final long serialVersionUID = -5862063828870424262L;

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>wx-java-solon-plugins</artifactId>
+    <groupId>com.github.binarywang</groupId>
+    <version>4.8.6.B</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <artifactId>wx-java-store-multi-solon-plugin</artifactId>
+  <name>WxJava - Solon Plugin for Store::支持多账号配置</name>
+  <description>微信小店开发的 Solon Plugin::支持多账号配置</description>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.github.binarywang</groupId>
+      <artifactId>weixin-java-store</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.redisson</groupId>
+      <artifactId>redisson</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jodd</groupId>
+      <artifactId>jodd-http</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+</project>

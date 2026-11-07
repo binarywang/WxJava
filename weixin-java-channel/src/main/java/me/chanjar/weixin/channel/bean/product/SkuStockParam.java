@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 
 /**
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.product.SkuStockParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Deprecated
 public class SkuStockParam implements Serializable {
 
   private static final long serialVersionUID = -5542939078361208816L;

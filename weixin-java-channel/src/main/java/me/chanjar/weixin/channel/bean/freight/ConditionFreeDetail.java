@@ -9,10 +9,12 @@ import lombok.NoArgsConstructor;
  * 计费规则
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.freight.ConditionFreeDetail}。
  */
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
+@Deprecated
 public class ConditionFreeDetail extends AddressInfoList {
 
   private static final long serialVersionUID = 9204578767029379142L;

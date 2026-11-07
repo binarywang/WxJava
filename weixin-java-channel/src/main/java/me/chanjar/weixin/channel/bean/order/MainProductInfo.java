@@ -8,9 +8,11 @@ import java.io.Serializable;
 
 /**
  * 赠品对应的主品信息
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.order.MainProductInfo}。
  */
 @Data
 @NoArgsConstructor
+@Deprecated
 public class MainProductInfo implements Serializable {
 
   private static final long serialVersionUID = 2024061212345678901L;

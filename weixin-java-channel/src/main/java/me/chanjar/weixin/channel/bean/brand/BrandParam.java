@@ -11,11 +11,13 @@ import lombok.NoArgsConstructor;
  * 品牌参数
  *
  * @author <a href="https://github.com/lixize">Zeyes</a>
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.brand.BrandParam}。
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class BrandParam implements Serializable {
 
   private static final long serialVersionUID = -4894709391464428613L;

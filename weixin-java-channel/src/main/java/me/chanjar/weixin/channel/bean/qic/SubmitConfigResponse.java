@@ -9,9 +9,13 @@ import me.chanjar.weixin.channel.bean.base.WxChannelBaseResponse;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @deprecated 请迁移至 {@link com.binarywang.wxjava.store.bean.qic.SubmitConfigResponse}。
+ */
 @Data
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Deprecated
 public class SubmitConfigResponse extends WxChannelBaseResponse {
   private static final long serialVersionUID = 2456553692263326158L;
 

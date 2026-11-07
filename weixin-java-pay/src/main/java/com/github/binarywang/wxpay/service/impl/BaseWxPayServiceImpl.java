@@ -134,6 +134,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   private final BrandMerchantTransferService brandMerchantTransferService = new BrandMerchantTransferServiceImpl(this);
 
   @Getter
+  private final BrandApplymentService brandApplymentService = new BrandApplymentServiceImpl(this);
+
+  @Getter
+  private final BrandStoreService brandStoreService = new BrandStoreServiceImpl(this);
+
+  @Getter
+  private final BrandProfitSharingService brandProfitSharingService = new BrandProfitSharingServiceImpl(this);
+
+  @Getter
   private final SubscriptionBillingService subscriptionBillingService = new SubscriptionBillingServiceImpl(this);
 
   @Getter
@@ -147,6 +156,9 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
 
   @Getter
   private final MerchantLimitationService merchantLimitationService = new MerchantLimitationServiceImpl(this);
+
+  @Getter
+  private final GoldPlanService goldPlanService = new GoldPlanServiceImpl(this);
 
   @Getter
   private final PartnerInvoiceService partnerInvoiceService = new PartnerInvoiceServiceImpl(this);
@@ -368,12 +380,15 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   @Override
   public String getPayBaseUrl() {
     if (this.getConfig().isUseSandboxEnv()) {
-      if (StringUtils.isNotBlank(this.getConfig().getApiV3Key())) {
-        throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
-      }
       return this.getConfig().getApiHostWithPathPrefix() + "/xdc/apiv2sandbox";
     }
     return this.getConfig().getApiHostWithPathPrefix();
+  }
+
+  protected void checkV3SandboxNotSupported() {
+    if (this.getConfig().isUseSandboxEnv()) {
+      throw new WxRuntimeException("微信支付V3 目前不支持沙箱模式！");
+    }
   }
 
   @Override

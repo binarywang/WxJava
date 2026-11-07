@@ -78,7 +78,27 @@ public class CommonUploadParam implements Serializable {
    */
   @SneakyThrows
   public static CommonUploadParam fromBytes(String name, @Nullable String fileName, byte[] bytes) {
-    return new CommonUploadParam(name, new CommonUploadData(fileName, new ByteArrayInputStream(bytes), bytes.length), null);
+    return new CommonUploadParam(name, new ByteArrayUploadData(fileName, bytes), null);
+  }
+
+  private static class ByteArrayUploadData extends CommonUploadData {
+
+    private final byte[] bytes;
+
+    private ByteArrayUploadData(@Nullable String fileName, byte[] bytes) {
+      super(fileName, new ByteArrayInputStream(bytes), bytes.length);
+      this.bytes = bytes;
+    }
+
+    @Override
+    public ByteArrayInputStream getInputStream() {
+      return new ByteArrayInputStream(bytes);
+    }
+
+    @Override
+    public byte[] readAllBytes() {
+      return bytes.clone();
+    }
   }
 
   /**
