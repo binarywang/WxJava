@@ -19,7 +19,7 @@ public class HttpProxyUtils {
 
   /**
    * 配置 http 正向代理 可以实现内网服务通过代理调用接口
-   * 参考代码: WxPayServiceApacheHttpImpl 中的方法 createHttpClientBuilder
+   * 参考代码: AbstractWxPayApacheHttpServiceImpl 中的方法 createHttpClientBuilder
    *
    * @param wxPayHttpProxy 代理配置
    * @param httpClientBuilder http构造参数
