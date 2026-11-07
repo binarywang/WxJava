@@ -1,16 +1,18 @@
 package me.chanjar.weixin.common.util;
 
+import java.security.SecureRandom;
+
 public class RandomUtils {
 
   private static final String RANDOM_STR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-  private static volatile java.util.Random random;
+  private static volatile SecureRandom random;
 
-  private static java.util.Random getRandom() {
+  private static SecureRandom getRandom() {
     if (random == null) {
       synchronized (RandomUtils.class) {
         if (random == null) {
-          random = new java.util.Random();
+          random = new SecureRandom();
         }
       }
     }
@@ -19,7 +21,7 @@ public class RandomUtils {
 
   public static String getRandomStr() {
     StringBuilder sb = new StringBuilder();
-    java.util.Random r = getRandom();
+    SecureRandom r = getRandom();
     for (int i = 0; i < 16; i++) {
       sb.append(RANDOM_STR.charAt(r.nextInt(RANDOM_STR.length())));
     }

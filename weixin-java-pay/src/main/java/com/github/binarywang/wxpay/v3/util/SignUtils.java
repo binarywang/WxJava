@@ -4,7 +4,6 @@ import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.security.*;
 import java.util.Base64;
-import java.util.Random;
 
 /**
 * @author cloudx
@@ -33,13 +32,13 @@ public class SignUtils {
     return genRandomStr(32);
   }
 
-  private static volatile Random random;
+  private static volatile SecureRandom random;
 
-  private static Random getRandom() {
+  private static SecureRandom getRandom() {
     if (random == null) {
       synchronized (SignUtils.class) {
         if (random == null) {
-          random = new Random();
+          random = new SecureRandom();
         }
       }
     }
@@ -54,7 +53,7 @@ public class SignUtils {
    */
   public static String genRandomStr(int length) {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    Random r = getRandom();
+    SecureRandom r = getRandom();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < length; i++) {
       int number = r.nextInt(base.length());
