@@ -18,8 +18,9 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.SecureRandom;
 import java.util.Arrays;
-import java.util.Random;
 
 /**
  * <pre>
@@ -37,13 +38,13 @@ public class WxCryptUtil {
   private static final Base64 BASE64 = new Base64();
   private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-  private static volatile Random random;
+  private static volatile SecureRandom random;
 
-  private static Random getRandom() {
+  private static SecureRandom getRandom() {
     if (random == null) {
       synchronized (WxCryptUtil.class) {
         if (random == null) {
-          random = new Random();
+          random = new SecureRandom();
         }
       }
     }
@@ -122,13 +123,27 @@ public class WxCryptUtil {
    */
   private static String genRandomStr() {
     String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    Random r = getRandom();
+    SecureRandom r = getRandom();
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i < 16; i++) {
       int number = r.nextInt(base.length());
       sb.append(base.charAt(number));
     }
     return sb.toString();
+  }
+
+  /**
+   * 以固定时间的方式比较两个签名，避免时序攻击.
+   *
+   * @param expected 本地计算出的签名
+   * @param actual   请求中携带的签名
+   * @return 两者是否一致
+   */
+  private static boolean isSignatureEqual(String expected, String actual) {
+    if (expected == null || actual == null) {
+      return false;
+    }
+    return MessageDigest.isEqual(expected.getBytes(CHARSET), actual.getBytes(CHARSET));
   }
 
   /**
@@ -296,7 +311,7 @@ public class WxCryptUtil {
   public String decryptContent(String msgSignature, String timeStamp, String nonce, String encryptedContent) {
     // 验证安全签名
     String signature = SHA1.gen(this.token, timeStamp, nonce, encryptedContent);
-    if (!signature.equals(msgSignature)) {
+    if (!isSignatureEqual(signature, msgSignature)) {
       throw new WxRuntimeException("加密消息签名校验失败");
     }
     // 解密

@@ -11,6 +11,7 @@
       <class name="me.chanjar.weixin.common.util.json.WxDateTypeAdapterTest"/>
       <class name="me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerTest"/>
       <class name="me.chanjar.weixin.common.session.SessionTest"/>
+      <class name="me.chanjar.weixin.common.util.http.ServerCertificateVerificationTest"/>
     </classes>
   </test>
 </suite>
