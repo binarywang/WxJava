@@ -21,7 +21,6 @@
     # 存储配置redis(可选)
     wx.mp.config-storage.type= edis                     # 配置类型: Memory(默认), Jedis, RedisTemplate
     wx.mp.config-storage.key-prefix=wx                  # 相关redis前缀配置: wx(默认)
-    #wx.mp.config-storage.redis.host               # 默认不配置，Jedis/Redisson 模式复用容器中的 JedisPool/RedissonClient Bean
     wx.mp.config-storage.redis.port=6379
 	#单机和sentinel同时存在时，优先使用sentinel配置
 	#wx.mp.config-storage.redis.sentinel-ips=127.0.0.1:16379,127.0.0.1:26379
@@ -37,6 +36,9 @@
 	#wx.mp.hosts.open-host=http://proxy.com/
 	#wx.mp.hosts.mp-host=http://proxy.com/
     ```
+
+    `wx.mp.config-storage.redis.host` 默认不配置。Jedis 模式复用容器中的 `JedisPool`，Redisson 模式复用容器中的 `RedissonClient`。
+
 3. 自动注入的类型
 
 - `WxMpService`
