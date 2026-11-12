@@ -17,7 +17,7 @@ public class RedisProperties implements Serializable {
   /**
    * 主机地址.
    */
-  private String host = "127.0.0.1";
+  private String host;
 
   /**
    * 端口号.
