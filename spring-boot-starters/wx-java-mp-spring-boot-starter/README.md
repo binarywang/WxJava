@@ -19,6 +19,7 @@
     wx.mp.aes-key=@aesKey
     wx.mp.use-stable-access-token=@useStableAccessToken
     # 存储配置redis(可选)
+    # 注意: redis.host 默认不配置，Jedis/Redisson 模式分别复用容器中的 JedisPool/RedissonClient
     wx.mp.config-storage.type= edis                     # 配置类型: Memory(默认), Jedis, RedisTemplate
     wx.mp.config-storage.key-prefix=wx                  # 相关redis前缀配置: wx(默认)
     wx.mp.config-storage.redis.port=6379
@@ -36,9 +37,6 @@
 	#wx.mp.hosts.open-host=http://proxy.com/
 	#wx.mp.hosts.mp-host=http://proxy.com/
     ```
-
-    `wx.mp.config-storage.redis.host` 默认不配置。Jedis 模式复用容器中的 `JedisPool`，Redisson 模式复用容器中的 `RedissonClient`。
-
 3. 自动注入的类型
 
 - `WxMpService`
