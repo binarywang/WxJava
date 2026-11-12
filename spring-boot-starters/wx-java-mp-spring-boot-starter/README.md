@@ -18,13 +18,11 @@
     wx.mp.token=@token
     wx.mp.aes-key=@aesKey
     wx.mp.use-stable-access-token=@useStableAccessToken
-    # 存储类型（可选）：Memory（默认）、Jedis、RedisTemplate、Redisson
-    wx.mp.config-storage.type=Memory
-    # Redis 键前缀（默认 wx）
-    wx.mp.config-storage.key-prefix=wx
-    # 使用独立 Redis 连接时显式配置 host
-    # wx.mp.config-storage.redis.host=127.0.0.1
-    # wx.mp.config-storage.redis.port=6379
+    # 存储配置redis(可选)
+    wx.mp.config-storage.type= edis                     # 配置类型: Memory(默认), Jedis, RedisTemplate
+    wx.mp.config-storage.key-prefix=wx                  # 相关redis前缀配置: wx(默认)
+    #wx.mp.config-storage.redis.host=127.0.0.1      # 可选，Jedis/Redisson 模式省略时需提供对应的 JedisPool/RedissonClient Bean
+    wx.mp.config-storage.redis.port=6379
 	#单机和sentinel同时存在时，优先使用sentinel配置
 	#wx.mp.config-storage.redis.sentinel-ips=127.0.0.1:16379,127.0.0.1:26379
 	#wx.mp.config-storage.redis.sentinel-name=mymaster
@@ -39,8 +37,6 @@
 	#wx.mp.hosts.open-host=http://proxy.com/
 	#wx.mp.hosts.mp-host=http://proxy.com/
     ```
-    选择 `Redisson` 或 `Jedis` 时，`wx.mp.config-storage.redis.host` 默认未设置。省略该配置会按类型复用应用提供的 `RedissonClient` 或 `JedisPool` Bean。应用需要提供对应的 Bean，否则 Starter 会在启动时因找不到客户端而失败。显式配置 host 时，Starter 会创建公众号专用客户端或连接池。
-
 3. 自动注入的类型
 
 - `WxMpService`
