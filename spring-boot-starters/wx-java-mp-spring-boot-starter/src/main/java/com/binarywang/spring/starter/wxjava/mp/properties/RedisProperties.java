@@ -15,7 +15,7 @@ public class RedisProperties implements Serializable {
   private static final long serialVersionUID = -5924815351660074401L;
 
   /**
-   * 主机地址.
+   * 主机地址。Jedis 或 Redisson 模式下省略时，复用应用提供的相应客户端 Bean。
    */
   private String host;
 
