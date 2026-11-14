@@ -53,6 +53,8 @@ public class WxMaVodDramaInfo implements Serializable {
     private Long createTime;
     @SerializedName("audit_time")
     private Long auditTime;
+    @SerializedName("reason")
+    private String reason;
   }
 
   @Data
