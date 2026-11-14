@@ -15,9 +15,9 @@ public class RedisProperties implements Serializable {
   private static final long serialVersionUID = -5924815351660074401L;
 
   /**
-   * 主机地址.
+   * 主机地址.不填则从spring容器内获取JedisPool或RedissonClient
    */
-  private String host = "127.0.0.1";
+  private String host;
 
   /**
    * 端口号.
