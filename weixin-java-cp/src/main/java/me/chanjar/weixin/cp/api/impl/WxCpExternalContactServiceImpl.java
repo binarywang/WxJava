@@ -742,8 +742,12 @@ public class WxCpExternalContactServiceImpl implements WxCpExternalContactServic
   @Override
   public WxMediaUploadResult uploadAttachment(String mediaType, String fileType, Integer attachmentType,
                                               InputStream inputStream) throws WxErrorException, IOException {
-    return uploadAttachment(mediaType, attachmentType, FileUtils.createTmpFile(inputStream,
-      UUID.randomUUID().toString(), fileType));
+    File tmpFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType);
+    try {
+      return uploadAttachment(mediaType, attachmentType, tmpFile);
+    } finally {
+      tmpFile.delete();
+    }
   }
 
   @Override

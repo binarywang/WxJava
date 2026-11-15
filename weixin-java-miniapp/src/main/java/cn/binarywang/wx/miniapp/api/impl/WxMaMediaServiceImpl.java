@@ -14,7 +14,6 @@ import me.chanjar.weixin.common.util.http.RequestExecutor;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
 import java.util.UUID;
 
 import static cn.binarywang.wx.miniapp.constant.WxMaApiUrlConstants.Media.MEDIA_GET_URL;
@@ -29,10 +28,16 @@ public class WxMaMediaServiceImpl implements WxMaMediaService {
 
   @Override
   public WxMediaUploadResult uploadMedia(String mediaType, String fileType, InputStream inputStream) throws WxErrorException {
+    File tmpFile = null;
     try {
-      return this.uploadMedia(mediaType, FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType));
+      tmpFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType);
+      return this.uploadMedia(mediaType, tmpFile);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
+    } finally {
+      if (tmpFile != null) {
+        tmpFile.delete();
+      }
     }
   }
 
@@ -48,7 +53,7 @@ public class WxMaMediaServiceImpl implements WxMaMediaService {
   public File getMedia(String mediaId) throws WxErrorException {
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
-        .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("wxma").toFile());
+        .create(this.wxMaService.getRequestHttp(), FileUtils.getTmpDir());
       return this.wxMaService.execute(executor, MEDIA_GET_URL, "media_id=" + mediaId);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);

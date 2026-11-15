@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.common.util.json.GsonHelper;
@@ -42,11 +43,10 @@ public class WxMaCodeServiceImpl implements WxMaCodeService {
 
   @Override
   public byte[] getQrCode(String path) throws WxErrorException {
-    String appId = this.service.getWxMaConfig().getAppid();
     Path qrCodeFilePath = null;
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
-        .create(this.service.getRequestHttp(), Files.createTempDirectory("wxjava-ma-" + appId).toFile());
+        .create(this.service.getRequestHttp(), FileUtils.getTmpDir());
 
       final StringBuilder url = new StringBuilder(GET_QRCODE_URL);
       if (StringUtils.isNotBlank(path)) {

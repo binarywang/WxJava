@@ -90,10 +90,16 @@ public class WxMaComplaintServiceImpl implements WxMaComplaintService {
 
   @Override
   public String uploadResponseImage(InputStream inputStream, String fileName) throws WxErrorException, IOException {
+    File tmpFile = null;
     try {
-      return this.uploadResponseImage(FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileName));
+      tmpFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileName);
+      return this.uploadResponseImage(tmpFile);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);
+    } finally {
+      if (tmpFile != null) {
+        tmpFile.delete();
+      }
     }
   }
 }

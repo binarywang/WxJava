@@ -12,6 +12,7 @@
       <class name="me.chanjar.weixin.common.api.WxMessageInMemoryDuplicateCheckerTest"/>
       <class name="me.chanjar.weixin.common.session.SessionTest"/>
       <class name="me.chanjar.weixin.common.util.http.ServerCertificateVerificationTest"/>
+      <class name="me.chanjar.weixin.common.util.fs.FileUtilsTest"/>
     </classes>
   </test>
 </suite>
