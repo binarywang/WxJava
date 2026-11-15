@@ -3,17 +3,56 @@ on:
   push:
     branches:
       - develop
+  # Maintainers can publish a timestamped build from develop on demand.
+  workflow_dispatch:
 
 permissions:
   contents: write
 
-concurrency:
-  group: maven-publish-${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
-  build-and-publish:
+  check-publish:
+    if: github.ref == 'refs/heads/develop' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      should_publish: ${{ steps.publish_guard.outputs.should_publish }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+
+      - name: Check whether publication was requested
+        id: publish_guard
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_REF: ${{ github.ref }}
+        run: |
+          # Expressions compare strings case-insensitively; require the exact branch here.
+          if [[ "$EVENT_REF" != "refs/heads/develop" ]]; then
+            echo "should_publish=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          SHOULD_PUBLISH="false"
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            SHOULD_PUBLISH="true"
+          elif [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\.B\ 测试版本 ]] ||
+               [[ "$COMMIT_MSG" =~ ^:bookmark:\ 发布\ ([0-9]+\.[0-9]+\.[0-9]+)\ 正式版本 ]]; then
+            SHOULD_PUBLISH="true"
+          fi
+          echo "should_publish=$SHOULD_PUBLISH" >> "$GITHUB_OUTPUT"
+
+  build-and-publish:
+    needs: check-publish
+    if: github.ref == 'refs/heads/develop' && needs.check-publish.outputs.should_publish == 'true'
+    runs-on: ubuntu-latest
+    # Ordinary pushes never enter this group or cancel an intentional release.
+    concurrency:
+      group: maven-publish-${{ github.ref }}
+      cancel-in-progress: false
+      queue: max
 
     steps:
       - name: Checkout Code
@@ -22,6 +61,7 @@ jobs:
           fetch-depth: 0
 
       - name: Detect and tag release version from commit message
+        if: github.event_name == 'push'
         id: version_detect
         run: |
           COMMIT_MSG=$(git log -1 --pretty=%B)
