@@ -33,6 +33,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.apache.http.entity.ContentType;
@@ -1201,9 +1202,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   private String handleGzipBill(String url, String requestStr) throws WxPayException {
+    Path tempDirectory = null;
     try {
       byte[] responseBytes = this.postForBytes(url, requestStr, false);
-      Path tempDirectory = Files.createTempDirectory("bill");
+      tempDirectory = Files.createTempDirectory("bill");
       Path path = Paths.get(tempDirectory.toString(), System.currentTimeMillis() + ".gzip");
       Files.write(path, responseBytes);
       try {
@@ -1219,6 +1221,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       }
     } catch (Exception e) {
       throw new WxPayException("解析对账单文件时出错！", e);
+    } finally {
+      if (tempDirectory != null) {
+        FileUtils.deleteQuietly(tempDirectory.toFile());
+      }
     }
   }
 
@@ -1252,9 +1258,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
   }
 
   private String handleGzipFundFlow(String url, String requestStr) throws WxPayException {
+    Path tempDirectory = null;
     try {
       byte[] responseBytes = this.postForBytes(url, requestStr, true);
-      Path tempDirectory = Files.createTempDirectory("fundFlow");
+      tempDirectory = Files.createTempDirectory("fundFlow");
       Path path = Paths.get(tempDirectory.toString(), System.currentTimeMillis() + ".gzip");
       Files.write(path, responseBytes);
 
@@ -1273,6 +1280,10 @@ public abstract class BaseWxPayServiceImpl implements WxPayService {
       throw wxPayException;
     } catch (Exception e) {
       throw new WxPayException("解压zip文件出错", e);
+    } finally {
+      if (tempDirectory != null) {
+        FileUtils.deleteQuietly(tempDirectory.toFile());
+      }
     }
   }
 

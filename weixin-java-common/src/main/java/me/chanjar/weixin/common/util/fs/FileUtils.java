@@ -16,6 +16,7 @@ import static org.apache.commons.io.FileUtils.openOutputStream;
  * @author Daniel Qian
  */
 public class FileUtils {
+  private static volatile File tmpDir;
 
   /**
    * 创建临时文件.
@@ -41,14 +42,39 @@ public class FileUtils {
   }
 
   /**
-   * 创建临时文件.
+   * 创建临时文件，文件位于 {@link #getTmpDir()} 返回的目录中.
    *
    * @param inputStream 输入文件流
    * @param name        文件名
    * @param ext         扩展名
    */
   public static File createTmpFile(InputStream inputStream, String name, String ext) throws IOException {
-    return createTmpFile(inputStream, name, ext, Files.createTempDirectory("wxjava-temp").toFile());
+    return createTmpFile(inputStream, name, ext, getTmpDir());
+  }
+
+  /**
+   * 获取 SDK 共用的临时目录.
+   * <p>
+   * 目录在首次调用时创建，之后的调用都复用它，不会每次调用都新建一个永远不会被删除的临时目录；
+   * 目录被外部清理掉后，下次调用会重新创建。
+   * </p>
+   *
+   * @return 临时目录
+   * @throws IOException 无法创建临时目录时抛出
+   */
+  public static File getTmpDir() throws IOException {
+    File dir = tmpDir;
+    if (dir == null || !dir.isDirectory()) {
+      synchronized (FileUtils.class) {
+        dir = tmpDir;
+        if (dir == null || !dir.isDirectory()) {
+          dir = Files.createTempDirectory("wxjava-temp").toFile();
+          dir.deleteOnExit();
+          tmpDir = dir;
+        }
+      }
+    }
+    return dir;
   }
 
   /**

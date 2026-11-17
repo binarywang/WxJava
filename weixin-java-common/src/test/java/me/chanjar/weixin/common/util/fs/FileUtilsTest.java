@@ -33,6 +33,34 @@ public class FileUtilsTest {
   }
 
   @Test
+  public void testCreateTmpFileReusesOneTmpDir() throws IOException {
+    File first = FileUtils.createTmpFile(new ByteArrayInputStream("a".getBytes()), "first", "txt");
+    File second = FileUtils.createTmpFile(new ByteArrayInputStream("b".getBytes()), "second", "txt");
+    try {
+      // 每次调用都新建一个临时目录的话，调用方删除文件后目录仍会一直残留
+      assertThat(second.getParentFile()).isEqualTo(first.getParentFile());
+    } finally {
+      assertThat(first.delete()).isTrue();
+      assertThat(second.delete()).isTrue();
+    }
+  }
+
+  @Test
+  public void testGetTmpDirIsRecreatedAfterDeletion() throws IOException {
+    File tmpDir = FileUtils.getTmpDir();
+    assertThat(FileUtils.getTmpDir()).isEqualTo(tmpDir);
+
+    org.apache.commons.io.FileUtils.deleteDirectory(tmpDir);
+    assertThat(tmpDir).doesNotExist();
+
+    File recreated = FileUtils.getTmpDir();
+    assertThat(recreated).isDirectory();
+    File tmpFile = FileUtils.createTmpFile(new ByteArrayInputStream("c".getBytes()), "recreated", "txt");
+    assertThat(tmpFile.getParentFile()).isEqualTo(recreated);
+    assertThat(tmpFile.delete()).isTrue();
+  }
+
+  @Test
   public void testImageToBase64ByStream() {
     byte[] original = new byte[5000];
     for (int i = 0; i < original.length; i++) {

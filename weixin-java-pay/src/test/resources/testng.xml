@@ -55,6 +55,7 @@
       <class name="com.github.binarywang.wxpay.service.impl.TransferUserAuthorizationApiCompatibilityTest"/>
       <class name="com.github.binarywang.wxpay.service.impl.WxPayServiceApacheHttpImplConnectionPoolTest"/>
       <class name="com.github.binarywang.wxpay.service.impl.WxPayServiceSandboxTest"/>
+      <class name="com.github.binarywang.wxpay.service.impl.WxPayGzipBillTmpFileTest"/>
       <class name="com.github.binarywang.wxpay.util.SignUtilsTest"/>
       <class name="com.github.binarywang.wxpay.v3.SignatureExecTrustedHostTest"/>
       <class name="com.github.binarywang.wxpay.v3.auth.AutoUpdateCertificatesVerifierPublicKeyModeTest"/>

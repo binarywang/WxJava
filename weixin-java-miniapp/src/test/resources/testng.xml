@@ -6,6 +6,7 @@
       <class name="cn.binarywang.wx.miniapp.api.impl.WxMaCode2SessionSecurityTest"/>
       <class name="cn.binarywang.wx.miniapp.api.impl.WxMaSubscribeServiceImplUrlTest"/>
       <class name="cn.binarywang.wx.miniapp.api.impl.WxMaUserServiceImplCheckSessionKeyTest"/>
+      <class name="cn.binarywang.wx.miniapp.api.impl.WxMaTmpFileCleanupTest"/>
     </classes>
   </test>
 </suite>

@@ -7,6 +7,7 @@ import me.chanjar.weixin.open.bean.CommonUploadMultiParam;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.open.executor.CommonUploadMultiRequestExecutor;
+import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.BaseMediaDownloadRequestExecutor;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 import me.chanjar.weixin.open.api.WxOpenMaIcpService;
@@ -16,7 +17,6 @@ import me.chanjar.weixin.open.util.json.WxOpenGsonBuilder;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 
 /**
  * @author xzh
@@ -209,7 +209,7 @@ public class WxOpenMaIcpServiceImpl implements WxOpenMaIcpService {
   public File getIcpMedia(String mediaId) throws WxErrorException {
     try {
       RequestExecutor<File, String> executor = BaseMediaDownloadRequestExecutor
-        .create(this.wxMaService.getRequestHttp(), Files.createTempDirectory("wxma").toFile());
+        .create(this.wxMaService.getRequestHttp(), FileUtils.getTmpDir());
       return this.wxMaService.execute(executor, GET_ICP_MEDIA, "media_id=" + mediaId);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);

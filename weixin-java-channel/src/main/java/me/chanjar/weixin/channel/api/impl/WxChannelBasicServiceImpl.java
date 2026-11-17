@@ -11,7 +11,6 @@ import static me.chanjar.weixin.channel.constant.WxChannelApiUrlConstants.Basics
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.channel.api.WxChannelBasicService;
 import me.chanjar.weixin.channel.bean.address.AddressCodeResponse;
@@ -28,6 +27,7 @@ import me.chanjar.weixin.channel.executor.ChannelMediaDownloadRequestExecutor;
 import me.chanjar.weixin.channel.util.ResponseUtils;
 import me.chanjar.weixin.common.error.WxError;
 import me.chanjar.weixin.common.error.WxErrorException;
+import me.chanjar.weixin.common.util.fs.FileUtils;
 import me.chanjar.weixin.common.util.http.RequestExecutor;
 
 /**
@@ -76,12 +76,11 @@ public class WxChannelBasicServiceImpl implements WxChannelBasicService {
 
   @Override
   public ChannelImageResponse getImg(String mediaId) throws WxErrorException {
-    String appId = shopService.getConfig().getAppid();
     ChannelImageResponse rs;
     try {
       String url = GET_IMG_URL + "?media_id=" + mediaId;
       RequestExecutor<ChannelImageResponse, String> executor = ChannelMediaDownloadRequestExecutor.create(shopService,
-        Files.createTempDirectory("wxjava-channel-" + appId).toFile());
+        FileUtils.getTmpDir());
       rs = shopService.execute(executor, url, null);
     } catch (IOException e) {
       throw new WxErrorException(WxError.builder().errorMsg(e.getMessage()).build(), e);

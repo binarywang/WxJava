@@ -31,7 +31,12 @@ public class WxCpTpMediaServiceImpl implements WxCpTpMediaService {
   @Override
   public WxMediaUploadResult upload(String mediaType, String fileType, InputStream inputStream, String corpId)
     throws WxErrorException, IOException {
-    return this.upload(mediaType, FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType), corpId);
+    File tmpFile = FileUtils.createTmpFile(inputStream, UUID.randomUUID().toString(), fileType);
+    try {
+      return this.upload(mediaType, tmpFile, corpId);
+    } finally {
+      tmpFile.delete();
+    }
   }
 
   @Override
