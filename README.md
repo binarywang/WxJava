@@ -230,7 +230,7 @@ System.out.println(result.getOpenid());
 <summary>点此展开查看</summary>
   
 1. 本项目定为大约每半年左右发布一次正式版，遇到重大问题需修复会及时提交新版本，欢迎大家随时提交 `Pull Request`；
-2. 每次代码更新都会自动构建出新版本方便及时尝鲜，版本号格式为 `x.x.x-时间戳`;
+2. 普通 `develop` 提交只跑测试，不自动发布；需要提前验证修复时，维护者可在 GitHub Actions 手动发布 `x.x.x-时间戳` 版本。
 3. 发布正式版时，`develop` 分支代码合并进入 `release` 分支），版本号格式为 `X.X.0`（如`2.1.0`，`2.2.0`等）；
 4. 每隔一段时间后，会发布测试版本（如`3.6.8.B`，即尾号不为0，并添加B，以区别于正式版），代码仅存在于 `develop` 分支中；
 5. 目前最新版本号为 [![Maven Central](https://img.shields.io/maven-central/v/com.github.binarywang/wx-java.svg)](http://mvnrepository.com/artifact/com.github.binarywang/wx-java) ，也可以通过访问以下链接分别查看各个模块最新的版本： 
