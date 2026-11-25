@@ -70,7 +70,7 @@ public class WxPayCredentials implements Credentials {
 
   @Override
   public final String getSchema() {
-    return "WECHATPAY2-SHA256-RSA2048";
+    return signer.getSchema();
   }
 
   @Override
