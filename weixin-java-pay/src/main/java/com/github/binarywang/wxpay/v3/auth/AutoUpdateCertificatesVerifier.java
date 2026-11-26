@@ -124,12 +124,18 @@ public class AutoUpdateCertificatesVerifier implements Verifier {
 
   @Override
   public boolean verify(String serialNumber, byte[] message, String signature) {
+    return verify(serialNumber, message, signature, null);
+  }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean verify(String serialNumber, byte[] message, String signature, String signatureType) {
     checkAndAutoUpdateCert();
     if (verifier == null) {
       log.warn("No valid certificate available for verification");
       return false;
     }
-    return verifier.verify(serialNumber, message, signature);
+    return verifier.verify(serialNumber, message, signature, signatureType);
   }
 
   /**
