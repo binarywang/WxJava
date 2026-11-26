@@ -17,6 +17,7 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import me.chanjar.weixin.common.error.WxRuntimeException;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 public class PemUtils {
 
@@ -34,9 +35,13 @@ public class PemUtils {
           .replace("-----END PRIVATE KEY-----", "")
           .replaceAll("\\s+", "");
 
-      KeyFactory kf = KeyFactory.getInstance("RSA");
-      return kf.generatePrivate(
-          new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKey)));
+      byte[] encodedKey = Base64.getDecoder().decode(privateKey);
+      try {
+        return KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(encodedKey));
+      } catch (InvalidKeySpecException e) {
+        return KeyFactory.getInstance("EC", new BouncyCastleProvider())
+          .generatePrivate(new PKCS8EncodedKeySpec(encodedKey));
+      }
     } catch (NoSuchAlgorithmException e) {
       throw new WxRuntimeException("当前Java环境不支持RSA", e);
     } catch (InvalidKeySpecException e) {
@@ -74,8 +79,13 @@ public class PemUtils {
         .replace("-----BEGIN PUBLIC KEY-----", "")
         .replace("-----END PUBLIC KEY-----", "")
         .replaceAll("\\s+", "");
-      return KeyFactory.getInstance("RSA")
-        .generatePublic(new X509EncodedKeySpec(Base64.getDecoder().decode(publicKey)));
+      byte[] encodedKey = Base64.getDecoder().decode(publicKey);
+      try {
+        return KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(encodedKey));
+      } catch (InvalidKeySpecException e) {
+        return KeyFactory.getInstance("EC", new BouncyCastleProvider())
+          .generatePublic(new X509EncodedKeySpec(encodedKey));
+      }
     } catch (NoSuchAlgorithmException e) {
       throw new WxRuntimeException("当前Java环境不支持RSA", e);
     } catch (InvalidKeySpecException e) {

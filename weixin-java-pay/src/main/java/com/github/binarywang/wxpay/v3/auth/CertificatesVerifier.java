@@ -3,6 +3,7 @@ package com.github.binarywang.wxpay.v3.auth;
 import me.chanjar.weixin.common.error.WxRuntimeException;
 
 import java.math.BigInteger;
+import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Signature;
@@ -25,14 +26,16 @@ public class CertificatesVerifier implements Verifier {
     }
   }
 
-  private boolean verify(X509Certificate certificate, byte[] message, String signature) {
+  private boolean verify(X509Certificate certificate, byte[] message, String signature, String signatureType) {
     try {
-      Signature sign = Signature.getInstance("SHA256withRSA");
+      Signature sign = WechatPaySignature.create(signatureType);
       sign.initVerify(certificate);
       sign.update(message);
       return sign.verify(Base64.getDecoder().decode(signature));
+    } catch (InvalidAlgorithmParameterException e) {
+      throw new WxRuntimeException("签名参数无效", e);
     } catch (NoSuchAlgorithmException e) {
-      throw new WxRuntimeException("当前Java环境不支持SHA256withRSA", e);
+      throw new WxRuntimeException("当前Java环境不支持签名算法", e);
     } catch (SignatureException e) {
       throw new WxRuntimeException("签名验证过程发生了错误", e);
     } catch (InvalidKeyException e) {
@@ -42,8 +45,13 @@ public class CertificatesVerifier implements Verifier {
 
   @Override
   public boolean verify(String serialNumber, byte[] message, String signature) {
+    return verify(serialNumber, message, signature, WechatPaySignature.RSA_TYPE);
+  }
+
+  @Override
+  public boolean verify(String serialNumber, byte[] message, String signature, String signatureType) {
     BigInteger val = new BigInteger(serialNumber, 16);
-    return certificates.containsKey(val) && verify(certificates.get(val), message, signature);
+    return certificates.containsKey(val) && verify(certificates.get(val), message, signature, signatureType);
   }
 
 

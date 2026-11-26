@@ -26,10 +26,15 @@ public class PublicCertificateVerifier implements Verifier{
 
     @Override
     public boolean verify(String serialNumber, byte[] message, String signature) {
+        return verify(serialNumber, message, signature, WechatPaySignature.RSA_TYPE);
+    }
+
+    @Override
+    public boolean verify(String serialNumber, byte[] message, String signature, String signatureType) {
         // 如果序列号不为空且不包含"PUB_KEY_ID"且有证书验证器，先尝试证书验证
         if (serialNumber != null && !serialNumber.contains("PUB_KEY_ID") && this.certificateVerifier != null) {
             try {
-                if (this.certificateVerifier.verify(serialNumber, message, signature)) {
+                if (this.certificateVerifier.verify(serialNumber, message, signature, signatureType)) {
                     return true;
                 }
             } catch (Exception e) {
@@ -39,12 +44,14 @@ public class PublicCertificateVerifier implements Verifier{
         }
         // 使用公钥验证（兜底方案，适用于公钥转账等场景）
         try {
-            Signature sign = Signature.getInstance("SHA256withRSA");
+            Signature sign = WechatPaySignature.create(signatureType);
             sign.initVerify(publicKey);
             sign.update(message);
             return sign.verify(Base64.getDecoder().decode(signature));
+        } catch (InvalidAlgorithmParameterException e) {
+            throw new WxRuntimeException("签名参数无效", e);
         } catch (NoSuchAlgorithmException e) {
-            throw new WxRuntimeException("当前Java环境不支持SHA256withRSA", e);
+            throw new WxRuntimeException("当前Java环境不支持签名算法", e);
         } catch (SignatureException e) {
             throw new WxRuntimeException("签名验证过程发生了错误", e);
         } catch (InvalidKeyException e) {

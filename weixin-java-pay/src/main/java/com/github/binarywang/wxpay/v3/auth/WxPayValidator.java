@@ -73,10 +73,16 @@ public class WxPayValidator implements Validator {
     }
     Header serialNo = response.getFirstHeader("Wechatpay-Serial");
     Header sign = response.getFirstHeader("Wechatpay-Signature");
+    Header signatureType = response.getFirstHeader("Wechatpay-Signature-Type");
     Header timestamp = response.getFirstHeader("Wechatpay-TimeStamp");
     Header nonce = response.getFirstHeader("Wechatpay-Nonce");
 
     if (timestamp == null || nonce == null || serialNo == null || sign == null) {
+      return false;
+    }
+
+    String signatureTypeValue = signatureType == null ? null : signatureType.getValue();
+    if (!WechatPaySignature.isSupported(signatureTypeValue)) {
       return false;
     }
 
@@ -85,7 +91,8 @@ public class WxPayValidator implements Validator {
     }
 
     String message = buildMessage(response);
-    return verifier.verify(serialNo.getValue(), message.getBytes(StandardCharsets.UTF_8), sign.getValue());
+    return verifier.verify(serialNo.getValue(), message.getBytes(StandardCharsets.UTF_8), sign.getValue(),
+      signatureTypeValue);
   }
 
   /**
